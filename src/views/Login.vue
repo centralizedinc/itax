@@ -27,7 +27,7 @@
                   <a-icon slot="suffix" :type="reveal?'eye':'eye-invisible'" @click="reveal=!reveal" style="cursor:pointer"/>
                 </a-input>
               </a-form-item>
-              <a-button size="large" block ghost >Login</a-button>
+              <a-button size="large" block ghost @click="$router.push('/app')">Login</a-button>
               
               <!-- <p style="color:white">Login using facebook or google accounts</p> -->
               <a-row type="flex" gutter="16">
