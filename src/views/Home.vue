@@ -11,23 +11,33 @@
           <a-avatar style="cursor:pointer" @click="$router.push('/')" src="https://www.lucenacity.gov.ph/img/Lucena_Seal200.png" :size="50"></a-avatar>
         </a-col>-->
         <a-col :span="4">
-          <h3 style="color:white;">iTax.</h3>
+          <h2 style="color:white;">iTax.</h2>
         </a-col>
-        <a-col :span="2" :push="12">
-          <a-button ghost block>NEWS</a-button>
+        <!-- <a-col :span="8">
+          <a-tabs :tabBarStyle="{color:red}">
+            <a-tab-pane key="1" tab="Home"></a-tab-pane>
+            
+          </a-tabs>
+        </a-col>-->
+
+        <a-col :span="2" :push="14">
+          <a-button ghost block type="link">About</a-button>
         </a-col>
-        <a-col :span="2" :push="12">
-          <a-button ghost block>REPORT</a-button>
+        <a-col :span="2" :push="14">
+          <a-button ghost block type="link">Contact Us</a-button>
         </a-col>
-        <a-col :span="2" :push="12">
-          <a-button ghost block @click="signup_visible=true">SIGN-UP</a-button>
+        <a-col :span="2" :push="14">
+          <a-button ghost block @click="signup_visible=true" type="link">Register</a-button>
         </a-col>
       </a-row>
+      <a-divider style="margin-top: -2vh" v-if="topLocation<=50"></a-divider>
     </a-layout-header>
     <a-layout-content>
       <router-view></router-view>
     </a-layout-content>
-    <a-layout-footer style="background: linear-gradient(to left, #0575e6, #021b79); color: #ffffff">
+    <a-layout-footer
+      style="background: linear-gradient(to right, #000046, #1cb5e0); color: #ffffff"
+    >
       <a-row>
         <a-col :span="24">
           <h1 style="color:#ffffff">Get in touch</h1>
@@ -36,18 +46,8 @@
             <a-icon type="phone"></a-icon>Hotline: 123-3456
           </p>
           <p>
-            <a-icon type="global"></a-icon>Website:
-            <a
-              style="color:#ffffff"
-              href="https://www.lucenacity.gov.ph/"
-            >https://www.lucenacity.gov.ph/</a>
-          </p>
-          <p>
             <a-icon type="facebook"></a-icon>Facebook:
-            <a
-              style="color:#ffffff"
-              href="https://www.facebook.com/RoderickDondonAlcala/"
-            >lucena.city</a>
+            <a style="color:#ffffff" href="https://www.facebook.com/RoderickDondonAlcala/">itax.ph</a>
           </p>
           <a-divider></a-divider>
         </a-col>
@@ -264,7 +264,7 @@ export default {
           this.$store
             .dispatch("SIGNUP", account)
             .then(result => {
-              console.log('SIGNUP result :', result);
+              console.log("SIGNUP result :", result);
               this.$notification.open({
                 message: "Registration success.",
                 description: `Please confirm your account in ${account.email}`,
@@ -289,8 +289,10 @@ export default {
 
   computed: {
     headerStyle() {
-      if (this.topLocation >= 50) {
-        return "background: linear-gradient(to right, #0575e6, #021b79)";
+      if (this.topLocation < 50) {
+        return "background: transparent";
+      } else {
+        return "background: linear-gradient(to left, #000046, #1cb5e0);";
       }
     }
   }

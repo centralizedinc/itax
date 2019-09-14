@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="login-background">
-      <a-row style="height:100vh" type="flex" justify="start">
+      <!-- <div style="background-image:url('https://www.lucenacity.gov.ph/images/banner7.jpg'); height:100%;background-repeat: no-repeat;
+  background-size: cover"> -->
+  <div style="background: linear-gradient(to left, #000046, #1cb5e0);">
+      <a-row style="height:100vh" type="flex" justify="start" >
         <a-col :push="1" :span="12" style="margin-top:20vh">
-          <div style="font-size: 52px; color: blue; text-shadow: 1px 1px white;">iTax Portal</div>
-          <div style="font-size: 42px; color:#ffffff;">Ease of Doing Business Portal</div>
-          <p
-            style="margin-top:2vh; color:#ffffff"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <a-button style="margin-top:5vh" size="large" type="primary">Read More</a-button>
+          <div style="font-size: 52px; color:#ffffff; ">iTax.</div>
+          <div style="font-size: 42px; color:#ffffff;">Tax Preparation Software.</div>
+          <p style="margin-top:2vh; color:#ffffff">Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations. </p>
+          <a-button style="margin-top:5vh"  size="large" type="primary">Read More</a-button>  
         </a-col>
         <a-col :push="2" :span="8" style="margin-top:20vh;">
           <a-card style="background: rgba(59, 79, 99, 0.62)">
@@ -45,27 +45,16 @@
                   />
                 </a-input>
               </a-form-item>
-              <a-button size="large" block ghost @click="login">Login</a-button>
-              <a-divider></a-divider>
-              <p style="color:white">Login using facebook or google accounts</p>
-              <a-row type="flex" :gutter="16">
-                <a-col :span="12">
-                  <a-button
-                    block
-                    style="border: #4267B2;background-color:#4267B2; color:#FFFFFF"
-                    @click="registerFacebook"
-                  >
-                    <a-icon type="facebook"></a-icon>Facebook
-                  </a-button>
+              <a-button size="large" block ghost :loading="loading" @click="login">Login</a-button>
+              
+              <!-- <p style="color:white">Login using facebook or google accounts</p> -->
+              <a-row type="flex" gutter="16">
+                <a-divider style="color:#FFFFFF">or</a-divider>
+                <a-col :span="24">
+                  <a-button block :disabled="loading" style="border: #4267B2;background-color:#4267B2; color:#FFFFFF" @click="registerFacebook"> <a-icon type="facebook"></a-icon>Facebook</a-button>
                 </a-col>
-                <a-col :span="12">
-                  <a-button
-                    block
-                    @click="registerGoogle"
-                    style="border: #DE4935;background-color:#DE4935; color:#FFFFFF"
-                  >
-                    <a-icon type="google"></a-icon>Google
-                  </a-button>
+                <a-col :span="24">
+                  <a-button block :disabled="loading" @click="registerGoogle" style="margin-top: 1vh; border: #DE4935;background-color:#DE4935; color:#FFFFFF"> <a-icon type="google"></a-icon>Google</a-button>
                 </a-col>
               </a-row>
             </a-form>
