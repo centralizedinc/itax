@@ -28,13 +28,31 @@
   <a-layout-content>
     <a-row style="min-height:80vh; margin-top:15vh; margin-left:2vw; margin-right:2vw" type="flex" justify="start">
       <a-col :span="3">
-        <!-- <a-card> -->
-          <a-menu>
-            <a-menu-item key="1"><a-icon type="block" />Dashboard</a-menu-item>
-            <a-menu-item key="2"><a-icon type="form" />Tax Returns</a-menu-item>
-            <a-menu-item key="3"><a-icon type="credit-card" />Payments</a-menu-item>
-            <a-menu-item key="4"><a-icon type="idcard" />Account</a-menu-item>
-            <a-menu-item key="5"><a-icon type="lock" />Passsword</a-menu-item>
+        <a-row type="flex" justify="center" style="margin-bottom: 2vh">
+          <a-col :span="24">
+            <a-card style="min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);">
+            </a-card>
+          </a-col>
+          <a-col :span="10">
+            <a-avatar style="z-index: 1; margin-top: -5vh" :size="60" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
+          </a-col>
+          <a-col :span="24">
+            <a-card style="text-align: center; margin-top: -4vh; min-height: 5vh; ">
+              <div style="margin-top: 2vh">
+                <p>Ariel Balita</p>
+              </div>
+              
+            </a-card>
+          </a-col>
+        </a-row>
+          <a-menu @click="nav">
+            <a-menu-item key="/app"><a-icon type="block" />Dashboard</a-menu-item>
+            <a-menu-item key="/app/taxpayer" ><a-icon type="solution" />Taxpayers</a-menu-item>
+            <a-menu-item key="/app/tax" ><a-icon type="form" />Tax Returns</a-menu-item>
+            <a-menu-item key="/app/pay"><a-icon type="credit-card" />Payments</a-menu-item>
+            <a-divider></a-divider>
+            <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
+            <a-menu-item key="/app/pass"><a-icon type="lock" />Passsword</a-menu-item>
             <a-menu-item key="6"><a-icon type="logout" />Logout</a-menu-item>
           </a-menu>
         <!-- </a-card> -->
@@ -93,3 +111,15 @@
   </a-layout-footer>
 </a-layout>
 </template>
+
+
+<script>
+export default {
+    methods:{
+      nav(e){
+        this.$router.push(e.key);
+
+      }
+    }
+}
+</script>

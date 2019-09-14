@@ -27,9 +27,29 @@ export default new Router({
           component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
         },
         {
+          path:'taxpayer',
+          name:'Tax Payers',
+          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
+        },
+        {
           path:'tax',
           name:'Tax Returns',
-          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/TaxReturns.vue'),
+          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
+        },
+        {
+          path:'pay',
+          name:'Payments',
+          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),
+        },
+        {
+          path:'user',
+          name:'User Profile',
+          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/User.vue'),
+        },
+        {
+          path:'security',
+          name:'Security Settings',
+          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Security.vue'),
         }
       ]
     }
