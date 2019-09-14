@@ -26,13 +26,13 @@
     </v-btn>-->
     <!-- </v-toolbar> -->
     <!-- page 1 -->
-    <page-1 :form-details="formDetails" v-show="formDetails.page==1"></page-1>
+    <!-- <page-1 :form-details="formDetails" v-show="formDetails.page==1"></page-1> -->
     <!-- page 2 -->
-    <page-2 :form-details="formDetails" v-show="formDetails.page==2"></page-2>
+    <!-- <page-2 :form-details="formDetails" v-show="formDetails.page==2"></page-2> -->
     <!-- page 3 -->
-    <page-3 :form-details="formDetails" v-show="formDetails.page==3"></page-3>
+    <!-- <page-3 :form-details="formDetails" v-show="formDetails.page==3"></page-3> -->
     <!-- page 4 -->
-    <page-4 :form-details="formDetails" v-show="formDetails.page==4"></page-4>
+    <!-- <page-4 :form-details="formDetails" v-show="formDetails.page==4"></page-4> -->
   </div>
 </template>
 <script>

@@ -4,8 +4,10 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import './plugins/ant-design-vue.js'
+import mixins from '@/plugins/mixins.js'
 
 Vue.config.productionTip = false
+Vue.use(mixins);
 
 new Vue({
   router,
