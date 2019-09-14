@@ -58,6 +58,11 @@ export default new Router({
           path: '',
           name: 'Dashboard',
           component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
+        },
+        {
+          path:'tax',
+          name:'Tax Returns',
+          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/TaxReturns.vue'),
         }
       ]
     }

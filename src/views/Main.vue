@@ -21,12 +21,12 @@
           <a-icon type="setting" style="color:#ffffff"></a-icon>
         </a-col>
         <a-col :span="1">
-          <a-avatar shape="square" :size="35">AB</a-avatar>
+          <a-avatar shape="square" :size="35" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
         </a-col>
     </a-row>
   </a-layout-header>
   <a-layout-content>
-    <a-row style="margin-top:15vh; margin-left:2vw; margin-right:2vw" type="flex" justify="start">
+    <a-row style="min-height:80vh; margin-top:15vh; margin-left:2vw; margin-right:2vw" type="flex" justify="start">
       <a-col :span="3">
         <!-- <a-card> -->
           <a-menu>
@@ -44,10 +44,52 @@
         <router-view></router-view>
       </a-col>
       <a-col :span="4">
-        <a-card title="September 2019"></a-card>
+        <!-- <a-card title="Tax Calendar">
+          <a-row type="flex" justify="center">
+            <a-col :span="18">
+              <p>September 2019</p>
+              <a-divider style="margin-top:-1vh"></a-divider>
+            </a-col>
+            <a-col :span="24"></a-col>
+            <a-col :span="2">
+              <a-icon size="small" type="left"></a-icon>
+            </a-col>
+            <a-col :span="4">
+              <p>MON</p>
+             <span>01</span> 
+              
+            </a-col>
+            <a-col :span="4">
+              02
+            </a-col>
+            <a-col :span="4">
+              03
+            </a-col>
+            <a-col :span="4">
+              04
+            </a-col>
+            <a-col :span="4">
+              05
+            </a-col>
+            <a-col :span="2">
+              <a-icon size="small" type="right"></a-icon>
+            </a-col>
+          </a-row>
+        </a-card> -->
+        <a-card title="Activities" style="margin-top: 2vh">
+          <a-timeline>
+            <a-timeline-item>Create a services site 2015-09-01</a-timeline-item>
+            <a-timeline-item>Solve initial network problems 2015-09-01</a-timeline-item>
+            <a-timeline-item>Technical testing 2015-09-01</a-timeline-item>
+            <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
+          </a-timeline>
+        </a-card>
       </a-col>
     </a-row>
   </a-layout-content>
-  <a-layout-footer class="footer"></a-layout-footer>
+  <a-layout-footer class="footer" style="margin-top: 2vh">
+    <!-- <a-icon type="facebook"></a-icon>
+    <a-icon type="google-plus"></a-icon> -->
+  </a-layout-footer>
 </a-layout>
 </template>
