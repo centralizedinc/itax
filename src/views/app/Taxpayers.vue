@@ -1,12 +1,12 @@
 <template>
 
     <a-row>
-        <a-col :span="14">
+        <a-col :span="18">
             <a-card>
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
-                  <a-avatar shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
-                        <a-icon style="font-size:24px" type="plus"></a-icon>
+                  <a-avatar class="avatar_btn" @click="$router.push('/app/taxpayer/new')" shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
+                        <a-icon style="font-size:24px" type="user-add"></a-icon>
                     </a-avatar>
               </a-col>
               <a-col :span="16">
@@ -16,11 +16,11 @@
             </a-row>
             </a-card>
         </a-col>
-        <a-col :span="14">
+        <a-col :span="18">
             <a-card>
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
-                  <a-avatar shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
+                  <a-avatar class="avatar_btn" @click="$router.push('/app/taxpayer/upload')"  shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
                         <a-icon style="font-size:24px" type="upload"></a-icon>
                     </a-avatar>
               </a-col>
@@ -31,11 +31,11 @@
             </a-row>
             </a-card>
         </a-col>
-        <a-col :span="14">
+        <a-col :span="18">
             <a-card>
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
-                  <a-avatar shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
+                  <a-avatar class="avatar_btn" @click="$router.push('/app/taxpayer/search')"  shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
                         <a-icon style="font-size:24px" type="search"></a-icon>
                     </a-avatar>
               </a-col>

@@ -66,6 +66,21 @@ export default new Router({
           component: () => import(/* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
         },
         {
+          path:'taxpayer/new',
+          name:'Create New Taxpayer',
+          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
+        },
+        {
+          path:'taxpayer/upload',
+          name:'Upload Taxpayers',
+          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
+        },
+        {
+          path:'taxpayer/search',
+          name:'Search Taxpayer',
+          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/SearchTaxpayer.vue'),
+        },
+        {
           path:'tax',
           name:'Tax Returns',
           component: () => import(/* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),

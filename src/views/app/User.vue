@@ -4,7 +4,7 @@
     <a-tab-pane key="1" tab="Account Information">
         <a-form>
             <a-form-item>
-                <a-avatar :size="150" shape="square" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
+                <a-avatar class="profile_pic" :size="150" shape="square" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
             </a-form-item>
             <a-form-item>
                 <a-input placeholder="First Name"></a-input>
@@ -45,5 +45,10 @@ export default {
 </script>
 
 <style>
-
+.profile_pic{
+    cursor: pointer;
+}
+.profile_pic:hover{
+    opacity: 0.6;
+}
 </style>
