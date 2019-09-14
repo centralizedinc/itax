@@ -21,7 +21,7 @@
           <a-icon type="setting" style="color:#ffffff"></a-icon>
         </a-col>
         <a-col :span="1">
-          <a-avatar shape="square" :size="35" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
+          <a-avatar shape="square" :size="35" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg" style="border: 1px solid #FFFFFF"></a-avatar>
         </a-col>
     </a-row>
   </a-layout-header>
@@ -34,7 +34,7 @@
             </a-card>
           </a-col>
           <a-col :span="10">
-            <a-avatar style="z-index: 1; margin-top: -5vh" :size="60" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
+            <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
           </a-col>
           <a-col :span="24">
             <a-card style="text-align: center; margin-top: -4vh; min-height: 5vh; ">
@@ -52,7 +52,7 @@
             <a-menu-item key="/app/pay"><a-icon type="credit-card" />Payments</a-menu-item>
             <a-divider></a-divider>
             <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-            <a-menu-item key="/app/pass"><a-icon type="lock" />Passsword</a-menu-item>
+            <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
             <a-menu-item key="6"><a-icon type="logout" />Logout</a-menu-item>
           </a-menu>
         <!-- </a-card> -->

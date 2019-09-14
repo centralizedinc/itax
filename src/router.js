@@ -11,6 +11,7 @@ function isAuthenticated(to, from, next) {
     next(is_authenticated ? "/app" : true)
   else if (to.matched[0].name === "Secured")
     next(is_authenticated ? true : "/")
+  
 }
 
 export default new Router({
@@ -39,7 +40,7 @@ export default new Router({
       }]
     },
     {
-      path: '/app',
+      path: '/app/test',
       name: 'Secured',
       beforeEnter: isAuthenticated,
       component: Home,
@@ -61,7 +62,7 @@ export default new Router({
         },
         {
           path:'taxpayer',
-          name:'Tax Payers',
+          name:'Taxpayers',
           component: () => import(/* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
         },
         {

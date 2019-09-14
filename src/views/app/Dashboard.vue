@@ -8,6 +8,19 @@
     </a-col>
   </a-row>
   <a-row type="flex" align="center" :gutter="16" style="margin-top: 5vh">
+      <a-col :span="8">
+        <a-card >
+             <a-row type="flex" align="middle">
+              <a-col :span="8">
+                  <a-icon type="idcard" theme="twoTone"  style="font-size: 40px"></a-icon>
+              </a-col>
+              <a-col :span="16">
+                  <h3>Taxpayers</h3>
+                  <p>0</p>
+              </a-col>
+            </a-row>
+        </a-card>
+    </a-col>
     <a-col :span="8">
         <a-card >
             <a-row type="flex" align="middle">
@@ -35,19 +48,7 @@
             </a-row>
         </a-card>
     </a-col>
-    <a-col :span="8">
-        <a-card >
-             <a-row type="flex" align="middle">
-              <a-col :span="8">
-                  <a-icon type="schedule" theme="twoTone"  style="font-size: 40px"></a-icon>
-              </a-col>
-              <a-col :span="16">
-                  <h3>Deadlines</h3>
-                  <p>End of September</p>
-              </a-col>
-            </a-row>
-        </a-card>
-    </a-col>
+    
   </a-row>
   <a-row type="flex" align="middle" justify="center" :gutter="16" style="margin-top: 5vh">
     <a-col :span="24">
