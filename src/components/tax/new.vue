@@ -119,7 +119,7 @@ export default {
   methods: {
     nav(e) {
       console.log("New filling tax :", e.key);
-      if (e.key) this.$router.push(`tax/${e.key}`);
+      if (e.key) this.$router.replace(`../${e.key}`);
     }
   }
 };
