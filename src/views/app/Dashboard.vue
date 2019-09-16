@@ -3,7 +3,7 @@
   <a-row>
     <a-col :span="24">
         <a-card style="background: linear-gradient(to right, #000046, #1cb5e0);">
-            <h2 style="color: #FFFFFF">Welcome Ariel!</h2>
+            <h2 style="color: #FFFFFF">Welcome {{$store.state.account_session.user.name.first}}!</h2>
             <a-divider></a-divider>
             <p style="color: #FFFFFF">For easier filing of your tax returns, complete your taxpayer profile now! </p>
              <a-button ghost ghtype="primary" @click="$router.push('/app/user')">My Profile</a-button>
@@ -11,7 +11,7 @@
         </a-card>
     </a-col>
   </a-row>
-  <a-row type="flex" align="center" :gutter="16" style="margin-top: 5vh">
+  <a-row type="flex" align="center" :gutter="16" style="margin-top: 2vh">
       <a-col :span="8">
         <a-card >
              <a-row type="flex" align="middle">
@@ -54,7 +54,7 @@
     </a-col>
     
   </a-row>
-  <a-row type="flex" align="middle" justify="center" :gutter="16" style="margin-top: 5vh">
+  <!-- <a-row type="flex" align="middle" justify="center" :gutter="16" style="margin-top: 5vh">
     <a-col :span="24">
         <h3>Quick View</h3>
         <a-divider></a-divider>
@@ -83,7 +83,7 @@
     <a-col :span="1">
         <a-avatar shape="square"><a-icon type="right"></a-icon></a-avatar>
     </a-col>
-  </a-row>
+  </a-row> -->
   </div>
 </template>
 

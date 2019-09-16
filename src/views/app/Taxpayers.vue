@@ -1,5 +1,4 @@
 <template>
-
     <a-row type="flex" :gutter="8">
         <a-col :span="8">
             <a-card>
@@ -47,25 +46,26 @@
             </a-card>
         </a-col>
 
-        <a-col :span="24" style="margin-top: 5vh">
-            <h3>My Taxpayer Vault</h3>
-            <a-divider></a-divider>
+        <a-col :span="24" style="margin-top: 2vh">
+            <a-card>
+                 <h3>My Taxpayer Vault</h3>
+                 <a-divider></a-divider>
+                 <a-table :columns="cols"></a-table>
+            </a-card>
+           
         </a-col>
           
           
-        <a-col  :span="12">
+        <!-- <a-col  :span="12">
           <a-input-search
             placeholder="Search"
             @search="onSearch"
           />
       </a-col>
-      <a-col :span="24" style="margin-top: 2vh">
-          
+      <a-col :span="24" style="margin-top: 2vh">          
           <a-table :columns="cols"></a-table>
-      </a-col>
+      </a-col> -->
     </a-row>
-  
-
 </template>
 
 <script>

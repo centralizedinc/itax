@@ -1,19 +1,23 @@
 <template>
-<div>
+<div style="margin-top:5vh">
   <a-steps :current="step_curr" size="small">
     <a-step title="Taxpayer Type"/>
     <a-step title="Taxpayer Information" />
     <a-step title="Contact Information" />
   </a-steps>
   
-  <a-row type="flex" justify="center" :gutter="16" style="margin-top:5vh">
+  <a-row type="flex" justify="center" :gutter="16" style="margin-top:10vh">
     <template v-if="step_curr==0">
+      <a-col :span="24">
+        <h2>Select the taxpayer type:</h2>
+      </a-col>
         <a-col :span="12">
           <a-card>
             <a-row type="flex" align="middle" :gutter="8">
+              
               <a-col :span="8">
-                  <a-avatar class="avatar_btn" @click="next('I')" shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
-                        <a-icon style="font-size:24px" type="user-add"></a-icon>
+                  <a-avatar  class="avatar_btn" @click="next('I')" shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
+                        <a-icon style="font-size:24px" :type="loading?'loading':'user-add'"></a-icon>
                     </a-avatar>
               </a-col>
               <a-col :span="16">
@@ -37,6 +41,12 @@
               </a-col>
             </a-row>
            </a-card>
+           
+         </a-col>
+         <a-col :span="24">
+           <a-divider></a-divider>
+           <h2>How are you connected to this taxpayer?</h2>
+           <a-input placeholder="type here..."></a-input>
          </a-col>
     </template>
     <template v-if="step_curr == 1">
@@ -217,6 +227,7 @@
 export default {
   data(){
     return{
+      loading:false,
       step_curr:0,
       tp_type:''
     }
