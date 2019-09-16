@@ -15,9 +15,7 @@ function isAuthenticated(to, from, next) {
 }
 
 export default new Router({
-  routes: [
-
-    {
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home,
@@ -43,14 +41,8 @@ export default new Router({
     {
       path: '/app/test',
       name: 'Secured',
-      beforeEnter: isAuthenticated,
-      component: Home,
-      children: [{
-        // Testing purpose
-        path: '',
-        name: 'Logout',
-        component: () => import('./views/secured/logout.vue')
-      }]
+      // Testing purpose
+      component: () => import('./components/forms/1601e/Form1601eDisplay.vue')
     },
     {
       path: '/app',
@@ -61,10 +53,6 @@ export default new Router({
           component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
         },
         {
-          path: 'boksu',
-          name: 'test',
-          component: () => import( /* webpackChunkName: "about" */ './views/app/payment/PaymentSummary.vue')
-        }, {
           path: 'taxpayer',
           name: 'Taxpayers',
           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
