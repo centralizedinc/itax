@@ -15,8 +15,7 @@ function isAuthenticated(to, from, next) {
 }
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home,
@@ -42,48 +41,41 @@ export default new Router({
     {
       path: '/app/test',
       name: 'Secured',
-      beforeEnter: isAuthenticated,
-      component: Home,
-      children: [{
-        // Testing purpose
-        path: '',
-        name: 'Logout',
-        component: () => import('./views/secured/logout.vue')
-      }]
+      // Testing purpose
+      component: () => import('./components/forms/1601e/Form1601eDisplay.vue')
     },
     {
       path: '/app',
-      component: () => import(/* webpackChunkName: "main" */ '@/views/Main.vue'),
-      children: [
-        {
+      component: () => import( /* webpackChunkName: "main" */ '@/views/Main.vue'),
+      children: [{
           path: '',
           name: 'Dashboard',
-          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
+          component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
         },
         {
           path: 'taxpayer',
           name: 'Taxpayers',
-          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
         },
         {
           path: 'taxpayer/new',
           name: 'Create New Taxpayer',
-          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
         },
         {
           path: 'taxpayer/upload',
           name: 'Upload Taxpayers',
-          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
         },
         {
           path: 'taxpayer/search',
           name: 'Search Taxpayer',
-          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/SearchTaxpayer.vue'),
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/SearchTaxpayer.vue'),
         },
         {
           path: 'tax',
           name: 'Tax Returns',
-          component: () => import(/* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
         },
         {
           path: 'tax/form',
@@ -93,6 +85,7 @@ export default new Router({
           {
             path: '2550m',
             name: 'Form 2550m',
+<<<<<<< HEAD
             component: () => import(/* webpackChunkName: "tax" */ '@/views/app/forms/2550m/2550m.vue'),
           },
           {
@@ -100,23 +93,32 @@ export default new Router({
             name:'Form 1601e',
             component: () => import(/* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
         }]
+=======
+            component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2550m/2550m.vue'),
+          }]
+>>>>>>> 1479f43c09d8a82c535471a9fcec04721210abc3
         },
         {
           path: 'pay',
           name: 'Payments',
+<<<<<<< HEAD
           component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),
+=======
+          component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),
+>>>>>>> 1479f43c09d8a82c535471a9fcec04721210abc3
         },
         {
           path: 'user',
           name: 'User Profile',
-          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/User.vue'),
+          component: () => import( /* webpackChunkName: "dash" */ '@/views/app/User.vue'),
         },
         {
           path: 'security',
           name: 'Security Settings',
-          component: () => import(/* webpackChunkName: "dash" */ '@/views/app/Security.vue'),
+          component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Security.vue'),
         }
       ]
+<<<<<<< HEAD
     },
     {
       path: '/2550m',
@@ -127,6 +129,8 @@ export default new Router({
       path:'/1601e',
       name:'Form 1601e',
       component: () => import(/* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
+=======
+>>>>>>> 1479f43c09d8a82c535471a9fcec04721210abc3
     }
   ]
 })
