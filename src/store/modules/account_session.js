@@ -1,3 +1,6 @@
+import OAuthAPI from "../../api/OAuthAPI";
+
+
 function initialState() {
     return {
         account: {},
@@ -25,10 +28,63 @@ const mutations = {
 
 const actions = {
     LOGIN(context, account) {
+        return new Promise((resolve, reject) => {
+            OAuthAPI.login(account)
+                .then((result) => {
+                    console.log('result.data :', result.data);
+                    if (result.data.error) reject(result.data.error);
+                    else {
+                        context.commit("LOGIN", result.data.model);
+                        resolve(result.data.model);
+                    }
+                }).catch((err) => {
+                    reject(err);
+                });
+        })
     },
     LOGOUT(context) {
         console.log("Logging out...");
         context.commit("RESET");
+    },
+    SIGNUP(context, account) {
+        return new Promise((resolve, reject) => {
+            OAuthAPI.signup(account)
+                .then((result) => {
+                    console.log('result :', result.data);
+                    resolve(result.data)
+                }).catch((err) => {
+                    reject(err)
+                });
+        })
+    },
+    REGISTRATION_CONFIRMATION(context, code) {
+        return new Promise((resolve, reject) => {
+            OAuthAPI.confirm(code)
+                .then((result) => {
+                    if (result.data.error) reject(result.data.error);
+                    else resolve(result.data);
+                }).catch((err) => {
+                    reject(err)
+                });
+        })
+    },
+    FACEBOOK_CONFIRMATION(context, code) {
+        const retrieved_data = new Buffer(code, "base64").toString();
+        try {
+            const data = JSON.parse(retrieved_data);
+            context.commit('LOGIN', data);
+        } catch (error) {
+            console.log('error :', error);
+        }
+    },
+    GOOGLE_CONFIRMATION(context, code) {
+        const retrieved_data = new Buffer(code, "base64").toString();
+        try {
+            const data = JSON.parse(retrieved_data);
+            context.commit('LOGIN', data);
+        } catch (error) {
+            console.log('error :', error);
+        }
     }
 }
 
