@@ -1,5 +1,4 @@
-import OAuthAPI from "../../api/OAuthAPI";
-
+import TaxForm from "../../api/TaxFormAPI";
 
 function initialState() {
     return {
@@ -16,6 +15,9 @@ const mutations = {
 }
 
 const actions = {
+    VALIDATE_AND_SAVE(context, { form_type, form_details }) {
+        return TaxForm.saveAndValidate(form_type, form_details)
+    }
 }
 
 export default {

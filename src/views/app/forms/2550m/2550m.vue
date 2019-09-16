@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form :form="form_general" v-if="current_step===0">
+    <a-form :form="form_general" v-show="current_step===0">
       <a-form-item label="1. For the month of (MM/YYYY)">
         <a-month-picker v-decorator="['returnPeriod']" style="width: 100%" />
       </a-form-item>
@@ -22,7 +22,7 @@
     </a-form>
 
     <!-- Part I -->
-    <a-form :form="form_part1" v-else-if="current_step===1">
+    <a-form :form="form_part1" v-show="current_step===1">
       <a-form-item label="4. TIN">
         <a-input v-decorator="['taxpayer.tin']"></a-input>
       </a-form-item>
@@ -47,7 +47,7 @@
       <a-form-item
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
       >
-        <a-radio-group v-decorator="['specialRate']" :defaultValue="false">
+        <a-radio-group v-decorator="['specialRate', { initialValue: false }]">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -63,7 +63,7 @@
     </a-form>
 
     <!-- Part II -->
-    <a-form :form="form_part2" v-else-if="current_step===2">
+    <a-form :form="form_part2" v-show="current_step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)"></a-form-item>
       <a-form-item class="computation-item" label="12A. Sales/Receipt for the Month">
         <a-input-number
@@ -511,27 +511,43 @@ export default {
     validateGeneral() {
       this.loading = true;
       this.form_general.validateFieldsAndScroll((err, values) => {
-        if (!err) this.changeStep(1);
+        if (!err) {
+          console.log("validateGeneral :", values);
+          this.form = { ...this.form, ...values };
+
+          this.changeStep(1);
+        }
         this.loading = false;
       });
     },
     validatePartI() {
       this.loading = true;
       this.form_part1.validateFieldsAndScroll((err, values) => {
-        if (!err) this.changeStep(2);
+        if (!err) {
+          console.log("validatePartI :", values);
+          this.form = { ...this.form, ...values };
+          this.changeStep(2);
+        }
         this.loading = false;
       });
     },
     validatePartII() {
       this.loading = true;
       this.form_general.validateFieldsAndScroll((err, values) => {
-        if (!err) this.submit();
-        else this.loading = false;
+        if (!err) {
+          console.log("validatePartII :", values);
+          this.form = { ...this.form, ...values };
+          this.submit();
+        } else this.loading = false;
       });
     },
     submit() {
       this.loading = true;
-
+      console.log("this.form :", this.form);
+      // this.$store.dispatch("VALIDATE_AND_SAVE", {
+      //   form_type: "2550M",
+      //   form_details: this.form
+      // });
       this.loading = false;
     },
     changeStep(step) {
@@ -544,7 +560,10 @@ export default {
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
-      image_height: 1000
+      image_height: 1000,
+      form: {
+        taxpayer: {}
+      }
     };
   },
   computed: {
@@ -555,6 +574,7 @@ export default {
   created() {
     console.log("this.$ref.container.height :", this.$refs);
     window.addEventListener("scroll", this.handleScroll);
+    this.changeStep(0);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
