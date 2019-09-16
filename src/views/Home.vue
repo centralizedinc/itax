@@ -11,7 +11,7 @@
           <a-avatar style="cursor:pointer" @click="$router.push('/')" src="https://www.lucenacity.gov.ph/img/Lucena_Seal200.png" :size="50"></a-avatar>
         </a-col>-->
         <a-col :span="4">
-          <h2 style="color:white;">iTax.</h2>
+          <h2 style="color:white;">Smart Tax</h2>
         </a-col>
         <!-- <a-col :span="8">
           <a-tabs :tabBarStyle="{color:red}">

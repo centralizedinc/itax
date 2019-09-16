@@ -137,7 +137,9 @@ export default {
     data(){
         return{
             curr_tab:0,
-            user:{},
+            user:{
+                name:{}
+            },
             taxpayer:{
                 individual_details:{}
             }
