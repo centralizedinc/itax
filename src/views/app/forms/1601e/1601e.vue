@@ -234,7 +234,7 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="22D.">
+      <a-form-item class="computation-item" label="22D">
         <a-input-number
           v-decorator="['item22d']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -242,7 +242,7 @@
         ></a-input-number>
       </a-form-item>
       <a-form-item label="23. Others"></a-form-item>
-      <a-form-item class="computation-item" label="23A.">
+      <a-form-item class="computation-item" label="23A">
         <a-input-number
           v-decorator="['item23a']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
