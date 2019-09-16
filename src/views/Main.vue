@@ -39,14 +39,14 @@
       <a-col :span="3">
         <a-row type="flex" justify="center" style="margin-bottom: 2vh">
           <a-col :span="24">
-            <a-card style="border:1px solid #FFFFFF; min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);">
+            <a-card style=" min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);">
             </a-card>
           </a-col>
           <a-col :span="10">
             <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
           </a-col>
           <a-col :span="24">
-            <a-card style="text-align: center; margin-top: -4vh; min-height: 5vh; ">
+            <a-card style="text-align: center; margin-top: -5vh; min-height: 3vh; ">
               <div style="margin-top: 2vh">
                 <p>Ariel Balita</p>
               </div>
@@ -59,15 +59,16 @@
             <a-menu-item key="/app/taxpayer" ><a-icon type="solution" />Taxpayers</a-menu-item>
             <a-menu-item key="/app/tax" ><a-icon type="form" />Tax Returns</a-menu-item>
             <a-menu-item key="/app/pay"><a-icon type="credit-card" />Payments</a-menu-item>
-            <a-divider></a-divider>
-            <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-            <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
+            <!-- <a-divider></a-divider> -->
+            <!-- <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
+            <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item> -->
             <a-menu-item key="logout"><a-icon type="logout" />Logout</a-menu-item>
           </a-menu>
         <!-- </a-card> -->
       </a-col>
       <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
         <h3>{{$route.name}}</h3>
+        <a-divider></a-divider>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>

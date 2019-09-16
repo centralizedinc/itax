@@ -4,6 +4,10 @@
     <a-col :span="24">
         <a-card style="background: linear-gradient(to right, #000046, #1cb5e0);">
             <h2 style="color: #FFFFFF">Welcome Ariel!</h2>
+            <a-divider></a-divider>
+            <p style="color: #FFFFFF">For easier filing of your tax returns, complete your taxpayer profile now! </p>
+             <a-button ghost ghtype="primary" @click="$router.push('/app/user')">My Profile</a-button>
+            
         </a-card>
     </a-col>
   </a-row>
