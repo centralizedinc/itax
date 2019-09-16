@@ -1,6 +1,6 @@
 <template>
   <a-row type="flex" justify="center" :gutter="8">
-    <a-col :span="10">
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -30,7 +30,7 @@
         </a-row>
       </a-card>
     </a-col>
-    <a-col :span="10">
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -52,29 +52,40 @@
           <a-col :span="16">
             <h4>Value Added Tax</h4>
             <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <a>Learn More</a>
           </a-col>
         </a-row>
       </a-card>
     </a-col>
-    <a-col :span="10">
+    <a-divider></a-divider>
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
-            <a-avatar
-              class="avatar_btn"
-              shape="square"
-              :size="60"
-              style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
-            >WT</a-avatar>
+            <a-popover title trigger="click" placement="right">
+              <a-avatar
+                class="avatar_btn"
+                shape="square"
+                :size="60"
+                style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
+              >VT</a-avatar>
+              <template slot="content">
+                <a-menu @click="nav">
+                  <a-menu-item key="1601e">Form 1601E</a-menu-item>
+                  <a-menu-item key="1601eq">Form 1601EQ</a-menu-item>
+                </a-menu>
+              </template>
+            </a-popover>
           </a-col>
           <a-col :span="16">
             <h4>Withholding Tax</h4>
             <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <a>Learn More</a>
           </a-col>
         </a-row>
       </a-card>
     </a-col>
-    <a-col :span="10">
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -88,6 +99,7 @@
           <a-col :span="16">
             <h4>Percentage Tax</h4>
             <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <a>Learn More</a>
           </a-col>
         </a-row>
       </a-card>
