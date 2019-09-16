@@ -1,14 +1,16 @@
 <template>
   <div>
-      <!-- <div style="background-image:url('https://www.lucenacity.gov.ph/images/banner7.jpg'); height:100%;background-repeat: no-repeat;
-  background-size: cover"> -->
-  <div style="background: linear-gradient(to left, #000046, #1cb5e0);">
-      <a-row style="height:100vh" type="flex" justify="start" >
+    <!-- <div style="background-image:url('https://www.lucenacity.gov.ph/images/banner7.jpg'); height:100%;background-repeat: no-repeat;
+    background-size: cover">-->
+    <div style="background: linear-gradient(to left, #000046, #1cb5e0);">
+      <a-row style="height:100vh" type="flex" justify="start">
         <a-col :push="1" :span="12" style="margin-top:20vh">
           <div style="font-size: 52px; color:#ffffff; ">iTax.</div>
           <div style="font-size: 42px; color:#ffffff;">Tax Preparation Software.</div>
-          <p style="margin-top:2vh; color:#ffffff">Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations. </p>
-          <a-button style="margin-top:5vh"  size="large" type="primary">Read More</a-button>  
+          <p
+            style="margin-top:2vh; color:#ffffff"
+          >Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
+          <a-button style="margin-top:5vh" size="large" type="primary">Read More</a-button>
         </a-col>
         <a-col :push="2" :span="8" style="margin-top:20vh;">
           <a-card style="background: rgba(59, 79, 99, 0.62)">
@@ -46,15 +48,29 @@
                 </a-input>
               </a-form-item>
               <a-button size="large" block ghost :loading="loading" @click="login">Login</a-button>
-              
+
               <!-- <p style="color:white">Login using facebook or google accounts</p> -->
               <a-row type="flex" gutter="16">
                 <a-divider style="color:#FFFFFF">or</a-divider>
                 <a-col :span="24">
-                  <a-button block :disabled="loading" style="border: #4267B2;background-color:#4267B2; color:#FFFFFF" @click="registerFacebook"> <a-icon type="facebook"></a-icon>Facebook</a-button>
+                  <a-button
+                    block
+                    :disabled="loading"
+                    style="border: #4267B2;background-color:#4267B2; color:#FFFFFF"
+                    @click="registerFacebook"
+                  >
+                    <a-icon type="facebook"></a-icon>Facebook
+                  </a-button>
                 </a-col>
                 <a-col :span="24">
-                  <a-button block :disabled="loading" @click="registerGoogle" style="margin-top: 1vh; border: #DE4935;background-color:#DE4935; color:#FFFFFF"> <a-icon type="google"></a-icon>Google</a-button>
+                  <a-button
+                    block
+                    :disabled="loading"
+                    @click="registerGoogle"
+                    style="margin-top: 1vh; border: #DE4935;background-color:#DE4935; color:#FFFFFF"
+                  >
+                    <a-icon type="google"></a-icon>Google
+                  </a-button>
                 </a-col>
               </a-row>
             </a-form>
@@ -189,7 +205,7 @@ export default {
               });
               this.loading = false;
             });
-        }
+        } else this.loading = false;
       });
     },
     registerFacebook() {
