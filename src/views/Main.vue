@@ -21,8 +21,8 @@
           <a-icon type="setting" style="color:#ffffff"></a-icon>
         </a-col>
         <a-col :span="1">
-          <a-popover title="Ariel Balita" trigger="click" placement="bottomRight">
-          <a-avatar shape="square" :size="35" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg" style="border: 1px solid #FFFFFF"></a-avatar>
+          <a-popover :title="`${user.name.first} ${user.name.last}`" trigger="click" placement="bottomRight">
+          <a-avatar shape="square" :size="35" :src="user.avatar" style="border: 1px solid #FFFFFF"></a-avatar>
           <template slot="content">
             <a-menu @click="nav">
             <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
@@ -35,39 +35,42 @@
     </a-row>
   </a-layout-header>
   <a-layout-content>
-    <a-row style="min-height:100vh; margin-top:15vh; margin-left:2vw; margin-right:2vw" type="flex" justify="start">
-      <a-col :span="3">
+    <a-row style="min-height:100vh; margin-top:15vh; margin-left:1vw; margin-right:1vw" type="flex" justify="start">
+      <a-col :span="4">
         <a-row type="flex" justify="center" style="margin-bottom: 2vh">
           <a-col :span="24">
-            <a-card style="border:1px solid #FFFFFF; min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);">
+            <a-card style=" min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);">
             </a-card>
           </a-col>
-          <a-col :span="10">
-            <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" src="https://lh3.googleusercontent.com/a-/AAuE7mCkAaeluurFVT0Px52MI7IE7DUGr9Bko7fePKGgAg"></a-avatar>
+          <a-col :span="6">
+            <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" :src="user.avatar"></a-avatar>
           </a-col>
           <a-col :span="24">
-            <a-card style="text-align: center; margin-top: -4vh; min-height: 5vh; ">
+            <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
               <div style="margin-top: 2vh">
-                <p>Ariel Balita</p>
+                <p>{{user.name.first}} {{user.name.last}}</p>
               </div>
               
             </a-card>
           </a-col>
         </a-row>
+        <a-affix :offsetTop="100">
           <a-menu @click="nav">
             <a-menu-item key="/app"><a-icon type="layout" />Dashboard</a-menu-item>
             <a-menu-item key="/app/taxpayer" ><a-icon type="solution" />Taxpayers</a-menu-item>
             <a-menu-item key="/app/tax" ><a-icon type="form" />Tax Returns</a-menu-item>
             <a-menu-item key="/app/pay"><a-icon type="credit-card" />Payments</a-menu-item>
-            <a-divider></a-divider>
-            <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-            <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
+            <!-- <a-divider></a-divider> -->
+            <!-- <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
+            <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item> -->
             <a-menu-item key="logout"><a-icon type="logout" />Logout</a-menu-item>
           </a-menu>
+        </a-affix>
         <!-- </a-card> -->
       </a-col>
       <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-        <h3>{{$route.name}}</h3>
+        <!-- <h3>{{$route.name}}</h3> -->
+        <!-- <a-divider></a-divider> -->
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>
@@ -94,7 +97,20 @@
 
 <script>
 export default {
+  data(){
+    return{
+      user:{
+        name:{}
+      }
+    }
+  },
+  created(){
+    this.init();
+  },
     methods:{
+      init(){
+        this.user = this.$store.state.account_session.user
+      },
       nav(e){
         if(e.key==='logout'){
           var _self = this;
@@ -102,6 +118,7 @@ export default {
               title: 'Logout Confirmation',
               content: 'Are you sure you want to logout?',
               onOk() {
+                _self.$store.dispatch("LOGOUT");
                 _self.$router.push('/')
               },
               onCancel() {},

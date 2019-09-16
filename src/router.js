@@ -78,6 +78,16 @@ export default new Router({
           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
         },
         {
+          path: 'tax/form',
+          name: "Tax Form",
+          component: () => import('@/views/app/forms/FormPage.vue'),
+          children: [{
+            path: '2550m',
+            name: 'Form 2550m',
+            component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2550m/2550m.vue'),
+          }]
+        },
+        {
           path: 'pay',
           name: 'Payments',
           component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),

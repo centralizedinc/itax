@@ -1,11 +1,12 @@
 <template>
 <div>
-  <a-tabs @change="changeView">
+<a-affix :offsetTop="64">
+  <a-tabs @change="changeView" style="background-color:#FFFFFF">
     <a-tab-pane key="0" tab="New"></a-tab-pane>
     <a-tab-pane key="1" tab="Draft"></a-tab-pane>
     <a-tab-pane key="2" tab="Submitted"></a-tab-pane>
   </a-tabs>
-
+</a-affix>
     <div style="margin-top: 5vh">
         <component v-bind:is="currentView"></component>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <a-row type="flex" justify="center" :gutter="8">
-    <a-col :span="10">
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -30,7 +30,7 @@
         </a-row>
       </a-card>
     </a-col>
-    <a-col :span="10">
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -52,11 +52,13 @@
           <a-col :span="16">
             <h4>Value Added Tax</h4>
             <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <a>Learn More</a>
           </a-col>
         </a-row>
       </a-card>
     </a-col>
-    <a-col :span="10">
+    <a-divider></a-divider>
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -78,11 +80,12 @@
           <a-col :span="16">
             <h4>Withholding Tax</h4>
             <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <a>Learn More</a>
           </a-col>
         </a-row>
       </a-card>
     </a-col>
-    <a-col :span="10">
+    <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
@@ -96,6 +99,7 @@
           <a-col :span="16">
             <h4>Percentage Tax</h4>
             <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <a>Learn More</a>
           </a-col>
         </a-row>
       </a-card>
