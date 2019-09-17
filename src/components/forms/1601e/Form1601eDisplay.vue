@@ -19,14 +19,14 @@ const printers = {
   FORM2550M: Form2550m
 };
 export default {
-  props: ["form"],
+  props: ["form", "type"],
   components: {
     pdf
   },
   data() {
     return {
-      prev: "",
-      type: "FORM2550M"
+      prev: ""
+      // type: "FORM2550M"
     };
   },
   computed: {
