@@ -1,20 +1,28 @@
 <template>
   <a-card>
-    <a-steps :current="current_step">
-      <a-step 
-        v-for="(item, index) in form_steps" 
-        :key="index" 
-        :title="item.title" 
-        :description="item.description"/>
+    <a-steps :current="curr_step" size="small">
+      <a-step v-for="(item, index) in form_steps" :key="index" :description="item.description">
+        <b slot="title">{{item.title}}</b>
+      </a-step>
     </a-steps>
     <a-row :gutter="10">
       <a-col :xs="0" :md="12">
         <!-- Form Display -->
-        <img :src="form_2550m_image" style="width: 100%;" alt="">
+        <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
+          <img :src="form_2550m_image" style="width: 100%;" alt />
+        </a-card>
       </a-col>
-      <a-col :xs="0" :md="12" :style="fill_up_form_style" class="tax-form">
+      <a-col :xs="0" :md="12" class="tax-form">
         <!-- Fill up forms -->
-        <router-view />
+        <a-card :bodyStyle="{ padding: '10px' }">
+          <component
+            :is="curr_form"
+            :form="form"
+            :step="curr_step"
+            @updateForm="v=>form={...form, ...v}"
+            @changeStep="v=>curr_step=v"
+          />
+        </a-card>
       </a-col>
     </a-row>
   </a-card>
@@ -22,24 +30,32 @@
 
 <script>
 import form_2550m_image from "@/assets/forms/2550M.jpeg";
+import Form2550M from "./2550m/2550m.vue";
 
 export default {
+  components: {
+    Form2550M
+  },
   computed: {
-    current_step() {
-      return this.$store.state.tax_form.current_step;
+    form_type() {
+      const paths = this.$route.path.split("/");
+      const form_type = paths[paths.length - 1];
+      return form_type;
     },
     form_steps() {
-      const paths = this.$route.path.split("/");
-      const form = paths[paths.length - 1];
-      const steps = this.steps[form];
+      const steps = this.steps[this.form_type];
       return steps ? steps : this.default_steps;
     },
-    fill_up_form_style(){
-      return `overflow-y: auto; height: 600px`
+    curr_form() {
+      return `Form${this.form_type.toUpperCase()}`;
     }
   },
   data() {
     return {
+      form: {
+        taxpayer: {}
+      },
+      curr_step: 0,
       form_2550m_image,
       steps: {
         "2550m": [
@@ -72,7 +88,8 @@ export default {
     };
   },
   created() {
-    console.log("current form : ", this.$route.path);
+    console.log("Form Type :", this.form_type);
+    this.curr_step = 0;
   }
 };
 </script>
