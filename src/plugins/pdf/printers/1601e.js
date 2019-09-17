@@ -39,7 +39,7 @@ function getContent(forms) {
                 widths: [103, 50, 60, 50, 80, 60, 50],
                 body: [
                     [{
-                            text: 'MM',
+                            text: forms.month ? forms.month : '00',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
