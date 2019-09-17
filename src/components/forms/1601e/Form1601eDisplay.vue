@@ -11,10 +11,12 @@ import pdf from "vue-pdf";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import Form1601e from "../../../plugins/pdf/printers/1601e";
+import Form2550m from "../../../plugins/pdf/printers/2550m";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const printers = {
-  FORM1601E: Form1601e
+  FORM1601E: Form1601e,
+  FORM2550M: Form2550m
 };
 export default {
   props: ["form"],
@@ -24,7 +26,7 @@ export default {
   data() {
     return {
       prev: "",
-      type: "FORM1601E"
+      type: "FORM2550M"
     };
   },
   computed: {
@@ -70,38 +72,9 @@ export default {
 
   methods: {
     refresh() {
-      // this.data = {};
-      // this.data = {
-      //   month: 12,
-      //   tax_computation: [
-      //     {
-      //       income_nature: "Gambling",
-      //       atc: "WC 140",
-      //       tax_base: 2,
-      //       tax_rate: 20,
-      //       tax_widthheld: 200
-      //     },
-      //     {
-      //       income_nature: "Gambling",
-      //       atc: "WC 140",
-      //       tax_base: 2,
-      //       tax_rate: 20,
-      //       tax_widthheld: 200
-      //     },
-      //     {
-      //       income_nature: "Gambling",
-      //       atc: "WC 140",
-      //       tax_base: 2,
-      //       tax_rate: 20,
-      //       tax_widthheld: 200
-      //     }
-      //   ]
-      // };
-      // this.$preview(data, "TEST", "fda-receipt.pdf").then(result => {
-      //   console.log("result :" + JSON.stringify(result));
-      //   this.prev = result;
-      //   console.log("prev data: " + JSON.stringify(this.prev));
-      // });
+      var data_holder = this.form;
+      data_holder.amendedYn;
+
       var printer = printers[this.type];
       var document = printer.fillup(this.form);
       var self = this;
@@ -114,6 +87,12 @@ export default {
         console.log("dataurl: " + dataUrl);
         self.prev = dataUrl;
       });
+    },
+    formatDt(dt) {
+      var date = new Date(dt);
+      var month = date.getMonth() + 1;
+      var newDT = date.getFullYear() + "-" + month + "-" + date.getDate();
+      return newDT;
     },
     download() {
       var filename = "Form 1601E";
