@@ -66,6 +66,7 @@ export default {
     }
   },
   created() {
+    this.type.toUpper
     console.log("form 1601e display");
     this.refresh();
   },
