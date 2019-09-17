@@ -7,16 +7,16 @@
       <a-form-item
         label="1. For the month of (MM/YYYY)"
       >
-        <a-month-picker v-decorator="['date_month']" />
+        <a-month-picker v-decorator="['dateFiled']" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
-        <a-radio-group v-decorator="['ammended']" :defaultValue="false">
+        <a-radio-group v-decorator="['amendedYn']" :defaultValue="false">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-decorator="['no_sheets']" :defaultValue="0"></a-input-number>
+        <a-input-number v-decorator="['numOfSheet']" :defaultValue="0"></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
         <a-radio-group v-decorator="['withheld']" :defaultValue="false">
@@ -32,30 +32,31 @@
         <b>Part I: Background Information</b>
       </a-divider>
       <a-form-item label="5. TIN NUMBER">
-        <a-input v-decorator="['tin']"></a-input>
+        <a-input v-decorator="['taxpayer.tin']"></a-input>
       </a-form-item>
       <a-form-item label="6. RDO Code">
-        <a-input v-decorator="['rdo_code']"></a-input>
+        <a-input v-decorator="['taxpayer.rdo_code']"></a-input>
       </a-form-item>
       <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-decorator="['line_business']"></a-input>
+        <a-input v-decorator="['taxpayer.line_business']"></a-input>
       </a-form-item>
       <a-form-item
         label="8. Withholding Agent's Name/Registered Name"
       >
-        <a-input v-decorator="['taxpayer_name']"></a-input>
+        <a-input v-decorator="['taxpayer.taxpayer_name']"></a-input>
       </a-form-item>
       <a-form-item label="9. Telephone Number">
-        <a-input-number v-decorator="['telephone_no']"></a-input-number>
+        <a-input-number v-decorator="['taxpayer.telephone_no']"></a-input-number>
       </a-form-item>
       <a-form-item label="10. Registered Address">
-        <a-textarea v-decorator="['registered_address']"></a-textarea>
+        <a-textarea v-decorator="['taxpayer.registered_address']"></a-textarea>
       </a-form-item>
       <a-form-item label="11. Zip Code">
-        <a-input-number v-decorator="['zip_code']"></a-input-number>
+        <a-input-number v-decorator="['taxpayer.zip_code']"></a-input-number>
       </a-form-item>
+      <!-- up to part I  -->
       <a-form-item label="12. Category of Withholding Agent">
-        <a-radio-group v-decorator="['category']" :defaultValue="false">
+        <a-radio-group v-decorator="['categoryOfAgent']" :defaultValue="false">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
@@ -69,7 +70,7 @@
         </a-radio-group>
       </a-form-item>
       <a-form-item label="If yes, specify">
-        <a-input v-decorator="['specify_availing_tax_relief']"></a-input>
+        <a-input v-decorator="['internationalTreatyYn']"></a-input>
       </a-form-item>
     </a-form>
 

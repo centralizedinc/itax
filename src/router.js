@@ -42,7 +42,7 @@ export default new Router({
       path: '/app/test',
       name: 'Secured',
       // Testing purpose
-      component: () => import('./components/forms/1601e/Form1601eDisplay.vue')
+      component: () => import('./components/forms/1601e/test.vue')
     },
     {
       path: '/app',
