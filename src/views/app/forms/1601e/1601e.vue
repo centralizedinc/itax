@@ -170,6 +170,7 @@
           <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
         </a-radio-group>
       </a-form-item>
+      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
 
     <!-- Part III -->
@@ -243,10 +244,10 @@
         ></a-input-number>
       </a-form-item>
 
-      <a-button v-show="sub" type="primary" block @click="submit">Submit</a-button>
+      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
-    <a-button v-show="!sub" @click="step--">Previous</a-button>
-    <a-button v-show="!sub" type="primary" @click="step++">Next</a-button>
+    <a-button v-show="sub==false" @click="step--">Previous</a-button>
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>
   </div>
 </template>
 
@@ -270,7 +271,7 @@ export default {
     step() {
       if (this.step < 0) {
         this.$router.push("/");
-      } else if (this.step > 1) {
+      } else if (this.step == 2) {
         this.sub = true;
       }
     }
