@@ -25,8 +25,8 @@ export default {
   },
   data() {
     return {
-      prev: ""
-      // type: "FORM2550M"
+      prev: "",
+      type: "FORM1601E"
     };
   },
   computed: {
@@ -66,7 +66,7 @@ export default {
     }
   },
   created() {
-    this.type.toUpper
+    this.type.toUpper;
     console.log("form 1601e display");
     this.refresh();
   },

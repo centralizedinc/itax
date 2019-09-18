@@ -125,7 +125,7 @@
         label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
       >
         <a-input-number
-          v-decorator="['tax_overimittance']"
+          v-decorator="['amtPayblCrdtb']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>

@@ -74,14 +74,14 @@ function getContent(forms) {
                             margin: [33, 82, 10, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.taxes_withheld ? 'X' : '',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [40, 82, 0, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.taxes_withheld ? '' : 'X',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -190,13 +190,13 @@ function getContent(forms) {
                             alignment: 'justify'
                         },
                         {
-                            text: 'X',
+                            text: forms.availing_tax_relief ? 'X' : '',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [85, 6, 0, 0],
                             alignment: 'justify'
                         }, {
-                            text: 'X',
+                            text: forms.availing_tax_relief ? '' : 'X',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [20, 6, 0, 0],
@@ -225,7 +225,8 @@ function getContent(forms) {
                 widths: [220, 40, 82, 42, 115],
                 body: [
                     [{
-                            text: '48 characters only',
+                            // 48 characters only
+                            text: 'Sample',
                             fontSize: 8,
                             // right,down,left,up
                             margin: [0, 0, 0, 0],
@@ -269,35 +270,36 @@ function getContent(forms) {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(14) 20 characters",
+        // 20 characters
+        text: forms.total_tax_withheld_remitted,
         // right,down,left,up
         margin: [416, 8, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(15A) 20 characters",
+        text: forms.prevTaxPaidCrdtb,
         // right,down,left,up
         margin: [415, 11, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(15B) 20 characters",
+        text: forms.advPayment,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(15C) 20 characters",
+        text: forms.totTaxCredits,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(16) 20 characters",
+        text: forms.amtPayblCrdtb,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     })
@@ -307,7 +309,7 @@ function getContent(forms) {
             widths: [131, 122, 110, 140],
             body: [
                 [{
-                        text: '(17A)',
+                        text: forms.surcharge,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [52, 13, 0, 0],
@@ -315,7 +317,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(17B)',
+                        text: forms.interest,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [26, 13, 0, 0],
@@ -323,7 +325,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(17C)',
+                        text: forms.compromise,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [23, 13, 0, 0],
@@ -331,7 +333,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(17D)',
+                        text: forms.penaltiesCrdtb,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [28, 13, 0, 0],
@@ -349,7 +351,7 @@ function getContent(forms) {
             widths: [160, 100, 260],
             body: [
                 [{
-                        text: 'X',
+                        text: forms.overremittance ? 'X' : '',
                         fontSize: 12,
                         // right,down,left,up
                         margin: [155, 8, 0, 0],
@@ -357,7 +359,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: 'X',
+                        text: forms.overremittance ? '' : 'X',
                         fontSize: 12,
                         // right,down,left,up
                         margin: [95, 8, 0, 0],
@@ -365,7 +367,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(18)',
+                        text: forms.total_amount_overremittance,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [140, 0, 0, 0],
