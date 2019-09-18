@@ -82,14 +82,15 @@
 
 <script>
 import FormDisplay from "@/components/FormDisplay.vue";
-import form_2550m_image from "@/assets/forms/2550M.jpeg";
 import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
+import Form1601E from "./1601e/1601e.vue";
 
 export default {
   components: {
     FormDisplay,
-    Form2550M
+    Form2550M,
+    Form1601E
   },
   computed: {
     affix_computation() {
@@ -117,6 +118,7 @@ export default {
       return existing_form;
     }
   },
+
   data() {
     return {
       form: {
@@ -126,7 +128,6 @@ export default {
         }
       },
       curr_step: 0,
-      form_2550m_image,
       steps: {
         "2550m": [
           {
@@ -180,6 +181,11 @@ export default {
       // window.close();
     }
   },
+  watch: {
+    form() {
+      console.log("##### update formpage: " + this.form);
+    }
+  },
   created() {
     console.log("this.existing_form :", this.existing_form);
     if (
@@ -196,6 +202,12 @@ export default {
     console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
+    // if(this.form_type == "1601e"){
+    //   this.form = {
+
+    //   }
+    // }
+
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {

@@ -25,11 +25,12 @@ export default {
   data() {
     return {
       prev: ""
-      // type: "FORM2550M"
+      // type: ""
     };
   },
   computed: {
     preview() {
+      console.log("computed preview form data: " + JSON.stringify(this.form));
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
 
@@ -63,8 +64,12 @@ export default {
     }
   },
   watch: {
-    form() {
-      console.log("##### update");
+    form: {
+      handler(val) {
+        console.log("##### update ", this.form);
+        this.refresh();
+      },
+      deep: true
     }
   },
   created() {
@@ -75,8 +80,8 @@ export default {
 
   methods: {
     refresh() {
-      var data_holder = this.form;
-      data_holder.amendedYn;
+      this.form.year = this.formatDtYear(this.form.dateFiled);
+      this.form.month = this.formatDtMonth(this.form.dateFiled);
 
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
@@ -91,14 +96,19 @@ export default {
         self.prev = dataUrl;
       });
     },
-    formatDt(dt) {
+    formatDtYear(dt) {
       var date = new Date(dt);
       var month = date.getMonth() + 1;
-      var newDT = date.getFullYear() + "-" + month + "-" + date.getDate();
+      var newDT = date.getFullYear();
       return newDT;
     },
+    formatDtMonth(dt) {
+      var date = new Date(dt);
+      var month = date.getMonth() + 1;
+      return month;
+    },
     download() {
-      var filename = "Form 1601E";
+      var filename = this.form_type;
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
@@ -119,6 +129,8 @@ export default {
         console.log("getdata: " + dataUrl);
         self.prev = dataUrl;
       });
+      console.log("open form data: " + JSON.stringify(this.form));
+      this.refresh();
     }
   }
 };
