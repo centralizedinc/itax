@@ -13,7 +13,7 @@
           :class="affix_computation? '' : 'prevent-affix'"
         >
           <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
-              <form-display :type="form_type" :form="form" />
+            <form-display :type="form_type" :form="form" />
           </a-card>
         </a-affix>
       </a-col>
@@ -37,13 +37,14 @@
 
 <script>
 import FormDisplay from "@/components/FormDisplay.vue";
-import form_2550m_image from "@/assets/forms/2550M.jpeg";
 import Form2550M from "./2550m/2550m.vue";
+import Form1601E from "./1601e/1601e.vue";
 
 export default {
   components: {
     FormDisplay,
-    Form2550M
+    Form2550M,
+    Form1601E
   },
   computed: {
     affix_computation() {
@@ -63,13 +64,13 @@ export default {
       return `Form${this.form_type.toUpperCase()}`;
     }
   },
+
   data() {
     return {
       form: {
         taxpayer: {}
       },
       curr_step: 0,
-      form_2550m_image,
       steps: {
         "2550m": [
           {
@@ -106,12 +107,23 @@ export default {
       console.log("refs ", this.$refs);
       console.log("window :", window);
       this.in_bottom = window.scrollY > 2000;
-      console.log('this.in_bottom :', this.in_bottom);
+      console.log("this.in_bottom :", this.in_bottom);
+    }
+  },
+  watch: {
+    form() {
+      console.log("##### update formpage: " + this.form);
     }
   },
   created() {
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
+    // if(this.form_type == "1601e"){
+    //   this.form = {
+
+    //   }
+    // }
+
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
