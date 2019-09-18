@@ -123,7 +123,17 @@ export default {
   methods: {
     nav(e) {
       console.log("New filling tax :", e.key);
-      if (e.key) this.$router.replace(`tax/form/${e.key}`);
+      if (e.key) {
+        const ref_no = new Date().getTime().toString();
+        this.$store.dispatch('ADD_DRAFT_FORM', {
+          ref_no,
+          form: e.key,
+          taxpayer: '',
+          created_date: new Date()
+        })
+        window.open(`http://localhost:8080/#/tax/form/${e.key}?ref_no=${ref_no}`);
+        this.$emit('changeActiveKey', 1);
+      }
     }
   }
 };

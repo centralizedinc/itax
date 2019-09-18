@@ -15,6 +15,6 @@ export default class TaxForm {
     static saveAndValidate(form_type, form_details) {
         console.log('form_type :', form_type);
         console.log('saveAndValidate :', form_details);
-        return axios.get(`http://localhost:5000/tax/returns/validate/${form_type}`, form_details)
+        return axios.post(`http://localhost:5000/tax/returns/validate/${form_type}`, form_details)
     }
 }

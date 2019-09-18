@@ -38,12 +38,12 @@ export default new Router({
         component: () => import('./views/confirmation/Google.vue')
       }]
     },
-    {
-      path: '/app/test',
-      name: 'Secured',
-      // Testing purpose
-      component: () => import('./components/forms/1601e/test.vue')
-    },
+    // {
+    //   path: '/app/test',
+    //   name: 'Secured',
+    //   // Testing purpose
+    //   component: () => import('./components/forms/1601e/test.vue')
+    // },
     {
       path: '/app',
       component: () => import( /* webpackChunkName: "main" */ '@/views/Main.vue'),
