@@ -72,6 +72,7 @@ export default {
     }
   },
   created() {
+    this.type.toUpper
     console.log("form 1601e display");
     console.log("this.type.toUpperCase() :", this.form_type);
     this.refresh();

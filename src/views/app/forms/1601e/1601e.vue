@@ -19,7 +19,7 @@
         <a-input-number v-decorator="['numOfSheet']" :defaultValue="0"></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
-        <a-radio-group v-decorator="['withheld']" :defaultValue="false">
+        <a-radio-group v-decorator="['taxes_withheld']" :defaultValue="false">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -84,7 +84,7 @@
         label="14. Total Tax Required to be Withheld and Remitted"
       >
         <a-input-number
-          v-decorator="['item14']"
+          v-decorator="['total_tax_withheld_remitted']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -95,7 +95,7 @@
         label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
       >
         <a-input-number
-          v-decorator="['item15a']"
+          v-decorator="['prevTaxPaidCrdtb']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -105,7 +105,7 @@
         label="15B. Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
       >
         <a-input-number
-          v-decorator="['item15b']"
+          v-decorator="['advPayment']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -115,7 +115,7 @@
         label="15C. Total Tax Credits/Payments(Sum of Items 15A&15b)"
       >
         <a-input-number
-          v-decorator="['item15c']"
+          v-decorator="['totTaxCredits']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -125,7 +125,7 @@
         label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
       >
         <a-input-number
-          v-decorator="['item16']"
+          v-decorator="['tax_overimittance']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -136,7 +136,7 @@
         label="17A. Surcharge"
       >
         <a-input-number
-          v-decorator="['item17a']"
+          v-decorator="['surcharge']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -146,7 +146,7 @@
         label="17B. Interest"
       >
         <a-input-number
-          v-decorator="['item17b']"
+          v-decorator="['interest']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -156,7 +156,7 @@
         label="17C. Compromise"
       >
         <a-input-number
-          v-decorator="['item17c']"
+          v-decorator="['compromise']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -166,7 +166,7 @@
         label="17D"
       >
         <a-input-number
-          v-decorator="['item17d']"
+          v-decorator="['penaltiesCrdtb']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
@@ -176,7 +176,7 @@
         label="18. Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
       >
         <a-input-number
-          v-decorator="['item18']"
+          v-decorator="['total_amount_overremitance']"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>

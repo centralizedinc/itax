@@ -39,12 +39,13 @@ function getContent(forms) {
                 widths: [103, 50, 60, 50, 80, 60, 50],
                 body: [
                     [{
-                            text: forms.month ? forms.month : '00',
+                            text: forms.dateFiled ? forms.dateFiled : '00',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [80, 78, 0, 0]
-                        }, {
+                        },
+                        {
                             text: 'YYYY',
                             fontSize: 15,
                             // right,down,left,up
@@ -52,21 +53,21 @@ function getContent(forms) {
                             margin: [0, 78, 0, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.amendedYn ? 'X' : '',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [40, 82, 0, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.amendedYn ? '' : 'X',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [13, 82, 0, 0]
                         },
                         {
-                            text: '00',
+                            text: forms.numOfSheet,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -97,20 +98,21 @@ function getContent(forms) {
                 widths: [200, 150, 158],
                 body: [
                     [{
-                            text: '### - ### - ### - ###',
+                            text: forms.taxpayer.tin,
                             fontSize: 19,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [15, 5, 0, 0]
                         },
                         {
-                            text: '###',
+                            text: forms.taxpayer.rdo_code,
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [85, 7, 0, 0]
                         }, {
-                            text: '38 characters',
+                            // 38 characters only
+                            text: forms.taxpayer.line_business,
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
@@ -127,14 +129,15 @@ function getContent(forms) {
                 widths: [420, "*"],
                 body: [
                     [{
-                            text: '72 characters only',
+                            // 72 characters 
+                            text: forms.taxpayer.taxpayer_name,
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [14, 5, 0, 0]
                         },
                         {
-                            text: '44443334444',
+                            text: forms.taxpayer.telephone_no,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -149,14 +152,15 @@ function getContent(forms) {
                 widths: [420, "*"],
                 body: [
                     [{
-                            text: '72 characters',
+                            // 72 characters
+                            text: forms.taxpayer.registered_address,
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [12, 6, 0, 0]
                         },
                         {
-                            text: '12345',
+                            text: forms.taxpayer.zip_code,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'center',
@@ -171,7 +175,7 @@ function getContent(forms) {
                 widths: [25, 30, 100, 30, 310],
                 body: [
                     [{
-                            text: 'X',
+                            text: forms.categoryOfAgent ? 'X' : '',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [13, 6, 0, 0],
@@ -179,7 +183,7 @@ function getContent(forms) {
 
                         },
                         {
-                            text: 'X',
+                            text: forms.categoryOfAgent ? '' : 'X',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [28, 6, 0, 0],
@@ -199,7 +203,8 @@ function getContent(forms) {
                             alignment: 'justify'
                         },
                         {
-                            text: '30 characters',
+                            // 30 characters
+                            text: forms.internationalTreatyYn,
                             fontSize: 12,
                             // right,down,left,up
                             margin: [105, 6, 0, 0],
