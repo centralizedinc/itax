@@ -8,35 +8,48 @@
     <a-row :gutter="10">
       <a-col :xs="0" :md="12">
         <!-- Form Display -->
-        <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
-          <img :src="form_2550m_image" style="width: 100%;" alt />
-        </a-card>
+        <a-affix
+          :offsetTop="in_bottom ? -350: -200"
+          :class="affix_computation? '' : 'prevent-affix'"
+        >
+          <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
+              <form-display :type="form_type" :form="form" />
+          </a-card>
+        </a-affix>
       </a-col>
       <a-col :xs="0" :md="12" class="tax-form">
         <!-- Fill up forms -->
-        <a-card :bodyStyle="{ padding: '10px' }">
-          <component
-            :is="curr_form"
-            :form="form"
-            :step="curr_step"
-            @updateForm="v=>form={...form, ...v}"
-            @changeStep="v=>curr_step=v"
-          />
-        </a-card>
+        <div ref="fillup_form">
+          <a-card :bodyStyle="{ padding: '30px' }">
+            <component
+              :is="curr_form"
+              :form="form"
+              :step="curr_step"
+              @updateForm="v=>form={...form, ...v}"
+              @changeStep="v=>curr_step=v"
+            />
+          </a-card>
+        </div>
       </a-col>
     </a-row>
   </a-card>
 </template>
 
 <script>
+import FormDisplay from "@/components/FormDisplay.vue";
 import form_2550m_image from "@/assets/forms/2550M.jpeg";
 import Form2550M from "./2550m/2550m.vue";
 
 export default {
   components: {
+    FormDisplay,
     Form2550M
   },
   computed: {
+    affix_computation() {
+      if (this.curr_step === 2) return true;
+      else return false;
+    },
     form_type() {
       const paths = this.$route.path.split("/");
       const form_type = paths[paths.length - 1];
@@ -84,12 +97,25 @@ export default {
           title: "Part II",
           description: "Computation"
         }
-      ]
+      ],
+      in_bottom: false
     };
+  },
+  methods: {
+    handleScroll() {
+      console.log("refs ", this.$refs);
+      console.log("window :", window);
+      this.in_bottom = window.scrollY > 2000;
+      console.log('this.in_bottom :', this.in_bottom);
+    }
   },
   created() {
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
 };
 </script>
@@ -101,5 +127,13 @@ export default {
 
 .tax-form .ant-form-item-label {
   text-align: left;
+}
+
+.tax-form .ant-input-number {
+  width: 40vh;
+}
+
+.prevent-affix .ant-affix {
+  position: initial !important;
 }
 </style>

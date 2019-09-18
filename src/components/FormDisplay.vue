@@ -1,17 +1,20 @@
 <template>
   <div>
-    <pdf style="display:none" :src="preview"></pdf>
-    <pdf style="width:50%" :src="prev"></pdf>
-    <a-button @click="download">Download</a-button>
-    <a-button @click="open">Open</a-button>
+    <!-- <pdf style="display:none" :src="preview"></pdf> -->
+    <pdf style="width:100%" :src="prev"></pdf>
+    <!-- <br /> -->
+    <a-button-group style="top: -80px; justify-content: center; align-items: center; display: flex;">
+      <a-button @click="download">Download</a-button>
+      <a-button @click="open">Open</a-button>
+    </a-button-group>
   </div>
 </template>
 <script>
 import pdf from "vue-pdf";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import Form1601e from "../../../plugins/pdf/printers/1601e";
-import Form2550m from "../../../plugins/pdf/printers/2550m";
+import Form1601e from "../plugins/pdf/printers/1601e";
+import Form2550m from "../plugins/pdf/printers/2550m";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const printers = {
@@ -31,7 +34,7 @@ export default {
   },
   computed: {
     preview() {
-      var printer = printers[this.type];
+      var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
 
       const pdfDocGenerator = pdfMake.createPdf(document);
@@ -58,6 +61,9 @@ export default {
       //   self.prev = dataUrl;
       // });
       // return this.prev;
+    },
+    form_type() {
+      return `FORM${this.type.toUpperCase()}`;
     }
   },
   watch: {
@@ -67,6 +73,7 @@ export default {
   },
   created() {
     console.log("form 1601e display");
+    console.log("this.type.toUpperCase() :", this.form_type);
     this.refresh();
   },
 
@@ -75,7 +82,7 @@ export default {
       var data_holder = this.form;
       data_holder.amendedYn;
 
-      var printer = printers[this.type];
+      var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
       const pdfDocGenerator = pdfMake.createPdf(document);
@@ -96,7 +103,7 @@ export default {
     },
     download() {
       var filename = "Form 1601E";
-      var printer = printers[this.type];
+      var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
       pdfMake.createPdf(document).download(filename, err => {
@@ -109,7 +116,7 @@ export default {
       });
     },
     open() {
-      var printer = printers[this.type];
+      var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
       pdfMake.createPdf(document).open(dataUrl => {
