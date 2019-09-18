@@ -3,10 +3,6 @@
     <!-- <pdf style="display:none" :src="preview"></pdf> -->
     <pdf style="width:100%" :src="prev"></pdf>
     <!-- <br /> -->
-    <a-button-group style="top: -80px; justify-content: center; align-items: center; display: flex;">
-      <a-button @click="download">Download</a-button>
-      <a-button @click="open">Open</a-button>
-    </a-button-group>
   </div>
 </template>
 <script>
@@ -72,7 +68,6 @@ export default {
     }
   },
   created() {
-    this.type.toUpper
     console.log("form 1601e display");
     console.log("this.type.toUpperCase() :", this.form_type);
     this.refresh();

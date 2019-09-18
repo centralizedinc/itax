@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form :form="form_general" v-show="step===0">
+    <a-form v-show="step===0">
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -8,17 +8,12 @@
       >
         <a-month-picker
           placeholder="For the month of (MM/YYYY)"
-          v-decorator="['returnPeriod']"
+          v-model="form.returnPeriod"
           style="width: 100%"
         />
       </a-form-item>
       <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
-        <a-radio-group
-          v-decorator="['amendedYn', {
-            initialValue: false
-        }]"
-          style="width: 100%"
-        >
+        <a-radio-group v-model="form.amendedYn" :defaultValue="false" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -30,41 +25,41 @@
       >
         <a-input-number
           placeholder="Number of Sheets"
-          v-decorator="['numOfSheet']"
+          v-model="form.numOfSheet"
           style="width: 100%"
         />
       </a-form-item>
     </a-form>
 
     <!-- Part I -->
-    <a-form :form="form_part1" v-show="step===1">
+    <a-form v-show="step===1">
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="4"
       >
-        <a-input placeholder="TIN" v-decorator="['taxpayer.tin']"></a-input>
+        <a-input placeholder="TIN" v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="5"
       >
-        <a-input placeholder="RDO Code" v-decorator="['taxpayer.rdo_code']"></a-input>
+        <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="6"
       >
-        <a-input placeholder="Line of Business" v-decorator="['taxpayer.line_of_business']"></a-input>
+        <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business"></a-input>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="7"
       >
-        <a-input placeholder="Taxpayer/Registered Name" v-decorator="['taxpayer.registered_name']"></a-input>
+        <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -73,7 +68,7 @@
       >
         <a-input-number
           placeholder="Telephone Number"
-          v-decorator="['taxpayer.contact_details.telno']"
+          v-model="form.taxpayer.contact_details.telno"
           style="width: 100%"
         ></a-input-number>
       </a-form-item>
@@ -82,7 +77,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="9"
       >
-        <a-textarea placeholder="Registered Address" v-decorator="['taxpayer.address']"></a-textarea>
+        <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -91,24 +86,26 @@
       >
         <a-input-number
           placeholder="Zip Code"
-          v-decorator="['taxpayer.address_details.zipCode']"
+          v-model="form.taxpayer.address_details.zipCode"
           style="width: 100%"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="11. Are you availing of tax relief under Special Law or International Tax Treaty?" />
+      <a-form-item
+        label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
+      />
       <a-form-item>
-        <a-radio-group v-decorator="['specialRate', { initialValue: false }]">
+        <a-radio-group v-model="form.specialRate">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item>
-        <a-input placeholder="If yes, specify" v-decorator="['specialRateYn']"></a-input>
+        <a-input placeholder="If yes, specify" v-model="form.specialRateYn"></a-input>
       </a-form-item>
     </a-form>
 
     <!-- Part II -->
-    <a-form :form="form_part2" v-show="step===2">
+    <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -117,7 +114,7 @@
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
-          v-decorator="['totalAtcAmount']"
+          v-model="form.totalAtcAmount"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -129,7 +126,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due for the Month"
-          v-decorator="['totalAtcOutput']"
+          v-model="form.totalAtcOutput"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -143,7 +140,7 @@
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
-          v-decorator="['salesGovAmount']"
+          v-model="form.salesGovAmount"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -155,7 +152,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due for the Month"
-          v-decorator="['salesGovOutput']"
+          v-model="form.salesGovOutput"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -169,7 +166,7 @@
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
-          v-decorator="['zeroRatedAmount']"
+          v-model="form.zeroRatedAmount"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -183,7 +180,7 @@
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
-          v-decorator="['exemptAmount']"
+          v-model="form.exemptAmount"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -197,7 +194,7 @@
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
-          v-decorator="['totalSales']"
+          v-model="form.totalSales"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -209,7 +206,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due for the Month"
-          v-decorator="['totalOutputTax']"
+          v-model="form.totalOutputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -223,7 +220,7 @@
       >
         <a-input-number
           placeholder="Input Tax Carried Over from Previous Period"
-          v-decorator="['carriedOverPreviousPeriod']"
+          v-model="form.carriedOverPreviousPeriod"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -235,7 +232,7 @@
       >
         <a-input-number
           placeholder="Input Tax Deferred on Capital Goods Exceeding ₱1Million from Previous Period"
-          v-decorator="['txbleGoodsServices']"
+          v-model="form.txbleGoodsServices"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -247,7 +244,7 @@
       >
         <a-input-number
           placeholder="Transitional Input Tax"
-          v-decorator="['transInputTax']"
+          v-model="form.transInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -259,7 +256,7 @@
       >
         <a-input-number
           placeholder="Presumptive Input Tax"
-          v-decorator="['presumpInputTax']"
+          v-model="form.presumpInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -271,7 +268,7 @@
       >
         <a-input-number
           placeholder="Others"
-          v-decorator="['otherAllowableLessInputTax']"
+          v-model="form.otherAllowableLessInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -283,7 +280,7 @@
       >
         <a-input-number
           placeholder="Total"
-          v-decorator="['totalAllowableLessInputTax']"
+          v-model="form.totalAllowableLessInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -302,7 +299,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['purCapGoodsNotExceed']"
+          v-model="form.purCapGoodsNotExceed"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -315,7 +312,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputCapGoodsNotExceed']"
+          v-model="form.outputCapGoodsNotExceed"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -332,7 +329,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['purCapGoodsExceed']"
+          v-model="form.purCapGoodsExceed"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -345,7 +342,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputPurCapGoodsExceed']"
+          v-model="form.outputPurCapGoodsExceed"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -362,7 +359,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['domesticPurchaseGoods']"
+          v-model="form.domesticPurchaseGoods"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -375,7 +372,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputDomesticPurchaseGoods']"
+          v-model="form.outputDomesticPurchaseGoods"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -392,7 +389,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['importationGoods']"
+          v-model="form.importationGoods"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -405,7 +402,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputImportationGoods']"
+          v-model="form.outputImportationGoods"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -419,7 +416,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['domesticPurchaseService']"
+          v-model="form.domesticPurchaseService"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -432,7 +429,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputDomesticPurchaseService']"
+          v-model="form.outputDomesticPurchaseService"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -446,7 +443,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['servicesNonResidents']"
+          v-model="form.servicesNonResidents"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -459,7 +456,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputServicesNonResidents']"
+          v-model="form.outputServicesNonResidents"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -473,7 +470,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['purchaseNotQualified']"
+          v-model="form.purchaseNotQualified"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -487,7 +484,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['purchaseOthers']"
+          v-model="form.purchaseOthers"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -500,7 +497,7 @@
       >
         <a-input-number
           placeholder="Output Tax Due"
-          v-decorator="['outputPurchaseOthers']"
+          v-model="form.outputPurchaseOthers"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -514,7 +511,7 @@
       >
         <a-input-number
           placeholder="Purchase"
-          v-decorator="['totalCurrentPurchases']"
+          v-model="form.totalCurrentPurchases"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -527,7 +524,7 @@
       >
         <a-input-number
           placeholder="Total Available Input Tax"
-          v-decorator="['totalAvailableInputTax']"
+          v-model="form.totalAvailableInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -541,7 +538,7 @@
       >
         <a-input-number
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
-          v-decorator="['inputTaxPurchaseCapGoods']"
+          v-model="form.inputTaxPurchaseCapGoods"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -553,7 +550,7 @@
       >
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
-          v-decorator="['inputTaxSaleToGovt']"
+          v-model="form.inputTaxSaleToGovt"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -565,7 +562,7 @@
       >
         <a-input-number
           placeholder="Input Tax allocable to Exempt Sales"
-          v-decorator="['inputTaxAllocableToExempt']"
+          v-model="form.inputTaxAllocableToExempt"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -577,7 +574,7 @@
       >
         <a-input-number
           placeholder="VAT Refund/TCC claimed"
-          v-decorator="['refundTcm']"
+          v-model="form.refundTcm"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -589,7 +586,7 @@
       >
         <a-input-number
           placeholder="Others"
-          v-decorator="['otherDeductionFrInputTax']"
+          v-model="form.otherDeductionFrInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -601,7 +598,7 @@
       >
         <a-input-number
           placeholder="Total"
-          v-decorator="['totalDeductionFrInputTax']"
+          v-model="form.totalDeductionFrInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -614,7 +611,7 @@
       >
         <a-input-number
           placeholder="Total Allowable Input Tax"
-          v-decorator="['totalInputTax']"
+          v-model="form.totalInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -627,7 +624,7 @@
       >
         <a-input-number
           placeholder="Net VAT Payable"
-          v-decorator="['taxDue']"
+          v-model="form.taxDue"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -641,7 +638,7 @@
       >
         <a-input-number
           placeholder="Creditable Value-Added Tax Withheld"
-          v-decorator="['creditableVatWithheld']"
+          v-model="form.creditableVatWithheld"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -653,7 +650,7 @@
       >
         <a-input-number
           placeholder="Advance Payments for Sugar and Flour Industries"
-          v-decorator="['advPaySugarFlourInd']"
+          v-model="form.advPaySugarFlourInd"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -665,7 +662,7 @@
       >
         <a-input-number
           placeholder="VAT withheld on Sales to Government"
-          v-decorator="['taxWthld']"
+          v-model="form.taxWthld"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -677,7 +674,7 @@
       >
         <a-input-number
           placeholder="VAT paid in return previously filed, if this is an amended return"
-          v-decorator="['prevTaxPaid']"
+          v-model="form.prevTaxPaid"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -689,7 +686,7 @@
       >
         <a-input-number
           placeholder="Advance Payments made"
-          v-decorator="['advPymt']"
+          v-model="form.advPymt"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -701,7 +698,7 @@
       >
         <a-input-number
           placeholder="Others"
-          v-decorator="['otherTaxCredits']"
+          v-model="form.otherTaxCredits"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -713,7 +710,7 @@
       >
         <a-input-number
           placeholder="Total Tax Credits/Payments"
-          v-decorator="['totalCredits']"
+          v-model="form.totalCredits"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -726,7 +723,7 @@
       >
         <a-input-number
           placeholder="Tax Still Payable/(Overpayment)"
-          v-decorator="['amtPaybl']"
+          v-model="form.amtPaybl"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -740,7 +737,7 @@
       >
         <a-input-number
           placeholder="Surcharge"
-          v-decorator="['surcharge']"
+          v-model="form.surcharge"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -752,7 +749,7 @@
       >
         <a-input-number
           placeholder="Interest"
-          v-decorator="['interest']"
+          v-model="form.interest"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -764,7 +761,7 @@
       >
         <a-input-number
           placeholder="Compromise"
-          v-decorator="['compromise']"
+          v-model="form.compromise"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -776,7 +773,7 @@
       >
         <a-input-number
           placeholder="Total Penalties"
-          v-decorator="['penalties']"
+          v-model="form.penalties"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -789,24 +786,12 @@
       >
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
-          v-decorator="['totalAmountPayable']"
+          v-model="form.totalAmountPayable"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
       </a-form-item>
     </a-form>
-
-    <a-button-group class="form-button">
-      <a-button @click="changeStep(step-1)" :disabled="loading" v-if="step > 0">Previous</a-button>
-      <a-button type="primary" @click="validateGeneral" :loading="loading" v-if="step===0">Next</a-button>
-      <a-button type="primary" @click="validatePartI" :loading="loading" v-else-if="step===1">Next</a-button>
-      <a-button
-        type="primary"
-        @click="validatePartII"
-        :loading="loading"
-        v-else-if="step===2"
-      >Submit</a-button>
-    </a-button-group>
   </div>
 </template>
 
@@ -814,6 +799,91 @@
 export default {
   props: ["form", "step"],
   methods: {
+    // checkDraft() {
+    //   if (
+    //     this.existing_form &&
+    //     Object.keys(this.existing_form).length === 0 &&
+    //     this.existing_form.constructor === Object
+    //   ) {
+    //     // const {
+    //     //     form_general,
+    //     //     form_part1,
+    //     //     form_part2
+    //     //   } = this.existing_form.details,
+    //     //   _self = this;
+    //     // // Mapping General
+    //     // if (form_general) {
+    //     //   var fields = {};
+    //     //   Object.keys(form_general).forEach(key => {
+    //     //     fields[key] = this.$form.createFormField({
+    //     //       value: form_general[key]
+    //     //     });
+    //     //   });
+    //     //   this.form_general = this.$form.createForm(this, {
+    //     //     mapPropsToFields: () => {
+    //     //       return fields;
+    //     //     }
+    //     //   });
+    //     // }
+
+    //     // // Mapping Part1
+    //     // if (form_part1) {
+    //     //   this.form_part1 = this.$form.createForm(this, {
+    //     //     mapPropsToFields: () => {
+    //     //       return {
+    //     //         "taxpayer.tin": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.tin
+    //     //         }),
+    //     //         "taxpayer.rdo_code": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.rdo_code
+    //     //         }),
+    //     //         "taxpayer.line_of_business": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.line_of_business
+    //     //         }),
+    //     //         "taxpayer.registered_name": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.registered_name
+    //     //         }),
+    //     //         "taxpayer.contact_details.telno": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.contact_details.telno
+    //     //         }),
+    //     //         "taxpayer.address": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.address
+    //     //         }),
+    //     //         "taxpayer.address_details.zipCode": this.$form.createFormField({
+    //     //           value: form_part1.taxpayer.address_details.zipCode
+    //     //         }),
+    //     //         specialRate: this.$form.createFormField({
+    //     //           value: form_part1.specialRate
+    //     //         }),
+    //     //         specialRateYn: this.$form.createFormField({
+    //     //           value: form_part1.specialRateYn
+    //     //         })
+    //     //       };
+    //     //     }
+    //     //   });
+    //     // }
+
+    //     // // Mapping Part2
+    //     // if (form_part2) {
+    //     //   var fields = {};
+    //     //   Object.keys(form_part2).forEach(key => {
+    //     //     fields[key] = this.$form.createFormField({
+    //     //       value: form_part2[key]
+    //     //     });
+    //     //   });
+    //     //   this.form_part2 = this.$form.createForm(this, {
+    //     //     mapPropsToFields: () => {
+    //     //       return fields;
+    //     //     }
+    //     //   });
+    //     // }
+    //   }
+    // },
+    validate() {
+      this.changeStep(this.step + 1);
+      // if(this.step === 0) this.validateGeneral();
+      // else if(this.step === 1) this.validatePartI();
+    },
     validateGeneral() {
       this.loading = true;
       this.form_general.validateFieldsAndScroll((err, values) => {
@@ -840,13 +910,11 @@ export default {
         if (!err) {
           console.log("validatePartII :", values);
           this.$emit("updateForm", values);
-          this.submit();
         } else this.loading = false;
       });
     },
     submit() {
       this.loading = true;
-      console.log("this.form :", this.form);
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "2550M",
@@ -855,12 +923,67 @@ export default {
         .then(result => {
           console.log("VALIDATE_AND_SAVE :", result.data);
           this.loading = false;
+          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          // window.opener.location.reload();
+          window.close();
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
+      // this.form_general.validateFieldsAndScroll((err, form_general_values) => {
+      //   if (!err) {
+      //     this.form_part1.validateFieldsAndScroll((err, form_part1_values) => {
+      //       if (!err) {
+      //         this.form_part2.validateFieldsAndScroll(
+      //           (err, form_part2_values) => {
+      //             if (!err) {
+      //               const form = {
+      //                 ...form_general_values,
+      //                 ...form_part1_values,
+      //                 ...form_part2_values
+      //               };
+
+      //               this.$store
+      //                 .dispatch("VALIDATE_AND_SAVE", {
+      //                   form_type: "2550M",
+      //                   form_details: form
+      //                 })
+      //                 .then(result => {
+      //                   console.log("VALIDATE_AND_SAVE :", result.data);
+      //                   this.loading = false;
+      //                   window.opener.location.reload();
+      //                   window.close();
+      //                 })
+      //                 .catch(err => {
+      //                   console.log("VALIDATE_AND_SAVE", err);
+      //                   this.loading = false;
+      //                 });
+      //             } else this.loading = false;
+      //           }
+      //         );
+      //       } else this.loading = false;
+      //     });
+      //   } else this.loading = false;
+      // });
+      // this.loading = true;
+      // console.log("this.form :", this.form);
+      // this.$store
+      //   .dispatch("VALIDATE_AND_SAVE", {
+      //     form_type: "2550M",
+      //     form_details: this.form
+      //   })
+      //   .then(result => {
+      //     console.log("VALIDATE_AND_SAVE :", result.data);
+      //     this.loading = false;
+      //   })
+      //   .catch(err => {
+      //     console.log("VALIDATE_AND_SAVE", err);
+      //     this.loading = false;
+      //   });
     },
+    save_draft() {},
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
@@ -885,6 +1008,14 @@ export default {
       image_height: 1000
     };
   },
+  watch: {
+    loading(val) {
+      this.$emit("loading", val);
+    }
+  }
+  // created() {
+  //   this.checkDraft();
+  // }
 };
 </script>
 
