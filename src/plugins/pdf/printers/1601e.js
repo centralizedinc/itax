@@ -39,48 +39,49 @@ function getContent(forms) {
                 widths: [103, 50, 60, 50, 80, 60, 50],
                 body: [
                     [{
-                            text: 'MM',
+                            text: forms.month ? forms.month : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [76, 78, 0, 0]
-                        }, {
-                            text: 'YYYY',
+                            margin: [80, 78, 0, 0]
+                        },
+                        {
+                            text: forms.year ? forms.year : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [0, 78, 0, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.amendedYn == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [40, 82, 0, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.amendedYn == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [13, 82, 0, 0]
                         },
                         {
-                            text: '00',
-                            fontSize: 12,
+                            text: forms.numOfSheet,
+                            fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [33, 82, 10, 0]
+                            margin: [34, 83, 10, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.taxes_withheld == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [40, 82, 0, 0]
                         },
                         {
-                            text: 'X',
+                            text: forms.taxes_withheld == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -97,20 +98,21 @@ function getContent(forms) {
                 widths: [200, 150, 158],
                 body: [
                     [{
-                            text: '### - ### - ### - ###',
+                            text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
                             fontSize: 19,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [15, 5, 0, 0]
                         },
                         {
-                            text: '###',
+                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [85, 7, 0, 0]
                         }, {
-                            text: '38 characters',
+                            // 38 characters only
+                            text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
@@ -127,14 +129,15 @@ function getContent(forms) {
                 widths: [420, "*"],
                 body: [
                     [{
-                            text: '72 characters only',
+                            // 72 characters 
+                            text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [14, 5, 0, 0]
                         },
                         {
-                            text: '44443334444',
+                            text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -149,14 +152,15 @@ function getContent(forms) {
                 widths: [420, "*"],
                 body: [
                     [{
-                            text: '72 characters',
+                            // 72 characters
+                            text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [12, 6, 0, 0]
                         },
                         {
-                            text: '12345',
+                            text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'center',
@@ -171,7 +175,7 @@ function getContent(forms) {
                 widths: [25, 30, 100, 30, 310],
                 body: [
                     [{
-                            text: 'X',
+                            text: forms.categoryOfAgent == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [13, 6, 0, 0],
@@ -179,27 +183,28 @@ function getContent(forms) {
 
                         },
                         {
-                            text: 'X',
+                            text: forms.categoryOfAgent == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [28, 6, 0, 0],
                             alignment: 'justify'
                         },
                         {
-                            text: 'X',
+                            text: forms.availing_tax_relief == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [85, 6, 0, 0],
                             alignment: 'justify'
                         }, {
-                            text: 'X',
+                            text: forms.availing_tax_relief == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             margin: [20, 6, 0, 0],
                             alignment: 'justify'
                         },
                         {
-                            text: '30 characters',
+                            // 30 characters
+                            text: forms.internationalTreatyYn,
                             fontSize: 12,
                             // right,down,left,up
                             margin: [105, 6, 0, 0],
@@ -220,7 +225,8 @@ function getContent(forms) {
                 widths: [220, 40, 82, 42, 115],
                 body: [
                     [{
-                            text: '48 characters only',
+                            // 48 characters only
+                            text: ' ',
                             fontSize: 8,
                             // right,down,left,up
                             margin: [0, 0, 0, 0],
@@ -228,27 +234,27 @@ function getContent(forms) {
 
                         },
                         {
-                            text: 'ATC',
+                            text: ' ',
                             fontSize: 8,
                             // right,down,left,up
                             margin: [0, 0, 0, 0],
                             alignment: 'center'
                         },
                         {
-                            text: 'Tax Base',
+                            text: ' ',
                             fontSize: 8,
                             // right,down,left,up
                             margin: [0, 0, 0, 0],
                             alignment: 'center'
                         }, {
-                            text: 'Tax Rate',
+                            text: ' ',
                             fontSize: 8,
                             // right,down,left,up
                             margin: [0, 0, 0, 0],
                             alignment: 'center'
                         },
                         {
-                            text: 'Withheld',
+                            text: ' ',
                             fontSize: 8,
                             // right,down,left,up
                             margin: [0, 0, 0, 0],
@@ -264,35 +270,36 @@ function getContent(forms) {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(14) 20 characters",
+        // 20 characters
+        text: forms.total_tax_withheld_remitted,
         // right,down,left,up
         margin: [416, 8, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(15A) 20 characters",
+        text: forms.prevTaxPaidCrdtb,
         // right,down,left,up
         margin: [415, 11, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(15B) 20 characters",
+        text: forms.advPayment,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(15C) 20 characters",
+        text: forms.totTaxCredits,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     }, {
         alignment: 'justify',
         fontSize: 10,
         width: 100,
-        text: "(16) 20 characters",
+        text: forms.amtPayblCrdtb,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     })
@@ -302,7 +309,7 @@ function getContent(forms) {
             widths: [131, 122, 110, 140],
             body: [
                 [{
-                        text: '(17A)',
+                        text: forms.surcharge,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [52, 13, 0, 0],
@@ -310,7 +317,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(17B)',
+                        text: forms.interest,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [26, 13, 0, 0],
@@ -318,7 +325,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(17C)',
+                        text: forms.compromise,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [23, 13, 0, 0],
@@ -326,7 +333,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(17D)',
+                        text: forms.penaltiesCrdtb,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [28, 13, 0, 0],
@@ -344,7 +351,7 @@ function getContent(forms) {
             widths: [160, 100, 260],
             body: [
                 [{
-                        text: 'X',
+                        text: forms.overremittance == true ? 'X' : ' ',
                         fontSize: 12,
                         // right,down,left,up
                         margin: [155, 8, 0, 0],
@@ -352,7 +359,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: 'X',
+                        text: forms.overremittance == false ? 'X' : ' ',
                         fontSize: 12,
                         // right,down,left,up
                         margin: [95, 8, 0, 0],
@@ -360,7 +367,7 @@ function getContent(forms) {
 
                     },
                     {
-                        text: '(18)',
+                        text: forms.total_amount_overremittance,
                         fontSize: 8,
                         // right,down,left,up
                         margin: [140, 0, 0, 0],
