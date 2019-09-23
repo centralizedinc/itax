@@ -50,7 +50,18 @@
             <a-card>
                  <h3>My Taxpayer Vault</h3>
                  <a-divider></a-divider>
-                 <a-table :columns="cols"></a-table>
+                 <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
+                  <a-list itemLayout="horizontal" :dataSource="taxpayers" >
+                        <a-list-item slot="renderItem" slot-scope="item, index">
+                        <a-list-item-meta>
+                            <p slot="title" >{{item.tin}}</p>
+                            <template slot="description" >
+                                <p>{{item.taxpayer_type}}</p>
+                            </template>
+                            <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        </a-list-item-meta>
+                        </a-list-item>
+                    </a-list>
             </a-card>
            
         </a-col>
@@ -72,6 +83,8 @@
 export default {
     data(){
         return{
+            loading:false,
+            taxpayers:[],
             cols:[
                 {
                     title: 'Name',
@@ -91,10 +104,24 @@ export default {
                     dataIndex: 'rdo'
                 }
             ]
+        }        
+    },
+    created(){
+        this.init();
+    },
+    methods:{
+        init(){
+            this.loading = true;
+            this.$http.get('/taxpayer')
+            .then(result=>{
+                this.loading = false;
+                console.log('result', JSON.stringify(result))
+                this.taxpayers = result.data.data
+            })
 
         }
-        
     }
+
 
 }
 </script>

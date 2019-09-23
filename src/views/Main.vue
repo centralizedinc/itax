@@ -68,9 +68,9 @@
         </a-affix>
         <!-- </a-card> -->
       </a-col>
-      <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-        <!-- <h3>{{$route.name}}</h3> -->
-        <!-- <a-divider></a-divider> -->
+      <a-col :span="15" style="margin-left:2vw; margin-right:2vw">        
+        <h2>{{$route.name}}</h2>
+        <a-divider style="margin-top:-2vh"></a-divider>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>
@@ -82,7 +82,7 @@
             <a-timeline-item>Solve initial network problems 2015-09-01</a-timeline-item>
             <a-timeline-item>Technical testing 2015-09-01</a-timeline-item>
             <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
-          </a-timeline>
+          </a-timeline>          
         </a-card>
       </a-col>
     </a-row>

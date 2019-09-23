@@ -11,7 +11,9 @@
         </a-card>
     </a-col>
   </a-row>
-  <a-row type="flex" align="center" :gutter="16" style="margin-top: 2vh">
+
+  
+  <!-- <a-row type="flex" align="center" :gutter="16" style="margin-top: 2vh">
       <a-col :span="8">
         <a-card >
              <a-row type="flex" align="middle">
@@ -53,7 +55,7 @@
         </a-card>
     </a-col>
     
-  </a-row>
+  </a-row> -->
   <!-- <a-row type="flex" align="middle" justify="center" :gutter="16" style="margin-top: 5vh">
     <a-col :span="24">
         <h3>Quick View</h3>

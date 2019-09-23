@@ -165,10 +165,5 @@ export default {
 </script>
 
 <style>
-.profile_pic{
-    cursor: pointer;
-}
-.profile_pic:hover{
-    opacity: 0.6;
-}
+
 </style>
