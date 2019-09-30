@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+// import your plugins pdf printers form
 import pdf from "vue-pdf";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
@@ -13,6 +14,7 @@ import Form1601e from "../plugins/pdf/printers/1601e";
 import Form2550m from "../plugins/pdf/printers/2550m";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+// add printers
 const printers = {
   FORM1601E: Form1601e,
   FORM2550M: Form2550m
