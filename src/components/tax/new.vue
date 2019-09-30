@@ -24,7 +24,7 @@
           </a-col>
           <a-col :span="16">
             <h4>Income Tax</h4>
-            <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <p>Income Tax is a tax on a person's income, emoluments, profits arising from property, practice of profession, conduct of trade or business or on the pertinent items of gross income specified in the Tax Code of 1997 (Tax Code), as amended, less the deductions if any, authorized for such types of income, by the Tax Code, as amended, or other special laws.</p>
             <a>Learn More</a>
           </a-col>
         </a-row>
@@ -51,7 +51,7 @@
           </a-col>
           <a-col :span="16">
             <h4>Value Added Tax</h4>
-            <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <p>Value-Added Tax is a business tax imposed and collected from the seller in the course of trade or business on every sale of properties (real or personal) lease of goods or properties (real or personal) or vendors of services. It is an indirect tax, thus, it can be passed on to the buyer. </p>
             <a>Learn More</a>
           </a-col>
         </a-row>
@@ -98,7 +98,7 @@
           </a-col>
           <a-col :span="16">
             <h4>Percentage Tax</h4>
-            <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+            <p>Percentage Tax is a business tax imposed on persons or entities who sell or lease goods, properties or services in the course of trade or business whose gross annual sales or receipts do not exceed P550,000 and are not VAT-registered. </p>
             <a>Learn More</a>
           </a-col>
         </a-row>

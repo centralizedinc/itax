@@ -10,8 +10,17 @@
           <p
             style="margin-top:2vh; color:#ffffff"
           >Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
-          <a-button style="margin-top:5vh" size="large" type="primary">Read More</a-button>
-        </a-col>
+          <!-- <a-button style="margin-top:5vh" size="large" type="primary">Read More</a-button> -->
+          <a-row :gutter="24" style="margin-top:5vh">
+            <a-col :span="4"  width="100" style="margin-top:1.5vh">
+              <img src="@/assets/app_store.svg"/>  
+            </a-col>
+            <a-col :span="4">
+              <img src="@/assets/google-play.png" width="150"/>  
+            </a-col>
+          </a-row>
+                
+          </a-col>
         <a-col :push="2" :span="8" style="margin-top:20vh;">
           <a-card style="background: rgba(59, 79, 99, 0.62)">
             <template slot="title">
