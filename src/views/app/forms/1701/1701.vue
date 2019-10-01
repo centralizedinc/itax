@@ -1,10 +1,10 @@
 <template>
-   <div>
+  <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Monthly Percentage Tax Return(2551M)</b>
+        <b>Annual Income Tax Return (1701)</b>
       </a-divider>
-      <a-form-item label="1. For the month of (MM/YYYY)">
+      <a-form-item label="1. For the Year (MM/20YY)">
         <a-month-picker v-model="form.dateFiled" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
@@ -13,13 +13,17 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-model="form.numOfSheet"></a-input-number>
-      </a-form-item>
-      <a-form-item label="4. Any Taxes Witheld?">
-        <a-radio-group v-model="form.taxes_withheld">
+      <a-form-item label="3. Short Period Return">
+        <a-radio-group v-model="form.sprYn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="4. Alphanumeric Tax Code (ATC)">
+        <a-radio-group v-model="form.atc">
+          <a-radio :value="1">II 011 Compensation Income</a-radio>
+          <a-radio :value="2">II 012 Business Income / Income from Profession</a-radio>
+          <a-radio :value="3">II 013 Mixed Income</a-radio>
         </a-radio-group>
       </a-form-item>
     </a-form>
@@ -35,6 +39,21 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
+      <a-form-item label="7. Tax Filer Type">
+        <a-radio-group v-model="form.taxpayer.tax_filer_type">
+          <a-radio :value="1">Single Proprietor</a-radio>
+          <a-radio :value="2">Professional</a-radio>
+          <a-radio :value="3">Estate</a-radio>
+          <a-radio :value="4">Trust</a-radio>
+        </a-radio-group>
+      </a-form-item>
+ <a-form-item label="8. Taxpayer’s Name (Last Name, First Name, Middle Name) /ESTATE OF (First Name, Middle Name, Last Name)/ TRUST FAO: (First Name, Middle Name, Last Name)">
+        <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
+      </a-form-item>
+ <a-form-item label="9. Trade Name">
+        <a-input v-model="form.taxpayer.trade_name"></a-input>
+      </a-form-item>
+
       <a-form-item label="7. Line of Business/Occupation">
         <a-input v-model="form.taxpayer.line_business"></a-input>
       </a-form-item>
@@ -252,14 +271,14 @@
 </template>
 
 <script>
-// import form_2551m_image from "@/assets/forms/2551m.jpg";
+// import form_1601e_image from "@/assets/forms/1601e.jpg";
 
 export default {
   props: ["form", "step"],
   data() {
     return {
       sub: false,
-      // form_2551m_image,
+      // form_1601e_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
@@ -310,23 +329,4 @@ export default {
 .tax-form .computation-item .ant-input-number {
   width: 40vh;
 } */
-</style>
-.form-button {
-  float: right;
-  margin: 0;
-  margin-top: 5vh;
-}
-
-.tax-form .computation-item {
-  padding-left: 10vh;
-}
-
-.tax-form .computation-item-2 {
-  padding-left: 20vh;
-}
-
-.tax-form .computation-item .ant-input-number,
-.tax-form .computation-item-2 .ant-input-number {
-  width: 40vh;
-}
 </style>
