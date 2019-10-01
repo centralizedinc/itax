@@ -2,7 +2,7 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Annual Income Tax Return (1701)</b>
+        <b>Quarterly Income Tax Return(1701Q)</b>
       </a-divider>
       <a-form-item label="1. For the Year (MM/20YY)">
         <a-month-picker v-model="form.dateFiled" />
