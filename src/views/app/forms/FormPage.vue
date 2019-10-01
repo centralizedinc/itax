@@ -96,6 +96,7 @@ export default {
     Form1601E,
     Form1700,
     Form1701,
+    Form1701Q,
     Form2551Q
   },
   computed: {

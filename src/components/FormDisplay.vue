@@ -23,6 +23,7 @@ const printers = {
   FORM2550M: Form2550m,
   FORM1700: Form1700,
   FORM1701: Form1701,
+  FORM1701Q: Form1701q,
   FORM2551Q: Form2551q
 };
 export default {

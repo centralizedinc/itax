@@ -32,8 +32,8 @@ returns_router.route("/")
     })
 
     .post((req, res) => {
-        var form_type = req.body.form_type;
-        var form_details = req.body.form_details;
+        // var form_type = req.body.form_type;
+        // var form_details = req.body.form_details;
 
         // validation
         // validation_service.validate(form_type, form_details, resp => {

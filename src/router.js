@@ -131,9 +131,9 @@ export default new Router({
               component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
             },
             {
-              path: '1700',
-              name: 'Form 1700',
-              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
+              path: '1701q',
+              name: 'Form 1701q',
+              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
             },
             {
               path: '1701',
@@ -267,9 +267,9 @@ export default new Router({
           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
         },
         {
-          path: '1700',
-          name: 'Form 1700',
-          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
+          path: '1701q',
+          name: 'Form 1701q',
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
         },
         {
           path: '2551q',
