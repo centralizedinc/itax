@@ -53,13 +53,19 @@
                  <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
                   <a-list itemLayout="horizontal" :dataSource="taxpayers" >
                         <a-list-item slot="renderItem" slot-scope="item, index">
+                            <!-- <a-card> -->
+                            <a slot="actions">edit</a>
+                            <a slot="actions">view</a>
                         <a-list-item-meta>
-                            <p slot="title" >{{item.tin}}</p>
+                            
+                            <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:item.corporate_details.registeredName}}</p>
                             <template slot="description" >
-                                <p>{{item.taxpayer_type}}</p>
+                                <p>{{item.tin}}</p>
+                                <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                             </template>
-                            <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="item.avatar" :size="64" />
                         </a-list-item-meta>
+                        <!-- </a-card> -->
                         </a-list-item>
                     </a-list>
             </a-card>
@@ -112,12 +118,14 @@ export default {
     methods:{
         init(){
             this.loading = true;
-            this.$http.get('/taxpayer')
-            .then(result=>{
-                this.loading = false;
-                console.log('result', JSON.stringify(result))
-                this.taxpayers = result.data.data
-            })
+            // this.$http.get('/taxpayer')
+            // .then(result=>{
+            //     this.loading = false;
+            //     console.log('result', JSON.stringify(result))
+            //     this.taxpayers = result.data.data
+            // })
+            this.taxpayers = this.$store.state.taxpayers.records
+            this.loading = false;
 
         }
     }
