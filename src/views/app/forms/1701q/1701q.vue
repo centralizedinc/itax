@@ -2,7 +2,7 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Annual Income Tax Return (1700)</b>
+        <b>Annual Income Tax Return (1701Q)</b>
       </a-divider>
       <a-form-item label="1. For the year (YYYY)">
         <a-dropdown></a-dropdown>
