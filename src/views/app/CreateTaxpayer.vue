@@ -103,13 +103,20 @@
                <a-form-item label="TIN"
                         :label-col="{ span: 4 }"
                         :wrapper-col="{ span: 18 }">
-                  <a-input placeholder="Tax Identification Number" v-model="taxpayer.tin"></a-input>
+                  <!-- <a-input placeholder="Tax Identification Number" v-model="taxpayer.tin"></a-input> -->
+                  <a-input-number
+                  style="width:100%"
+                  max="9999999999999"
+                    placeholder="Tax Identification Number" v-model="taxpayer.tin"
+                    :formatter="value => `${value}`.replace(/^(\d{3})(\d{3})(\d{3})(\d{4})/g, '$1-$2-$3-$4')"
+                    :parser="value => value.replace(/\$\s?|(-*)/g, '')"
+                  ></a-input-number>
                 </a-form-item>
                 <a-form-item label="RDO"
                         :label-col="{ span: 4 }"
                         :wrapper-col="{ span: 18 }">
                   <a-select placeholder="RDO" style="width: 100%"  v-model="taxpayer.rdo_code">
-                    <a-select-option value="001">RDO 001 - </a-select-option>
+                    <a-select-option v-for="rdo in rdos" :key="rdo._id" :value="rdo.code">{{rdo.code}} - {{rdo.description}} </a-select-option>
                 </a-select>
                 </a-form-item>
                 <!-- For Individual -->
@@ -182,7 +189,7 @@
                   <a-form-item label="Start Month"
                               :label-col="{ span: 4 }"
                               :wrapper-col="{ span: 18 }">
-                      <a-select :defaultValue="1" placeholder="RDO" style="width: 100%"  v-model="taxpayer.start_month">
+                      <a-select :defaultValue="1" placeholder="Select Start Month" style="width: 100%"  v-model="taxpayer.start_month">
                           <a-select-option value="1">01 - January</a-select-option>
                           <a-select-option value="2">02 - Febuary</a-select-option>
                           <a-select-option value="3">03 - March</a-select-option>
@@ -320,6 +327,7 @@ export default {
       formData:null,
       loading:false,
       step_curr:0,
+      rdos:[],
       taxpayer:{
         taxpayer_type:'',
         avatar:null,
@@ -333,7 +341,17 @@ export default {
       }
     }
   },
+  created(){
+    this.init()
+  },
   methods:{
+    init(){
+      this.$http.get('/reference/rdos')
+      .then(results =>{
+        console.log('data', JSON.stringify(results.data))
+        this.rdos = results.data
+      })
+    },
     next(type){
       this.taxpayer.taxpayer_type = type;
       // this.step_curr ++;
