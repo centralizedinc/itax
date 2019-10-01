@@ -2,7 +2,7 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Monthly Percentage Tax Return(2551Q)</b>
+        <b>Quarterly Percentage Tax Return(2551Q)</b>
       </a-divider>
       <a-form-item label="1. For the">
         <a-radio-group v-model="form.yearType">
