@@ -19,8 +19,7 @@ function isAuthenticated(to, from, next) {
 }
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home,
@@ -130,20 +129,21 @@ export default new Router({
               name: 'Form 1601e',
               component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
             },
-            {
-              path: '1701q',
-              name: 'Form 1701q',
-              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
-            },
-            {
-              path: '1701',
-              name: 'Form 1701',
-              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701/1701.vue')
-            },
+
             {
               path: '2551q',
               name: 'Form 2551q',
               component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
+            },
+            {
+              path: '1700',
+              name: 'Form 1700',
+              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
+            },
+            {
+              path: '1701q',
+              name: 'Form 1701Q',
+              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
             }
           ]
         },
@@ -266,16 +266,22 @@ export default new Router({
           name: 'Form 1601e',
           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
         },
-        {
-          path: '1701q',
-          name: 'Form 1701q',
-          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
-        },
+
         {
           path: '2551q',
           name: 'Form 2551q',
           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
+        },
+        {
+          path: '1700',
+          name: 'Form 1700',
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
+        }, {
+          path: '1701q',
+          name: 'Form 1701Q',
+          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
         }
+
       ]
     }
   ]
