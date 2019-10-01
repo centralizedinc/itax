@@ -2,10 +2,10 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Annual Income Tax Return (1701)</b>
+        <b>Annual Income Tax Return (1700)</b>
       </a-divider>
-      <a-form-item label="1. For the Year (MM/20YY)">
-        <a-month-picker v-model="form.dateFiled" />
+      <a-form-item label="1. For the year (YYYY)">
+        <a-dropdown></a-dropdown>
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amendedYn">
@@ -13,19 +13,27 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. Short Period Return">
-        <a-radio-group v-model="form.sprYn">
+      <a-form-item label="3. Joint Filing">
+        <a-radio-group v-model="form.joint_filing">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="4. Alphanumeric Tax Code (ATC)">
-        <a-radio-group v-model="form.atc">
-          <a-radio :value="1">II 011 Compensation Income</a-radio>
-          <a-radio :value="2">II 012 Business Income / Income from Profession</a-radio>
-          <a-radio :value="3">II 013 Mixed Income</a-radio>
+      <a-form-item label="4. Source of Income">
+        <a-radio-group v-model="form.source_of_income">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
+      <!-- <a-form-item label="3. No. of Sheets Attached">
+        <a-input-number v-model="form.numOfSheet"></a-input-number>
+      </a-form-item>
+      <a-form-item label="4. Any Taxes Witheld?">
+        <a-radio-group v-model="form.taxes_withheld">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item> -->
     </a-form>
 
     <!-- Part I -->
@@ -39,24 +47,12 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Tax Filer Type">
-        <a-radio-group v-model="form.taxpayer.tax_filer_type">
-          <a-radio :value="1">Single Proprietor</a-radio>
-          <a-radio :value="2">Professional</a-radio>
-          <a-radio :value="3">Estate</a-radio>
-          <a-radio :value="4">Trust</a-radio>
-        </a-radio-group>
+      <a-form-item label="7. PSOC Code">
+        <a-input v-model="form.taxpayer.psoc_code"></a-input>
       </a-form-item>
- <a-form-item label="8. Taxpayer’s Name (Last Name, First Name, Middle Name) /ESTATE OF (First Name, Middle Name, Last Name)/ TRUST FAO: (First Name, Middle Name, Last Name)">
-        <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
-      </a-form-item>
- <a-form-item label="9. Trade Name">
-        <a-input v-model="form.taxpayer.trade_name"></a-input>
-      </a-form-item>
-
-      <a-form-item label="7. Line of Business/Occupation">
+      <!-- <a-form-item label="7. Line of Business/Occupation">
         <a-input v-model="form.taxpayer.line_business"></a-input>
-      </a-form-item>
+      </a-form-item> -->
       <a-form-item label="8. Withholding Agent's Name/Registered Name">
         <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
       </a-form-item>
