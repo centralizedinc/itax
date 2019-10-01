@@ -13,15 +13,14 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import Form1601e from "../plugins/pdf/printers/1601e";
 import Form2550m from "../plugins/pdf/printers/2550m";
 import Form1700 from "../plugins/pdf/printers/1700";
-import Form2551m from '../plugins/pdf/printers/2551m'
+import Form2551q from "../plugins/pdf/printers/2551q";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-// add printers
 const printers = {
   FORM1601E: Form1601e,
   FORM2550M: Form2550m,
   FORM1700: Form1700,
-  FORM2551M: Form2551m
+  FORM2551Q: Form2551q
 };
 export default {
   props: ["form", "type"],

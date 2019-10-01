@@ -1,6 +1,6 @@
 'use strict'
 
-var Form2551MModel = require('../models/forms/form2551MModel.js');
+var Form2551QModel = require('../models/forms/form2551QModel.js');
 var commonValidator = require('./commonValidator.js');
 
 
@@ -10,7 +10,7 @@ var commonValidator = require('./commonValidator.js');
  * @param {*} callback 
  */
 function validate(form_details, callback) {
-    var form = new Form2551MModel(form_details);
+    var form = new Form2551QModel(form_details);
 
     //validation begins ...
     var error_messages = {};
@@ -164,7 +164,7 @@ function computeDueDate(returnPeriod) {
 
 /**
  * 
- * @param {form2551MModel} form 
+ * @param {form2551QModel} form 
  */
 function validateComputations(form, error_messages) {
     var item19Total = 0;
