@@ -63,7 +63,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.amendedYn == false ? 'X' : ' ',
-                            text: forms.jointFiling == true ? 'X' : ' ',
+                            text: forms.joint_filing == true ? 'X' : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
@@ -71,7 +71,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.numOfSheet,
-                            text: forms.jointFiling == false ? 'X' : ' ',
+                            text: forms.joint_filing == false ? 'X' : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
@@ -79,7 +79,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.taxes_withheld == true ? 'X' : ' ',
-                            text: '6',
+                            text: forms.source_of_income == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -87,7 +87,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.taxes_withheld == false ? 'X' : ' ',
-                            text: '7',
+                            text: forms.source_of_income == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -104,24 +104,24 @@ function getContent(forms) {
                 widths: [245, 160, 114],
                 body: [
                     [{
-                            // text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                            text: '0  1  2   -  3  4  5   -   6  7  8 ',
+                            text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                            // text: '0  1  2   -  3  4  5   -   6  7  8 ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [65, 16, 0, 0]
                         },
                         {
-                            // text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                            text: '0 0 0',
+                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                            // text: '0 0 0',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [120, 16, 0, 0]
                         }, {
                             // PSOC CODE
-                            // text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
-                            text: '0  0  0  0',
+                            text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
+                            // text: '0  0  0  0',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
