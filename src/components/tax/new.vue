@@ -13,6 +13,7 @@
               >IT</a-avatar>
               <template slot="content">
                 <a-menu @click="nav">
+                  <a-menu-item key="1700">From 1700</a-menu-item>
                   <a-menu-item key="1701">From 1701</a-menu-item>
                   <a-menu-item key="1701q">Form 1701Q</a-menu-item>
                   <a-menu-item key="1702">Form 1702</a-menu-item>
@@ -51,7 +52,7 @@
           </a-col>
           <a-col :span="16">
             <h4>Value Added Tax</h4>
-            <p>Value-Added Tax is a business tax imposed and collected from the seller in the course of trade or business on every sale of properties (real or personal) lease of goods or properties (real or personal) or vendors of services. It is an indirect tax, thus, it can be passed on to the buyer. </p>
+            <p>Value-Added Tax is a business tax imposed and collected from the seller in the course of trade or business on every sale of properties (real or personal) lease of goods or properties (real or personal) or vendors of services. It is an indirect tax, thus, it can be passed on to the buyer.</p>
             <a>Learn More</a>
           </a-col>
         </a-row>
@@ -89,16 +90,23 @@
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
           <a-col :span="8">
-            <a-avatar
-              class="avatar_btn"
-              shape="square"
-              :size="60"
-              style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
-            >PT</a-avatar>
+            <a-popover title trigger="click" placement="right">
+              <a-avatar
+                class="avatar_btn"
+                shape="square"
+                :size="60"
+                style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
+              >PT</a-avatar>
+              <template slot="content">
+                <a-menu @click="nav">
+                  <a-menu-item key="2551m">Form 2551m</a-menu-item>
+                </a-menu>
+              </template>
+            </a-popover>
           </a-col>
           <a-col :span="16">
             <h4>Percentage Tax</h4>
-            <p>Percentage Tax is a business tax imposed on persons or entities who sell or lease goods, properties or services in the course of trade or business whose gross annual sales or receipts do not exceed P550,000 and are not VAT-registered. </p>
+            <p>Percentage Tax is a business tax imposed on persons or entities who sell or lease goods, properties or services in the course of trade or business whose gross annual sales or receipts do not exceed P550,000 and are not VAT-registered.</p>
             <a>Learn More</a>
           </a-col>
         </a-row>
@@ -125,14 +133,16 @@ export default {
       console.log("New filling tax :", e.key);
       if (e.key) {
         const ref_no = new Date().getTime().toString();
-        this.$store.dispatch('ADD_DRAFT_FORM', {
+        this.$store.dispatch("ADD_DRAFT_FORM", {
           ref_no,
           form: e.key,
-          taxpayer: '',
+          taxpayer: "",
           created_date: new Date()
-        })
-        window.open(`http://localhost:8080/#/tax/form/${e.key}?ref_no=${ref_no}`);
-        this.$emit('changeActiveKey', 1);
+        });
+        window.open(
+          `http://localhost:8080/#/tax/form/${e.key}?ref_no=${ref_no}`
+        );
+        this.$emit("changeActiveKey", 1);
       }
     }
   }
