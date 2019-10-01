@@ -45,6 +45,7 @@
                 <a-menu @click="nav">
                   <a-menu-item key="2550m">From 2550M</a-menu-item>
                   <a-menu-item key="2550q">Form 2550Q</a-menu-item>
+                  <a-menu-item key="250q">Form 250Q</a-menu-item>
                 </a-menu>
               </template>
             </a-popover>
