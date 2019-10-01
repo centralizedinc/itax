@@ -7,8 +7,9 @@
 <script>
 export default {
   created() {
+    console.log('code :', this.$route.params.code);
     this.$store.dispatch("FACEBOOK_CONFIRMATION", this.$route.params.code);
-    window.opener.location.href = "https://localhost:8080/#/";
+    window.opener.location.href = "http://localhost:8080/#/";
     window.opener.location.reload();
     window.close();
   }
