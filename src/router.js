@@ -51,8 +51,6 @@ export default new Router({
     {
       path: '/app',
       name: 'Secured',
-<<<<<<< HEAD
-=======
       component: () => import( /* webpackChunkName: "main" */ '@/views/Main.vue'),
       children: [{
         path: '',
@@ -81,7 +79,6 @@ export default new Router({
     // },
     {
       path: '/app',
->>>>>>> eaac75beacf04b4707829289202b882c74bd0b00
       component: () => import( /* webpackChunkName: "main" */ '@/views/Main.vue'),
       children: [{
           path: '',
