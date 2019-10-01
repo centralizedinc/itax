@@ -91,12 +91,6 @@ export default new Router({
               name: 'Form 1601e',
               component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
             }
-            ,
-            {
-              path: '2551',
-              name: 'Form 2551',
-              component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551/2551.vue')
-            }
           ]
         },
         {
