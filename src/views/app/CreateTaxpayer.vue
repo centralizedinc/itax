@@ -4,6 +4,7 @@
     <a-step title="Taxpayer Type"/>
     <a-step title="Taxpayer Information" />
     <a-step title="Contact Information" />
+    <a-step title="Connections" />
   </a-steps>
   
   <a-row type="flex" justify="center" :gutter="16" style="margin-top:5vh">
@@ -44,11 +45,9 @@
            </a-card>
            
          </a-col>
-         <a-col :span="24">
+         <!-- <a-col :span="24">
            <a-divider></a-divider>
            <h2>How are you connected to this taxpayer?</h2>
-            <!-- <a-divider></a-divider> -->
-           <!-- <a-input placeholder="type here..." v-model="taxpayer.connection"></a-input> -->
            <a-select
               mode="multiple"
               placeholder="Please select"
@@ -58,7 +57,7 @@
                 {{(i + 9).toString(36) + i}}
               </a-select-option>
           </a-select>
-         </a-col>
+         </a-col> -->
          <a-col :span="24">
          <a-row type="flex" justify="end" :gutter="16">
                   <a-col :span="24">
@@ -254,22 +253,70 @@
                     <a-button block @click="step_curr=1"> <a-icon type="left"></a-icon>Back</a-button>
                   </a-col> 
                   <a-col :span="6">
-                    <a-button :loading="loading" block type="primary" @click="save">Submit <a-icon type="save"></a-icon></a-button>
+                    <a-button block type="primary" @click="step_curr++">Next <a-icon type="right"></a-icon></a-button>
+                    <!-- <a-button :loading="loading" block type="primary" @click="save">Submit <a-icon type="save"></a-icon></a-button> -->
                   </a-col>
                 </a-row>
              </a-form>
            </a-card>
            </a-col>
          </template>
+         <template v-if="step_curr == 3">
+           <a-col :span="24">
+           <a-card>
+             <a-row type="flex" justify="center">
+                <a-col :span="20">
+                  <h2>Connections</h2>                  
+                </a-col>
+                <a-col :span="4">
+                  <a-button block type="primary" @click="search_modal=true">Add Connection</a-button>
+                </a-col>
+                <a-col :span="24">
+                  <a-divider style="margin-top:-1vh"></a-divider>
+                  <tree :data="tree"  style="height:80vh"/>
+                </a-col>
+              </a-row> 
+              <a-row type="flex" justify="end" :gutter="16">
+                  <a-col :span="24">
+                    <a-divider></a-divider>
+                  </a-col>
+                  <a-col :span="6">
+                    <a-button block @click="step_curr=1"> <a-icon type="left"></a-icon>Back</a-button>
+                  </a-col> 
+                  <a-col :span="6">
+                    <!-- <a-button block type="primary" @click="step_curr++">Next <a-icon type="right"></a-icon></a-button> -->
+                    <a-button :loading="loading" block type="primary" @click="save">Submit <a-icon type="save"></a-icon></a-button>
+                  </a-col>
+                </a-row>           
+           </a-card>
+           </a-col>
+         </template>
       </a-row>
-    
+      <a-modal v-model="search_modal" :closable="true"  @close="seach_modal=false" title="New Connection">
+        <a-row>
+          <a-col :span="24">
+            <a-input-search placeholder="Enter TIN to search for taxpayer test"></a-input-search>
+          </a-col>
+           <a-col :span="24">
+            <a-select placeholder="Enter Relationship" style="width:100%">
+              <a-select-option key="1" value="Employer" >Employer</a-select-option>
+            </a-select>
+           </a-col>
+        </a-row>
+      </a-modal>
   </div>
 </template>
 
 <script>
+
+import {tree} from 'vued3tree' 
 export default {
+  components:{
+    tree
+  },
   data(){
     return{
+      search_modal:false,
       formData:null,
       loading:false,
       step_curr:0,
@@ -278,7 +325,11 @@ export default {
         avatar:null,
         individual_details:{},
         corporate_details:{},
-        contact_details:{}
+        contact_details:{},        
+      },
+      tree: {
+          name: "123-344-888-0000 ",
+          children:[]
       }
     }
   },
@@ -297,7 +348,19 @@ export default {
       this.taxpayer.avatar = URL.createObjectURL(event.target.files[0]); 
       console.log('onFilePicked: ', this.taxpayer.avatar)     
     },
+    /**
+     * 
+     * @description Save on store only. For testing
+     */
     save(){
+      this.$store.commit('ADD_TP', this.taxpayer)
+      this.$notification.success({
+          message: 'Successful',
+          description:`New Taxpayer Created!`
+        })
+      this.$router.push('/app/taxpayer')
+    },
+    save_db(){
       this.loading=true;
       this.$http.post('/taxpayer', this.taxpayer)
       .then(result=>{
