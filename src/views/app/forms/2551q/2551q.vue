@@ -1,29 +1,32 @@
 <template>
-   <div>
+  <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Monthly Percentage Tax Return(2551M)</b>
+        <b>Quarterly Percentage Tax Return(2551Q)</b>
       </a-divider>
-      <a-form-item label="1. For the month of (MM/YYYY)">
-        <a-month-picker v-model="form.dateFiled" />
+      <a-form-item label="1. For the">
+        <a-radio-group v-model="form.yearType">
+          <a-radio :value="true">Calendar</a-radio>
+          <a-radio :value="false">Fiscal</a-radio>
+        </a-radio-group>
       </a-form-item>
-      <a-form-item label="2. Amended Return">
+      <a-form-item label="2. Year ended (MM/YYYY)">
+        <a-month-picker v-model="form.yearEndedYear" />
+      </a-form-item>
+      <a-form-item label="3. For the month of (MM/YYYY)">
+        <a-month-picker v-model="form.yearEndedMonth" />
+      </a-form-item>
+      <a-form-item label="4. Amended Return">
         <a-radio-group v-model="form.amendedYn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-model="form.numOfSheet"></a-input-number>
-      </a-form-item>
-      <a-form-item label="4. Any Taxes Witheld?">
-        <a-radio-group v-model="form.taxes_withheld">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
-        </a-radio-group>
+      <a-form-item label="5. No. of Sheets Attached">
+        <a-input-number v-model="form.numSheets"></a-input-number>
       </a-form-item>
     </a-form>
-
+    <br />
     <!-- Part I -->
     <a-form :form="form_part1" v-show="step===1">
       <a-divider orientation="left">
@@ -252,14 +255,14 @@
 </template>
 
 <script>
-// import form_2551m_image from "@/assets/forms/2551m.jpg";
+// import form_2551q_image from "@/assets/forms/2551q.jpg";
 
 export default {
   props: ["form", "step"],
   data() {
     return {
       sub: false,
-      // form_2551m_image,
+      // form_2551q_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),

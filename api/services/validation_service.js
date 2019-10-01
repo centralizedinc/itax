@@ -2,7 +2,7 @@
 
 // validators
 var form1601eValidator = require('../validators/form1601eValidator.js');
-var form2551mValidator = require('../validators/form2551mValidator.js');
+// var form2551qValidator = require('../validators/form2551qValidator.js');
 var form2000OTValidator = require('../validators/form2000otValidator');
 const form2550mValidator = require('../validators/form2550mValidator');
 
@@ -24,8 +24,8 @@ function validate(form_type, form_details) {
         //         callback(response);
         //     })
         //     break;
-        // case "2551M":
-        //     form2551mValidator.validate(form_details, (response) => {
+        // case "2551Q":
+        //     form2551qValidator.validate(form_details, (response) => {
         //         // relay response ...
         //         callback(response);
         //     })
