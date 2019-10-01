@@ -14,12 +14,18 @@
         </a-radio-group>
       </a-form-item>
       <a-form-item label="3. Joint Filing">
-        <a-radio-group v-model="form.jointFiling">
+        <a-radio-group v-model="form.joint_filing">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
+      <a-form-item label="4. Source of Income">
+        <a-radio-group v-model="form.source_of_income">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <!-- <a-form-item label="3. No. of Sheets Attached">
         <a-input-number v-model="form.numOfSheet"></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
@@ -27,7 +33,7 @@
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
-      </a-form-item>
+      </a-form-item> -->
     </a-form>
 
     <!-- Part I -->
@@ -41,9 +47,12 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-model="form.taxpayer.line_business"></a-input>
+      <a-form-item label="7. PSOC Code">
+        <a-input v-model="form.taxpayer.psoc_code"></a-input>
       </a-form-item>
+      <!-- <a-form-item label="7. Line of Business/Occupation">
+        <a-input v-model="form.taxpayer.line_business"></a-input>
+      </a-form-item> -->
       <a-form-item label="8. Withholding Agent's Name/Registered Name">
         <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
       </a-form-item>

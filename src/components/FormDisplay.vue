@@ -15,6 +15,7 @@ import Form2550m from "../plugins/pdf/printers/2550m";
 import Form1700 from "../plugins/pdf/printers/1700";
 import Form2551m from "../plugins/pdf/printers/2551m";
 import Form1701 from "../plugins/pdf/printers/1701";
+import Form2551q from "../plugins/pdf/printers/2551q";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -23,7 +24,8 @@ const printers = {
   FORM2550M: Form2550m,
   FORM1700: Form1700,
   FORM2551M: Form2551m,
-  FORM1701: Form1701
+  FORM1701: Form1701,
+  FORM2551Q: Form2551q
 };
 export default {
   props: ["form", "type"],
