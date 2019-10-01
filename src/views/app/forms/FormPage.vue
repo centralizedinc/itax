@@ -86,6 +86,8 @@ import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
 import Form1601E from "./1601e/1601e.vue";
 import Form1700 from "./1700/1700.vue";
+import Form2551M from "./2551m/2551m.vue";
+import Form1701 from "./1701/1701.vue";
 import Form2551Q from "./2551q/2551q.vue";
 
 export default {
@@ -94,6 +96,8 @@ export default {
     Form2550M,
     Form1601E,
     Form1700,
+    Form2551M,
+    Form1701,
     Form2551Q
   },
   computed: {
