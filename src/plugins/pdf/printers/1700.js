@@ -1,4 +1,4 @@
-const form = require("../templates/2551m_template").template;
+const form = require("../templates/1700_template").template;
 
 /**
  *
@@ -36,56 +36,62 @@ function getContent(forms) {
             // layout: "noBorders",
             table: {
                 // 
-                widths: [103, 50, 60, 50, 80, 60, 50],
+                widths: [103, 50, 60, 48, 82, 60, 50],
                 body: [
                     [{
-                            text: forms.month ? forms.month : ' ',
+                            text: '01',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [80, 78, 0, 0]
+                            margin: [49, 90, 0, 0]
                         },
                         {
-                            text: forms.year ? forms.year : ' ',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [0, 78, 0, 0]
-                        },
-                        {
+                            // text: forms.year ? forms.year : ' ',
                             text: forms.amendedYn == true ? 'X' : ' ',
-                            fontSize: 12,
+                            fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [40, 82, 0, 0]
+                            margin: [26, 92, 0, 0]
                         },
                         {
+                            // text: forms.amendedYn == true ? 'X' : ' ',
                             text: forms.amendedYn == false ? 'X' : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [3, 92, 0, 0]
+                        },
+                        {
+                            // text: forms.amendedYn == false ? 'X' : ' ',
+                            text: forms.joint_filing == true ? 'X' : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [20, 92, 0, 0]
+                        },
+                        {
+                            // text: forms.numOfSheet,
+                            text: forms.joint_filing == false ? 'X' : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [0, 92, 0, 0]
+                        },
+                        {
+                            // text: forms.taxes_withheld == true ? 'X' : ' ',
+                            text: forms.source_of_income == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [13, 82, 0, 0]
+                            margin: [0, 92, 0, 0]
                         },
                         {
-                            text: forms.numOfSheet,
-                            fontSize: 10,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [34, 83, 10, 0]
-                        },
-                        {
-                            text: forms.taxes_withheld == true ? 'X' : ' ',
+                            // text: forms.taxes_withheld == false ? 'X' : ' ',
+                            text: forms.source_of_income == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [40, 82, 0, 0]
-                        },
-                        {
-                            text: forms.taxes_withheld == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [25, 82, 0, 0]
+                            margin: [7, 93, 0, 0]
                         }
                     ],
 
@@ -95,36 +101,40 @@ function getContent(forms) {
         }, {
             // layout: "noBorders",
             table: {
-                widths: [200, 150, 158],
+                widths: [245, 160, 114],
                 body: [
                     [{
                             text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                            fontSize: 19,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [15, 5, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                            // text: '0  1  2   -  3  4  5   -   6  7  8 ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [85, 7, 0, 0]
-                        }, {
-                            // 38 characters only
-                            text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
-                            fontSize: 10,
+                            margin: [65, 16, 0, 0]
+                        },
+                        {
+                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                            // text: '0 0 0',
+                            fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [50, 6, 0, 0]
-                        }
+                            margin: [120, 16, 0, 0]
+                        }, {
+                            // PSOC CODE
+                            text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
+                            // text: '0  0  0  0',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [50, 16, 0, 0]
+                        },
+
                     ]
                 ]
             }
         },
 
         {
-            layout: "noBorders",
+            // layout: "noBorders",
             table: {
                 widths: [420, "*"],
                 body: [
@@ -134,7 +144,7 @@ function getContent(forms) {
                             fontSize: 10,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [14, 5, 0, 0]
+                            margin: [14, 13, 0, 0]
                         },
                         {
                             text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
@@ -147,7 +157,7 @@ function getContent(forms) {
                 ]
             }
         }, {
-            layout: "noBorders",
+            // layout: "noBorders",
             table: {
                 widths: [420, "*"],
                 body: [
@@ -170,7 +180,7 @@ function getContent(forms) {
                 ]
             }
         }, {
-            layout: "noBorders",
+            // layout: "noBorders",
             table: {
                 widths: [25, 30, 100, 30, 310],
                 body: [
