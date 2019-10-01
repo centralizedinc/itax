@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Form2551mSchema = new Schema({
+var Form2551qSchema = new Schema({
     referenceNo: Number,
     yearType: String,
     yearEndedMonth: String,
@@ -49,4 +49,4 @@ var Form2551mSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('form_2551m', Form2551mSchema);
+module.exports = mongoose.model('form_2551q', Form2551qSchema);
