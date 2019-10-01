@@ -8,7 +8,7 @@
     <a-layout-header class="header">
       <a-row type="flex" justify="start" :gutter="8">
         <a-col :span="10">
-          <h2 style="color:white;">iTax.</h2>
+          <h2 style="color:white;">Smart Tax.</h2>
         </a-col>
         <a-col :span="11">
           <a-input-search placeholder="Search" @search="onSearch" />
@@ -50,10 +50,9 @@
     </a-layout-header>
     <a-layout-content>
       <a-row
-        style="min-height:100vh; margin-top:15vh; margin-left:1vw; margin-right:1vw"
+        style="min-height:100vh; margin-top:15vh; margin-left:1vw; margin-right:1vw;"
         type="flex"
-        justify="start"
-      >
+        justify="start">
         <a-col :span="4">
           <a-row type="flex" justify="center" style="margin-bottom: 2vh">
             <a-col :span="24">
@@ -62,11 +61,7 @@
               ></a-card>
             </a-col>
             <a-col :span="6">
-              <a-avatar
-                style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF"
-                :size="60"
-                :src="user.avatar"
-              ></a-avatar>
+              <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" :src="user.avatar"></a-avatar>
             </a-col>
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
@@ -83,6 +78,9 @@
               </a-menu-item>
               <a-menu-item key="/app/taxpayer">
                 <a-icon type="solution" />Taxpayers
+              </a-menu-item>
+              <a-menu-item key="/app/taxpayer/network">
+                <a-icon type="deployment-unit" />Taxpayer Network
               </a-menu-item>
               <a-menu-item key="/app/tax">
                 <a-icon type="form" />Tax Returns
@@ -101,20 +99,61 @@
           <!-- </a-card> -->
         </a-col>
         <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-          <!-- <h3>{{$route.name}}</h3> -->
-          <!-- <a-divider></a-divider> -->
+          <h3>{{$route.name}}</h3>
+          <a-divider></a-divider>
           <transition name="fade" mode="out-in">
             <router-view></router-view>
           </transition>
         </a-col>
         <a-col :span="4">
-          <a-card title="Activities" style="margin-top: 2vh">
+          <!-- <a-card title="Activities" style="margin-top: 2vh">
             <a-timeline>
               <a-timeline-item>Create a services site 2015-09-01</a-timeline-item>
               <a-timeline-item>Solve initial network problems 2015-09-01</a-timeline-item>
               <a-timeline-item>Technical testing 2015-09-01</a-timeline-item>
               <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
             </a-timeline>
+          </a-card> -->
+          <h3>My Daily Stats</h3>
+          <a-divider></a-divider>
+
+          <a-card>
+            TaxPayers
+            <vue-trend
+              :data="ttrend"
+              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
+              auto-draw
+              smooth
+              strokeWidth="5"
+            >
+            </vue-trend>
+            <!-- <trend-chart :datasets="[
+    {
+      data: ttrend,
+      fill: true,
+      className:`curve-vue`
+    }
+  ]" :min="0" padding="5 5 0" :interactive="true" @mouseMove="onMouseMove"></trend-chart> -->
+          </a-card>
+           <a-card>
+             Tax Returns
+            <vue-trend
+              :data="rtrend"
+              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
+              auto-draw
+              smooth
+            >
+            </vue-trend>
+          </a-card>
+           <a-card style="background: ">
+             Payments
+            <vue-trend
+              :data="ptrend"
+              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
+              auto-draw
+              smooth
+            >
+            </vue-trend>
           </a-card>
         </a-col>
       </a-row>
@@ -128,7 +167,13 @@
 
 
 <script>
+import VueTrend from 'vuetrend'
+import TrendChart from "vue-trend-chart";
 export default {
+  components:{
+    VueTrend,
+    TrendChart
+  },
   data() {
     return {
       user: {
@@ -158,10 +203,41 @@ export default {
       } else {
         this.$router.push(e.key);
       }
+    },
+    randomArray(){
+      var arr = []
+      for(var i=0; i<10; i++){
+        arr.push(this.random())
+      }      
+      return arr;
+    },
+    random(){
+      return Math.floor(Math.random() *10)
+    }
+  },
+  computed:{
+    ttrend(){
+      return this.randomArray()
+    },
+    rtrend(){
+      return this.randomArray()
+    },
+    ptrend(){
+      return this.randomArray()
     }
   }
 };
 </script>
 
 <style>
+.curve-vue.stroke {
+    stroke: #39af77;
+  }
+.curve-vue.fill {
+    fill: #39af77;
+  }
+.curve-vue.point {
+    fill: #39af77;
+    stroke: #39af77;
+  }
 </style>
