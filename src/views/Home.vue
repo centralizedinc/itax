@@ -6,7 +6,7 @@
       </a-avatar>
     </a-back-top>
     <a-layout-header class="header" :style="headerStyle">
-      <a-row type="flex" justify="start" :gutter="8">
+      <a-row type="flex" justify="start" :gutter="8"  data-aos="fade-up">
         <!-- <a-col :span="2">
           <a-avatar style="cursor:pointer" @click="$router.push('/')" src="https://www.lucenacity.gov.ph/img/Lucena_Seal200.png" :size="50"></a-avatar>
         </a-col>-->

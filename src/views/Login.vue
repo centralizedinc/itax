@@ -4,7 +4,7 @@
     background-size: cover">-->
     <div style="background: linear-gradient(to left, #000046, #1cb5e0);">
       <a-row style="height:100vh" type="flex" justify="start">
-        <a-col :push="1" :span="12" style="margin-top:20vh">
+        <a-col :push="1" :span="12" style="margin-top:20vh" data-aos="fade-up">
           <div style="font-size: 52px; color:#ffffff; ">Smart Tax.</div>
           <div style="font-size: 42px; color:#ffffff;">Tax Preparation Software.</div>
           <p
