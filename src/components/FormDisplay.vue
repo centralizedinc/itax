@@ -33,7 +33,8 @@ export default {
   },
   data() {
     return {
-      prev: ""
+      prev: "",
+      loading: false
       // type: ""
     };
   },
@@ -75,6 +76,7 @@ export default {
   watch: {
     form: {
       handler(val) {
+
         console.log("##### update ", this.form);
         this.refresh();
       },
