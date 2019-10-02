@@ -1,7 +1,7 @@
 const model = require('../models/UserModel');
 
 class RelationshipDao {
-    
+
     /**
      * @returns {Promise}
      */
@@ -16,7 +16,7 @@ class RelationshipDao {
     static findOneByID(id) {
         return model.findById(id).lean().exec()
     }
-    
+
     /**
      * @returns {Promise}
      * @param {Object} conditions 
@@ -38,7 +38,24 @@ class RelationshipDao {
      * @param {Object} details 
      */
     static create(details) {
-        return (new model(details)).save()
+        return new Promise((resolve, reject) => {
+            var data = {};
+            (new model(details)).save()
+                .then((result) => {
+                    data = result;
+                    const reversed_data = {
+                        relationship: result.relationship,
+                        from: result.to,
+                        to: result.from,
+                        created_by: result.created_by
+                    }
+                    return (new model(reversed_data)).save();
+                })
+                .then((reversed_result) => {
+                    resolve(data)
+                })
+                .catch((err) => reject(err));
+        })
     }
 }
 
