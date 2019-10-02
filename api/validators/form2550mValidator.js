@@ -7,21 +7,19 @@ var commonValidator = require('./commonValidator.js');
 /**
  * 
  * @param {*} form_details 
+ * @returns [Array] errors
  */
 function validate(form_details) {
 
     //validation begins ...
-    var errors = null;
+    var errors = [];
 
+    //validate required fields
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
+    //latefiling computations
+    console.log('errors', JSON.stringify(errors) )
 
-
-    console.log("############ error_messages: " + errors);
-
-    // callback({
-    //     success: success_flag,
-    //     errors: error_messages
-    // });
     return errors
 }
 
