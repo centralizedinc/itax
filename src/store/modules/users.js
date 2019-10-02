@@ -30,7 +30,7 @@ const actions = {
                 .then((account) => {
                     result.account = account.data.model;
                     context.commit("UPDATE_ACCOUNT", result.account);
-                    context.commit("UPDATE_USER", result.user);
+                    // context.commit("UPDATE_USER", result.user);
                     resolve(result);
                 })
                 .catch((err) => reject(err));
