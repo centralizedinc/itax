@@ -749,7 +749,7 @@
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
-        label="25A"
+        label="25B"
       >
         <a-input-number
           placeholder="Interest"
@@ -761,7 +761,7 @@
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
-        label="25A"
+        label="25C"
       >
         <a-input-number
           placeholder="Compromise"
@@ -773,7 +773,7 @@
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
-        label="25A"
+        label="25D"
       >
         <a-input-number
           placeholder="Total Penalties"
