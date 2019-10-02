@@ -147,6 +147,19 @@ export default {
             title: "Part II",
             description: "Computation"
           }
+        ],
+        "1601e": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation"
+          }
         ]
       },
       default_steps: [

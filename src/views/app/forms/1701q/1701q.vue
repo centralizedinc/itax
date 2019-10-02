@@ -267,10 +267,10 @@
         ></a-input-number>
       </a-form-item>
 
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
+      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
-    <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>
+    <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
   </div>
 </template>
 
@@ -290,21 +290,51 @@ export default {
       image_height: 1000
     };
   },
-  watch: {
-    step() {
-      if (this.step < 0) {
-        this.$router.push("/");
-      } else if (this.step == 2) {
-        this.sub = true;
-      }
-    }
-  },
+  // watch: {
+  //   step() {
+  //     if (this.step < 0) {
+  //       this.$router.push("/");
+  //     } else if (this.step == 2) {
+  //       this.sub = true;
+  //     }
+  //   }
+  // },
   methods: {
+    save_draft() {},
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
+    validate() {
+      this.changeStep(this.step + 1);
+      // if(this.step === 0) this.validateGeneral();
+      // else if(this.step === 1) this.validatePartI();
+    },
     submit() {
-      this.form.validateFieldsAndScroll((err, values) => {
-        if (!err) console.log("values :", values);
-      });
-    }
+      this.loading = true;
+      this.$store
+        .dispatch("VALIDATE_AND_SAVE", {
+          form_type: "1701Q",
+          form_details: this.form
+        })
+        .then(result => {
+          console.log("VALIDATE_AND_SAVE result:", result.data);
+          this.loading = false;
+          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          // window.opener.location.reload();
+          window.close();
+        })
+        .catch(err => {
+          console.log("VALIDATE_AND_SAVE", err);
+          this.loading = false;
+        });
+    },
+    // submit() {
+    //   this.form.validateFieldsAndScroll((err, values) => {
+    //     if (!err) console.log("values :", values);
+    //   });
+    // }
   },
   // watch: {
   //   form: {

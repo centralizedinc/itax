@@ -33,7 +33,7 @@ function getContent(forms) {
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
     content.push({
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 // 
                 widths: [103, 50, 60, 50, 80, 60, 50],
@@ -93,7 +93,7 @@ function getContent(forms) {
 
             }
         }, {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [200, 150, 158],
                 body: [

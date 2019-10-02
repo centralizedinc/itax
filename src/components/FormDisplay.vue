@@ -90,9 +90,9 @@ export default {
 
   methods: {
     refresh() {
-      // this.form.year = this.formatDtYear(this.form.dateFiled);
-      // this.form.month = this.formatDtMonth(this.form.dateFiled);
-
+      this.form.year = this.formatDtYear(this.form.dateFiled);
+      this.form.month = this.formatDtMonth(this.form.dateFiled);
+      console.log("form to be print: " + JSON.stringify(this.form))
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
@@ -106,17 +106,6 @@ export default {
         self.prev = dataUrl;
       });
     },
-    // formatDtYear(dt) {
-    //   var date = new Date(dt);
-    //   var month = date.getMonth() + 1;
-    //   var newDT = date.getFullYear();
-    //   return newDT;
-    // },
-    // formatDtMonth(dt) {
-    //   var date = new Date(dt);
-    //   var month = date.getMonth() + 1;
-    //   return month;
-    // },
     download() {
       var filename = this.form_type;
       var printer = printers[this.form_type];
