@@ -1,8 +1,7 @@
 'use strict'
 
-var request = require('request');
 var express = require('express');
-var path = require('path');
+const jwt = require('jsonwebtoken');
 
 var user_router = express.Router();
 
@@ -25,6 +24,69 @@ user_router.route("/")
     })
     .post((req, res) => {
         UserDao.create(req.body)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    });
+
+user_router.route("/accountid")
+    .get((req, res) => {
+        const account_id = jwt.decode(req.headers.access_token).account_id;
+        UserDao.findOneByAccountID(account_id)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
+    .post((req, res) => {
+        const account_id = jwt.decode(req.headers.access_token).account_id;
+        UserDao.modifyByAccountID(account_id, req.body)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    });
+
+
+user_router.route("/:id")
+    .get((req, res) => {
+        UserDao.findOneByID(req.params.id)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
+    .post((req, res) => {
+        UserDao.modifyByID(req.params.id, req.body)
             .then((model) => {
                 res.json({
                     success: true,

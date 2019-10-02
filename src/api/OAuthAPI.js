@@ -34,4 +34,11 @@ export default class OAuthAPI {
         console.log('code :', code);
         return axios.get(`http://localhost:5000/oauth/confirmation/${code}`)
     }
+
+    /**
+     * @returns {Promise}
+     */
+    doneSetup() {
+        return axios.get('http://localhost:5000/oauth/confirmation/setup')
+    }
 }

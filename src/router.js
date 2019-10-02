@@ -8,7 +8,7 @@ Vue.use(Router)
 function isAuthenticated(to, from, next) {
   const status = store.state.account_session && store.state.account_session.account && store.state.account_session.account.status ? parseInt(store.state.account_session.account.status) : 0;
   const is_authenticated = store.state.account_session.is_authenticated && store.state.account_session.token && status > 0;
-  
+  console.log('to.matched[0].name :', to.matched[0].name);
   if (to.matched[0].name === "Home")
     next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : "/app") : true);
   else if (to.matched[1].name === "Setup")
@@ -42,102 +42,188 @@ export default new Router({
       component: () => import('./views/confirmation/Google.vue')
     }]
   },
-  // {
-  //   path: '/app/test',
-  //   name: 'Secured',
-  //   // Testing purpose
-  //   component: () => import('./components/forms/1601e/test.vue')
-  // },
   {
     path: '/app',
     name: 'Secured',
     component: () => import( /* webpackChunkName: "main" */ '@/views/Main.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Dashboard',
-        beforeEnter: isAuthenticated,
-        component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
+    children: [{
+      path: '',
+      name: 'Dashboard',
+      beforeEnter: isAuthenticated,
+      component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
+    },
+    {
+      path: 'setup',
+      name: 'Setup',
+      beforeEnter: isAuthenticated,
+      component: () => import( /* webpackChunkName: "dash" */ '@/views/setup/Setup.vue'),
+    },
+    {
+      path: 'taxpayer',
+      name: 'Taxpayers',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
+    },
+    {
+      path: 'taxpayer/network',
+      name: 'Taxpayer Network',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Network.vue'),
+    },
+    {
+      path: 'taxpayer/new',
+      name: 'Create New Taxpayer',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
+    },
+    {
+      path: 'taxpayer/upload',
+      name: 'Upload Taxpayers',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
+    },
+    {
+      path: 'taxpayer/search',
+      name: 'Search Taxpayer',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/SearchTaxpayer.vue'),
+    },
+    {
+      path: 'tax',
+      name: 'Tax Returns',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
+    },
+    {
+      path: 'tax/form',
+      name: "Tax Form",
+      component: () => import('@/views/app/forms/FormPage.vue'),
+      children: [{
+        path: '2550m', //FreyMark
+        name: 'Form 2550m',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2550m/2550m.vue'),
       },
       {
-        path: 'setup',
-        name: 'Setup',
-        beforeEnter: isAuthenticated,
-        component: () => import( /* webpackChunkName: "dash" */ '@/views/setup/Setup.vue'),
+        path: '1601e', //FreyMark
+        name: 'Form 1601e',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
       },
       {
-        path: 'taxpayer',
-        name: 'Taxpayers',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
+        path: '2551q', //FreyChard
+        name: 'Form 2551q',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
       },
       {
-        path: 'taxpayer/network',
-        name: 'Taxpayer Network',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Network.vue'),
+        path: '1700', //Kris
+        name: 'Form 1700',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
       },
       {
-        path: 'taxpayer/new',
-        name: 'Create New Taxpayer',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
-      },
-      {
-        path: 'taxpayer/upload',
-        name: 'Upload Taxpayers',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
-      },
-      {
-        path: 'taxpayer/search',
-        name: 'Search Taxpayer',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/SearchTaxpayer.vue'),
-      },
-      {
-        path: 'tax',
-        name: 'Tax Returns',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
-      },
-      {
-        path: 'tax/form',
-        name: "Tax Form",
-        component: () => import('@/views/app/forms/FormPage.vue'),
-        children: [{
-          path: '2550m',
-          name: 'Form 2550m',
-          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2550m/2550m.vue'),
-        },
-        {
-          path: '1601e',
-          name: 'Form 1601e',
-          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
-        },
-        {
-          path: '1700',
-          name: 'Form 1700',
-          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
-        },
-        {
-          path: '2551m',
-          name: 'Form 2551m',
-          component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551m/2551m.vue')
-        }
-        ]
-      },
-      {
-        path: 'pay',
-        name: 'Payments',
-        component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),
-      },
-      {
-        path: 'user',
-        name: 'User Profile',
-        component: () => import( /* webpackChunkName: "dash" */ '@/views/app/User.vue'),
-      },
-      {
-        path: 'security',
-        name: 'Security Settings',
-        component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Security.vue'),
+        path: '1701q', //VinsChz
+        name: 'Form 1701Q',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
       }
+      ]
+    },
+    {
+      path: 'pay',
+      name: 'Payments',
+      component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),
+    },
+    {
+      path: 'user',
+      name: 'User Profile',
+      component: () => import( /* webpackChunkName: "dash" */ '@/views/app/User.vue'),
+    },
+    {
+      path: 'security',
+      name: 'Security Settings',
+      component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Security.vue'),
+    }
     ]
   },
+  // {
+  //   path: '/tax/form',
+  //   name: "Tax Form",
+  //   component: () => import('@/views/app/forms/FormPage.vue'),
+  //   children: [{
+  //       name: 'Dashboard',
+  //       // beforeEnter: isAuthenticated,
+  //       component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
+  //     },
+  //     {
+  //       path: 'setup',
+  //       name: 'Setup',
+  //       // beforeEnter: isAuthenticated,
+  //       component: () => import( /* webpackChunkName: "dash" */ '@/views/setup/Setup.vue'),
+  //     },
+  //     {
+  //       path: 'taxpayer',
+  //       name: 'Taxpayers',
+  //       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Taxpayers.vue'),
+  //     },
+  //     {
+  //       path: 'taxpayer/network',
+  //       name: 'Taxpayer Network',
+  //       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Network.vue'),
+  //     },
+  //     {
+  //       path: 'taxpayer/new',
+  //       name: 'Create New Taxpayer',
+  //       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
+  //     },
+  //     {
+  //       path: 'taxpayer/upload',
+  //       name: 'Upload Taxpayers',
+  //       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
+  //     },
+  //     {
+  //       path: 'taxpayer/search',
+  //       name: 'Search Taxpayer',
+  //       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/SearchTaxpayer.vue'),
+  //     },
+  //     {
+  //       path: 'tax',
+  //       name: 'Tax Returns',
+  //       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/TaxReturns.vue'),
+  //     },
+  //     {
+  //       path: 'tax/form',
+  //       name: "Tax Form",
+  //       component: () => import('@/views/app/forms/FormPage.vue'),
+  //       children: [{
+  //           path: '2550m',
+  //           name: 'Form 2550m',
+  //           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2550m/2550m.vue'),
+  //         },
+  //         {
+  //           path: '1601e',
+  //           name: 'Form 1601e',
+  //           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
+  //         },
+  //         {
+  //           path: '1700',
+  //           name: 'Form 1700',
+  //           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
+  //         },
+  //         {
+  //           path: '2551q',
+  //           name: 'Form 2551q',
+  //           component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: 'pay',
+  //       name: 'Payments',
+  //       component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Payments.vue'),
+  //     },
+  //     {
+  //       path: 'user',
+  //       name: 'User Profile',
+  //       component: () => import( /* webpackChunkName: "dash" */ '@/views/app/User.vue'),
+  //     },
+  //     {
+  //       path: 'security',
+  //       name: 'Security Settings',
+  //       component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Security.vue'),
+  //     }
+  //   ]
+  // },
   {
     path: '/tax/form',
     name: "Tax Form",
@@ -153,15 +239,20 @@ export default new Router({
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
     },
     {
+      path: '2551q',
+      name: 'Form 2551q',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
+    },
+    {
       path: '1700',
       name: 'Form 1700',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1700/1700.vue')
-    },
-    {
-      path: '2551m',
-      name: 'Form 2551m',
-      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551m/2551m.vue')
+    }, {
+      path: '1701q',
+      name: 'Form 1701Q',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1701q/1701q.vue')
     }
+
     ]
   }
   ]

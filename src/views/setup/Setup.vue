@@ -4,12 +4,21 @@
       <a-tab-pane :disabled="loading || currentView===2" :key="0" tab="Personal Details" />
       <a-tab-pane :disabled="loading || currentView===2" :key="1" tab="Taxpayer Information" />
       <a-tab-pane :disabled="loading || currentView!==2" :key="2" tab="Connections" />
+
+      <a-button
+        slot="tabBarExtraContent"
+        type="primary"
+        v-if="currentView===2"
+        @click="showAddTP=true"
+      >Add Taxpayer</a-button>
     </a-tabs>
     <component
       v-bind:is="view_components[currentView]"
       :details="details"
       :full="true"
       :loading="loading"
+      :showAddTP="showAddTP"
+      @hideAddTP="showAddTP=false"
       @next="next"
       @previous="next"
       @submitTaxpayer="submitTaxpayer"
@@ -30,6 +39,7 @@ export default {
   },
   data() {
     return {
+      showAddTP: false,
       loading: false,
       details: {
         user: { avatar: {}, name: {} },
@@ -69,8 +79,9 @@ export default {
     },
     submitTaxpayer() {
       this.loading = true;
+      this.details.user.tin = this.details.taxpayer.tin;
       this.$store
-        .dispatch("CREATE_TAXPAYER", this.details.taxpayer)
+        .dispatch("ACCOUNT_SETUP", this.details)
         .then(result => {
           console.log("submitTaxpayer :", result);
           this.currentView = 2;

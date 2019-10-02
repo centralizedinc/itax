@@ -3,7 +3,7 @@
 //import models
 var Form1601EModel = require('../models/forms/form1601EModel');
 var Form2550MModel = require('../models/forms/form2550MModel');
-var Form2551MModel = require('../models/forms/form2551MModel');
+var Form2551QModel = require('../models/forms/form2551QModel');
 var Form2000OTModel = require('../models/forms/form2000OTModel');
 
 // Dao

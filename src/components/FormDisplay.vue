@@ -13,14 +13,17 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import Form1601e from "../plugins/pdf/printers/1601e";
 import Form2550m from "../plugins/pdf/printers/2550m";
 import Form1700 from "../plugins/pdf/printers/1700";
-import Form2551m from "../plugins/pdf/printers/2551m";
+import Form2551q from "../plugins/pdf/printers/2551q";
+import Form1701q from "../plugins/pdf/printers/1701q";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const printers = {
   FORM1601E: Form1601e,
   FORM2550M: Form2550m,
   FORM1700: Form1700,
-  FORM2551M: Form2551m
+  FORM2551Q: Form2551q,
+  FORM1701Q: Form1701q
 };
 export default {
   props: ["form", "type"],
@@ -85,8 +88,8 @@ export default {
 
   methods: {
     refresh() {
-      this.form.year = this.formatDtYear(this.form.dateFiled);
-      this.form.month = this.formatDtMonth(this.form.dateFiled);
+      // this.form.year = this.formatDtYear(this.form.dateFiled);
+      // this.form.month = this.formatDtMonth(this.form.dateFiled);
 
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
@@ -101,17 +104,17 @@ export default {
         self.prev = dataUrl;
       });
     },
-    formatDtYear(dt) {
-      var date = new Date(dt);
-      var month = date.getMonth() + 1;
-      var newDT = date.getFullYear();
-      return newDT;
-    },
-    formatDtMonth(dt) {
-      var date = new Date(dt);
-      var month = date.getMonth() + 1;
-      return month;
-    },
+    // formatDtYear(dt) {
+    //   var date = new Date(dt);
+    //   var month = date.getMonth() + 1;
+    //   var newDT = date.getFullYear();
+    //   return newDT;
+    // },
+    // formatDtMonth(dt) {
+    //   var date = new Date(dt);
+    //   var month = date.getMonth() + 1;
+    //   return month;
+    // },
     download() {
       var filename = this.form_type;
       var printer = printers[this.form_type];

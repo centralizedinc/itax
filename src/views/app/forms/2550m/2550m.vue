@@ -1011,6 +1011,13 @@ export default {
   watch: {
     loading(val) {
       this.$emit("loading", val);
+    },
+    form(){
+      console.log("2550m form: " + this.form.returnPeriod)
+      this.form.year = this.formatDtYear(this.form.returnPeriod);
+      this.form.month = this.formatDtMonth(this.form.returnPeriod);
+      console.log("year: " + this.form.month)
+      
     }
   }
   // created() {

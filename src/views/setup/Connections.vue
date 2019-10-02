@@ -1,145 +1,97 @@
 <template>
   <a-card>
-    <a-form>
-      <a-form-item
-        label="Employer"
-        :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol"
-      >
-        <a-select
-          showSearch
-          placeholder="Search by TIN"
-          optionFilterProp="children"
-          style="width: 100%"
-          @search="handleSearch($event, 'employer')"
-          @change="handleChange($event, 'employer')"
-          :loading="loading"
-        >
-          <a-select-option
-            v-for="(d, index) in employer_taxpayers"
-            :key="index"
-            :value="d.tin"
-          >{{d.tin}}{{d.branch_code}} - {{d.individual_details.firstName}} {{d.individual_details.lastName}}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item
-        label="Spouse"
-        :label-col="formItemLayout.labelCol"
-        :wrapper-col="formItemLayout.wrapperCol"
-      >
-        <a-select
-          showSearch
-          placeholder="Search by TIN"
-          optionFilterProp="children"
-          style="width: 100%"
-          @search="handleSearch($event, 'spouse')"
-          @change="handleChange($event, 'spouse')"
-          :loading="loading"
-        >
-          <a-select-option
-            v-for="(d, index) in spouse_taxpayers"
-            :key="index"
-            :value="d.tin"
-          >{{d.tin}}{{d.branch_code}} - {{d.individual_details.firstName}} {{d.individual_details.lastName}}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item v-for="(other, index) in others" :key="index">
-        <a-select 
-          style="width: 17%" 
-          @change="other.relationship = $event"
-          placeholder="Relationship">
-          <a-select-option
-            v-for="(item, index) in relationships"
-            :key="index"
-            :value="item"
-          >{{item}}</a-select-option>
-        </a-select>
-        <a-select
-          showSearch
-          placeholder="Search by TIN"
-          optionFilterProp="children"
-          style="width: 75%"
-          @search="handleSearch($event, 'others')"
-          @change="handleChange($event, 'others', index)"
-          :loading="loading"
-        >
-          <a-select-option
-            v-for="(d, index) in others_taxpayers"
-            :key="index"
-            :value="d.tin"
-          >{{d.tin}}{{d.branch_code}} - {{d.individual_details.firstName}} {{d.individual_details.lastName}}</a-select-option>
-        </a-select>
-        <a-icon 
-          type="delete" 
-          style="cursor: pointer; color: red;font-size:20px;margin-left:5px;" 
-          @click="removeTaxpayer(index)"/>
-      </a-form-item>
-      <a-form-item style="text-align: center;">
-        <a-button type="primary" @click="addTaxpayer">Add Other Taxpayer</a-button>
-      </a-form-item>
-    </a-form>
+    <tree :data="tree" node-text="tin" style="height: 100vh" @clickedText="showDetails">
+      <div slot="node" slot-scope="data">{{data.name}} {{data.tin ? `: ${data.tin}` : ''}}</div>
+    </tree>
+    <span
+      @click="skip"
+      style="cursor: pointer; color: #3894D5;text-decoration:underline;margin-right:25px;float:right;"
+    >Skip</span>
+    <a-modal :visible="showAddTP" @cancel="$emit('hideAddTP')" title="Add Taxpayer">
+      <a-card>
+        <a-form>
+          <a-form-item>
+            <!-- <a-select
+              showSearch
+              placeholder="Search by TIN"
+              style="width: 100%"
+              @search="handleSearch($event, 'employer')"
+              @change="handleChange($event, 'employer')"
+              :loading="loading"
+            >
+              <a-select-option
+                v-for="(d, index) in employer_taxpayers"
+                :key="index"
+                :value="d.tin"
+              >{{d.tin}}{{d.branch_code}} {{d.individual_details ? `- ${d.individual_details.firstName} ${d.individual_details.lastName}`: '- New Taxpayer'}}</a-select-option>
+            </a-select>-->
+          </a-form-item>
+        </a-form>
+      </a-card>
+    </a-modal>
   </a-card>
 </template>
 
 <script>
+import { tree } from "vued3tree";
+
 export default {
+  components: {
+    tree
+  },
+  props: {
+    showAddTP: {
+      type: Boolean,
+      default: false
+    },
+    details: {
+      type: Object,
+      default: () => {
+        return {
+          taxpayer: { individual_details: {}, contact_details: {} }
+        };
+      }
+    }
+  },
   data() {
     return {
-      search_value: "",
-      loading: false,
-      loading_employer: false,
-      loading_spouse: false,
-      loading_others: false,
-      spouse_taxpayers: [],
-      employer_taxpayers: [],
-      others_taxpayers: [],
-      employer: null,
-      spouse: null,
-      others: [],
-      relationships: ["Officemate", "Siblings"],
-      formItemLayout: {
-        labelCol: {
-          span: 4
-        },
-        wrapperCol: {
-          span: 18
-        }
+      tree: {
+        name: "You",
+        children: [
+          {
+            name: "Spouse"
+          },
+          {
+            name: "Employer"
+          }
+        ]
       }
     };
   },
+  created() {
+    this.init();
+  },
   methods: {
-    addTaxpayer() {
-      this.others.push({
-        relationship: "",
-        tin: ""
-      });
+    skip() {
+      console.log("test");
+      this.$router.push("/app");
+      window.location.reload();
     },
-    removeTaxpayer(i){
-      this.others.splice(i, 1);
+    init() {
+      this.tree.tin = "111222333444";
+      //   this.tree.tin = this.details.taxpayer.tin;
     },
-    handleSearch(value, field) {
-      if (value.length >= 12) {
-        this.getDataByTIN(value, field);
-      }
+    showDetails(element, data, target) {
+      console.log(`element`, JSON.stringify(element.data));
+      console.log(`data`, JSON.stringify(data));
+      console.log(`target`, JSON.stringify(target));
+      //   this.showAddTP = true;
     },
-    handleChange(value, field, index) {
-      if (field === "others") {
-        this.others[index].tin = value;
-      } else this[field] = value;
-      this.getDataByTIN(value, field);
-    },
-    getDataByTIN(tin, field) {
-      this[`loading_${field}`] = true;
+    getConnections(tin) {
       this.$store
-        .dispatch("SEARCH_TAXPAYER", tin)
-        .then(data => {
-          this[`loading_${field}`] = false;
-          this[`${field}_taxpayers`] = data;
-        })
-        .catch(err => {
-          this[`loading_${field}`] = false;
-          console.log("err :", err);
-        });
+        .dispatch("GET_CONNECTIONS_BY_TIN", tin)
+        .then(result => {})
+        .catch(err => {});
     }
   }
 };

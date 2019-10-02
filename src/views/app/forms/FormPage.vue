@@ -86,7 +86,8 @@ import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
 import Form1601E from "./1601e/1601e.vue";
 import Form1700 from "./1700/1700.vue";
-import Form2551M from "./2551m/2551m.vue";
+import Form2551Q from "./2551q/2551q.vue";
+import Form1701Q from "./1701q/1701q.vue";
 
 export default {
   components: {
@@ -94,7 +95,8 @@ export default {
     Form2550M,
     Form1601E,
     Form1700,
-    Form2551M
+    Form2551Q,
+    Form1701Q
   },
   computed: {
     affix_computation() {
