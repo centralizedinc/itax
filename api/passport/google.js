@@ -44,7 +44,7 @@ function signInGoogle(profile, google_access_token) {
                 if (!account) {
                     result.new_account = true;
                     return AccountDao.create({
-                        method: 'facebook', email: profile.emails[0].value, google_id: profile.id, google_access_token,
+                        method: 'google', email: profile.emails[0].value, google_id: profile.id, google_access_token,
                         status: 1
                     })
                 }
