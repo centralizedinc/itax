@@ -36,31 +36,36 @@ function getContent(forms) {
     content.push({
             layout: "noBorders",
             table: {
-                // 
-                widths: [103, 50, 60, 42, 62, 60, 50],
+                // add width if column added
+                widths: [103, 50, 60, 60, 42, 62, 60, 50],
                 body: [
                     [{
                             text: '01',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [72, 80, 0, 0]
+                            margin: [62, 47, 0, 0]
                         },
                         {
-                            // text: forms.year ? forms.year : ' ',
-                            text: forms.amendedYn == true ? 'X' : ' ',
+                            text: forms.quarter == 1 ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [41, 82, 0, 0]
+                            margin: [46, 47, 0, 0]
                         },
                         {
-                            // text: forms.amendedYn == true ? 'X' : ' ',
-                            text: forms.amendedYn == false ? 'X' : ' ',
+                            text: forms.quarter == 2 ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [17, 83, 0, 0]
+                            margin: [28, 45, 0, 0]
+                        },
+                        {
+                            text: forms.quarter == 3 ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [18, 43, 0, 0]
                         },
                         {
                             // text: forms.amendedYn == false ? 'X' : ' ',
@@ -184,7 +189,7 @@ function getContent(forms) {
                 ]
             }
         }, {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [140, 358],
                 body: [
