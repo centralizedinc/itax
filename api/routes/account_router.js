@@ -1,16 +1,17 @@
-'use strict'
+"use strict";
 
-var request = require('request');
-var express = require('express');
-var path = require('path');
+const router = require("express").Router();
+const passport = require('passport');
 
-var user_router = express.Router();
+// Dao
+const AccountDao = require('../dao/AccountDao');
 
-const UserDao = require('../dao/UserDao');
+// Utils
+const constant_helper = require('../utils/constant_helper');
 
-user_router.route("/")
+router.route('/')
     .get((req, res) => {
-        UserDao.findAll()
+        AccountDao.findAll()
             .then((model) => {
                 res.json({
                     success: true,
@@ -24,7 +25,7 @@ user_router.route("/")
             });
     })
     .post((req, res) => {
-        UserDao.create(req.body)
+        AccountDao.create(req.body)
             .then((model) => {
                 res.json({
                     success: true,
@@ -36,6 +37,7 @@ user_router.route("/")
                     errors
                 })
             });
-    });
 
-module.exports = user_router;
+    })
+
+module.exports = router;

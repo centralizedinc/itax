@@ -8,13 +8,13 @@ Vue.use(Router)
 function isAuthenticated(to, from, next) {
   const status = store.state.account_session && store.state.account_session.account && store.state.account_session.account.status ? parseInt(store.state.account_session.account.status) : 0;
   const is_authenticated = store.state.account_session.is_authenticated && store.state.account_session.token && status > 0;
-  // console.log('status :', status);
-  // console.log('is_authenticated :', is_authenticated);
-  // console.log('to.matched[0].name :', to.matched[0].name);
+  
   if (to.matched[0].name === "Home")
-    next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : "/app") : true)
+    next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : "/app") : true);
+  else if (to.matched[1].name === "Setup")
+    next(is_authenticated && status === 1 ? true : '/');
   else if (to.matched[0].name === "Secured")
-    next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : true) : "/")
+    next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : true) : "/");
   // else next("/")
 }
 
@@ -56,13 +56,13 @@ export default new Router({
       {
         path: '',
         name: 'Dashboard',
-        // beforeEnter: isAuthenticated,
+        beforeEnter: isAuthenticated,
         component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
       },
       {
         path: 'setup',
         name: 'Setup',
-        // beforeEnter: isAuthenticated,
+        beforeEnter: isAuthenticated,
         component: () => import( /* webpackChunkName: "dash" */ '@/views/setup/Setup.vue'),
       },
       {
