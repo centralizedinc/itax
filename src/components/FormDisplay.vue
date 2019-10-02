@@ -106,6 +106,11 @@ export default {
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
       form.month = this.formatDtMonth(form.dateFiled);
+      var returnPeriod = {
+        month: this.formatDtMonth(form.returnPeriod),
+        year: this.formatDtYear(form.returnPeriod)
+      }
+      form.returnPeriod = returnPeriod;
       var dateFiled1 = {
         month: this.formatDtMonth(form.dateFiled1),
         year: this.formatDtYear(form.dateFiled1)
@@ -119,11 +124,6 @@ export default {
       }
       console.log('dateField2 :', dateFiled2)
       form.dateFiled2 = dateFiled2;
-
-
-
-
-
       console.log("this.form##### : ", form)
       var printer = printers[this.form_type];
       var document = printer.fillup(form);

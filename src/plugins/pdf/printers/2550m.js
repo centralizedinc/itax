@@ -37,7 +37,7 @@ function getContent(forms) {
             widths: [158, 80, 50, 50, 150],
             body: [
                 [{
-                    text: "XX",
+                    text: forms.returnPeriod.month ? forms.returnPeriod.month : ' ',
                     fontSize: 15,
                     akignment: 'justify',
                     // right,down,left,up
