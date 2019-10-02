@@ -77,10 +77,5 @@ router
     })
 
 
-router.route('/vault/:tin')
-.get((req, res)=>{
-    TaxpayerDao.find()
-    .then()
-})
 
 module.exports = router;
