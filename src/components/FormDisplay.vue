@@ -139,17 +139,6 @@ export default {
         self.loading = false
       });
     },
-    // formatDtYear(dt) {
-    //   var date = new Date(dt);
-    //   var month = date.getMonth() + 1;
-    //   var newDT = date.getFullYear();
-    //   return newDT;
-    // },
-    // formatDtMonth(dt) {
-    //   var date = new Date(dt);
-    //   var month = date.getMonth() + 1;
-    //   return month;
-    // },
     download() {
       var filename = this.form_type;
       var printer = printers[this.form_type];

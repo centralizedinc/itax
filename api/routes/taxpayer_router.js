@@ -3,60 +3,77 @@
 var request = require('request');
 var express = require('express');
 var path = require('path');
+const jwt = require('jsonwebtoken');
 
-var TaxpayerModel = require('../models/taxpayerDetailsModel.js')
+const TaxpayerDao = require('../dao/TaxpayerDao');
 
-var taxpayer_router = express.Router();
+var router = express.Router();
 
-taxpayer_router.route("/all")
-
-    .get((req, res)=>{
-        TaxpayerModel.find()
-        .then(results=>{
-            res.json({
-                success: true,
-                error_code:"0000",
-                data: results
-            });
-        })
-        .catch(err=>{
-            res.json({
-                success: false,
-                error_code:"0000",
-                error_msg: err
-            });
-
-        })
-    })
-
-taxpayer_router.route("/")
-
-    .get((req, res)=>{        
-        TaxpayerModel.findOne({"tin":req.query.tin},(err, resp)=>{
-
-            if(!err){
+router.route("/")
+    .get((req, res) => {
+        TaxpayerDao.findAll()
+            .then((model) => {
                 res.json({
                     success: true,
-                    error_code:"0000",
-                    data: resp
-                });
-            }else{
+                    model
+                })
+            }).catch((errors) => {
                 res.json({
                     success: false,
-                    error_code:"0000",
-                    error_msg: err
-                });
-            }
-            
-        });
+                    errors
+                })
+            });
     })
-
     .post((req, res) => {
-        var tp = new TaxpayerModel(req.body)
-        tp.save((err)=>{
-            res.json(tp);
-        });
+        var data = req.body;
+        data.created_by = jwt.decode(req.headers.access_token).account_id;
+        TaxpayerDao.create(data)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
     })
 
+router
+    .route('/tin')
+    .get((req, res) => {
+        console.log('req.query.tin :', req.query.tin);
+        TaxpayerDao.searchByTIN(req.query.tin)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
 
-module.exports = taxpayer_router;
+router
+    .route('/tin/:tin')
+    .get((req, res) => {
+        TaxpayerDao.findOneByTIN(req.params.tin)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
+
+module.exports = router;

@@ -16,7 +16,7 @@ export default {
           message: result.message,
           icon: <a-icon type="check" style="color: blue" />
         });
-        this.$router.push("/");
+        this.$router.push("/app");
       })
       .catch(err => {
         console.log("confirmation err :", err);

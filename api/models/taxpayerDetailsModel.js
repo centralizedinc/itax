@@ -39,7 +39,35 @@ var taxpayerDetailsSchema = new Schema({
     registeredName: String,
     incorporationDate: Date
   },
-  registered_name: String
+  registered_name: String,
+
+  created_by: {
+    type: String
+  },
+  modified_by: {
+    type: String
+  },
+  date_created: {
+    type: Date,
+    default: new Date()
+  },
+  date_modified: {
+    type: Date,
+    default: new Date()
+  }
+});
+
+taxpayerDetailsSchema.pre('save', function (callback) {
+    this.date_created = new Date();
+    this.date_modified = new Date();
+    callback();
+});
+
+taxpayerDetailsSchema.pre('findOneAndUpdate', function (callback) {
+    this.options.new = true;
+    this.options.runValidators = true;
+    this._update.date_modified = new Date();
+    callback();
 });
 
 module.exports = mongoose.model("taxpayer_details", taxpayerDetailsSchema);

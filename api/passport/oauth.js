@@ -92,30 +92,36 @@ passport.use('signup', new LocalStrategy({
     if (!password || !confirm || password !== confirm) return done({ message: constant_helper.invalid_password });
 
     var result = {};
-    AccountDao.create({ email, password })
-        .then((account) => {
-            result.account = account;
-            return UserDao.create({
-                account_id: account.account_id,
-                email,
-                name: {
-                    first: name.first,
-                    last: name.last
-                }
-            })
-        })
-        .then((user) => {
-            result.user = user;
-            return SendEmail.registration(email, user.name.first, user.account_id);
-        })
-        .then((send_email) => {
-            const { confirmation_url, expiry_date } = send_email;
-            result.confirmation = { confirmation_url, expiry_date };
-            return AccountDao.modifyById(result.account._id, { confirmation_url })
-        })
-        .then((account) => {
-            result.account = account;
-            done(null, result);
-        })
-        .catch((err) => done(err));
+    AccountDao.findByEmail(email)
+        .then((existing_account) => {
+            if (existing_account) done({ message: constant_helper.existing_email });
+            else {
+                AccountDao.create({ email, password })
+                    .then((account) => {
+                        result.account = account;
+                        return UserDao.create({
+                            account_id: account.account_id,
+                            email,
+                            name: {
+                                first: name.first,
+                                last: name.last
+                            }
+                        })
+                    })
+                    .then((user) => {
+                        result.user = user;
+                        return SendEmail.registration(email, user.name.first, user.account_id);
+                    })
+                    .then((send_email) => {
+                        const { confirmation_url, expiry_date } = send_email;
+                        result.confirmation = { confirmation_url, expiry_date };
+                        return AccountDao.modifyById(result.account._id, { confirmation_url })
+                    })
+                    .then((account) => {
+                        result.account = account;
+                        done(null, result);
+                    })
+                    .catch((err) => done(err));
+            }
+        }).catch((err) => done(err));
 }))

@@ -4,6 +4,9 @@ const UserModelSchema = new mongoose.Schema({
     account_id: {
         type: String
     },
+    tin: {
+        type: String
+    },
     avatar: {},
     name: {
         first: {
