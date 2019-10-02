@@ -244,10 +244,10 @@
         ></a-input-number>
       </a-form-item>
 
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
+      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
-    <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>
+    <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
   </div>
 </template>
 
@@ -267,21 +267,85 @@ export default {
       image_height: 1000
     };
   },
-  watch: {
-    step() {
-      if (this.step < 0) {
-        this.$router.push("/");
-      } else if (this.step == 2) {
-        this.sub = true;
-      }
-    }
-  },
+  // watch: {
+  //   step() {
+  //     if (this.step < 0) {
+  //       this.$router.push("/");
+  //     } else if (this.step == 2) {
+  //       this.sub = true;
+  //     }
+  //   }
+  // },
   methods: {
-    submit() {
-      this.form.validateFieldsAndScroll((err, values) => {
-        if (!err) console.log("values :", values);
+    save_draft() {},
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
+    validate() {
+      this.changeStep(this.step + 1);
+      // if(this.step === 0) this.validateGeneral();
+      // else if(this.step === 1) this.validatePartI();
+    },
+    validateGeneral() {
+      this.loading = true;
+      this.form_general.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log("validateGeneral :", values);
+          this.changeStep(1, values);
+        }
+        this.loading = false;
       });
-    }
+    },
+    validatePartI() {
+      this.loading = true;
+      this.form_part1.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log("validatePartI :", values);
+          this.changeStep(2, values);
+        }
+        this.loading = false;
+      });
+    },
+    validatePartII() {
+      this.loading = true;
+      this.form_part2.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log("validatePartII :", values);
+          this.$emit("updateForm", values);
+        } else this.loading = false;
+      });
+    },
+    submit() {
+      this.loading = true;
+      this.$store
+        .dispatch("VALIDATE_AND_SAVE", {
+          form_type: "1601E",
+          form_details: this.form
+        })
+        .then(result => {
+          console.log("VALIDATE_AND_SAVE result:", result.data);
+          this.loading = false;
+          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          // window.opener.location.reload();
+          window.close();
+        })
+        .catch(err => {
+          console.log("VALIDATE_AND_SAVE", err);
+          this.loading = false;
+        });
+    },
+    save_draft() {},
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
+    // submit() {
+    //   this.form.validateFieldsAndScroll((err, values) => {
+    //     if (!err) console.log("values :", values);
+    //   });
+    // }
   },
   // watch: {
   //   form: {

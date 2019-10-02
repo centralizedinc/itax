@@ -921,7 +921,7 @@ export default {
           form_details: this.form
         })
         .then(result => {
-          console.log("VALIDATE_AND_SAVE :", result.data);
+          console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
           this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
