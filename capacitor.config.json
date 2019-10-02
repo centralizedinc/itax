@@ -1,0 +1,7 @@
+{
+  "appId": "com.centralizedinc.smarttax",
+  "appName": "smartTax",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist"
+}

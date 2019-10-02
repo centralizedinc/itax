@@ -1,8 +1,8 @@
 <template>
-  <div>
+   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Withholding Tax Declaration (250q)</b>
+        <b>Monthly Percentage Tax Return(2551M)</b>
       </a-divider>
       <a-form-item label="1. For the month of (MM/YYYY)">
         <a-month-picker v-model="form.dateFiled" />
@@ -252,14 +252,14 @@
 </template>
 
 <script>
-// import form_1601e_image from "@/assets/forms/1601e.jpg";
+// import form_2551m_image from "@/assets/forms/2551m.jpg";
 
 export default {
   props: ["form", "step"],
   data() {
     return {
       sub: false,
-      // form_1601e_image,
+      // form_2551m_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
@@ -310,4 +310,23 @@ export default {
 .tax-form .computation-item .ant-input-number {
   width: 40vh;
 } */
+</style>
+.form-button {
+  float: right;
+  margin: 0;
+  margin-top: 5vh;
+}
+
+.tax-form .computation-item {
+  padding-left: 10vh;
+}
+
+.tax-form .computation-item-2 {
+  padding-left: 20vh;
+}
+
+.tax-form .computation-item .ant-input-number,
+.tax-form .computation-item-2 .ant-input-number {
+  width: 40vh;
+}
 </style>
