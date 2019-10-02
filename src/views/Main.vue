@@ -14,10 +14,10 @@
           <a-input-search placeholder="Search" @search="onSearch" />
         </a-col>
         <a-col :span="1">
-          <a-icon type="notification" style="color:#ffffff"></a-icon>
+          <a-icon type="notification" style="color:#ffffff; cursor:pointer"></a-icon>
         </a-col>
         <a-col :span="1">
-          <a-icon type="setting" style="color:#ffffff"></a-icon>
+          <a-icon type="setting" style="color:#ffffff; cursor:pointer"></a-icon>
         </a-col>
         <a-col :span="1">
           <a-popover
@@ -29,7 +29,7 @@
               shape="square"
               :size="35"
               :src="user.avatar"
-              style="border: 1px solid #FFFFFF"
+              style="border: 1px solid #FFFFFF; cursor:pointer"
             ></a-avatar>
             <template slot="content">
               <a-menu @click="nav">

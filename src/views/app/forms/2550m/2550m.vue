@@ -921,7 +921,7 @@ export default {
           form_details: this.form
         })
         .then(result => {
-          console.log("VALIDATE_AND_SAVE :", result.data);
+          console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
           this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
@@ -1011,6 +1011,13 @@ export default {
   watch: {
     loading(val) {
       this.$emit("loading", val);
+    },
+    form(){
+      console.log("2550m form: " + this.form.returnPeriod)
+      this.form.year = this.formatDtYear(this.form.returnPeriod);
+      this.form.month = this.formatDtMonth(this.form.returnPeriod);
+      console.log("year: " + this.form.month)
+      
     }
   }
   // created() {

@@ -29,6 +29,7 @@
     "mongoose": "^4.13.0",
     "mongoose-auto-increment-reworked": "^1.2.1",
     "mongoose-sequence-plugin": "^1.0.5",
+    "nodemon": "^1.19.3",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
@@ -42,7 +43,7 @@
     "vue-pdf": "^4.0.7",
     "vue-router": "^3.0.3",
     "vue-trend-chart": "^0.14.6",
-    "vued3tree": "^5.0.1",
+    "vued3tree": "^5.1.0",
     "vuetrend": "^0.3.4",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"

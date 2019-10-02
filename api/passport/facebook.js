@@ -41,7 +41,13 @@ function signInFacebook(profile, facebook_access_token) {
             .then((account) => {
                 if (!account) {
                     result.new_account = true;
-                    return AccountDao.create({ method: 'facebook', email: profile.emails[0].value, facebook_id: profile.id, facebook_access_token })
+                    return AccountDao.create({
+                        method: 'facebook',
+                        email: profile.emails[0].value,
+                        facebook_id: profile.id,
+                        facebook_access_token,
+                        status: 1
+                    })
                 }
                 else return account
             })

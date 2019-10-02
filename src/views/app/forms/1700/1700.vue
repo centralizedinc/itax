@@ -4,7 +4,7 @@
       <a-divider>
         <b>Annual Income Tax Return (1700)</b>
       </a-divider>
-      <a-form-item label="1. For the year (YYYY)">
+      <a-form-item label="1. For the year (YY)">
         <a-dropdown></a-dropdown>
       </a-form-item>
       <a-form-item label="2. Amended Return">
@@ -14,12 +14,18 @@
         </a-radio-group>
       </a-form-item>
       <a-form-item label="3. Joint Filing">
-        <a-radio-group v-model="form.jointFiling">
+        <a-radio-group v-model="form.joint_filing">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
+      <a-form-item label="4. Source of Income">
+        <a-radio-group v-model="form.source_of_income">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <!-- <a-form-item label="3. No. of Sheets Attached">
         <a-input-number v-model="form.numOfSheet"></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
@@ -27,7 +33,7 @@
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
-      </a-form-item>
+      </a-form-item>-->
     </a-form>
 
     <!-- Part I -->
@@ -41,20 +47,33 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Line of Business/Occupation">
+      <a-form-item label="7. PSOC Code">
+        <a-input v-model="form.taxpayer.psoc_code"></a-input>
+      </a-form-item>
+      <!-- <a-form-item label="7. Line of Business/Occupation">
         <a-input v-model="form.taxpayer.line_business"></a-input>
+      </a-form-item>-->
+      <a-form-item label="8. Tax Filer's Name">
+        <a-row>
+          <a-col :span="11">
+            <a-input placeholder="Last Name" v-model="form.taxpayer.taxpayer_last"></a-input>
+          </a-col>
+          <a-col :span="11">
+            <a-input placeholder="Given Name" v-model="form.taxpayer.taxpayer_given"></a-input>
+          </a-col>
+          <a-col :span="2">
+            <a-input placeholder="M.I." v-model="form.taxpayer.taxpayer_mi"></a-input>
+          </a-col>
+        </a-row>
       </a-form-item>
-      <a-form-item label="8. Withholding Agent's Name/Registered Name">
-        <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
-      </a-form-item>
-      <a-form-item label="9. Telephone Number">
+      <!-- <a-form-item label="9. Telephone Number">
         <a-input-number v-model="form.taxpayer.telephone_no"></a-input-number>
-      </a-form-item>
-      <a-form-item label="10. Registered Address">
+      </a-form-item> -->
+      <a-form-item label="9. Address">
         <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
       </a-form-item>
-      <a-form-item label="11. Zip Code">
-        <a-input-number v-model="form.taxpayer.zip_code"></a-input-number>
+      <a-form-item label="10. Date of Birth">
+        <a-date-picker v-model="form.birthday"></a-date-picker>
       </a-form-item>
       <a-form-item label="12. Category of Withholding Agent">
         <a-radio-group v-model="form.categoryOfAgent">
@@ -298,6 +317,7 @@ export default {
   //   }
   // },
   created() {
+    console.log("1700");
     // console.log("this.$ref.container.height :", this.$refs);
     // console.log("test :", this.$refs.container.height);
     window.addEventListener("scroll", this.handleScroll);

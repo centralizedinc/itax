@@ -13,7 +13,8 @@ function fillup(details) {
         background: function (page) {
             return [{
                 image: "form",
-                width: 600
+                width: 550,
+                margin: [25, 0, 0, 0]
             }]
         },
         content: content,
@@ -33,65 +34,65 @@ function getContent(forms) {
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
     content.push({
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 // 
-                widths: [103, 50, 60, 48, 82, 60, 50],
+                widths: [103, 50, 60, 42, 62, 60, 50],
                 body: [
                     [{
                             text: '01',
-                            fontSize: 15,
+                            fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [49, 90, 0, 0]
+                            margin: [72, 80, 0, 0]
                         },
                         {
                             // text: forms.year ? forms.year : ' ',
                             text: forms.amendedYn == true ? 'X' : ' ',
-                            fontSize: 15,
+                            fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [26, 92, 0, 0]
+                            margin: [41, 82, 0, 0]
                         },
                         {
                             // text: forms.amendedYn == true ? 'X' : ' ',
                             text: forms.amendedYn == false ? 'X' : ' ',
-                            fontSize: 15,
+                            fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [3, 92, 0, 0]
+                            margin: [17, 83, 0, 0]
                         },
                         {
                             // text: forms.amendedYn == false ? 'X' : ' ',
-                            text: forms.jointFiling == true ? 'X' : ' ',
-                            fontSize: 15,
+                            text: forms.joint_filing == true ? 'X' : ' ',
+                            fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [20, 92, 0, 0]
+                            margin: [27, 83, 0, 0]
                         },
                         {
                             // text: forms.numOfSheet,
-                            text: forms.jointFiling == false ? 'X' : ' ',
-                            fontSize: 15,
+                            text: forms.joint_filing == false ? 'X' : ' ',
+                            fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [0, 92, 0, 0]
+                            margin: [11, 83, 0, 0]
                         },
                         {
                             // text: forms.taxes_withheld == true ? 'X' : ' ',
-                            text: '6',
+                            text: forms.source_of_income == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [0, 92, 0, 0]
+                            margin: [24, 82, 0, 0]
                         },
                         {
                             // text: forms.taxes_withheld == false ? 'X' : ' ',
-                            text: '7',
+                            text: forms.source_of_income == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [7, 93, 0, 0]
+                            margin: [25, 82, 0, 0]
                         }
                     ],
 
@@ -99,33 +100,34 @@ function getContent(forms) {
 
             }
         }, {
-            // layout: "noBorders",
+            layout: "noBorders",
+            // TIN
             table: {
-                widths: [245, 160, 114],
+                widths: [245, 160, 90],
                 body: [
                     [{
-                            // text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                            text: '0  1  2   -  3  4  5   -   6  7  8 ',
+                            text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                            // text: '0  1  2   -  3  4  5   -   6  7  8 ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [65, 16, 0, 0]
+                            margin: [83, 15, 0, 0]
                         },
                         {
-                            // text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                            text: '0 0 0',
+                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                            // text: '0 0 0',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [120, 16, 0, 0]
+                            margin: [120, 14, 0, 0]
                         }, {
                             // PSOC CODE
-                            // text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
-                            text: '0  0  0  0',
+                            text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
+                            // text: '0  0  0  0',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [50, 16, 0, 0]
+                            margin: [42, 14, 0, 0]
                         },
 
                     ]
@@ -134,95 +136,113 @@ function getContent(forms) {
         },
 
         {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
-                widths: [420, "*"],
+                widths: [230, 230, 33],
                 body: [
                     [{
                             // 72 characters 
-                            text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
-                            fontSize: 10,
+                            text: forms.taxpayer.taxpayer_last == null ? ' ' : forms.taxpayer.taxpayer_last,
+                            fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [14, 13, 0, 0]
+                            margin: [4, 6, 0, 0]
                         },
                         {
-                            text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
-                            fontSize: 12,
+                            // 72 characters 
+                            text: forms.taxpayer.taxpayer_given == null ? ' ' : forms.taxpayer.taxpayer_given,
+                            fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [25, 3, 0, 0]
-                        }
+                            margin: [10, 6, 0, 0]
+                        },
+                        {
+                            // 72 characters 
+                            text: forms.taxpayer.taxpayer_mi == null ? ' ' : forms.taxpayer.taxpayer_mi,
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [10, 6, 0, 0]
+                        },
                     ]
+                ]
+            }
+        }, {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                heights: [55],
+                body: [
+                    [{
+                        // ADDRESS
+                        text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [0, 8, 0, 0]
+                    }]
                 ]
             }
         }, {
             // layout: "noBorders",
             table: {
-                widths: [420, "*"],
+                widths: [140, 358],
                 body: [
                     [{
-                            // 72 characters
-                            text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
-                            fontSize: 10,
+                            text: form.birthday ? form.birthday : ' ',
+                            fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [12, 6, 0, 0]
+                            margin: [80, 78, 0, 0]
                         },
-                        {
-                            text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'center',
-                            margin: [50, 6, 0, 0]
-                        }
-                    ]
-                ]
-            }
-        }, {
-            // layout: "noBorders",
-            table: {
-                widths: [25, 30, 100, 30, 310],
-                body: [
-                    [{
-                            text: forms.categoryOfAgent == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            margin: [13, 6, 0, 0],
-                            alignment: 'justify'
+                        // {
+                        //     text: forms.year ? forms.year : ' ',
+                        //     fontSize: 15,
+                        //     // right,down,left,up
+                        //     alignment: 'justify',
+                        //     margin: [0, 78, 0, 0]
+                        // },
+                        // {
+                        //     text: forms.categoryOfAgent == true ? 'X' : ' ',
+                        //     fontSize: 12,
+                        //     // right,down,left,up
+                        //     margin: [13, 6, 0, 0],
+                        //     alignment: 'justify'
 
-                        },
-                        {
-                            text: forms.categoryOfAgent == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            margin: [28, 6, 0, 0],
-                            alignment: 'justify'
-                        },
-                        {
-                            text: forms.availing_tax_relief == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            margin: [85, 6, 0, 0],
-                            alignment: 'justify'
-                        }, {
-                            text: forms.availing_tax_relief == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            margin: [20, 6, 0, 0],
-                            alignment: 'justify'
-                        },
-                        {
-                            // 30 characters
-                            text: forms.internationalTreatyYn,
-                            fontSize: 12,
-                            // right,down,left,up
-                            margin: [105, 6, 0, 0],
-                            alignment: 'justify'
-                        }
+                        // },
+                        // {
+                        //     text: forms.categoryOfAgent == false ? 'X' : ' ',
+                        //     fontSize: 12,
+                        //     // right,down,left,up
+                        //     margin: [28, 6, 0, 0],
+                        //     alignment: 'justify'
+                        // },
+                        // {
+                        //     text: forms.availing_tax_relief == true ? 'X' : ' ',
+                        //     fontSize: 12,
+                        //     // right,down,left,up
+                        //     margin: [85, 6, 0, 0],
+                        //     alignment: 'justify'
+                        // }, {
+                        //     text: forms.availing_tax_relief == false ? 'X' : ' ',
+                        //     fontSize: 12,
+                        //     // right,down,left,up
+                        //     margin: [20, 6, 0, 0],
+                        //     alignment: 'justify'
+                        // },
+                        // {
+                        //     // 30 characters
+                        //     text: forms.internationalTreatyYn,
+                        //     fontSize: 12,
+                        //     // right,down,left,up
+                        //     margin: [105, 6, 0, 0],
+                        //     alignment: 'justify'
+                        // }
                     ]
                 ]
-            }
+            },
+
+
         }, {
             text: '\n\n\n'
         },
