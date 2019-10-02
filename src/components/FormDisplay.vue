@@ -1,7 +1,15 @@
 <template>
   <div>
     <!-- <pdf style="display:none" :src="preview"></pdf> -->
-    <pdf style="width:100%" :src="prev"></pdf>
+    <pdf style="width:100%" :src="prev" @progress="load" v-show="!loading"></pdf>
+    <a-row type="flex" align="middle" justify="center" v-show="loading">
+      <a-col :span="6">
+        <a-icon type="loading" style="margin-top: 30vh; font-size:42px"></a-icon>
+        <!-- <a-progress type="circle" :percent="percent" /> -->
+      </a-col>
+    </a-row>
+    
+
     <!-- <br /> -->
   </div>
 </template>
@@ -35,7 +43,8 @@ export default {
   data() {
     return {
       prev: "",
-      loading: false
+      loading: false,
+      percent:0
       // type: ""
     };
   },
@@ -91,7 +100,12 @@ export default {
   },
 
   methods: {
+    load(e){
+      console.log('loaded: ', e)
+      this.percent = e*100
+    },
     refresh() {
+      this.loading = true
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
       form.month = this.formatDtMonth(form.dateFiled);
@@ -125,6 +139,7 @@ export default {
         var dataUrl = URL.createObjectURL(file);
         console.log("dataurl: " + dataUrl);
         self.prev = dataUrl;
+        self.loading = false
       });
     },
     // formatDtYear(dt) {
