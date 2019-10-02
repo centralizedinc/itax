@@ -5,112 +5,73 @@ var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
 
 var Form1701QSchema = new Schema({
-    reference_no: {
-        type: Number
+    reference_no: String,
+    dateFiled: {
+        type: Date,
+        default: new Date()
     },
-    taxpayer: {},
-    dateFiled: Date,
-    dueDate: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
+    quarter: {
+        type: Number,
+        default: 0
+    },
     amendedYn: Boolean,
     numOfSheet: {
         type: Number,
         default: 0
     },
-    opnYn: String,
-    categoryOfAgent: String,
-    specialRateYn: String,
-    internationalTreatyYn: String,
-    taxes_withheld: Boolean,
-    availing_tax_relief: Boolean,
-    // 14
-    total_tax_withheld_remitted: {
-        type: Number,
-        default: 0
-    },
-    // 16
-    tax_overrimittance:{
-        type: Number,
-        default: 0
-    },
-    overremittance: Boolean,
-    // 18
-    total_amount_overremittance:{
-        type: Number,
-        default: 0
-    },
-    amtDueCrdtb: {
-        type: Number,
-        default: 0
-    },
-    // 15a
-    prevTaxPaidCrdtb: {
-        type: Number,
-        default: 0
-    },
-    amtPayblCrdtb: {
-        type: Number,
-        default: 0
-    },
-    // 17a
-    surcharge: { 
-        type: Number,
-        default: 0
-    },
-    // 17b
-    interest: {
-        type: Number,
-        default: 0
-    },
-    // 17c
-    compromise: {
-        type: Number,
-        default: 0
-    },
-    // 17D
-    penaltiesCrdtb: {
-        type: Number,
-        default: 0
-    },
-    totalAmtPayblCrdtb: {
-        type: Number,
-        default: 0
-    },
-    refundType: String,
-    // 15b
-    advPayment: {
-        type: Number,
-        default: 0
-    },
-    // 15c
-    totTaxCredits: {
-        type: Number,
-        default: 0
-    },
-    ifOverremittance: String,
-    atcList: [{
-        seqNo: {
-            type: Number,
-            default: 0
+    taxpayer: {
+        taxpayer_name:{
+            first: String,
+            middle: String,
+            last: String
         },
-        atcCode: String,
-        payeeFlag: String,
-        txbleAmt: {
-            type: Number,
-            default: 0
+        tin: Number,
+        rdo_code: Number,
+        tax_filer_type: String,
+        registered_address: String,
+        birthday: Date,
+        email_address: String,
+        citizenship: String,
+        telephone_no: Number,
+        spouse_tin: Number,
+        spouse_rdo_code: Number,
+        spouse_tax_filer_type: String,
+        spouse_atc: { type: Number, default: 0 },
+        spouse_name: {
+            first: String,
+            middle: String,
+            last: String
         },
-        taxRate: {
-            type: Number,
-            default: 0
-        },
-        taxDue: {
-            type: Number,
-            default: 0
-        },
-        description: String
-    }],
+        spouse_citizenship: String,
+        telephone_no:Number
+    },
+    dueDate: Date,
+    returnPeriod: Date,
+    returnPeriodMonth: String,
+    returnPeriodYear: String,
+    amendedYn: Boolean,
+    numOfSheet: { type: Number, default: 0 },
+    atc: { type: Number, default: 0 }, 
+    taxCredits: { type: Number, default: 0 },
+    taxRate: { type: Number, default: 0 },
+    method_deduction: { type: Number, default: 0 },
+    spouse_atc: { type: Number, default: 0 },
+    spouse_taxCredits: { type: Number, default: 0 },
+    spouse_taxRate: { type: Number, default: 0 },
+    spouse_method_deduction: { type: Number, default: 0 },
+    otherTaxCredits: { type: Number, default: 0 },
+    totalCredits: { type: Number, default: 0 },
+    amtPaybl: { type: Number, default: 0 },
+    surcharge: { type: Number, default: 0 },
+    interest: { type: Number, default: 0 },
+    compromise: { type: Number, default: 0 },
+    penalties: { type: Number, default: 0 },
+    totalAmountPayable: { type: Number, default: 0 },
+    batchNo: { type: Number, default: 0 },
+    sched1: [],
+    sched2: [],
+    sched3: [],
+    sched4: [],
     date_created: {
         type: Date,
         default: new Date()
@@ -154,7 +115,7 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form1701QSchema, '1701q_forms', options);
+const plugin = new autoIncrement(Form2550MSchema, '1701q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin()
@@ -165,5 +126,6 @@ plugin.applyPlugin()
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });
+
 
 module.exports = mongoose.model('1701q_forms', Form1701QSchema);

@@ -1,4 +1,4 @@
-const form = require("../templates/1601e_template").template;
+const form = require("../templates/2550q_template").template;
 
 /**
  *
@@ -28,71 +28,216 @@ function fillup(details) {
  * @param {Array|Object} forms 
  */
 function getContent(forms) {
-    console.log("get content forms: " + forms)
+    console.log("get content forms: " + JSON.stringify(forms))
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
     content.push({
             layout: "noBorders",
             table: {
-                // 
-                widths: [103, 50, 60, 50, 80, 60, 50],
+              
+                widths: [90, 50],
                 body: [
                     [{
-                            text: forms.month ? forms.month : ' ',
+                            text: forms.yearended == true ? 'X' : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [80, 78, 0, 0]
+                            margin: [50, 58, 0, 0]
                         },
                         {
-                            text: forms.year ? forms.year : ' ',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [0, 78, 0, 0]
-                        },
-                        {
-                            text: forms.amendedYn == true ? 'X' : ' ',
+                            text: forms.yearended == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [40, 82, 0, 0]
+                            margin: [10, 58, 0, 0]
                         },
-                        {
-                            text: forms.amendedYn == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [13, 82, 0, 0]
-                        },
-                        {
-                            text: forms.numOfSheet,
-                            fontSize: 10,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [34, 83, 10, 0]
-                        },
-                        {
-                            text: forms.taxes_withheld == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [40, 82, 0, 0]
-                        },
-                        {
-                            text: forms.taxes_withheld == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [25, 82, 0, 0]
-                        }
+
                     ],
 
                 ]
 
             }
-        }, {
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [50,100],
+                body: [
+                    [
+                       {
+            text: forms.month ? forms.month : ' ',
+            fontSize: 15,
+            // right,down,left,up
+            alignment: 'justify',
+            margin: [70, -10, 0, 0]
+        }, 
+        {
+            text: forms.year ? forms.year : ' ',
+            fontSize: 15,
+            // right,down,left,up
+            alignment: 'justify',
+            margin: [40, -10, 0, 0]
+        }, 
+                    ]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [50,50,50,50],
+                body: [
+                    [
+                        {
+                                text: forms.quarter == 1 ? 'X' : ' ',
+                                fontSize: 12,
+                                // right,down,left,up
+                                alignment: 'justify',
+                                margin: [194, -33, 0, 0]
+                            },
+                            {
+                                text: forms.quarter == 2 ? 'X' : ' ',
+                                fontSize: 12,
+                                // right,down,left,up
+                                alignment: 'justify',
+                                margin: [136, -18, 0, 0]
+                            },
+                            {
+                                text: forms.quarter == 3 ? 'X' : ' ',
+                                fontSize: 12,
+                                // right,down,left,up
+                                alignment: 'justify',
+                                margin: [108, -33, 0, 0]
+                            },
+                            {
+                                text: forms.quarter == 4 ? 'X' : ' ',
+                                fontSize: 12,
+                                // right,down,left,up
+                                alignment: 'justify',
+                                margin: [50, -18, 0, 0]
+                            },
+                    ]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [100,300,80,80],
+                body: [
+                    [
+                       {
+            text: forms.dateFiled1 && forms.dateFiled1.month ? forms.dateFiled1.month : '',
+            fontSize: 15,
+            // right,down,left,up
+            alignment: 'justify',
+            margin: [330, -36, 0, 0]
+        }, 
+        {
+            text: forms.dateFiled1 && forms.dateFiled1.year ? forms.dateFiled1.year : '',
+            fontSize: 15,
+            // right,down,left,up
+            alignment: 'justify',
+            margin: [240, -36, 0, 0]
+        }, 
+        {
+            text: forms.dateFiled1 && forms.dateFiled2.month ? forms.dateFiled2.month : '',
+            fontSize: 15,
+            // right,down,left,up
+            alignment: 'justify',
+            margin: [-85, -24, 0, 0]
+        }, 
+        {
+            text: forms.dateFiled2 && forms.dateFiled1.year ? forms.dateFiled2.year : '',
+            fontSize: 15,
+            // right,down,left,up
+            alignment: 'justify',
+            margin: [-155, -25, 0, 0]
+        }, 
+                    ]
+                ]
+            }
+        },
+
+        // {
+        //     text: forms.year ? forms.year : ' ',
+        //     fontSize: 15,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [0, 78, 0, 0]
+        // },
+        // {
+        //     text: forms.amendedYn == true ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [40, 82, 0, 0]
+        // },
+        // {
+        //     text: forms.amendedYn == false ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [13, 82, 0, 0]
+        // },
+
+        //year ended
+
+
+
+        // {
+        //     text: forms.quarter == 1 ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [13, 82, 0, 0]
+        // },
+        // {
+        //     text: forms.quarter == 2 ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [13, 82, 0, 0]
+        // },
+        // {
+        //     text: forms.quarter == 3 ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [13, 82, 0, 0]
+        // },
+        // {
+        //     text: forms.quarter == 4 ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [13, 82, 0, 0]
+        // },
+        // {
+        //     text: forms.numOfSheet,
+        //     fontSize: 10,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [34, 83, 10, 0]
+        // },
+        // {
+        //     text: forms.taxes_withheld == true ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [40, 82, 0, 0]
+        // },
+        // {
+        //     text: forms.taxes_withheld == false ? 'X' : ' ',
+        //     fontSize: 12,
+        //     // right,down,left,up
+        //     alignment: 'justify',
+        //     margin: [25, 82, 0, 0]
+        // }
+        {
             layout: "noBorders",
             table: {
                 widths: [200, 150, 158],
