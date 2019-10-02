@@ -10,18 +10,19 @@
           <p
             style="margin-top:2vh; color:#ffffff"
           >Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
-          <a-button size="large" ghost><a-icon type="download"></a-icon>Download & Install on PC</a-button>
+          <a-button size="large" ghost>
+            <a-icon type="download"></a-icon>Download & Install on PC
+          </a-button>
           <a-row :gutter="24" style="margin-top:5vh">
-            <p style="color:#FFFFFF">Also available on: </p>
-            <a-col :span="4"  width="100" style="margin-top:1.5vh">
-              <img src="@/assets/app_store.svg"/>  
+            <p style="color:#FFFFFF">Also available on:</p>
+            <a-col :span="4" width="100" style="margin-top:1.5vh">
+              <img src="@/assets/app_store.svg" />
             </a-col>
             <a-col :span="5">
-              <img src="@/assets/google-play.png" width="150"/>  
-            </a-col>            
+              <img src="@/assets/google-play.png" width="150" />
+            </a-col>
           </a-row>
-                
-          </a-col>
+        </a-col>
         <a-col :push="2" :span="8" style="margin-top:20vh;">
           <a-card style="background: rgba(59, 79, 99, 0.62)">
             <template slot="title">
@@ -206,7 +207,7 @@ export default {
                 icon: <a-icon type="check" style="color: blue" />
               });
               this.loading = false;
-              this.$router.push("/");
+              this.$router.push("/app");
             })
             .catch(err => {
               this.$notification.open({

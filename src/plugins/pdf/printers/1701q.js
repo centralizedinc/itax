@@ -85,12 +85,11 @@ function getContent(forms) {
                             margin: [32, 46, 0, 0]
                         },
                         {
-                            // text: forms.taxes_withheld == false ? 'X' : ' ',
-                            text: forms.source_of_income == false ? 'X' : ' ',
+                            text: '4',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [25, 82, 0, 0]
+                            margin: [60, 46, 0, 0]
                         }
                     ],
                 ]
@@ -108,7 +107,7 @@ function getContent(forms) {
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [168, -26, 0, 0]
+                            margin: [168, -20, 0, 0]
                         },
                         {
                             // text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
