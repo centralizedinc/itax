@@ -160,6 +160,45 @@ export default {
             title: "Part II",
             description: "Computation"
           }
+        ],
+        "1700": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information on Tax Filer and Spouse"
+          },
+          {
+            title: "Part II",
+            description: "Total Tax Payable"
+          }
+        ],
+        // "1701q": [
+        //   {
+        //     title: "General"
+        //   },
+        //   {
+        //     title: "Part I",
+        //     description: "Background Information"
+        //   },
+        //   {
+        //     title: "Part II",
+        //     description: "Computation"
+        //   }
+        // ],
+        "2551q": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation"
+          }
         ]
       },
       default_steps: [
