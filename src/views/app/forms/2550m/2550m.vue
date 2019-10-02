@@ -926,7 +926,7 @@ export default {
           form_details: this.form
         })
         .then(result => {
-          console.log("VALIDATE_AND_SAVE :", result.data);
+          console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           if(result.data.errors && result.data.errors.length > 0){
             this.errors = result.data.errors
