@@ -8,9 +8,6 @@
         <!-- <a-progress type="circle" :percent="percent" /> -->
       </a-col>
     </a-row>
-    
-
-    <!-- <br /> -->
   </div>
 </template>
 <script>
