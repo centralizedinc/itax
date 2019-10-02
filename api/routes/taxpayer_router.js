@@ -8,6 +8,27 @@ var TaxpayerModel = require('../models/taxpayerDetailsModel.js')
 
 var taxpayer_router = express.Router();
 
+taxpayer_router.route("/all")
+
+    .get((req, res)=>{
+        TaxpayerModel.find()
+        .then(results=>{
+            res.json({
+                success: true,
+                error_code:"0000",
+                data: results
+            });
+        })
+        .catch(err=>{
+            res.json({
+                success: false,
+                error_code:"0000",
+                error_msg: err
+            });
+
+        })
+    })
+
 taxpayer_router.route("/")
 
     .get((req, res)=>{        
