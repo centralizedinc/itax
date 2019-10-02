@@ -20,9 +20,8 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item :labelCol="form.label_col" :wrapperCol="form.wrapper_col" label="3">
+      <a-form-item :labelCol="form.label_col" :wrapperCol="form.wrapper_col" label="4. Number of Sheets">
         <a-input-number
-          placeholder="4. Number of Sheets"
           v-model="form.numOfSheet"
           style="width: 100%"
         />
