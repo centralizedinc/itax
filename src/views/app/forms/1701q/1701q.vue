@@ -8,7 +8,7 @@
         <a-month-picker style="width: 100%" v-model="form.dateFiled" />
       </a-form-item>
       <a-form-item label>
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
           <a-radio :value="2">Second</a-radio>
           <a-radio :value="3">Third</a-radio>
@@ -127,15 +127,14 @@
       <a-form-item label="18. RDO Code">
         <a-input v-model="form.taxpayer.spouse_rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="19. Tax Filer Type">
+      <a-form-item label="19. Filer’s Spouse Type">
         <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
           <a-radio :value="1">Single Proprietor</a-radio>
           <a-radio :value="2">Professional</a-radio>
-          <a-radio :value="3">Estate</a-radio>
-          <a-radio :value="4">Trust</a-radio>
+          <a-radio :value="3">Compensation Earner</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="20. Alphanumeric Tax Code (ATC)">
+      <a-form-item label="20. ATC">
         <a-radio-group v-model="form.spouse_atc">
           <a-radio :value="1">II012 Business Income-Graduated IT Rates</a-radio>
           <a-radio :value="2">II015 Business Income - 8% IT Rate</a-radio>
@@ -143,13 +142,13 @@
           <a-radio :value="4">II017 Income from Profession – 8% IT Rate</a-radio>
           <a-radio :value="5">II013 Mixed Income–Graduated IT Rates</a-radio>
           <a-radio :value="6">II016 Mixed Income – 8% IT Rate</a-radio>
-          <a-radio :value="7">Compensation Earner</a-radio>
+          <a-radio :value="7">II011 Compensation Income</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="21. Spouse’s Name:">
         <a-input
           placeholder="Last Name, First Name, Middle Name"
-          v-model="form.taxpayer.spouse_taxpayer_name"
+          v-model="form.taxpayer.spouse_name"
         ></a-input>
       </a-form-item>
       <a-form-item label="22. Citizenship ">
@@ -224,7 +223,9 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="28. Tax Payable/(Overpayment)(Item 26 Less Item 27)(From Part V, Item 63)"></a-form-item>
+      <a-form-item
+        label="28. Tax Payable/(Overpayment)(Item 26 Less Item 27)(From Part V, Item 63)"
+      ></a-form-item>
       <a-form-item class="computation-item" label="A)Taxpayer/Filer">
         <a-input-number
           v-model="form.item28a"
@@ -254,7 +255,9 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="30. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"></a-form-item>
+      <a-form-item
+        label="30. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+      ></a-form-item>
       <a-form-item class="computation-item" label="A)Taxpayer/Filer">
         <a-input-number
           v-model="form.item30a"
@@ -269,7 +272,9 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="31. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"></a-form-item>
+      <a-form-item
+        label="31. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+      ></a-form-item>
       <a-form-item class="computation-item" label="(Sum of Items 30A and 30B)">
         <a-input-number
           v-model="form.item31"
@@ -365,7 +370,7 @@
         ></a-input-number>
       </a-form-item>
       <a-form-item label="35. Others"></a-form-item>
-       <a-form-item class="computation-item" label="Particulars">
+      <a-form-item class="computation-item" label="Particulars">
         <a-input-number
           v-model="form.item35a"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -409,7 +414,6 @@
 </template>
 
 <script>
-
 export default {
   props: ["form", "step"],
   data() {
@@ -480,6 +484,11 @@ export default {
 </script>
 
 <style>
+p {
+  margin-left: 22px;
+  margin-top: -11px;
+  margin-bottom: 1em;
+}
 /* .tax-form .computation-item {
   padding-left: 50px;
 }
