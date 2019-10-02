@@ -6,6 +6,10 @@ export default {
                 deepCopy(obj) {
                     return JSON.parse(JSON.stringify(obj));
                 },
+                formatTIN(tin){
+                    
+                    return tin&&tin.length==13?`${tin.substring(0,3)}-${tin.substring(3,6)}-${tin.substring(6,9)}-${tin.substring(9,13)}`:tin
+                },
                 formatDate(date, type) {
                     if (!date) {
                         return "";
@@ -20,17 +24,22 @@ export default {
                     });
                     return dt;
                 },
+                getBase64(img, callback) {
+                    const reader = new FileReader();
+                    reader.addEventListener("load", () => callback(reader.result));
+                    reader.readAsDataURL(img);
+                },
                 formatDtYear(dt) {
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     var newDT = date.getFullYear();
                     return newDT;
-                  },
-                  formatDtMonth(dt) {
+                },
+                formatDtMonth(dt) {
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     return month;
-                  },
+                },
             },
         })
     }

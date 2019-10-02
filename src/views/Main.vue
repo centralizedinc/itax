@@ -28,7 +28,7 @@
             <a-avatar
               shape="square"
               :size="35"
-              :src="user.avatar"
+              :src="user.avatar.location"
               style="border: 1px solid #FFFFFF; cursor:pointer"
             ></a-avatar>
             <template slot="content">
@@ -61,7 +61,7 @@
               ></a-card>
             </a-col>
             <a-col :span="6">
-              <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" :src="user.avatar"></a-avatar>
+              <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" :src="user.avatar.location"></a-avatar>
             </a-col>
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">

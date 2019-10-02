@@ -2,6 +2,7 @@
 
 const router = require("express").Router();
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 // Dao
 const AccountDao = require('../dao/AccountDao');
@@ -39,6 +40,16 @@ router
                 model: user
             });
         })(req, res, next);
+    })
+
+router
+    .route('/confirmation/setup')
+    .get((req, res) => {
+        const account_id = jwt.decode(req.headers.access_token).account_id;
+
+        AccountDao.modifyByAccountId(account_id, { status: 2 })
+            .then((model) => res.json({ message: constant_helper.confirmation_success, model }))
+            .catch((error) => res.json({ error }));
     })
 
 router
