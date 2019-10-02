@@ -55,7 +55,7 @@
       </a-radio-group>
     </a-form-item>
     <a-form-item
-      v-if="details.taxpayer.taxpayer_type === 0 && details.taxpayer.individual_details.civil_status === 'M'"
+      v-if="details.taxpayer.taxpayer_type === 'I' && details.taxpayer.individual_details.civil_status === 'M'"
       label="Spouse TIN"
       :label-col="formItemLayout.labelCol"
       :wrapper-col="formItemLayout.wrapperCol"

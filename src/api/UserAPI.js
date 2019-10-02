@@ -22,7 +22,7 @@ export default class UserAPI {
      * @returns {Promise} 
      * @param {Object} updated_account 
      */
-    update(updated_account) {
+    updateByAccountID(updated_account) {
         return axios.post(`/users/accountid`, updated_account);
     }
 }

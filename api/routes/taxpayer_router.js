@@ -6,6 +6,7 @@ var path = require('path');
 const jwt = require('jsonwebtoken');
 
 const TaxpayerDao = require('../dao/TaxpayerDao');
+const UserDao = require('../dao/UserDao');
 
 var router = express.Router();
 
@@ -62,13 +63,25 @@ router
 router
     .route('/tin/:tin')
     .get((req, res) => {
+        var taxpayer = {}
+        console.log('req.params.tin :', req.params.tin);
         TaxpayerDao.findOneByTIN(req.params.tin)
-            .then((model) => {
+            .then((taxpayer) => {
+                console.log('taxpayer :', taxpayer);
+                taxpayer = taxpayer;
+                return UserDao.findOne({ tin: req.params.tin });
+            })
+            .then((user) => {
+                console.log('user :', user);
                 res.json({
                     success: true,
-                    model
+                    model: {
+                        taxpayer,
+                        user
+                    }
                 })
-            }).catch((errors) => {
+            })
+            .catch((errors) => {
                 res.json({
                     success: false,
                     errors
@@ -77,10 +90,5 @@ router
     })
 
 
-router.route('/vault/:tin')
-.get((req, res)=>{
-    TaxpayerDao.find()
-    .then()
-})
 
 module.exports = router;

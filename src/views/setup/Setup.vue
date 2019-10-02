@@ -18,7 +18,8 @@
       :full="true"
       :loading="loading"
       :showAddTP="showAddTP"
-      @hideAddTP="showAddTP=false"
+      :avatar="avatar"
+      @showAddTP="showAddTP=$event"
       @next="next"
       @previous="next"
       @submitTaxpayer="submitTaxpayer"
@@ -41,6 +42,10 @@ export default {
     return {
       showAddTP: false,
       loading: false,
+      avatar: {
+        image_url: "",
+        form_data: ""
+      },
       details: {
         user: { avatar: {}, name: {} },
         taxpayer: { individual_details: {}, contact_details: {} }
@@ -58,12 +63,13 @@ export default {
     init() {
       console.log("this.user.avatar :", this.user.avatar);
       this.details.user.name = this.user.name;
-      this.details.user.avatar.image_url = this.user.avatar.location;
+      this.avatar.image_url = this.user.avatar.location;
+      this.details.user.avatar = this.user.avatar;
       this.details.user.email = this.user.email;
       this.details.taxpayer.individual_details.firstName = this.user.name.first;
       this.details.taxpayer.individual_details.lastName = this.user.name.last;
       this.details.taxpayer.contact_details.email = this.user.email;
-      this.details.taxpayer.taxpayer_type = 0;
+      this.details.taxpayer.taxpayer_type = 'I';
     },
     next(i) {
       // this.details.taxpayer.individual_details.firstName = this.details.user.name.first;
@@ -80,6 +86,8 @@ export default {
     submitTaxpayer() {
       this.loading = true;
       this.details.user.tin = this.details.taxpayer.tin;
+      // if (!this.avatar.form_data)
+      //   this.details.user.avatar = this.user.avatar;
       this.$store
         .dispatch("ACCOUNT_SETUP", this.details)
         .then(result => {
