@@ -18,7 +18,6 @@ validate_router.route("/")
         var form_type = req.body.form_type;
         var form_details = req.body.form_details;
 
-
         console.log("form_type: " + form_type);
         console.log("form_details: " + JSON.stringify(form_details));
 
