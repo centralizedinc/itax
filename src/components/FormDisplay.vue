@@ -15,6 +15,7 @@ import Form2550m from "../plugins/pdf/printers/2550m";
 import Form1700 from "../plugins/pdf/printers/1700";
 import Form2551q from "../plugins/pdf/printers/2551q";
 import Form1701q from "../plugins/pdf/printers/1701q";
+import Form2550q from "../plugins/pdf/printers/2550q";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -23,7 +24,8 @@ const printers = {
   FORM2550M: Form2550m,
   FORM1700: Form1700,
   FORM2551Q: Form2551q,
-  FORM1701Q: Form1701q
+  FORM1701Q: Form1701q,
+  FORM2550Q: Form2550q,
 };
 export default {
   props: ["form", "type"],
@@ -83,18 +85,37 @@ export default {
     }
   },
   created() {
-    console.log("form 1601e display");
+    console.log("form display :", this.form);
     console.log("this.type.toUpperCase() :", this.form_type);
     this.refresh();
   },
 
   methods: {
     refresh() {
-      // this.form.year = this.formatDtYear(this.form.dateFiled);
-      // this.form.month = this.formatDtMonth(this.form.dateFiled);
+      var form = this.deepCopy(this.form);
+      form.year = this.formatDtYear(form.dateFiled);
+      form.month = this.formatDtMonth(form.dateFiled);
+      var dateFiled1 = {
+        month: this.formatDtMonth(form.dateFiled1),
+        year: this.formatDtYear(form.dateFiled1)
+      }
+      console.log('dateField1 :', dateFiled1)
+      form.dateFiled1 = dateFiled1;
 
+   var dateFiled2 = {
+        month: this.formatDtMonth(form.dateFiled2),
+        year: this.formatDtYear(form.dateFiled2)
+      }
+      console.log('dateField2 :', dateFiled2)
+      form.dateFiled2 = dateFiled2;
+
+
+
+
+
+      console.log("this.form##### : ", form)
       var printer = printers[this.form_type];
-      var document = printer.fillup(this.form);
+      var document = printer.fillup(form);
       var self = this;
       const pdfDocGenerator = pdfMake.createPdf(document);
       pdfDocGenerator.getBuffer(function(buffer) {
