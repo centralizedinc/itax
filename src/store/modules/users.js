@@ -18,7 +18,7 @@ const actions = {
     ACCOUNT_SETUP(context, data) {
         return new Promise((resolve, reject) => {
             var result = {}
-            new UserAPI(context.rootState.account_session.token).update(data.user)
+            new UserAPI(context.rootState.account_session.token).updateByAccountID(data.user)
                 .then((user) => {
                     result.user = user.data.model;
                     return context.dispatch("CREATE_TAXPAYER", data.taxpayer)

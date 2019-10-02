@@ -64,7 +64,7 @@ class UserDao {
      * @param {Object} details 
      */
     static modifyByAccountID(account_id, details) {
-        return model.findOneAndUpdate(account_id, details).exec();
+        return model.findOneAndUpdate({ account_id }, details).exec();
     }
 }
 
