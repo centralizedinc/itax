@@ -26,7 +26,7 @@ export default new Router({
     children: [{
       path: '',
       name: "Login",
-      beforeEnter: isAuthenticated,
+      // beforeEnter: isAuthenticated,
       component: () => import('./views/Login.vue')
     }, {
       path: 'confirmation/:code',
@@ -49,13 +49,13 @@ export default new Router({
     children: [{
       path: '',
       name: 'Dashboard',
-      beforeEnter: isAuthenticated,
+      // beforeEnter: isAuthenticated,
       component: () => import( /* webpackChunkName: "dash" */ '@/views/app/Dashboard.vue'),
     },
     {
       path: 'setup',
       name: 'Setup',
-      beforeEnter: isAuthenticated,
+      // beforeEnter: isAuthenticated,
       component: () => import( /* webpackChunkName: "dash" */ '@/views/setup/Setup.vue'),
     },
     {
