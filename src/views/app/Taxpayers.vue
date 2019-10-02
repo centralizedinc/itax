@@ -118,11 +118,13 @@ export default {
     methods:{
         init(){
             this.loading = true;
-            this.$http.get('/taxpayer/all')
+            console.log('user######### ', JSON.stringify(this.$store.state.account_session.user.tin))
+
+            this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
             .then(result=>{
                 this.loading = false;
                 console.log('result', JSON.stringify(result))
-                this.taxpayers = result.data.data
+                this.taxpayers = result.data.model
             })
             .catch(err=>{
                 this.loading = false;

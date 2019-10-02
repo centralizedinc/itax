@@ -9,9 +9,9 @@
         @change="handleChangeAvatar"
       >
         <img
-          v-if="details && details.user && details.user.avatar && details.user.avatar.image_url"
-          :src="details.user.avatar.image_url"
-          :alt="details.user.avatar.image_url"
+          v-if="avatar && avatar.image_url"
+          :src="avatar.image_url"
+          :alt="avatar.image_url"
         />
         <div v-else>
           <a-icon v-if="loading_avatar" type="loading" />
@@ -60,6 +60,12 @@ export default {
         return { user: { avatar: {}, name: {} } };
       }
     },
+    avatar: {
+      type: Object,
+      default: () => {
+        return { image_url: '', form_data: '' };
+      }
+    },
     loading: {
       type: Boolean,
       default: false
@@ -88,9 +94,9 @@ export default {
     uploadAvatar(file) {
       var form_data = new FormData();
       form_data.append("avatar", file, file.name);
-      this.details.user.avatar.form_data = form_data;
+      this.avatar.form_data = form_data;
       this.getBase64(file, image_url => {
-        this.details.user.avatar.image_url = image_url;
+        this.avatar.image_url = image_url;
         this.loading_avatar = false;
       });
     }

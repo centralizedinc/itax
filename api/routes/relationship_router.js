@@ -40,4 +40,21 @@ router.route("/")
 
     
 
+router.route('/:tin')
+.get((req, res)=>{
+    RelationshipDao.find({from:req.params.tin})
+    .then(model=>{
+        res.json({
+            success: true,
+            model
+        })
+    })
+    .catch(errors=>{
+        res.json({
+            success: true,
+            errors
+        })
+    })
+})
+
 module.exports = router;
