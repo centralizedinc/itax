@@ -8,9 +8,11 @@
         <a-month-picker v-model="form.dateFiled" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
-        <a-radio-group v-model="form.amendedYn">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
+        <a-radio-group v-model="form.quarter">
+          <a-radio :value="1">Yes</a-radio>
+          <a-radio :value="2">No</a-radio>
+          <a-radio :value="3">Yes</a-radio>
+          <a-radio :value="4">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="3. Short Period Return">
@@ -47,10 +49,12 @@
           <a-radio :value="4">Trust</a-radio>
         </a-radio-group>
       </a-form-item>
- <a-form-item label="8. Taxpayer’s Name (Last Name, First Name, Middle Name) /ESTATE OF (First Name, Middle Name, Last Name)/ TRUST FAO: (First Name, Middle Name, Last Name)">
+      <a-form-item
+        label="8. Taxpayer’s Name (Last Name, First Name, Middle Name) /ESTATE OF (First Name, Middle Name, Last Name)/ TRUST FAO: (First Name, Middle Name, Last Name)"
+      >
         <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
       </a-form-item>
- <a-form-item label="9. Trade Name">
+      <a-form-item label="9. Trade Name">
         <a-input v-model="form.taxpayer.trade_name"></a-input>
       </a-form-item>
 

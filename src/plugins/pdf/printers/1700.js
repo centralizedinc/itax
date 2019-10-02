@@ -174,14 +174,13 @@ function getContent(forms) {
                 heights: [55],
                 body: [
                     [{
-                            // ADDRESS
-                            text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
-                            fontSize: 14,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [0, 8, 0, 0]
-                        }
-                    ]
+                        // ADDRESS
+                        text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [0, 8, 0, 0]
+                    }]
                 ]
             }
         }, {
@@ -189,21 +188,20 @@ function getContent(forms) {
             table: {
                 widths: [140, 358],
                 body: [
-                    [
-                        {
-                        text: form.birthday ? form.birthday : ' ',
-                        fontSize: 15,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [80, 78, 0, 0]
-                    },
-                    // {
-                    //     text: forms.year ? forms.year : ' ',
-                    //     fontSize: 15,
-                    //     // right,down,left,up
-                    //     alignment: 'justify',
-                    //     margin: [0, 78, 0, 0]
-                    // },
+                    [{
+                            text: form.birthday ? form.birthday : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [80, 78, 0, 0]
+                        },
+                        // {
+                        //     text: forms.year ? forms.year : ' ',
+                        //     fontSize: 15,
+                        //     // right,down,left,up
+                        //     alignment: 'justify',
+                        //     margin: [0, 78, 0, 0]
+                        // },
                         // {
                         //     text: forms.categoryOfAgent == true ? 'X' : ' ',
                         //     fontSize: 12,
@@ -243,8 +241,8 @@ function getContent(forms) {
                     ]
                 ]
             },
-            
-            
+
+
         }, {
             text: '\n\n\n'
         },
