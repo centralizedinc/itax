@@ -267,15 +267,15 @@ export default {
       image_height: 1000
     };
   },
-  // watch: {
-  //   step() {
-  //     if (this.step < 0) {
-  //       this.$router.push("/");
-  //     } else if (this.step == 2) {
-  //       this.sub = true;
-  //     }
-  //   }
-  // },
+  watch: {
+    // step() {
+    //   if (this.step < 0) {
+    //     this.$router.push("/");
+    //   } else if (this.step == 2) {
+    //     this.sub = true;
+    //   }
+    // }
+  },
   methods: {
     save_draft() {},
     changeStep(step, form) {
@@ -287,35 +287,35 @@ export default {
       // if(this.step === 0) this.validateGeneral();
       // else if(this.step === 1) this.validatePartI();
     },
-    validateGeneral() {
-      this.loading = true;
-      this.form_general.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log("validateGeneral :", values);
-          this.changeStep(1, values);
-        }
-        this.loading = false;
-      });
-    },
-    validatePartI() {
-      this.loading = true;
-      this.form_part1.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log("validatePartI :", values);
-          this.changeStep(2, values);
-        }
-        this.loading = false;
-      });
-    },
-    validatePartII() {
-      this.loading = true;
-      this.form_part2.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log("validatePartII :", values);
-          this.$emit("updateForm", values);
-        } else this.loading = false;
-      });
-    },
+    // validateGeneral() {
+    //   this.loading = true;
+    //   this.form_general.validateFieldsAndScroll((err, values) => {
+    //     if (!err) {
+    //       console.log("validateGeneral :", values);
+    //       this.changeStep(1, values);
+    //     }
+    //     this.loading = false;
+    //   });
+    // },
+    // validatePartI() {
+    //   this.loading = true;
+    //   this.form_part1.validateFieldsAndScroll((err, values) => {
+    //     if (!err) {
+    //       console.log("validatePartI :", values);
+    //       this.changeStep(2, values);
+    //     }
+    //     this.loading = false;
+    //   });
+    // },
+    // validatePartII() {
+    //   this.loading = true;
+    //   this.form_part2.validateFieldsAndScroll((err, values) => {
+    //     if (!err) {
+    //       console.log("validatePartII :", values);
+    //       this.$emit("updateForm", values);
+    //     } else this.loading = false;
+    //   });
+    // },
     submit() {
       this.loading = true;
       this.$store

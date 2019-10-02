@@ -24,17 +24,22 @@ export default {
                     });
                     return dt;
                 },
+                getBase64(img, callback) {
+                    const reader = new FileReader();
+                    reader.addEventListener("load", () => callback(reader.result));
+                    reader.readAsDataURL(img);
+                },
                 formatDtYear(dt) {
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     var newDT = date.getFullYear();
                     return newDT;
-                  },
-                  formatDtMonth(dt) {
+                },
+                formatDtMonth(dt) {
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     return month;
-                  },
+                },
             },
         })
     }

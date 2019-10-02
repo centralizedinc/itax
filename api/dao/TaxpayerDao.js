@@ -1,9 +1,9 @@
-const model = require('../models/UserModel');
+const model = require('../models/taxpayerDetailsModel');
 
-class UserDao {
+class TaxpayerDao {
     /**
-     * @returns {Promise}
-     */
+         * @returns {Promise}
+         */
     static findAll() {
         return model.find({}).lean().exec()
     }
@@ -14,14 +14,6 @@ class UserDao {
      */
     static findOneByID(id) {
         return model.findById(id).lean().exec()
-    }
-
-    /**
-     * @returns {Promise}
-     * @param {String} account_id 
-     */
-    static findOneByAccountID(account_id) {
-        return model.findOne({ account_id }).lean().exec()
     }
 
     /**
@@ -50,22 +42,19 @@ class UserDao {
 
     /**
      * @returns {Promise}
-     * @param {String} id
-     * @param {Object} details 
+     * @param {String} tin 
      */
-    static modifyByID(id, details) {
-        return model.findByIdAndUpdate(id, details).exec();
+    static findOneByTIN(tin){
+        return model.findOne({tin}).lean().exec();
     }
-
 
     /**
      * @returns {Promise}
-     * @param {String} account_id 
-     * @param {Object} details 
+     * @param {String} tin 
      */
-    static modifyByAccountID(account_id, details) {
-        return model.findOneAndUpdate(account_id, details).exec();
+    static searchByTIN(tin) {
+        return model.find({ tin: { $regex: `^${tin}`, $options: 'mi' } }).select('_id tin branch_code individual_details').lean().exec();
     }
 }
 
-module.exports = UserDao
+module.exports = TaxpayerDao;

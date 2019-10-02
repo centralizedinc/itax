@@ -1,6 +1,7 @@
 const model = require('../models/UserModel');
 
-class UserDao {
+class RelationshipDao {
+    
     /**
      * @returns {Promise}
      */
@@ -15,15 +16,7 @@ class UserDao {
     static findOneByID(id) {
         return model.findById(id).lean().exec()
     }
-
-    /**
-     * @returns {Promise}
-     * @param {String} account_id 
-     */
-    static findOneByAccountID(account_id) {
-        return model.findOne({ account_id }).lean().exec()
-    }
-
+    
     /**
      * @returns {Promise}
      * @param {Object} conditions 
@@ -47,25 +40,6 @@ class UserDao {
     static create(details) {
         return (new model(details)).save()
     }
-
-    /**
-     * @returns {Promise}
-     * @param {String} id
-     * @param {Object} details 
-     */
-    static modifyByID(id, details) {
-        return model.findByIdAndUpdate(id, details).exec();
-    }
-
-
-    /**
-     * @returns {Promise}
-     * @param {String} account_id 
-     * @param {Object} details 
-     */
-    static modifyByAccountID(account_id, details) {
-        return model.findOneAndUpdate(account_id, details).exec();
-    }
 }
 
-module.exports = UserDao
+module.exports = RelationshipDao
