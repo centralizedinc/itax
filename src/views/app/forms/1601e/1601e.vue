@@ -282,11 +282,11 @@ export default {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
     },
-    // validate() {
-    //   this.changeStep(this.step + 1);
-    //   // if(this.step === 0) this.validateGeneral();
-    //   // else if(this.step === 1) this.validatePartI();
-    // },
+    validate() {
+      this.changeStep(this.step + 1);
+      // if(this.step === 0) this.validateGeneral();
+      // else if(this.step === 1) this.validatePartI();
+    },
     // validateGeneral() {
     //   this.loading = true;
     //   this.form_general.validateFieldsAndScroll((err, values) => {
