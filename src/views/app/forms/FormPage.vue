@@ -277,7 +277,7 @@ export default {
       return this.selected_index == index
     },
     fillup(){
-      this.form.taxpayer = this.taxpayer
+      // this.form.taxpayer = this.taxpayer
       this.view_select = false;
     },
     saveDraft() {
