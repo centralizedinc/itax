@@ -218,19 +218,27 @@ export default {
             description: "Total Tax Payable"
           }
         ],
-        // "1701q": [
-        //   {
-        //     title: "General"
-        //   },
-        //   {
-        //     title: "Part I",
-        //     description: "Background Information"
-        //   },
-        //   {
-        //     title: "Part II",
-        //     description: "Computation"
-        //   }
-        // ],
+        "1701q": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information on Taxpayer/Filer"
+          },
+          {
+            title: "Part II",
+            description: "Background Information on Spouse (if applicable)"
+          },
+          {
+            title: "Part III",
+            description: "Total Tax Payable"
+          },
+          {
+            title: "Part IV",
+            description: "Details of Payment"
+          }
+        ],
         "2551q": [
           {
             title: "General"

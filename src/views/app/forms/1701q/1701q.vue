@@ -20,11 +20,12 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item :labelCol="form.label_col" :wrapperCol="form.wrapper_col" label="4. Number of Sheets">
-        <a-input-number
-          v-model="form.numOfSheet"
-          style="width: 100%"
-        />
+      <a-form-item
+        :labelCol="form.label_col"
+        :wrapperCol="form.wrapper_col"
+        label="4. Number of Sheets"
+      >
+        <a-input-number v-model="form.numOfSheet" style="width: 100%" />
       </a-form-item>
     </a-form>
 
@@ -82,7 +83,7 @@
         <a-input style="width: 100%" v-model="form.taxpayer.citizenship"></a-input>
       </a-form-item>
       <a-form-item label="14. Foreign Tax Number (if applicable)">
-        <a-input-number style="width: 100%" v-model="form.taxpayer.telephone_no"></a-input-number>
+        <a-input-number style="width: 100%" v-model="form.taxpayer.foreign_tax_no"></a-input-number>
       </a-form-item>
       <a-form-item label="15. Claiming Foreign Tax Credits?">
         <a-radio-group v-model="form.taxCredits">
@@ -408,7 +409,7 @@
       <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
     <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>-->
   </div>
 </template>
 
@@ -458,7 +459,9 @@ export default {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          this.$store.commit("NOTIFY_MESSAGE", {
+            message: "Successfully submitted Form 2550m."
+          });
           // window.opener.location.reload();
           window.close();
         })
@@ -466,7 +469,7 @@ export default {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
-    },
+    }
     // submit() {
     //   this.form.validateFieldsAndScroll((err, values) => {
     //     if (!err) console.log("values :", values);

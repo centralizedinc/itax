@@ -25,4 +25,11 @@ export default class TaxpayersAPI {
         return axios.get(`/taxpayer/tin?tin=${tin}`);
     }
 
+    /**
+     * @returns {Promise}
+     * @param {String} tin 
+     */
+    getTaxpayerByTIN(tin){
+        return axios.get(`/taxpayer/tin/${tin}`);
+    }
 }

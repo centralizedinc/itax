@@ -36,6 +36,16 @@ const actions = {
                     else resolve(result.data.model)
                 }).catch((err) => reject(err));
         })
+    },
+    GET_TAXPAYER_BY_TIN(context, tin) {
+        return new Promise((resolve, reject) => {
+            new TaxpayersAPI(context.rootState.account_session.token)
+                .getTaxpayerByTIN(tin)
+                .then((result) => {
+                    if (result.data.errors) reject(result.data.errors);
+                    else resolve(result.data.model)
+                }).catch((err) => reject(err));
+        })
     }
 }
 
