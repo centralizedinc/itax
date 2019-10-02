@@ -63,7 +63,7 @@ returns_router.route("/validate/:form_type")
                 .then((result) => {
                     res.json({ model: result });
                 }).catch((err) => {
-                    res.json({ errors: err });
+                    res.status(500).json({ errors: err });
                 });
         } else {
             res.json({ errors });
