@@ -14,6 +14,14 @@ const RelationshipModelSchema = new mongoose.Schema({
     to: {
         type: String
     },
+    status: {
+        type: String,
+        default: 'A'
+        /**
+         * A - ACTIVE
+         * I - INACTIVE
+         */
+    },
     created_by: {
         type: String
     },
@@ -33,6 +41,7 @@ const RelationshipModelSchema = new mongoose.Schema({
 RelationshipModelSchema.pre('save', function (callback) {
     this.date_created = new Date();
     this.date_modified = new Date();
+    this.status = 'A';
     callback();
 });
 
