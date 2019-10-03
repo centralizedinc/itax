@@ -1,6 +1,12 @@
 <template>
   <a-card>
-    <tree :data="tree" node-text="tin" style="height: 100vh" @clickedText="updateDetails">
+    <tree
+      :data="tree"
+      v-if="!loading_tree"
+      node-text="tin"
+      style="height: 100vh"
+      @clickedText="updateDetails"
+    >
       <!-- <div slot="node" slot-scope="data">{{data.name}} {{data.tin ? `: ${data.tin}` : ''}}</div> -->
     </tree>
     <span
@@ -54,7 +60,7 @@
           <span
             style="margin-left: 1vh;font-weight:bold;"
           >{{taxpayer.individual_details.firstName}} {{taxpayer.individual_details.lastName}}</span>
-          <a-button style="float: right;" type="primary" @click="connect">Connect</a-button>
+          <a-button style="float: right;" :type="check_connectivity ? 'danger' : 'primary'" @click="connect">{{ check_connectivity ? 'Remove Connection' : 'Connect'}}</a-button>
         </a-card>
         <div v-else-if="search_tin && search_tin.length > 12">
           <p
@@ -66,7 +72,7 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-radio-group buttonStyle="solid" v-model="new_taxpayer.individual_details.gender">
+              <a-radio-group buttonStyle="solid" v-model="new_taxpayer.taxpayer_type">
                 <a-radio-button value="I">Individual</a-radio-button>
                 <a-radio-button value="C">Corporate</a-radio-button>
               </a-radio-group>
@@ -76,7 +82,7 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-input v-model="new_taxpayer.contact_details.email" placeholder="Email" />
+              <a-input v-model="new_taxpayer.email" placeholder="Email" />
             </a-form-item>
             <a-form-item
               label="First Name"
@@ -84,18 +90,8 @@
               :wrapper-col="formItemLayout.wrapperCol"
             >
               <a-input
-                v-model="new_taxpayer.individual_details.firstName"
+                v-model="new_taxpayer.first_name"
                 placeholder="First Name"
-              />
-            </a-form-item>
-            <a-form-item
-              label="Middle Name"
-              :label-col="formItemLayout.labelCol"
-              :wrapper-col="formItemLayout.wrapperCol"
-            >
-              <a-input
-                v-model="new_taxpayer.individual_details.middleName"
-                placeholder="Middle Name"
               />
             </a-form-item>
             <a-form-item
@@ -103,7 +99,7 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-input v-model="new_taxpayer.individual_details.lastName" placeholder="Last Name" />
+              <a-input v-model="new_taxpayer.last_name" placeholder="Last Name" />
             </a-form-item>
             <a-button block type="primary" @click="addTaxpayer">Submit</a-button>
           </a-form>
@@ -141,17 +137,14 @@ export default {
     return {
       search_tin: "",
       relationship: "",
-      tree: {
-        name: "You",
-        children: []
-      },
+      loading_tree: false,
       taxpayer: null,
       user: null,
       selected: {},
       is_busy: false,
       loading: false,
       default_relationship: null,
-      new_taxpayer: { individual_details: {}, contact_details: {} },
+      new_taxpayer: {},
       relationships: [
         "Employer",
         "Employee",
@@ -180,30 +173,50 @@ export default {
   created() {
     this.init();
   },
+  computed: {
+    account_user() {
+      return this.deepCopy(this.$store.state.account_session.user);
+    },
+    connections() {
+      return this.deepCopy(this.$store.state.relationship.connections);
+    },
+    tree() {
+      return {
+        name: "You",
+        tin: this.account_user.tin,
+        children: this.connections.length
+          ? this.connections
+          : [
+              {
+                relationship: "Spouse",
+                tin: "Spouse"
+              },
+              {
+                relationship: "Employer",
+                tin: "Employer"
+              }
+            ]
+      };
+    },
+    check_connectivity(){
+      const index = this.connections.findIndex(v => v.tin === this.search_tin);
+      return index > -1
+    }
+  },
   methods: {
     skip() {
       this.$router.push("/app");
       window.location.reload();
     },
     init() {
-      console.log('this.$store.state.account_session.user :', this.$store.state.account_session.user);
-      this.tree.tin = this.details.taxpayer.tin;
+      this.loading_tree = true;
       this.$store
-        .dispatch("GET_CONNECTIONS", { tin: this.details.taxpayer.tin })
+        .dispatch("GET_CONNECTIONS", { tin: this.account_user.tin })
         .then(result => {
-          console.log('result :', result);
-          this.tree.children = result || [
-            {
-              relationship: "Spouse",
-              tin: "Spouse"
-            },
-            {
-              relationship: "Employer",
-              tin: "Employer"
-            }
-          ];
+          this.loading_tree = false;
         })
         .catch(err => {
+          this.loading_tree = false;
           console.log("GET_CONNECTIONS err :", err);
         });
     },
@@ -238,18 +251,38 @@ export default {
       }
     },
     connect() {
+      this.loading_tree = true;
+      this.loading = true;
+      const action = this.check_connectivity ? "REMOVE_CONNECTION" : "CONNECT"
       this.$store
-        .dispatch("CONNECT", { tin: this.details.taxpayer.tin })
-        .then(result => {})
+        .dispatch(action, { 
+          relationship: this.relationship,
+          from: this.account_user.tin,
+          to: this.search_tin
+        })
+        .then(result => {
+          this.loading_tree = false;
+          this.loading = false;
+        })
         .catch(err => {
+          this.loading_tree = false;
+          this.loading = false;
           console.log("CONNECT err :", err);
         });
     },
     addTaxpayer() {
+      this.loading_tree = true;
+      this.new_taxpayer.tin = this.search_tin;
+      this.new_taxpayer.relationship = this.relationship;
+      this.new_taxpayer.from = this.account_user.tin;
+      this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`
       this.$store
-        .dispatch("ADD_AND_CONNECT_TAXPAYER", { tin: this.details.taxpayer.tin })
-        .then(result => {})
+        .dispatch("ADD_AND_CONNECT_TAXPAYER", this.new_taxpayer)
+        .then(result => {
+          this.loading_tree = false;
+        })
         .catch(err => {
+          this.loading_tree = false;
           console.log("CONNECT err :", err);
         });
     }

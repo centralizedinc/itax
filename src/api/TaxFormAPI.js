@@ -16,7 +16,6 @@ export default class TaxForm {
     saveAndValidate(form_type, form_details) {
         console.log('form_type :', form_type);
         console.log('saveAndValidate :', form_details);
-        // return axios.post(`http://localhost:5000/tax/returns/validate/${form_type}`, form_details)
         return axios.post(`tax/returns/validate/${form_type}`, form_details)
     }
 
@@ -24,7 +23,6 @@ export default class TaxForm {
      * @returns {Promise}
      */
     getReturnsDetails() {
-        // return axios.get('http://localhost:5000/tax/returns');
-        return axios.get('http://localhost:5000/tax/returns');
+        return axios.get('tax/returns');
     }
 }

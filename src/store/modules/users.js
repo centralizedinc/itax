@@ -27,6 +27,7 @@ const actions = {
                 })
                 .then((res) => {
                     if (res) {
+                        console.log('res :', res.data);
                         details.user.avatar = res.data.model;
                     }
                     return new UserAPI(context.rootState.account_session.token).updateByAccountID(details.user)
@@ -42,7 +43,7 @@ const actions = {
                 .then((account) => {
                     result.account = account.data.model;
                     context.commit("UPDATE_ACCOUNT", result.account);
-                    // context.commit("UPDATE_USER", result.user);
+                    context.commit("UPDATE_USER", result.user);
                     resolve(result);
                 })
                 .catch((err) => reject(err));

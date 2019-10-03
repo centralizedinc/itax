@@ -34,7 +34,7 @@ router.route('/avatar/:account_id')
             } else {
                 res.json({
                     success: true,
-                    model: req.files
+                    model: req.file
                 })
             }
         })

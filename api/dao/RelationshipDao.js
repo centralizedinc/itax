@@ -1,4 +1,4 @@
-const model = require('../models/UserModel');
+const model = require('../models/RelationshipModel');
 
 class RelationshipDao {
 

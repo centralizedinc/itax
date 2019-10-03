@@ -9,6 +9,7 @@ const AccountDao = require('../dao/AccountDao');
 
 // Utils
 const constant_helper = require('../utils/constant_helper');
+const email_helper = require('../utils/email');
 
 router.route('/login')
     .post(function (req, res, next) {
@@ -48,8 +49,8 @@ router
         const account_id = jwt.decode(req.headers.access_token).account_id;
 
         AccountDao.modifyByAccountId(account_id, {
-                status: 2
-            })
+            status: 2
+        })
             .then((model) => res.json({
                 message: constant_helper.confirmation_success,
                 model
@@ -88,9 +89,9 @@ router
             }
 
             AccountDao.modifyByAccountId(account_id, {
-                    status: 1,
-                    confirmation_url: null
-                })
+                status: 1,
+                confirmation_url: null
+            })
                 .then((model) => res.json({
                     message: constant_helper.confirmation_success,
                     model
@@ -123,12 +124,20 @@ router.route('/facebook')
 
 router.route('/facebook/callback')
     .get(passport.authenticate('facebook', {
-            session: false
-        }),
+        session: false
+    }),
         (req, res) => {
             // res.json(req.user)
             const code = new Buffer(JSON.stringify(req.user)).toString('base64');
             res.redirect(`http://localhost:8080/#/confirmation/facebook/${code}`)
         });
+
+router.route('/invitation')
+    .post((req, res) => {
+        const { email, name, sender } = req.body;
+        email_helper.registerInvitation(email, name, sender)
+            .then((model) => res.json({ success: true, model }))
+            .catch((errors) => res.json({ success: false, errors }));
+    })
 
 module.exports = router;

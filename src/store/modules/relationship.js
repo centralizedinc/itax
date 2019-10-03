@@ -1,5 +1,7 @@
 import TaxForm from "../../api/TaxFormAPI";
 import RelationshipAPI from "../../api/RelationshipAPI";
+import OAuthAPI from "../../api/OAuthAPI";
+import TaxpayersAPI from "../../api/TaxpayersAPI";
 
 function initialState() {
     return {
@@ -19,6 +21,11 @@ const mutations = {
     REMOVE_CONNECTION(state, data) {
         const index = state.connections.findIndex(v => v.id.toString() === data.toString());
         state.connections.splice(index, 1);
+    },
+    RESET(state) {
+        Object.keys(state).forEach(key => {
+            state[key] = initialState()[key];
+        })
     }
 }
 
@@ -39,6 +46,7 @@ const actions = {
                                     relationship: v.relationship
                                 }
                             })
+                            console.log('children :', children);
                             context.commit('SET_CONNECTION', children);
                             resolve(children)
                         }
@@ -55,7 +63,7 @@ const actions = {
                     else {
                         const child = {
                             id: result.data.model._id,
-                            tin: result.data.model.tin,
+                            tin: result.data.model.to,
                             relationship: result.data.model.relationship
                         }
                         context.commit('ADD_CONNECTION', child);
@@ -76,6 +84,47 @@ const actions = {
                         resolve(result.data.model)
                     }
                 }).catch((err) => reject(err));
+        })
+    },
+    ADD_AND_CONNECT_TAXPAYER(context, data) {
+        return new Promise((resolve, reject) => {
+            const account = {
+                email: data.email,
+                name: {
+                    first: data.first_name,
+                    last: data.last_name
+                },
+                sender: data.sender
+            }
+            new OAuthAPI(context.rootState.account_session.token)
+                .sendRegisterInvitation(account)
+                .then((result) => {
+                    const taxpayer = {
+                        tin: data.tin,
+                        individual_details: {
+                            firstName: data.first_name,
+                            lastName: data.last_name
+                        },
+                        contact_details: {
+                            email: data.email
+                        }
+                    }
+                    return new TaxpayersAPI(context.rootState.account_session.token).create(taxpayer)
+                })
+                .then((result) => {
+                    const connection = {
+                        relationship: data.relationship,
+                        to: data.tin,
+                        from: data.from
+                    }
+                    return context.dispatch("CONNECT", connection);
+                })
+                .then((result) => {
+                    resolve(result);
+                })
+                .catch((err) => {
+
+                });
         })
     }
 }
