@@ -19,6 +19,12 @@ const mutations = {
         state.token = data.token;
         state.is_authenticated = true;
     },
+    UPDATE_ACCOUNT(state, data) {
+        state.account = data;
+    },
+    UPDATE_USER(state, data) {
+        state.user = data;
+    },
     RESET(state) {
         Object.keys(state).forEach(key => {
             state[key] = initialState()[key];

@@ -19,8 +19,10 @@ passport.use(new FacebookStrategy({
     function (facebook_access_token, refreshToken, profile, done) {
         signInFacebook(profile, facebook_access_token)
             .then((result) => {
+                console.log('done signing in facebook');
                 done(null, result);
             }).catch((err) => {
+                console.log('signing in facebook err :', err);
                 done(err);
             });
     }
@@ -65,7 +67,9 @@ function signInFacebook(profile, facebook_access_token) {
                 if (result.new_account) return UserDao.create({
                     account_id: result.account.account_id,
                     email: profile.emails[0].value,
-                    avatar: profile.photos[0].value,
+                    avatar: {
+                        location: profile.photos[0].value
+                    },
                     name: {
                         first: profile.name.givenName,
                         last: profile.name.familyName
@@ -75,6 +79,7 @@ function signInFacebook(profile, facebook_access_token) {
             })
             .then((user) => {
                 result.user = user;
+                console.log('######## auth user: ', JSON.stringify(user))
                 resolve(result)
             })
             .catch((err) => {

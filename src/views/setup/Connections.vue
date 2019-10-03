@@ -1,0 +1,266 @@
+<template>
+  <a-card>
+    <tree :data="tree" node-text="tin" style="height: 100vh" @clickedText="updateDetails">
+      <!-- <div slot="node" slot-scope="data">{{data.name}} {{data.tin ? `: ${data.tin}` : ''}}</div> -->
+    </tree>
+    <span
+      @click="skip"
+      style="cursor: pointer; color: #3894D5;text-decoration:underline;margin-right:25px;float:right;"
+    >Skip</span>
+    <!-- Connect or Add Taxpayer -->
+    <a-modal
+      :visible="showAddTP"
+      @cancel="$emit('showAddTP', false)"
+      title="Add Taxpayer"
+      :footer="null"
+    >
+      <a-form>
+        <a-form-item
+          label="Search By TIN"
+          :validate-status="relationship_status"
+          :help="relationship_status === 'error' ? 'Relationship is required.' : ''"
+        >
+          <a-select
+            style="width: 25%"
+            @change="relationship = $event"
+            v-bind="default_relationship ? { defaultValue: default_relationship } : {}"
+            placeholder="Relationship"
+          >
+            <a-select-option
+              v-for="(item, index) in relationships"
+              :key="index"
+              :value="item"
+            >{{item}}</a-select-option>
+          </a-select>
+          <a-input-search
+            style="width: 75%"
+            v-model="search_tin"
+            placeholder="Search TIN"
+            @search="getDataByTIN"
+            enterButton
+            :loading="loading"
+          />
+        </a-form-item>
+      </a-form>
+      <div v-if="loading" class="align-items-middle">
+        <a-spin />
+      </div>
+      <template v-else-if="is_busy">
+        <a-card
+          :bodyStyle="{ padding: '2vh' }"
+          v-if="taxpayer && Object.keys(taxpayer).length && user && Object.keys(user).length"
+        >
+          <a-avatar :src="user.avatar.location">{{user.name.first[0]}}</a-avatar>
+          <span
+            style="margin-left: 1vh;font-weight:bold;"
+          >{{taxpayer.individual_details.firstName}} {{taxpayer.individual_details.lastName}}</span>
+          <a-button style="float: right;" type="primary" @click="connect">Connect</a-button>
+        </a-card>
+        <div v-else-if="search_tin && search_tin.length > 12">
+          <p
+            style="font-style: italic;font-size: 12px;"
+          >Taxpayer does not exist. Please input the details of the TIN owner.</p>
+          <a-form>
+            <a-form-item
+              label="Taxpayer Type"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+            >
+              <a-radio-group buttonStyle="solid" v-model="new_taxpayer.individual_details.gender">
+                <a-radio-button value="I">Individual</a-radio-button>
+                <a-radio-button value="C">Corporate</a-radio-button>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              label="Email"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+            >
+              <a-input v-model="new_taxpayer.contact_details.email" placeholder="Email" />
+            </a-form-item>
+            <a-form-item
+              label="First Name"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+            >
+              <a-input
+                v-model="new_taxpayer.individual_details.firstName"
+                placeholder="First Name"
+              />
+            </a-form-item>
+            <a-form-item
+              label="Middle Name"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+            >
+              <a-input
+                v-model="new_taxpayer.individual_details.middleName"
+                placeholder="Middle Name"
+              />
+            </a-form-item>
+            <a-form-item
+              label="Last Name"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+            >
+              <a-input v-model="new_taxpayer.individual_details.lastName" placeholder="Last Name" />
+            </a-form-item>
+            <a-button block type="primary" @click="addTaxpayer">Submit</a-button>
+          </a-form>
+        </div>
+        <span v-else style="font-style: italic;">Invalid input TIN</span>
+      </template>
+    </a-modal>
+
+    <!-- Update Taxpayer -->
+  </a-card>
+</template>
+
+<script>
+import { tree } from "vued3tree";
+
+export default {
+  components: {
+    tree
+  },
+  props: {
+    showAddTP: {
+      type: Boolean,
+      default: false
+    },
+    details: {
+      type: Object,
+      default: () => {
+        return {
+          taxpayer: { individual_details: {}, contact_details: {} }
+        };
+      }
+    }
+  },
+  data() {
+    return {
+      search_tin: "",
+      relationship: "",
+      tree: {
+        name: "You",
+        children: []
+      },
+      taxpayer: null,
+      user: null,
+      selected: {},
+      is_busy: false,
+      loading: false,
+      default_relationship: null,
+      new_taxpayer: { individual_details: {}, contact_details: {} },
+      relationships: [
+        "Employer",
+        "Employee",
+        "Spouse",
+        "Officemate",
+        "Siblings"
+      ],
+      relationship_status: "",
+      formItemLayout: {
+        labelCol: {
+          span: 5
+        },
+        wrapperCol: {
+          span: 19
+        }
+      }
+    };
+  },
+  watch: {
+    search_tin() {
+      this.is_busy = false;
+      this.taxpayer = null;
+      this.user = null;
+    }
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    skip() {
+      this.$router.push("/app");
+      window.location.reload();
+    },
+    init() {
+      console.log('this.$store.state.account_session.user :', this.$store.state.account_session.user);
+      this.tree.tin = this.details.taxpayer.tin;
+      this.$store
+        .dispatch("GET_CONNECTIONS", { tin: this.details.taxpayer.tin })
+        .then(result => {
+          console.log('result :', result);
+          this.tree.children = result || [
+            {
+              relationship: "Spouse",
+              tin: "Spouse"
+            },
+            {
+              relationship: "Employer",
+              tin: "Employer"
+            }
+          ];
+        })
+        .catch(err => {
+          console.log("GET_CONNECTIONS err :", err);
+        });
+    },
+    updateDetails(element) {
+      console.log(`element`, JSON.stringify(element.data));
+      this.selected = element.data;
+    },
+    getConnections(tin) {
+      this.$store
+        .dispatch("GET_CONNECTIONS_BY_TIN", tin)
+        .then(result => {})
+        .catch(err => {});
+    },
+    getDataByTIN() {
+      this.is_busy = true;
+      this.taxpayer = null;
+      this.user = null;
+      if (this.search_tin && this.search_tin.length > 12) {
+        this.loading = true;
+        this.$store
+          .dispatch("GET_TAXPAYER_BY_TIN", this.search_tin)
+          .then(data => {
+            console.log("data :", data);
+            this.loading = false;
+            this.taxpayer = data.taxpayer;
+            this.user = data.user;
+          })
+          .catch(err => {
+            this.loading = false;
+            console.log("err :", err);
+          });
+      }
+    },
+    connect() {
+      this.$store
+        .dispatch("CONNECT", { tin: this.details.taxpayer.tin })
+        .then(result => {})
+        .catch(err => {
+          console.log("CONNECT err :", err);
+        });
+    },
+    addTaxpayer() {
+      this.$store
+        .dispatch("ADD_AND_CONNECT_TAXPAYER", { tin: this.details.taxpayer.tin })
+        .then(result => {})
+        .catch(err => {
+          console.log("CONNECT err :", err);
+        });
+    }
+  }
+};
+</script>
+
+<style>
+.align-items-middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

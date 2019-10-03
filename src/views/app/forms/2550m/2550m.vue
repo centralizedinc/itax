@@ -37,6 +37,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="4"
+        :validate-status="error_item('taxpayer.tin')"
+        :help="error_desc('taxpayer.tin')"
       >
         <a-input placeholder="TIN" v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
@@ -44,6 +46,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="5"
+        :validate-status="error_item('taxpayer.rdo_code')"
+        :help="error_desc('taxpayer.rdo_code')"
       >
         <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
@@ -745,7 +749,7 @@
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
-        label="25A"
+        label="25B"
       >
         <a-input-number
           placeholder="Interest"
@@ -757,7 +761,7 @@
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
-        label="25A"
+        label="25C"
       >
         <a-input-number
           placeholder="Compromise"
@@ -769,7 +773,7 @@
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
-        label="25A"
+        label="25D"
       >
         <a-input-number
           placeholder="Total Penalties"
@@ -798,6 +802,7 @@
 <script>
 export default {
   props: ["form", "step"],
+  
   methods: {
     // checkDraft() {
     //   if (
@@ -923,10 +928,19 @@ export default {
         .then(result => {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
-          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          if(result.data.errors && result.data.errors.length > 0){
+            this.errors = result.data.errors
+            this.$notification.error(
+              {message:'Validation Error'}
+            )
+          }else{
+            this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+            this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+             window.close();
+          }
+          
           // window.opener.location.reload();
-          window.close();
+          // window.close();
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
@@ -987,10 +1001,17 @@ export default {
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
+    },
+    error_item(item){
+      return this.errors.find(x => x.field === item)?'error':'';
+    },
+    error_desc(item){
+      return this.errors.find(x => x.field === item)?this.errors.find(x => x.field === item).error:'';
     }
   },
   data() {
     return {
+      errors:[],
       loading: false,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
@@ -1018,8 +1039,9 @@ export default {
       this.form.month = this.formatDtMonth(this.form.returnPeriod);
       console.log("year: " + this.form.month)
       
-    }
-  }
+    },
+    
+  },
   // created() {
   //   this.checkDraft();
   // }

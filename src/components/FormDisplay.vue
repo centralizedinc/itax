@@ -1,8 +1,13 @@
 <template>
   <div>
     <!-- <pdf style="display:none" :src="preview"></pdf> -->
-    <pdf style="width:100%" :src="prev"></pdf>
-    <!-- <br /> -->
+    <pdf style="width:100%" :src="prev" @progress="load" v-show="!loading"></pdf>
+    <a-row type="flex" align="middle" justify="center" v-show="loading">
+      <a-col :span="6">
+        <a-icon type="loading" style="margin-top: 30vh; font-size:42px"></a-icon>
+        <!-- <a-progress type="circle" :percent="percent" /> -->
+      </a-col>
+    </a-row>
   </div>
 </template>
 <script>
@@ -25,7 +30,7 @@ const printers = {
   FORM1700: Form1700,
   FORM2551Q: Form2551q,
   FORM1701Q: Form1701q,
-  FORM2550Q: Form2550q,
+  FORM2550Q: Form2550q
 };
 export default {
   props: ["form", "type"],
@@ -35,7 +40,8 @@ export default {
   data() {
     return {
       prev: "",
-      loading: false
+      loading: false,
+      percent: 0
       // type: ""
     };
   },
@@ -77,7 +83,6 @@ export default {
   watch: {
     form: {
       handler(val) {
-
         console.log("##### update ", this.form);
         this.refresh();
       },
@@ -91,29 +96,41 @@ export default {
   },
 
   methods: {
+    load(e) {
+      console.log("loaded: ", e);
+      this.percent = e * 100;
+    },
     refresh() {
+      this.loading = true;
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
       form.month = this.formatDtMonth(form.dateFiled);
+      var returnPeriod = {
+        month: this.formatDtMonth(form.returnPeriod),
+        year: this.formatDtYear(form.returnPeriod)
+      }
+      form.returnPeriod = returnPeriod;
       var dateFiled1 = {
         month: this.formatDtMonth(form.dateFiled1),
         year: this.formatDtYear(form.dateFiled1)
-      }
-      console.log('dateField1 :', dateFiled1)
-      form.dateFiled1 = dateFiled1;
+      };
 
-   var dateFiled2 = {
+      var birthday = {
+        month: this.formatDtMonth(form.taxpayer.birthday),
+        year: this.formatDtYear(form.taxpayer.birthday),
+        day: this.formatDtDay(form.taxpayer.birthday)
+      };
+      console.log("taxpayer.birthday :", birthday);
+      form.birthday = birthday;
+
+      var dateFiled2 = {
         month: this.formatDtMonth(form.dateFiled2),
         year: this.formatDtYear(form.dateFiled2)
-      }
-      console.log('dateField2 :', dateFiled2)
+      };
+      console.log("dateField2 :", dateFiled2);
       form.dateFiled2 = dateFiled2;
 
-
-
-
-
-      console.log("this.form##### : ", form)
+      console.log("this.form##### : ", form);
       var printer = printers[this.form_type];
       var document = printer.fillup(form);
       var self = this;
@@ -125,19 +142,9 @@ export default {
         var dataUrl = URL.createObjectURL(file);
         console.log("dataurl: " + dataUrl);
         self.prev = dataUrl;
+        self.loading = false;
       });
     },
-    // formatDtYear(dt) {
-    //   var date = new Date(dt);
-    //   var month = date.getMonth() + 1;
-    //   var newDT = date.getFullYear();
-    //   return newDT;
-    // },
-    // formatDtMonth(dt) {
-    //   var date = new Date(dt);
-    //   var month = date.getMonth() + 1;
-    //   return month;
-    // },
     download() {
       var filename = this.form_type;
       var printer = printers[this.form_type];

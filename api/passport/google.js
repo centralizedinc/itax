@@ -18,8 +18,10 @@ passport.use('google', new GoogleStrategy({
     function (google_access_token, refreshToken, profile, done) {
         signInGoogle(profile, google_access_token)
             .then((result) => {
+                console.log('done signing in google');
                 done(null, result);
             }).catch((err) => {
+                console.log('signing in google err :' , err);
                 done(err);
             });
     }
@@ -42,7 +44,7 @@ function signInGoogle(profile, google_access_token) {
                 if (!account) {
                     result.new_account = true;
                     return AccountDao.create({
-                        method: 'facebook', email: profile.emails[0].value, google_id: profile.id, google_access_token,
+                        method: 'google', email: profile.emails[0].value, google_id: profile.id, google_access_token,
                         status: 1
                     })
                 }
@@ -62,7 +64,9 @@ function signInGoogle(profile, google_access_token) {
                 if (result.new_account) return UserDao.create({
                     account_id: result.account.account_id,
                     email: profile.emails[0].value,
-                    avatar: profile.photos[0].value,
+                    avatar: {
+                        location: profile.photos[0].value
+                    },
                     name: {
                         first: profile.name.givenName,
                         last: profile.name.familyName

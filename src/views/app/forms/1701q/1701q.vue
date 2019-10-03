@@ -8,7 +8,7 @@
         <a-month-picker style="width: 100%" v-model="form.dateFiled" />
       </a-form-item>
       <a-form-item label>
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
           <a-radio :value="2">Second</a-radio>
           <a-radio :value="3">Third</a-radio>
@@ -20,12 +20,12 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item :labelCol="form.label_col" :wrapperCol="form.wrapper_col" label="3">
-        <a-input-number
-          placeholder="4. Number of Sheets"
-          v-model="form.numOfSheet"
-          style="width: 100%"
-        />
+      <a-form-item
+        :labelCol="form.label_col"
+        :wrapperCol="form.wrapper_col"
+        label="4. Number of Sheets"
+      >
+        <a-input-number v-model="form.numOfSheet" style="width: 100%" />
       </a-form-item>
     </a-form>
 
@@ -35,27 +35,34 @@
         <b>Part I: BACKGROUND INFORMATION ON TAXPAYER/FILER</b>
       </a-divider>
       <a-form-item label="5. Taxpayer Identification Number (TIN)">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+        <a-input-number
+          style="width:100%"
+          max="9999999999999"
+          placeholder="Tax Identification Number"
+          v-model="form.taxpayer.tin"
+          :formatter="value => `${value}`.replace(/^(\d{3})(\d{3})(\d{3})(\d{4})/g, '$1-$2-$3-$4')"
+          :parser="value => value.replace(/\$\s?|(-*)/g, '')"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
       <a-form-item label="7. Tax Filer Type">
         <a-radio-group v-model="form.taxpayer.tax_filer_type">
-          <a-radio :value="1">Single Proprietor</a-radio>
-          <a-radio :value="2">Professional</a-radio>
-          <a-radio :value="3">Estate</a-radio>
-          <a-radio :value="4">Trust</a-radio>
+          <a-radio :value="SP">Single Proprietor</a-radio>
+          <a-radio :value="PRO">Professional</a-radio>
+          <a-radio :value="EST">Estate</a-radio>
+          <a-radio :value="TRU">Trust</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="8. Alphanumeric Tax Code (ATC)">
         <a-radio-group v-model="form.atc">
-          <a-radio :value="1">II012 Business Income-Graduated IT Rates</a-radio>
-          <a-radio :value="2">II015 Business Income - 8% IT Rate</a-radio>
-          <a-radio :value="3">II014 Income from Profession–Graduated IT Rates</a-radio>
-          <a-radio :value="4">II017 Income from Profession – 8% IT Rate</a-radio>
-          <a-radio :value="5">II013 Mixed Income–Graduated IT Rates</a-radio>
-          <a-radio :value="6">II016 Mixed Income – 8% IT Rate</a-radio>
+          <a-radio :value="II012">II012 Business Income-Graduated IT Rates</a-radio>
+          <a-radio :value="II015">II015 Business Income - 8% IT Rate</a-radio>
+          <a-radio :value="II014">II014 Income from Profession–Graduated IT Rates</a-radio>
+          <a-radio :value="II017">II017 Income from Profession – 8% IT Rate</a-radio>
+          <a-radio :value="II013">II013 Mixed Income–Graduated IT Rates</a-radio>
+          <a-radio :value="II016">II016 Mixed Income – 8% IT Rate</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="9. Taxpayer’s Name ( ESTATE of / TRUST FAO ):">
@@ -83,7 +90,7 @@
         <a-input style="width: 100%" v-model="form.taxpayer.citizenship"></a-input>
       </a-form-item>
       <a-form-item label="14. Foreign Tax Number (if applicable)">
-        <a-input-number style="width: 100%" v-model="form.taxpayer.telephone_no"></a-input-number>
+        <a-input-number style="width: 100%" v-model="form.taxpayer.foreign_tax_no"></a-input-number>
       </a-form-item>
       <a-form-item label="15. Claiming Foreign Tax Credits?">
         <a-radio-group v-model="form.taxCredits">
@@ -94,10 +101,10 @@
       <a-form-item label="16. Tax Rate*(choose one,for income from business/profession):">
         <a-radio-group v-model="form.taxRate">
           <a-radio
-            :value="1"
+            :value="GR"
           >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
           <a-radio
-            :value="2"
+            :value="GS"
           >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates</a-radio>
           <p>
             under Sec. 24(A)(2)(a) & Percentage Tax
@@ -107,9 +114,9 @@
       </a-form-item>
       <a-form-item label="16A. Method of Deduction:">
         <a-radio-group v-model="form.method_deduction">
-          <a-radio :value="1">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
+          <a-radio :value="ID">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
           <a-radio
-            :value="2"
+            :value="OSD"
           >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees</a-radio>
           <p>[Sec. 34(L), NIRC]</p>
         </a-radio-group>
@@ -122,41 +129,47 @@
         <b>Part II: BACKGROUND INFORMATION ON SPOUSE (if applicable)</b>
       </a-divider>
       <a-form-item label="17. Spouse’s TIN">
-        <a-input v-model="form.taxpayer.spouse_tin"></a-input>
+        <a-input-number
+          style="width:100%"
+          max="9999999999999"
+          placeholder="Tax Identification Number"
+          v-model="form.taxpayer.spouse_tin"
+          :formatter="value => `${value}`.replace(/^(\d{3})(\d{3})(\d{3})(\d{4})/g, '$1-$2-$3-$4')"
+          :parser="value => value.replace(/\$\s?|(-*)/g, '')"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="18. RDO Code">
         <a-input v-model="form.taxpayer.spouse_rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="19. Tax Filer Type">
+      <a-form-item label="19. Filer’s Spouse Type">
         <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
-          <a-radio :value="1">Single Proprietor</a-radio>
-          <a-radio :value="2">Professional</a-radio>
-          <a-radio :value="3">Estate</a-radio>
-          <a-radio :value="4">Trust</a-radio>
+          <a-radio :value="SSP">Single Proprietor</a-radio>
+          <a-radio :value="SPRO">Professional</a-radio>
+          <a-radio :value="SCE">Compensation Earner</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="20. Alphanumeric Tax Code (ATC)">
+      <a-form-item label="20. ATC">
         <a-radio-group v-model="form.spouse_atc">
-          <a-radio :value="1">II012 Business Income-Graduated IT Rates</a-radio>
-          <a-radio :value="2">II015 Business Income - 8% IT Rate</a-radio>
-          <a-radio :value="3">II014 Income from Profession–Graduated IT Rates</a-radio>
-          <a-radio :value="4">II017 Income from Profession – 8% IT Rate</a-radio>
-          <a-radio :value="5">II013 Mixed Income–Graduated IT Rates</a-radio>
-          <a-radio :value="6">II016 Mixed Income – 8% IT Rate</a-radio>
-          <a-radio :value="7">Compensation Earner</a-radio>
+          <a-radio :value="SII012">II012 Business Income-Graduated IT Rates</a-radio>
+          <a-radio :value="SII015">II015 Business Income - 8% IT Rate</a-radio>
+          <a-radio :value="SII014">II014 Income from Profession–Graduated IT Rates</a-radio>
+          <a-radio :value="SII017">II017 Income from Profession – 8% IT Rate</a-radio>
+          <a-radio :value="SII013">II013 Mixed Income–Graduated IT Rates</a-radio>
+          <a-radio :value="SII016">II016 Mixed Income – 8% IT Rate</a-radio>
+          <a-radio :value="SII011">II011 Compensation Income</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="21. Spouse’s Name:">
         <a-input
           placeholder="Last Name, First Name, Middle Name"
-          v-model="form.taxpayer.spouse_taxpayer_name"
+          v-model="form.taxpayer.spouse_name"
         ></a-input>
       </a-form-item>
       <a-form-item label="22. Citizenship ">
         <a-input v-model="form.taxpayer.spouse_citizenship"></a-input>
       </a-form-item>
       <a-form-item label="23. Foreign Tax Number (if applicable)">
-        <a-input-number style="width: 100%" v-model="form.taxpayer.telephone_no"></a-input-number>
+        <a-input-number style="width: 100%" v-model="form.taxpayer.spouse_foreign_tax_no"></a-input-number>
       </a-form-item>
       <a-form-item label="24. Claiming Foreign Tax Credits?">
         <a-radio-group v-model="form.spouse_taxCredits">
@@ -167,10 +180,10 @@
       <a-form-item label="25. Tax Rate*(choose one,for income from business/profession):">
         <a-radio-group v-model="form.spouse_taxRate">
           <a-radio
-            :value="1"
+            :value="SGR"
           >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
           <a-radio
-            :value="2"
+            :value="SOGS"
           >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates</a-radio>
           <p>
             under Sec. 24(A)(2)(a) & Percentage Tax
@@ -180,9 +193,9 @@
       </a-form-item>
       <a-form-item label="25A. Method of Deduction:">
         <a-radio-group v-model="form.spouse_method_deduction">
-          <a-radio :value="1">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
+          <a-radio :value="SID">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
           <a-radio
-            :value="2"
+            :value="SOSD"
           >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees</a-radio>
           <p>[Sec. 34(L), NIRC]</p>
         </a-radio-group>
@@ -224,7 +237,9 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="28. Tax Payable/(Overpayment)(Item 26 Less Item 27)(From Part V, Item 63)"></a-form-item>
+      <a-form-item
+        label="28. Tax Payable/(Overpayment)(Item 26 Less Item 27)(From Part V, Item 63)"
+      ></a-form-item>
       <a-form-item class="computation-item" label="A)Taxpayer/Filer">
         <a-input-number
           v-model="form.item28a"
@@ -254,7 +269,9 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="30. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"></a-form-item>
+      <a-form-item
+        label="30. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+      ></a-form-item>
       <a-form-item class="computation-item" label="A)Taxpayer/Filer">
         <a-input-number
           v-model="form.item30a"
@@ -269,7 +286,9 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="31. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"></a-form-item>
+      <a-form-item
+        label="31. Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+      ></a-form-item>
       <a-form-item class="computation-item" label="(Sum of Items 30A and 30B)">
         <a-input-number
           v-model="form.item31"
@@ -365,7 +384,7 @@
         ></a-input-number>
       </a-form-item>
       <a-form-item label="35. Others"></a-form-item>
-       <a-form-item class="computation-item" label="Particulars">
+      <a-form-item class="computation-item" label="Particulars">
         <a-input-number
           v-model="form.item35a"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -400,16 +419,11 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
-    <br />
-    <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>
   </div>
 </template>
 
 <script>
-
 export default {
   props: ["form", "step"],
   data() {
@@ -424,21 +438,53 @@ export default {
       image_height: 1000
     };
   },
-  watch: {
-    step() {
-      if (this.step < 0) {
-        this.$router.push("/");
-      } else if (this.step == 4) {
-        this.sub = true;
-      }
-    }
-  },
+  // watch: {
+  //   step() {
+  //     if (this.step < 0) {
+  //       this.$router.push("/");
+  //     } else if (this.step == 2) {
+  //       this.sub = true;
+  //     }
+  //   }
+  // },
   methods: {
+    save_draft() {},
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
+    validate() {
+      this.changeStep(this.step + 1);
+      // if(this.step === 0) this.validateGeneral();
+      // else if(this.step === 1) this.validatePartI();
+    },
     submit() {
-      this.form.validateFieldsAndScroll((err, values) => {
-        if (!err) console.log("values :", values);
-      });
+      this.loading = true;
+      this.$store
+        .dispatch("VALIDATE_AND_SAVE", {
+          form_type: "1701Q",
+          form_details: this.form
+        })
+        .then(result => {
+          console.log("VALIDATE_AND_SAVE result:", result.data);
+          this.loading = false;
+          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+          this.$store.commit("NOTIFY_MESSAGE", {
+            message: "Successfully submitted Form 2550m."
+          });
+          // window.opener.location.reload();
+          window.close();
+        })
+        .catch(err => {
+          console.log("VALIDATE_AND_SAVE", err);
+          this.loading = false;
+        });
     }
+    // submit() {
+    //   this.form.validateFieldsAndScroll((err, values) => {
+    //     if (!err) console.log("values :", values);
+    //   });
+    // }
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
@@ -450,6 +496,11 @@ export default {
 </script>
 
 <style>
+p {
+  margin-left: 22px;
+  margin-top: -11px;
+  margin-bottom: 1em;
+}
 /* .tax-form .computation-item {
   padding-left: 50px;
 }
