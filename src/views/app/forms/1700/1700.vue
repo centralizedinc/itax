@@ -22,8 +22,8 @@
       </a-form-item>
       <a-form-item label="4. Source of Income">
         <a-radio-group v-model="form.source_of_income">
-          <a-radio :value="true">Compensation Income</a-radio>
-          <a-radio :value="false">Other Income</a-radio>
+          <a-radio :value="0">Compensation Income</a-radio>
+          <a-radio :value="1">Other Income</a-radio>
         </a-radio-group>
       </a-form-item>
       <!-- <a-form-item label="3. No. of Sheets Attached">
@@ -60,30 +60,27 @@
             <a-input placeholder="Last Name" v-model="form.taxpayer.taxpayer_last"></a-input>
           </a-col>
           <a-col :span="11">
-            <a-input placeholder="Given Name" v-model="form.taxpayer.taxpayer_given"></a-input>
+            <a-input placeholder="Given Name" v-model="form.taxpayer.taxpayer_first"></a-input>
           </a-col>
           <a-col :span="2">
-            <a-input placeholder="M.I." v-model="form.taxpayer.taxpayer_mi"></a-input>
+            <a-input placeholder="M.I." v-model="form.taxpayer.taxpayer_middle"></a-input>
           </a-col>
         </a-row>
       </a-form-item>
-      <!-- <a-form-item label="9. Telephone Number">
-        <a-input-number v-model="form.taxpayer.telephone_no"></a-input-number>
-      </a-form-item> -->
       <a-form-item label="9. Address">
         <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
       </a-form-item>
       <a-form-item label="10. Date of Birth">
-        <a-date-picker v-model="form.dateFiled"></a-date-picker>
+        <a-date-picker v-model="form.taxpayer.birthday"></a-date-picker>
       </a-form-item>
       <a-form-item label="11. Email Address">
-        <a-input v-model="form.email"></a-input>
+        <a-input v-model="form.taxpayer.email_address"></a-input>
       </a-form-item>
       <a-form-item label="12. Contact Number">
-        <a-input v-model="form.contact_number"></a-input>
+        <a-input v-model="form.taxpayer.telephone_no"></a-input>
       </a-form-item>
 <a-form-item label="13. Civil Status">
-        <a-radio-group v-model="form.civil_status">
+        <a-radio-group v-model="form.taxpayer.civil_status">
           <a-radio :value="0">Single</a-radio>
           <a-radio :value="1">Married</a-radio>
           <a-radio :value="2">Legally Separated</a-radio>
@@ -93,50 +90,50 @@
       <a-form-item                                                            
         label="14. Claiming Additional Exemptions?"
       >
-        <a-radio-group v-model="form.claiming_add_exemp">
+        <a-radio-group v-model="form.taxpayer.claiming_add_exemp">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="15. If YES, enter number of Qualified Dependent Children">
-        <a-input v-model="form.no_dependents"></a-input>
+        <a-input v-model="form.taxpayer.no_dependents"></a-input>
       </a-form-item>
       <!-- spouse details -->
        <a-form-item label="16. Spouse's Name">
         <a-row>
           <a-col :span="11">
-            <a-input placeholder="Last Name" v-model="form.spouse_last"></a-input>
+            <a-input placeholder="Last Name" v-model="form.taxpayer.spouse_name.last"></a-input>
           </a-col>
           <a-col :span="11">
-            <a-input placeholder="First Name" v-model="form.spouse_first"></a-input>
+            <a-input placeholder="First Name" v-model="form.taxpayer.spouse_name.first"></a-input>
           </a-col>
           <a-col :span="2">
-            <a-input placeholder="M.I." v-model="form.spouse_mi"></a-input>
+            <a-input placeholder="M.I." v-model="form.taxpayer.spouse_name.middle"></a-input>
           </a-col>
         </a-row>
       </a-form-item>
       <a-form-item label="17. Spouse's TIN number">
-        <a-input v-model="form.spouse_tin"></a-input>
+        <a-input v-model="form.taxpayer.spouse_tin"></a-input>
       </a-form-item>
       <a-form-item label="18. Contact Number">
-        <a-input v-model="form.spouse_contact_number"></a-input>
+        <a-input v-model="form.taxpayer.spouse_contact_number"></a-input>
       </a-form-item>
        <a-form-item label="19. Date of Birth">
-        <a-date-picker v-model="form.dateFiled"></a-date-picker>
+        <a-date-picker v-model="form.taxpayer.spouse_birthday"></a-date-picker>
       </a-form-item>
       <a-form-item label="20. Email Address">
-        <a-input v-model="form.spouse_email"></a-input>
+        <a-input v-model="form.taxpayer.spouse_email"></a-input>
       </a-form-item>
        <a-form-item                                                            
         label="21. Claiming Additional Exemptions?"
       >
-        <a-radio-group v-model="form.spouse_claiming_add_exemp">
+        <a-radio-group v-model="form.taxpayer.spouse_claiming_add_exemp">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="22. If YES, enter number of Qualified Dependent Children">
-        <a-input v-model="form.spouse_no_dependents"></a-input>
+        <a-input v-model="form.taxpayer.spouse_no_dependents"></a-input>
       </a-form-item>
     </a-form>
 
@@ -307,7 +304,7 @@
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
-      </a-form-item>
+      </a-form-item>-->
   </div>
 </template>
 
@@ -323,7 +320,7 @@ export default {
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
-      form_part3: this.$form.createForm(this),
+      // form_part3: this.$form.createForm(this),
       image_height: 1000
     };
   },
@@ -358,7 +355,7 @@ export default {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 1700.' })
           // window.opener.location.reload();
           window.close();
         })

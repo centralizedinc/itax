@@ -142,7 +142,7 @@ function getContent(forms) {
                 body: [
                     [{
                         // 72 characters 
-                        text: forms.taxpayer.taxpayer_last == null ? ' ' : forms.taxpayer.taxpayer_last,
+                        text: forms.taxpayer_name.last == null ? ' ' : forms.taxpayer_name.last,
                         fontSize: 15,
                         // right,down,left,up
                         alignment: 'justify',
@@ -150,7 +150,7 @@ function getContent(forms) {
                     },
                     {
                         // 72 characters 
-                        text: forms.taxpayer.taxpayer_given == null ? ' ' : forms.taxpayer.taxpayer_given,
+                        text: forms.taxpayer_name.first == null ? ' ' : forms.taxpayer_name.first,
                         fontSize: 15,
                         // right,down,left,up
                         alignment: 'justify',
@@ -158,7 +158,7 @@ function getContent(forms) {
                     },
                     {
                         // 72 characters 
-                        text: forms.taxpayer.taxpayer_mi == null ? ' ' : forms.taxpayer.taxpayer_mi,
+                        text: forms.taxpayer_name.middle == null ? ' ' : forms.taxpayer_name.middle,
                         fontSize: 15,
                         // right,down,left,up
                         alignment: 'justify',
@@ -214,7 +214,7 @@ function getContent(forms) {
                             margin: [10, 7, 0, 0]
                         },
                         {
-                            text: forms.email == null ? ' ' : forms.email,
+                            text: forms.taxpayer.email_address == null ? ' ' : forms.taxpayer.email_address,
                             // text: '0 0 0',
                             fontSize: 15,
                             // right,down,left,up
@@ -232,7 +232,7 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.contact_number == null ? ' ' : forms.contact_number,
+                            text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -240,7 +240,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.year ? forms.year : ' ',
-                            text: forms.civil_status == 0 ? 'X' : ' ',
+                            text: forms.taxpayer.civil_status == 0 ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -248,7 +248,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.year ? forms.year : ' ',
-                            text: forms.civil_status == 1 ? 'X' : ' ',
+                            text: forms.taxpayer.civil_status == 1 ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -256,7 +256,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.year ? forms.year : ' ',
-                            text: forms.civil_status == 2 ? 'X' : ' ',
+                            text: forms.taxpayer.civil_status == 2 ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -264,7 +264,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.year ? forms.year : ' ',
-                            text: forms.civil_status == 3 ? 'X' : ' ',
+                            text: forms.taxpayer.civil_status == 3 ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -281,14 +281,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.claiming_add_exemp == true ? 'X' : ' ',
+                            text: forms.taxpayer.claiming_add_exemp == true ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [161, -2, 0, 0]
                         },
                         {
-                            text: forms.claiming_add_exemp == false ? 'X' : ' ',
+                            text: forms.taxpayer.claiming_add_exemp == false ? 'X' : ' ',
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -296,7 +296,7 @@ function getContent(forms) {
                         },
                         {
                             // text: forms.year ? forms.year : ' ',
-                            text: forms.no_dependents == null ? ' ' : forms.no_dependents,
+                            text: forms.taxpayer.no_dependents == null ? ' ' : forms.taxpayer.no_dependents,
                             fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
@@ -312,7 +312,7 @@ function getContent(forms) {
                 body: [
                     [{
                         // 72 characters 
-                        text: forms.spouse_last == null ? ' ' : forms.spouse_last,
+                        text: forms.taxpayer.spouse_name.last == null ? ' ' : forms.taxpayer.spouse_name.ast,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -320,7 +320,7 @@ function getContent(forms) {
                     },
                     {
                         // 72 characters 
-                        text: forms.spouse_first== null ? ' ' : forms.spouse_first,
+                        text: forms.taxpayer.spouse_name.first== null ? ' ' : forms.taxpayer.spouse_name.first,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -328,7 +328,7 @@ function getContent(forms) {
                     },
                     {
                         // 72 characters 
-                        text: forms.spouse_mi == null ? ' ' : forms.spouse_mi,
+                        text: forms.taxpayer.spouse_name.middle == null ? ' ' : forms.taxpayer.spouse_name.middle,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -345,7 +345,7 @@ function getContent(forms) {
                 widths: [322, 160],
                 body: [
                     [{
-                        text: forms.spouse_tin == null ? ' ' : forms.spouse_tin,
+                        text: forms.taxpayer.spouse_tin == null ? ' ' : forms.taxpayer.spouse_tin,
                         fontSize: 13,
                         // right,down,left,up
                         alignment: 'justify',
@@ -353,7 +353,7 @@ function getContent(forms) {
                     },
                     {
                         // 72 characters 
-                        text: forms.spouse_contact_number == null ? ' ' : forms.spouse_contact_number,
+                        text: forms.taxpayer.spouse_contact_number == null ? ' ' : forms.taxpayer.spouse_contact_number,
                         fontSize: 13,
                         // right,down,left,up
                         alignment: 'justify',
@@ -370,28 +370,28 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.month ? forms.month : ' ',
+                            text: forms.taxpayer.spouse_birthday.month ? forms.taxpayer.spouse_birthday.month : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [10, 7, 0, 0]
                         },
                         {
-                            text: forms.day ? forms.day : ' ',
+                            text: forms.taxpayer.spouse_birthday.day ? forms.taxpayer.spouse_birthday.day : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [4, 7, 0, 0]
                         },
                         {
-                            text: forms.year ? forms.year : ' ',
+                            text: forms.taxpayer.spouse_birthday.year ? forms.taxpayer.spouse_birthday.year : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
                             margin: [10, 7, 0, 0]
                         },
                         {
-                            text: forms.spouse_email == null ? ' ' : forms.spouse_email,
+                            text: forms.taxpayer.spouse_email == null ? ' ' : forms.taxpayer.spouse_email,
                             // text: '0 0 0',
                             fontSize: 12,
                             // right,down,left,up

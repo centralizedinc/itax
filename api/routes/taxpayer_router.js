@@ -63,22 +63,19 @@ router
 router
     .route('/tin/:tin')
     .get((req, res) => {
-        var taxpayer = {}
+        var model = {}
         console.log('req.params.tin :', req.params.tin);
         TaxpayerDao.findOneByTIN(req.params.tin)
             .then((taxpayer) => {
-                console.log('taxpayer :', taxpayer);
-                taxpayer = taxpayer;
+                model.taxpayer = taxpayer;
+
                 return UserDao.findOne({ tin: req.params.tin });
             })
             .then((user) => {
-                console.log('user :', user);
+                model.user = user;
                 res.json({
                     success: true,
-                    model: {
-                        taxpayer,
-                        user
-                    }
+                    model
                 })
             })
             .catch((errors) => {
