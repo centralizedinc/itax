@@ -31,6 +31,11 @@ export default {
                     var month = date.getMonth() + 1;
                     return month;
                   },
+                  formatDtDay(dt) {
+                    var date = new Date(dt);
+                    var day = date.getDate();
+                    return day;
+                  },
             },
         })
     }

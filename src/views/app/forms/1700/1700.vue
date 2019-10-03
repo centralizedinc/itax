@@ -5,7 +5,8 @@
         <b>Annual Income Tax Return (1700)</b>
       </a-divider>
       <a-form-item label="1. For the year (YY)">
-        <a-dropdown></a-dropdown>
+        <!-- <a-input v-model="form.year"></a-input> -->
+        <a-month-picker v-model="form.dateFiled"></a-month-picker>
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amendedYn">
@@ -21,8 +22,8 @@
       </a-form-item>
       <a-form-item label="4. Source of Income">
         <a-radio-group v-model="form.source_of_income">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
+          <a-radio :value="true">Compensation Income</a-radio>
+          <a-radio :value="false">Other Income</a-radio>
         </a-radio-group>
       </a-form-item>
       <!-- <a-form-item label="3. No. of Sheets Attached">
@@ -39,7 +40,7 @@
     <!-- Part I -->
     <a-form :form="form_part1" v-show="step===1">
       <a-divider orientation="left">
-        <b>Part I: Background Information</b>
+        <b>Part I: Background Information on Tax Filer and Spouse</b>
       </a-divider>
       <a-form-item label="5. TIN NUMBER">
         <a-input v-model="form.taxpayer.tin"></a-input>
@@ -73,43 +74,169 @@
         <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
       </a-form-item>
       <a-form-item label="10. Date of Birth">
-        <a-date-picker v-model="form.birthday"></a-date-picker>
+        <a-date-picker v-model="form.dateFiled"></a-date-picker>
       </a-form-item>
-      <a-form-item label="12. Category of Withholding Agent">
-        <a-radio-group v-model="form.categoryOfAgent">
-          <a-radio :value="true">Private</a-radio>
-          <a-radio :value="false">Government</a-radio>
+      <a-form-item label="11. Email Address">
+        <a-input v-model="form.email"></a-input>
+      </a-form-item>
+      <a-form-item label="12. Contact Number">
+        <a-input v-model="form.contact_number"></a-input>
+      </a-form-item>
+<a-form-item label="13. Civil Status">
+        <a-radio-group v-model="form.civil_status">
+          <a-radio :value="0">Single</a-radio>
+          <a-radio :value="1">Married</a-radio>
+          <a-radio :value="2">Legally Separated</a-radio>
+          <a-radio :value="3">Widow/er</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item
-        label="13. Are you availing of tax relief under Special Law or International Tax Treaty?"
+      <a-form-item                                                            
+        label="14. Claiming Additional Exemptions?"
       >
-        <a-radio-group v-model="form.availing_tax_relief">
+        <a-radio-group v-model="form.claiming_add_exemp">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="If yes, specify">
-        <a-input v-model="form.internationalTreatyYn"></a-input>
+      <a-form-item label="15. If YES, enter number of Qualified Dependent Children">
+        <a-input v-model="form.no_dependents"></a-input>
+      </a-form-item>
+      <!-- spouse details -->
+       <a-form-item label="16. Spouse's Name">
+        <a-row>
+          <a-col :span="11">
+            <a-input placeholder="Last Name" v-model="form.spouse_last"></a-input>
+          </a-col>
+          <a-col :span="11">
+            <a-input placeholder="First Name" v-model="form.spouse_first"></a-input>
+          </a-col>
+          <a-col :span="2">
+            <a-input placeholder="M.I." v-model="form.spouse_mi"></a-input>
+          </a-col>
+        </a-row>
+      </a-form-item>
+      <a-form-item label="17. Spouse's TIN number">
+        <a-input v-model="form.spouse_tin"></a-input>
+      </a-form-item>
+      <a-form-item label="18. Contact Number">
+        <a-input v-model="form.spouse_contact_number"></a-input>
+      </a-form-item>
+       <a-form-item label="19. Date of Birth">
+        <a-date-picker v-model="form.dateFiled"></a-date-picker>
+      </a-form-item>
+      <a-form-item label="20. Email Address">
+        <a-input v-model="form.spouse_email"></a-input>
+      </a-form-item>
+       <a-form-item                                                            
+        label="21. Claiming Additional Exemptions?"
+      >
+        <a-radio-group v-model="form.spouse_claiming_add_exemp">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="22. If YES, enter number of Qualified Dependent Children">
+        <a-input v-model="form.spouse_no_dependents"></a-input>
       </a-form-item>
     </a-form>
 
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
-        <b>Part II: Computation of Tax</b>
+        <b>Part II: Total Tax Payable</b>
       </a-divider>
       <a-form-item
         class="computation-item"
-        label="14. Total Tax Required to be Withheld and Remitted"
-      >
+        label="23. Tax Filer's Tax Due"
+      > 
         <a-input-number
-          v-model="form.total_tax_withheld_remitted"
+          v-model="form.tax_filer_tax_due"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
+       <a-form-item
+        class="computation-item"
+        label="24. Spouse's Tax Due"
+      > 
+        <a-input-number
+          v-model="form.spouse_tax_due"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="25. Total Income Tax Due"
+      > 
+        <a-input-number
+          v-model="form.total_income_tax_due"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="26. Less: Tax Filer's Tax Credits/Payments"
+      > 
+        <a-input-number
+          v-model="form.less_tax_credits"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="27. Spouse's Tax Credits/Payments"
+      > 
+        <a-input-number
+          v-model="form.spouse_less_tax_credits"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="28. Net Tax Payable (Overpayment)"
+      > 
+        <a-input-number
+          v-model="form.net_tax_payable"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="29. Less: Portion of Tax Payable Allowed"
+      > 
+        <a-input-number
+          v-model="form.portion_tax_payable"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="30. Add: Total Penalties"
+      > 
+        <a-input-number
+          v-model="form.total_penalties"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="31. TOTAL AMOUNT PAYABLE Upon Filing (Overpayment)"
+      >
+        <a-input-number
+          v-model="form.total_amount_payable"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+
+      <!-- <a-form-item label="24. Spouse's Tax Due"></a-form-item>
       <a-form-item
         class="computation-item"
         label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
@@ -194,12 +321,12 @@
           <a-radio :value="true">To be Refunded</a-radio>
           <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
         </a-radio-group>
-      </a-form-item>
+      </a-form-item> -->
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
 
     <!-- Part III -->
-    <a-form :form="form_part3" v-show="step===3">
+    <!-- <a-form :form="form_part3" v-show="step===3">
       <a-divider orientation="left">
         <b>Part III: Details of Payment</b>
       </a-divider>
@@ -270,9 +397,9 @@
       </a-form-item>
 
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form>
+    </a-form> -->
     <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> 
   </div>
 </template>
 
@@ -293,10 +420,13 @@ export default {
     };
   },
   watch: {
+    // form(){
+    //   console.log("birthday day: " + JSON.stringify(this.formatDtDay(this.form.birthday)))
+    // },
     step() {
       if (this.step < 0) {
         this.$router.push("/");
-      } else if (this.step == 2) {
+      } else if (this.step == 3) {
         this.sub = true;
       }
     }

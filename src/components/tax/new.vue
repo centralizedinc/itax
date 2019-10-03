@@ -14,8 +14,8 @@
               <template slot="content">
                 <a-menu @click="nav">
                   <a-menu-item key="1700">From 1700</a-menu-item>
-                  <a-menu-item key="1701Q">From 1701Q</a-menu-item>
-                  <a-menu-item key="1700">Form 1700</a-menu-item>
+                  <!-- <a-menu-item key="1701Q">From 1701Q</a-menu-item> -->
+                  <!-- <a-menu-item key="1700">Form 1700</a-menu-item> -->
                   <a-menu-item key="1702">Form 1702</a-menu-item>
                   <a-menu-item key="1702q">Form 1702Q</a-menu-item>
                   <a-menu-item key="1702rt">Form 1702-RT</a-menu-item>

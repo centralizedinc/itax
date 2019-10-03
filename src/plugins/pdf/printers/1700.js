@@ -34,101 +34,101 @@ function getContent(forms) {
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
     content.push({
-            layout: "noBorders",
-            table: {
-                // 
-                widths: [103, 50, 60, 42, 62, 60, 50],
-                body: [
-                    [{
-                            text: '01',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [72, 80, 0, 0]
-                        },
-                        {
-                            // text: forms.year ? forms.year : ' ',
-                            text: forms.amendedYn == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [41, 82, 0, 0]
-                        },
-                        {
-                            // text: forms.amendedYn == true ? 'X' : ' ',
-                            text: forms.amendedYn == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [17, 83, 0, 0]
-                        },
-                        {
-                            // text: forms.amendedYn == false ? 'X' : ' ',
-                            text: forms.joint_filing == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [27, 83, 0, 0]
-                        },
-                        {
-                            // text: forms.numOfSheet,
-                            text: forms.joint_filing == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [11, 83, 0, 0]
-                        },
-                        {
-                            // text: forms.taxes_withheld == true ? 'X' : ' ',
-                            text: forms.source_of_income == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [24, 82, 0, 0]
-                        },
-                        {
-                            // text: forms.taxes_withheld == false ? 'X' : ' ',
-                            text: forms.source_of_income == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [25, 82, 0, 0]
-                        }
-                    ],
+        layout: "noBorders",
+        table: {
+            // 
+            widths: [103, 50, 60, 42, 62, 60, 50],
+            body: [
+                [{
+                    text: forms.year == null ? ' ' : forms.year,
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [72, 80, 0, 0]
+                },
+                {
+                    // text: forms.year ? forms.year : ' ',
+                    text: forms.amendedYn == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [41, 82, 0, 0]
+                },
+                {
+                    // text: forms.amendedYn == true ? 'X' : ' ',
+                    text: forms.amendedYn == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [17, 83, 0, 0]
+                },
+                {
 
-                ]
+                    text: forms.joint_filing == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [27, 83, 0, 0]
+                },
+                {
 
-            }
-        }, {
+                    text: forms.joint_filing == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [11, 83, 0, 0]
+                },
+                {
+
+                    text: forms.source_of_income == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [24, 82, 0, 0]
+                },
+                {
+
+                    text: forms.source_of_income == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [25, 82, 0, 0]
+                }
+                ],
+
+            ]
+
+        }
+    }, {
             layout: "noBorders",
             // TIN
             table: {
                 widths: [245, 160, 90],
                 body: [
                     [{
-                            text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                            // text: '0  1  2   -  3  4  5   -   6  7  8 ',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [83, 15, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                            // text: '0 0 0',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [120, 14, 0, 0]
-                        }, {
-                            // PSOC CODE
-                            text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
-                            // text: '0  0  0  0',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [42, 14, 0, 0]
-                        },
+                        text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                        // text: '0  1  2   -  3  4  5   -   6  7  8 ',
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [83, 15, 0, 0]
+                    },
+                    {
+                        text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                        // text: '0 0 0',
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [120, 14, 0, 0]
+                    }, {
+                        // PSOC CODE
+                        text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
+                        // text: '0  0  0  0',
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [42, 14, 0, 0]
+                    },
 
                     ]
                 ]
@@ -141,111 +141,462 @@ function getContent(forms) {
                 widths: [230, 230, 33],
                 body: [
                     [{
-                            // 72 characters 
-                            text: forms.taxpayer.taxpayer_last == null ? ' ' : forms.taxpayer.taxpayer_last,
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [4, 6, 0, 0]
-                        },
-                        {
-                            // 72 characters 
-                            text: forms.taxpayer.taxpayer_given == null ? ' ' : forms.taxpayer.taxpayer_given,
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [10, 6, 0, 0]
-                        },
-                        {
-                            // 72 characters 
-                            text: forms.taxpayer.taxpayer_mi == null ? ' ' : forms.taxpayer.taxpayer_mi,
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [10, 6, 0, 0]
-                        },
+                        // 72 characters 
+                        text: forms.taxpayer.taxpayer_last == null ? ' ' : forms.taxpayer.taxpayer_last,
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [4, 6, 0, 0]
+                    },
+                    {
+                        // 72 characters 
+                        text: forms.taxpayer.taxpayer_given == null ? ' ' : forms.taxpayer.taxpayer_given,
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [10, 6, 0, 0]
+                    },
+                    {
+                        // 72 characters 
+                        text: forms.taxpayer.taxpayer_mi == null ? ' ' : forms.taxpayer.taxpayer_mi,
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [10, 6, 0, 0]
+                    },
                     ]
                 ]
             }
-        }, {
+        }, 
+        {
             layout: "noBorders",
             table: {
                 widths: [508],
                 heights: [55],
                 body: [
                     [{
-                            // ADDRESS
-                            text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
-                            fontSize: 14,
+                        // ADDRESS
+                        text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [0, 8, 0, 0]
+                    }
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [35, 35 ,70, 350],
+                body: [
+                    [
+                        {
+                            text: forms.month ? forms.month : ' ',
+                            fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [0, 8, 0, 0]
+                            margin: [10, 7, 0, 0]
+                        },
+                        {
+                            text: forms.day ? forms.day : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [4, 7, 0, 0]
+                        },
+                        {
+                            text: forms.year ? forms.year : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [10, 7, 0, 0]
+                        },
+                        {
+                            text: forms.email == null ? ' ' : forms.email,
+                            // text: '0 0 0',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [10, 6, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [170, 50, 50, 70, 130],
+                body: [
+                    [
+                        {
+                            text: forms.contact_number == null ? ' ' : forms.contact_number,
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [8, 3, 0, 0]
+                        },
+                        {
+                            // text: forms.year ? forms.year : ' ',
+                            text: forms.civil_status == 0 ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [13, 3, 0, 0]
+                        },
+                        {
+                            // text: forms.year ? forms.year : ' ',
+                            text: forms.civil_status == 1 ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [24, 3, 0, 0]
+                        },
+                        {
+                            // text: forms.year ? forms.year : ' ',
+                            text: forms.civil_status == 2 ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [36, 3, 0, 0]
+                        },
+                        {
+                            // text: forms.year ? forms.year : ' ',
+                            text: forms.civil_status == 3 ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [70, 3, 0, 0]
                         }
                     ]
                 ]
             }
-        }, {
-            // layout: "noBorders",
+        },
+        {
+            layout: "noBorders",
             table: {
-                widths: [140, 358],
+                widths: [170, 50, 270],
                 body: [
                     [
                         {
-                        text: form.birthday ? form.birthday : ' ',
-                        fontSize: 15,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [80, 78, 0, 0]
-                    },
-                    // {
-                    //     text: forms.year ? forms.year : ' ',
-                    //     fontSize: 15,
-                    //     // right,down,left,up
-                    //     alignment: 'justify',
-                    //     margin: [0, 78, 0, 0]
-                    // },
-                        // {
-                        //     text: forms.categoryOfAgent == true ? 'X' : ' ',
-                        //     fontSize: 12,
-                        //     // right,down,left,up
-                        //     margin: [13, 6, 0, 0],
-                        //     alignment: 'justify'
-
-                        // },
-                        // {
-                        //     text: forms.categoryOfAgent == false ? 'X' : ' ',
-                        //     fontSize: 12,
-                        //     // right,down,left,up
-                        //     margin: [28, 6, 0, 0],
-                        //     alignment: 'justify'
-                        // },
-                        // {
-                        //     text: forms.availing_tax_relief == true ? 'X' : ' ',
-                        //     fontSize: 12,
-                        //     // right,down,left,up
-                        //     margin: [85, 6, 0, 0],
-                        //     alignment: 'justify'
-                        // }, {
-                        //     text: forms.availing_tax_relief == false ? 'X' : ' ',
-                        //     fontSize: 12,
-                        //     // right,down,left,up
-                        //     margin: [20, 6, 0, 0],
-                        //     alignment: 'justify'
-                        // },
-                        // {
-                        //     // 30 characters
-                        //     text: forms.internationalTreatyYn,
-                        //     fontSize: 12,
-                        //     // right,down,left,up
-                        //     margin: [105, 6, 0, 0],
-                        //     alignment: 'justify'
-                        // }
+                            text: forms.claiming_add_exemp == true ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [161, -2, 0, 0]
+                        },
+                        {
+                            text: forms.claiming_add_exemp == false ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [32, -2, 0, 0]
+                        },
+                        {
+                            // text: forms.year ? forms.year : ' ',
+                            text: forms.no_dependents == null ? ' ' : forms.no_dependents,
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [238, -1, 0, 0]
+                        }
                     ]
                 ]
-            },
-            
-            
-        }, {
+            }
+        },{
+            layout: "noBorders",
+            table: {
+                widths: [230, 230, 33],
+                body: [
+                    [{
+                        // 72 characters 
+                        text: forms.spouse_last == null ? ' ' : forms.spouse_last,
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [5, 13, 0, 0]
+                    },
+                    {
+                        // 72 characters 
+                        text: forms.spouse_first== null ? ' ' : forms.spouse_first,
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [10, 13, 0, 0]
+                    },
+                    {
+                        // 72 characters 
+                        text: forms.spouse_mi == null ? ' ' : forms.spouse_mi,
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [15, 13, 0, 0]
+                    },
+                    ]
+                ]
+            }
+        }, 
+        {
+            layout: "noBorders",
+            // TIN
+            table: {
+                widths: [322, 160],
+                body: [
+                    [{
+                        text: forms.spouse_tin == null ? ' ' : forms.spouse_tin,
+                        fontSize: 13,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [75, -2, 0, 0]
+                    },
+                    {
+                        // 72 characters 
+                        text: forms.spouse_contact_number == null ? ' ' : forms.spouse_contact_number,
+                        fontSize: 13,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [20, -2, 0, 0]
+                    },
+
+                    ]
+                ]
+            }
+        },{
+            layout: "noBorders",
+            table: {
+                widths: [35, 35, 70, 350],
+                body: [
+                    [
+                        {
+                            text: forms.month ? forms.month : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [10, 7, 0, 0]
+                        },
+                        {
+                            text: forms.day ? forms.day : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [4, 7, 0, 0]
+                        },
+                        {
+                            text: forms.year ? forms.year : ' ',
+                            fontSize: 15,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [10, 7, 0, 0]
+                        },
+                        {
+                            text: forms.spouse_email == null ? ' ' : forms.spouse_email,
+                            // text: '0 0 0',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [10, 6, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },{
+            layout: "noBorders",
+            table: {
+                widths: [170, 50, 270],
+                body: [
+                    [
+                        {
+                            text: forms.spouse_claiming_add_exemp == true ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [161, 0, 0, 0]
+                        },
+                        {
+                            text: forms.spouse_claiming_add_exemp == false ? 'X' : ' ',
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [30, 0, 0, 0]
+                        },
+                        {
+                            // text: forms.year ? forms.year : ' ',
+                            text: forms.spouse_no_dependents == null ? ' ' : forms.spouse_no_dependents,
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'justify',
+                            margin: [238, -1, 0, 0]
+                        }
+                    ]
+                ]
+            }
+        },
+        // total payable
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.tax_filer_tax_due == null ? ' ' : forms.tax_filer_tax_due,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, 6, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.spouse_tax_due == null ? ' ' : forms.spouse_tax_due,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -3, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.total_income_tax_due == null ? ' ' : forms.total_income_tax_due,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -3, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.less_tax_credits == null ? ' ' : forms.less_tax_credits,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -6, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.spouse_less_tax_credits == null ? ' ' : forms.spouse_less_tax_credits,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -6, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.net_tax_payable == null ? ' ' : forms.net_tax_payable,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -5, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.portion_tax_payable == null ? ' ' : forms.portion_tax_payable,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -5, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.total_penalties == null ? ' ' : forms.total_penalties,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -5, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [508],
+                // heights: [0],
+                body: [
+                    [{
+                        
+                        text: forms.total_amount_payable == null ? ' ' : forms.total_amount_payable,
+                        fontSize: 14,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [403, -3, 0, 0]
+                    }    
+                    ]
+                ]
+            }
+        },
+        {
             text: '\n\n\n'
         },
     )
@@ -257,45 +608,45 @@ function getContent(forms) {
                 widths: [220, 40, 82, 42, 115],
                 body: [
                     [{
-                            // 48 characters only
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
+                        // 48 characters only
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
 
-                        },
-                        {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        },
-                        {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        }, {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        },
-                        {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        }
+                    },
+                    {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    },
+                    {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    }, {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    },
+                    {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    }
                     ]
                 ]
             }
-        }, )
+        })
     }
 
     content.push({
@@ -307,71 +658,71 @@ function getContent(forms) {
         // right,down,left,up
         margin: [416, 8, 0, 0],
     }, {
-        alignment: 'justify',
-        fontSize: 10,
-        width: 100,
-        text: forms.prevTaxPaidCrdtb,
-        // right,down,left,up
-        margin: [415, 11, 0, 0],
-    }, {
-        alignment: 'justify',
-        fontSize: 10,
-        width: 100,
-        text: forms.advPayment,
-        // right,down,left,up
-        margin: [415, 1, 0, 0],
-    }, {
-        alignment: 'justify',
-        fontSize: 10,
-        width: 100,
-        text: forms.totTaxCredits,
-        // right,down,left,up
-        margin: [415, 1, 0, 0],
-    }, {
-        alignment: 'justify',
-        fontSize: 10,
-        width: 100,
-        text: forms.amtPayblCrdtb,
-        // right,down,left,up
-        margin: [415, 1, 0, 0],
-    })
+            alignment: 'justify',
+            fontSize: 10,
+            width: 100,
+            text: forms.prevTaxPaidCrdtb,
+            // right,down,left,up
+            margin: [415, 11, 0, 0],
+        }, {
+            alignment: 'justify',
+            fontSize: 10,
+            width: 100,
+            text: forms.advPayment,
+            // right,down,left,up
+            margin: [415, 1, 0, 0],
+        }, {
+            alignment: 'justify',
+            fontSize: 10,
+            width: 100,
+            text: forms.totTaxCredits,
+            // right,down,left,up
+            margin: [415, 1, 0, 0],
+        }, {
+            alignment: 'justify',
+            fontSize: 10,
+            width: 100,
+            text: forms.amtPayblCrdtb,
+            // right,down,left,up
+            margin: [415, 1, 0, 0],
+        })
     content.push({
         layout: "noBorders",
         table: {
             widths: [131, 122, 110, 140],
             body: [
                 [{
-                        text: forms.surcharge,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [52, 13, 0, 0],
-                        alignment: 'justify'
+                    text: forms.surcharge,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [52, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.interest,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [26, 13, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.interest,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [26, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.compromise,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [23, 13, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.compromise,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [23, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.penaltiesCrdtb,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [28, 13, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.penaltiesCrdtb,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [28, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
+                },
                 ]
             ]
         }
@@ -383,29 +734,29 @@ function getContent(forms) {
             widths: [160, 100, 260],
             body: [
                 [{
-                        text: forms.overremittance == true ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [155, 8, 0, 0],
-                        alignment: 'justify'
+                    text: forms.overremittance == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [155, 8, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.overremittance == false ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [95, 8, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.overremittance == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [95, 8, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.total_amount_overremittance,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [140, 0, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.total_amount_overremittance,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [140, 0, 0, 0],
+                    alignment: 'justify'
 
-                    }
+                }
                 ]
             ]
         }

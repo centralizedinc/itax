@@ -206,7 +206,7 @@ export default {
                 icon: <a-icon type="check" style="color: blue" />
               });
               this.loading = false;
-              this.$router.push("/");
+              this.$router.push("/app");
             })
             .catch(err => {
               this.$notification.open({
