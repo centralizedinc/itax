@@ -1,6 +1,6 @@
 'use strict'
 
-var Form2550MModel = require('../models/forms/form2550MModel.js');
+var Form2551QModel = require('../models/forms/form2551QModel.js');
 var commonValidator = require('./commonValidator.js');
 
 
@@ -18,7 +18,7 @@ function validate(form_details) {
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('form 2550m validator errors: ', JSON.stringify(errors) )
+    console.log('form 2551q validator errors: ', JSON.stringify(errors) )
 
     return errors
 }
