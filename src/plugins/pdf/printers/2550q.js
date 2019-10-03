@@ -59,6 +59,8 @@ function getContent(forms) {
 
             }
         },
+        
+/////////////////////////////////////////////////////////////////////////////////////////
         {
             layout: "noBorders",
             table: {
@@ -83,7 +85,7 @@ function getContent(forms) {
                 ]
             }
         },
-
+///////////////////////////////////////////////////////////////////////////////////////
         {
             layout: "noBorders",
             table: {
@@ -122,6 +124,8 @@ function getContent(forms) {
                 ]
             }
         },
+
+///////////////////////////////////////////////////////////////////////////////////////
 
         {
             layout: "noBorders",
@@ -162,155 +166,258 @@ function getContent(forms) {
             }
         },
 
-        // {
-        //     text: forms.year ? forms.year : ' ',
-        //     fontSize: 15,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [0, 78, 0, 0]
-        // },
-        // {
-        //     text: forms.amendedYn == true ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [40, 82, 0, 0]
-        // },
-        // {
-        //     text: forms.amendedYn == false ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [13, 82, 0, 0]
-        // },
+ ////////////////////////////////////////////////////////////////////////////////////       
 
-        //year ended
-
-
-
-        // {
-        //     text: forms.quarter == 1 ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [13, 82, 0, 0]
-        // },
-        // {
-        //     text: forms.quarter == 2 ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [13, 82, 0, 0]
-        // },
-        // {
-        //     text: forms.quarter == 3 ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [13, 82, 0, 0]
-        // },
-        // {
-        //     text: forms.quarter == 4 ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [13, 82, 0, 0]
-        // },
-        // {
-        //     text: forms.numOfSheet,
-        //     fontSize: 10,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [34, 83, 10, 0]
-        // },
-        // {
-        //     text: forms.taxes_withheld == true ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [40, 82, 0, 0]
-        // },
-        // {
-        //     text: forms.taxes_withheld == false ? 'X' : ' ',
-        //     fontSize: 12,
-        //     // right,down,left,up
-        //     alignment: 'justify',
-        //     margin: [25, 82, 0, 0]
-        // }
         {
             layout: "noBorders",
             table: {
-                widths: [200, 150, 158],
+              
+                widths: [90, 50],
                 body: [
                     [{
-                            text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                            fontSize: 19,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [15, 5, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                            text: forms.amendedYn == true ? 'X' : ' ',
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [85, 7, 0, 0]
-                        }, {
-                            // 38 characters only
-                            text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
-                            fontSize: 10,
+                            margin: [442, -40, 0, 0]
+                        },
+                        {
+                            text: forms.amendedYn == false ? 'X' : ' ',
+                            fontSize: 12,
                             // right,down,left,up
                             alignment: 'justify',
-                            margin: [50, 6, 0, 0]
-                        }
-                    ]
+                            margin: [345, -26, 0, 0]
+                        },
+
+                    ],
+
                 ]
+
             }
         },
 
-        {
+//////////////////////////////////////////////////////////////////
+{
+    layout: "noBorders",
+    table: {
+      
+        widths: [90, 50],
+        body: [
+            [{
+                    text: forms.shortperiod == true ? 'X' : ' ',
+                    fontSize: 15,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [510, -45, 0, 0]
+                },
+                {
+                    text: forms.shortperiod == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [412, -30, 0, 0]
+                },
+
+            ],
+
+        ]
+
+    }
+},
+/////////////////////////////////////////////////////////
+{
+    layout: "noBorders",
+    table: {
+      
+        widths: [100, 100, 100],
+        body: [
+            [
+                {
+                    text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                    fontSize: 14,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [22, -17, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.tin1 == null ? ' ' : forms.taxpayer.tin1,
+                    fontSize: 14,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [-47, -17, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.tin2 == null ? ' ' : forms.taxpayer.tin2,
+                    fontSize: 14,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [-115, -17, 0, 0]
+                },
+            ],
+
+        ]
+
+    }
+},
+
+//////////////////////////////////////////////////////////////////////////////////
+{
+    layout: "noBorders",
+    table: {
+      
+        widths: [300],
+        body: [
+            [
+                {
+                    text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                    fontSize: 15,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [227, -22, 0, 0]
+                },    
+             
+            ],
+
+        ]
+
+    }
+},
+
+////////////////////////////////////////////////////////////////////////
+{
+    layout: "noBorders",
+    table: {
+      
+        widths: [400],
+        body: [
+            [
+                {
+                    text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                    fontSize: 15,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [326, -25, 0, 0]
+                },    
+             
+            ],
+
+        ]
+
+    }
+},
+/////////////////////////////////////////////////////////////
+{
+    layout: "noBorders",
+    table: {
+        widths: [500,],
+        body: [
+            [
+               {
+                    // 38 characters only
+                    text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [410, -25, 0, 0]
+                }
+            ]
+        ]
+    }
+},
+//////////////////////////////////////////////////////////////
+
+{
+    layout: "noBorders",
+    table: {
+        widths: [500,],
+        body: [
+            [
+                {
+                    // 72 characters 
+                    text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [14, -5, 0, 0]
+                }, 
+            ]
+        ]
+    }
+},
+
+///////////////////////////////////////////////////////
+
+{
+    layout: "noBorders",
+    table: {
+        widths: [500,],
+        body: [
+            [
+                {
+                    text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [420, -16, 0, 0]
+                }
+            ]
+        ]
+    }
+},
+
+///////////////////////////////////////////////////////////////////
+
+{
+    layout: "noBorders",
+    table: {
+        widths: [500,],
+        body: [
+            [
+                {
+                    // 72 characters
+                    text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [12, 6, 0, 0]
+                }
+            ]
+        ]
+    }
+},
+
+
+
+//////////////////////////////////////////////////////////////////
+
+{
+    layout: "noBorders",
+    table: {
+        widths: [600,],
+        body: [
+            [
+                {
+                    text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [487, -17, 0, 0]
+                }
+            ]
+        ]
+    }
+},
+
+
+/////////////////////////////////////////////////////////////////
+
+     {
             layout: "noBorders",
             table: {
                 widths: [420, "*"],
                 body: [
-                    [{
-                            // 72 characters 
-                            text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
-                            fontSize: 10,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [14, 5, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [25, 3, 0, 0]
-                        }
-                    ]
-                ]
-            }
-        }, {
-            layout: "noBorders",
-            table: {
-                widths: [420, "*"],
-                body: [
-                    [{
-                            // 72 characters
-                            text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
-                            fontSize: 10,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [12, 6, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'center',
-                            margin: [50, 6, 0, 0]
-                        }
+                    [
+                      
                     ]
                 ]
             }

@@ -4,7 +4,7 @@ mongoose.Promise = require('bluebird')
 var SettingsDao = require('../dao/SettingsDao');
 var ApplicationSettings = require('./ApplicationSettings');
 const sg_email = require('./email');
-// const uploader = require("./uploader");
+const uploader = require("./uploader");
 
 function connect(app) {
     mongoose.connect(process.env.DB_CONNECTION_URL || require('./constant_helper').mongodb_uri, {
@@ -26,7 +26,7 @@ function connect(app) {
             require('../passport/google');
             require('../passport/facebook');
             sg_email.setKeys();
-            // uploader.setKeys();
+            uploader.setKeys();
         }).catch((err) => console.error(err));
 }
 

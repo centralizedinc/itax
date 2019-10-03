@@ -1,18 +1,22 @@
 const mongoose = require('mongoose')
 
-const RelationshipModelSchema = new mongoose.Schema({
+const ConnectionModelSchema = new mongoose.Schema({
     relationship: {
-        type: Number
-        /**
-         * Employer - 0
-         * Spouse - 1
-         */
+        type: String
     },
     from: {
         type: String
     },
     to: {
         type: String
+    },
+    status: {
+        type: String,
+        default: 'A'
+        /**
+         * A - ACTIVE
+         * I - INACTIVE
+         */
     },
     created_by: {
         type: String
@@ -30,17 +34,18 @@ const RelationshipModelSchema = new mongoose.Schema({
     }
 })
 
-RelationshipModelSchema.pre('save', function (callback) {
+ConnectionModelSchema.pre('save', function (callback) {
     this.date_created = new Date();
     this.date_modified = new Date();
+    this.status = 'A';
     callback();
 });
 
-RelationshipModelSchema.pre('findOneAndUpdate', function (callback) {
+ConnectionModelSchema.pre('findOneAndUpdate', function (callback) {
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();
     callback();
 });
 
-module.exports = mongoose.model('relationships', RelationshipModelSchema)
+module.exports = mongoose.model('connections', ConnectionModelSchema)

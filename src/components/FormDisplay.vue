@@ -101,7 +101,7 @@ export default {
       this.percent = e * 100;
     },
     refresh() {
-      this.loading = true;
+      // this.loading = true;
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
       form.month = this.formatDtMonth(form.dateFiled);
@@ -122,6 +122,14 @@ export default {
       };
       console.log("taxpayer.birthday :", birthday);
       form.birthday = birthday;
+
+      var sbirthday = {
+        month: this.formatDtMonth(form.taxpayer.sbirthday),
+        year: this.formatDtYear(form.taxpayer.sbirthday),
+        day: this.formatDtDay(form.taxpayer.sbirthday)
+      };
+      console.log("taxpayer.birthday :", sbirthday);
+      form.sbirthday = sbirthday;
 
       var dateFiled2 = {
         month: this.formatDtMonth(form.dateFiled2),

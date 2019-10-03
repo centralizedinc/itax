@@ -14,7 +14,7 @@ export default class OAuthAPI {
      */
     static login(account) {
         console.table([account]);
-        return axios.post(`http://localhost:5000/oauth/login`, account);
+        return axios.post(`oauth/login`, account);
     }
 
     /**
@@ -23,7 +23,7 @@ export default class OAuthAPI {
      */
     static signup(account) {
         console.table([account]);
-        return axios.post(`http://localhost:5000/oauth/signup`, account);
+        return axios.post(`oauth/signup`, account);
     }
 
     /**
@@ -32,13 +32,21 @@ export default class OAuthAPI {
      */
     static confirm(code) {
         console.log('code :', code);
-        return axios.get(`http://localhost:5000/oauth/confirmation/${code}`)
+        return axios.get(`oauth/confirmation/${code}`)
     }
 
     /**
      * @returns {Promise}
      */
     doneSetup() {
-        return axios.get('http://localhost:5000/oauth/confirmation/setup')
+        return axios.get('oauth/confirmation/setup')
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} details
+     */
+    sendRegisterInvitation(details) {
+        return axios.post('oauth/invitation', details)
     }
 }
