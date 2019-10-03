@@ -1038,6 +1038,15 @@ export default {
   },
   computed:{
     total_allowable_less_input_tax(){
+    //   if(this.form.carriedOverPreviousPeriod == null){
+    //     this.form.carriedOverPreviousPeriod = 0
+    //   } else if(this.form.txbleGoodsServices == null){
+    //     this.form.txbleGoodsServices = 0
+    //   } else if(this.form.transInputTax == null){
+    //     this.form.transInputTax = 0
+    //   } else if(this.form.presumpInputTax == null){
+    //     this.form.presumpInputTax = 0
+    //   }
       return this.form.totalAllowableLessInputTax = this.form.carriedOverPreviousPeriod + this.form.txbleGoodsServices
       + this.form.transInputTax + this.form.presumpInputTax + this.form.otherAllowableLessInputTax
     }
@@ -1055,9 +1064,14 @@ export default {
     },
     
   },
-  // created() {
-  //   this.checkDraft();
-  // }
+  created() {
+    // this.checkDraft();
+    // this.form.carriedOverPreviousPeriod = 0
+    // this.form.txbleGoodsServices = 0
+    // this.form.transInputTax = 0
+    // this.form.presumpInputTax = 0
+    //    this.form.otherAllowableLessInputTax = 0
+  }
 };
 </script>
 
