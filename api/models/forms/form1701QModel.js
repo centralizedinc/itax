@@ -20,11 +20,7 @@ var Form1701QSchema = new Schema({
         default: 0
     },
     taxpayer: {
-        taxpayer_name:{
-            first: String,
-            middle: String,
-            last: String
-        },
+        taxpayer_name:String,
         tin: Number,
         rdo_code: Number,
         tax_filer_type: String,
@@ -32,25 +28,19 @@ var Form1701QSchema = new Schema({
         birthday: Date,
         email_address: String,
         citizenship: String,
-        telephone_no: Number,
+        foreign_tax_no: Number,
         spouse_tin: Number,
         spouse_rdo_code: Number,
         spouse_tax_filer_type: String,
         spouse_atc: { type: Number, default: 0 },
-        spouse_name: {
-            first: String,
-            middle: String,
-            last: String
-        },
+        spouse_name: String,
         spouse_citizenship: String,
-        telephone_no:Number
+        spouse_foreign_tax_no:Number
     },
     dueDate: Date,
     returnPeriod: Date,
     returnPeriodMonth: String,
     returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: { type: Number, default: 0 },
     atc: { type: Number, default: 0 }, 
     taxCredits: { type: Number, default: 0 },
     taxRate: { type: Number, default: 0 },

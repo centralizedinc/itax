@@ -6,9 +6,9 @@ export default {
                 deepCopy(obj) {
                     return JSON.parse(JSON.stringify(obj));
                 },
-                formatTIN(tin){
-                    
-                    return tin&&tin.length==13?`${tin.substring(0,3)}-${tin.substring(3,6)}-${tin.substring(6,9)}-${tin.substring(9,13)}`:tin
+                formatTIN(tin) {
+
+                    return tin && tin.length == 13 ? `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, 13)}` : tin
                 },
                 formatDate(date, type) {
                     if (!date) {
@@ -39,6 +39,11 @@ export default {
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     return month;
+                },
+                formatDtDay(dt) {
+                    var date = new Date(dt);
+                    var day = date.getDate();
+                    return day;
                 },
             },
         })
