@@ -225,6 +225,8 @@
         <a-input-number
           placeholder="Input Tax Carried Over from Previous Period"
           v-model="form.carriedOverPreviousPeriod"
+          :data="total_allowable_less_input_tax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -237,6 +239,7 @@
         <a-input-number
           placeholder="Input Tax Deferred on Capital Goods Exceeding ₱1Million from Previous Period"
           v-model="form.txbleGoodsServices"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -249,6 +252,7 @@
         <a-input-number
           placeholder="Transitional Input Tax"
           v-model="form.transInputTax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -261,6 +265,7 @@
         <a-input-number
           placeholder="Presumptive Input Tax"
           v-model="form.presumpInputTax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -273,6 +278,7 @@
         <a-input-number
           placeholder="Others"
           v-model="form.otherAllowableLessInputTax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -284,6 +290,7 @@
       >
         <a-input-number
           placeholder="Total"
+          :data="total_allowable_less_input_tax"
           v-model="form.totalAllowableLessInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
@@ -1028,6 +1035,12 @@ export default {
       },
       image_height: 1000
     };
+  },
+  computed:{
+    total_allowable_less_input_tax(){
+      return this.form.totalAllowableLessInputTax = this.form.carriedOverPreviousPeriod + this.form.txbleGoodsServices
+      + this.form.transInputTax + this.form.presumpInputTax + this.form.otherAllowableLessInputTax
+    }
   },
   watch: {
     loading(val) {

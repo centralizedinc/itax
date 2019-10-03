@@ -18,7 +18,7 @@ function validate(form_details) {
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('errors', JSON.stringify(errors) )
+    console.log('form 2550m validator errors: ', JSON.stringify(errors) )
 
     return errors
 }
