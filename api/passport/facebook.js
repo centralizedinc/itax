@@ -79,6 +79,7 @@ function signInFacebook(profile, facebook_access_token) {
             })
             .then((user) => {
                 result.user = user;
+                console.log('######## auth user: ', JSON.stringify(user))
                 resolve(result)
             })
             .catch((err) => {

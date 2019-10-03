@@ -47,9 +47,16 @@ router
     .get((req, res) => {
         const account_id = jwt.decode(req.headers.access_token).account_id;
 
-        AccountDao.modifyByAccountId(account_id, { status: 2 })
-            .then((model) => res.json({ message: constant_helper.confirmation_success, model }))
-            .catch((error) => res.json({ error }));
+        AccountDao.modifyByAccountId(account_id, {
+                status: 2
+            })
+            .then((model) => res.json({
+                message: constant_helper.confirmation_success,
+                model
+            }))
+            .catch((error) => res.json({
+                error
+            }));
     })
 
 router
@@ -67,7 +74,11 @@ router
             })
         }
         if (data) {
-            const { account_id, expiry_date, date } = data;
+            const {
+                account_id,
+                expiry_date,
+                date
+            } = data;
             if (new Date(expiry_date).getTime() < new Date().getTime()) {
                 return res.json({
                     error: {
@@ -76,9 +87,17 @@ router
                 })
             }
 
-            AccountDao.modifyByAccountId(account_id, { status: 1, confirmation_url: null })
-                .then((model) => res.json({ message: constant_helper.confirmation_success, model }))
-                .catch((error) => res.json({ error }));
+            AccountDao.modifyByAccountId(account_id, {
+                    status: 1,
+                    confirmation_url: null
+                })
+                .then((model) => res.json({
+                    message: constant_helper.confirmation_success,
+                    model
+                }))
+                .catch((error) => res.json({
+                    error
+                }));
         }
     })
 
@@ -98,12 +117,14 @@ router.route('/google/callback')
 
 /***** SIGN UP USING FACEBOOK ACCOUNT *****/
 router.route('/facebook')
-    .get(passport.authenticate('facebook', { scope: ["email"] }));
+    .get(passport.authenticate('facebook', {
+        scope: ["email"]
+    }));
 
 router.route('/facebook/callback')
     .get(passport.authenticate('facebook', {
-        session: false
-    }),
+            session: false
+        }),
         (req, res) => {
             // res.json(req.user)
             const code = new Buffer(JSON.stringify(req.user)).toString('base64');

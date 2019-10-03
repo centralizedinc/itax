@@ -15,7 +15,7 @@ function isAuthenticated(to, from, next) {
     next(is_authenticated && status === 1 ? true : '/');
   else if (to.matched[0].name === "Secured")
     next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : true) : "/");
-  // else next("/")
+  //  next("/")
 }
 
 export default new Router({

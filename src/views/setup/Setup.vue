@@ -18,7 +18,8 @@
       :full="true"
       :loading="loading"
       :showAddTP="showAddTP"
-      @hideAddTP="showAddTP=false"
+      :avatar="avatar"
+      @showAddTP="showAddTP=$event"
       @next="next"
       @previous="next"
       @submitTaxpayer="submitTaxpayer"
@@ -68,7 +69,7 @@ export default {
       this.details.taxpayer.individual_details.firstName = this.user.name.first;
       this.details.taxpayer.individual_details.lastName = this.user.name.last;
       this.details.taxpayer.contact_details.email = this.user.email;
-      this.details.taxpayer.taxpayer_type = 0;
+      this.details.taxpayer.taxpayer_type = 'I';
     },
     next(i) {
       // this.details.taxpayer.individual_details.firstName = this.details.user.name.first;

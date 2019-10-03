@@ -55,6 +55,7 @@ user_router.route("/accountid")
     })
     .post((req, res) => {
         const account_id = jwt.decode(req.headers.access_token).account_id;
+        console.log('account_id :', account_id);
         UserDao.modifyByAccountID(account_id, req.body)
             .then((model) => {
                 res.json({

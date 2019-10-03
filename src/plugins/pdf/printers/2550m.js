@@ -35,38 +35,38 @@ function getContent(forms) {
     content.push({
         layout: "noBorders",
         table: {
-            widths: [160, 79, 50, 50, 150],
+            widths: [162, 79, 49, 49, 150],
             body: [
                 [{
-                    text: "12",
-                    fontSize: 13,
-                    alignment: 'justify',
+                    text: forms.returnPeriod.month ? forms.returnPeriod.month : ' ',
+                    fontSize: 15,
+                    akignment: 'justify',
                     // right,down,left,up
                     margin: [145, 34, 0, 0]
                 },
                 {
-                    text: "2019",
+                    text: forms.returnPeriod.year ? forms.returnPeriod.year : ' ',
                     fontSize: 13,
                     alignment: 'justify',
                     // right,down,left,up
                     margin: [12, 34, 0, 0]
                 },
                 {
-                    text: "X",
+                    text: forms.amendedYn == true ? 'X' : ' ',
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [43, 39, 0, 0]
+                    margin: [42, 39, 0, 0]
                 },
                 {
-                    text: "X",
+                    text: forms.amendedYn == false ? 'X' : ' ',
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [21, 39, 0, 0]
+                    margin: [20, 39, 0, 0]
                 },
                 {
-                    text: "XX",
+                    text: forms.numOfSheet ? forms.numOfSheet : ' ',
                     fontSize: 12,
                     alignment: 'justify',
                     // right,down,left,up
@@ -83,21 +83,21 @@ function getContent(forms) {
                 widths: [170, 100, 236],
                 body: [
                     [{
-                        text: "XXX  XXX   XXX",
+                        text: forms.taxpayer.tin ? forms.taxpayer.tin : ' ',
                         fontSize: 14,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [33, 9, 0, 0]
                     },
                     {
-                        text: "XXX",
+                        text: forms.taxpayer.rdo_code ? forms.taxpayer.rdo_code : ' ',
                         fontSize: 14,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [60, 9, 0, 0]
                     },
                     {
-                        text: "INFRASTRUCTURE",
+                        text: forms.taxpayer.line_of_business ? forms.taxpayer.line_of_business : ' ',
                         fontSize: 13,
                         alignment: 'justify',
                         // right,down,left,up
@@ -117,14 +117,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "Richard Aguilus Mulawin Bermudez",
+                            text: forms.taxpayer.registered_name ? forms.taxpayer.registered_name : ' ',
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [18, 9, 0, 0]
                         },
                         {
-                            text: "02 8700",
+                            text: forms.taxpayer.contact_details.telno ? forms.taxpayer.contact_details.telno : ' ',
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
@@ -143,14 +143,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "2550M Bgy Alapapaap Mulawin Village",
+                            text: forms.taxpayer.address ? forms.taxpayer.address : ' ',
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [16, 8, 0, 0]
                         },
                         {
-                            text: "1630",
+                            text: forms.taxpayer.address_details.zipCode,
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
@@ -170,21 +170,21 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "X",
+                            text: forms.specialRate == true ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [210, 5, 0, 0]
                         },
                         {
-                            text: "X",
+                            text: forms.specialRate == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [23, 5, 0, 0]
                         },
                         {
-                            text: "TAX RELIEF",
+                            text: forms.specialRateYn,
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
@@ -206,14 +206,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.totalAtcAmount,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, 22, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.totalAtcOutput,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -234,14 +234,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.salesGovAmount,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -5, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.salesGovOutput,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -261,7 +261,7 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.zeroRatedAmount,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -283,7 +283,7 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.exemptAmount,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -305,14 +305,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.totalSales,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.totalOutputTax,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -333,7 +333,7 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXX",
+                            text: forms.carriedOverPreviousPeriod,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -356,7 +356,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: "XXXXX",
+                            text: forms.txbleGoodsServices,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -376,7 +376,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: "XXXXX",
+                            text: forms.transInputTax,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -396,7 +396,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: "XXXXX",
+                            text: forms.presumpInputTax,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -416,7 +416,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: "XXXXX",
+                            text: forms.otherAllowableLessInputTax,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -436,7 +436,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: "XXXXX",
+                            text: forms.totalAllowableLessInputTax,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -458,14 +458,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.purCapGoodsNotExceed,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, 5, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.outputCapGoodsNotExceed,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -485,14 +485,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.purCapGoodsExceed,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -3, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.outputPurCapGoodsExceed,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -513,14 +513,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.domesticPurchaseGoods,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.outputDomesticPurchaseGoods,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -541,14 +541,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.importationGoods,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.outputImportationGoods,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -569,14 +569,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: "XXXXXX",
+                            text: forms.domesticPurchaseService,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -5, 0, 0]
                         },
                         {
-                            text: "XXXXX",
+                            text: forms.outputDomesticPurchaseService,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -597,14 +597,14 @@ function getContent(forms) {
         body: [
             [
                 {
-                    text: "XXXXXX",
+                    text: forms.servicesNonResidents,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
                     margin: [270, -5, 0, 0]
                 },
                 {
-                    text: "XXXXX",
+                    text: forms.outputServicesNonResidents,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -625,7 +625,7 @@ function getContent(forms) {
         body: [
             [
                 {
-                    text: "XXXXXX",
+                    text: forms.purchaseNotQualified,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -647,14 +647,14 @@ function getContent(forms) {
         body: [
             [
                 {
-                    text: "XXXXXX",
+                    text: forms.purchaseOthers,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
                     margin: [270, -5, 0, 0]
                 },
                 {
-                    text: "XXXXX",
+                    text: forms.outputPurchaseOthers,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -675,7 +675,7 @@ function getContent(forms) {
         body: [
             [
                 {
-                    text: "XXXXXX",
+                    text: forms.totalCurrentPurchases,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -720,7 +720,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.inputTaxPurchaseCapGoods,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -742,7 +742,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.inputTaxSaleToGovt,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -764,7 +764,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.inputTaxAllocableToExempt,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -786,7 +786,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.refundTcm,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -808,7 +808,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.otherDeductionFrInputTax,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -830,7 +830,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.totalDeductionFrInputTax,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -852,7 +852,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.totalInputTax,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -874,7 +874,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.taxDue,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -896,7 +896,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.creditableVatWithheld,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -918,7 +918,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.advPaySugarFlourInd,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -940,7 +940,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.taxWthld,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -962,7 +962,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.prevTaxPaid,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -984,7 +984,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.advPymt,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -1006,7 +1006,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.otherTaxCredits,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -1028,7 +1028,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.totalCredits,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -1050,7 +1050,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.amtPaybl,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -1072,28 +1072,28 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXXXXXXX",
+                    text: forms.surcharge,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
                     margin: [83, 5, 0, 0]
                 },
                 {
-                    text: "XXXXXXXXXX",
+                    text: forms.interest,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
                     margin: [23, 5, 0, 0]
                 },
                 {
-                    text: "XXXXXXXXXX",
+                    text: forms.compromise,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
                     margin: [13, 5, 0, 0]
                 },
                 {
-                    text: "XXXXX",
+                    text: forms.penalties,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
