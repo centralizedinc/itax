@@ -535,6 +535,7 @@
       >
         <a-input-number
           placeholder="Total Available Input Tax"
+          :data="total_available_input_tax"
           v-model="form.totalAvailableInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
@@ -1049,6 +1050,25 @@ export default {
     //   }
       return this.form.totalAllowableLessInputTax = this.form.carriedOverPreviousPeriod + this.form.txbleGoodsServices
       + this.form.transInputTax + this.form.presumpInputTax + this.form.otherAllowableLessInputTax
+    },
+    total_available_input_tax(){
+      return this.form.totalAvailableInputTax =
+      this.form.purCapGoodsNotExceed
+      +this.form.outputCapGoodsNotExceed
+      +this.form.purCapGoodsExceed
+      +this.form.outputPurCapGoodsExceed
+      +this.form.domesticPurchaseGoods
+      +this.form.outputDomesticPurchaseGoods
+      +this.form.importationGoods
+      +this.form.outputImportationGoods
+      +this.form.domesticPurchaseService
+      +this.form.outputDomesticPurchaseService
+      +this.form.servicesNonResidents
+      +this.form.outputServicesNonResidents
+      +this.form.purchaseNotQualified
+      +this.form.purchaseOthers
+      +this.form.outputPurchaseOthers
+      +this.form.totalCurrentPurchases
     }
   },
   watch: {
