@@ -58,7 +58,8 @@ app.use('/tax/returns', require('./api/routes/returns_router'));
 app.use('/taxpayer', require('./api/routes/taxpayer_router'));
 app.use('/users', require('./api/routes/user_router'));
 app.use('/validate', require('./api/routes/validate_router'));
-app.use('/connections', require('./api/routes/relationship_router'))
+app.use('/connections', require('./api/routes/relationship_router'));
+app.use('/upload', require('./api/routes/upload_router'))
 
 // START SERVER
 //#############################################################################

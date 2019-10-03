@@ -26,6 +26,7 @@ router.route("/")
         data.created_by = jwt.decode(req.headers.access_token).account_id;
         RelationshipDao.create(data)
             .then((model) => {
+                console.log('model :', model);
                 res.json({
                     success: true,
                     model

@@ -61,5 +61,27 @@ class SendEmail {
       cb(error);
     });
   }
+
+  static registerInvitation(email, name, sender) {
+    const confirmation_token = new Buffer(JSON.stringify({
+      email,
+      name,
+      date: new Date()
+    })).toString('base64')
+    const confirmation_url = `http://localhost:8080/#/?reg_code=${confirmation_token}`
+    console.log('confirmation_url :', confirmation_url);
+    const msg = {
+      to: email,
+      from: ApplicationSettings.getValue("ITAX_EMAIL"),
+      templateId: ApplicationSettings.getValue("REGISTRATION_INVITATION_TEMPLATE"),
+      substitutions: { name: `${name.first} ${name.last}`, sender, confirmation_url }
+    };
+    return new Promise((resolve, reject) => {
+      sgMail.send(msg)
+        .then((result) => {
+          resolve({ result, confirmation_url })
+        }).catch((err) => reject(err));
+    })
+  }
 }
 module.exports = SendEmail
