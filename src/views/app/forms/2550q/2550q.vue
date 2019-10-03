@@ -36,7 +36,7 @@
       </a-form-item>
 
       <a-form-item label="5. Short Period Return?">
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.shortperiod">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -59,8 +59,12 @@
         <b>Part I: Background Information</b>
       </a-divider>
       <a-form-item label="6. TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+        <a-input-number v-model="form.taxpayer.tin"  :formatter="value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ~ ')"></a-input-number> 
+        <!-- <a-input-number v-model="form.taxpayer.tin1" :min="0" :max="999" style="width: 10%"></a-input-number> 
+        <a-input-number v-model="form.taxpayer.tin2" :min="0" :max="999" style="width: 10%"></a-input-number> -->
       </a-form-item>
+
+
       <a-form-item label="7. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
