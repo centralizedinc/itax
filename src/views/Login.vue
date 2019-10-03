@@ -10,7 +10,7 @@
           <p
             style="margin-top:2vh; color:#ffffff"
           >Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
-          <a-button size="large" ghost><a-icon type="download"></a-icon>Download & Install on PC</a-button>
+          <a-button size="large" ghost><a-icon type="download"></a-icon>Download & Install on PC <a-icon type="windows"/></a-button>
           <a-row :gutter="24" style="margin-top:5vh">
             <p style="color:#FFFFFF">Also available on: </p>
             <a-col :span="4"  width="100" style="margin-top:1.5vh">
