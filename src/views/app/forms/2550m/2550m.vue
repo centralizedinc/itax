@@ -225,6 +225,8 @@
         <a-input-number
           placeholder="Input Tax Carried Over from Previous Period"
           v-model="form.carriedOverPreviousPeriod"
+          :data="total_allowable_less_input_tax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -237,6 +239,7 @@
         <a-input-number
           placeholder="Input Tax Deferred on Capital Goods Exceeding ₱1Million from Previous Period"
           v-model="form.txbleGoodsServices"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -249,6 +252,7 @@
         <a-input-number
           placeholder="Transitional Input Tax"
           v-model="form.transInputTax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -261,6 +265,7 @@
         <a-input-number
           placeholder="Presumptive Input Tax"
           v-model="form.presumpInputTax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -273,6 +278,7 @@
         <a-input-number
           placeholder="Others"
           v-model="form.otherAllowableLessInputTax"
+          :defaultValue="0"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -284,6 +290,7 @@
       >
         <a-input-number
           placeholder="Total"
+          :data="total_allowable_less_input_tax"
           v-model="form.totalAllowableLessInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
@@ -528,6 +535,7 @@
       >
         <a-input-number
           placeholder="Total Available Input Tax"
+          :data="total_available_input_tax"
           v-model="form.totalAvailableInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
@@ -1029,6 +1037,40 @@ export default {
       image_height: 1000
     };
   },
+  computed:{
+    total_allowable_less_input_tax(){
+    //   if(this.form.carriedOverPreviousPeriod == null){
+    //     this.form.carriedOverPreviousPeriod = 0
+    //   } else if(this.form.txbleGoodsServices == null){
+    //     this.form.txbleGoodsServices = 0
+    //   } else if(this.form.transInputTax == null){
+    //     this.form.transInputTax = 0
+    //   } else if(this.form.presumpInputTax == null){
+    //     this.form.presumpInputTax = 0
+    //   }
+      return this.form.totalAllowableLessInputTax = this.form.carriedOverPreviousPeriod + this.form.txbleGoodsServices
+      + this.form.transInputTax + this.form.presumpInputTax + this.form.otherAllowableLessInputTax
+    },
+    total_available_input_tax(){
+      return this.form.totalAvailableInputTax =
+      this.form.purCapGoodsNotExceed
+      +this.form.outputCapGoodsNotExceed
+      +this.form.purCapGoodsExceed
+      +this.form.outputPurCapGoodsExceed
+      +this.form.domesticPurchaseGoods
+      +this.form.outputDomesticPurchaseGoods
+      +this.form.importationGoods
+      +this.form.outputImportationGoods
+      +this.form.domesticPurchaseService
+      +this.form.outputDomesticPurchaseService
+      +this.form.servicesNonResidents
+      +this.form.outputServicesNonResidents
+      +this.form.purchaseNotQualified
+      +this.form.purchaseOthers
+      +this.form.outputPurchaseOthers
+      +this.form.totalCurrentPurchases
+    }
+  },
   watch: {
     loading(val) {
       this.$emit("loading", val);
@@ -1042,9 +1084,14 @@ export default {
     },
     
   },
-  // created() {
-  //   this.checkDraft();
-  // }
+  created() {
+    // this.checkDraft();
+    // this.form.carriedOverPreviousPeriod = 0
+    // this.form.txbleGoodsServices = 0
+    // this.form.transInputTax = 0
+    // this.form.presumpInputTax = 0
+    //    this.form.otherAllowableLessInputTax = 0
+  }
 };
 </script>
 

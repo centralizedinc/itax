@@ -174,14 +174,14 @@ function getContent(forms) {
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [210, 5, 0, 0]
+                            margin: [210, 3, 0, 0]
                         },
                         {
                             text: forms.specialRate == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [23, 5, 0, 0]
+                            margin: [23, 3, 0, 0]
                         },
                         {
                             text: forms.specialRateYn,
@@ -380,7 +380,7 @@ function getContent(forms) {
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [410, -4, 0, 0]
+                            margin: [410, -6, 0, 0]
                         },
                     ]
                 ]
@@ -698,7 +698,7 @@ function getContent(forms) {
             [
                
                 {
-                    text: "XXXXX",
+                    text: forms.totalAvailableInputTax,
                     fontSize: 9,
                     alignment: 'justify',
                     // right,down,left,up
@@ -1106,32 +1106,32 @@ function getContent(forms) {
 },
 // end
 // start--------------------------------
-{
-    //Table 54  President Signature   
-    //layout: "noBorders",
-    table: {
-        widths: [310, 200,],
-        body: [
-            [
-                {
-                    text: "Richard Aguilus Mulawin Gutierez  ",
-                    fontSize: 9,
-                    alignment: 'justify',
-                    // right,down,left,up
-                    margin: [80, 27, 0, 0]
-                },
-                {
-                    text: "Junex Mastermind",
-                    fontSize: 9,
-                    alignment: 'justify',
-                    // right,down,left,up
-                    margin: [40, 30, 0, 0]
-                },
-            ]
-        ]
+// {
+//     //Table 54  President Signature   
+//     //layout: "noBorders",
+//     table: {
+//         widths: [310, 200,],
+//         body: [
+//             [
+//                 {
+//                     text: "Richard Aguilus Mulawin Gutierez  ",
+//                     fontSize: 9,
+//                     alignment: 'justify',
+//                     // right,down,left,up
+//                     margin: [80, 27, 0, 0]
+//                 },
+//                 {
+//                     text: "Junex Mastermind",
+//                     fontSize: 9,
+//                     alignment: 'justify',
+//                     // right,down,left,up
+//                     margin: [40, 30, 0, 0]
+//                 },
+//             ]
+//         ]
 
-    }
-},
+//     }
+// },
 // end
 
         )
