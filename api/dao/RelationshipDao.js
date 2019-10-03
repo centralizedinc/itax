@@ -6,7 +6,9 @@ class RelationshipDao {
      * @returns {Promise}
      */
     static findAll() {
-        return model.find({}).lean().exec()
+        return model.find({
+            status: 'A'
+        }).lean().exec()
     }
 
     /**
@@ -35,6 +37,26 @@ class RelationshipDao {
 
     /**
      * @returns {Promise}
+     * @param {Object} data `from, to, modified_by `
+     */
+    static remove(data) {
+        const { from, to, modified_by } = data;
+        return new Promise((resolve, reject) => {
+            var result = {};
+            this.modify({ from, to }, { status: 'I', modified_by })
+                .then((data) => {
+                    result = data;
+                    return this.modify({ from: to, to: from }, { status: 'I', modified_by })
+                })
+                .then((data) => {
+                    resolve(result);
+                })
+                .catch((err) => reject(err));
+        })
+    }
+
+    /**
+     * @returns {Promise}
      * @param {Object} details 
      */
     static create(details) {
@@ -56,6 +78,14 @@ class RelationshipDao {
                 })
                 .catch((err) => reject(err));
         })
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     */
+    static modify(conditions, updated_details) {
+        return model.findOneAndUpdate(conditions, updated_details).exec()
     }
 }
 
