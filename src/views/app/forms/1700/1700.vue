@@ -5,7 +5,8 @@
         <b>Annual Income Tax Return (1700)</b>
       </a-divider>
       <a-form-item label="1. For the year (YY)">
-        <a-dropdown></a-dropdown>
+        <!-- <a-input v-model="form.year"></a-input> -->
+        <a-month-picker v-model="form.dateFiled"></a-month-picker>
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amendedYn">
@@ -21,8 +22,8 @@
       </a-form-item>
       <a-form-item label="4. Source of Income">
         <a-radio-group v-model="form.source_of_income">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
+          <a-radio :value="0">Compensation Income</a-radio>
+          <a-radio :value="1">Other Income</a-radio>
         </a-radio-group>
       </a-form-item>
       <!-- <a-form-item label="3. No. of Sheets Attached">
@@ -39,10 +40,16 @@
     <!-- Part I -->
     <a-form :form="form_part1" v-show="step===1">
       <a-divider orientation="left">
-        <b>Part I: Background Information</b>
+        <b>Part I: Background Information on Tax Filer and Spouse</b>
       </a-divider>
       <a-form-item label="5. TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+        <a-input
+        style="width:100%"
+          max="999999999"
+        v-model="form.taxpayer.tin"
+        :formatter="value => `${value}`.replace(/^(\d{3})(\d{3})(\d{3})/g, '$1-$2-$3')"
+        :parser="value => value.replace(/\$\s?|(-*)/g, '')"
+        ></a-input>
       </a-form-item>
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
@@ -50,229 +57,187 @@
       <a-form-item label="7. PSOC Code">
         <a-input v-model="form.taxpayer.psoc_code"></a-input>
       </a-form-item>
-      <!-- <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-model="form.taxpayer.line_business"></a-input>
-      </a-form-item>-->
+      
       <a-form-item label="8. Tax Filer's Name">
         <a-row>
           <a-col :span="11">
-            <a-input placeholder="Last Name" v-model="form.taxpayer.taxpayer_last"></a-input>
+            <a-input placeholder="Last Name" v-model="form.taxpayer.contact_details.last"></a-input>
           </a-col>
           <a-col :span="11">
-            <a-input placeholder="Given Name" v-model="form.taxpayer.taxpayer_given"></a-input>
+            <a-input placeholder="Given Name" v-model="form.taxpayer.contact_details.first"></a-input>
           </a-col>
           <a-col :span="2">
-            <a-input placeholder="M.I." v-model="form.taxpayer.taxpayer_mi"></a-input>
+            <a-input placeholder="M.I." v-model="form.taxpayer.contact_details.middle"></a-input>
           </a-col>
         </a-row>
       </a-form-item>
-      <!-- <a-form-item label="9. Telephone Number">
-        <a-input-number v-model="form.taxpayer.telephone_no"></a-input-number>
-      </a-form-item> -->
       <a-form-item label="9. Address">
         <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
       </a-form-item>
       <a-form-item label="10. Date of Birth">
-        <a-date-picker v-model="form.birthday"></a-date-picker>
+        <a-date-picker v-model="form.taxpayer.birthday"></a-date-picker>
       </a-form-item>
-      <a-form-item label="12. Category of Withholding Agent">
-        <a-radio-group v-model="form.categoryOfAgent">
-          <a-radio :value="true">Private</a-radio>
-          <a-radio :value="false">Government</a-radio>
+      <a-form-item label="11. Email Address">
+        <a-input v-model="form.taxpayer.email_address"></a-input>
+      </a-form-item>
+      <a-form-item label="12. Contact Number">
+        <a-input v-model="form.taxpayer.telephone_no"></a-input>
+      </a-form-item>
+<a-form-item label="13. Civil Status">
+        <a-radio-group v-model="form.taxpayer.civil_status">
+          <a-radio :value="0">Single</a-radio>
+          <a-radio :value="1">Married</a-radio>
+          <a-radio :value="2">Legally Separated</a-radio>
+          <a-radio :value="3">Widow/er</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item
-        label="13. Are you availing of tax relief under Special Law or International Tax Treaty?"
+      <a-form-item                                                            
+        label="14. Claiming Additional Exemptions?"
       >
-        <a-radio-group v-model="form.availing_tax_relief">
+        <a-radio-group v-model="form.taxpayer.claiming_add_exemp">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="If yes, specify">
-        <a-input v-model="form.internationalTreatyYn"></a-input>
+      <a-form-item label="15. If YES, enter number of Qualified Dependent Children">
+        <a-input v-model="form.taxpayer.no_dependents"></a-input>
+      </a-form-item>
+      <!-- spouse details -->
+       <a-form-item label="16. Spouse's Name">
+        <a-row>
+          <a-col :span="11">
+            <a-input placeholder="Last Name" v-model="form.taxpayer.spouse_name_last"></a-input>
+          </a-col>
+          <a-col :span="11">
+            <a-input placeholder="First Name" v-model="form.taxpayer.spouse_name_first"></a-input>
+          </a-col>
+          <a-col :span="2">
+            <a-input placeholder="M.I." v-model="form.taxpayer.spouse_name_middle"></a-input>
+          </a-col>
+        </a-row>
+      </a-form-item>
+      <a-form-item label="17. Spouse's TIN number">
+        <a-input v-model="form.taxpayer.spouse_tin"></a-input>
+      </a-form-item>
+      <a-form-item label="18. Contact Number">
+        <a-input v-model="form.taxpayer.spouse_contact_number"></a-input>
+      </a-form-item>
+       <a-form-item label="19. Date of Birth">
+        <a-date-picker v-model="form.taxpayer.sbirthday"></a-date-picker>
+      </a-form-item>
+      <a-form-item label="20. Email Address">
+        <a-input v-model="form.taxpayer.spouse_email"></a-input>
+      </a-form-item>
+       <a-form-item                                                            
+        label="21. Claiming Additional Exemptions?"
+      >
+        <a-radio-group v-model="form.taxpayer.spouse_claiming_add_exemp">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="22. If YES, enter number of Qualified Dependent Children">
+        <a-input v-model="form.taxpayer.spouse_no_dependents"></a-input>
       </a-form-item>
     </a-form>
 
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
-        <b>Part II: Computation of Tax</b>
+        <b>Part II: Total Tax Payable</b>
       </a-divider>
       <a-form-item
         class="computation-item"
-        label="14. Total Tax Required to be Withheld and Remitted"
-      >
+        label="23. Tax Filer's Tax Due"
+      > 
         <a-input-number
-          v-model="form.total_tax_withheld_remitted"
+          v-model="form.tax_filer_tax_due"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
-      <a-form-item
+       <a-form-item
         class="computation-item"
-        label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
-      >
+        label="24. Spouse's Tax Due"
+      > 
         <a-input-number
-          v-model="form.prevTaxPaidCrdtb"
+          v-model="form.spouse_tax_due"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="15B. Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
-      >
-        <a-input-number
-          v-model="form.advPayment"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="15C. Total Tax Credits/Payments(Sum of Items 15A&15b)"
-      >
+        label="25. Total Income Tax Due"
+      > 
         <a-input-number
-          v-model="form.totTaxCredits"
+          v-model="form.total_income_tax_due"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
-      >
+        label="26. Less: Tax Filer's Tax Credits/Payments"
+      > 
         <a-input-number
-          v-model="form.amtPayblCrdtb"
+          v-model="form.less_tax_credits"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="17. Add: Penalties"></a-form-item>
-      <a-form-item class="computation-item" label="17A. Surcharge">
-        <a-input-number
-          v-model="form.surcharge"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="17B. Interest">
-        <a-input-number
-          v-model="form.interest"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="17C. Compromise">
-        <a-input-number
-          v-model="form.compromise"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="17D">
-        <a-input-number
-          v-model="form.penaltiesCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="18. Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
-      >
+        label="27. Spouse's Tax Credits/Payments"
+      > 
         <a-input-number
-          v-model="form.total_amount_overremitance"
+          v-model="form.spouse_less_tax_credits"
           :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="if overremittance, mark one box only:">
-        <a-radio-group v-model="form.overremittance">
-          <a-radio :value="true">To be Refunded</a-radio>
-          <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
-        </a-radio-group>
+      <a-form-item
+        class="computation-item"
+        label="28. Net Tax Payable (Overpayment)"
+      > 
+        <a-input-number
+          v-model="form.net_tax_payable"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="29. Less: Portion of Tax Payable Allowed"
+      > 
+        <a-input-number
+          v-model="form.portion_tax_payable"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="30. Add: Total Penalties"
+      > 
+        <a-input-number
+          v-model="form.total_penalties"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        class="computation-item"
+        label="31. TOTAL AMOUNT PAYABLE Upon Filing (Overpayment)"
+      >
+        <a-input-number
+          v-model="form.total_amount_payable"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
+        ></a-input-number>
       </a-form-item>
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
-
-    <!-- Part III -->
-    <a-form :form="form_part3" v-show="step===3">
-      <a-divider orientation="left">
-        <b>Part III: Details of Payment</b>
-      </a-divider>
-      <a-form-item class="computation-item" label="21. Cash/Bank Debit Memo">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="22. Check"></a-form-item>
-      <a-form-item class="computation-item" label="22A">
-        <a-input-number
-          v-model="form.item21a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22B">
-        <a-input-number
-          v-model="form.item22b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22C">
-        <a-input-number
-          v-model="form.item22c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22D">
-        <a-input-number
-          v-model="form.item22d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="23. Others"></a-form-item>
-      <a-form-item class="computation-item" label="23A">
-        <a-input-number
-          v-model="form.item23a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23B">
-        <a-input-number
-          v-model="form.item23b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23C">
-        <a-input-number
-          v-model="form.item23c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23D">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-
-      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
-    </a-form>
-    <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
   </div>
 </template>
 
@@ -288,7 +253,7 @@ export default {
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
-      form_part3: this.$form.createForm(this),
+      // form_part3: this.$form.createForm(this),
       image_height: 1000
     };
   },
@@ -323,7 +288,7 @@ export default {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 1700.' })
           // window.opener.location.reload();
           window.close();
         })
