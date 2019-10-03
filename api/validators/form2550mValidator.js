@@ -10,20 +10,23 @@ var commonValidator = require('./commonValidator.js');
  * @returns [Array] errors
  */
 function validate(form_details) {
-
+    console.log("validation form details: " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
-
+    var due = computeDueDate(form_details.returnPeriod)
+    console.log("due: " + due)
     //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer))
 
     //latefiling computations
-    console.log('form 2550m validator errors: ', JSON.stringify(errors) )
+    // 25% total amount due
+    console.log('form 2550m validator errors: ', JSON.stringify(errors))
 
     return errors
 }
 
 function computeDueDate(returnPeriod) {
+    console.log("computeDueDate data: " + returnPeriod)
     var due_date = new Date();
 
     var month = returnPeriod.getMonth() + 1;
@@ -46,23 +49,23 @@ function validateComputations(form) {
         item12B = 0,
         item16A = 0,
         item16B = 0,
-        item17F = 0,
+        item17F = 0, //form.totalAllowableLessInputTax
         item18A = 0,
         item18B = 0,
         item18C = 0,
         item18D = 0,
         item18P = 0,
-        item19 = 0,
+        item19 = 0, //form.totalAvailableInputTax
         item20A = 0,
         item20B = 0,
         item20C = 0,
-        item20F = 0,
+        item20F = 0, // form.totalDeductionFrInputTax
         item21 = 0,
         item22 = 0,
         item23A = 0,
         item23B = 0,
         item23C = 0,
-        item23G = 0,
+        item23G = 0, //form.totalCredits
         item24 = 0,
         item25D = 0,
         item26 = 0,

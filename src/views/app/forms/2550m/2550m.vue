@@ -610,6 +610,7 @@
       >
         <a-input-number
           placeholder="Total"
+          :data="total_deduction_from_input_tax"
           v-model="form.totalDeductionFrInputTax"
           :formatter="formatter.amount"
           :parser="parser.amount"
@@ -722,6 +723,7 @@
       >
         <a-input-number
           placeholder="Total Tax Credits/Payments"
+          :data="total_credits"
           v-model="form.totalCredits"
           :formatter="formatter.amount"
           :parser="parser.amount"
@@ -810,7 +812,7 @@
 <script>
 export default {
   props: ["form", "step"],
-  
+
   methods: {
     // checkDraft() {
     //   if (
@@ -936,17 +938,17 @@ export default {
         .then(result => {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
-          if(result.data.errors && result.data.errors.length > 0){
-            this.errors = result.data.errors
-            this.$notification.error(
-              {message:'Validation Error'}
-            )
-          }else{
+          if (result.data.errors && result.data.errors.length > 0) {
+            this.errors = result.data.errors;
+            this.$notification.error({ message: "Validation Error" });
+          } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-            this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
-             window.close();
+            this.$store.commit("NOTIFY_MESSAGE", {
+              message: "Successfully submitted Form 2550m."
+            });
+            window.close();
           }
-          
+
           // window.opener.location.reload();
           // window.close();
         })
@@ -1010,16 +1012,18 @@ export default {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
     },
-    error_item(item){
-      return this.errors.find(x => x.field === item)?'error':'';
+    error_item(item) {
+      return this.errors.find(x => x.field === item) ? "error" : "";
     },
-    error_desc(item){
-      return this.errors.find(x => x.field === item)?this.errors.find(x => x.field === item).error:'';
+    error_desc(item) {
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
     }
   },
   data() {
     return {
-      errors:[],
+      errors: [],
       loading: false,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
@@ -1037,52 +1041,71 @@ export default {
       image_height: 1000
     };
   },
-  computed:{
-    total_allowable_less_input_tax(){
-    //   if(this.form.carriedOverPreviousPeriod == null){
-    //     this.form.carriedOverPreviousPeriod = 0
-    //   } else if(this.form.txbleGoodsServices == null){
-    //     this.form.txbleGoodsServices = 0
-    //   } else if(this.form.transInputTax == null){
-    //     this.form.transInputTax = 0
-    //   } else if(this.form.presumpInputTax == null){
-    //     this.form.presumpInputTax = 0
-    //   }
-      return this.form.totalAllowableLessInputTax = this.form.carriedOverPreviousPeriod + this.form.txbleGoodsServices
-      + this.form.transInputTax + this.form.presumpInputTax + this.form.otherAllowableLessInputTax
+  computed: {
+    total_allowable_less_input_tax() {
+      //   if(this.form.carriedOverPreviousPeriod == null){
+      //     this.form.carriedOverPreviousPeriod = 0
+      //   } else if(this.form.txbleGoodsServices == null){
+      //     this.form.txbleGoodsServices = 0
+      //   } else if(this.form.transInputTax == null){
+      //     this.form.transInputTax = 0
+      //   } else if(this.form.presumpInputTax == null){
+      //     this.form.presumpInputTax = 0
+      //   }
+      return (this.form.totalAllowableLessInputTax =
+        this.form.carriedOverPreviousPeriod +
+        this.form.txbleGoodsServices +
+        this.form.transInputTax +
+        this.form.presumpInputTax +
+        this.form.otherAllowableLessInputTax);
     },
-    total_available_input_tax(){
-      return this.form.totalAvailableInputTax =
-      this.form.purCapGoodsNotExceed
-      +this.form.outputCapGoodsNotExceed
-      +this.form.purCapGoodsExceed
-      +this.form.outputPurCapGoodsExceed
-      +this.form.domesticPurchaseGoods
-      +this.form.outputDomesticPurchaseGoods
-      +this.form.importationGoods
-      +this.form.outputImportationGoods
-      +this.form.domesticPurchaseService
-      +this.form.outputDomesticPurchaseService
-      +this.form.servicesNonResidents
-      +this.form.outputServicesNonResidents
-      +this.form.purchaseNotQualified
-      +this.form.purchaseOthers
-      +this.form.outputPurchaseOthers
-      +this.form.totalCurrentPurchases
+    total_available_input_tax() {
+      return (this.form.totalAvailableInputTax =
+        this.form.purCapGoodsNotExceed +
+        this.form.outputCapGoodsNotExceed +
+        this.form.purCapGoodsExceed +
+        this.form.outputPurCapGoodsExceed +
+        this.form.domesticPurchaseGoods +
+        this.form.outputDomesticPurchaseGoods +
+        this.form.importationGoods +
+        this.form.outputImportationGoods +
+        this.form.domesticPurchaseService +
+        this.form.outputDomesticPurchaseService +
+        this.form.servicesNonResidents +
+        this.form.outputServicesNonResidents +
+        this.form.purchaseNotQualified +
+        this.form.purchaseOthers +
+        this.form.outputPurchaseOthers +
+        this.form.totalCurrentPurchases);
+    },
+    total_deduction_from_input_tax() {
+      return (this.form.totalDeductionFrInputTax =
+        this.form.inputTaxPurchaseCapGoods +
+        this.form.inputTaxSaleToGovt +
+        this.form.inputTaxAllocableToExempt +
+        this.form.refundTcm +
+        this.form.otherDeductionFrInputTax);
+    },
+    total_credits() {
+      return (this.form.totalCredits =
+        this.form.creditableVatWithheld +
+        this.form.advPaySugarFlourInd +
+        this.form.taxWthld +
+        this.form.prevTaxPaid +
+        this.form.advPymt +
+        this.form.otherTaxCredits);
     }
   },
   watch: {
     loading(val) {
       this.$emit("loading", val);
     },
-    form(){
-      console.log("2550m form: " + this.form.returnPeriod)
+    form() {
+      console.log("2550m form: " + this.form.returnPeriod);
       this.form.year = this.formatDtYear(this.form.returnPeriod);
       this.form.month = this.formatDtMonth(this.form.returnPeriod);
-      console.log("year: " + this.form.month)
-      
-    },
-    
+      console.log("year: " + this.form.month);
+    }
   },
   created() {
     // this.checkDraft();
