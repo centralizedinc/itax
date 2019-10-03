@@ -13,8 +13,8 @@ function validate(form_details) {
     console.log("validation form details: " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
-    var due = computeDueDate(form_details.returnPeriod)
-    console.log("due: " + due)
+    // var due = computeDueDate(form_details.returnPeriod)
+    // console.log("due: " + due)
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer))
 
