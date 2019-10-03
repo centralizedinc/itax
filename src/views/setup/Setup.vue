@@ -50,7 +50,7 @@ export default {
         user: { avatar: {}, name: {} },
         taxpayer: { individual_details: {}, contact_details: {} }
       },
-      currentView: 0,
+      currentView: 2,
       view_components: ["PersonalDetails", "TaxpayerInformation", "Connections"]
     };
   },
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     init() {
-      console.log("this.user.avatar :", this.user.avatar);
+      console.log('this.currentView :', this.currentView);
       this.details.user.name = this.user.name;
       this.avatar.image_url = this.user.avatar.location;
       this.details.user.avatar = this.user.avatar;
