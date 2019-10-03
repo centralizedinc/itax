@@ -17,11 +17,12 @@ const mutations = {
 const actions = {
     ACCOUNT_SETUP(context, data) {
         return new Promise((resolve, reject) => {
+            const { details, form_data } = data;
             var result = {}
-            new UserAPI(context.rootState.account_session.token).updateByAccountID(data.user)
+            new UserAPI(context.rootState.account_session.token).updateByAccountID(details.user)
                 .then((user) => {
                     result.user = user.data.model;
-                    return context.dispatch("CREATE_TAXPAYER", data.taxpayer)
+                    return context.dispatch("CREATE_TAXPAYER", details.taxpayer)
                 })
                 .then((taxpayer) => {
                     result.taxpayer = taxpayer;

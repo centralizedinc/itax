@@ -50,7 +50,7 @@ export default {
         user: { avatar: {}, name: {} },
         taxpayer: { individual_details: {}, contact_details: {} }
       },
-      currentView: 0,
+      currentView: 2,
       view_components: ["PersonalDetails", "TaxpayerInformation", "Connections"]
     };
   },
@@ -72,10 +72,6 @@ export default {
       this.details.taxpayer.taxpayer_type = 'I';
     },
     next(i) {
-      // this.details.taxpayer.individual_details.firstName = this.details.user.name.first;
-      this.details.taxpayer.individual_details.middleName = this.details.user.name.middle;
-      // this.details.taxpayer.individual_details.lastName = this.details.user.name.last;
-      // this.details.taxpayer.contact_details.email = this.details.user.email;
       this.currentView = i;
     },
     changeView(key) {
@@ -89,7 +85,7 @@ export default {
       // if (!this.avatar.form_data)
       //   this.details.user.avatar = this.user.avatar;
       this.$store
-        .dispatch("ACCOUNT_SETUP", this.details)
+        .dispatch("ACCOUNT_SETUP", { details: this.details, form_data: this.avatar.form_data })
         .then(result => {
           console.log("submitTaxpayer :", result);
           this.currentView = 2;

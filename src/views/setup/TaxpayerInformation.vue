@@ -15,6 +15,27 @@
       <a-input v-model="details.taxpayer.rdo_code" placeholder="RDO" />
     </a-form-item>
     <a-form-item
+      label="Taxpayer's First Name"
+      :label-col="formItemLayout.labelCol"
+      :wrapper-col="formItemLayout.wrapperCol"
+    >
+      <a-input v-model="details.taxpayer.individual_details.firstName" placeholder="First Name" />
+    </a-form-item>
+    <a-form-item
+      label="Taxpayer's Middle Name"
+      :label-col="formItemLayout.labelCol"
+      :wrapper-col="formItemLayout.wrapperCol"
+    >
+      <a-input v-model="details.taxpayer.individual_details.middleName" placeholder="Middle Name" />
+    </a-form-item>
+    <a-form-item
+      label="Taxpayer's Last Name"
+      :label-col="formItemLayout.labelCol"
+      :wrapper-col="formItemLayout.wrapperCol"
+    >
+      <a-input v-model="details.taxpayer.individual_details.lastName" placeholder="Last Name" />
+    </a-form-item>
+    <a-form-item
       label="Address"
       :label-col="formItemLayout.labelCol"
       :wrapper-col="formItemLayout.wrapperCol"
@@ -87,7 +108,7 @@ export default {
     return {
       formItemLayout: {
         labelCol: {
-          span: 4
+          span: 5
         },
         wrapperCol: {
           span: 18
