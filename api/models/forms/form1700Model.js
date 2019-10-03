@@ -24,15 +24,19 @@ var Form1700Schema = new Schema({
         default: 0
     },
     taxpayer: {
-     
+     contact_details:{
             last: String,
             first: String,
-            middle: String,
+            middle: String},
+        address_details: {
+            registered_address: String,
+        },
+            
         
         tin: Number,
         rdo_code: Number,
         // tax_filer_type: String,
-        registered_address: String,
+        
         birthday: Date,
         email_address: String,
         // citizenship: String,

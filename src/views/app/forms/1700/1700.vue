@@ -43,7 +43,13 @@
         <b>Part I: Background Information on Tax Filer and Spouse</b>
       </a-divider>
       <a-form-item label="5. TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+        <a-input
+        style="width:100%"
+          max="999999999"
+        v-model="form.taxpayer.tin"
+        :formatter="value => `${value}`.replace(/^(\d{3})(\d{3})(\d{3})/g, '$1-$2-$3')"
+        :parser="value => value.replace(/\$\s?|(-*)/g, '')"
+        ></a-input>
       </a-form-item>
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
@@ -51,19 +57,17 @@
       <a-form-item label="7. PSOC Code">
         <a-input v-model="form.taxpayer.psoc_code"></a-input>
       </a-form-item>
-      <!-- <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-model="form.taxpayer.line_business"></a-input>
-      </a-form-item>-->
+      
       <a-form-item label="8. Tax Filer's Name">
         <a-row>
           <a-col :span="11">
-            <a-input placeholder="Last Name" v-model="form.taxpayer.taxpayer_last"></a-input>
+            <a-input placeholder="Last Name" v-model="form.taxpayer.contact_details.last"></a-input>
           </a-col>
           <a-col :span="11">
-            <a-input placeholder="Given Name" v-model="form.taxpayer.taxpayer_first"></a-input>
+            <a-input placeholder="Given Name" v-model="form.taxpayer.contact_details.first"></a-input>
           </a-col>
           <a-col :span="2">
-            <a-input placeholder="M.I." v-model="form.taxpayer.taxpayer_middle"></a-input>
+            <a-input placeholder="M.I." v-model="form.taxpayer.contact_details.middle"></a-input>
           </a-col>
         </a-row>
       </a-form-item>
@@ -102,13 +106,13 @@
        <a-form-item label="16. Spouse's Name">
         <a-row>
           <a-col :span="11">
-            <a-input placeholder="Last Name" v-model="form.taxpayer.spouse_name.last"></a-input>
+            <a-input placeholder="Last Name" v-model="form.taxpayer.spouse_name_last"></a-input>
           </a-col>
           <a-col :span="11">
-            <a-input placeholder="First Name" v-model="form.taxpayer.spouse_name.first"></a-input>
+            <a-input placeholder="First Name" v-model="form.taxpayer.spouse_name_first"></a-input>
           </a-col>
           <a-col :span="2">
-            <a-input placeholder="M.I." v-model="form.taxpayer.spouse_name.middle"></a-input>
+            <a-input placeholder="M.I." v-model="form.taxpayer.spouse_name_middle"></a-input>
           </a-col>
         </a-row>
       </a-form-item>
@@ -119,7 +123,7 @@
         <a-input v-model="form.taxpayer.spouse_contact_number"></a-input>
       </a-form-item>
        <a-form-item label="19. Date of Birth">
-        <a-date-picker v-model="form.taxpayer.spouse_birthday"></a-date-picker>
+        <a-date-picker v-model="form.taxpayer.sbirthday"></a-date-picker>
       </a-form-item>
       <a-form-item label="20. Email Address">
         <a-input v-model="form.taxpayer.spouse_email"></a-input>
@@ -234,77 +238,6 @@
       </a-form-item>
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
-
-    <!-- Part III -->
-    <!-- <a-form :form="form_part3" v-show="step===3">
-      <a-divider orientation="left">
-        <b>Part III: Details of Payment</b>
-      </a-divider>
-      <a-form-item class="computation-item" label="21. Cash/Bank Debit Memo">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="22. Check"></a-form-item>
-      <a-form-item class="computation-item" label="22A">
-        <a-input-number
-          v-model="form.item21a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22B">
-        <a-input-number
-          v-model="form.item22b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22C">
-        <a-input-number
-          v-model="form.item22c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22D">
-        <a-input-number
-          v-model="form.item22d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="23. Others"></a-form-item>
-      <a-form-item class="computation-item" label="23A">
-        <a-input-number
-          v-model="form.item23a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23B">
-        <a-input-number
-          v-model="form.item23b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23C">
-        <a-input-number
-          v-model="form.item23c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23D">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>-->
   </div>
 </template>
 
