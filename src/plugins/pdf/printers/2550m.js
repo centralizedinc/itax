@@ -174,14 +174,14 @@ function getContent(forms) {
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [210, 5, 0, 0]
+                            margin: [210, 3, 0, 0]
                         },
                         {
                             text: forms.specialRate == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [23, 5, 0, 0]
+                            margin: [23, 3, 0, 0]
                         },
                         {
                             text: forms.specialRateYn,
@@ -380,7 +380,7 @@ function getContent(forms) {
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [410, -4, 0, 0]
+                            margin: [410, -6, 0, 0]
                         },
                     ]
                 ]
