@@ -29,6 +29,7 @@
     "mongoose": "^4.13.0",
     "mongoose-auto-increment-reworked": "^1.2.1",
     "mongoose-sequence-plugin": "^1.0.5",
+    "nodemon": "^1.19.3",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
@@ -50,7 +51,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-pwa": "^3.0.1",
-    "@vue/cli-service": "^3.0.1",
+    "@vue/cli-service": "^3.11.0",
     "less": "^2.7.3",
     "less-loader": "^4.1.0",
     "node-sass": "^4.9.0",

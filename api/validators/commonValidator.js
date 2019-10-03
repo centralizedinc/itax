@@ -2,20 +2,21 @@
 
 var taxpayerDetails = require('../models/taxpayerDetailsModel.js');
 
-function validateTaxpayerDetails(taxpayer) {
+function validateTaxpayerDetails(tp) {
     var error_messages = [];
-    var tp = new taxpayerDetails(taxpayer);
-
+    // var tp = new taxpayerDetails(taxpayer);
+    console.log('tp', JSON.stringify(tp))
+    console.log('!tp.tin', !tp.tin)
     if (!tp.tin) {
-        error_messages.push({ field: "tin", error: "TIN is a mandatory field" });
+        error_messages.push({ field: "taxpayer.tin", name: "TIN", error: "TIN is a mandatory field" });
     }
 
-    if (!tp.branch_code) {
-        error_messages.push({ field: "branch_code", error: "Branch Code is a mandatory field" });
-    }
+    // if (!tp.branch_code) {
+    //     error_messages.push({ field: "taxpayer.branch_code", error: "Branch Code is a mandatory field" });
+    // }
 
     if (!tp.rdo_code) {
-        error_messages.push({ field: "rdo_code", error: "RDO Code is a mandatory field" });
+        error_messages.push({ field: "taxpayer.rdo_code", error: "RDO Code is a mandatory field" });
     }
 
     return error_messages;

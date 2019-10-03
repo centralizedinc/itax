@@ -47,6 +47,25 @@ class UserDao {
     static create(details) {
         return (new model(details)).save()
     }
+
+    /**
+     * @returns {Promise}
+     * @param {String} id
+     * @param {Object} details 
+     */
+    static modifyByID(id, details) {
+        return model.findByIdAndUpdate(id, details).exec();
+    }
+
+
+    /**
+     * @returns {Promise}
+     * @param {String} account_id 
+     * @param {Object} details 
+     */
+    static modifyByAccountID(account_id, details) {
+        return model.findOneAndUpdate({ account_id }, details).exec();
+    }
 }
 
 module.exports = UserDao

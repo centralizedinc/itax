@@ -235,93 +235,6 @@
           :parser="value => value.replace(/\₱\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-
-      <!-- <a-form-item label="24. Spouse's Tax Due"></a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
-      >
-        <a-input-number
-          v-model="form.prevTaxPaidCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="15B. Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
-      >
-        <a-input-number
-          v-model="form.advPayment"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="15C. Total Tax Credits/Payments(Sum of Items 15A&15b)"
-      >
-        <a-input-number
-          v-model="form.totTaxCredits"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
-      >
-        <a-input-number
-          v-model="form.amtPayblCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="17. Add: Penalties"></a-form-item>
-      <a-form-item class="computation-item" label="17A. Surcharge">
-        <a-input-number
-          v-model="form.surcharge"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="17B. Interest">
-        <a-input-number
-          v-model="form.interest"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="17C. Compromise">
-        <a-input-number
-          v-model="form.compromise"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="17D">
-        <a-input-number
-          v-model="form.penaltiesCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="18. Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
-      >
-        <a-input-number
-          v-model="form.total_amount_overremitance"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="if overremittance, mark one box only:">
-        <a-radio-group v-model="form.overremittance">
-          <a-radio :value="true">To be Refunded</a-radio>
-          <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
-        </a-radio-group>
-      </a-form-item> -->
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
 
@@ -395,11 +308,6 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form> -->
-    <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> 
   </div>
 </template>
 
@@ -419,24 +327,51 @@ export default {
       image_height: 1000
     };
   },
-  watch: {
-    // form(){
-    //   console.log("birthday day: " + JSON.stringify(this.formatDtDay(this.form.birthday)))
-    // },
-    step() {
-      if (this.step < 0) {
-        this.$router.push("/");
-      } else if (this.step == 3) {
-        this.sub = true;
-      }
-    }
-  },
+  // watch: {
+  //   step() {
+  //     if (this.step < 0) {
+  //       this.$router.push("/");
+  //     } else if (this.step == 2) {
+  //       this.sub = true;
+  //     }
+  //   }
+  // },
   methods: {
+    save_draft() {},
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
+    validate() {
+      this.changeStep(this.step + 1);
+      // if(this.step === 0) this.validateGeneral();
+      // else if(this.step === 1) this.validatePartI();
+    },
     submit() {
-      this.form.validateFieldsAndScroll((err, values) => {
-        if (!err) console.log("values :", values);
-      });
-    }
+      this.loading = true;
+      this.$store
+        .dispatch("VALIDATE_AND_SAVE", {
+          form_type: "1700",
+          form_details: this.form
+        })
+        .then(result => {
+          console.log("VALIDATE_AND_SAVE result:", result.data);
+          this.loading = false;
+          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          // window.opener.location.reload();
+          window.close();
+        })
+        .catch(err => {
+          console.log("VALIDATE_AND_SAVE", err);
+          this.loading = false;
+        });
+    },
+    // submit() {
+    //   this.form.validateFieldsAndScroll((err, values) => {
+    //     if (!err) console.log("values :", values);
+    //   });
+    // }
   },
   // watch: {
   //   form: {

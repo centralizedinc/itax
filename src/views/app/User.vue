@@ -67,7 +67,7 @@
                         :wrapper-col="{ span: 18 }">
                 <a-textarea :rows="4" placeholder="Address" v-model="taxpayer.address"></a-textarea>
             </a-form-item>
-            <a-form-item label="Brith Date"
+            <a-form-item label="Birth Date"
                         :label-col="{ span: 4 }"
                         :wrapper-col="{ span: 18 }">
                 <a-date-picker  style="width:100%" placeholder="Enter your Birthdate" v-model="taxpayer.individual_details.birthDate"></a-date-picker>

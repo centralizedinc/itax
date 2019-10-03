@@ -51,14 +51,14 @@
                  <h3>My Taxpayer Vault</h3>
                  <a-divider></a-divider>
                  <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
-                  <a-list itemLayout="horizontal" :dataSource="taxpayers" >
+                  <a-list itemLayout="horizontal" :dataSource="taxpayers" :loading="loading">
                         <a-list-item slot="renderItem" slot-scope="item, index">
                             <!-- <a-card> -->
                             <a slot="actions">edit</a>
                             <a slot="actions">view</a>
                         <a-list-item-meta>
                             
-                            <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:item.corporate_details.registeredName}}</p>
+                            <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
                             <template slot="description" >
                                 <p>{{item.tin}}</p>
                                 <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
@@ -118,14 +118,19 @@ export default {
     methods:{
         init(){
             this.loading = true;
-            // this.$http.get('/taxpayer')
-            // .then(result=>{
-            //     this.loading = false;
-            //     console.log('result', JSON.stringify(result))
-            //     this.taxpayers = result.data.data
-            // })
-            this.taxpayers = this.$store.state.taxpayers.records
-            this.loading = false;
+            console.log('user######### ', JSON.stringify(this.$store.state.account_session.user.tin))
+
+            this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
+            .then(result=>{
+                this.loading = false;
+                console.log('result', JSON.stringify(result))
+                this.taxpayers = result.data.model
+            })
+            .catch(err=>{
+                this.loading = false;
+            })
+            // this.taxpayers = this.$store.state.taxpayers.records
+            
 
         }
     }

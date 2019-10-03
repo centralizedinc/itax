@@ -1,5 +1,14 @@
 <template>
-  <a-card>
+  <a-layout>
+    <a-layout-header class="header">
+      <a-row type="flex" justify="start" :gutter="8">
+        <a-col :span="10">
+          <h2 style="color:white;">Smart Tax.</h2>
+        </a-col>
+      </a-row>
+    </a-layout-header>
+    <a-layout-content style="min-height:100vh; margin-top:15vh;">
+      <a-card>
     <a-steps :current="curr_step" size="small">
       <a-step v-for="(item, index) in form_steps" :key="index" :description="item.description">
         <b slot="title">{{item.title}}</b>
@@ -78,6 +87,35 @@
       </div>
     </div>
   </a-card>
+    </a-layout-content>
+    <a-modal :visible="view_select" title="Select Taxpayer" :closable="false">
+      <a-list itemLayout="horizontal" :dataSource="taxpayer_list" :loading="loading">
+        <a-list-item slot="renderItem" slot-scope="item, index">
+            <a-card style="width:100%" class="tin_card" @click="select(index)">
+              <a-row type="flex" align="middle">
+                <a-col :span="22">
+                  <a-list-item-meta>
+                    <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
+                    <template slot="description" >
+                        <p>{{formatTIN(item.tin)}}</p>
+                        <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
+                    </template>
+                    <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="item.avatar" :size="64" />                                    
+                </a-list-item-meta>
+                </a-col>
+                <a-col :span="2">
+                  <a-icon v-if="isSelected(index)" type="check" style="color:#115B95;font-size:24px"></a-icon>
+                </a-col>
+              </a-row>
+        </a-card>
+        </a-list-item>
+    </a-list>
+    <template slot="footer">
+      <a-button type="primary" @click="fillup">Select</a-button>
+    </template>
+    </a-modal>
+  </a-layout>
+  
 </template>
 
 <script>
@@ -86,9 +124,9 @@ import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
 import Form1601E from "./1601e/1601e.vue";
 import Form1700 from "./1700/1700.vue";
-// import Form2551M from "./2551m/2551m.vue";
-// import Form1701q from "./1701q/1701q.vue";
 import Form2551Q from "./2551q/2551q.vue";
+import Form1701Q from "./1701q/1701q.vue";
+import Form2550Q from "./2550q/2550q.vue";
 
 export default {
   components: {
@@ -96,10 +134,9 @@ export default {
     Form2550M,
     Form1601E,
     Form1700,
-    // Form2551M,
-    // Form1701,
-    // Form1701Q,
-    Form2551Q
+    Form2551Q,
+    Form1701Q,
+    Form2550Q,
   },
   computed: {
     affix_computation() {
@@ -130,6 +167,10 @@ export default {
 
   data() {
     return {
+      view_select:true,
+      selected_index:0,
+      taxpayer_list:[],
+      taxpayer:null,
       form: {
         taxpayer: {
           contact_details: {},
@@ -139,6 +180,66 @@ export default {
       curr_step: 0,
       steps: {
         "2550m": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation"
+          }
+        ],
+        "1601e": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation"
+          }
+        ],
+        "1700": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information on Tax Filer and Spouse"
+          },
+          {
+            title: "Part II",
+            description: "Total Tax Payable"
+          }
+        ],
+        "1701q": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information on Taxpayer/Filer"
+          },
+          {
+            title: "Part II",
+            description: "Background Information on Spouse (if applicable)"
+          },
+          {
+            title: "Part III",
+            description: "Total Tax Payable"
+          },
+          {
+            title: "Part IV",
+            description: "Details of Payment"
+          }
+        ],
+        "2551q": [
           {
             title: "General"
           },
@@ -176,6 +277,17 @@ export default {
       this.in_bottom = window.scrollY > 2000;
       console.log("this.in_bottom :", this.in_bottom);
     },
+    select(index){
+      this.taxpayer = this.taxpayer_list[index]
+      this.selected_index = index;
+    },
+    isSelected(index){
+      return this.selected_index == index
+    },
+    fillup(){
+      // this.form.taxpayer = this.taxpayer
+      this.view_select = false;
+    },
     saveDraft() {
       console.log("this.form saving draft... :", this.form);
       this.$store.commit("SAVE_DRAFT_FORM", {
@@ -211,13 +323,18 @@ export default {
     console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
-    // if(this.form_type == "1601e"){
-    //   this.form = {
-
-    //   }
-    // }
-
     window.addEventListener("scroll", this.handleScroll);
+    this.loading = true
+    this.$http.get('/taxpayer/all')
+            .then(result=>{
+                this.loading = false;                
+                this.taxpayer_list = result.data.data
+                console.log('result', JSON.stringify(this.taxpayer_list ))
+            })
+            .catch(err=>{
+              this.loading = false
+            })
+    
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
