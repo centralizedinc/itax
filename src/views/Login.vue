@@ -191,7 +191,13 @@ export default {
       loading: false
     };
   },
+  created(){
+    this.init()
+  },
   methods: {
+    init(){
+      this.$aos.refresh()
+    },
     login() {
       this.loading = true;
       this.form.validateFieldsAndScroll((err, account) => {

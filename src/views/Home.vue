@@ -289,6 +289,8 @@ export default {
 
   computed: {
     headerStyle() {
+      console.log('refresh#######')
+      this.$aos.refreshHard()
       if (this.topLocation < 50) {
         return "background: transparent";
       } else {

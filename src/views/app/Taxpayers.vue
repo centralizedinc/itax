@@ -120,13 +120,19 @@ export default {
             this.loading = true;
             console.log('user######### ', JSON.stringify(this.$store.state.account_session.user.tin))
 
-            this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
-            .then(result=>{
+            this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+            .then(results=>{
+                console.log('result1 ::: ', JSON.stringify(results.data))
+                this.taxpayers.push(results.data.model.taxpayer)
+                return this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
+            })
+            .then(results=>{
+                console.log('result2 ::: ', JSON.stringify(results.data))
                 this.loading = false;
-                console.log('result', JSON.stringify(result))
-                this.taxpayers = result.data.model
+                this.taxpayers.push(results.data.model)
             })
             .catch(err=>{
+                console.log(`err ::: `, err)
                 this.loading = false;
             })
             // this.taxpayers = this.$store.state.taxpayers.records

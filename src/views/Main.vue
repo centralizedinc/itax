@@ -195,8 +195,9 @@ export default {
           title: "Logout Confirmation",
           content: "Are you sure you want to logout?",
           onOk() {
-            _self.$store.dispatch("LOGOUT");
+            _self.$store.dispatch("LOGOUT");            
             _self.$router.push("/");
+            _self.$forceUpdate();
           },
           onCancel() {}
         });
