@@ -420,14 +420,22 @@
         ></a-input-number>
       </a-form-item>
     </a-form>
+    <a-button @click="sched = 1" > sched 1</a-button>
+    <sched1 :show="sched === 1" @close="sched = 0"></sched1>
   </div>
 </template>
 
 <script>
+import sched1 from "./schedule1.vue";
 export default {
+ components: {
+ sched1
+ },
   props: ["form", "step"],
   data() {
     return {
+      sched: null,
+      show: true,
       sub: false,
       // form_1601e_image,
       form_general: this.$form.createForm(this),
