@@ -50,7 +50,7 @@ export default {
         user: { avatar: {}, name: {} },
         taxpayer: { individual_details: {}, contact_details: {} }
       },
-      currentView: 2,
+      currentView: 0,
       view_components: ["PersonalDetails", "TaxpayerInformation", "Connections"]
     };
   },

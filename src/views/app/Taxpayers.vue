@@ -52,7 +52,7 @@
                  <a-divider></a-divider>
                  <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
                   <a-list itemLayout="horizontal" :dataSource="taxpayers" :loading="loading">
-                        <a-list-item slot="renderItem" slot-scope="item, index">
+                        <a-list-item slot="renderItem" slot-scope="item">
                             <!-- <a-card> -->
                             <a slot="actions">edit</a>
                             <a slot="actions">view</a>
