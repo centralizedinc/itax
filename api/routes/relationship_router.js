@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 const RelationshipDao = require('../dao/RelationshipDao');
+const TaxpayerDao = require('../dao/TaxpayerDao')
 
 router.route("/")
     .get((req, res) => {
