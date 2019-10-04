@@ -86,6 +86,42 @@ router
             });
     })
 
+router.route('/details')
+    .post((req, res) => {
+        console.log('req.params.tin :', req.params.tin);
+        TaxpayerDao.findConnected(req.body)
+            .then(model => {
+                res.json({
+                    success: true,
+                    model
+                })
+            })
+            .catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
 
+
+router
+    .route('/:id')
+    .post((req, res) => {
+        var data = req.body;
+        data.modified_by = jwt.decode(req.headers.access_token).account_id;
+        TaxpayerDao.modifyByID(req.params.id, data)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
 
 module.exports = router;

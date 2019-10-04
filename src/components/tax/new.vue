@@ -141,7 +141,7 @@ export default {
           created_date: new Date()
         });
         window.open(
-          `http://localhost:8080/#/tax/form/${e.key}?ref_no=${ref_no}`
+          `${process.env.VUE_APP_HOME_URL}tax/form/${e.key}?ref_no=${ref_no}`
         );
         this.$emit("changeActiveKey", 1);
       }
