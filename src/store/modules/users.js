@@ -34,7 +34,14 @@ const actions = {
                 })
                 .then((user) => {
                     result.user = user.data.model;
-                    return context.dispatch("CREATE_TAXPAYER", details.taxpayer)
+                    if(context.rootState.account_session.user.tin){
+                        console.log('Updating taxpayer ...');
+                        return context.dispatch("UPDATE_TAXPAYER", { id: details.taxpayer._id, data: details.taxpayer }, { root: true });
+                    }
+                    else {
+                        console.log('creating taxpayer ...');
+                        return context.dispatch("CREATE_TAXPAYER", details.taxpayer, { root: true });
+                    }
                 })
                 .then((taxpayer) => {
                     result.taxpayer = taxpayer;

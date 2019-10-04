@@ -9,10 +9,7 @@
     >
       <!-- <div slot="node" slot-scope="data">{{data.name}} {{data.tin ? `: ${data.tin}` : ''}}</div> -->
     </tree>
-    <span
-      @click="skip"
-      style="cursor: pointer; color: #3894D5;text-decoration:underline;margin-right:25px;float:right;"
-    >Skip</span>
+    <a-button @click="skip" type="primary" style="float:right;">DONE</a-button>
     <!-- Connect or Add Taxpayer -->
     <a-modal
       :visible="showAddTP"
@@ -58,10 +55,9 @@
           :bodyStyle="{ padding: '2vh' }"
           v-if="taxpayer && Object.keys(taxpayer).length && user && Object.keys(user).length"
         >
-          <a-avatar  
-                :src="user && user.avatar ? user.avatar.location : null">
-                {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
-              </a-avatar>
+          <a-avatar
+            :src="user && user.avatar ? user.avatar.location : null"
+          >{{user && user.name && user.name.first ? user.name.first[0] : '?' }}</a-avatar>
           <span
             style="margin-left: 1vh;font-weight:bold;"
           >{{taxpayer.individual_details.firstName}} {{taxpayer.individual_details.lastName}}</span>
@@ -95,7 +91,12 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-input v-model="new_taxpayer.email" placeholder="Email" :disabled="loading_submit" @keypress.enter="addTaxpayer"/>
+              <a-input
+                v-model="new_taxpayer.email"
+                placeholder="Email"
+                :disabled="loading_submit"
+                @keypress.enter="addTaxpayer"
+              />
             </a-form-item>
             <a-form-item
               label="First Name"
@@ -304,7 +305,7 @@ export default {
         .then(result => {
           this.loading_submit = false;
           this.loading_tree = false;
-          this.$emit('showAddTP', false);
+          this.$emit("showAddTP", false);
         })
         .catch(err => {
           this.loading_submit = false;

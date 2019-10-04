@@ -106,6 +106,7 @@ const actions = {
                     console.log('sendRegisterInvitation :', result);
                     const taxpayer = {
                         tin: data.tin,
+                        taxpayer_type: data.taxpayer_type,
                         individual_details: {
                             firstName: data.first_name,
                             lastName: data.last_name
