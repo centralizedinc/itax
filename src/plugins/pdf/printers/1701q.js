@@ -41,7 +41,8 @@ function getContent(forms) {
                 widths: [103, 50, 60, 60, 60, 60, 62],
                 body: [
                     [{
-                        text: '2019',
+                        // text: '2019',
+                        text: forms.year == null ? ' ' : forms.year,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -93,7 +94,7 @@ function getContent(forms) {
                 ]
             }
         },
-        // 5-7 TIN
+        // 5-6 TIN
         {
             layout: "noBorders",
             table: {
@@ -101,11 +102,11 @@ function getContent(forms) {
                 body: [
                     [{
                         text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                        // text: '0 1 2  -  3 4 5  -  6 7 8 ',
-                        fontSize: 15,
+                        // text: '0 1 2  -  3 4 5  -  6 7 8 ',
+                        fontSize: 16,
                         // right,down,left,up
                         alignment: 'justify',
-                        margin: [164, 9, 0, 0]
+                        margin: [170, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -168,7 +169,7 @@ function getContent(forms) {
                         // text: forms.filerType == 1 ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'left',
-                        margin: [10, -63, 0, 60]
+                        margin: [10, -63, 0, 0]
                     },
                     {
                         text: forms.atc == 'II012' ? 'X' : ' ',
@@ -226,7 +227,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [400, 100],
+                widths: [510],
                 body: [
                     [{
                         text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
@@ -234,11 +235,15 @@ function getContent(forms) {
                         // right,down,left,up
                         alignment: 'justified',
                         margin: [10, 6, 0, 0]
-                    },
-                    {
-                        text: ''
-                    }
-                    ],
+                    }],
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [455, 50],
+                body: [
                     [{
                         text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
                         fontSize: 12,
@@ -249,30 +254,37 @@ function getContent(forms) {
                     {
                         text: ''
                     }],
-                    [{
-                        text: '',
-                        fontSize: 12,
-                    },
-                    {
-                        // text: "4012",
-                        text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'left',
-                        margin: [60, 0, 0, 0]
-                    }],
                 ]
             }
         },
+        {
+
+            layout: "noBorders",
+            table: {
+                widths: [510],
+                body: [
+                    [
+                        {
+                            // text: "4012",
+                            text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                            fontSize: 12,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [470, -15, 0, 0]
+                        }]
+                ]
+            }
+        },
+
 
         // 11-12
         {
             layout: "noBorders",
             table: {
-                widths: [90, 300],
+                widths: [150, 300],
                 body: [
                     [{
-                        text: forms.birthday.month + "  " + forms.birthday.day + " " + forms.birthday.year,
+                        text: forms.birthday.month + "  " + forms.birthday.day + " " + " " + " " + forms.birthday.year ? forms.birthday.month + "  " + forms.birthday.day + " " + " " + " " + forms.birthday.year : '',
                         // text: '01  01  2011',
                         fontSize: 14,
                         // right,down,left,up
@@ -284,7 +296,7 @@ function getContent(forms) {
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [22, 5, 0, 0]
+                        margin: [0, 5, 0, 0]
                     }
                     ]
                 ]
@@ -483,7 +495,7 @@ function getContent(forms) {
                         text: forms.spouse_atc == 'SII015' ? 'X' : ' ',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [35, -5, 0, 60]
+                        margin: [35, -5, 0, 0]
                     },
                     {
                         text: forms.spouse_atc == 'SII017' ? 'X' : ' ',
@@ -499,7 +511,6 @@ function getContent(forms) {
                         alignment: 'left',
                         margin: [10, -5, 0, 0]
                     }, {
-                        // text: forms.filerType == 3 ? 'X' : ' ',
                         text: '',
                         fontSize: 10,
                         alignment: 'left',
@@ -517,11 +528,11 @@ function getContent(forms) {
                 body: [
                     [{
                         text: forms.taxpayer.spouse_name == null ? ' ' : forms.taxpayer.spouse_name,
-                        // text: 'VENUS VENUS VENUS VENUS BELO BELO BELO',
+                        // text: 'SPOUSE NAME,
                         fontSize: 13,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [9, -52, 0, 0]
+                        margin: [9, 10, 0, 0]
                     }],
                 ]
             }
@@ -538,7 +549,7 @@ function getContent(forms) {
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
-                        margin: [9, -29, 0, 0]
+                        margin: [9, 5, 0, 0]
                     },
                     {
                         text: forms.taxpayer.spouse_foreign_tax_no,
@@ -546,7 +557,7 @@ function getContent(forms) {
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [3, -29, 0, 0]
+                        margin: [3, 5, 0, 0]
                     },
                     {
                         text: forms.spouse_taxCredits == true ? 'X' : ' ',
@@ -554,7 +565,7 @@ function getContent(forms) {
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [29, -49, 0, 0]
+                        margin: [29, 5, 0, 0]
                     },
                     {
                         text: forms.spouse_taxCredits == false ? 'X' : ' ',
@@ -562,9 +573,9 @@ function getContent(forms) {
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [16, -49, 0, 0]
-                    }
-                    ]
+                        margin: [16, 5, 0, 0]
+                    }]
+
                 ]
             }
         },
@@ -578,22 +589,22 @@ function getContent(forms) {
                         // text: 'X',
                         text: forms.spouse_taxRate == 'SGR' ? 'X' : ' ',
                         fontSize: 10,
-                        alignment: 'left',
-                        margin: [43, -25, 0, 0]
+                        alignment: 'justified',
+                        margin: [43, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SID' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'justify',
-                        margin: [19, -25, 0, 0]
+                        margin: [19, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SOSD' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'justify',
-                        margin: [9, -25, 0, 0]
+                        margin: [9, 6, 0, 0]
                     }
 
                     ],
@@ -602,7 +613,7 @@ function getContent(forms) {
                         text: forms.spouse_taxRate == 'SOGS' ? 'X' : ' ',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [43, -10, 0, 0]
+                        margin: [43, 4, 0, 0]
                     },
                     {
                         // text: forms.filerType == 2 ? 'X' : ' ',
@@ -684,7 +695,7 @@ function getContent(forms) {
                     fontSize: 12,
                     // right,down,left,up
                     margin: [330, -268, 0, 0],
-                    alignment: 'left'
+                    alignment: 'right-justified'
 
                 },
                 {

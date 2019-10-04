@@ -4,7 +4,7 @@
       <a-divider>
         <b>Quarterly Income Tax Return(1701Q)</b>
       </a-divider>
-      <a-form-item label="1. For the Year (MM/20YY)">
+      <a-form-item label="1. For the Year">
         <a-month-picker style="width: 100%" v-model="form.dateFiled" />
       </a-form-item>
       <a-form-item label>
