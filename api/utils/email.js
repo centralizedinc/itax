@@ -62,10 +62,11 @@ class SendEmail {
     });
   }
 
-  static registerInvitation(email, name, sender) {
+  static registerInvitation(email, name, tin, sender) {
     const confirmation_token = new Buffer(JSON.stringify({
       email,
       name,
+      tin,
       date: new Date()
     })).toString('base64')
     const confirmation_url = `http://localhost:8080/#/?reg_code=${confirmation_token}`

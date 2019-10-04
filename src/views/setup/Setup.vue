@@ -63,9 +63,10 @@ export default {
     init() {
       console.log('this.currentView :', this.currentView);
       this.details.user.name = this.user.name;
-      this.avatar.image_url = this.user.avatar.location;
+      this.avatar.image_url = this.user.avatar ? this.user.avatar.location : '';
       this.details.user.avatar = this.user.avatar;
       this.details.user.email = this.user.email;
+      this.details.taxpayer.tin = this.user.tin;
       this.details.taxpayer.individual_details.firstName = this.user.name.first;
       this.details.taxpayer.individual_details.lastName = this.user.name.last;
       this.details.taxpayer.contact_details.email = this.user.email;
