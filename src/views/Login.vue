@@ -225,7 +225,7 @@ export default {
     },
     registerFacebook() {
       window.open(
-        `${process.env.VUE_APP_BASE_API_URI}oauth/facebook`,
+        `${process.env.VUE_APP_BASE_API_URI}/oauth/facebook`,
         "",
         "width=500,height=450"
       );
@@ -233,7 +233,7 @@ export default {
     },
     registerGoogle() {
       window.open(
-        `${process.env.VUE_APP_BASE_API_URI}oauth/google`,
+        `${process.env.VUE_APP_BASE_API_URI}/oauth/google`,
         "",
         "width=500,height=450"
       );
