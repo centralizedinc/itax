@@ -55,6 +55,27 @@ class TaxpayerDao {
     static searchByTIN(tin) {
         return model.find({ tin: { $regex: `^${tin}`, $options: 'mi' } }).select('_id tin branch_code individual_details').lean().exec();
     }
+
+    /**
+     * @returns {Promise}
+     * @param {String} id 
+     * @param {Object} data 
+     */
+    static modifyByID(id, data){
+        return model.findByIdAndUpdate(id, data).exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Array} tins 
+     */
+    static findConnected(tins){
+        return model.find({
+            tin :{
+                $in: tins
+            }
+        }).lean().exec()
+    }
 }
 
 module.exports = TaxpayerDao;

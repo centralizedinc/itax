@@ -128,8 +128,17 @@ export default {
             })
             .then(results=>{
                 console.log('result2 ::: ', JSON.stringify(results.data))
+                var tins = []
+                results.data.model.forEach(tin=>{
+                    tins.push(tin.to)
+                })
+                return this.$http.post('/taxpayer/details/',tins)
+            })
+            .then(results =>{
+                console.log('result2 ::: ', JSON.stringify(results.data))
                 this.loading = false;
-                this.taxpayers.push(results.data.model)
+                
+                this.taxpayers.push(...results.data.model)
             })
             .catch(err=>{
                 console.log(`err ::: `, err)

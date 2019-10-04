@@ -1,119 +1,118 @@
 <template>
   <div>
-    <a-modal
+    <a-drawer
       title="Schedule I – For Graduated IT Rate"
-      :visible="show"
+      :visible="visible"
       @cancel="$emit('close')"
       @ok="handleOk"
+      :width="720"
+      :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
-      <a-form-item label="36. Sales/Revenues/Receipts/Fees"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(net of sales returns, allowances and discounts)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(net of sales returns, allowances and discounts)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="37. Less: Cost of Sales/Services"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(applicable only if availing Itemized Deductions)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(applicable only if availing Itemized Deductions)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="38. Gross Income/(Loss) from Operation (Item 36 Less Item 37)"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number style="width: 100%" placeholder="Less: Allowable Deductions"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number style="width: 100%" placeholder="Less: Allowable Deductions"></a-input-number>
-      </a-form-item>
-      <a-form-item label="39. Total Allowable Itemized Deductions "></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number style="width: 100%" placeholder="Total Allowable Itemized Deductions "></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number style="width: 100%" placeholder="Total Allowable Itemized Deductions"></a-input-number>
-      </a-form-item>
-      <a-form-item label="40. Optional Standard Deduction (OSD) (40% of Item 36)"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number style="width: 100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number style="width: 100%"></a-input-number>
-      </a-form-item>
-      <a-form-item label="41. Net Income/(Loss) This Quarter "></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="42. Taxable Income/(Loss) Previous Quarter/s"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number style="width: 100%" placeholder="Taxable Income/(Loss) Previous Quarter/s"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number style="width: 100%" placeholder="Taxable Income/(Loss) Previous Quarter/s"></a-input-number>
-      </a-form-item>
-      <a-form-item label="43. Non-Operating Income (specify)"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number style="width: 100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number style="width: 100%"></a-input-number>
-      </a-form-item>
-      <a-form-item label="44. Amount Received/Share in Income by a (GPP)"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number
-          style="width: 100%"
-          placeholder="Partner from General Professional Partnership (GPP)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number
-          style="width: 100%"
-          placeholder="Partner from General Professional Partnership (GPP)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="45. Total Taxable Income/(Loss) To Date"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number style="width: 100%" placeholder="(Sum of Items 41 to 44)"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number style="width: 100%" placeholder="(Sum of Items 41 to 44)"></a-input-number>
-      </a-form-item>
-      <a-form-item label="46. TAX DUE"></a-form-item>
-      <a-form-item class="computation-item" label="A)Taxpayer/Filer">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(Item 45 x Applicable Tax Rate based on Tax Table below)(To Part III, Item 26)"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="B)Spouse">
-        <a-input-number
-          style="width: 100%"
-          placeholder="(Item 45 x Applicable Tax Rate based on Tax Table below)(To Part III, Item 26)"
-        ></a-input-number>
-      </a-form-item>
-    </a-modal>
+      <a-form :form="form" layout="vertical" hideRequiredMark>
+        <a-row :gutter="16">
+          <a-col :span="12">
+            <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="36."
+            >
+              <a-input
+                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                placeholder="Sales/Revenues/Receipts/Fees"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+              <a-input
+                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                placeholder="Sales/Revenues/Receipts/Fees"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="16">
+          <a-col :span="12">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="36."
+            >
+              <a-input
+                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                placeholder="Sales/Revenues/Receipts/Fees"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+              <a-input
+                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                placeholder="Sales/Revenues/Receipts/Fees"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="16">
+          <a-col :span="12">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="36."
+            >
+              <a-input
+                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                placeholder="Sales/Revenues/Receipts/Fees"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+              <a-input
+                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                placeholder="Sales/Revenues/Receipts/Fees"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="16">
+          <a-col :span="24">
+            <a-form-item label="Description">
+              <a-textarea
+                v-decorator="['description', {
+                  rules: [{ required: true, message: 'Please enter url description' }]
+                }]"
+                :rows="4"
+                placeholder="please enter url description"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
+      <div
+        :style="{
+          position: 'absolute',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+          borderTop: '1px solid #e9e9e9',
+          padding: '10px 16px',
+          background: '#fff',
+          textAlign: 'right',
+        }"
+      >
+        <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
+        <a-button @click="handleOk" type="primary">Submit</a-button>
+      </div>
+    </a-drawer>
   </div>
 </template>
 <script>
@@ -121,12 +120,31 @@ export default {
   props: ["show"],
   data() {
     return {
-      visible: true
+      visible: true,
+      formatter: {
+        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      },
+      parser: {
+        amount: value => value.replace(/\₱\s?|(,*)/g, "")
+      },
+      form_layout: {
+        label_col: { span: 2 },
+        wrapper_col: { span: 22 }
+      }
     };
   },
   created() {
     console.log("show sched 1: " + this.show);
     this.visible = this.show;
+  },
+  watch: {
+    show() {
+      console.log("show watch!!: " + this.show);
+      if (this.show == 1) {
+        this.visible = true;
+      }
+      console.log("visible! : " + this.visible);
+    }
   },
   methods: {
     showModal() {

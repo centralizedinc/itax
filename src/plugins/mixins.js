@@ -30,17 +30,20 @@ export default {
                     reader.readAsDataURL(img);
                 },
                 formatDtYear(dt) {
+                    if (!dt) return ""
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     var newDT = date.getFullYear();
                     return newDT;
                 },
                 formatDtMonth(dt) {
+                    if (!dt) return ""
                     var date = new Date(dt);
                     var month = date.getMonth() + 1;
                     return month;
                 },
                 formatDtDay(dt) {
+                    if (!dt) return ""
                     var date = new Date(dt);
                     var day = date.getDate();
                     return day;

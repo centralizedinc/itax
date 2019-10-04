@@ -13,7 +13,7 @@
               >IT</a-avatar>
               <template slot="content">
                 <a-menu @click="nav">
-                  <a-menu-item key="1700">From 1700</a-menu-item>
+                  <!-- <a-menu-item key="1700">From 1700</a-menu-item> -->
                   <!-- <a-menu-item key="1701Q">From 1701Q</a-menu-item> -->
                   <a-menu-item key="1700">Form 1700</a-menu-item>
                   <a-menu-item key="1702">Form 1702</a-menu-item>
@@ -141,7 +141,7 @@ export default {
           created_date: new Date()
         });
         window.open(
-          `http://localhost:8080/#/tax/form/${e.key}?ref_no=${ref_no}`
+          `${process.env.VUE_APP_HOME_URL}tax/form/${e.key}?ref_no=${ref_no}`
         );
         this.$emit("changeActiveKey", 1);
       }

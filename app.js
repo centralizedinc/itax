@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
 const serveStatic = require('serve-static');
+require('dotenv').config()
 
 // SET-UP
 //#############################################################################
