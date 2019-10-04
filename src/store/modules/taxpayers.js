@@ -46,6 +46,16 @@ const actions = {
                     else resolve(result.data.model)
                 }).catch((err) => reject(err));
         })
+    },
+    UPDATE_TAXPAYER(context, { id, data }) {
+        return new Promise((resolve, reject) => {
+            new TaxpayersAPI(context.rootState.account_session.token)
+                .update(id, data)
+                .then((result) => {
+                    if (result.data.errors) reject(result.data.errors);
+                    else resolve(result.data.model)
+                }).catch((err) => reject(err));
+        })
     }
 }
 

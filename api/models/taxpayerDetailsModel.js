@@ -30,6 +30,7 @@ var taxpayerDetailsSchema = new Schema({
     firstName: String,
     middleName: String,
     lastName: String,
+    gender: String,
     birthDate: Date,
     civil_status: String,
     spouseTin: String,
