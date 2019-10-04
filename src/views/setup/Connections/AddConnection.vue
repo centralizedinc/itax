@@ -8,8 +8,8 @@
     <a-form>
       <a-form-item
         label="Search By TIN"
-        :validate-status="relationship_status"
-        :help="relationship_status === 'error' ? 'Relationship is required.' : ''"
+        :validate-status="error_message ? 'error' : ''"
+        :help="error_message"
       >
         <a-select
           style="width: 25%"
@@ -113,14 +113,13 @@
           <a-button block type="primary" @click="addTaxpayer" :loading="loading_submit">Submit</a-button>
         </a-form>
       </div>
-      <span v-else style="font-style: italic;">Invalid input TIN</span>
     </template>
   </a-modal>
 </template>
 
 <script>
 export default {
-  props: ["showAddTP"],
+  props: ["showAddTP", "tree"],
   data() {
     return {
       search_tin: "",
@@ -140,7 +139,7 @@ export default {
         "Officemate",
         "Siblings"
       ],
-      relationship_status: "",
+      error_message: "",
       formItemLayout: {
         labelCol: {
           span: 5
@@ -152,7 +151,10 @@ export default {
     };
   },
   watch: {
-    search_tin() {
+    showAddTP(val) {
+      if (val) this.search_tin = "";
+    },
+    search_tin(val) {
       this.is_busy = false;
       this.taxpayer = null;
       this.user = null;
@@ -182,6 +184,17 @@ export default {
       this.taxpayer = null;
       this.user = null;
       if (this.search_tin && this.search_tin.length > 12) {
+        // check tin
+        if(this.search_tin === this.tree.tin) {
+          this.error_message = "Oops! This is your TIN.";
+          return;
+        }
+        const index = this.tree.children.findIndex(v=>v.to===this.search_tin);
+        if(index>-1) {
+          this.error_message = "This TIN is already in your list.";
+          return;
+        }
+
         this.loading = true;
         this.$store
           .dispatch("GET_TAXPAYER_BY_TIN", this.search_tin)
@@ -195,49 +208,76 @@ export default {
             this.loading = false;
             console.log("err :", err);
           });
-      }
+      } else this.error_message = "Invalid TIN";
     },
     connect() {
-      this.$emit('reloadTree', true);
       this.loading = true;
-      const action = this.check_connectivity ? "REMOVE_CONNECTION" : "CONNECT";
-      this.$store
-        .dispatch(action, {
+      if (this.check_connectivity) {
+        this.$emit("removeConnection", this.search_tin);
+      } else {
+        const connection = {
           relationship: this.relationship,
           from: this.account_user.tin,
-          to: this.search_tin
-        })
-        .then(result => {
-          this.$emit('reloadTree', false);
-          this.loading = false;
-        })
-        .catch(err => {
-          this.$emit('reloadTree', false);
-          this.loading = false;
-          console.log("CONNECT err :", err);
-        });
+          to: this.search_tin,
+          name: `${this.search_tin} (${this.relationship})`
+        };
+        this.$emit("connect", connection);
+      }
+      this.loading = false;
     },
     addTaxpayer() {
       this.loading_submit = true;
-      this.$emit('reloadTree', true);
       this.new_taxpayer.tin = this.search_tin;
       this.new_taxpayer.relationship = this.relationship;
       this.new_taxpayer.from = this.account_user.tin;
+      this.new_taxpayer.to = this.search_tin;
       this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`;
-      console.log("this.new_taxpayer :", this.new_taxpayer);
-      this.$store
-        .dispatch("ADD_AND_CONNECT_TAXPAYER", this.new_taxpayer)
-        .then(result => {
-          this.loading_submit = false;
-          this.$emit('reloadTree', false);
-          this.$emit("showAddTP", false);
-        })
-        .catch(err => {
-          this.loading_submit = false;
-          this.$emit('reloadTree', false);
-          console.log("CONNECT err :", err);
-        });
+      this.new_taxpayer.name = `${this.search_tin} (${this.relationship})`;
+      this.$emit("connect", this.new_taxpayer);
+      this.loading_submit = false;
+      this.$emit("showAddTP", false);
     }
+    // connect() {
+    //   this.$emit('reloadTree', true);
+    //   this.loading = true;
+    //   const action = this.check_connectivity ? "REMOVE_CONNECTION" : "CONNECT";
+    //   this.$store
+    //     .dispatch(action, {
+    //       relationship: this.relationship,
+    //       from: this.account_user.tin,
+    //       to: this.search_tin
+    //     })
+    //     .then(result => {
+    //       this.$emit('reloadTree', false);
+    //       this.loading = false;
+    //     })
+    //     .catch(err => {
+    //       this.$emit('reloadTree', false);
+    //       this.loading = false;
+    //       console.log("CONNECT err :", err);
+    //     });
+    // },
+    // addTaxpayer() {
+    //   this.loading_submit = true;
+    //   this.$emit('reloadTree', true);
+    //   this.new_taxpayer.tin = this.search_tin;
+    //   this.new_taxpayer.relationship = this.relationship;
+    //   this.new_taxpayer.from = this.account_user.tin;
+    //   this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`;
+    //   console.log("this.new_taxpayer :", this.new_taxpayer);
+    //   this.$store
+    //     .dispatch("ADD_AND_CONNECT_TAXPAYER", this.new_taxpayer)
+    //     .then(result => {
+    //       this.loading_submit = false;
+    //       this.$emit('reloadTree', false);
+    //       this.$emit("showAddTP", false);
+    //     })
+    //     .catch(err => {
+    //       this.loading_submit = false;
+    //       this.$emit('reloadTree', false);
+    //       console.log("CONNECT err :", err);
+    //     });
+    // }
   }
 };
 </script>

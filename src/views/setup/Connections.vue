@@ -1,20 +1,34 @@
 <template>
   <a-card>
+    <div v-if="reload_tree" class="align-items-middle">
+      <a-spin />
+    </div>
     <tree
       :data="tree"
-      v-if="!reload_tree"
+      v-else
       node-text="name"
       style="height: 100vh"
       @clickedText="updateDetails"
     >
       <!-- <div slot="node" slot-scope="data">{{data.name}} {{data.tin ? `: ${data.tin}` : ''}}</div> -->
     </tree>
+    <span style="font-style: italic; font-size: 12px;">
+      <b style="color: red">*</b> Changes will take effect once you click <b>DONE</b>.
+    </span>
     <a-button-group style="float: right">
-      <span style="margin-right: 2vh; color: #4bacfc; text-decoration: underline; cursor: pointer;" @click="skip">Skip</span>
-      <!-- <a-button @click="submit" type="primary">Done</a-button> -->
+      <span
+        style="margin-right: 2vh; color: #4bacfc; text-decoration: underline; cursor: pointer;"
+        @click="skip"
+      >Skip</span>
+      <a-button @click="submit" type="primary">Done</a-button>
     </a-button-group>
     <!-- Connect or Add Taxpayer -->
-    <add-taxpayer :showAddTP="showAddTP" @showAddTP="$emit('showAddTP', $event)" @reloadTree="reload_tree=$event" />
+    <add-taxpayer
+      :showAddTP="showAddTP"
+      @showAddTP="$emit('showAddTP', $event)"
+      @connect="connect"
+      @removeConnection="removeConnection"
+    />
 
     <!-- Update Taxpayer -->
   </a-card>
@@ -37,7 +51,9 @@ export default {
   },
   data() {
     return {
-      reload_tree: false
+      reload_tree: false,
+      new_taxpayers: [],
+      new_connections: []
     };
   },
   created() {
@@ -52,20 +68,9 @@ export default {
     },
     tree() {
       return {
-        name: `${this.account_user.tin} (ME)`,
+        name: `${this.account_user.tin || ""} (ME)`,
         tin: this.account_user.tin,
-        children: this.connections.length
-          ? this.connections
-          : [
-              {
-                relationship: "Spouse",
-                tin: "Spouse"
-              },
-              {
-                relationship: "Employer",
-                tin: "Employer"
-              }
-            ]
+        children: [...this.new_connections, ...this.new_taxpayers]
       };
     }
   },
@@ -86,9 +91,27 @@ export default {
           console.log("GET_CONNECTIONS err :", err);
         });
     },
-    submit(){
-
+    connect(data) {
+      this.reload_tree = true;
+      setTimeout(() => {
+        if (data.tin) this.new_taxpayers.push(data);
+        else this.new_connections.push(data);
+        console.log("this.new_taxpayers :", this.new_taxpayers);
+        console.log("this.new_connections :", this.new_connections);
+        this.reload_tree = false;
+      }, 1000);
     },
+    removeConnection(tin) {
+      this.reload_tree = true;
+      setTimeout(() => {
+        this.new_connections = this.new_connections.filter(v => v.to !== tin);
+        this.new_taxpayers = this.new_taxpayers.filter(v => v.tin !== tin);
+        console.log("this.new_taxpayers :", this.new_taxpayers);
+        console.log("this.new_connections :", this.new_connections);
+        this.reload_tree = false;
+      }, 1000);
+    },
+    submit() {},
     updateDetails(element) {
       console.log(`element`, JSON.stringify(element.data));
     }

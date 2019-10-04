@@ -83,7 +83,7 @@ export default {
           }
         }
       },
-      currentView: 2,
+      currentView: 0,
       view_components: ["PersonalDetails", "TaxpayerInformation", "Connections"]
     };
   },
