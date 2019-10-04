@@ -86,6 +86,25 @@ router
             });
     })
 
+router.route('/details')
+    .post((req, res) => {
+        console.log('req.params.tin :', req.params.tin);
+        TaxpayerDao.findConnected(req.body)
+            .then(model => {
+                res.json({
+                    success: true,
+                    model
+                })
+            })
+            .catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
+
+
 router
     .route('/:id')
     .post((req, res) => {

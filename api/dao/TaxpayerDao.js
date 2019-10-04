@@ -64,6 +64,18 @@ class TaxpayerDao {
     static modifyByID(id, data){
         return model.findByIdAndUpdate(id, data).exec();
     }
+
+    /**
+     * @returns {Promise}
+     * @param {Array} tins 
+     */
+    static findConnected(tins){
+        return model.find({
+            tin :{
+                $in: tins
+            }
+        }).lean().exec()
+    }
 }
 
 module.exports = TaxpayerDao;

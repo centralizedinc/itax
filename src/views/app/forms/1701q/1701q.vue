@@ -49,20 +49,20 @@
       </a-form-item>
       <a-form-item label="7. Tax Filer Type">
         <a-radio-group v-model="form.taxpayer.tax_filer_type">
-          <a-radio :value="SP">Single Proprietor</a-radio>
-          <a-radio :value="PRO">Professional</a-radio>
-          <a-radio :value="EST">Estate</a-radio>
-          <a-radio :value="TRU">Trust</a-radio>
+          <a-radio :value="'SP'">Single Proprietor</a-radio>
+          <a-radio :value="'PRO'">Professional</a-radio>
+          <a-radio :value="'EST'">Estate</a-radio>
+          <a-radio :value="'TRU'">Trust</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="8. Alphanumeric Tax Code (ATC)">
         <a-radio-group v-model="form.atc">
-          <a-radio :value="II012">II012 Business Income-Graduated IT Rates</a-radio>
-          <a-radio :value="II015">II015 Business Income - 8% IT Rate</a-radio>
-          <a-radio :value="II014">II014 Income from Profession–Graduated IT Rates</a-radio>
-          <a-radio :value="II017">II017 Income from Profession – 8% IT Rate</a-radio>
-          <a-radio :value="II013">II013 Mixed Income–Graduated IT Rates</a-radio>
-          <a-radio :value="II016">II016 Mixed Income – 8% IT Rate</a-radio>
+          <a-radio :value="'II012'">II012 Business Income-Graduated IT Rates</a-radio>
+          <a-radio :value="'II015'">II015 Business Income - 8% IT Rate</a-radio>
+          <a-radio :value="'II014'">II014 Income from Profession–Graduated IT Rates</a-radio>
+          <a-radio :value="'II017'">II017 Income from Profession – 8% IT Rate</a-radio>
+          <a-radio :value="'II013'">II013 Mixed Income–Graduated IT Rates</a-radio>
+          <a-radio :value="'II016'">II016 Mixed Income – 8% IT Rate</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="9. Taxpayer’s Name ( ESTATE of / TRUST FAO ):">
@@ -101,10 +101,10 @@
       <a-form-item label="16. Tax Rate*(choose one,for income from business/profession):">
         <a-radio-group v-model="form.taxRate">
           <a-radio
-            :value="GR"
+            :value="'GR'"
           >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
           <a-radio
-            :value="GS"
+            :value="'GS'"
           >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates</a-radio>
           <p>
             under Sec. 24(A)(2)(a) & Percentage Tax
@@ -114,9 +114,9 @@
       </a-form-item>
       <a-form-item label="16A. Method of Deduction:">
         <a-radio-group v-model="form.method_deduction">
-          <a-radio :value="ID">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
+          <a-radio :value="'ID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
           <a-radio
-            :value="OSD"
+            :value="'OSD'"
           >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees</a-radio>
           <p>[Sec. 34(L), NIRC]</p>
         </a-radio-group>
@@ -143,20 +143,20 @@
       </a-form-item>
       <a-form-item label="19. Filer’s Spouse Type">
         <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
-          <a-radio :value="SSP">Single Proprietor</a-radio>
-          <a-radio :value="SPRO">Professional</a-radio>
-          <a-radio :value="SCE">Compensation Earner</a-radio>
+          <a-radio :value="'SSP'">Single Proprietor</a-radio>
+          <a-radio :value="'SPRO'">Professional</a-radio>
+          <a-radio :value="'SCE'">Compensation Earner</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="20. ATC">
         <a-radio-group v-model="form.spouse_atc">
-          <a-radio :value="SII012">II012 Business Income-Graduated IT Rates</a-radio>
-          <a-radio :value="SII015">II015 Business Income - 8% IT Rate</a-radio>
-          <a-radio :value="SII014">II014 Income from Profession–Graduated IT Rates</a-radio>
-          <a-radio :value="SII017">II017 Income from Profession – 8% IT Rate</a-radio>
-          <a-radio :value="SII013">II013 Mixed Income–Graduated IT Rates</a-radio>
-          <a-radio :value="SII016">II016 Mixed Income – 8% IT Rate</a-radio>
-          <a-radio :value="SII011">II011 Compensation Income</a-radio>
+          <a-radio :value="'SII012'">II012 Business Income-Graduated IT Rates</a-radio>
+          <a-radio :value="'SII015'">II015 Business Income - 8% IT Rate</a-radio>
+          <a-radio :value="'SII014'">II014 Income from Profession–Graduated IT Rates</a-radio>
+          <a-radio :value="'SII017'">II017 Income from Profession – 8% IT Rate</a-radio>
+          <a-radio :value="'SII013'">II013 Mixed Income–Graduated IT Rates</a-radio>
+          <a-radio :value="'SII016'">II016 Mixed Income – 8% IT Rate</a-radio>
+          <a-radio :value="'SII011'">II011 Compensation Income</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="21. Spouse’s Name:">
@@ -180,10 +180,10 @@
       <a-form-item label="25. Tax Rate*(choose one,for income from business/profession):">
         <a-radio-group v-model="form.spouse_taxRate">
           <a-radio
-            :value="SGR"
+            :value="'SGR'"
           >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
           <a-radio
-            :value="SOGS"
+            :value="'SOGS'"
           >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates</a-radio>
           <p>
             under Sec. 24(A)(2)(a) & Percentage Tax
@@ -193,9 +193,9 @@
       </a-form-item>
       <a-form-item label="25A. Method of Deduction:">
         <a-radio-group v-model="form.spouse_method_deduction">
-          <a-radio :value="SID">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
+          <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
           <a-radio
-            :value="SOSD"
+            :value="'SOSD'"
           >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees</a-radio>
           <p>[Sec. 34(L), NIRC]</p>
         </a-radio-group>
@@ -420,7 +420,7 @@
         ></a-input-number>
       </a-form-item>
     </a-form>
-    <a-button @click="sched = 1" > sched 1</a-button>
+    <a-button @click="sched = 1">sched 1</a-button>
     <sched1 :show="sched === 1" @close="sched = 0"></sched1>
   </div>
 </template>
@@ -428,9 +428,9 @@
 <script>
 import sched1 from "./schedule1.vue";
 export default {
- components: {
- sched1
- },
+  components: {
+    sched1
+  },
   props: ["form", "step"],
   data() {
     return {
