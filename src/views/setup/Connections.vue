@@ -3,16 +3,13 @@
     <tree
       :data="tree"
       v-if="!loading_tree"
-      node-text="tin"
+      node-text="name"
       style="height: 100vh"
       @clickedText="updateDetails"
     >
       <!-- <div slot="node" slot-scope="data">{{data.name}} {{data.tin ? `: ${data.tin}` : ''}}</div> -->
     </tree>
-    <span
-      @click="skip"
-      style="cursor: pointer; color: #3894D5;text-decoration:underline;margin-right:25px;float:right;"
-    >Skip</span>
+    <a-button @click="skip" type="primary" style="float:right;">DONE</a-button>
     <!-- Connect or Add Taxpayer -->
     <a-modal
       :visible="showAddTP"
@@ -31,6 +28,7 @@
             @change="relationship = $event"
             v-bind="default_relationship ? { defaultValue: default_relationship } : {}"
             placeholder="Relationship"
+            :disabled="loading_submit"
           >
             <a-select-option
               v-for="(item, index) in relationships"
@@ -45,6 +43,7 @@
             @search="getDataByTIN"
             enterButton
             :loading="loading"
+            :disabled="loading_submit"
           />
         </a-form-item>
       </a-form>
@@ -56,11 +55,17 @@
           :bodyStyle="{ padding: '2vh' }"
           v-if="taxpayer && Object.keys(taxpayer).length && user && Object.keys(user).length"
         >
-          <a-avatar :src="user.avatar.location">{{user.name.first[0]}}</a-avatar>
+          <a-avatar
+            :src="user && user.avatar ? user.avatar.location : null"
+          >{{user && user.name && user.name.first ? user.name.first[0] : '?' }}</a-avatar>
           <span
             style="margin-left: 1vh;font-weight:bold;"
           >{{taxpayer.individual_details.firstName}} {{taxpayer.individual_details.lastName}}</span>
-          <a-button style="float: right;" :type="check_connectivity ? 'danger' : 'primary'" @click="connect">{{ check_connectivity ? 'Remove Connection' : 'Connect'}}</a-button>
+          <a-button
+            style="float: right;"
+            :type="check_connectivity ? 'danger' : 'primary'"
+            @click="connect"
+          >{{ check_connectivity ? 'Remove Connection' : 'Connect'}}</a-button>
         </a-card>
         <div v-else-if="search_tin && search_tin.length > 12">
           <p
@@ -72,7 +77,11 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-radio-group buttonStyle="solid" v-model="new_taxpayer.taxpayer_type">
+              <a-radio-group
+                buttonStyle="solid"
+                v-model="new_taxpayer.taxpayer_type"
+                :disabled="loading_submit"
+              >
                 <a-radio-button value="I">Individual</a-radio-button>
                 <a-radio-button value="C">Corporate</a-radio-button>
               </a-radio-group>
@@ -82,7 +91,12 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-input v-model="new_taxpayer.email" placeholder="Email" />
+              <a-input
+                v-model="new_taxpayer.email"
+                placeholder="Email"
+                :disabled="loading_submit"
+                @keypress.enter="addTaxpayer"
+              />
             </a-form-item>
             <a-form-item
               label="First Name"
@@ -92,6 +106,8 @@
               <a-input
                 v-model="new_taxpayer.first_name"
                 placeholder="First Name"
+                :disabled="loading_submit"
+                @keypress.enter="addTaxpayer"
               />
             </a-form-item>
             <a-form-item
@@ -99,9 +115,14 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
             >
-              <a-input v-model="new_taxpayer.last_name" placeholder="Last Name" />
+              <a-input
+                v-model="new_taxpayer.last_name"
+                placeholder="Last Name"
+                :disabled="loading_submit"
+                @keypress.enter="addTaxpayer"
+              />
             </a-form-item>
-            <a-button block type="primary" @click="addTaxpayer">Submit</a-button>
+            <a-button block type="primary" @click="addTaxpayer" :loading="loading_submit">Submit</a-button>
           </a-form>
         </div>
         <span v-else style="font-style: italic;">Invalid input TIN</span>
@@ -143,6 +164,7 @@ export default {
       selected: {},
       is_busy: false,
       loading: false,
+      loading_submit: false,
       default_relationship: null,
       new_taxpayer: {},
       relationships: [
@@ -182,7 +204,7 @@ export default {
     },
     tree() {
       return {
-        name: "You",
+        name: `${this.account_user.tin} (ME)`,
         tin: this.account_user.tin,
         children: this.connections.length
           ? this.connections
@@ -198,9 +220,9 @@ export default {
             ]
       };
     },
-    check_connectivity(){
+    check_connectivity() {
       const index = this.connections.findIndex(v => v.tin === this.search_tin);
-      return index > -1
+      return index > -1;
     }
   },
   methods: {
@@ -253,9 +275,9 @@ export default {
     connect() {
       this.loading_tree = true;
       this.loading = true;
-      const action = this.check_connectivity ? "REMOVE_CONNECTION" : "CONNECT"
+      const action = this.check_connectivity ? "REMOVE_CONNECTION" : "CONNECT";
       this.$store
-        .dispatch(action, { 
+        .dispatch(action, {
           relationship: this.relationship,
           from: this.account_user.tin,
           to: this.search_tin
@@ -271,17 +293,22 @@ export default {
         });
     },
     addTaxpayer() {
+      this.loading_submit = true;
       this.loading_tree = true;
       this.new_taxpayer.tin = this.search_tin;
       this.new_taxpayer.relationship = this.relationship;
       this.new_taxpayer.from = this.account_user.tin;
-      this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`
+      this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`;
+      console.log("this.new_taxpayer :", this.new_taxpayer);
       this.$store
         .dispatch("ADD_AND_CONNECT_TAXPAYER", this.new_taxpayer)
         .then(result => {
+          this.loading_submit = false;
           this.loading_tree = false;
+          this.$emit("showAddTP", false);
         })
         .catch(err => {
+          this.loading_submit = false;
           this.loading_tree = false;
           console.log("CONNECT err :", err);
         });

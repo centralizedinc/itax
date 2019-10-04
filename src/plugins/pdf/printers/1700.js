@@ -40,8 +40,9 @@ function getContent(forms) {
             widths: [103, 50, 60, 42, 62, 60, 50],
             body: [
                 [{
-                    text: forms.year == null ? ' ' : forms.year,
+                    text: forms.year ? forms.year : ' ' ,
                     fontSize: 12,
+                    // text: forms.birthday.month ? forms.birthday.month : ' ',
                     // right,down,left,up
                     alignment: 'justify',
                     margin: [72, 80, 0, 0]
@@ -80,7 +81,7 @@ function getContent(forms) {
                 },
                 {
 
-                    text: forms.source_of_income == true ? 'X' : ' ',
+                    text: forms.source_of_income == 0 ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
@@ -88,7 +89,7 @@ function getContent(forms) {
                 },
                 {
 
-                    text: forms.source_of_income == false ? 'X' : ' ',
+                    text: forms.source_of_income == 1 ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',

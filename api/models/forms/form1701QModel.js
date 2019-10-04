@@ -20,7 +20,7 @@ var Form1701QSchema = new Schema({
         default: 0
     },
     taxpayer: {
-        taxpayer_name:String,
+        taxpayer_name: String,
         tin: Number,
         rdo_code: Number,
         tax_filer_type: String,
@@ -32,32 +32,86 @@ var Form1701QSchema = new Schema({
         spouse_tin: Number,
         spouse_rdo_code: Number,
         spouse_tax_filer_type: String,
-        spouse_atc: { type: Number, default: 0 },
+        spouse_atc: {
+            type: Number,
+            default: 0
+        },
         spouse_name: String,
         spouse_citizenship: String,
-        spouse_foreign_tax_no:Number
+        spouse_foreign_tax_no: Number
     },
     dueDate: Date,
     returnPeriod: Date,
     returnPeriodMonth: String,
     returnPeriodYear: String,
-    atc: { type: Number, default: 0 }, 
-    taxCredits: { type: Number, default: 0 },
-    taxRate: { type: Number, default: 0 },
-    method_deduction: { type: Number, default: 0 },
-    spouse_atc: { type: Number, default: 0 },
-    spouse_taxCredits: { type: Number, default: 0 },
-    spouse_taxRate: { type: Number, default: 0 },
-    spouse_method_deduction: { type: Number, default: 0 },
-    otherTaxCredits: { type: Number, default: 0 },
-    totalCredits: { type: Number, default: 0 },
-    amtPaybl: { type: Number, default: 0 },
-    surcharge: { type: Number, default: 0 },
-    interest: { type: Number, default: 0 },
-    compromise: { type: Number, default: 0 },
-    penalties: { type: Number, default: 0 },
-    totalAmountPayable: { type: Number, default: 0 },
-    batchNo: { type: Number, default: 0 },
+    atc: {
+        type: Number,
+        default: 0
+    },
+    taxCredits: {
+        type: Number,
+        default: 0
+    },
+    taxRate: {
+        type: Number,
+        default: 0
+    },
+    method_deduction: {
+        type: Number,
+        default: 0
+    },
+    spouse_atc: {
+        type: Number,
+        default: 0
+    },
+    spouse_taxCredits: {
+        type: Number,
+        default: 0
+    },
+    spouse_taxRate: {
+        type: Number,
+        default: 0
+    },
+    spouse_method_deduction: {
+        type: Number,
+        default: 0
+    },
+    otherTaxCredits: {
+        type: Number,
+        default: 0
+    },
+    totalCredits: {
+        type: Number,
+        default: 0
+    },
+    amtPaybl: {
+        type: Number,
+        default: 0
+    },
+    surcharge: {
+        type: Number,
+        default: 0
+    },
+    interest: {
+        type: Number,
+        default: 0
+    },
+    compromise: {
+        type: Number,
+        default: 0
+    },
+    penalties: {
+        type: Number,
+        default: 0
+    },
+    totalAmountPayable: {
+        type: Number,
+        default: 0
+    },
+    batchNo: {
+        type: Number,
+        default: 0
+    },
     sched1: [],
     sched2: [],
     sched3: [],
@@ -74,10 +128,10 @@ var Form1701QSchema = new Schema({
         type: Number
     },
     created_by: {
-            type: String
+        type: String
     },
     modified_by: {
-            type: String
+        type: String
     }
 });
 
@@ -105,7 +159,7 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form2550MSchema, '1701q_forms', options);
+const plugin = new autoIncrement(Form1701QSchema, '1701q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin()

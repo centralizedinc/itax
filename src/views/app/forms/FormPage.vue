@@ -285,7 +285,11 @@ export default {
       return this.selected_index == index
     },
     fillup(){
-      // this.form.taxpayer = this.taxpayer
+      this.form.taxpayer = this.taxpayer
+      if(!this.form.taxpayer.address_details){
+        this.form.taxpayer.address_details = {}
+      }
+      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {
@@ -325,14 +329,30 @@ export default {
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
     this.loading = true
-    this.$http.get('/taxpayer/all')
-            .then(result=>{
-                this.loading = false;                
-                this.taxpayer_list = result.data.data
-                console.log('result', JSON.stringify(this.taxpayer_list ))
+    //find tp list  
+    this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+            .then(results=>{
+                console.log('result1 ::: ', JSON.stringify(results.data))
+                this.taxpayer_list.push(results.data.model.taxpayer)
+                return this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
+            })
+            .then(results=>{
+                console.log('result2 ::: ', JSON.stringify(results.data))
+                var tins = []
+                results.data.model.forEach(tin=>{
+                    tins.push(tin.to)
+                })
+                return this.$http.post('/taxpayer/details/',tins)
+            })
+            .then(results =>{
+                console.log('result2 ::: ', JSON.stringify(results.data))
+                this.loading = false;
+                
+                this.taxpayer_list.push(...results.data.model)
             })
             .catch(err=>{
-              this.loading = false
+                console.log(`err ::: `, err)
+                this.loading = false;
             })
     
   },

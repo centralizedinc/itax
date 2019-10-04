@@ -14,7 +14,7 @@ Vue.use(mixins);
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URI
 Vue.prototype.$http = axios
-
+Vue.prototype.$aos = aos;
 new Vue({
   created(){
     aos.init()

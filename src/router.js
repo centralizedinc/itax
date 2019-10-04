@@ -22,7 +22,7 @@ export default new Router({
   routes: [{
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('./views/Home.vue'),
     children: [{
       path: '',
       name: "Login",

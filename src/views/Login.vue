@@ -10,7 +10,10 @@
           <p
             style="margin-top:2vh; color:#ffffff"
           >Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
-          <a-button size="large" ghost><a-icon type="download"></a-icon>Download & Install on PC <a-icon type="windows"/></a-button>
+          <a-button size="large" ghost>
+            <a-icon type="download"></a-icon>Download & Install on PC
+            <a-icon type="windows" />
+          </a-button>
           <a-row :gutter="24" style="margin-top:5vh">
             <p style="color:#FFFFFF">Also available on:</p>
             <a-col :span="4" width="100" style="margin-top:1.5vh">
@@ -191,7 +194,13 @@ export default {
       loading: false
     };
   },
+  created() {
+    this.init();
+  },
   methods: {
+    init() {
+      this.$aos.refresh();
+    },
     login() {
       this.loading = true;
       this.form.validateFieldsAndScroll((err, account) => {
@@ -219,7 +228,7 @@ export default {
     },
     registerFacebook() {
       window.open(
-        `http://localhost:5000/oauth/facebook`,
+        `${process.env.VUE_APP_BASE_API_URI}/oauth/facebook`,
         "",
         "width=500,height=450"
       );
@@ -227,7 +236,7 @@ export default {
     },
     registerGoogle() {
       window.open(
-        `http://localhost:5000/oauth/google`,
+        `${process.env.VUE_APP_BASE_API_URI}/oauth/google`,
         "",
         "width=500,height=450"
       );

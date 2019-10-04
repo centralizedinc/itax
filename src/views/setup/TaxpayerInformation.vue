@@ -75,14 +75,6 @@
         <a-radio-button value="W">Widower</a-radio-button>
       </a-radio-group>
     </a-form-item>
-    <a-form-item
-      v-if="details.taxpayer.taxpayer_type === 'I' && details.taxpayer.individual_details.civil_status === 'M'"
-      label="Spouse TIN"
-      :label-col="formItemLayout.labelCol"
-      :wrapper-col="formItemLayout.wrapperCol"
-    >
-      <a-input placeholder="Spouse TIN" v-model="details.taxpayer.individual_details.spouse_tin"></a-input>
-    </a-form-item>
     <a-button-group style="float: right">
       <a-button @click="$emit('previous', 0)" :disabled="loading">Previous</a-button>
       <a-button type="primary" @click="$emit('submitTaxpayer')" :loading="loading">Submit</a-button>

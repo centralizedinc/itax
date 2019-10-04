@@ -43,7 +43,8 @@ const actions = {
                                 return {
                                     id: v._id,
                                     tin: v.to,
-                                    relationship: v.relationship
+                                    relationship: v.relationship,
+                                    name: `${v.to} (${v.relationship})`
                                 }
                             })
                             console.log('children :', children);
@@ -64,7 +65,8 @@ const actions = {
                         const child = {
                             id: result.data.model._id,
                             tin: result.data.model.to,
-                            relationship: result.data.model.relationship
+                            relationship: result.data.model.relationship,
+                            name: `${result.data.model.to} (${result.data.model.relationship})`
                         }
                         context.commit('ADD_CONNECTION', child);
                         resolve(child)
@@ -94,13 +96,17 @@ const actions = {
                     first: data.first_name,
                     last: data.last_name
                 },
+                tin: data.tin,
                 sender: data.sender
             }
+            console.log('sendRegisterInvitation args:', account);
             new OAuthAPI(context.rootState.account_session.token)
                 .sendRegisterInvitation(account)
                 .then((result) => {
+                    console.log('sendRegisterInvitation :', result);
                     const taxpayer = {
                         tin: data.tin,
+                        taxpayer_type: data.taxpayer_type,
                         individual_details: {
                             firstName: data.first_name,
                             lastName: data.last_name
@@ -109,21 +115,26 @@ const actions = {
                             email: data.email
                         }
                     }
+                    console.log('create taxpayer args :', taxpayer);
                     return new TaxpayersAPI(context.rootState.account_session.token).create(taxpayer)
                 })
                 .then((result) => {
+                    console.log('create taxpayer :', result);
                     const connection = {
                         relationship: data.relationship,
                         to: data.tin,
                         from: data.from
                     }
+                    console.log('connect taxpayer args:', connection);
                     return context.dispatch("CONNECT", connection);
                 })
                 .then((result) => {
+                    console.log('connect taxpayer :', result);
                     resolve(result);
                 })
                 .catch((err) => {
-
+                    console.log('ADD_AND_CONNECT_TAXPAYER err :', err);
+                    reject(err)
                 });
         })
     }

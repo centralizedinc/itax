@@ -28,9 +28,9 @@
             <a-avatar
               shape="square"
               :size="35"
-              :src="user.avatar.location"
+              :src="user && user.avatar ? user.avatar.location : null"
               style="border: 1px solid #FFFFFF; cursor:pointer"
-            ></a-avatar>
+            >{{user && user.name && user.name.first ? user.name.first[0] : '?'}}</a-avatar>
             <template slot="content">
               <a-menu @click="nav">
                 <a-menu-item key="/app/user">
@@ -61,7 +61,12 @@
               ></a-card>
             </a-col>
             <a-col :span="6">
-              <a-avatar style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" :size="60" :src="user.avatar.location"></a-avatar>
+              <a-avatar 
+                style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" 
+                :size="60" 
+                :src="user && user.avatar ? user.avatar.location : null">
+                {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
+              </a-avatar>
             </a-col>
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
@@ -197,6 +202,7 @@ export default {
           onOk() {
             _self.$store.dispatch("LOGOUT");
             _self.$router.push("/");
+            _self.$forceUpdate();
           },
           onCancel() {}
         });
