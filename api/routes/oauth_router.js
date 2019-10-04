@@ -134,8 +134,8 @@ router.route('/facebook/callback')
 
 router.route('/invitation')
     .post((req, res) => {
-        const { email, name, sender } = req.body;
-        email_helper.registerInvitation(email, name, sender)
+        const { email, name, tin, sender } = req.body;
+        email_helper.registerInvitation(email, name, tin, sender)
             .then((model) => res.json({ success: true, model }))
             .catch((errors) => res.json({ success: false, errors }));
     })

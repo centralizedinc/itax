@@ -103,6 +103,7 @@ passport.use('signup', new LocalStrategy({
 }, (req, email, password, done) => {
     const {
         name,
+        tin,
         confirm
     } = req.body;
     if (!email) return done({
@@ -128,6 +129,7 @@ passport.use('signup', new LocalStrategy({
                         return UserDao.create({
                             account_id: account.account_id,
                             email,
+                            tin,
                             name: {
                                 first: name.first,
                                 last: name.last
