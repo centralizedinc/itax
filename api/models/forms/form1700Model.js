@@ -24,43 +24,48 @@ var Form1700Schema = new Schema({
         default: 0
     },
     taxpayer: {
-     contact_details:{
-            last: String,
-            first: String,
-            middle: String},
-        address_details: {
-            registered_address: String,
-        },
-            
-        
+
+
         tin: Number,
         rdo_code: Number,
         // tax_filer_type: String,
-        
-        birthday: Date,
-        email_address: String,
-        // citizenship: String,
-        telephone_no: Number,
-        civil_status: { type: Number},
-        // 0 - Single , 1 - Married , 2 - Legally Separated, 3 - widowed
-        claiming_add_exemp: String,
-        no_dependents: Number,
-        spouse_tin: Number,
-        spouse_rdo_code: Number,
-        spouse_tax_filer_type: String,
-        spouse_atc: { type: Number, default: 0 },
-        spouse_name: {
+        psoc_code: Number,
+
+        contact_details: {
             last: String,
             first: String,
             middle: String
-            
         },
-        spouse_citizenship: String,
-        spouse_contact_number:Number,
-        spouse_birthday: Date,
+
+        registered_address: String,
+
+        birthday: Date,
+
+        email_address: String,
+
+        telephone_no: Number,
+
+        civil_status: { type: Number },
+        // 0 - Single , 1 - Married , 2 - Legally Separated, 3 - widowed
+
+        claiming_add_exemp: String,
+        no_dependents: Number,
+
+        // spouse details
+        spouse_name_last: String,
+        spouse_name_first: String,
+        spouse_name_middle: String,
+        spouse_tin: Number,
+        spouse_contact_number: Number,
+        sbirthday: Date,
         spouse_email: String,
         spouse_claiming_add_exemp: Boolean,
         spouse_no_dependents: Number,
+
+        // spouse_rdo_code: Number,
+        // spouse_tax_filer_type: String,
+        // spouse_atc: { type: Number, default: 0 },
+        // spouse_citizenship: String,
     },
     dueDate: Date,
     returnPeriod: Date,
@@ -112,10 +117,10 @@ var Form1700Schema = new Schema({
         type: Number
     },
     created_by: {
-            type: String
+        type: String
     },
     modified_by: {
-            type: String
+        type: String
     }
 });
 

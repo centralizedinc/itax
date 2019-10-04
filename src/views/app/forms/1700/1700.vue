@@ -42,25 +42,43 @@
       <a-divider orientation="left">
         <b>Part I: Background Information on Tax Filer and Spouse</b>
       </a-divider>
-      <a-form-item label="5. TIN NUMBER">
-        <a-input
-        style="width:100%"
-          max="999999999"
-        v-model="form.taxpayer.tin"
-        :formatter="value => `${value}`.replace(/^(\d{3})(\d{3})(\d{3})/g, '$1-$2-$3')"
-        :parser="value => value.replace(/\$\s?|(-*)/g, '')"
-        ></a-input>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="5"
+      >
+        <a-input placeholder="Tax Identification Number" v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
-      <a-form-item label="6. RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="6"
+      >
+        <a-input-number 
+        placeholder="RDO code" 
+        style="width: 100%"
+        max= "999" 
+        v-model="form.taxpayer.rdo_code"></a-input-number>
       </a-form-item>
-      <a-form-item label="7. PSOC Code">
-        <a-input v-model="form.taxpayer.psoc_code"></a-input>
+<!--  -->
+
+      <a-form-item
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="7">
+        <a-input-number placeholder="PSOC Code" max= "9999" style="width: 100%" v-model="form.taxpayer.psoc_code"></a-input-number>
       </a-form-item>
       
-      <a-form-item label="8. Tax Filer's Name">
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="8">
         <a-row>
-          <a-col :span="11">
+          <a-col 
+          :span="11"
+          >
             <a-input placeholder="Last Name" v-model="form.taxpayer.contact_details.last"></a-input>
           </a-col>
           <a-col :span="11">
@@ -254,7 +272,17 @@ export default {
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
       // form_part3: this.$form.createForm(this),
-      image_height: 1000
+      image_height: 1000,
+      formatter: {
+        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      },
+      parser: {
+        amount: value => value.replace(/\₱\s?|(,*)/g, "")
+      },
+      form_layout: {
+        label_col: { span: 2 },
+        wrapper_col: { span: 22 }
+      },
     };
   },
   // watch: {
