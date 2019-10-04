@@ -27,7 +27,7 @@ class SendEmail {
       date: new Date(),
       expiry_date
     })).toString('base64')
-    const confirmation_url = `http://localhost:8080/#/confirmation/${confirmation_token}`
+    const confirmation_url = `${process.env.VUE_APP_HOME_URL}confirmation/${confirmation_token}`
     console.log('confirmation_url :', confirmation_url);
     const msg = {
       to: email,
@@ -68,7 +68,7 @@ class SendEmail {
       name,
       date: new Date()
     })).toString('base64')
-    const confirmation_url = `http://localhost:8080/#/?reg_code=${confirmation_token}`
+    const confirmation_url = `${process.env.VUE_APP_HOME_URL}?reg_code=${confirmation_token}`
     console.log('confirmation_url :', confirmation_url);
     const msg = {
       to: email,

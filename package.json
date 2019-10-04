@@ -22,6 +22,7 @@
     "body-parser": "^1.18.2",
     "core-js": "^2.6.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
     "express": "^4.16.2",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
@@ -32,7 +33,6 @@
     "mongoose-sequence-plugin": "^1.0.5",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
-    "nodemon": "^1.19.3",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
@@ -60,7 +60,8 @@
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-antv": "^1.1.1",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "nodemon": "^1.19.3"
   },
   "postcss": {
     "plugins": {

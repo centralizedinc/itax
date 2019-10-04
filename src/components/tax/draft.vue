@@ -31,7 +31,7 @@ export default {
         message: `Edit Form ${form.toUpperCase()}.`,
         icon: <a-icon type="check" style="color: blue" />
       });
-      window.open(`http://localhost:8080/#/tax/form/${form}?ref_no=${ref_no}`);
+      window.open(`${process.env.VUE_APP_HOME_URL}/tax/form/${form}?ref_no=${ref_no}`);
     },
     removeDraft(form, ref_no) {
       this.$store.commit("REMOVE_DRAFT_FORM", ref_no);
