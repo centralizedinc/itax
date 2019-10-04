@@ -113,7 +113,7 @@ router.route('/google/callback')
         session: false
     }), (req, res) => {
         const code = new Buffer(JSON.stringify(req.user)).toString('base64');
-        res.redirect(`http://localhost:8080/#/confirmation/google/${code}`)
+        res.redirect(`${process.env.VUE_APP_HOME_URL}confirmation/google/${code}`)
     });
 
 /***** SIGN UP USING FACEBOOK ACCOUNT *****/
@@ -129,7 +129,7 @@ router.route('/facebook/callback')
         (req, res) => {
             // res.json(req.user)
             const code = new Buffer(JSON.stringify(req.user)).toString('base64');
-            res.redirect(`http://localhost:8080/#/confirmation/facebook/${code}`)
+            res.redirect(`${process.env.VUE_APP_HOME_URL}confirmation/facebook/${code}`)
         });
 
 router.route('/invitation')
