@@ -1052,12 +1052,18 @@ export default {
       //   } else if(this.form.presumpInputTax == null){
       //     this.form.presumpInputTax = 0
       //   }
+
+      console.log('#########',this.form.carriedOverPreviousPeriod?this.form.carriedOverPreviousPeriod:0);
+      console.log('#########',Number(this.form.txbleGoodsServices));
+      console.log('#########',Number(this.form.transInputTax));
+      console.log('#########',Number(this.form.presumpInputTax));
+      console.log('#########',Number(this.form.otherAllowableLessInputTax));
       return (this.form.totalAllowableLessInputTax =
-        this.form.carriedOverPreviousPeriod +
-        this.form.txbleGoodsServices +
-        this.form.transInputTax +
-        this.form.presumpInputTax +
-        this.form.otherAllowableLessInputTax);
+        Number(this.form.carriedOverPreviousPeriod) +
+        Number(this.form.txbleGoodsServices) +
+        Number(this.form.transInputTax) +
+        Number(this.form.presumpInputTax) +
+        Number(this.form.otherAllowableLessInputTax));
     },
     total_available_input_tax() {
       return (this.form.totalAvailableInputTax =
@@ -1105,9 +1111,67 @@ export default {
       this.form.year = this.formatDtYear(this.form.returnPeriod);
       this.form.month = this.formatDtMonth(this.form.returnPeriod);
       console.log("year: " + this.form.month);
+    },
+    step(){
+      
     }
   },
   created() {
+    // if(this.form.totalAmountPayable == null){
+      
+    // this.form.totalAtcAmount = 0
+    //     this.form.totalAtcOutput = 0
+    //     this.form.salesGovAmount = 0
+    //     this.form.salesGovOutput = 0
+    //     this.form.zeroRatedAmount= 0
+    //     this.form.exemptAmount= 0
+    //     this.form.totalSales= 0
+    //     this.form.totalOutputTax= 0
+    //     this.form.carriedOverPreviousPeriod= 0
+    //     this.form.txbleGoodsServices= 0
+    //     this.form.transInputTax= 0
+    //     this.form.presumpInputTax= 0
+    //     this.form.otherAllowableLessInputTax= 0
+    //     this.form.totalAllowableLessInputTax= 0
+    //     this.form.purCapGoodsNotExceed= 0
+    //     this.form.outputCapGoodsNotExceed= 0
+    //     this.form.purCapGoodsExceed= 0
+    //     this.form.outputPurCapGoodsExceed= 0
+    //     this.form.domesticPurchaseGoods= 0
+    //     this.form.outputDomesticPurchaseGoods= 0
+    //     this.form.importationGoods= 0
+    //     this.form.outputImportationGoods= 0
+    //     this.form.domesticPurchaseService= 0
+    //     this.form.outputDomesticPurchaseService= 0
+    //     this.form.servicesNonResidents= 0
+    //     this.form.outputServicesNonResidents= 0
+    //     this.form.purchaseNotQualified= 0
+    //     this.form.purchaseOthers= 0
+    //     this.form.outputPurchaseOthers= 0
+    //     this.form.totalCurrentPurchases= 0
+    //     this.form.totalAvailableInputTax= 0
+    //     this.form.inputTaxPurchaseCapGoods= 0
+    //     this.form.inputTaxSaleToGovt= 0
+    //     this.form.inputTaxAllocableToExempt= 0
+    //     this.form.refundTcm= 0
+    //     this.form.otherDeductionFrInputTax= 0
+    //     this.form.totalDeductionFrInputTax= 0
+    //     this.form.totalInputTax= 0
+    //     this.form.taxDue= 0
+    //     this.form.creditableVatWithheld= 0
+    //     this.form.advPaySugarFlourInd= 0
+    //     this.form.taxWthld= 0
+    //     this.form.prevTaxPaid= 0
+    //     this.form.advPymt= 0
+    //     this.form.otherTaxCredits= 0
+    //     this.form.totalCredits= 0
+    //     this.form.amtPaybl= 0
+    //     this.form.surcharge= 0
+    //     this.form.interest= 0
+    //     this.form.compromise= 0
+    //     this.form.penalties= 0
+    //     this.form.totalAmountPayable= 0
+    // }
     // this.checkDraft();
     // this.form.carriedOverPreviousPeriod = 0
     // this.form.txbleGoodsServices = 0

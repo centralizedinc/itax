@@ -45,6 +45,9 @@ export default {
                     var day = date.getDate();
                     return day;
                 },
+                computeSum(su){
+                    
+                }
             },
         })
     }
