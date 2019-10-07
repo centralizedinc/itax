@@ -5,6 +5,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
+        :validate-status="error_item('returnPeriod')"
+        :help="error_desc('returnPeriod')"
       >
         <a-month-picker
           placeholder="For the month of (MM/YYYY)"
@@ -57,6 +59,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="6"
+        :validate-status="error_item('taxpayer.line_of_business')"
+        :help="error_desc('taxpayer.line_of_business')"
       >
         <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business"></a-input>
       </a-form-item>
@@ -64,6 +68,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="7"
+        :validate-status="error_item('taxpayer.registered_name')"
+        :help="error_desc('taxpayer.registered_name')"
       >
         <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
@@ -71,6 +77,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="8"
+        :validate-status="error_item('taxpayer.contact_details.telno')"
+        :help="error_desc('taxpayer.contact_details.telno')"
       >
         <a-input-number
           placeholder="Telephone Number"
@@ -84,6 +92,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="9"
+        :validate-status="error_item('taxpayer.address')"
+        :help="error_desc('taxpayer.address')"
       >
         <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
       </a-form-item>
@@ -91,6 +101,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="10"
+        :validate-status="error_item('taxpayer.address_details.zipCode')"
+        :help="error_desc('taxpayer.address_details.zipCode')"
       >
         <a-input-number
           placeholder="Zip Code"
@@ -121,6 +133,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="12A"
+        :validate-status="error_item('atc')"
+        :help="error_desc('atc')"
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
@@ -756,6 +770,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25A"
+        :validate-status="error_item('surcharge')"
+        :help="error_desc('surcharge')"
       >
         <a-input-number
           placeholder="Surcharge"
@@ -768,6 +784,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25B"
+        :validate-status="error_item('interest')"
+        :help="error_desc('interst')"
       >
         <a-input-number
           placeholder="Interest"
@@ -780,6 +798,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25C"
+        :validate-status="error_item('compromise')"
+        :help="error_desc('compromise')"
       >
         <a-input-number
           placeholder="Compromise"
@@ -1051,21 +1071,26 @@ export default {
   },
   computed: {
     // 16A = 12A + 13A + 14 + 15
-    total_sales(){
-      
-    },
+    total_sales() {},
     // 16B = 12B + 13B
-    total_output_tax(){
-
-    },
+    total_output_tax() {},
     total_allowable_less_input_tax() {
-      console.log('#########',this.form.carriedOverPreviousPeriod?this.form.carriedOverPreviousPeriod:0);
-      var tosum = [this.form.carriedOverPreviousPeriod,
-      this.form.txbleGoodsServices,this.form.transInputTax,
-      this.form.presumpInputTax,this.form.otherAllowableLessInputTax]
-      console.log('compute sum: ' + this.computeSum(tosum))
-      return this.form.totalAllowableLessInputTax = this.computeSum(tosum)
-},
+      console.log(
+        "#########",
+        this.form.carriedOverPreviousPeriod
+          ? this.form.carriedOverPreviousPeriod
+          : 0
+      );
+      var tosum = [
+        this.form.carriedOverPreviousPeriod,
+        this.form.txbleGoodsServices,
+        this.form.transInputTax,
+        this.form.presumpInputTax,
+        this.form.otherAllowableLessInputTax
+      ];
+      console.log("compute sum: " + this.computeSum(tosum));
+      return (this.form.totalAllowableLessInputTax = this.computeSum(tosum));
+    },
     total_available_input_tax() {
       return (this.form.totalAvailableInputTax =
         this.form.purCapGoodsNotExceed +
