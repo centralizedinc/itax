@@ -13,7 +13,7 @@ function validate(form_details) {
     console.log("validation form details: " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
-    // var due = computeDueDate(form_details.returnPeriod)
+    form_details.due_date = computeDueDate(form_details.returnPeriod)
     // console.log("due: " + due)
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer));
@@ -22,6 +22,33 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
     //latefiling computations
     // 25% total amount due
+    if (commonValidator.isLateFiling(form_details.due_date)) {
+        // Compute Surcharge
+        const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
+        if (form_details.surcharge !== surcharge) {
+            errors.push({
+                field: 'surcharge',
+                error: `Surcharge amount must be ${surcharge}`
+            })
+        }
+        // Compute Interest
+        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
+        if (form_details.interest !== interest) {
+            errors.push({
+                field: 'interest',
+                error: `Interest amount must be ${interest}`
+            })
+        }
+        // Compute Compromise
+        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
+        if (form_details.compromise !== compromise) {
+            errors.push({
+                field: 'compromise',
+                error: `Compromise amount must be ${compromise}`
+            })
+        }
+    }
+
     console.log('form 2550m validator errors: ', JSON.stringify(errors))
 
     return errors
