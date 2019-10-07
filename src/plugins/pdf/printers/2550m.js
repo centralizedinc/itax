@@ -206,9 +206,9 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.totalAtcAmount,
+                            text: forms.totalAtcAmount?forms.totalAtcAmount:'0.00',
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
                             margin: [270, 22, 0, 0]
                         },

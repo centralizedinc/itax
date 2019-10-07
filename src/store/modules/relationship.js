@@ -137,6 +137,12 @@ const actions = {
                     reject(err)
                 });
         })
+    },
+    CONNECT_ALL(context, data){
+        return new RelationshipAPI(context.rootState.account_session.token).connectAll(data);
+    },
+    CONNECT_ALL_NEW(context, data){
+        return new RelationshipAPI(context.rootState.account_session.token).connectAllNew(data);
     }
 }
 

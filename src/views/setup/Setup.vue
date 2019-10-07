@@ -1,6 +1,6 @@
 <template>
   <a-card>
-    <div v-if="fetching_data">
+    <div v-if="fetching_data" style="width: 100%;" class="align-items-middle">
       <a-spin />
     </div>
     <template v-else>
@@ -156,4 +156,9 @@ export default {
 </script>
 
 <style>
+.align-items-middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
