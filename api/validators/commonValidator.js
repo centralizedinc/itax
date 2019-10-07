@@ -2,7 +2,7 @@
 
 var taxpayerDetails = require('../models/taxpayerDetailsModel.js');
 
-function validateTaxpayerDetails(tp) {
+function    validateTaxpayerDetails(tp) {
     var error_messages = [];
     // var tp = new taxpayerDetails(taxpayer);
     console.log('tp', JSON.stringify(tp))
@@ -17,6 +17,26 @@ function validateTaxpayerDetails(tp) {
 
     if (!tp.rdo_code) {
         error_messages.push({ field: "taxpayer.rdo_code", error: "RDO Code is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.taxpayer_name) {
+        error_messages.push({ field: "taxpayer.taxpayer_name", error: "Tax payer name is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.registered_address) {
+        error_messages.push({ field: "taxpayer.registered_address", error: "Tax payer registered address is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.zip_code) {
+        error_messages.push({ field: "taxpayer.zip_code", error: "Zip code is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.birthday) {
+        error_messages.push({ field: "taxpayer.birthday", error: "Tax payer birthday is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.email_address) {
+        error_messages.push({ field: "taxpayer.email_address", error: "Email address is a mandatory field" });
     }
 
     return error_messages;

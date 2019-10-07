@@ -18,10 +18,75 @@ function validate(form_details) {
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('form 1700m validator errors: ', JSON.stringify(errors) )
+    console.log('form 1701q validator errors: ', JSON.stringify(errors) )
 
     return errors
 }
+
+// function validateYear(year) {
+//     var error_messages = [];
+//     // var tp = new taxpayerDetails(taxpayer);
+//     console.log('tp', JSON.stringify(year))
+//     console.log('!tp.tin', !year.dateFiled)
+//     if (!year.dateFiled) {
+//         error_messages.push({ field: "dateFiled", name: "Year", error: "Year is a mandatory field" });
+//     }
+
+//     if (!year.quarter) {
+//         error_messages.push({ field: "quarter", name: "Quarter", error: "Quarter is a mandatory field" });
+//     }
+
+//     if (!year.amendedYn) {
+//         error_messages.push({ field: "taxpayer.rdo_code", error: "RDO Code is a mandatory field" });
+//     }
+
+//     return error_messages;
+
+// }
+
+function validateRequired(field) {
+    var error_messages = [];
+        var tp = new taxpayerDetails(taxpayer); 
+        console.log('tp', JSON.stringify(field))
+        console.log('!tp.tin', !field.dateFiled)
+        if (!field.dateFiled) {
+            error_messages.push({ field: "dateFiled", name: "Year", error: "Year is a mandatory field" });
+        }
+    
+        if (!field.quarter) {
+            error_messages.push({ field: "quarter", name: "Quarter", error: "Quarter is a mandatory field" });
+        }
+    
+        if (!field.tax_filer_type) {
+            error_messages.push({ field: "taxpayer.tax_filer_type", error: "Tax payer type is a mandatory field" });
+        }
+
+        if (!field.taxpayer.atc) {
+            error_messages.push({ field: "atc", error: "ATC is a mandatory field" });
+        }
+    
+        if (!field.tax_filer_type) {
+            error_messages.push({ field: "taxpayer.tax_filer_type", error: "Tax payer type is a mandatory field" });
+        }
+
+        if (!field.taxpayer.tax_filer_type) {
+            error_messages.push({ field: "taxpayer.tax_filer_type", error: "Tax payer type is a mandatory field" });
+        }
+
+        if (!field.taxpayer.citizenship) {
+            error_messages.push({ field: "taxpayer.citizenship", error: "Citizenship is a mandatory field" });
+        }
+
+        if (!field.taxCredits) {
+            error_messages.push({ field: "taxCredits", error: "Claiming Foreign Tax Credits is a mandatory field" });
+        }
+        
+        if (!field.method_deduction) {
+            error_messages.push({ field: "method_deduction", error: "Method of deduction is a mandatory field" });
+        }
+        return error_messages;
+}
+
 
 function computeDueDate(returnPeriod) {
     var due_date = new Date();
