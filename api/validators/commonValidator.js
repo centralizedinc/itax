@@ -2,21 +2,36 @@
 
 var taxpayerDetails = require('../models/taxpayerDetailsModel.js');
 
+const constant_helper = require('../utils/constant_helper');
+
 function validateTaxpayerDetails(tp) {
     var error_messages = [];
     // var tp = new taxpayerDetails(taxpayer);
     console.log('tp', JSON.stringify(tp))
     console.log('!tp.tin', !tp.tin)
     if (!tp.tin) {
-        error_messages.push({ field: "taxpayer.tin", name: "TIN", error: "TIN is a mandatory field" });
+        error_messages.push({ field: "taxpayer.tin", error: constant_helper.MANDATORY_FIELD('TIN') });
+    }
+
+    if (!tp.rdo_code) {
+        error_messages.push({ field: "taxpayer.rdo_code", error: constant_helper.MANDATORY_FIELD('RDO Code') });
     }
 
     // if (!tp.branch_code) {
     //     error_messages.push({ field: "taxpayer.branch_code", error: "Branch Code is a mandatory field" });
     // }
 
-    if (!tp.rdo_code) {
-        error_messages.push({ field: "taxpayer.rdo_code", error: "RDO Code is a mandatory field" });
+    if (!tp.registered_name) {
+        error_messages.push({ field: "taxpayer.registered_name", error: constant_helper.MANDATORY_FIELD('Registered Name') });
+    }
+    if (!tp.contact_details.telno) {
+        error_messages.push({ field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Telephone no') });
+    }
+    if (!tp.address) {
+        error_messages.push({ field: "taxpayer.address", error: constant_helper.MANDATORY_FIELD('Registered Address') });
+    }
+    if (!tp.address_details.zipCode) {
+        error_messages.push({ field: "taxpayer.address_details.zipCode", error: constant_helper.MANDATORY_FIELD('Zip Code') });
     }
 
     return error_messages;

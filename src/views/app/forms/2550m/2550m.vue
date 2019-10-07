@@ -1053,11 +1053,16 @@ export default {
       //     this.form.presumpInputTax = 0
       //   }
 
-      console.log('#########',this.form.carriedOverPreviousPeriod?this.form.carriedOverPreviousPeriod:0);
-      console.log('#########',Number(this.form.txbleGoodsServices));
-      console.log('#########',Number(this.form.transInputTax));
-      console.log('#########',Number(this.form.presumpInputTax));
-      console.log('#########',Number(this.form.otherAllowableLessInputTax));
+      console.log(
+        "#########",
+        this.form.carriedOverPreviousPeriod
+          ? this.form.carriedOverPreviousPeriod
+          : 0
+      );
+      console.log("#########", Number(this.form.txbleGoodsServices));
+      console.log("#########", Number(this.form.transInputTax));
+      console.log("#########", Number(this.form.presumpInputTax));
+      console.log("#########", Number(this.form.otherAllowableLessInputTax));
       return (this.form.totalAllowableLessInputTax =
         Number(this.form.carriedOverPreviousPeriod) +
         Number(this.form.txbleGoodsServices) +
@@ -1106,19 +1111,23 @@ export default {
     loading(val) {
       this.$emit("loading", val);
     },
-    form() {
-      console.log("2550m form: " + this.form.returnPeriod);
-      this.form.year = this.formatDtYear(this.form.returnPeriod);
-      this.form.month = this.formatDtMonth(this.form.returnPeriod);
-      console.log("year: " + this.form.month);
+    form: {
+      deep: true,
+      handler() {
+        console.log("2550m form: " + this.form.returnPeriod);
+        this.form.year = this.formatDtYear(this.form.returnPeriod);
+        this.form.month = this.formatDtMonth(this.form.returnPeriod);
+        this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
+        this.form.returnPeriodMonth = this.formatDtMonth(
+          this.form.returnPeriod
+        );
+        console.log("year: " + this.form.month);
+      }
     },
-    step(){
-      
-    }
+    step() {}
   },
   created() {
     // if(this.form.totalAmountPayable == null){
-      
     // this.form.totalAtcAmount = 0
     //     this.form.totalAtcOutput = 0
     //     this.form.salesGovAmount = 0

@@ -3,7 +3,7 @@
 var Form2550MModel = require('../models/forms/form2550MModel.js');
 var commonValidator = require('./commonValidator.js');
 
-
+const constant_helper = require('../utils/constant_helper');
 /**
  * 
  * @param {*} form_details 
@@ -16,13 +16,51 @@ function validate(form_details) {
     // var due = computeDueDate(form_details.returnPeriod)
     // console.log("due: " + due)
     //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer))
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer));
 
+    // validate required fields
+    errors.push(...validateRequired(form_details));
     //latefiling computations
     // 25% total amount due
     console.log('form 2550m validator errors: ', JSON.stringify(errors))
 
     return errors
+}
+
+/**
+ * 
+ * @param {form2550MModel} form 
+ */
+function validateRequired(form) {
+    var error_messages = [];
+
+    if (!form.taxpayer.line_of_business) {
+        error_messages.push({ field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
+    }
+
+    if (!form.returnPeriodYear || !form.returnPeriodMonth || !form.returnPeriod) {
+        error_messages.push({ field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
+    }
+
+    if (!form.sched1 || !form.sched1.length) {
+        error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD('Schedule 1') });
+    } else {
+        form.sched1.forEach((data, index) => {
+            if (!data.description) {
+                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Description at schedule 1 item ${index + 1}`) });
+            }
+            if (!data.atc) {
+                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`ATC at schedule 1 item ${index + 1}`) });
+            }
+            if (!data.amount) {
+                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Amount of Sales at schedule 1 item ${index + 1}`) });
+            }
+            if (!data.output_tax) {
+                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Output Tax at schedule 1 item ${index + 1}`) });
+            }
+        })
+    }
+    return error_messages;
 }
 
 function computeDueDate(returnPeriod) {
