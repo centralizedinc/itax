@@ -3,7 +3,7 @@
 var Form1701QModel = require('../models/forms/form1701QModel.js');
 var commonValidator = require('./commonValidator.js');
 
-
+const constant_helper = require('../utils/constant_helper');
 /**
  * 
  * @param {*} form_details 
@@ -13,36 +13,46 @@ function validate(form_details) {
 
     //validation begins ...
     var errors = [];
-
+    form_details.due_date = computeDueDate(form_details.returnPeriod)
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
+    // validate required fields
+    errors.push(...validateRequired(form_details));
 
-    //latefiling computations
-    console.log('form 1701q validator errors: ', JSON.stringify(errors) )
+    // LATE FILING
+
+    // if (commonValidator.isLateFiling(form_details.due_date)) {
+    //     // Compute Surcharge
+    //     const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
+    //     if (form_details.surcharge !== surcharge) {
+    //         errors.push({
+    //             field: 'surcharge',
+    //             error: `Surcharge amount must be ${surcharge}`
+    //         })
+    //     }
+    //     // Compute Interest
+    //     const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
+    //     if (form_details.interest !== interest) {
+    //         errors.push({
+    //             field: 'interest',
+    //             error: `Interest amount must be ${interest}`
+    //         })
+    //     }
+    //     // Compute Compromise
+    //     const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
+    //     if (form_details.compromise !== compromise) {
+    //         errors.push({
+    //             field: 'compromise',
+    //             error: `Compromise amount must be ${compromise}`
+    //         })
+    //     }
+    // }
+
+//latefiling computations
+console.log('form 1701q validator errors: ', JSON.stringify(errors) )
 
     return errors
 }
-
-// function validateYear(year) {
-//     var error_messages = [];
-//     // var tp = new taxpayerDetails(taxpayer);
-//     console.log('tp', JSON.stringify(year))
-//     console.log('!tp.tin', !year.dateFiled)
-//     if (!year.dateFiled) {
-//         error_messages.push({ field: "dateFiled", name: "Year", error: "Year is a mandatory field" });
-//     }
-
-//     if (!year.quarter) {
-//         error_messages.push({ field: "quarter", name: "Quarter", error: "Quarter is a mandatory field" });
-//     }
-
-//     if (!year.amendedYn) {
-//         error_messages.push({ field: "taxpayer.rdo_code", error: "RDO Code is a mandatory field" });
-//     }
-
-//     return error_messages;
-
-// }
 
 function validateRequired(field) {
     var error_messages = [];
@@ -50,51 +60,51 @@ function validateRequired(field) {
         console.log('tp', JSON.stringify(field))
         console.log('!tp.tin', !field.dateFiled)
         if (!field.dateFiled) {
-            error_messages.push({ field: "dateFiled", name: "Year", error: "Year is a mandatory field" });
+            error_messages.push({ field: "dateFiled", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
         }
     
         if (!field.quarter) {
-            error_messages.push({ field: "quarter", name: "Quarter", error: "Quarter is a mandatory field" });
+            error_messages.push({ field: "quarter", name: "Quarter", error: constant_helper.MANDATORY_FIELD("Quarter") });
         }
     
         if (!field.tax_filer_type) {
-            error_messages.push({ field: "taxpayer.tax_filer_type", error: "Tax payer type is a mandatory field" });
+            error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
         }
 
         if (!field.taxpayer.atc) {
-            error_messages.push({ field: "atc", error: "ATC is a mandatory field" });
+            error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD("ATC") });
         }
     
-        if (!field.tax_filer_type) {
-            error_messages.push({ field: "taxpayer.tax_filer_type", error: "Tax payer type is a mandatory field" });
-        }
+        // if (!field.tax_filer_type) {
+        //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
+        // }
 
         if (!field.taxpayer.tax_filer_type) {
-            error_messages.push({ field: "taxpayer.tax_filer_type", error: "Tax payer type is a mandatory field" });
+            error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
         }
 
         if (!field.taxpayer.citizenship) {
-            error_messages.push({ field: "taxpayer.citizenship", error: "Citizenship is a mandatory field" });
+            error_messages.push({ field: "taxpayer.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
         }
 
         if (!field.taxCredits) {
-            error_messages.push({ field: "taxCredits", error: "Claiming Foreign Tax Credits is a mandatory field" });
+            error_messages.push({ field: "taxCredits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
         }
         
         if (!field.method_deduction) {
-            error_messages.push({ field: "method_deduction", error: "Method of deduction is a mandatory field" });
+            error_messages.push({ field: "method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
         }
         return error_messages;
 }
 
 
 function computeDueDate(returnPeriod) {
+    console.log("computeDueDate data: " + returnPeriod)
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth() + 1;
-
-    //every 20th of the next month
-    due_date.setDate(20);
+    var month = returnPeriod.getMonth() + 3;
+    // every 15th of the quarter May 15, Aug 15, Nov 15
+    due_date.setDate(15);
     due_date.setMonth(month);
 
     return due_date;
