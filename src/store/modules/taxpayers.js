@@ -12,6 +12,11 @@ const state = initialState()
 const mutations = {
     ADD_TP(state, payload) {
         state.records.push(payload)
+    },
+    RESET(state) {
+        Object.keys(state).forEach(key => {
+            state[key] = initialState()[key];
+        })
     }
 }
 

@@ -82,6 +82,26 @@ class RelationshipDao {
 
     /**
      * @returns {Promise}
+     * @param {Array<Object>} details 
+     * @param {String} created_by
+     */
+    static createMany(details, created_by) {
+        var datas = [];
+        details.forEach(tp => {
+            tp.created_by = created_by;
+            datas.push(tp);
+            datas.push({
+                relationship: tp.relationship,
+                from: tp.to,
+                to: tp.from,
+                created_by
+            })
+        })
+        return model.insertMany(datas);
+    }
+
+    /**
+     * @returns {Promise}
      * @param {Object} conditions 
      */
     static modify(conditions, updated_details) {

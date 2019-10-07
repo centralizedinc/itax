@@ -38,14 +38,14 @@
     <div v-if="loading" class="align-items-middle">
       <a-spin />
     </div>
-    <template v-else-if="is_busy">
+    <template v-else-if="is_busy && !error_message">
       <a-card
         :bodyStyle="{ padding: '2vh' }"
-        v-if="taxpayer && Object.keys(taxpayer).length && user && Object.keys(user).length"
+        v-if="taxpayer && Object.keys(taxpayer).length"
       >
         <a-avatar
-          :src="user && user.avatar ? user.avatar.location : null"
-        >{{user && user.name && user.name.first ? user.name.first[0] : '?' }}</a-avatar>
+          :src="user && user.avatar ? user.avatar.location : default_user_icon"
+        />
         <span
           style="margin-left: 1vh;font-weight:bold;"
         >{{taxpayer.individual_details.firstName}} {{taxpayer.individual_details.lastName}}</span>
@@ -64,6 +64,8 @@
             label="Taxpayer Type"
             :label-col="formItemLayout.labelCol"
             :wrapper-col="formItemLayout.wrapperCol"
+            :validate-status="validation.taxpayer_type ? 'error' : ''"
+            :help="validation.taxpayer_type"
           >
             <a-radio-group
               buttonStyle="solid"
@@ -78,6 +80,8 @@
             label="Email"
             :label-col="formItemLayout.labelCol"
             :wrapper-col="formItemLayout.wrapperCol"
+            :validate-status="validation.email ? 'error' : ''"
+            :help="validation.email"
           >
             <a-input
               v-model="new_taxpayer.email"
@@ -90,6 +94,8 @@
             label="First Name"
             :label-col="formItemLayout.labelCol"
             :wrapper-col="formItemLayout.wrapperCol"
+            :validate-status="validation.first_name ? 'error' : ''"
+            :help="validation.first_name"
           >
             <a-input
               v-model="new_taxpayer.first_name"
@@ -102,6 +108,8 @@
             label="Last Name"
             :label-col="formItemLayout.labelCol"
             :wrapper-col="formItemLayout.wrapperCol"
+            :validate-status="validation.last_name ? 'error' : ''"
+            :help="validation.last_name"
           >
             <a-input
               v-model="new_taxpayer.last_name"
@@ -132,13 +140,7 @@ export default {
       loading_submit: false,
       default_relationship: null,
       new_taxpayer: {},
-      relationships: [
-        "Employer",
-        "Employee",
-        "Spouse",
-        "Officemate",
-        "Siblings"
-      ],
+      relationships: ["Employer", "Employee", "Officemate", "Siblings"],
       error_message: "",
       formItemLayout: {
         labelCol: {
@@ -147,7 +149,14 @@ export default {
         wrapperCol: {
           span: 19
         }
-      }
+      },
+      validation: {
+        taxpayer_type: "",
+        email: "",
+        first_name: "",
+        last_name: ""
+      },
+      default_user_icon: "https://img.pngio.com/circled-user-icon-user-profile-icon-png-png-image-transparent-profile-icon-png-820_860.png"
     };
   },
   watch: {
@@ -158,6 +167,7 @@ export default {
       this.is_busy = false;
       this.taxpayer = null;
       this.user = null;
+      this.error_message = "";
     }
   },
   computed: {
@@ -183,31 +193,33 @@ export default {
       this.is_busy = true;
       this.taxpayer = null;
       this.user = null;
+      this.error_message = "";
       if (this.search_tin && this.search_tin.length > 12) {
         // check tin
-        if(this.search_tin === this.tree.tin) {
+
+        const index = this.tree.children.findIndex(
+          v => v.to === this.search_tin
+        );
+        if (this.search_tin === this.tree.tin) {
           this.error_message = "Oops! This is your TIN.";
-          return;
-        }
-        const index = this.tree.children.findIndex(v=>v.to===this.search_tin);
-        if(index>-1) {
+        } else if (index > -1) {
           this.error_message = "This TIN is already in your list.";
           return;
+        } else {
+          this.loading = true;
+          this.$store
+            .dispatch("GET_TAXPAYER_BY_TIN", this.search_tin)
+            .then(data => {
+              console.log("data :", data);
+              this.loading = false;
+              this.taxpayer = data.taxpayer;
+              this.user = data.user;
+            })
+            .catch(err => {
+              this.loading = false;
+              console.log("err :", err);
+            });
         }
-
-        this.loading = true;
-        this.$store
-          .dispatch("GET_TAXPAYER_BY_TIN", this.search_tin)
-          .then(data => {
-            console.log("data :", data);
-            this.loading = false;
-            this.taxpayer = data.taxpayer;
-            this.user = data.user;
-          })
-          .catch(err => {
-            this.loading = false;
-            console.log("err :", err);
-          });
       } else this.error_message = "Invalid TIN";
     },
     connect() {
@@ -215,27 +227,60 @@ export default {
       if (this.check_connectivity) {
         this.$emit("removeConnection", this.search_tin);
       } else {
-        const connection = {
-          relationship: this.relationship,
-          from: this.account_user.tin,
-          to: this.search_tin,
-          name: `${this.search_tin} (${this.relationship})`
-        };
-        this.$emit("connect", connection);
+        if (this.validate(false)) {
+          const connection = {
+            relationship: this.relationship,
+            from: this.account_user.tin,
+            to: this.search_tin,
+            name: `${this.search_tin} (${this.relationship})`,
+            new: false
+          };
+          this.$emit("connect", connection);
+        }
       }
       this.loading = false;
     },
+    validate(validate_all) {
+      this.validation = {};
+      if (validate_all) {
+        if (!this.new_taxpayer.taxpayer_type) {
+          this.validation.taxpayer_type = "Taxpayer type is required.";
+          return false;
+        }
+        if (!this.new_taxpayer.email) {
+          this.validation.email = "Email is required.";
+          return false;
+        }
+        if (!this.new_taxpayer.first_name) {
+          this.validation.first_name = "First Name is required.";
+          return false;
+        }
+        if (!this.new_taxpayer.last_name) {
+          this.validation.last_name = "Last Name is required.";
+          return false;
+        }
+      }
+      console.log("this.relationship :", this.relationship);
+      if (!this.relationship) {
+        this.error_message = "Relationship is required.";
+        return false;
+      }
+      return true;
+    },
     addTaxpayer() {
       this.loading_submit = true;
-      this.new_taxpayer.tin = this.search_tin;
-      this.new_taxpayer.relationship = this.relationship;
-      this.new_taxpayer.from = this.account_user.tin;
-      this.new_taxpayer.to = this.search_tin;
-      this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`;
-      this.new_taxpayer.name = `${this.search_tin} (${this.relationship})`;
-      this.$emit("connect", this.new_taxpayer);
+      if (this.validate(true)) {
+        this.new_taxpayer.tin = this.search_tin;
+        this.new_taxpayer.relationship = this.relationship;
+        this.new_taxpayer.from = this.account_user.tin;
+        this.new_taxpayer.to = this.search_tin;
+        this.new_taxpayer.sender = `${this.account_user.name.first} ${this.account_user.name.last}`;
+        this.new_taxpayer.name = `${this.search_tin} (${this.relationship})`;
+        this.new_taxpayer.new = true;
+        this.$emit("connect", this.new_taxpayer);
+        this.$emit("showAddTP", false);
+      }
       this.loading_submit = false;
-      this.$emit("showAddTP", false);
     }
     // connect() {
     //   this.$emit('reloadTree', true);
