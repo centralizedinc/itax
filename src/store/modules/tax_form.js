@@ -29,6 +29,12 @@ const mutations = {
     },
     SET_TAX_RETURNS(state, data) {
         state.tax_returns = data;
+    },
+    RESET(state) {
+        Object.keys(state).forEach(key => {
+            if (key === 'draft_forms') return;
+            else state[key] = initialState()[key];
+        })
     }
 }
 

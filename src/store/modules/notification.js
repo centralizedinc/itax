@@ -12,6 +12,11 @@ const mutations = {
     NOTIFY_MESSAGE(state, data) {
         console.log('Notify :', data);
         state.notify = data;
+    },
+    RESET(state) {
+        Object.keys(state).forEach(key => {
+            state[key] = initialState()[key];
+        })
     }
 }
 
