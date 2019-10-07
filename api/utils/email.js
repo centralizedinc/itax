@@ -62,6 +62,13 @@ class SendEmail {
     });
   }
 
+  /**
+   * 
+   * @param {String} email 
+   * @param {String} name 
+   * @param {String} tin 
+   * @param {String} sender 
+   */
   static registerInvitation(email, name, tin, sender) {
     const confirmation_token = new Buffer(JSON.stringify({
       email,
@@ -83,6 +90,33 @@ class SendEmail {
           resolve({ result, confirmation_url })
         }).catch((err) => reject(err));
     })
+  }
+
+  /**
+   * @returns {Promise}
+   * @param {Array<Object>} details 
+   */
+  static sendMultipleInvitation(details) {
+    var messages = [];
+    details.forEach(data => {
+      const { email, name, tin, sender } = data;
+      const confirmation_token = new Buffer(JSON.stringify({
+        email,
+        name,
+        tin,
+        date: new Date()
+      })).toString('base64')
+      const confirmation_url = `${process.env.VUE_APP_HOME_URL}?reg_code=${confirmation_token}`
+      console.log('confirmation_url :', confirmation_url);
+      const msg = {
+        to: email,
+        from: ApplicationSettings.getValue("ITAX_EMAIL"),
+        templateId: ApplicationSettings.getValue("REGISTRATION_INVITATION_TEMPLATE"),
+        substitutions: { name: `${name.first} ${name.last}`, sender, confirmation_url }
+      };
+      messages.push(msg);
+    })
+    return sgMail.sendMultiple(messages);
   }
 }
 module.exports = SendEmail

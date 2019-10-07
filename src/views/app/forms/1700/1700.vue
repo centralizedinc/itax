@@ -89,20 +89,32 @@
           </a-col>
         </a-row>
       </a-form-item>
-      <a-form-item label="9. Address">
-        <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="9">
+        <a-textarea placeholder="Address (Indicate complete registered address)" v-model="form.taxpayer.registered_address"></a-textarea>
       </a-form-item>
-      <a-form-item label="10. Date of Birth">
-        <a-date-picker v-model="form.taxpayer.birthday"></a-date-picker>
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="10">
+        <a-date-picker placeholder="Date of Birth (MM/DD/YYYY)" style="width: 100%" v-model="form.taxpayer.birthday"></a-date-picker>
       </a-form-item>
-      <a-form-item label="11. Email Address">
-        <a-input v-model="form.taxpayer.email_address"></a-input>
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="11">
+        <a-input placeholder="Email Address" v-model="form.taxpayer.email_address"></a-input>
       </a-form-item>
-      <a-form-item label="12. Contact Number">
-        <a-input v-model="form.taxpayer.telephone_no"></a-input>
+      <a-form-item
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="12">
+        <a-input placeholder="Contact Number" v-model="form.taxpayer.telephone_no"></a-input>
       </a-form-item>
 <a-form-item label="13. Civil Status">
-        <a-radio-group v-model="form.taxpayer.civil_status">
+        <a-radio-group style="width: 100%" v-model="form.taxpayer.civil_status">
           <a-radio :value="0">Single</a-radio>
           <a-radio :value="1">Married</a-radio>
           <a-radio :value="2">Legally Separated</a-radio>
@@ -117,11 +129,17 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="15. If YES, enter number of Qualified Dependent Children">
-        <a-input v-model="form.taxpayer.no_dependents"></a-input>
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="15">
+        <a-input placeholder="If YES, enter number of Qualified Dependent Children" v-model="form.taxpayer.no_dependents"></a-input>
       </a-form-item>
-      <!-- spouse details -->
-       <a-form-item label="16. Spouse's Name">
+      spouse details
+       <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="16">
         <a-row>
           <a-col :span="11">
             <a-input placeholder="Last Name" v-model="form.taxpayer.spouse_name_last"></a-input>
@@ -134,15 +152,21 @@
           </a-col>
         </a-row>
       </a-form-item>
-      <a-form-item label="17. Spouse's TIN number">
-        <a-input v-model="form.taxpayer.spouse_tin"></a-input>
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="17">
+        <a-input placeholder="Spouse's TIN number" v-model="form.taxpayer.spouse_tin"></a-input>
       </a-form-item>
-      <a-form-item label="18. Contact Number">
-        <a-input v-model="form.taxpayer.spouse_contact_number"></a-input>
+      <a-form-item 
+      :labelCol="form_layout.label_col"
+      :wrapperCol="form_layout.wrapper_col"
+      label="18">
+        <a-input placeholder="Spouse Contact Number" v-model="form.taxpayer.spouse_contact_number"></a-input>
       </a-form-item>
        <a-form-item label="19. Date of Birth">
         <a-date-picker v-model="form.taxpayer.sbirthday"></a-date-picker>
-      </a-form-item>
+      </a-form-item>birthday
       <a-form-item label="20. Email Address">
         <a-input v-model="form.taxpayer.spouse_email"></a-input>
       </a-form-item>

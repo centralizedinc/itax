@@ -4,27 +4,38 @@
       <a-divider>
         <b>Quarterly Income Tax Return(1701Q)</b>
       </a-divider>
-      <a-form-item label="1. For the Year">
+      <a-form-item label="For the Year"></a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="1."
+      >
         <a-month-picker style="width: 100%" v-model="form.dateFiled" />
       </a-form-item>
-      <a-form-item label>
+      <a-form-item label="Quarter"></a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="2."
+      >
         <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
           <a-radio :value="2">Second</a-radio>
           <a-radio :value="3">Third</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. Amended Return">
+      <a-form-item label="Amended Return"></a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="3."
+      >
         <a-radio-group v-model="form.amendedYn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item
-        :labelCol="form.label_col"
-        :wrapperCol="form.wrapper_col"
-        label="4. Number of Sheets"
-      >
+      <a-form-item label="4. Number of Sheets">
         <a-input-number v-model="form.numOfSheet" style="width: 100%" />
       </a-form-item>
     </a-form>
@@ -234,6 +245,7 @@
             ></a-input-number>
           </a-form-item>
         </a-col>
+        <a-button style="margin-left: 15px;" type="link" @click="show = 1">Schedule I</a-button>
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
@@ -244,7 +256,7 @@
           >
             <a-input-number
               v-model="form.item27a"
-              placeholder="Less: Tax Credits/Payments(From Part V, Schedule III-Item 62)"
+              placeholder="Less: Tax Credits/Payments(From "
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -254,12 +266,13 @@
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
               v-model="form.item27b"
-              placeholder="Less: Tax Credits/Payments(From Part V, Schedule III-Item 62)"
+              placeholder="Part V, Schedule III-Item 62)"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
           </a-form-item>
         </a-col>
+        <a-button style="margin-left: 15px;" type="link" @click="show = 3">Schedule III</a-button>
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
@@ -270,7 +283,7 @@
           >
             <a-input-number
               v-model="form.item28a"
-              placeholder="Tax Payable/(Overpayment)(Item 26 Less Item 27)(From Part V, Item 63)"
+              placeholder="Tax Payable/(Overpayment)(Item "
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -280,7 +293,7 @@
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
               v-model="form.item28b"
-              placeholder="Tax Payable/(Overpayment)(Item 26 Less Item 27)(From Part V, Item 63)"
+              placeholder="26 Less Item 27 From Part V,Item 63)"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -296,7 +309,7 @@
           >
             <a-input-number
               v-model="form.item29a"
-              placeholder="Add: Total Penalties (From Part V, Schedule IV-Item 67)"
+              placeholder="Add: Total Penalties (From Part V, "
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -306,12 +319,13 @@
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
               v-model="form.item29b"
-              placeholder="Add: Total Penalties (From Part V, Schedule IV-Item 67)"
+              placeholder="Schedule IV-Item 67)"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
           </a-form-item>
         </a-col>
+        <a-button style="margin-left: 15px;" type="link" @click="show = 4">Schedule IV</a-button>
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
@@ -322,7 +336,7 @@
           >
             <a-input-number
               v-model="form.item30a"
-              placeholder="Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+              placeholder="Total Amount Payable/Overpayment"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -332,7 +346,7 @@
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
               v-model="form.item30b"
-              placeholder="Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+              placeholder="Sum of Items 28/29 From Part V,Item 68"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -348,7 +362,7 @@
           >
             <a-input-number
               v-model="form.item31a"
-              placeholder="Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+              placeholder="Aggregate Amount Payable/(Overpayment)"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -358,7 +372,7 @@
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
               v-model="form.item31b"
-              placeholder="Total Amount Payable/(Overpayment)(Sum of Items 28 and 29)(From Part V, Item 68)"
+              placeholder="(Sum of Items 30A and 30B)"
               :formatter="formatter.amount"
               :parser="parser.amount"
             ></a-input-number>
@@ -390,6 +404,7 @@
         class="computation-item"
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
+        label="32"
       >
         <a-input-number
           placeholder="Number"
@@ -402,6 +417,7 @@
         class="computation-item"
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
+        label="32"
       >
         <a-input-number
           placeholder="Date (MM/DD/YYYY)"
@@ -414,6 +430,7 @@
         class="computation-item"
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
+        label="32"
       >
         <a-input-number
           placeholder="Amount"
@@ -434,102 +451,170 @@
           v-model="form.item33a"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="33"
+      >
         <a-input-number
           placeholder="Number"
           v-model="form.item33b"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="33"
+      >
         <a-input-number
           placeholder="Date (MM/DD/YYYY)"
           v-model="form.item33b"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="33"
+      >
         <a-input-number
           placeholder="Amount"
           v-model="form.item34c"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="34. Tax Debit Memo"></a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item label="Tax Debit Memo"></a-form-item>
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="34"
+      >
         <a-input-number
           placeholder="Number"
           v-model="form.item34a"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="34"
+      >
         <a-input-number
           placeholder="Date (MM/DD/YYYY)"
           v-model="form.item34b"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="34"
+      >
         <a-input-number
           placeholder="Amount"
           v-model="form.item34c"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="35. Others"></a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item label="Others"></a-form-item>
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="35"
+      >
         <a-input-number
           placeholder="Particulars"
           v-model="form.item35a"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="35"
+      >
         <a-input-number
           placeholder="Drawee Bank/Agency"
           v-model="form.item35b"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="35"
+      >
         <a-input-number
           placeholder="Number"
           v-model="form.item35c"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="35"
+      >
         <a-input-number
           placeholder="Date (MM/DD/YYYY)"
           v-model="form.item35d"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item">
+      <a-form-item
+        class="computation-item"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="35"
+      >
         <a-input-number
           placeholder="Amount"
           v-model="form.item35e"
           :formatter="formatter.amount"
           :parser="parser.amount"
+          disabled
         ></a-input-number>
       </a-form-item>
-      <a-button type="link" @click="show = 1">Schedule I</a-button>
+      <br />
+      <!-- <a-button type="link" @click="show = 1">Schedule I</a-button>
       <a-button type="link" @click="show = 2">Schedule II</a-button>
       <a-button type="link" @click="show = 3">Schedule III</a-button>
-      <a-button type="link" @click="show = 4">Schedule IV</a-button>
+      <a-button type="link" @click="show = 4">Schedule IV</a-button>-->
     </a-form>
     <sched1 :show="show" @close="show = 0"></sched1>
     <sched2 :show="show" @close="show = 0"></sched2>
@@ -564,7 +649,7 @@ export default {
       form_part4: this.$form.createForm(this),
       image_height: 1000,
       formatter: {
-        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, "-")
       },
       parser: {
         amount: value => value.replace(/\₱\s?|(,*)/g, "")

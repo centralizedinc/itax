@@ -44,7 +44,9 @@ const actions = {
                                     id: v._id,
                                     tin: v.to,
                                     relationship: v.relationship,
-                                    name: `${v.to} (${v.relationship})`
+                                    name: `${v.to} (${v.relationship})`,
+                                    to: v.to,
+                                    from: v.from
                                 }
                             })
                             console.log('children :', children);
@@ -137,6 +139,12 @@ const actions = {
                     reject(err)
                 });
         })
+    },
+    CONNECT_ALL(context, data){
+        return new RelationshipAPI(context.rootState.account_session.token).connectAll(data);
+    },
+    CONNECT_ALL_NEW(context, data){
+        return new RelationshipAPI(context.rootState.account_session.token).connectAllNew(data);
     }
 }
 
