@@ -94,7 +94,7 @@
         <span style="margin-right: 2vh; color: #4bacfc; text-decoration: underline; cursor: pointer;" @click="$emit('hide')">Cancel</span>
         <a-button type="primary" @click="update">Update</a-button>
       </a-button-group>
-        <a-button type="danger" @click="$emit('removeConnection', details.tin)">Remove</a-button>
+        <a-button type="danger" @click="$emit('removeConnection', taxpayer.tin)">Remove</a-button>
     </a-form>
   </a-modal>
 </template>

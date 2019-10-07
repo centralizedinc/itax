@@ -80,7 +80,7 @@ export default {
       return {
         name: `${this.account_user.tin || ""} (ME)`,
         tin: this.account_user.tin,
-        children: [...this.new_connections, ...this.new_taxpayers]
+        children: [...this.new_connections, ...this.new_taxpayers, ...this.connections]
       };
     }
   },
@@ -90,9 +90,10 @@ export default {
       window.location.reload();
     },
     init() {
+      console.log('test');
       this.reload_tree = true;
       this.$store
-        .dispatch("GET_CONNECTIONS", { tin: this.account_user.tin })
+        .dispatch("GET_CONNECTIONS", { tin: this.account_user.tin, refresh: true })
         .then(result => {
           this.reload_tree = false;
         })
