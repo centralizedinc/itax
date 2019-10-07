@@ -48,8 +48,19 @@ export default {
                     var day = date.getDate();
                     return day;
                 },
-                computeSum(su){
-                    
+                computeSum(data){
+                    var total = 0
+                    console.log("compute sum data: " + JSON.stringify(data))
+                    data.forEach(element => {
+                        console.log('for each element: ' + JSON.stringify(element))
+                        if(element == null || element == undefined ){
+                            console.log("element null or undefined: " + element)
+                        element = 0
+                        }
+                        total += element
+                    }); 
+                    console.log("compute sum mixin: " + total)
+                    return total
                 }
             },
         })

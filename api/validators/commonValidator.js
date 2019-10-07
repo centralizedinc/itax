@@ -34,6 +34,26 @@ function validateTaxpayerDetails(tp) {
         error_messages.push({ field: "taxpayer.address_details.zipCode", error: constant_helper.MANDATORY_FIELD('Zip Code') });
     }
 
+    if (!tp.taxpayer.taxpayer_name) {
+        error_messages.push({ field: "taxpayer.taxpayer_name", error: "Tax payer name is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.registered_address) {
+        error_messages.push({ field: "taxpayer.registered_address", error: "Tax payer registered address is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.zip_code) {
+        error_messages.push({ field: "taxpayer.zip_code", error: "Zip code is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.birthday) {
+        error_messages.push({ field: "taxpayer.birthday", error: "Tax payer birthday is a mandatory field" });
+    }
+
+    if (!tp.taxpayer.email_address) {
+        error_messages.push({ field: "taxpayer.email_address", error: "Email address is a mandatory field" });
+    }
+
     return error_messages;
 
 }
