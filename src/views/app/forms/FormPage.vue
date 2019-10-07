@@ -89,6 +89,7 @@
   </a-card>
     </a-layout-content>
     <a-modal :visible="view_select" title="Select Taxpayer" :closable="false">
+      <!-- :loading="loading" -->
       <a-list itemLayout="horizontal" :dataSource="taxpayer_list" :loading="loading">
         <a-list-item slot="renderItem" slot-scope="item, index">
             <a-card style="width:100%" class="tin_card" @click="select(index)">
@@ -285,11 +286,11 @@ export default {
       return this.selected_index == index
     },
     fillup(){
-      this.form.taxpayer = this.taxpayer
-      if(!this.form.taxpayer.address_details){
-        this.form.taxpayer.address_details = {}
-      }
-      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      // this.form.taxpayer = this.taxpayer
+      // if(!this.form.taxpayer.address_details){
+      //   this.form.taxpayer.address_details = {}
+      // }
+      // console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {
@@ -328,7 +329,7 @@ export default {
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
-    this.loading = true
+    // this.loading = true
     //find tp list  
     this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
             .then(results=>{

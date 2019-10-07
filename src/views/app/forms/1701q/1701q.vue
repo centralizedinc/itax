@@ -12,7 +12,12 @@
       >
         <a-month-picker style="width: 100%" v-model="form.dateFiled" />
       </a-form-item>
-      <a-form-item label>
+      <a-form-item label="Quarter"></a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="2."
+      >
         <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
           <a-radio :value="2">Second</a-radio>
@@ -30,7 +35,7 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="4. Amended Return">
+      <a-form-item label="4. Number of Sheets">
         <a-input-number v-model="form.numOfSheet" style="width: 100%" />
       </a-form-item>
     </a-form>
@@ -644,7 +649,7 @@ export default {
       form_part4: this.$form.createForm(this),
       image_height: 1000,
       formatter: {
-        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, "-")
       },
       parser: {
         amount: value => value.replace(/\₱\s?|(,*)/g, "")
