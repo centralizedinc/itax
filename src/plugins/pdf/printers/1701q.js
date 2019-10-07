@@ -588,21 +588,21 @@ function getContent(forms) {
                     [{
                         // text: 'X',
                         text: forms.spouse_taxRate == 'SGR' ? 'X' : ' ',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'justified',
                         margin: [43, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SID' ? 'X' : ' ',
                         // text: 'X',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'justify',
                         margin: [19, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SOSD' ? 'X' : ' ',
                         // text: 'X',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'justify',
                         margin: [9, 6, 0, 0]
                     }
@@ -611,7 +611,7 @@ function getContent(forms) {
                     [{
                         // text: 'X',
                         text: forms.spouse_taxRate == 'SOGS' ? 'X' : ' ',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'left',
                         margin: [43, 4, 0, 0]
                     },
@@ -636,226 +636,194 @@ function getContent(forms) {
         },
 
     )
-    // forms.tax_computation.forEach(element => {
-    for (var x = 0; x < 22; x++) {
-        content.push({
-            layout: "noBorders",
-            table: {
-                widths: [220, 40, 82, 42, 115],
-                body: [
-                    [{
-                        // 48 characters only
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-
-                    },
-                    {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    },
-                    {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    }, {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    },
-                    {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    }
-                    ]
-                ]
-            }
-        })
-    }
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [510],
+            heights: [35],
+            body: [
+                [{
+                    text: '',
+                }]
+            ]
+        }
+    })
 
     content.push({
         layout: "noBorders",
         table: {
-            widths: ['auto', 'auto'],
+            widths: [300, 96, 96],
             body: [
                 [{
-                    text: '1 000 000',
-                    fontSize: 12,
-                    // right,down,left,up
-                    margin: [330, -268, 0, 0],
-                    alignment: 'right-justified'
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right'
 
                 },
-                {
-                    text: '1 000 000',
-                    fontSize: 12,
-                    // right,down,left,up
-                    margin: [50, -268, 0, 0],
-                    alignment: 'left'
 
-                }
-                ]
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: '0',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
             ]
         }
     })
 
 
-
-
-    // content.push({
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     // 20 characters
-    //     text: 'forms.total_tax_withheld_remitted',
-    //     // text: forms.total_tax_withheld_remitted,
-    //     // right,down,left,up
-    //     margin: [416, 8, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.prevTaxPaidCrdtb',
-    //     // right,down,left,up
-    //     margin: [415, 11, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.advPayment',
-    //     // right,down,left,up
-    //     margin: [415, 1, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.totTaxCredits',
-    //     // right,down,left,up
-    //     margin: [415, 1, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.amtPayblCrdtb',
-    //     // right,down,left,up
-    //     margin: [415, 1, 0, 0],
-    // })
-    // content.push({
-    //     layout: "noBorders",
-    //     table: {
-    //         widths: [131, 122, 110, 140],
-    //         body: [
-    //             [{
-    //                     text: 'forms.surcharge',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [52, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'forms.interest',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [26, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'forms.compromise',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [23, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'forms.penaltiesCrdtb',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [28, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //             ]
-    //         ]
-    //     }
-    // })
-
-    // content.push({
-    //     layout: "noBorders",
-    //     table: {
-    //         widths: [160, 100, 260],
-    //         body: [
-    //             [{
-    //                     text: forms.overremittance == true ? 'X' : ' ',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [155, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: forms.overremittance == false ? 'X' : ' ',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [95, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: forms.total_amount_overremittance,
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [140, 0, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 }
-    //             ]
-    //         ]
-    //     }
-    // })
-
-    // -------------To be Continue
-    // content.push({
-    //     text: "\n\n"
-    // }, {
-    //     // layout: "noBorders",
-    //     table: {
-    //         widths: [310, 100],
-    //         body: [
-    //             [{
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [155, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [95, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 }
-    //             ]
-    //         ]
-    //     }
-    // })
     return content;
 }
 
