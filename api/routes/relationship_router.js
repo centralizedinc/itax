@@ -4,8 +4,12 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
+// DAO
 const RelationshipDao = require('../dao/RelationshipDao');
 const TaxpayerDao = require('../dao/TaxpayerDao')
+
+// Utils
+const SendEmail = require('../utils/email');
 
 router.route("/")
     .get((req, res) => {
@@ -73,6 +77,51 @@ router.route('/:tin')
                     errors
                 })
             })
+    })
+
+router.route('/connect/all')
+    .post((req, res) => {
+        const created_by = jwt.decode(req.headers.access_token).account_id;
+        RelationshipDao.createMany(req.body, created_by)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
+
+router.route('/connect/all/new')
+    .post((req, res) => {
+        var model = {}
+        const created_by = jwt.decode(req.headers.access_token).account_id;
+        const { taxpayers, invitations, connections } = req.body;
+        TaxpayerDao.createMany(taxpayers, created_by)
+            .then((results) => {
+                model.taxpayers = results;
+                return RelationshipDao.createMany(connections, created_by);
+            })
+            .then((results) => {
+                model.connections = results;
+                return SendEmail.sendMultipleInvitation(invitations);
+            })
+            .then((results) => {
+                model.emails = results;
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
     })
 
 module.exports = router;

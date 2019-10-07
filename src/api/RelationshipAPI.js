@@ -25,6 +25,22 @@ export default class RelationshipAPI {
         return axios.post('connections', details);
     }
 
+    /**
+     * @returns {Promise}
+     * @param {Array<Object>}
+     */
+    connectAll(details) {
+        return axios.post('connections/connect/all', details);
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} 'taxpayers, invitations, connections' 
+     */
+    connectAllNew(details) {
+        return axios.post('connections/connect/all/new', details);
+    }
+
 
     /**
      * @returns {Promise}
