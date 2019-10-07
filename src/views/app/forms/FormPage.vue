@@ -329,7 +329,7 @@ export default {
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
-    this.loading = true
+    // this.loading = true
     //find tp list  
     this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
             .then(results=>{
