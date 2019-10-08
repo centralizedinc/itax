@@ -279,18 +279,19 @@ export default {
       console.log("this.in_bottom :", this.in_bottom);
     },
     select(index){
-      this.taxpayer = this.taxpayer_list[index]
+      this.taxpayer = this.taxpayer_list[index];
+      console.log('this.taxpayer :', this.taxpayer);
       this.selected_index = index;
     },
     isSelected(index){
       return this.selected_index == index
     },
     fillup(){
-      // this.form.taxpayer = this.taxpayer
-      // if(!this.form.taxpayer.address_details){
-      //   this.form.taxpayer.address_details = {}
-      // }
-      // console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      this.form.taxpayer = this.taxpayer
+      if(!this.form.taxpayer.address_details){
+        this.form.taxpayer.address_details = {}
+      }
+      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {

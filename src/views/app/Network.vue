@@ -1,12 +1,7 @@
 <template>
   <div>
     <a-card title="My Network">
-      <tree :data="tree" style="height:100vh" @clickedText="showDetails"></tree>
-      <a-drawer title="Basic Drawer" :visible="visible" :closable="false" @close="visible=false">
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </a-drawer>
+      <tree :data="tree" v-if="reload_tree" style="height:100vh" @clickedText="showDetails"></tree>
     </a-card>
   </div>
 </template>
@@ -21,26 +16,42 @@ export default {
   data() {
     return {
       visible: false,
-      tree: {
-        name: "123-344-888-0000 ",
-        children: [
-          {
-            name: "son1",
-            children: [{ name: "grandson" }, { name: "grandson2" }]
-          },
-          {
-            name: "son2",
-            children: [{ name: "grandson3" }, { name: "grandson4" }]
-          }
-        ]
-      }
+      reload_tree: false
     };
+  },
+  computed: {
+    user() {
+      return this.deepCopy(this.$store.state.account_session.user);
+    },
+    connections() {
+      return this.deepCopy(this.$store.state.relationship.connections);
+    },
+    tree: {
+        name: `${this.user.tin} (ME)`,
+        tin: this.user.tin,
+        children: this.connections
+      }
   },
   created() {
     this.init();
   },
   methods: {
-    init() {},
+    init() {
+      console.log("test");
+      this.reload_tree = true;
+      this.$store
+        .dispatch("GET_CONNECTIONS", {
+          tin: this.user.tin,
+          refresh: true
+        })
+        .then(result => {
+          this.reload_tree = false;
+        })
+        .catch(err => {
+          this.reload_tree = false;
+          console.log("GET_CONNECTIONS err :", err);
+        });
+    },
     showDetails(element, data) {
       console.log("data :", JSON.stringify(data));
       console.log(`element`, element);

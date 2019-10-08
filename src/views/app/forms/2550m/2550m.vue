@@ -5,6 +5,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
+        :validate-status="error_item('returnPeriod')"
+        :help="error_desc('returnPeriod')"
       >
         <a-month-picker
           placeholder="For the month of (MM/YYYY)"
@@ -56,6 +58,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="6"
+        :validate-status="error_item('taxpayer.line_of_business')"
+        :help="error_desc('taxpayer.line_of_business')"
       >
         <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business"></a-input>
       </a-form-item>
@@ -63,6 +67,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="7"
+        :validate-status="error_item('taxpayer.registered_name')"
+        :help="error_desc('taxpayer.registered_name')"
       >
         <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
@@ -70,6 +76,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="8"
+        :validate-status="error_item('taxpayer.contact_details.telno')"
+        :help="error_desc('taxpayer.contact_details.telno')"
       >
         <a-input-number
           placeholder="Telephone Number"
@@ -82,6 +90,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="9"
+        :validate-status="error_item('taxpayer.address')"
+        :help="error_desc('taxpayer.address')"
       >
         <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
       </a-form-item>
@@ -89,6 +99,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="10"
+        :validate-status="error_item('taxpayer.address_details.zipCode')"
+        :help="error_desc('taxpayer.address_details.zipCode')"
       >
         <a-input-number
           placeholder="Zip Code"
@@ -118,6 +130,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="12A"
+        :validate-status="error_item('atc')"
+        :help="error_desc('atc')"
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
@@ -708,6 +722,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25A"
+        :validate-status="error_item('surcharge')"
+        :help="error_desc('surcharge')"
       >
         <a-input-number
           placeholder="Surcharge"
@@ -719,6 +735,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25B"
+        :validate-status="error_item('interest')"
+        :help="error_desc('interst')"
       >
         <a-input-number
           placeholder="Interest"
@@ -730,6 +748,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25C"
+        :validate-status="error_item('compromise')"
+        :help="error_desc('compromise')"
       >
         <a-input-number
           placeholder="Compromise"
@@ -1064,19 +1084,23 @@ return this.form.totalCurrentPurchases = this.computeSum(tosum)
     loading(val) {
       this.$emit("loading", val);
     },
-    form() {
-      console.log("2550m form: " + this.form.returnPeriod);
-      this.form.year = this.formatDtYear(this.form.returnPeriod);
-      this.form.month = this.formatDtMonth(this.form.returnPeriod);
-      console.log("year: " + this.form.month);
+    form: {
+      deep: true,
+      handler() {
+        console.log("2550m form: " + this.form.returnPeriod);
+        this.form.year = this.formatDtYear(this.form.returnPeriod);
+        this.form.month = this.formatDtMonth(this.form.returnPeriod);
+        this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
+        this.form.returnPeriodMonth = this.formatDtMonth(
+          this.form.returnPeriod
+        );
+        console.log("year: " + this.form.month);
+      }
     },
-    step(){
-      
-    }
+    step() {}
   },
   created() {
     // if(this.form.totalAmountPayable == null){
-      
     // this.form.totalAtcAmount = 0
     //     this.form.totalAtcOutput = 0
     //     this.form.salesGovAmount = 0
