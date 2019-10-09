@@ -286,16 +286,22 @@ function getContent(forms) {
                 body: [
                     [
                         {
+                            text: forms.exemptAmount == null ? '0.00' : forms.exemptAmount%1 == 0 ? forms.exemptAmount + '.00' : forms.exemptAmount,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [270, 2, 0, 0]
+                            margin: [270, -5, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
 
         },
 
         // --------------------------------------------
         {
-            //Table 10  16A Total Sales Receipts    
+            //Table 10  16A  16B Total Sales Receipts    
             layout: "noBorders",
             table: {
                 widths: [385, 130,],
@@ -306,14 +312,14 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [270, -4, 0, 0]
+                            margin: [270, -3, 0, 0]
                         },
                         {
                             text: forms.totalOutputTax == null ? '0.00' : forms.totalOutputTax%1 == 0 ? forms.totalOutputTax + '.00' : forms.totalOutputTax,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [17, -4, 0, 0]
+                            margin: [17, -3, 0, 0]
                         },
                     ]
                 ]
@@ -323,10 +329,10 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 11  Less Allowable 
+            //Table 11  17A Less Allowable 
             layout: "noBorders",
             table: {
-                widths: [500, 130,],
+                widths: [525, 130,],
                 body: [
                     [
                         {
@@ -334,7 +340,7 @@ function getContent(forms) {
                             text: forms.carriedOverPreviousPeriod == null ? '0.00' : forms.carriedOverPreviousPeriod%1==0 ? forms.carriedOverPreviousPeriod+'.00' : forms.carriedOverPreviousPeriod  ,
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [410, 2, 0, 0]
+                            margin: [480, 2, 0, 0]
                         },
 
                     ]
@@ -348,7 +354,7 @@ function getContent(forms) {
             //Table 12  17B
             layout: "noBorders",
             table: {
-                widths: [500,],
+                widths: [525,],
                 body: [
                     [
 
@@ -368,7 +374,7 @@ function getContent(forms) {
             //Table 13  17C
             layout: "noBorders",
             table: {
-                widths: [500,],
+                widths: [525,],
                 body: [
                     [
 
@@ -377,7 +383,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [410, -6, 0, 0]
+                            margin: [410, -4, 0, 0]
                         },
                     ]
                 ]
@@ -388,7 +394,7 @@ function getContent(forms) {
             //Table 14  17D
             layout: "noBorders",
             table: {
-                widths: [500,],
+                widths: [525,],
                 body: [
                     [
 
@@ -408,7 +414,7 @@ function getContent(forms) {
             //Table 15  17E
             layout: "noBorders",
             table: {
-                widths: [500,],
+                widths: [525,],
                 body: [
                     [
 
@@ -428,7 +434,7 @@ function getContent(forms) {
             //Table 16  17F
             layout: "noBorders",
             table: {
-                widths: [500,],
+                widths: [525,],
                 body: [
                     [
 
@@ -449,7 +455,7 @@ function getContent(forms) {
         // --------------------------------
         {
             //Table 17  18A and 18B     
-            layout: "noBorders",
+             layout: "noBorders", 
             table: {
                 widths: [385, 130,],
                 body: [
@@ -459,14 +465,14 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [270,30, 0, 0]
+                            margin: [230,4, 0, 0]
                         },
                         {
                             text: forms.outputCapGoodsNotExceed == null ? '0.00' : forms.outputCapGoodsNotExceed%1 == 0 ? forms.outputCapGoodsNotExceed + '.00' : forms.outputCapGoodsNotExceed,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [17, 30, 0, 0]
+                            margin: [17, 4, 0, 0]
                         },
                     ]
                 ]
@@ -514,7 +520,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [270, -4, 0, 0]
+                            margin: [270, -5, 0, 0]
                         },
                         {
                             text: forms.outputDomesticPurchaseGoods == null ? '0.00' : forms.outputDomesticPurchaseGoods%1 == 0 ? forms.outputDomesticPurchaseGoods + '.00' : forms.outputDomesticPurchaseGoods,
@@ -542,7 +548,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [270, -4, 0, 0]
+                            margin: [270, -6, 0, 0]
                         },
                         {
                             text: forms.outputImportationGoods == null ? '0.00' : forms.outputImportationGoods%1 == 0 ? forms.outputImportationGoods + '.00' : forms.outputImportationGoods,
@@ -570,7 +576,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [270, -5, 0, 0]
+                            margin: [270, -6, 0, 0]
                         },
                         {
                             text: forms.outputDomesticPurchaseService == null ? '0.00' : forms.outputDomesticPurchaseService%1 == 0 ? forms.outputDomesticPurchaseService + '.00' : forms.outputDomesticPurchaseService,
@@ -598,7 +604,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [270, -5, 0, 0]
+                    margin: [270, -6, 0, 0]
                 },
                 {
                     text: forms.outputServicesNonResidents == null ? '0.00' : forms.outputServicesNonResidents%1 == 0 ? forms.outputServicesNonResidents + '.00' : forms.outputServicesNonResidents,
@@ -640,7 +646,7 @@ function getContent(forms) {
     //Table 24  18N and 18O   
     layout: "noBorders",
     table: {
-        widths: [385, 130,],
+        widths: [385, 133,],
         body: [
             [
                 {
@@ -655,7 +661,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [17, -5, 0, 0]
+                    margin: [17, -4, 0, 0]
                 },
             ]
         ]
@@ -668,7 +674,7 @@ function getContent(forms) {
     //Table 25  18P     
     layout: "noBorders",
     table: {
-        widths: [385, 130,],
+        widths: [385, 132,],
         body: [
             [
                 {
@@ -676,7 +682,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [270, -4, 0, 0]
+                    margin: [270,-5 , 0, 0]
                 },
                 
             ]
@@ -690,7 +696,7 @@ function getContent(forms) {
     //Table 26  19   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -712,7 +718,7 @@ function getContent(forms) {
     //Table 27  20A   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -721,7 +727,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [410, 15, 0, 0]
+                    margin: [410, 16, 0, 0]
                 },
             ]
         ]
@@ -734,7 +740,7 @@ function getContent(forms) {
     //Table 28  20B   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -756,7 +762,7 @@ function getContent(forms) {
     //Table 29  20C   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -778,7 +784,7 @@ function getContent(forms) {
     //Table 30  20D   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -800,7 +806,7 @@ function getContent(forms) {
     //Table 31  20E   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -822,7 +828,7 @@ function getContent(forms) {
     //Table 32  20F   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -844,7 +850,7 @@ function getContent(forms) {
     //Table 33  21   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -866,7 +872,7 @@ function getContent(forms) {
     //Table 34  22   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -888,7 +894,7 @@ function getContent(forms) {
     //Table 35  23A   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -910,7 +916,7 @@ function getContent(forms) {
     //Table 36  23B   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -932,7 +938,7 @@ function getContent(forms) {
     //Table 37  23C   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -954,7 +960,7 @@ function getContent(forms) {
     //Table 38  23D   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -976,7 +982,7 @@ function getContent(forms) {
     //Table 39  23E   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -998,7 +1004,7 @@ function getContent(forms) {
     //Table 40  23F   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -1020,7 +1026,7 @@ function getContent(forms) {
     //Table 42  23G   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -1042,7 +1048,7 @@ function getContent(forms) {
     //Table 43  24   
     layout: "noBorders",
     table: {
-        widths: [520, 130,],
+        widths: [525, 130,],
         body: [
             [
                
@@ -1064,7 +1070,7 @@ function getContent(forms) {
     //Table 44  25 A B C D 
     layout: "noBorders",
     table: {
-        widths: [160, 118,83,130],
+        widths: [165, 118,83,135    ],
         body: [
             [
                
@@ -1073,21 +1079,21 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [83, 5, 0, 0]
+                    margin: [83, 4, 0, 0]
                 },
                 {
                     text: forms.interest == null ? '0.00' : forms.interest%1 == 0 ? forms.interest + '.00' : forms.interest,
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [23, 5, 0, 0]
+                    margin: [23, 4, 0, 0]
                 },
                 {
                     text: forms.compromise == null ? '0.00' : forms.compromise%1 == 0 ? forms.compromise + '.00' : forms.compromise,
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [13, 5, 0, 0]
+                    margin: [13, 4, 0, 0]
                 },
                 {
                     text: forms.penalties == null ? '0.00' : forms.penalties%1 == 0 ? forms.penalties + '.00' : forms.penalties,
@@ -1131,7 +1137,7 @@ function getContent(forms) {
 // },
 // end
 
-                    )
+        )
 
 
     return content;
