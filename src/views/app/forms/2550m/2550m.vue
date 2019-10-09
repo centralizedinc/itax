@@ -15,7 +15,7 @@
         />
       </a-form-item>
       <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
-        <a-radio-group v-model="form.amendedYn" :defaultValue="false" style="width: 100%">
+        <a-radio-group v-model="form.amendedYn" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -126,6 +126,52 @@
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
+      <a-button type="primary" @click="showDrawer">
+      Schedule 1
+    </a-button>
+    <a-drawer
+      title="Schedule 1"
+      placement="right"
+      :closable="false"
+      @close="onClose"
+      :visible="visible"
+      width="1000"
+    >
+      <a-button type="primary" @click="addAtc">
+        ADD
+      </a-button>
+      <!-- <a-drawer
+      title="ATC"
+      placement="right"
+      :closable="false"
+      @close="onClose"
+      :visible="visibleATC"
+      width="500"
+      >
+        <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
+      </a-drawer> -->
+      <a-table bordered :dataSource="dataSource" :columns="columns">
+        <template slot="atc" slot-scope="text, record, index">
+        <a-select
+          style="width 100%"
+          @change="pickAtc"
+          placeholder="Pick an ATC"
+        >
+          <a-select-option v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
+        </a-select>
+        <!-- <a-input placeholder="text"></a-input> -->
+        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+      </template>
+        <template slot="amount" slot-scope="text, record">
+        <a-input-number placeholder="text"></a-input-number>
+        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+      </template>
+      <template slot="output" slot-scope="text, record">
+        <a-input-number disabled></a-input-number>
+        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+      </template>
+      </a-table>
+    </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -528,7 +574,7 @@
           placeholder="Total Available Input Tax"
           :data="total_available_input_tax"
           v-model="form.totalAvailableInputTax"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -552,7 +598,7 @@
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -597,7 +643,7 @@
           placeholder="Total"
           :data="total_deduction_from_input_tax"
           v-model="form.totalDeductionFrInputTax"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -610,6 +656,7 @@
           placeholder="Total Allowable Input Tax"
           v-model="form.totalInputTax"
           :data = "total_input_tax"
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -634,7 +681,7 @@
         <a-input-number
           placeholder="Creditable Value-Added Tax Withheld"
           v-model="form.creditableVatWithheld"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -645,7 +692,7 @@
         <a-input-number
           placeholder="Advance Payments for Sugar and Flour Industries"
           v-model="form.advPaySugarFlourInd"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -656,7 +703,7 @@
         <a-input-number
           placeholder="VAT withheld on Sales to Government"
           v-model="form.taxWthld"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -667,7 +714,7 @@
         <a-input-number
           placeholder="VAT paid in return previously filed, if this is an amended return"
           v-model="form.prevTaxPaid"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -701,7 +748,7 @@
           placeholder="Total Tax Credits/Payments"
           :data="total_credits"
           v-model="form.totalCredits"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -714,6 +761,7 @@
           placeholder="Tax Still Payable/(Overpayment)"
           v-model="form.amtPaybl"
           :data="amount_payable"
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -765,7 +813,7 @@
         <a-input-number
           placeholder="Total Penalties"
           v-model="form.penalties"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -777,7 +825,7 @@
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
           v-model="form.totalAmountPayable"
-          
+          disabled
         ></a-input-number>
       </a-form-item>
     </a-form>
@@ -789,6 +837,33 @@ export default {
   props: ["form", "step"],
 
   methods: {
+    record(index){
+      console.log("record index: " + JSON.stringify(index))
+    },
+    pickAtc(value){
+      console.log("pick atc value: " + JSON.stringify(value))
+      // console.log("pick atc index: " + JSON.stringify(index))
+    },
+    addAtc() {
+      this.dataSource.push({
+        industry: '',
+        atc: '',
+        amount: 0.00,
+        output: 0.00
+      })
+      // this.visibleATC = true
+    },
+    showDrawer() {
+      this.visible = true
+    },
+    onClose() {
+      // this.visible = false
+      if(this.visible = true){
+        this.visible = false
+      } else if(this.visibleATC = true){
+        this.visibleATC = false
+      }
+    },
     // checkDraft() {
     //   if (
     //     this.existing_form &&
@@ -998,6 +1073,9 @@ export default {
   },
   data() {
     return {
+      atc_list: [{industries: "Genral", atc:"VB010"}, {industries: "Genral1", atc:"VB011"}], 
+      visible: false,
+      visibleATC: false,
       errors: [],
       loading: false,
       form_general: this.$form.createForm(this),
@@ -1013,7 +1091,32 @@ export default {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
       },
-      image_height: 1000
+      image_height: 1000,
+      atc_options:[],
+      dataSource: [{
+        industry: 'Edward King 0',
+        atc: '',
+        amount: 2000,
+        output: 1000
+      }],
+      columns: [{
+        title: 'Industry Covered by VAT',
+        dataIndex: 'industry'
+      }, {
+        title: 'ATC',
+        dataIndex: 'atc',
+        width: '30%',
+        scopedSlots: { customRender: 'atc'}
+      }, {
+        title: 'Amount of Sales/Receipts For the Period',
+        dataIndex: 'amount',
+        width: '30%',
+        scopedSlots: { customRender: 'amount' },
+      }, {
+        title: 'Output Tax for the Period',
+        dataIndex: 'output',
+        scopedSlots: { customRender: 'output' },
+      }],
     };
   },
   computed: {
@@ -1073,6 +1176,11 @@ return this.form.totalCurrentPurchases = this.computeSum(tosum)
     // 24 = 22 - 23F
     amount_payable(){
       return this.form.amtPayb = this.form.taxDue - this.form.otherTaxCredits
+    },
+    // 25D = 25A + 25B + 25C
+    penalties(){
+      var tosum = [this.form.surcharge,this.form.interest,this.form.compromise]
+      return this.form.penalties = this.computeSum(tosum)
     },
     // 26 = 24 + 25D
     total_amount_payable(){

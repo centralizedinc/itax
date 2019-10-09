@@ -287,11 +287,11 @@ export default {
       return this.selected_index == index
     },
     fillup(){
-      this.form.taxpayer = this.taxpayer
-      if(!this.form.taxpayer.address_details){
-        this.form.taxpayer.address_details = {}
-      }
-      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      // this.form.taxpayer = this.taxpayer
+      // if(!this.form.taxpayer.address_details){
+      //   this.form.taxpayer.address_details = {}
+      // }
+      // console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {
