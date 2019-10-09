@@ -1109,6 +1109,28 @@ function getContent(forms) {
 },
 // end
 // start--------------------------------
+{
+    //Table 44  25 A B C D 
+    layout: "noBorders",
+    table: {
+        widths: [165],
+        body: [
+            [
+               
+                {
+                    text: forms.totalAmountPayable == null ? '0.00' : forms.surcharge%1 == 0 ? forms.surcharge + '.00' : forms.surcharge,
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [83, 4, 0, 0]
+                }
+            ]
+        ]
+
+    }
+},
+// end
+// start--------------------------------
 // {
 //     //Table 54  President Signature   
 //     //layout: "noBorders",
