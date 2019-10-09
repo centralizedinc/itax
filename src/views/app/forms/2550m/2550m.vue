@@ -130,7 +130,7 @@
       Schedule 1
     </a-button>
     <a-drawer
-      title="Schedule 1"
+      title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
       placement="right"
       :closable="false"
       @close="onClose"
@@ -388,9 +388,11 @@
         class="computation-item"
         label="18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)"
       />
-      <a-button type="primary" @click="showDrawer2"></a-button>
+      <a-button type="primary" @click="showDrawer2">
+        Schedule 2
+      </a-button>
       <a-drawer
-      title="Schedule 2"
+      title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
       placement="right"
       :closable="false"
       @close="onClose_sched2"
@@ -398,7 +400,26 @@
       width="1000"
       >
       <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
-
+        <template slot="date_purchased" slot-scope="text, record,index">
+         <a-month-picker
+          v-model="dataSource[index].date_purchased"
+          style="width: 100%"
+        />
+      </template>
+      <template slot="description" slot-scope="text, record,index">
+        <a-input v-model="dataSource[index].description"></a-input>
+      </template>
+      <template slot="vat" slot-scope="text, record,index">
+        <a-input-number v-model="dataSource[index].vat"></a-input-number>
+      </template>
+      <template slot="tax" slot-scope="text, record,index">
+        <a-input-number disabled v-model="dataSource[index].tax"></a-input-number>
+      </template>
+      <template slot="footer" span: 2>
+          <a-button @click="addSched2">Add</a-button>
+          <a-button>Save</a-button>
+      <p align="right">18A: {{form.totalAtcAmount}} 18B: {{form.totalAtcOutput}}</p>
+    </template>
       </a-table>
       </a-drawer>
       <a-form-item
@@ -429,6 +450,21 @@
         class="computation-item"
         label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
       />
+      <a-button type="primary" @click="showDrawer3A">
+        Schedule 3
+      </a-button>
+      <a-drawer
+      title="Schedule 3 Purchases/Importation This Period"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched3A"
+      :visible="sched3A_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
+
+      </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -969,13 +1005,41 @@ export default {
       }
       // this.visibleATC = true
     },
+    sched2Save(){
+
+    },
+    addSched2(){
+      console.log('add sched2 date of return: ' + this.form.returnPeriod)
+      var index = this.sched2_data.length()
+      if(this.sched2_data[index].date_purchased == ''){
+
+      }
+      this.sched2_data.push({
+        date_purchased: '',
+        description: '',
+        vat: 0,
+        tax: 0,
+      })
+    },
+    sched2Compute(value){
+
+    },
+    onClose_sched2(){
+      this.sched2_drawer = false
+    },
     showDrawer() {
       console.log("data source show drawer; " + this.dataSource)
       this.visible = true
     },
     showDrawer2() {
       console.log("data source show drawer; " + this.dataSource)
-      this.sched2 = true
+      this.sched2_drawer = true
+    },
+    showDrawer3A(){
+      this.sched3A_drawer = true
+    },
+    onClose_sched3A(){
+      this.sched3A_drawer = false
     },
     onClose() {
       // this.visible = false
@@ -1207,6 +1271,7 @@ export default {
       forEdit: false,
       visible: false,
       sched2_drawer: false,
+      sched3A_drawer: false,
       visibleATC: false,
       errors: [],
       loading: false,
@@ -1226,7 +1291,6 @@ export default {
       image_height: 1000,
       atc_options:[],
       dataSource: [],
-      
       columns: [{
         title: 'Industry Covered by VAT',
         dataIndex: 'industry',
@@ -1272,6 +1336,49 @@ export default {
         scopedSlots: { customRender: 'tax'}
       }
       ],
+      sched3A_data:[],
+      columns_sched3A:[
+        {
+        title: 'Date Purchased',
+        dataIndex: 'date_purchased',
+        scopedSlots: { customRender: 'date_purchased'}
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        scopedSlots: { customRender: 'description'}
+      },
+      {
+        title: 'Amount(Net of VAT)',
+        dataIndex: 'vat',
+        scopedSlots: { customRender: 'vat'}
+      },
+      {
+        title: 'Input Tax (C*Tax Rate)',
+        dataIndex: 'tax_rate',
+        scopedSlots: { customRender: 'tax_rate'}
+      },
+      {
+        title: 'Estimate Life (in Months)',
+        dataIndex: 'est_life',
+        scopedSlots: { customRender: 'est_life'}
+      },
+      {
+        title: 'Recognized Life (In Months) Useful life or 60 mos. (whichever is shorter)',
+        dataIndex: 'recog_life',
+        scopedSlots: { customRender: 'recog_life'}
+      },
+      {
+        title: 'Allowable Input Tax for the Period Tax Rate / Recognized Life',
+        dataIndex: 'allowable_input_tax',
+        scopedSlots: { customRender: 'allowable_input_tax'}
+      },
+      {
+        title: 'Balance of Input Tax to be carried to Next Period Tax Rate - Allowable Input Tax',
+        dataIndex: 'balance',
+        scopedSlots: { customRender: 'balance'}
+      },
+      ]
     };
   },
   computed: {
