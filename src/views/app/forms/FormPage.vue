@@ -279,7 +279,8 @@ export default {
       console.log("this.in_bottom :", this.in_bottom);
     },
     select(index){
-      this.taxpayer = this.taxpayer_list[index]
+      this.taxpayer = this.taxpayer_list[index];
+      console.log('this.taxpayer :', this.taxpayer);
       this.selected_index = index;
     },
     isSelected(index){

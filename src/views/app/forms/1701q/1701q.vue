@@ -9,6 +9,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1."
+        :validate-status="error_item('dateFiled')"
+        :help="error_desc('dateFiled')"
       >
         <a-month-picker style="width: 100%" v-model="form.dateFiled" />
       </a-form-item>
@@ -17,6 +19,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="2."
+        :validate-status="error_item('quarter')"
+        :help="error_desc('quarter')"
       >
         <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
@@ -58,7 +62,10 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Tax Filer Type">
+      <a-form-item 
+      label="7. Tax Filer Type"
+      :validate-status="error_item('taxpayer.tax_filer_type')"
+      :help="error_desc('taxpayer.tax_filer_type')" >
         <a-radio-group v-model="form.taxpayer.tax_filer_type">
           <a-radio :value="'SP'">Single Proprietor</a-radio>
           <a-radio :value="'PRO'">Professional</a-radio>
@@ -66,7 +73,11 @@
           <a-radio :value="'TRU'">Trust</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="8. Alphanumeric Tax Code (ATC)">
+      <a-form-item 
+      label="8. Alphanumeric Tax Code (ATC)"
+      :validate-status="error_item('atc')"
+      :help="error_desc('atc')"
+      >
         <a-radio-group v-model="form.atc">
           <a-radio :value="'II012'">II012 Business Income-Graduated IT Rates</a-radio>
           <a-radio :value="'II015'">II015 Business Income - 8% IT Rate</a-radio>
@@ -701,12 +712,20 @@ export default {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
-    }
+    },
     // submit() {
     //   this.form.validateFieldsAndScroll((err, values) => {
     //     if (!err) console.log("values :", values);
     //   });
     // }
+    error_item(item) {
+      return this.errors.find(x => x.field === item) ? "error" : "";
+    },
+    error_desc(item) {
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
+    }
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);

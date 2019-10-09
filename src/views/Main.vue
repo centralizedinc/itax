@@ -62,7 +62,7 @@
             </a-col>
             <a-col :span="6">
               <a-avatar 
-                style="z-index: 1; margin-top: -5vh; border: 1px solid #FFFFFF" 
+                style="z-index: 1; margin-top: -5vh; border: 3px solid #FFFFFF" 
                 :size="60" 
                 :src="user && user.avatar ? user.avatar.location : null">
                 {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
@@ -84,9 +84,9 @@
               <a-menu-item key="/app/taxpayer">
                 <a-icon type="solution" />Taxpayers
               </a-menu-item>
-              <a-menu-item key="/app/taxpayer/network">
+              <!-- <a-menu-item key="/app/taxpayer/network">
                 <a-icon type="deployment-unit" />Taxpayer Network
-              </a-menu-item>
+              </a-menu-item> -->
               <a-menu-item key="/app/tax">
                 <a-icon type="form" />Tax Returns
               </a-menu-item>
@@ -123,6 +123,9 @@
           <a-divider></a-divider>
 
           <a-card>
+            <a-avatar shape="square" style="background: #115B95">
+              <a-icon type="user"></a-icon>
+            </a-avatar>
             TaxPayers
             <vue-trend
               :data="ttrend"
@@ -132,15 +135,11 @@
               strokeWidth="5"
             >
             </vue-trend>
-            <!-- <trend-chart :datasets="[
-    {
-      data: ttrend,
-      fill: true,
-      className:`curve-vue`
-    }
-  ]" :min="0" padding="5 5 0" :interactive="true" @mouseMove="onMouseMove"></trend-chart> -->
           </a-card>
            <a-card>
+             <a-avatar shape="square" style="background: #115B95">
+              <a-icon type="form"></a-icon>
+            </a-avatar>
              Tax Returns
             <vue-trend
               :data="rtrend"
@@ -151,6 +150,9 @@
             </vue-trend>
           </a-card>
            <a-card style="background: ">
+             <a-avatar shape="square" style="background: #115B95">
+              <a-icon type="credit-card"></a-icon>
+            </a-avatar>
              Payments
             <vue-trend
               :data="ptrend"
