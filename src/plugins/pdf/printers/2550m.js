@@ -227,16 +227,17 @@ function getContent(forms) {
         },
         // --------------------------------------------
         {
-            //Table 7  Sales to Goverment
+            //Table 7  13 A Sales to Goverment
             layout: "noBorders",
             table: {
                 widths: [385, 130,],
                 body: [
                     [
                         {
-                            text: forms.salesGovAmount,
+                            text: forms.salesGovAmount == null ? '0.00' : forms.salesGovAmount%1==0 ? forms.salesGovAmount+'.00' : forms.totalOutputTax,
+                            
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
                             margin: [270, -5, 0, 0]
                         },
@@ -254,7 +255,7 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 8  Zero Rated Sales
+            //Table 8   Zero Rated Sales
             layout: "noBorders",
             table: {
                 widths: [385, 130,],
@@ -263,7 +264,7 @@ function getContent(forms) {
                         {
                             text: forms.zeroRatedAmount,
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
@@ -276,18 +277,19 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 9  Exempt Sales Receipts
+            //Table 9  15 Exempt Sales Receipts
             layout: "noBorders",
             table: {
                 widths: [385, 130,],
                 body: [
                     [
                         {
-                            text: forms.exemptAmount,
+                            text: forms.exemptAmount == null ? '0.00' : forms.exemptAmount%1==0 ? forms.exemptAmount+'.00' : forms.exemptAmount,
+                            
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
-                            margin: [270, -5, 0, 0]
+                            margin: [270, 2, 0, 0]
                         },
 
                     ]
@@ -298,23 +300,25 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 10  Total Sales Receipts    
+            //Table 10  16A Total Sales Receipts    
             layout: "noBorders",
             table: {
                 widths: [385, 130,],
                 body: [
                     [
                         {
-                            text: forms.totalSales,
+                            text: forms.totalSales == null ? '0.00' : forms.totalSales%1==0 ? forms.totalSales+'.00' : forms.totalSales,
+
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
                         {
-                            text: forms.totalOutputTax,
+                            
+                            text: forms.totalOutputTax == null ? '0.00' : forms.totalOutputTax%1==0 ? forms.totalOutputTax+'.00' : forms.totalOutputTax,
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
                             margin: [17, -4, 0, 0]
                         },
@@ -333,9 +337,10 @@ function getContent(forms) {
                 body: [
                     [
                         {
+                            // forms. == null ? '0.00' : forms. %1==0 ? forms. +'.00' : forms.
                             text: forms.carriedOverPreviousPeriod == null ? '0.00' : forms.carriedOverPreviousPeriod%1==0 ? forms.carriedOverPreviousPeriod+'.00' : forms.carriedOverPreviousPeriod  ,
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
                             margin: [410, 2, 0, 0]
                         },
@@ -356,6 +361,7 @@ function getContent(forms) {
                     [
 
                         {
+                            
                             text: forms.txbleGoodsServices,
                             fontSize: 9,
                             alignment: 'justify',
@@ -458,18 +464,19 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.purCapGoodsNotExceed,
+                            text: forms.purCapGoodsNotExceed == null ? '0.00' : forms.purCapGoodsNotExceed%1==0 ? forms.purCapGoodsNotExceed+'.00' : forms.purCapGoodsNotExceed,
+                            
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
-                            margin: [270, 5, 0, 0]
+                            margin: [270,30, 0, 0]
                         },
                         {
                             text: forms.outputCapGoodsNotExceed,
                             fontSize: 9,
-                            alignment: 'justify',
+                            alignment: 'right',
                             // right,down,left,up
-                            margin: [17, 5, 0, 0]
+                            margin: [17, 30, 0, 0]
                         },
                     ]
                 ]
