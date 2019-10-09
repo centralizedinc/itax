@@ -237,16 +237,9 @@ function getContent(forms) {
                 body: [
                     [
                         {
-<<<<<<< HEAD
-                            text: forms.salesGovAmount == null ? '0.00' : forms.salesGovAmount%1==0 ? forms.salesGovAmount+'.00' : forms.totalOutputTax,
-                            
-                            fontSize: 9,
-                            alignment: 'right',
-=======
                             text: forms.salesGovAmount == null ? '0.00' : forms.salesGovAmount%1 == 0 ? forms.salesGovAmount + '.00' : forms.salesGovAmount,
                             alignment: 'right',
                             fontSize: 9,
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [270, -5, 0, 0]
                         },
@@ -274,10 +267,6 @@ function getContent(forms) {
                             text: forms.zeroRatedAmount == null ? '0.00' : forms.zeroRatedAmount%1 == 0 ? forms.zeroRatedAmount + '.00' : forms.zeroRatedAmount,
                             alignment: 'right',
                             fontSize: 9,
-<<<<<<< HEAD
-                            alignment: 'right',
-=======
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
@@ -297,23 +286,10 @@ function getContent(forms) {
                 body: [
                     [
                         {
-<<<<<<< HEAD
-                            text: forms.exemptAmount == null ? '0.00' : forms.exemptAmount%1==0 ? forms.exemptAmount+'.00' : forms.exemptAmount,
-                            
-                            fontSize: 9,
-                            alignment: 'right',
-=======
-                            text: forms.exemptAmount == null ? '0.00' : forms.exemptAmount%1 == 0 ? forms.exemptAmount + '.00' : forms.exemptAmount,
                             alignment: 'right',
                             fontSize: 9,
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [270, 2, 0, 0]
-                        },
-
-                    ]
-                ]
-            }
 
         },
 
@@ -326,30 +302,16 @@ function getContent(forms) {
                 body: [
                     [
                         {
-<<<<<<< HEAD
-                            text: forms.totalSales == null ? '0.00' : forms.totalSales%1==0 ? forms.totalSales+'.00' : forms.totalSales,
-
-                            fontSize: 9,
-                            alignment: 'right',
-=======
                             text: forms.totalSales == null ? '0.00' : forms.totalSales%1 == 0 ? forms.totalSales + '.00' : forms.totalSales,
                             alignment: 'right',
                             fontSize: 9,
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [270, -4, 0, 0]
                         },
                         {
-<<<<<<< HEAD
-                            
-                            text: forms.totalOutputTax == null ? '0.00' : forms.totalOutputTax%1==0 ? forms.totalOutputTax+'.00' : forms.totalOutputTax,
-                            fontSize: 9,
-                            alignment: 'right',
-=======
                             text: forms.totalOutputTax == null ? '0.00' : forms.totalOutputTax%1 == 0 ? forms.totalOutputTax + '.00' : forms.totalOutputTax,
                             alignment: 'right',
                             fontSize: 9,
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [17, -4, 0, 0]
                         },
@@ -368,16 +330,9 @@ function getContent(forms) {
                 body: [
                     [
                         {
-<<<<<<< HEAD
-                            // forms. == null ? '0.00' : forms. %1==0 ? forms. +'.00' : forms.
-                            text: forms.carriedOverPreviousPeriod == null ? '0.00' : forms.carriedOverPreviousPeriod%1==0 ? forms.carriedOverPreviousPeriod+'.00' : forms.carriedOverPreviousPeriod  ,
-                            fontSize: 9,
-                            alignment: 'right',
-=======
                             alignment: 'right',
                             text: forms.carriedOverPreviousPeriod == null ? '0.00' : forms.carriedOverPreviousPeriod%1==0 ? forms.carriedOverPreviousPeriod+'.00' : forms.carriedOverPreviousPeriod  ,
                             fontSize: 9,
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [410, 2, 0, 0]
                         },
@@ -398,13 +353,8 @@ function getContent(forms) {
                     [
 
                         {
-<<<<<<< HEAD
-                            
-                            text: forms.txbleGoodsServices,
-=======
                             text: forms.txbleGoodsServices == null ? '0.00' : forms.txbleGoodsServices%1 == 0 ? forms.txbleGoodsServices + '.00' : forms.txbleGoodsServices,
                             alignment: 'right',
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             fontSize: 9,
                             // right,down,left,up
                             margin: [410, -3, 0, 0]
@@ -505,16 +455,9 @@ function getContent(forms) {
                 body: [
                     [
                         {
-<<<<<<< HEAD
-                            text: forms.purCapGoodsNotExceed == null ? '0.00' : forms.purCapGoodsNotExceed%1==0 ? forms.purCapGoodsNotExceed+'.00' : forms.purCapGoodsNotExceed,
-                            
-                            fontSize: 9,
-                            alignment: 'right',
-=======
                             text: forms.purCapGoodsNotExceed == null ? '0.00' : forms.purCapGoodsNotExceed%1 == 0 ? forms.purCapGoodsNotExceed + '.00' : forms.purCapGoodsNotExceed,
                             alignment: 'right',
                             fontSize: 9,
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [270,30, 0, 0]
                         },
@@ -522,10 +465,6 @@ function getContent(forms) {
                             text: forms.outputCapGoodsNotExceed == null ? '0.00' : forms.outputCapGoodsNotExceed%1 == 0 ? forms.outputCapGoodsNotExceed + '.00' : forms.outputCapGoodsNotExceed,
                             alignment: 'right',
                             fontSize: 9,
-<<<<<<< HEAD
-                            alignment: 'right',
-=======
->>>>>>> 3db27c88c228209a8c8ed04778515e82a9a83e80
                             // right,down,left,up
                             margin: [17, 30, 0, 0]
                         },
@@ -1192,7 +1131,7 @@ function getContent(forms) {
 // },
 // end
 
-        )
+                    )
 
 
     return content;
