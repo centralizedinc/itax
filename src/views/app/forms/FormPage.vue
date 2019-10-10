@@ -193,6 +193,23 @@ export default {
             description: "Computation"
           }
         ],
+        "2550q": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II A",
+            description: "Computation"
+          },
+           {
+            title: "Part II B",
+            description: "Computation"
+          }
+        ],
         "1601e": [
           {
             title: "General"
