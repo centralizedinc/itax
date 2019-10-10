@@ -44,7 +44,9 @@ const actions = {
                                     id: v._id,
                                     tin: v.to,
                                     relationship: v.relationship,
-                                    name: `${v.to} (${v.relationship})`
+                                    name: `${v.to} (${v.relationship})`,
+                                    to: v.to,
+                                    from: v.from
                                 }
                             })
                             console.log('children :', children);

@@ -333,7 +333,7 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.carriedOverPreviousPeriod,
+                            text: forms.carriedOverPreviousPeriod == null ? '0.00' : forms.carriedOverPreviousPeriod%1==0 ? forms.carriedOverPreviousPeriod+'.00' : forms.carriedOverPreviousPeriod  ,
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up

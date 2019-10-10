@@ -5,6 +5,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
+        :validate-status="error_item('returnPeriod')"
+        :help="error_desc('returnPeriod')"
       >
         <a-month-picker
           placeholder="For the month of (MM/YYYY)"
@@ -26,6 +28,8 @@
         <a-input-number
           placeholder="Number of Sheets"
           v-model="form.numOfSheet"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
           style="width: 100%"
         />
       </a-form-item>
@@ -55,6 +59,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="6"
+        :validate-status="error_item('taxpayer.line_of_business')"
+        :help="error_desc('taxpayer.line_of_business')"
       >
         <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business"></a-input>
       </a-form-item>
@@ -62,6 +68,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="7"
+        :validate-status="error_item('taxpayer.registered_name')"
+        :help="error_desc('taxpayer.registered_name')"
       >
         <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
@@ -69,9 +77,13 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="8"
+        :validate-status="error_item('taxpayer.contact_details.telno')"
+        :help="error_desc('taxpayer.contact_details.telno')"
       >
         <a-input-number
           placeholder="Telephone Number"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
           v-model="form.taxpayer.contact_details.telno"
           style="width: 100%"
         ></a-input-number>
@@ -80,6 +92,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="9"
+        :validate-status="error_item('taxpayer.address')"
+        :help="error_desc('taxpayer.address')"
       >
         <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
       </a-form-item>
@@ -87,11 +101,15 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="10"
+        :validate-status="error_item('taxpayer.address_details.zipCode')"
+        :help="error_desc('taxpayer.address_details.zipCode')"
       >
         <a-input-number
           placeholder="Zip Code"
           v-model="form.taxpayer.address_details.zipCode"
           style="width: 100%"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -115,12 +133,15 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="12A"
+        :validate-status="error_item('atc')"
+        :help="error_desc('atc')"
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalAtcAmount"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -131,8 +152,9 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.totalAtcOutput"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          disbled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -145,8 +167,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.salesGovAmount"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -157,8 +179,8 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.salesGovOutput"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -171,8 +193,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.zeroRatedAmount"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -185,8 +207,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.exemptAmount"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -199,8 +221,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalSales"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -211,8 +233,8 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.totalOutputTax"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -227,8 +249,8 @@
           v-model="form.carriedOverPreviousPeriod"
           :data="total_allowable_less_input_tax"
           :defaultValue="0"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -240,8 +262,8 @@
           placeholder="Input Tax Deferred on Capital Goods Exceeding ₱1Million from Previous Period"
           v-model="form.txbleGoodsServices"
           :defaultValue="0"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -253,8 +275,8 @@
           placeholder="Transitional Input Tax"
           v-model="form.transInputTax"
           :defaultValue="0"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -266,8 +288,8 @@
           placeholder="Presumptive Input Tax"
           v-model="form.presumpInputTax"
           :defaultValue="0"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -279,8 +301,8 @@
           placeholder="Others"
           v-model="form.otherAllowableLessInputTax"
           :defaultValue="0"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -292,8 +314,8 @@
           placeholder="Total"
           :data="total_allowable_less_input_tax"
           v-model="form.totalAllowableLessInputTax"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -311,8 +333,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purCapGoodsNotExceed"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -324,8 +346,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputCapGoodsNotExceed"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -341,8 +363,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purCapGoodsExceed"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -354,8 +376,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputPurCapGoodsExceed"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -371,8 +393,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.domesticPurchaseGoods"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -384,8 +406,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputDomesticPurchaseGoods"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -401,8 +423,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.importationGoods"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -414,8 +436,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputImportationGoods"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18I/J. Domestic Purchase of Services" />
@@ -428,8 +450,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.domesticPurchaseService"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -441,8 +463,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputDomesticPurchaseService"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18K/L. Services rendered by Non-residents" />
@@ -455,8 +477,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.servicesNonResidents"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -468,8 +490,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputServicesNonResidents"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18M. Purchases Not Qualified for Input Tax" />
@@ -482,8 +504,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purchaseNotQualified"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18N/O. Others" />
@@ -496,8 +518,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purchaseOthers"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -509,8 +531,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputPurchaseOthers"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18P. Total Current Purchases" />
@@ -523,8 +545,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.totalCurrentPurchases"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -537,8 +559,8 @@
           placeholder="Total Available Input Tax"
           :data="total_available_input_tax"
           v-model="form.totalAvailableInputTax"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -551,8 +573,8 @@
         <a-input-number
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
           v-model="form.inputTaxPurchaseCapGoods"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -563,8 +585,8 @@
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -575,8 +597,8 @@
         <a-input-number
           placeholder="Input Tax allocable to Exempt Sales"
           v-model="form.inputTaxAllocableToExempt"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -587,8 +609,8 @@
         <a-input-number
           placeholder="VAT Refund/TCC claimed"
           v-model="form.refundTcm"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -599,8 +621,8 @@
         <a-input-number
           placeholder="Others"
           v-model="form.otherDeductionFrInputTax"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -612,8 +634,8 @@
           placeholder="Total"
           :data="total_deduction_from_input_tax"
           v-model="form.totalDeductionFrInputTax"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -625,8 +647,8 @@
         <a-input-number
           placeholder="Total Allowable Input Tax"
           v-model="form.totalInputTax"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -638,8 +660,8 @@
         <a-input-number
           placeholder="Net VAT Payable"
           v-model="form.taxDue"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -652,8 +674,8 @@
         <a-input-number
           placeholder="Creditable Value-Added Tax Withheld"
           v-model="form.creditableVatWithheld"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -664,8 +686,8 @@
         <a-input-number
           placeholder="Advance Payments for Sugar and Flour Industries"
           v-model="form.advPaySugarFlourInd"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -676,8 +698,8 @@
         <a-input-number
           placeholder="VAT withheld on Sales to Government"
           v-model="form.taxWthld"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -688,8 +710,8 @@
         <a-input-number
           placeholder="VAT paid in return previously filed, if this is an amended return"
           v-model="form.prevTaxPaid"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -700,8 +722,8 @@
         <a-input-number
           placeholder="Advance Payments made"
           v-model="form.advPymt"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -712,8 +734,8 @@
         <a-input-number
           placeholder="Others"
           v-model="form.otherTaxCredits"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -725,8 +747,8 @@
           placeholder="Total Tax Credits/Payments"
           :data="total_credits"
           v-model="form.totalCredits"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -738,8 +760,8 @@
         <a-input-number
           placeholder="Tax Still Payable/(Overpayment)"
           v-model="form.amtPaybl"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -748,36 +770,42 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25A"
+        :validate-status="error_item('surcharge')"
+        :help="error_desc('surcharge')"
       >
         <a-input-number
           placeholder="Surcharge"
           v-model="form.surcharge"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25B"
+        :validate-status="error_item('interest')"
+        :help="error_desc('interst')"
       >
         <a-input-number
           placeholder="Interest"
           v-model="form.interest"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25C"
+        :validate-status="error_item('compromise')"
+        :help="error_desc('compromise')"
       >
         <a-input-number
           placeholder="Compromise"
           v-model="form.compromise"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -788,8 +816,8 @@
         <a-input-number
           placeholder="Total Penalties"
           v-model="form.penalties"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -801,8 +829,8 @@
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
           v-model="form.totalAmountPayable"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
     </a-form>
@@ -1042,28 +1070,26 @@ export default {
     };
   },
   computed: {
+    // 16A = 12A + 13A + 14 + 15
+    total_sales() {},
+    // 16B = 12B + 13B
+    total_output_tax() {},
     total_allowable_less_input_tax() {
-      //   if(this.form.carriedOverPreviousPeriod == null){
-      //     this.form.carriedOverPreviousPeriod = 0
-      //   } else if(this.form.txbleGoodsServices == null){
-      //     this.form.txbleGoodsServices = 0
-      //   } else if(this.form.transInputTax == null){
-      //     this.form.transInputTax = 0
-      //   } else if(this.form.presumpInputTax == null){
-      //     this.form.presumpInputTax = 0
-      //   }
-
-      console.log('#########',this.form.carriedOverPreviousPeriod?this.form.carriedOverPreviousPeriod:0);
-      console.log('#########',Number(this.form.txbleGoodsServices));
-      console.log('#########',Number(this.form.transInputTax));
-      console.log('#########',Number(this.form.presumpInputTax));
-      console.log('#########',Number(this.form.otherAllowableLessInputTax));
-      return (this.form.totalAllowableLessInputTax =
-        Number(this.form.carriedOverPreviousPeriod) +
-        Number(this.form.txbleGoodsServices) +
-        Number(this.form.transInputTax) +
-        Number(this.form.presumpInputTax) +
-        Number(this.form.otherAllowableLessInputTax));
+      console.log(
+        "#########",
+        this.form.carriedOverPreviousPeriod
+          ? this.form.carriedOverPreviousPeriod
+          : 0
+      );
+      var tosum = [
+        this.form.carriedOverPreviousPeriod,
+        this.form.txbleGoodsServices,
+        this.form.transInputTax,
+        this.form.presumpInputTax,
+        this.form.otherAllowableLessInputTax
+      ];
+      console.log("compute sum: " + this.computeSum(tosum));
+      return (this.form.totalAllowableLessInputTax = this.computeSum(tosum));
     },
     total_available_input_tax() {
       return (this.form.totalAvailableInputTax =
@@ -1106,19 +1132,23 @@ export default {
     loading(val) {
       this.$emit("loading", val);
     },
-    form() {
-      console.log("2550m form: " + this.form.returnPeriod);
-      this.form.year = this.formatDtYear(this.form.returnPeriod);
-      this.form.month = this.formatDtMonth(this.form.returnPeriod);
-      console.log("year: " + this.form.month);
+    form: {
+      deep: true,
+      handler() {
+        console.log("2550m form: " + this.form.returnPeriod);
+        this.form.year = this.formatDtYear(this.form.returnPeriod);
+        this.form.month = this.formatDtMonth(this.form.returnPeriod);
+        this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
+        this.form.returnPeriodMonth = this.formatDtMonth(
+          this.form.returnPeriod
+        );
+        console.log("year: " + this.form.month);
+      }
     },
-    step(){
-      
-    }
+    step() {}
   },
   created() {
     // if(this.form.totalAmountPayable == null){
-      
     // this.form.totalAtcAmount = 0
     //     this.form.totalAtcOutput = 0
     //     this.form.salesGovAmount = 0
