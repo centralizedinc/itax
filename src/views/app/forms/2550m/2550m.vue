@@ -113,13 +113,13 @@
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
       />
       <a-form-item>
-        <a-radio-group v-model="form.specialRate">
+        <a-radio-group v-model="form.is_avail_tax_relief" :defaultValue="false">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item>
-        <a-input placeholder="If yes, specify" v-model="form.specialRateYn"></a-input>
+      <a-form-item v-if="form.is_avail_tax_relief">
+        <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
     </a-form>
 
@@ -127,84 +127,84 @@
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
       <a-button type="primary" @click="showDrawer">
-      Schedule 1
-    </a-button>
-    <a-drawer
-      title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
-      placement="right"
-      :closable="false"
-      @close="onClose"
-      :visible="visible"
-      width="1000"
-    >
-      <a-button type="primary" @click="addAtc">
-        ADD
+        Schedule 1
       </a-button>
-      <!-- <a-drawer
-      title="ATC"
-      placement="right"
-      :closable="false"
-      @close="onClose"
-      :visible="visibleATC"
-      width="500"
+      <a-drawer
+        title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
+        placement="right"
+        :closable="false"
+        @close="onClose"
+        :visible="visible"
+        width="1000"
       >
-        <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
-      </a-drawer> -->
-      <a-table bordered :dataSource="dataSource" :columns="columns">
-        <template slot="industry" slot-scope="text, record,index">
-        <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
-        <a-input disabled v-model="dataSource[index].industry"></a-input>
-      </template>
-        <template slot="footer" span: 2>
-          <a-button @click="onClose">Proceed</a-button>
-      <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
-    </template>
-        <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
-        <a-select
-          style="width 100%"
-          @change="pickAtc"
-          defaultValue="Pick an ATC"
-          :disabled="record.editable" 
-          v-model="dataSource[index].atc"          
+        <a-button type="primary" @click="addAtc">
+          ADD
+        </a-button>
+        <!-- <a-drawer
+        title="ATC"
+        placement="right"
+        :closable="false"
+        @close="onClose"
+        :visible="visibleATC"
+        width="500"
         >
-          <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
-        </a-select>
-        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
-      </template>
-        <template slot="amount" slot-scope="text, record">
-        <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
-      </template>
-      <template slot="output" slot-scope="text, record, index">
-        <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
-      </template>
-      <template slot="operation" slot-scope="text, record, index">
-        <a-popconfirm
-          v-if="dataSource[index].editable == false"
-          title="Sure to save?"
-          @confirm="() => saveAtc(index)">
-          <a href="javascript:;">Save</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == true"
-          title="Sure to edit?"
-          @confirm="() => editAtc(index)">
-          <a href="javascript:;">Edit</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == false"
-          title="Sure to Cance;?"
-          @confirm="() => cancelAtc(index)">
-          <a href="javascript:;">Cancel</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == true"
-          title="Sure to delete?"
-          @confirm="() => deleteAtc(index)">
-          <a href="javascript:;">Delete</a>
-        </a-popconfirm>
-      </template>
-      </a-table>
-    </a-drawer>
+          <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
+        </a-drawer> -->
+        <a-table bordered :dataSource="dataSource" :columns="columns">
+          <template slot="industry" slot-scope="text, record,index">
+            <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
+            <a-input disabled v-model="dataSource[index].industry"></a-input>
+          </template>
+          <template slot="footer" span: 2>
+            <a-button @click="onClose">Proceed</a-button>
+            <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
+          </template>
+          <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
+            <a-select
+              style="width 100%"
+              @change="pickAtc"
+              defaultValue="Pick an ATC"
+              :disabled="record.editable" 
+              v-model="dataSource[index].atc"          
+            >
+              <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
+            </a-select>
+            <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+          </template>
+          <template slot="amount" slot-scope="text, record">
+            <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
+          </template>
+          <template slot="output" slot-scope="text, record, index">
+            <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-popconfirm
+              v-if="dataSource[index].editable == false"
+              title="Sure to save?"
+              @confirm="() => saveAtc(index)">
+              <a href="javascript:;">Save</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == true"
+              title="Sure to edit?"
+              @confirm="() => editAtc(index)">
+              <a href="javascript:;">Edit</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == false"
+              title="Sure to Cance;?"
+              @confirm="() => cancelAtc(index)">
+              <a href="javascript:;">Cancel</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == true"
+              title="Sure to delete?"
+              @confirm="() => deleteAtc(index)">
+              <a href="javascript:;">Delete</a>
+            </a-popconfirm>
+          </template>
+        </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -392,35 +392,35 @@
         Schedule 2
       </a-button>
       <a-drawer
-      title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
-      placement="right"
-      :closable="false"
-      @close="onClose_sched2"
-      :visible="sched2_drawer"
-      width="1000"
-      >
-      <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
-        <template slot="date_purchased" slot-scope="text, record,index">
-         <a-month-picker
-          v-model="dataSource[index].date_purchased"
-          style="width: 100%"
-        />
-      </template>
-      <template slot="description" slot-scope="text, record,index">
-        <a-input v-model="dataSource[index].description"></a-input>
-      </template>
-      <template slot="vat" slot-scope="text, record,index">
-        <a-input-number v-model="dataSource[index].vat"></a-input-number>
-      </template>
-      <template slot="tax" slot-scope="text, record,index">
-        <a-input-number disabled v-model="dataSource[index].tax"></a-input-number>
-      </template>
-      <template slot="footer" span: 2>
-          <a-button @click="addSched2">Add</a-button>
-          <a-button>Save</a-button>
-      <p align="right">18A: {{form.totalAtcAmount}} 18B: {{form.totalAtcOutput}}</p>
-    </template>
-      </a-table>
+        title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
+        placement="right"
+        :closable="false"
+        @close="onClose_sched2"
+        :visible="sched2_drawer"
+        width="1000"
+        >
+        <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
+          <template slot="date_purchased" slot-scope="text, record,index">
+            <a-month-picker
+              v-model="dataSource[index].date_purchased"
+              style="width: 100%"
+            />
+          </template>
+          <template slot="description" slot-scope="text, record,index">
+            <a-input v-model="dataSource[index].description"></a-input>
+          </template>
+          <template slot="vat" slot-scope="text, record,index">
+            <a-input-number v-model="dataSource[index].vat"></a-input-number>
+          </template>
+          <template slot="tax" slot-scope="text, record,index">
+            <a-input-number disabled v-model="dataSource[index].tax"></a-input-number>
+          </template>
+          <template slot="footer" span: 2>
+            <a-button @click="addSched2">Add</a-button>
+            <a-button>Save</a-button>
+            <p align="right">18A: {{form.totalAtcAmount}} 18B: {{form.totalAtcOutput}}</p>
+          </template>
+        </a-table>
       </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -454,16 +454,16 @@
         Schedule 3
       </a-button>
       <a-drawer
-      title="Schedule 3 Purchases/Importation This Period"
-      placement="right"
-      :closable="false"
-      @close="onClose_sched3A"
-      :visible="sched3A_drawer"
-      width="1000"
-      >
-      <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
+        title="Schedule 3 Purchases/Importation This Period"
+        placement="right"
+        :closable="false"
+        @close="onClose_sched3A"
+        :visible="sched3A_drawer"
+        width="1000"
+        >
+        <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
 
-      </a-table>
+        </a-table>
       </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -867,7 +867,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="25B"
         :validate-status="error_item('interest')"
-        :help="error_desc('interst')"
+        :help="error_desc('interest')"
       >
         <a-input-number
           placeholder="Interest"
@@ -1175,6 +1175,8 @@ export default {
           this.loading = false;
           if (result.data.errors && result.data.errors.length > 0) {
             this.errors = result.data.errors;
+            console.log('this.errors :', this.errors);
+            if(this.errors && this.errors[0] && this.errors[0].page !== null) this.$emit("changeStep", this.errors[0].page);
             this.$notification.error({ message: "Validation Error" });
           } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);

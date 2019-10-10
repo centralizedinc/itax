@@ -173,21 +173,21 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.specialRate == true ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == true ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [210, 3, 0, 0]
                         },
                         {
-                            text: forms.specialRate == false ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [23, 3, 0, 0]
                         },
                         {
-                            text: forms.specialRateYn == null ? ' ' : forms.specialRateYn,
+                            text: forms.avail_tax_relief == null ? ' ' : forms.avail_tax_relief,
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
