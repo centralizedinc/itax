@@ -130,7 +130,7 @@
       Schedule 1
     </a-button>
     <a-drawer
-      title="Schedule 1"
+      title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
       placement="right"
       :closable="false"
       @close="onClose"
@@ -151,24 +151,57 @@
         <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
       </a-drawer> -->
       <a-table bordered :dataSource="dataSource" :columns="columns">
-        <template slot="atc" slot-scope="text, record, index">
+        <template slot="industry" slot-scope="text, record,index">
+        <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
+        <a-input disabled v-model="dataSource[index].industry"></a-input>
+      </template>
+        <template slot="footer" span: 2>
+          <a-button @click="onClose">Proceed</a-button>
+      <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
+    </template>
+        <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
         <a-select
           style="width 100%"
           @change="pickAtc"
-          placeholder="Pick an ATC"
+          defaultValue="Pick an ATC"
+          :disabled="record.editable" 
+          v-model="dataSource[index].atc"          
         >
-          <a-select-option v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
+          <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
         </a-select>
-        <!-- <a-input placeholder="text"></a-input> -->
         <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
       </template>
         <template slot="amount" slot-scope="text, record">
-        <a-input-number placeholder="text"></a-input-number>
-        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+        <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
       </template>
-      <template slot="output" slot-scope="text, record">
-        <a-input-number disabled></a-input-number>
-        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+      <template slot="output" slot-scope="text, record, index">
+        <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
+      </template>
+      <template slot="operation" slot-scope="text, record, index">
+        <a-popconfirm
+          v-if="dataSource[index].editable == false"
+          title="Sure to save?"
+          @confirm="() => saveAtc(index)">
+          <a href="javascript:;">Save</a>
+        </a-popconfirm>
+        <a-popconfirm
+          v-if="dataSource[index].editable == true"
+          title="Sure to edit?"
+          @confirm="() => editAtc(index)">
+          <a href="javascript:;">Edit</a>
+        </a-popconfirm>
+        <a-popconfirm
+          v-if="dataSource[index].editable == false"
+          title="Sure to Cance;?"
+          @confirm="() => cancelAtc(index)">
+          <a href="javascript:;">Cancel</a>
+        </a-popconfirm>
+        <a-popconfirm
+          v-if="dataSource[index].editable == true"
+          title="Sure to delete?"
+          @confirm="() => deleteAtc(index)">
+          <a href="javascript:;">Delete</a>
+        </a-popconfirm>
       </template>
       </a-table>
     </a-drawer>
@@ -355,6 +388,40 @@
         class="computation-item"
         label="18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)"
       />
+      <a-button type="primary" @click="showDrawer2">
+        Schedule 2
+      </a-button>
+      <a-drawer
+      title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched2"
+      :visible="sched2_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
+        <template slot="date_purchased" slot-scope="text, record,index">
+         <a-month-picker
+          v-model="dataSource[index].date_purchased"
+          style="width: 100%"
+        />
+      </template>
+      <template slot="description" slot-scope="text, record,index">
+        <a-input v-model="dataSource[index].description"></a-input>
+      </template>
+      <template slot="vat" slot-scope="text, record,index">
+        <a-input-number v-model="dataSource[index].vat"></a-input-number>
+      </template>
+      <template slot="tax" slot-scope="text, record,index">
+        <a-input-number disabled v-model="dataSource[index].tax"></a-input-number>
+      </template>
+      <template slot="footer" span: 2>
+          <a-button @click="addSched2">Add</a-button>
+          <a-button>Save</a-button>
+      <p align="right">18A: {{form.totalAtcAmount}} 18B: {{form.totalAtcOutput}}</p>
+    </template>
+      </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -383,6 +450,21 @@
         class="computation-item"
         label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
       />
+      <a-button type="primary" @click="showDrawer3A">
+        Schedule 3
+      </a-button>
+      <a-drawer
+      title="Schedule 3 Purchases/Importation This Period"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched3A"
+      :visible="sched3A_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
+
+      </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -668,6 +750,7 @@
         <a-input-number
           placeholder="Net VAT Payable"
           v-model="form.taxDue"
+          :data="tax_due"
           disabled
         ></a-input-number>
       </a-form-item>
@@ -813,6 +896,7 @@
         <a-input-number
           placeholder="Total Penalties"
           v-model="form.penalties"
+          :data="penalties"
           disabled
         ></a-input-number>
       </a-form-item>
@@ -825,6 +909,7 @@
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
           v-model="form.totalAmountPayable"
+          :data="total_amount_payable"
           disabled
         ></a-input-number>
       </a-form-item>
@@ -837,24 +922,124 @@ export default {
   props: ["form", "step"],
 
   methods: {
-    record(index){
-      console.log("record index: " + JSON.stringify(index))
+    computeSched1(){
+      this.form.totalAtcAmount = 0
+      this.form.totalAtcOutput = 0
+      this.dataSource.forEach(data =>{
+        console.log("data source data; " + JSON.stringify(data))
+        this.form.totalAtcAmount += data.amount
+        this.form.totalAtcOutput += data.output
+      })
+    },
+    saveAtc(index){
+      this.dataSource[index].editable = true
+      this.forEdit = false     
+      console.log("record index: " + JSON.stringify(this.dataSource))
+      this.holder = {
+        industry: null,
+        atc: null,
+        amount: 0,
+        output: 0
+      }
+      this.computeSched1()
+    },
+    cancelAtc(index){
+      this.dataSource[index].editable = true
+      this.dataSource[index] = this.holder
+      this.holder = {
+        industry: null,
+        atc: null,
+        amount: 0,
+        output: 0
+      }
+      this.forEdit = false
+    },
+    deleteAtc(index){
+      if(this.forEdit){
+     console.log("please save before you can delete")
+      }else{
+         this.dataSource[index].splice(index,1)
+        
+      }
+      console.log("delete atc data: " + JOSN.stringify(index))
+    },
+    editAtc(index){
+      if(this.forEdit){
+        console.log("please save first before you can edit other")
+        
+      }else{
+        this.forEdit = true
+        this.sched1_index = index
+        this.holder = this.dataSource[index]
+      this.dataSource[index].editable  = false
+      }
+      console.log("data source data: " + JSON.stringify(this.dataSource[index]))
     },
     pickAtc(value){
+      this.holder.industry = value.industry
+      this.holder.atc = value.atc      
+      console.log("atc holder data: " + JSON.stringify(this.holder))
       console.log("pick atc value: " + JSON.stringify(value))
-      // console.log("pick atc index: " + JSON.stringify(index))
+    },
+    changeAmount(value){
+      this.dataSource[this.sched1_index].amount = value
+      console.log("change amount value: " + JSON.stringify(value))
+      this.changeOutput(value)
+    },
+    changeOutput(value){
+      this.dataSource[this.sched1_index].output = value*0.12
+      console.log("change output value: " + JSON.stringify(value))
     },
     addAtc() {
+      console.log("updated dataa source: " + JSON.stringify(this.dataSource))
+      if(this.forEdit == true){
+        console.log("please save first before you can add")
+      }else{
       this.dataSource.push({
         industry: '',
         atc: '',
         amount: 0.00,
-        output: 0.00
+        output: 0.00,
+        editable: true
       })
+      }
       // this.visibleATC = true
     },
+    sched2Save(){
+
+    },
+    addSched2(){
+      console.log('add sched2 date of return: ' + this.form.returnPeriod)
+      var index = this.sched2_data.length()
+      if(this.sched2_data[index].date_purchased == ''){
+
+      }
+      this.sched2_data.push({
+        date_purchased: '',
+        description: '',
+        vat: 0,
+        tax: 0,
+      })
+    },
+    sched2Compute(value){
+
+    },
+    onClose_sched2(){
+      this.sched2_drawer = false
+    },
     showDrawer() {
+      console.log("data source show drawer; " + this.dataSource)
       this.visible = true
+    },
+    showDrawer2() {
+      console.log("data source show drawer; " + this.dataSource)
+      this.sched2_drawer = true
+    },
+    showDrawer3A(){
+      this.sched3A_drawer = true
+    },
+    onClose_sched3A(){
+      this.sched3A_drawer = false
     },
     onClose() {
       // this.visible = false
@@ -1073,8 +1258,20 @@ export default {
   },
   data() {
     return {
-      atc_list: [{industries: "Genral", atc:"VB010"}, {industries: "Genral1", atc:"VB011"}], 
+      atc_list: [{industry: "Genral", atc:"VB010"}, {industry: "Genral1", atc:"VB011"}], 
+      sched1_index: null,
+      holder:{
+        industry: null,
+        atc: "Pick an ATC",
+        amount: 0,
+        output: 0
+      },
+      atc_amount_holder:0,
+      atc_output_holder:0,
+      forEdit: false,
       visible: false,
+      sched2_drawer: false,
+      sched3A_drawer: false,
       visibleATC: false,
       errors: [],
       loading: false,
@@ -1093,15 +1290,11 @@ export default {
       },
       image_height: 1000,
       atc_options:[],
-      dataSource: [{
-        industry: 'Edward King 0',
-        atc: '',
-        amount: 2000,
-        output: 1000
-      }],
+      dataSource: [],
       columns: [{
         title: 'Industry Covered by VAT',
-        dataIndex: 'industry'
+        dataIndex: 'industry',
+        scopedSlots: { customRender: 'industry'}
       }, {
         title: 'ATC',
         dataIndex: 'atc',
@@ -1110,13 +1303,82 @@ export default {
       }, {
         title: 'Amount of Sales/Receipts For the Period',
         dataIndex: 'amount',
-        width: '30%',
         scopedSlots: { customRender: 'amount' },
       }, {
         title: 'Output Tax for the Period',
         dataIndex: 'output',
         scopedSlots: { customRender: 'output' },
+      },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { customRender: 'operation'}
       }],
+      sched2_data: [],
+      columns_sched2: [{
+        title: 'Date Purchased',
+        dataIndex: 'date_purchased',
+        scopedSlots: { customRender: 'date_purchased'}
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        scopedSlots: { customRender: 'description'}
+      },
+      {
+        title: 'Amount (Net of VAT)',
+        dataIndex: 'vat',
+        scopedSlots: { customRender: 'vat'}
+      },
+      {
+        title: 'Input Tax',
+        dataIndex: 'tax',
+        scopedSlots: { customRender: 'tax'}
+      }
+      ],
+      sched3A_data:[],
+      columns_sched3A:[
+        {
+        title: 'Date Purchased',
+        dataIndex: 'date_purchased',
+        scopedSlots: { customRender: 'date_purchased'}
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        scopedSlots: { customRender: 'description'}
+      },
+      {
+        title: 'Amount(Net of VAT)',
+        dataIndex: 'vat',
+        scopedSlots: { customRender: 'vat'}
+      },
+      {
+        title: 'Input Tax (C*Tax Rate)',
+        dataIndex: 'tax_rate',
+        scopedSlots: { customRender: 'tax_rate'}
+      },
+      {
+        title: 'Estimate Life (in Months)',
+        dataIndex: 'est_life',
+        scopedSlots: { customRender: 'est_life'}
+      },
+      {
+        title: 'Recognized Life (In Months) Useful life or 60 mos. (whichever is shorter)',
+        dataIndex: 'recog_life',
+        scopedSlots: { customRender: 'recog_life'}
+      },
+      {
+        title: 'Allowable Input Tax for the Period Tax Rate / Recognized Life',
+        dataIndex: 'allowable_input_tax',
+        scopedSlots: { customRender: 'allowable_input_tax'}
+      },
+      {
+        title: 'Balance of Input Tax to be carried to Next Period Tax Rate - Allowable Input Tax',
+        dataIndex: 'balance',
+        scopedSlots: { customRender: 'balance'}
+      },
+      ]
     };
   },
   computed: {
