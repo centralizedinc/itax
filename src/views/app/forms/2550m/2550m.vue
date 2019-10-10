@@ -148,44 +148,63 @@
         :visible="visibleATC"
         width="500"
         >
-          <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
-        </a-select>
-        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
-      </template>
-        <template slot="amount" slot-scope="text, record">
-        <a-input-number @change="changeAmount" :disabled="record.editable" ></a-input-number>
-      </template>
-      <template slot="output" slot-scope="text, record, index">
-        <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
-      </template>
-      <template slot="operation" slot-scope="text, record, index">
-        <a-popconfirm
-          v-if="dataSource[index].editable == false"
-          title="Sure to save?"
-          @confirm="() => saveAtc(index)">
-          <a href="javascript:;">Save</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == true"
-          title="Sure to edit?"
-          @confirm="() => editAtc(index)">
-          <a href="javascript:;">Edit</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == false"
-          title="Sure to Cance;?"
-          @confirm="() => cancelAtc(index)">
-          <a href="javascript:;">Cancel</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == true"
-          title="Sure to delete?"
-          @confirm="() => deleteAtc(index)">
-          <a href="javascript:;">Delete</a>
-        </a-popconfirm>
-      </template>
-      </a-table>
-    </a-drawer>
+          <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
+        </a-drawer> -->
+        <a-table bordered :dataSource="dataSource" :columns="columns">
+          <template slot="industry" slot-scope="text, record,index">
+            <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
+            <a-input disabled v-model="dataSource[index].industry"></a-input>
+          </template>
+          <template slot="footer" span: 2>
+            <a-button @click="onClose">Proceed</a-button>
+            <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
+          </template>
+          <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
+            <a-select
+              style="width 100%"
+              @change="pickAtc"
+              defaultValue="Pick an ATC"
+              :disabled="record.editable" 
+              v-model="dataSource[index].atc"          
+            >
+              <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
+            </a-select>
+            <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
+          </template>
+          <template slot="amount" slot-scope="text, record">
+            <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
+          </template>
+          <template slot="output" slot-scope="text, record, index">
+            <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-popconfirm
+              v-if="dataSource[index].editable == false"
+              title="Sure to save?"
+              @confirm="() => saveAtc(index)">
+              <a href="javascript:;">Save</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == true"
+              title="Sure to edit?"
+              @confirm="() => editAtc(index)">
+              <a href="javascript:;">Edit</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == false"
+              title="Sure to Cance;?"
+              @confirm="() => cancelAtc(index)">
+              <a href="javascript:;">Cancel</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == true"
+              title="Sure to delete?"
+              @confirm="() => deleteAtc(index)">
+              <a href="javascript:;">Delete</a>
+            </a-popconfirm>
+          </template>
+        </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
