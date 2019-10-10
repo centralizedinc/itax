@@ -57,7 +57,7 @@ returns_router.route("/validate/:form_type")
         const errors = validateForm(req.params.form_type, req.body);
 
         // check the errors
-        if (!errors || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
+        if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
             // save if there is no error
             var data = req.body;
             console.log('jwt.decode(req.headers.access_token).account_id :', jwt.decode(req.headers.access_token).account_id);

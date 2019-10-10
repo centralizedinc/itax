@@ -40,7 +40,6 @@ const mutations = {
 
 const actions = {
     VALIDATE_AND_SAVE(context, { form_type, form_details }) {
-        console.log('context.rootState.account_session :', context.rootState.account_session);
         return new TaxForm(context.rootState.account_session.token).saveAndValidate(form_type, form_details)
     },
     ADD_DRAFT_FORM(context, data) {
