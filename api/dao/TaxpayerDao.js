@@ -42,10 +42,23 @@ class TaxpayerDao {
 
     /**
      * @returns {Promise}
+     * @param {Array<Object>} details 
+     * @param {String} created_by
+     */
+    static createMany(details, created_by) {
+        var data = details.map(v => {
+            v.created_by = created_by;
+            return v;
+        })
+        return model.insertMany(data);
+    }
+
+    /**
+     * @returns {Promise}
      * @param {String} tin 
      */
-    static findOneByTIN(tin){
-        return model.findOne({tin}).lean().exec();
+    static findOneByTIN(tin) {
+        return model.findOne({ tin }).lean().exec();
     }
 
     /**
@@ -61,7 +74,7 @@ class TaxpayerDao {
      * @param {String} id 
      * @param {Object} data 
      */
-    static modifyByID(id, data){
+    static modifyByID(id, data) {
         return model.findByIdAndUpdate(id, data).exec();
     }
 
@@ -69,9 +82,9 @@ class TaxpayerDao {
      * @returns {Promise}
      * @param {Array} tins 
      */
-    static findConnected(tins){
+    static findConnected(tins) {
         return model.find({
-            tin :{
+            tin: {
                 $in: tins
             }
         }).lean().exec()

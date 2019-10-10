@@ -273,24 +273,28 @@ export default {
   },
   methods: {
     handleScroll() {
-      console.log("refs ", this.$refs);
-      console.log("window :", window);
       this.in_bottom = window.scrollY > 2000;
-      console.log("this.in_bottom :", this.in_bottom);
     },
     select(index){
-      this.taxpayer = this.taxpayer_list[index]
+      this.taxpayer = this.taxpayer_list[index];
+      console.log('this.taxpayer :', this.taxpayer);
       this.selected_index = index;
     },
     isSelected(index){
       return this.selected_index == index
     },
     fillup(){
-      // this.form.taxpayer = this.taxpayer
-      // if(!this.form.taxpayer.address_details){
-      //   this.form.taxpayer.address_details = {}
-      // }
-      // console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      this.form.taxpayer = this.taxpayer
+      if(!this.form.taxpayer.address_details){
+        this.form.taxpayer.address_details = {}
+      }
+      if(!this.form.taxpayer.contact_details){
+        this.form.taxpayer.contact_details = {}
+      }
+      if(!this.form.taxpayer.registered_name){
+        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`
+      }
+      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {
@@ -329,7 +333,7 @@ export default {
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
-    this.loading = true
+    // this.loading = true
     //find tp list  
     this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
             .then(results=>{
