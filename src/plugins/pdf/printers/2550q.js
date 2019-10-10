@@ -1090,7 +1090,7 @@ function getContent(forms) {
                     // right,down,lef
 
 
-                    margin: [0, -7, 0, 0]
+                    margin: [0, 4, 0, 0]
                 },
             ]
         ]
@@ -1162,7 +1162,7 @@ function getContent(forms) {
                     fontSize: 9,
                     alignment: 'right',
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, -7, 0, 0]
                 },
             ]
         ]
@@ -1180,7 +1180,7 @@ function getContent(forms) {
                     fontSize: 9,
                     alignment: 'right',
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, -5, 0, 0]
                 },
             ]
         ]
@@ -1216,12 +1216,121 @@ function getContent(forms) {
                     fontSize: 9,
                     alignment: 'right',
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, -6, 0, 0]
                 },
             ]
         ]
     }
 },
+{
+    layout: "noBorders",
+    table: {
+        widths: [518],
+
+        body: [
+            [
+                {
+                    text: forms.tax?forms.tax:'0.00',
+                    fontSize: 9,
+                    alignment: 'right',
+                    // right,down,left,up
+                    margin: [0, -6, 0, 0]
+                },
+            ]
+        ]
+    }
+},
+{
+    layout: "noBorders",
+    table: {
+        widths: [160],
+
+        body: [
+            [
+                {
+                    text: forms.surcharge?forms.surcharge:'0.00',
+                    fontSize: 9,
+                    alignment: 'right',
+                    // right,down,left,up
+                    margin: [0, 5, 0, 0]
+                },
+            ]
+        ]
+    }
+},
+{
+    layout: "noBorders",
+    table: {
+        widths: [266],
+
+        body: [
+            [
+                {
+                    text: forms.interest?forms.interest:'0.00',
+                    fontSize: 9,
+                    alignment: 'right',
+                    // right,down,left,up
+                    margin: [0, -14, 0, 0]
+                },
+            ]
+        ]
+    }
+},
+{
+    layout: "noBorders",
+    table: {
+        widths: [376],
+
+        body: [
+            [
+                {
+                    text: forms.compromise?forms.compromise:'0.00',
+                    fontSize: 9,
+                    alignment: 'right',
+                    // right,down,left,up
+                    margin: [0, -18, 0, 0]
+                },
+            ]
+        ]
+    }
+},
+{
+    layout: "noBorders",
+    table: {
+        widths: [518],
+
+        body: [
+            [
+                {
+                    text: forms.a28D?forms.a28D:'0.00',
+                    fontSize: 9,
+                    alignment: 'right',
+                    // right,down,left,up
+                    margin: [0, -25, 0, 0]
+                },
+            ]
+        ]
+    }
+},
+{
+    layout: "noBorders",
+    table: {
+        widths: [518],
+
+        body: [
+            [
+                {
+                    text: forms.sum29?forms.sum29:'0.00',
+                    fontSize: 9,
+                    alignment: 'right',
+                    // right,down,left,up
+                    margin: [0,-15, 0, 0]
+                },
+            ]
+        ]
+    }
+},
+
 
 
 //---------------------------------------------------------
