@@ -712,7 +712,7 @@ export default {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
-    }
+    },
     // submit() {
     //   this.form.validateFieldsAndScroll((err, values) => {
     //     if (!err) console.log("values :", values);
