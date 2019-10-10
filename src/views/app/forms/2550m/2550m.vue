@@ -150,35 +150,32 @@
         >
           <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
         </a-drawer> -->
-        <a-table bordered :dataSource="dataSource" :columns="columns">
+        <a-table bordered :loading="reloadATC" :dataSource="form.sched1" :columns="columns">
           <template slot="industry" slot-scope="text, record,index">
             <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
-            <a-input disabled v-model="dataSource[index].industry"></a-input>
+            <a-input disabled v-model="form.sched1[index].description"></a-input>
           </template>
-          <template slot="footer" span: 2>
-            <a-button @click="onClose">Proceed</a-button>
-            <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
+          <template slot="footer">
+            <!-- <a-button @click="onClose">Proceed</a-button> -->
+            <p align="right">12A: Total Amount: {{form.totalAtcAmount}} 12B: Total Output Tax: {{form.totalAtcOutput}}</p>
           </template>
-          <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
+          <template slot="atc" slot-scope="text, record, index">
             <a-select
               style="width 100%"
-              @change="pickAtc"
-              defaultValue="Pick an ATC"
-              :disabled="record.editable" 
-              v-model="dataSource[index].atc"          
+              @change="pickAtc($event, index)"
+              :defaultValue="form.sched1[index] && form.sched1[index].atc ? form.sched1[index].atc : 'Pick an ATC'"
             >
-              <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
+              <a-select-option  v-for="(item, i) in atc_list" :key="i">{{item.atc}}</a-select-option>
             </a-select>
-            <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
           </template>
-          <template slot="amount" slot-scope="text, record">
-            <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
+          <template slot="amount" slot-scope="text, record, index">
+            <a-input-number @change="changeAmount($event, index)" v-model="form.sched1[index].amount" placeholder="text"></a-input-number>
           </template>
           <template slot="output" slot-scope="text, record, index">
-            <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
+            <a-input-number v-model="form.sched1[index].output_tax" disabled></a-input-number>
           </template>
           <template slot="operation" slot-scope="text, record, index">
-            <a-popconfirm
+            <!-- <a-popconfirm
               v-if="dataSource[index].editable == false"
               title="Sure to save?"
               @confirm="() => saveAtc(index)">
@@ -195,11 +192,10 @@
               title="Sure to Cance;?"
               @confirm="() => cancelAtc(index)">
               <a href="javascript:;">Cancel</a>
-            </a-popconfirm>
+            </a-popconfirm> -->
             <a-popconfirm
-              v-if="dataSource[index].editable == true"
-              title="Sure to delete?"
-              @confirm="() => deleteAtc(index)">
+              title="Sure to delete ?"
+              @confirm="deleteAtc(index)">
               <a href="javascript:;">Delete</a>
             </a-popconfirm>
           </template>
@@ -216,7 +212,6 @@
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalAtcAmount"
           disabled
-          
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -228,7 +223,6 @@
           placeholder="Output Tax Due for the Month"
           v-model="form.totalAtcOutput"
           disabled
-          
         ></a-input-number>
       </a-form-item>
 
@@ -929,7 +923,6 @@
 <script>
 export default {
   props: ["form", "step"],
-
   methods: {
     computeSched1(){
       this.form.totalAtcAmount = 0
@@ -964,13 +957,11 @@ export default {
       this.forEdit = false
     },
     deleteAtc(index){
-      if(this.forEdit){
-     console.log("please save before you can delete")
-      }else{
-         this.dataSource[index].splice(index,1)
-        
-      }
-      console.log("delete atc data: " + JOSN.stringify(index))
+      this.reloadATC = true;
+      setTimeout(() => {
+        this.form.sched1.splice(index, 1);
+        this.reloadATC = false;
+      }, 1000);
     },
     editAtc(index){
       if(this.forEdit){
@@ -984,34 +975,59 @@ export default {
       }
       console.log("data source data: " + JSON.stringify(this.dataSource[index]))
     },
-    pickAtc(value){
-      this.holder.industry = value.industry
-      this.holder.atc = value.atc      
-      console.log("atc holder data: " + JSON.stringify(this.holder))
-      console.log("pick atc value: " + JSON.stringify(value))
+    pickAtc(atc_index, index){
+      this.reloadATC = true;
+        const item = this.atc_list[atc_index];
+        this.form.sched1[index].atc = item.atc;
+        this.form.sched1[index].description = item.description;
+        this.form.sched1[index].rate = item.rate;
+        this.form.sched1[index].output_tax = this.form.sched1[index].amount * item.rate;
+        console.log('this.dataSource[index] :', this.form.sched1[index]);
+        this.form.totalAtcAmount = this.form.sched1.map(v => v.amount).reduce((t, v) => t + v);
+        this.form.totalAtcOutput = this.form.sched1.map(v => v.output_tax).reduce((t, v) => t + v);
+        this.reloadATC = false;
     },
-    changeAmount(value){
-      this.dataSource[this.sched1_index].amount = value
-      console.log("change amount value: " + JSON.stringify(value))
-      this.changeOutput(value)
+    changeAmount(value, index){
+      console.log('changeAmount value :', value);
+      if(value !== null && !isNaN(value)){
+        // this.dataSource[index].amount = value
+        this.reloadATC = true;
+        this.form.sched1[index].output_tax = value * this.form.sched1[index].rate;
+        this.form.totalAtcAmount = this.form.sched1.map(v => v.amount).reduce((t, v) => t + v);
+        this.form.totalAtcOutput = this.form.sched1.map(v => v.output_tax).reduce((t, v) => t + v);
+        this.reloadATC = false;
+      }
     },
     changeOutput(value){
-      this.dataSource[this.sched1_index].output = value*0.12
+      this.dataSource[this.sched1_index].output = value * 0.12;
       console.log("change output value: " + JSON.stringify(value))
     },
     addAtc() {
-      console.log("updated dataa source: " + JSON.stringify(this.dataSource))
-      if(this.forEdit == true){
-        console.log("please save first before you can add")
-      }else{
-      this.dataSource.push({
-        industry: '',
-        atc: 'Pick an ATC',
-        amount: 0.00,
-        output: 0.00,
-        editable: true
-      })
-      }
+      this.reloadATC = true;
+      setTimeout(() => {
+        if(!this.form.sched1) this.form.sched1 = [];
+        this.form.sched1.push({
+          description: '',
+          atc: 'Pick an ATC',
+          amount: 0,
+          output_tax: 0,
+          rate: 0
+        })
+        this.reloadATC = false;
+      }, 1000);
+      console.log('this.form.sched1 addAtc :', this.form.sched1);
+      // console.log("updated dataa source: " + JSON.stringify(this.dataSource))
+      // if(this.forEdit == true){
+      //   console.log("please save first before you can add")
+      // }else{
+      // this.dataSource.push({
+      //   description: '',
+      //   atc: 'Pick an ATC',
+      //   amount: 0,
+      //   output_tax: 0,
+      //   rate: 0
+      // })
+      // }
       // this.visibleATC = true
     },
     sched2Save(){
@@ -1063,7 +1079,7 @@ export default {
       var index = this.sched2_data.length - 1
       this.form.purCapGoodsNotExceed = 0
       this.form.outputCapGoodsNotExceed = 0
-      this.sched2_data[index].tax = value*0.12
+      this.sched2_data[index].tax = value * 0.12;
       this.sched2_data.forEach(data =>{
         this.form.purCapGoodsNotExceed += data.vat
         this.form.outputCapGoodsNotExceed += data.tax
@@ -1210,6 +1226,7 @@ export default {
     },
     submit() {
       this.loading = true;
+      this.errors = [];
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "2550M",
@@ -1226,6 +1243,7 @@ export default {
           } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
             this.$store.commit("NOTIFY_MESSAGE", {
+              success: true,
               message: "Successfully submitted Form 2550m."
             });
             window.close();
@@ -1305,7 +1323,16 @@ export default {
   },
   data() {
     return {
-      atc_list: [{industry: "Genral", atc:"VB010"}, {industry: "Genral1", atc:"VB011"}], 
+      reloadATC: false,
+      atc_list: [{
+        description: "Genral", 
+        atc:"VB010",
+        rate: 0.12
+      }, {
+        description: "Genral1", 
+        atc:"VB011",
+        rate: 0.2
+      }], 
       sched1_index: null,
       holder:{
         industry: null,
@@ -1443,6 +1470,21 @@ export default {
     total_sales(){
       var tosum =[this.form.totalAtcAmount, this.form.salesGovAmount, this.form.zeroRatedAmount, this.form.exemptAmount]
       return this.form.totalSales = this.computeSum(tosum)
+    },
+    total_atc_amount(){
+      if(this.form.sched1 && this.form.sched1.length){
+        const total = this.form.sched1.map(v => v.amount).reduce((t, v) => t + v);
+        console.log('total :', total);
+        this.form.totalAtcAmount = total || 0;
+        return total || 0;
+      }return 0
+    },
+    total_atc_output_tax(){
+      if(this.form.sched1 && this.form.sched1.length){
+        const total = this.form.sched1.map(v => v.output_tax).reduce((t, v) => t + v);
+        this.form.totalAtcOutput = total || 0;
+        return total || 0;
+      } return 0;
     },
     // 16B = 12B + 13B
     total_output_tax(){
