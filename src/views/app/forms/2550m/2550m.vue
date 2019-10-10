@@ -172,7 +172,7 @@
         <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
       </template>
         <template slot="amount" slot-scope="text, record">
-        <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
+        <a-input-number @change="changeAmount" :disabled="record.editable" ></a-input-number>
       </template>
       <template slot="output" slot-scope="text, record, index">
         <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
@@ -401,24 +401,33 @@
       >
       <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
         <template slot="date_purchased" slot-scope="text, record,index">
-         <a-month-picker
-          v-model="dataSource[index].date_purchased"
+         <a-date-picker
+          v-model="sched2_data[index].date_purchased"
+          @change="check_sched2"
           style="width: 100%"
         />
       </template>
       <template slot="description" slot-scope="text, record,index">
-        <a-input v-model="dataSource[index].description"></a-input>
+        <a-input v-model="sched2_data[index].description"></a-input>
       </template>
       <template slot="vat" slot-scope="text, record,index">
-        <a-input-number v-model="dataSource[index].vat"></a-input-number>
+        <a-input-number v-model="sched2_data[index].vat" @change="sched2Compute"></a-input-number>
       </template>
       <template slot="tax" slot-scope="text, record,index">
-        <a-input-number disabled v-model="dataSource[index].tax"></a-input-number>
+        <a-input-number disabled v-model="sched2_data[index].tax"></a-input-number>
       </template>
-      <template slot="footer" span: 2>
+      <template slot="operation" slot-scope="text, record, index">
+        <a-popconfirm
+          v-if="sched2_data.length"
+          title="Sure to delete?"
+          @confirm="() => delete_sched2(index)">
+          <a href="javascript:;">Delete</a>
+        </a-popconfirm>
+      </template>
+      <template slot="footer">
           <a-button @click="addSched2">Add</a-button>
           <a-button>Save</a-button>
-      <p align="right">18A: {{form.totalAtcAmount}} 18B: {{form.totalAtcOutput}}</p>
+      <p align="right">18A: {{form.purCapGoodsNotExceed}} 18B: {{form.outputCapGoodsNotExceed}}</p>
     </template>
       </a-table>
       </a-drawer>
@@ -459,7 +468,7 @@
       :closable="false"
       @close="onClose_sched3A"
       :visible="sched3A_drawer"
-      width="1000"
+      width="1500"
       >
       <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
 
@@ -997,7 +1006,7 @@ export default {
       }else{
       this.dataSource.push({
         industry: '',
-        atc: '',
+        atc: 'Pick an ATC',
         amount: 0.00,
         output: 0.00,
         editable: true
@@ -1008,21 +1017,57 @@ export default {
     sched2Save(){
 
     },
-    addSched2(){
-      console.log('add sched2 date of return: ' + this.form.returnPeriod)
-      var index = this.sched2_data.length()
-      if(this.sched2_data[index].date_purchased == ''){
-
+    delete_sched2(index){
+      this.sched2_data[index].splice(index,1)
+    },
+    check_sched2(value){
+      
+      var only = this.formatDtMonth(this.form.returnPeriod)
+      var picked = this.formatDtMonth(value)
+      console.log('check sched2: ' + value)
+      if(picked !== only){
+        console.log("please choose base on return period")
       }
-      this.sched2_data.push({
+    },
+    addSched2(){
+      console.log('add sched2 date of return: ' + this.sched2_data)
+      
+      if(this.sched2_data == false){
+        console.log("sched 2 data fnun")
+        this.sched2_data.push({
+        date_purchased: '',
+        description: '',
+        vat: 0,
+        tax: 0
+      }) 
+      }else{
+        var index = this.sched2_data.length - 1
+      console.log("last index sched2_data: " + index)
+      if(this.sched2_data[index].date_purchased == '' || 
+      this.sched2_data[index].description == '' ||
+      this.sched2_data[index].tax <= 0 ||
+      this.sched2_data[index].vat <= 0 ){
+        console.log('please fill up all blank')
+      }else{
+        console.log("pushed")
+        this.sched2_data.push({
         date_purchased: '',
         description: '',
         vat: 0,
         tax: 0,
-      })
+      })  
+      }
+      }      
     },
     sched2Compute(value){
-
+      var index = this.sched2_data.length - 1
+      this.form.purCapGoodsNotExceed = 0
+      this.form.outputCapGoodsNotExceed = 0
+      this.sched2_data[index].tax = value*0.12
+      this.sched2_data.forEach(data =>{
+        this.form.purCapGoodsNotExceed += data.vat
+        this.form.outputCapGoodsNotExceed += data.tax
+      })
     },
     onClose_sched2(){
       this.sched2_drawer = false
@@ -1334,6 +1379,11 @@ export default {
         title: 'Input Tax',
         dataIndex: 'tax',
         scopedSlots: { customRender: 'tax'}
+      },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { cutomRender: 'operation'}
       }
       ],
       sched3A_data:[],
@@ -1378,6 +1428,11 @@ export default {
         dataIndex: 'balance',
         scopedSlots: { customRender: 'balance'}
       },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { cutomRender: 'operation'}
+      }
       ]
     };
   },
