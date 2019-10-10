@@ -201,10 +201,10 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 6  Vatable Sales
+            //Table 6 12A 12B Vatable Sales
             layout: "noBorders",
             table: {
-                widths: [385, 130],
+                widths: [385, 133],
 
                 body: [
                     [
@@ -230,10 +230,10 @@ function getContent(forms) {
         },
         // --------------------------------------------
         {
-            //Table 7  13 A Sales to Goverment
+            //Table 7  13A 13B Sales to Goverment
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -304,7 +304,7 @@ function getContent(forms) {
             //Table 10  16A  16B Total Sales Receipts    
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -1057,7 +1057,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [410, -5, 0, 0]
+                    margin: [410, -6 , 0, 0]
                 },
             ]
         ]
