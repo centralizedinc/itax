@@ -172,7 +172,7 @@
             <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
           </template>
           <template slot="amount" slot-scope="text, record">
-            <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
+            <a-input-number @change="changeAmount" :disabled="record.editable"></a-input-number>
           </template>
           <template slot="output" slot-scope="text, record, index">
             <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
@@ -460,7 +460,7 @@
         label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
       />
       <a-button type="primary" @click="showDrawer3A">
-        Schedule 3
+        Schedule 3 A
       </a-button>
       <a-drawer
       title="Schedule 3 Purchases/Importation This Period"
@@ -675,6 +675,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20A"
       >
+      <a-button type="primary" @click="sched3B_drawer = true">
+        Schedule 3B
+      </a-button>
         <a-input-number
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
           v-model="form.inputTaxPurchaseCapGoods"
@@ -686,6 +689,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20B"
       >
+      <a-button type="primary" @click="sched4_drawer = true">
+        Schedule 4
+      </a-button>
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
@@ -697,6 +703,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20C"
       >
+      <a-button type="primary" @click="sched5_drawer = true">
+        Schedule 5
+      </a-button>
         <a-input-number
           placeholder="Input Tax allocable to Exempt Sales"
           v-model="form.inputTaxAllocableToExempt"
@@ -770,6 +779,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23A"
       >
+      <a-button type="primary" @click="sched6_drawer = true">
+        Schedule 6
+      </a-button>
         <a-input-number
           placeholder="Creditable Value-Added Tax Withheld"
           v-model="form.creditableVatWithheld"
@@ -781,6 +793,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23B"
       >
+      <a-button type="primary" @click="sched7_drawer = true">
+        Schedule 7
+      </a-button>
         <a-input-number
           placeholder="Advance Payments for Sugar and Flour Industries"
           v-model="form.advPaySugarFlourInd"
@@ -792,6 +807,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23C"
       >
+      <a-button type="primary" @click="sched8_drawer = true">
+        Schedule 8
+      </a-button>
         <a-input-number
           placeholder="VAT withheld on Sales to Government"
           v-model="form.taxWthld"
@@ -923,6 +941,220 @@
         ></a-input-number>
       </a-form-item>
     </a-form>
+    <!-- schedule 3B -->
+    <a-drawer
+      title="Schedule 3 B Purchases/Importation Previous Period"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched3B"
+      :visible="sched3B_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched3B_data" :columns="columns_sched3A">
+
+      </a-table>
+      </a-drawer>
+      <!-- schedule 4 -->
+      <a-drawer
+      title="Schedule 4 Input Tax Attributable to Sale to Government"
+      placement="right"
+      :closable="false"
+      @close="sched4_drawer = false"
+      :visible="sched4_drawer"
+      width="1000"
+      >
+      <a-row>
+        <a-col :span="18">
+        <div>
+        <p>Input Tax directly attribute to sale to government
+          Add: Ratable portion of Input Tax not directly attribute to any activity:
+        </p>
+        </div>
+        </a-col>
+        <a-col :span="6">
+        <div>
+        <a-input-number></a-input-number>
+        </div>
+        </a-col>
+        </a-row>
+        <!-- -- -->
+        <a-row>
+          <a-col :span="9">
+            <a-row>
+              <a-col :span="12">
+                Taxable sales to government
+              </a-col>
+              <a-col :span="12">
+                <a-input-number disabled></a-input-number>
+              </a-col> 
+            </a-row>
+            <a-row>
+              <a-col :span="12">
+                Total Sales
+              </a-col>
+              <a-col :span="12">
+                <a-input-number disabled></a-input-number>
+              </a-col> 
+            </a-row>
+          </a-col>
+          <a-col :span="4">
+            Amount of Input Tax not directly attributable
+          </a-col>
+          <a-col :span="5">
+            <a-input-number></a-input-number>
+          </a-col>
+          <a-col :span="6">
+            <a-input-number disabled></a-input-number>
+            </a-col>
+          </a-row>
+          <!-- -- -->
+          <a-row>
+            <a-col :span="18">
+              Total Input Tax attributable to sale to government
+            </a-col>
+            <a-col :span="6">
+              <a-input-number disabled></a-input-number>
+            </a-col>
+          </a-row>
+          <!-- -- -->
+          <a-row>
+            <a-col :span="18">
+              Less Standard Input Tax to sale to government
+            </a-col>
+            <a-col :span="6">
+              <a-input-number></a-input-number>
+            </a-col>
+          </a-row>
+          <!-- -- -->
+          <a-row>
+            <a-col :span="18">
+              Input Tax on Sale to Govt. closed to expense (to Item 20B)             
+            </a-col>
+            <a-col :span="6">
+              <a-input-number disabled></a-input-number>
+            </a-col>
+          </a-row>
+      </a-drawer>
+      <!-- schedule 5 -->
+      <a-drawer
+      title="Schedule 4 Input Tax Attributable to Sale to Government"
+      placement="right"
+      :closable="false"
+      @close="sched5_drawer = false"
+      :visible="sched5_drawer"
+      width="1000"
+      >
+      <a-row>
+        <a-col :span="18">
+        <div>
+        <p>Input Tax directly attribute to sale to government
+          Add: Ratable portion of Input Tax not directly attribute to any activity:
+        </p>
+        </div>
+        </a-col>
+        <a-col :span="6">
+        <div>
+        <a-input-number></a-input-number>
+        </div>
+        </a-col>
+        </a-row>
+        <!-- -- -->
+        <a-row>
+          <a-col :span="9">
+            <a-row>
+              <a-col :span="12">
+                Taxable sales to government
+              </a-col>
+              <a-col :span="12">
+                <a-input-number disabled></a-input-number>
+              </a-col> 
+            </a-row>
+            <a-row>
+              <a-col :span="12">
+                Total Sales
+              </a-col>
+              <a-col :span="12">
+                <a-input-number disabled></a-input-number>
+              </a-col> 
+            </a-row>
+          </a-col>
+          <a-col :span="4">
+            Amount of Input Tax not directly attributable
+          </a-col>
+          <a-col :span="5">
+            <a-input-number></a-input-number>
+          </a-col>
+          <a-col :span="6">
+            <a-input-number disabled></a-input-number>
+            </a-col>
+          </a-row>
+          <!-- -- -->
+          <a-row>
+            <a-col :span="18">
+              Total Input Tax attributable to sale to government
+            </a-col>
+            <a-col :span="6">
+              <a-input-number disabled></a-input-number>
+            </a-col>
+          </a-row>
+          <!-- -- -->
+          <a-row>
+            <a-col :span="18">
+              Less Standard Input Tax to sale to government
+            </a-col>
+            <a-col :span="6">
+              <a-input-number></a-input-number>
+            </a-col>
+          </a-row>
+          <!-- -- -->
+          <a-row>
+            <a-col :span="18">
+              Input Tax on Sale to Govt. closed to expense (to Item 20B)             
+            </a-col>
+            <a-col :span="6">
+              <a-input-number disabled></a-input-number>
+            </a-col>
+          </a-row>
+      </a-drawer>
+      <!-- schedule 6 -->
+      <a-drawer
+      title="Schedule 6 Purchases/Importation Previous Period"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched3B"
+      :visible="sched6_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched6_data" :columns="columns_sched6">
+
+      </a-table>
+      </a-drawer>
+      <!-- schedule 7 -->
+      <a-drawer
+      title="Schedule 7 Purchases/Importation Previous Period"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched3B"
+      :visible="sched7_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched6_data" :columns="columns_sched7">
+
+      </a-table>
+      </a-drawer>
+      <!-- schedule 8 -->
+      <a-drawer
+      title="Schedule 8 Purchases/Importation Previous Period"
+      placement="right"
+      :closable="false"
+      @close="onClose_sched8"
+      :visible="sched8_drawer"
+      width="1000"
+      >
+      <a-table bordered :dataSource="sched8_data" :columns="columns_sched8">
+
+      </a-table>
+      </a-drawer>
   </div>
 </template>
 
@@ -1060,14 +1292,16 @@ export default {
       }      
     },
     sched2Compute(value){
-      var index = this.sched2_data.length - 1
+      var index = this.sched2_data.length - 1      
+      this.sched2_data[index].tax = value*0.12
       this.form.purCapGoodsNotExceed = 0
       this.form.outputCapGoodsNotExceed = 0
-      this.sched2_data[index].tax = value*0.12
       this.sched2_data.forEach(data =>{
+        console.log("sched2_data compute: " + data)
         this.form.purCapGoodsNotExceed += data.vat
         this.form.outputCapGoodsNotExceed += data.tax
       })
+      console.log("sched2compute data: " + this.sched2_datq)
     },
     onClose_sched2(){
       this.sched2_drawer = false
@@ -1319,6 +1553,12 @@ export default {
       visible: false,
       sched2_drawer: false,
       sched3A_drawer: false,
+      sched3B_drawer: false,
+      sched4_drawer: false,
+      sched5_drawer: false,
+      sched6_drawer: false,
+      sched7_drawer: false,
+      sched8_drawer: false, 
       visibleATC: false,
       errors: [],
       loading: false,
@@ -1435,7 +1675,160 @@ export default {
         dataIndex: 'operation',
         scopedSlots: { cutomRender: 'operation'}
       }
+      ],
+      sched3B_data:[],
+      columns_sched3B:[
+        {
+        title: 'Date Purchased',
+        dataIndex: 'date_purchased',
+        scopedSlots: { customRender: 'date_purchased'}
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        scopedSlots: { customRender: 'description'}
+      },
+      {
+        title: 'Amount(Net of VAT)',
+        dataIndex: 'vat',
+        scopedSlots: { customRender: 'vat'}
+      },
+      {
+        title: 'Balance of Input Tax from previous period',
+        dataIndex: 'balance_input_tax',
+        scopedSlots: { customRender: 'balance_input_tax'}
+      },
+      {
+        title: 'Estimate Life (in Months)',
+        dataIndex: 'est_life',
+        scopedSlots: { customRender: 'est_life'}
+      },
+      {
+        title: 'Recognized Life (In Months) Useful life or 60 mos. (whichever is shorter)',
+        dataIndex: 'recog_life',
+        scopedSlots: { customRender: 'recog_life'}
+      },
+      {
+        title: 'Allowable Input Tax for the Period Tax Rate / Recognized Life',
+        dataIndex: 'allowable_input_tax',
+        scopedSlots: { customRender: 'allowable_input_tax'}
+      },
+      {
+        title: 'Balance of Input Tax to be carried to Next Period Tax Rate - Allowable Input Tax',
+        dataIndex: 'balance',
+        scopedSlots: { customRender: 'balance'}
+      },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { cutomRender: 'operation'}
+      }
+      ],
+       sched6_data:[],
+      columns_sched6:[
+        {
+        title: 'Period Covered',
+        dataIndex: 'covered',
+        scopedSlots: { customRender: 'covered'}
+      },
+      {
+        title: 'Name of Withholding Agent',
+        dataIndex: 'withholding_agent',
+        scopedSlots: { customRender: 'withholding_agent'}
+      },
+      {
+        title: 'Income Payment',
+        dataIndex: 'income_pay',
+        scopedSlots: { customRender: 'income_pay'}
+      },
+      {
+        title: 'Total Tax Withheld',
+        dataIndex: 'total_tax_withheld',
+        scopedSlots: { customRender: 'total_tax_withheld'}
+      },
+      {
+        title: 'Applied Current mo.',
+        dataIndex: 'applied_current',
+        scopedSlots: { customRender: 'applied_current'}
+      },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { cutomRender: 'operation'}
+      }
+      ],
+      sched7_data:[],
+      columns_sched7:[
+        {
+        title: 'Period Covered',
+        dataIndex: 'covered',
+        scopedSlots: { customRender: 'covered'}
+      },
+      {
+        title: 'Name of Miller',
+        dataIndex: 'miller',
+        scopedSlots: { customRender: 'miller'}
+      },
+      {
+        title: 'Name of Tax Payer',
+        dataIndex: 'tax_payer',
+        scopedSlots: { customRender: 'tax_payer'}
+      },
+      {
+        title: 'Official Receipt Number',
+        dataIndex: 'receipt_num',
+        scopedSlots: { customRender: 'receipt_num'}
+      },
+      {
+        title: 'Amount Paid',
+        dataIndex: 'amount_paid',
+        scopedSlots: { customRender: 'amount_paid'}
+      },
+      {
+        title: 'Appliead Current mo.',
+        dataIndex: 'applied_current',
+        scopedSlots: { customRender: 'applied_current'}
+      },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { cutomRender: 'operation'}
+      }
+      ],
+      sched8_data:[],
+      columns_sched8:[
+        {
+        title: 'Period Covered',
+        dataIndex: 'covered',
+        scopedSlots: { customRender: 'covered'}
+      },
+      {
+        title: 'Name of Withholding Agent',
+        dataIndex: 'withholdinng_agent',
+        scopedSlots: { customRender: 'withholding_agent'}
+      },
+      {
+        title: 'Income Payment',
+        dataIndex: 'income_payment',
+        scopedSlots: { customRender: 'income_payment'}
+      },
+      {
+        title: 'Total Tax Withheld',
+        dataIndex: 'total_withheld',
+        scopedSlots: { customRender: 'total_withheld'}
+      },
+      {
+        title: 'Applied Current mo.',
+        dataIndex: 'applied_current',
+        scopedSlots: { customRender: 'applied_current'}
+      },
+      {
+        title: '',
+        dataIndex: 'operation',
+        scopedSlots: { cutomRender: 'operation'}
+      }
       ]
+
     };
   },
   computed: {
