@@ -89,8 +89,8 @@
   </a-card>
     </a-layout-content>
     <a-modal :visible="view_select" title="Select Taxpayer" :closable="false">
-      <!-- :loading="loading" -->
-      <a-list itemLayout="horizontal" :dataSource="taxpayer_list" :loading="loading">
+      <!-- <a-list itemLayout="horizontal" :dataSource="taxpayer_list" :loading="loading"> -->
+        <a-list itemLayout="horizontal" :dataSource="taxpayer_list">
         <a-list-item slot="renderItem" slot-scope="item, index">
             <a-card style="width:100%" class="tin_card" @click="select(index)">
               <a-row type="flex" align="middle">
@@ -168,7 +168,7 @@ export default {
 
   data() {
     return {
-      // view_select:true,
+      view_select:true,
       selected_index:0,
       taxpayer_list:[],
       taxpayer:null,
@@ -279,7 +279,8 @@ export default {
       console.log("this.in_bottom :", this.in_bottom);
     },
     select(index){
-      this.taxpayer = this.taxpayer_list[index]
+      this.taxpayer = this.taxpayer_list[index];
+      console.log('this.taxpayer :', this.taxpayer);
       this.selected_index = index;
     },
     isSelected(index){

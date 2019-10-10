@@ -69,24 +69,24 @@ function validateRequired(form) {
         error_messages.push({ field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
     }
 
-    if (!form.sched1 || !form.sched1.length) {
-        error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD('Schedule 1') });
-    } else {
-        form.sched1.forEach((data, index) => {
-            if (!data.description) {
-                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Description at schedule 1 item ${index + 1}`) });
-            }
-            if (!data.atc) {
-                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`ATC at schedule 1 item ${index + 1}`) });
-            }
-            if (!data.amount) {
-                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Amount of Sales at schedule 1 item ${index + 1}`) });
-            }
-            if (!data.output_tax) {
-                error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Output Tax at schedule 1 item ${index + 1}`) });
-            }
-        })
-    }
+    // if (!form.sched1 || !form.sched1.length) {
+    //     error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD('Schedule 1') });
+    // } else {
+    //     form.sched1.forEach((data, index) => {
+    //         if (!data.description) {
+    //             error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Description at schedule 1 item ${index + 1}`) });
+    //         }
+    //         if (!data.atc) {
+    //             error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`ATC at schedule 1 item ${index + 1}`) });
+    //         }
+    //         if (!data.amount) {
+    //             error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Amount of Sales at schedule 1 item ${index + 1}`) });
+    //         }
+    //         if (!data.output_tax) {
+    //             error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD(`Output Tax at schedule 1 item ${index + 1}`) });
+    //         }
+    //     })
+    // }
     return error_messages;
 }
 
