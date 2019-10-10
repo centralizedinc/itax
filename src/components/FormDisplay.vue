@@ -114,6 +114,7 @@ export default {
         month: this.formatDtMonth(form.dateFiled1),
         year: this.formatDtYear(form.dateFiled1)
       };
+      form.dateFiled1 = dateFiled1;
 
       var birthday = {
         month: this.formatDtMonth(form.taxpayer.birthday),
