@@ -173,21 +173,21 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.specialRate == true ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == true ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [210, 3, 0, 0]
                         },
                         {
-                            text: forms.specialRate == false ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [23, 3, 0, 0]
                         },
                         {
-                            text: forms.specialRateYn == null ? ' ' : forms.specialRateYn,
+                            text: forms.avail_tax_relief == null ? ' ' : forms.avail_tax_relief,
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
@@ -201,10 +201,10 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 6  Vatable Sales
+            //Table 6 12A 12B Vatable Sales
             layout: "noBorders",
             table: {
-                widths: [385, 130],
+                widths: [385, 132],
 
                 body: [
                     [
@@ -230,10 +230,10 @@ function getContent(forms) {
         },
         // --------------------------------------------
         {
-            //Table 7  13 A Sales to Goverment
+            //Table 7  13A 13B Sales to Goverment
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -304,7 +304,7 @@ function getContent(forms) {
             //Table 10  16A  16B Total Sales Receipts    
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -457,7 +457,7 @@ function getContent(forms) {
             //Table 17  18A and 18B     
              layout: "noBorders", 
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -484,7 +484,7 @@ function getContent(forms) {
             //Table 18  18C and 18D   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -512,7 +512,7 @@ function getContent(forms) {
             //Table 19  18E and 18F   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -540,7 +540,7 @@ function getContent(forms) {
             //Table 20  18G and 18H   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -568,7 +568,7 @@ function getContent(forms) {
             //Table 21  18I and 18J   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -596,7 +596,7 @@ function getContent(forms) {
     //Table 22  18K and 18L   
     layout: "noBorders",
     table: {
-        widths: [385, 130,],
+        widths: [385, 132,],
         body: [
             [
                 {
@@ -1057,7 +1057,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [410, -5, 0, 0]
+                    margin: [410, -6 , 0, 0]
                 },
             ]
         ]
@@ -1070,7 +1070,7 @@ function getContent(forms) {
     //Table 44  25 A B C D 
     layout: "noBorders",
     table: {
-        widths: [165, 118,83,135    ],
+        widths: [165,118,83,135    ],
         body: [
             [
                
@@ -1086,14 +1086,14 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [23, 4, 0, 0]
+                    margin: [23, 5, 0, 0]
                 },
                 {
                     text: forms.compromise == null ? '0.00' : forms.compromise%1 == 0 ? forms.compromise + '.00' : forms.compromise,
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [13, 4, 0, 0]
+                    margin: [13, 5, 0, 0]
                 },
                 {
                     text: forms.penalties == null ? '0.00' : forms.penalties%1 == 0 ? forms.penalties + '.00' : forms.penalties,
@@ -1122,7 +1122,7 @@ function getContent(forms) {
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [83, 4, 0, 0]
+                    margin: [83,4,0,0]
                 }
             ]
         ]
@@ -1139,14 +1139,14 @@ function getContent(forms) {
 //         body: [
 //             [
 //                 {
-//                     text: "Richard Aguilus Mulawin Gutierez  ",
+//                     text: "Testing",
 //                     fontSize: 9,
 //                     alignment: 'justify',
 //                     // right,down,left,up
 //                     margin: [80, 27, 0, 0]
 //                 },
 //                 {
-//                     text: "Junex Mastermind",
+//                     text: "Testing",
 //                     fontSize: 9,
 //                     alignment: 'justify',
 //                     // right,down,left,up

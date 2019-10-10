@@ -113,13 +113,13 @@
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
       />
       <a-form-item>
-        <a-radio-group v-model="form.specialRate">
+        <a-radio-group v-model="form.is_avail_tax_relief" :defaultValue="false">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item>
-        <a-input placeholder="If yes, specify" v-model="form.specialRateYn"></a-input>
+      <a-form-item v-if="form.is_avail_tax_relief">
+        <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
     </a-form>
 
@@ -127,45 +127,26 @@
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
       <a-button type="primary" @click="showDrawer">
-      Schedule 1
-    </a-button>
-    <a-drawer
-      title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
-      placement="right"
-      :closable="false"
-      @close="onClose"
-      :visible="visible"
-      width="1000"
-    >
-      <a-button type="primary" @click="addAtc">
-        ADD
+        Schedule 1
       </a-button>
-      <!-- <a-drawer
-      title="ATC"
-      placement="right"
-      :closable="false"
-      @close="onClose"
-      :visible="visibleATC"
-      width="500"
+      <a-drawer
+        title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
+        placement="right"
+        :closable="false"
+        @close="onClose"
+        :visible="visible"
+        width="1000"
       >
-        <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
-      </a-drawer> -->
-      <a-table bordered :dataSource="dataSource" :columns="columns">
-        <template slot="industry" slot-scope="text, record,index">
-        <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
-        <a-input disabled v-model="dataSource[index].industry"></a-input>
-      </template>
-        <template slot="footer" span: 2>
-          <a-button @click="onClose">Proceed</a-button>
-      <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
-    </template>
-        <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
-        <a-select
-          style="width 100%"
-          @change="pickAtc"
-          defaultValue="Pick an ATC"
-          :disabled="record.editable" 
-          v-model="dataSource[index].atc"          
+        <a-button type="primary" @click="addAtc">
+          ADD
+        </a-button>
+        <!-- <a-drawer
+        title="ATC"
+        placement="right"
+        :closable="false"
+        @close="onClose"
+        :visible="visibleATC"
+        width="500"
         >
           <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
         </a-select>
@@ -472,7 +453,7 @@
       >
       <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
 
-      </a-table>
+        </a-table>
       </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -876,7 +857,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="25B"
         :validate-status="error_item('interest')"
-        :help="error_desc('interst')"
+        :help="error_desc('interest')"
       >
         <a-input-number
           placeholder="Interest"
@@ -1220,6 +1201,8 @@ export default {
           this.loading = false;
           if (result.data.errors && result.data.errors.length > 0) {
             this.errors = result.data.errors;
+            console.log('this.errors :', this.errors);
+            if(this.errors && this.errors[0] && this.errors[0].page !== null) this.$emit("changeStep", this.errors[0].page);
             this.$notification.error({ message: "Validation Error" });
           } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
