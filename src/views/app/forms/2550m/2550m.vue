@@ -126,11 +126,11 @@
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
-      <a-button type="primary" @click="visible=true">
+      <a-button type="primary" @click="show_sched1=true">
         Schedule 1
       </a-button>
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')"></a-form-item>
-      <schedule-one v-if="visible" :show="visible" :form="form" @close="visible=false"/>
+      <schedule-one v-if="show_sched1" :show="show_sched1" :form="form" @close="show_sched1=false"/>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -857,118 +857,6 @@ export default {
   },
   props: ["form", "step"],
   methods: {
-    updateSched1(data){
-      Object.keys(data).forEach(key => {
-        this.form[key] = data[key];
-      })
-      this.visible = false;
-    },
-    computeSched1(){
-      this.form.totalAtcAmount = 0
-      this.form.totalAtcOutput = 0
-      this.dataSource.forEach(data =>{
-        console.log("data source data; " + JSON.stringify(data))
-        this.form.totalAtcAmount += data.amount
-        this.form.totalAtcOutput += data.output
-      })
-    },
-    saveAtc(index){
-      this.dataSource[index].editable = true
-      this.forEdit = false     
-      console.log("record index: " + JSON.stringify(this.dataSource))
-      this.holder = {
-        industry: null,
-        atc: null,
-        amount: 0,
-        output: 0
-      }
-      this.computeSched1()
-    },
-    cancelAtc(index){
-      this.dataSource[index].editable = true
-      this.dataSource[index] = this.holder
-      this.holder = {
-        industry: null,
-        atc: null,
-        amount: 0,
-        output: 0
-      }
-      this.forEdit = false
-    },
-    deleteAtc(index){
-      this.reloadATC = true;
-      setTimeout(() => {
-        this.form.sched1.splice(index, 1);
-        this.reloadATC = false;
-      }, 1000);
-    },
-    editAtc(index){
-      if(this.forEdit){
-        console.log("please save first before you can edit other")
-        
-      }else{
-        this.forEdit = true
-        this.sched1_index = index
-        this.holder = this.dataSource[index]
-      this.dataSource[index].editable  = false
-      }
-      console.log("data source data: " + JSON.stringify(this.dataSource[index]))
-    },
-    pickAtc(atc_index, index){
-      this.reloadATC = true;
-        const item = this.atc_list[atc_index];
-        this.form.sched1[index].atc = item.atc;
-        this.form.sched1[index].description = item.description;
-        this.form.sched1[index].rate = item.rate;
-        this.form.sched1[index].output_tax = this.form.sched1[index].amount * item.rate;
-        console.log('this.dataSource[index] :', this.form.sched1[index]);
-        this.form.totalAtcAmount = this.form.sched1.map(v => v.amount).reduce((t, v) => t + v);
-        this.form.totalAtcOutput = this.form.sched1.map(v => v.output_tax).reduce((t, v) => t + v);
-        this.reloadATC = false;
-    },
-    changeAmount(value, index){
-      console.log('changeAmount value :', value);
-      if(value !== null && !isNaN(value)){
-        // this.dataSource[index].amount = value
-        this.reloadATC = true;
-        this.form.sched1[index].output_tax = value * this.form.sched1[index].rate;
-        this.form.totalAtcAmount = this.form.sched1.map(v => v.amount).reduce((t, v) => t + v);
-        this.form.totalAtcOutput = this.form.sched1.map(v => v.output_tax).reduce((t, v) => t + v);
-        this.reloadATC = false;
-      }
-    },
-    changeOutput(value){
-      this.dataSource[this.sched1_index].output = value * 0.12;
-      console.log("change output value: " + JSON.stringify(value))
-    },
-    addAtc() {
-      this.reloadATC = true;
-      setTimeout(() => {
-        if(!this.form.sched1) this.form.sched1 = [];
-        this.form.sched1.push({
-          description: '',
-          atc: 'Pick an ATC',
-          amount: 0,
-          output_tax: 0,
-          rate: 0
-        })
-        this.reloadATC = false;
-      }, 1000);
-      console.log('this.form.sched1 addAtc :', this.form.sched1);
-      // console.log("updated dataa source: " + JSON.stringify(this.dataSource))
-      // if(this.forEdit == true){
-      //   console.log("please save first before you can add")
-      // }else{
-      // this.dataSource.push({
-      //   description: '',
-      //   atc: 'Pick an ATC',
-      //   amount: 0,
-      //   output_tax: 0,
-      //   rate: 0
-      // })
-      // }
-      // this.visibleATC = true
-    },
     sched2Save(){
 
     },
@@ -1027,10 +915,6 @@ export default {
     onClose_sched2(){
       this.sched2_drawer = false
     },
-    showDrawer() {
-      console.log("data source show drawer; " + this.dataSource)
-      this.visible = true
-    },
     showDrawer2() {
       console.log("data source show drawer; " + this.dataSource)
       this.sched2_drawer = true
@@ -1040,14 +924,6 @@ export default {
     },
     onClose_sched3A(){
       this.sched3A_drawer = false
-    },
-    onClose() {
-      // this.visible = false
-      if(this.visible = true){
-        this.visible = false
-      } else if(this.visibleATC = true){
-        this.visibleATC = false
-      }
     },
     // checkDraft() {
     //   if (
@@ -1282,7 +1158,7 @@ export default {
       atc_amount_holder:0,
       atc_output_holder:0,
       forEdit: false,
-      visible: false,
+      show_sched1: false,
       sched2_drawer: false,
       sched3A_drawer: false,
       visibleATC: false,
