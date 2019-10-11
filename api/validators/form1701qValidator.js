@@ -69,7 +69,7 @@ function validateRequired(field) {
         var tp = new taxpayerDetails(taxpayer); 
         console.log('tp', JSON.stringify(field))
         console.log('!tp.tin', !field.dateFiled)
-        if (!field.dateFiled) {
+        if (!field.returnPeriodYear) {
             error_messages.push({ field: "returnPeriodYear", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
         }
     
