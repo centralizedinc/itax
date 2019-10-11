@@ -17,8 +17,8 @@ var Form2550MSchema = new Schema({
     returnPeriodYear: String,
     amendedYn: Boolean,
     numOfSheet: { type: Number, default: 0 },
-    specialRateYn: String,
-    internationalTreatyYn: String,
+    is_avail_tax_relief: String,
+    avail_tax_relief: String,
     totalAtcAmount: { type: Number, default: 0 }, //item 12A
     totalAtcOutput: { type: Number, default: 0 }, // item 12B
     salesGovAmount: { type: Number, default: 0 },
@@ -73,7 +73,19 @@ var Form2550MSchema = new Schema({
     penalties: { type: Number, default: 0 },
     totalAmountPayable: { type: Number, default: 0 },
     batchNo: { type: Number, default: 0 },
-    sched1: [],
+    sched1: [{
+        atc: {
+            type: String
+        },
+        amount: {
+            type: Number,
+            default: 0
+        },
+        output_tax: {
+            type: Number,
+            default: 0
+        }
+    }],
     sched2: [],
     sched3: [],
     sched4: {

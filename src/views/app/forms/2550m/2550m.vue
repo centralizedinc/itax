@@ -116,19 +116,94 @@
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
       />
       <a-form-item>
-        <a-radio-group v-model="form.specialRate">
+        <a-radio-group v-model="form.is_avail_tax_relief" :defaultValue="false">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item>
-        <a-input placeholder="If yes, specify" v-model="form.specialRateYn"></a-input>
+      <a-form-item v-if="form.is_avail_tax_relief">
+        <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
     </a-form>
 
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
+      <a-button type="primary" @click="showDrawer">Schedule 1</a-button>
+      <a-drawer
+        title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
+        placement="right"
+        :closable="false"
+        @close="onClose"
+        :visible="visible"
+        width="1000"
+      >
+        <a-button type="primary" @click="addAtc">ADD</a-button>
+        <!-- <a-drawer
+        title="ATC"
+        placement="right"
+        :closable="false"
+        @close="onClose"
+        :visible="visibleATC"
+        width="500"
+        >
+          <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
+        </a-drawer>-->
+        <a-table bordered :loading="reloadATC" :dataSource="form.sched1" :columns="columns">
+          <template slot="industry" slot-scope="text, record,index">
+            <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
+            <a-input disabled v-model="form.sched1[index].description"></a-input>
+          </template>
+          <template slot="footer">
+            <!-- <a-button @click="onClose">Proceed</a-button> -->
+            <p
+              align="right"
+            >12A: Total Amount: {{form.totalAtcAmount}} 12B: Total Output Tax: {{form.totalAtcOutput}}</p>
+          </template>
+          <template slot="atc" slot-scope="text, record, index">
+            <a-select
+              style="width 100%"
+              @change="pickAtc($event, index)"
+              :defaultValue="form.sched1[index] && form.sched1[index].atc ? form.sched1[index].atc : 'Pick an ATC'"
+            >
+              <a-select-option v-for="(item, i) in atc_list" :key="i">{{item.atc}}</a-select-option>
+            </a-select>
+          </template>
+          <template slot="amount" slot-scope="text, record, index">
+            <a-input-number
+              @change="changeAmount($event, index)"
+              v-model="form.sched1[index].amount"
+              placeholder="text"
+            ></a-input-number>
+          </template>
+          <template slot="output" slot-scope="text, record, index">
+            <a-input-number v-model="form.sched1[index].output_tax" disabled></a-input-number>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <!-- <a-popconfirm
+              v-if="dataSource[index].editable == false"
+              title="Sure to save?"
+              @confirm="() => saveAtc(index)">
+              <a href="javascript:;">Save</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == true"
+              title="Sure to edit?"
+              @confirm="() => editAtc(index)">
+              <a href="javascript:;">Edit</a>
+            </a-popconfirm>
+            <a-popconfirm
+              v-if="dataSource[index].editable == false"
+              title="Sure to Cance;?"
+              @confirm="() => cancelAtc(index)">
+              <a href="javascript:;">Cancel</a>
+            </a-popconfirm>-->
+            <a-popconfirm title="Sure to delete ?" @confirm="deleteAtc(index)">
+              <a href="javascript:;">Delete</a>
+            </a-popconfirm>
+          </template>
+        </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -140,8 +215,6 @@
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalAtcAmount"
           disabled
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -152,9 +225,7 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.totalAtcOutput"
-          disbled
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
+          disabled
         ></a-input-number>
       </a-form-item>
 
@@ -324,6 +395,50 @@
         class="computation-item"
         label="18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)"
       />
+      <a-button type="primary" @click="showDrawer2">Schedule 2</a-button>
+      <a-drawer
+        title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
+        placement="right"
+        :closable="false"
+        @close="onClose_sched2"
+        :visible="sched2_drawer"
+        width="1000"
+      >
+        <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
+          <template slot="date_purchased" slot-scope="text, record,index">
+            <a-date-picker
+              v-model="sched2_data[index].date_purchased"
+              @change="check_sched2"
+              style="width: 100%"
+            />
+          </template>
+          <template slot="description" slot-scope="text, record,index">
+            <a-input v-model="sched2_data[index].description"></a-input>
+          </template>
+          <template slot="vat" slot-scope="text, record,index">
+            <a-input-number v-model="sched2_data[index].vat" @change="sched2Compute"></a-input-number>
+          </template>
+          <template slot="tax" slot-scope="text, record,index">
+            <a-input-number disabled v-model="sched2_data[index].tax"></a-input-number>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-popconfirm
+              v-if="sched2_data.length"
+              title="Sure to delete?"
+              @confirm="() => delete_sched2(index)"
+            >
+              <a href="javascript:;">Delete</a>
+            </a-popconfirm>
+          </template>
+          <template slot="footer">
+            <a-button @click="addSched2">Add</a-button>
+            <a-button>Save</a-button>
+            <p
+              align="right"
+            >18A: {{form.purCapGoodsNotExceed}} 18B: {{form.outputCapGoodsNotExceed}}</p>
+          </template>
+        </a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -354,6 +469,17 @@
         class="computation-item"
         label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
       />
+      <a-button type="primary" @click="showDrawer3A">Schedule 3</a-button>
+      <a-drawer
+        title="Schedule 3 Purchases/Importation This Period"
+        placement="right"
+        :closable="false"
+        @close="onClose_sched3A"
+        :visible="sched3A_drawer"
+        width="1500"
+      >
+        <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A"></a-table>
+      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -785,7 +911,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="25B"
         :validate-status="error_item('interest')"
-        :help="error_desc('interst')"
+        :help="error_desc('interest')"
       >
         <a-input-number
           placeholder="Interest"
@@ -840,8 +966,203 @@
 <script>
 export default {
   props: ["form", "step"],
-
   methods: {
+    computeSched1() {
+      this.form.totalAtcAmount = 0;
+      this.form.totalAtcOutput = 0;
+      this.dataSource.forEach(data => {
+        console.log("data source data; " + JSON.stringify(data));
+        this.form.totalAtcAmount += data.amount;
+        this.form.totalAtcOutput += data.output;
+      });
+    },
+    saveAtc(index) {
+      this.dataSource[index].editable = true;
+      this.forEdit = false;
+      console.log("record index: " + JSON.stringify(this.dataSource));
+      this.holder = {
+        industry: null,
+        atc: null,
+        amount: 0,
+        output: 0
+      };
+      this.computeSched1();
+    },
+    cancelAtc(index) {
+      this.dataSource[index].editable = true;
+      this.dataSource[index] = this.holder;
+      this.holder = {
+        industry: null,
+        atc: null,
+        amount: 0,
+        output: 0
+      };
+      this.forEdit = false;
+    },
+    deleteAtc(index) {
+      this.reloadATC = true;
+      setTimeout(() => {
+        this.form.sched1.splice(index, 1);
+        this.reloadATC = false;
+      }, 1000);
+    },
+    editAtc(index) {
+      if (this.forEdit) {
+        console.log("please save first before you can edit other");
+      } else {
+        this.forEdit = true;
+        this.sched1_index = index;
+        this.holder = this.dataSource[index];
+        this.dataSource[index].editable = false;
+      }
+      console.log(
+        "data source data: " + JSON.stringify(this.dataSource[index])
+      );
+    },
+    pickAtc(atc_index, index) {
+      this.reloadATC = true;
+      const item = this.atc_list[atc_index];
+      this.form.sched1[index].atc = item.atc;
+      this.form.sched1[index].description = item.description;
+      this.form.sched1[index].rate = item.rate;
+      this.form.sched1[index].output_tax =
+        this.form.sched1[index].amount * item.rate;
+      console.log("this.dataSource[index] :", this.form.sched1[index]);
+      this.form.totalAtcAmount = this.form.sched1
+        .map(v => v.amount)
+        .reduce((t, v) => t + v);
+      this.form.totalAtcOutput = this.form.sched1
+        .map(v => v.output_tax)
+        .reduce((t, v) => t + v);
+      this.reloadATC = false;
+    },
+    changeAmount(value, index) {
+      console.log("changeAmount value :", value);
+      if (value !== null && !isNaN(value)) {
+        // this.dataSource[index].amount = value
+        this.reloadATC = true;
+        this.form.sched1[index].output_tax =
+          value * this.form.sched1[index].rate;
+        this.form.totalAtcAmount = this.form.sched1
+          .map(v => v.amount)
+          .reduce((t, v) => t + v);
+        this.form.totalAtcOutput = this.form.sched1
+          .map(v => v.output_tax)
+          .reduce((t, v) => t + v);
+        this.reloadATC = false;
+      }
+    },
+    changeOutput(value) {
+      this.dataSource[this.sched1_index].output = value * 0.12;
+      console.log("change output value: " + JSON.stringify(value));
+    },
+    addAtc() {
+      this.reloadATC = true;
+      setTimeout(() => {
+        if (!this.form.sched1) this.form.sched1 = [];
+        this.form.sched1.push({
+          description: "",
+          atc: "Pick an ATC",
+          amount: 0,
+          output_tax: 0,
+          rate: 0
+        });
+        this.reloadATC = false;
+      }, 1000);
+      console.log("this.form.sched1 addAtc :", this.form.sched1);
+      // console.log("updated dataa source: " + JSON.stringify(this.dataSource))
+      // if(this.forEdit == true){
+      //   console.log("please save first before you can add")
+      // }else{
+      // this.dataSource.push({
+      //   description: '',
+      //   atc: 'Pick an ATC',
+      //   amount: 0,
+      //   output_tax: 0,
+      //   rate: 0
+      // })
+      // }
+      // this.visibleATC = true
+    },
+    sched2Save() {},
+    delete_sched2(index) {
+      this.sched2_data[index].splice(index, 1);
+    },
+    check_sched2(value) {
+      var only = this.formatDtMonth(this.form.returnPeriod);
+      var picked = this.formatDtMonth(value);
+      console.log("check sched2: " + value);
+      if (picked !== only) {
+        console.log("please choose base on return period");
+      }
+    },
+    addSched2() {
+      console.log("add sched2 date of return: " + this.sched2_data);
+
+      if (this.sched2_data == false) {
+        console.log("sched 2 data fnun");
+        this.sched2_data.push({
+          date_purchased: "",
+          description: "",
+          vat: 0,
+          tax: 0
+        });
+      } else {
+        var index = this.sched2_data.length - 1;
+        console.log("last index sched2_data: " + index);
+        if (
+          this.sched2_data[index].date_purchased == "" ||
+          this.sched2_data[index].description == "" ||
+          this.sched2_data[index].tax <= 0 ||
+          this.sched2_data[index].vat <= 0
+        ) {
+          console.log("please fill up all blank");
+        } else {
+          console.log("pushed");
+          this.sched2_data.push({
+            date_purchased: "",
+            description: "",
+            vat: 0,
+            tax: 0
+          });
+        }
+      }
+    },
+    sched2Compute(value) {
+      var index = this.sched2_data.length - 1;
+      this.form.purCapGoodsNotExceed = 0;
+      this.form.outputCapGoodsNotExceed = 0;
+      this.sched2_data[index].tax = value * 0.12;
+      this.sched2_data.forEach(data => {
+        this.form.purCapGoodsNotExceed += data.vat;
+        this.form.outputCapGoodsNotExceed += data.tax;
+      });
+    },
+    onClose_sched2() {
+      this.sched2_drawer = false;
+    },
+    showDrawer() {
+      console.log("data source show drawer; " + this.dataSource);
+      this.visible = true;
+    },
+    showDrawer2() {
+      console.log("data source show drawer; " + this.dataSource);
+      this.sched2_drawer = true;
+    },
+    showDrawer3A() {
+      this.sched3A_drawer = true;
+    },
+    onClose_sched3A() {
+      this.sched3A_drawer = false;
+    },
+    onClose() {
+      // this.visible = false
+      if ((this.visible = true)) {
+        this.visible = false;
+      } else if ((this.visibleATC = true)) {
+        this.visibleATC = false;
+      }
+    },
     // checkDraft() {
     //   if (
     //     this.existing_form &&
@@ -958,6 +1279,7 @@ export default {
     },
     submit() {
       this.loading = true;
+      this.errors = [];
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "2550M",
@@ -968,10 +1290,14 @@ export default {
           this.loading = false;
           if (result.data.errors && result.data.errors.length > 0) {
             this.errors = result.data.errors;
+            console.log("this.errors :", this.errors);
+            if (this.errors && this.errors[0] && this.errors[0].page !== null)
+              this.$emit("changeStep", this.errors[0].page);
             this.$notification.error({ message: "Validation Error" });
           } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
             this.$store.commit("NOTIFY_MESSAGE", {
+              success: true,
               message: "Successfully submitted Form 2550m."
             });
             window.close();
@@ -1051,6 +1377,33 @@ export default {
   },
   data() {
     return {
+      reloadATC: false,
+      atc_list: [
+        {
+          description: "Genral",
+          atc: "VB010",
+          rate: 0.12
+        },
+        {
+          description: "Genral1",
+          atc: "VB011",
+          rate: 0.2
+        }
+      ],
+      sched1_index: null,
+      holder: {
+        industry: null,
+        atc: "Pick an ATC",
+        amount: 0,
+        output: 0
+      },
+      atc_amount_holder: 0,
+      atc_output_holder: 0,
+      forEdit: false,
+      visible: false,
+      sched2_drawer: false,
+      sched3A_drawer: false,
+      visibleATC: false,
       errors: [],
       loading: false,
       form_general: this.$form.createForm(this),
@@ -1066,12 +1419,150 @@ export default {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
       },
-      image_height: 1000
+      image_height: 1000,
+      atc_options: [],
+      dataSource: [],
+      columns: [
+        {
+          title: "Industry Covered by VAT",
+          dataIndex: "industry",
+          scopedSlots: { customRender: "industry" }
+        },
+        {
+          title: "ATC",
+          dataIndex: "atc",
+          width: "30%",
+          scopedSlots: { customRender: "atc" }
+        },
+        {
+          title: "Amount of Sales/Receipts For the Period",
+          dataIndex: "amount",
+          scopedSlots: { customRender: "amount" }
+        },
+        {
+          title: "Output Tax for the Period",
+          dataIndex: "output",
+          scopedSlots: { customRender: "output" }
+        },
+        {
+          title: "",
+          dataIndex: "operation",
+          scopedSlots: { customRender: "operation" }
+        }
+      ],
+      sched2_data: [],
+      columns_sched2: [
+        {
+          title: "Date Purchased",
+          dataIndex: "date_purchased",
+          scopedSlots: { customRender: "date_purchased" }
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          scopedSlots: { customRender: "description" }
+        },
+        {
+          title: "Amount (Net of VAT)",
+          dataIndex: "vat",
+          scopedSlots: { customRender: "vat" }
+        },
+        {
+          title: "Input Tax",
+          dataIndex: "tax",
+          scopedSlots: { customRender: "tax" }
+        },
+        {
+          title: "",
+          dataIndex: "operation",
+          scopedSlots: { cutomRender: "operation" }
+        }
+      ],
+      sched3A_data: [],
+      columns_sched3A: [
+        {
+          title: "Date Purchased",
+          dataIndex: "date_purchased",
+          scopedSlots: { customRender: "date_purchased" }
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          scopedSlots: { customRender: "description" }
+        },
+        {
+          title: "Amount(Net of VAT)",
+          dataIndex: "vat",
+          scopedSlots: { customRender: "vat" }
+        },
+        {
+          title: "Input Tax (C*Tax Rate)",
+          dataIndex: "tax_rate",
+          scopedSlots: { customRender: "tax_rate" }
+        },
+        {
+          title: "Estimate Life (in Months)",
+          dataIndex: "est_life",
+          scopedSlots: { customRender: "est_life" }
+        },
+        {
+          title:
+            "Recognized Life (In Months) Useful life or 60 mos. (whichever is shorter)",
+          dataIndex: "recog_life",
+          scopedSlots: { customRender: "recog_life" }
+        },
+        {
+          title:
+            "Allowable Input Tax for the Period Tax Rate / Recognized Life",
+          dataIndex: "allowable_input_tax",
+          scopedSlots: { customRender: "allowable_input_tax" }
+        },
+        {
+          title:
+            "Balance of Input Tax to be carried to Next Period Tax Rate - Allowable Input Tax",
+          dataIndex: "balance",
+          scopedSlots: { customRender: "balance" }
+        },
+        {
+          title: "",
+          dataIndex: "operation",
+          scopedSlots: { cutomRender: "operation" }
+        }
+      ]
     };
   },
   computed: {
     // 16A = 12A + 13A + 14 + 15
-    total_sales() {},
+    total_sales() {
+      var tosum = [
+        this.form.totalAtcAmount,
+        this.form.salesGovAmount,
+        this.form.zeroRatedAmount,
+        this.form.exemptAmount
+      ];
+      return (this.form.totalSales = this.computeSum(tosum));
+    },
+    total_atc_amount() {
+      if (this.form.sched1 && this.form.sched1.length) {
+        const total = this.form.sched1
+          .map(v => v.amount)
+          .reduce((t, v) => t + v);
+        console.log("total :", total);
+        this.form.totalAtcAmount = total || 0;
+        return total || 0;
+      }
+      return 0;
+    },
+    total_atc_output_tax() {
+      if (this.form.sched1 && this.form.sched1.length) {
+        const total = this.form.sched1
+          .map(v => v.output_tax)
+          .reduce((t, v) => t + v);
+        this.form.totalAtcOutput = total || 0;
+        return total || 0;
+      }
+      return 0;
+    },
     // 16B = 12B + 13B
     total_output_tax() {},
     total_allowable_less_input_tax() {

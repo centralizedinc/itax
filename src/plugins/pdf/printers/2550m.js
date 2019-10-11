@@ -170,21 +170,21 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.specialRate == true ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == true ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [210, 3, 0, 0]
                         },
                         {
-                            text: forms.specialRate == false ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [23, 3, 0, 0]
                         },
                         {
-                            text: forms.specialRateYn,
+                            text: forms.avail_tax_relief == null ? ' ' : forms.avail_tax_relief,
                             fontSize: 11,
                             alignment: 'justify',
                             // right,down,left,up
@@ -198,10 +198,10 @@ function getContent(forms) {
 
         // --------------------------------------------
         {
-            //Table 6  Vatable Sales
+            //Table 6 12A 12B Vatable Sales
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132],
 
                 body: [
                     [
@@ -227,10 +227,10 @@ function getContent(forms) {
         },
         // --------------------------------------------
         {
-            //Table 7  Sales to Goverment
+            //Table 7  13A 13B Sales to Goverment
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -301,7 +301,7 @@ function getContent(forms) {
             //Table 10  Total Sales Receipts    
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -454,7 +454,7 @@ function getContent(forms) {
             //Table 17  18A and 18B     
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -481,7 +481,7 @@ function getContent(forms) {
             //Table 18  18C and 18D   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -509,7 +509,7 @@ function getContent(forms) {
             //Table 19  18E and 18F   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -537,7 +537,7 @@ function getContent(forms) {
             //Table 20  18G and 18H   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -565,7 +565,7 @@ function getContent(forms) {
             //Table 21  18I and 18J   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
@@ -593,20 +593,20 @@ function getContent(forms) {
             //Table 22  18K and 18L   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
-                            text: forms.servicesNonResidents,
+                            text: forms.servicesNonResidents == null ? '0.00' : forms.servicesNonResidents % 1 == 0 ? forms.servicesNonResidents + '.00' : forms.servicesNonResidents,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [270, -5, 0, 0]
+                            margin: [270, -6, 0, 0]
                         },
                         {
-                            text: forms.outputServicesNonResidents,
+                            text: forms.outputServicesNonResidents == null ? '0.00' : forms.outputServicesNonResidents % 1 == 0 ? forms.outputServicesNonResidents + '.00' : forms.outputServicesNonResidents,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [17, -5, 0, 0]
                         },
@@ -625,9 +625,9 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.purchaseNotQualified,
+                            text: forms.purchaseNotQualified == null ? '0.00' : forms.purchaseNotQualified % 1 == 0 ? forms.purchaseNotQualified + '.00' : forms.purchaseNotQualified,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -5, 0, 0]
                         },
@@ -643,22 +643,22 @@ function getContent(forms) {
             //Table 24  18N and 18O   
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 133,],
                 body: [
                     [
                         {
-                            text: forms.purchaseOthers,
+                            text: forms.purchaseOthers == null ? '0.00' : forms.purchaseOthers % 1 == 0 ? forms.purchaseOthers + '.00' : forms.purchaseOthers,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [270, -5, 0, 0]
                         },
                         {
-                            text: forms.outputPurchaseOthers,
+                            text: forms.outputPurchaseOthers == null ? '0.00' : forms.outputPurchaseOthers % 1 == 0 ? forms.outputPurchaseOthers + '.00' : forms.outputPurchaseOthers,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [17, -5, 0, 0]
+                            margin: [17, -4, 0, 0]
                         },
                     ]
                 ]
@@ -671,15 +671,15 @@ function getContent(forms) {
             //Table 25  18P     
             layout: "noBorders",
             table: {
-                widths: [385, 130,],
+                widths: [385, 132,],
                 body: [
                     [
                         {
-                            text: forms.totalCurrentPurchases,
+                            text: forms.totalCurrentPurchases == null ? '0.00' : forms.totalCurrentPurchases % 1 == 0 ? forms.totalCurrentPurchases + '.00' : forms.totalCurrentPurchases,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [270, -4, 0, 0]
+                            margin: [270, -5, 0, 0]
                         },
 
                     ]
@@ -693,14 +693,14 @@ function getContent(forms) {
             //Table 26  19   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.totalAvailableInputTax,
+                            text: forms.totalAvailableInputTax == null ? '0.00' : forms.totalAvailableInputTax % 1 == 0 ? forms.totalAvailableInputTax + '.00' : forms.totalAvailableInputTax,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -5, 0, 0]
                         },
@@ -715,16 +715,16 @@ function getContent(forms) {
             //Table 27  20A   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.inputTaxPurchaseCapGoods,
+                            text: forms.inputTaxPurchaseCapGoods == null ? '0.00' : forms.inputTaxPurchaseCapGoods % 1 == 0 ? forms.inputTaxPurchaseCapGoods + '.00' : forms.inputTaxPurchaseCapGoods,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [410, 15, 0, 0]
+                            margin: [410, 16, 0, 0]
                         },
                     ]
                 ]
@@ -737,14 +737,14 @@ function getContent(forms) {
             //Table 28  20B   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.inputTaxSaleToGovt,
+                            text: forms.inputTaxSaleToGovt == null ? '0.00' : forms.inputTaxSaleToGovt % 1 == 0 ? forms.inputTaxSaleToGovt + '.00' : forms.inputTaxSaleToGovt,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -5, 0, 0]
                         },
@@ -759,14 +759,14 @@ function getContent(forms) {
             //Table 29  20C   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.inputTaxAllocableToExempt,
+                            text: forms.inputTaxAllocableToExempt == null ? '0.00' : forms.inputTaxAllocableToExempt % 1 == 0 ? forms.inputTaxAllocableToExempt + '.00' : forms.inputTaxAllocableToExempt,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -5, 0, 0]
                         },
@@ -781,14 +781,14 @@ function getContent(forms) {
             //Table 30  20D   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.refundTcm,
+                            text: forms.refundTcm == null ? '0.00' : forms.refundTcm % 1 == 0 ? forms.refundTcm + '.00' : forms.refundTcm,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -803,14 +803,14 @@ function getContent(forms) {
             //Table 31  20E   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.otherDeductionFrInputTax,
+                            text: forms.otherDeductionFrInputTax == null ? '0.00' : forms.otherDeductionFrInputTax % 1 == 0 ? forms.otherDeductionFrInputTax + '.00' : forms.otherDeductionFrInputTax,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -825,14 +825,14 @@ function getContent(forms) {
             //Table 32  20F   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.totalDeductionFrInputTax,
+                            text: forms.totalDeductionFrInputTax == null ? '0.00' : forms.totalDeductionFrInputTax % 1 == 0 ? forms.totalDeductionFrInputTax + '.00' : forms.totalDeductionFrInputTax,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -847,14 +847,14 @@ function getContent(forms) {
             //Table 33  21   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.totalInputTax,
+                            text: forms.totalInputTax == null ? '0.00' : forms.totalInputTax % 1 == 0 ? forms.totalInputTax + '.00' : forms.totalInputTax,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -869,14 +869,14 @@ function getContent(forms) {
             //Table 34  22   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.taxDue,
+                            text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -5, 0, 0]
                         },
@@ -891,14 +891,14 @@ function getContent(forms) {
             //Table 35  23A   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.creditableVatWithheld,
+                            text: forms.creditableVatWithheld == null ? '0.00' : forms.creditableVatWithheld % 1 == 0 ? forms.creditableVatWithheld + '.00' : forms.creditableVatWithheld,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, 4, 0, 0]
                         },
@@ -913,14 +913,14 @@ function getContent(forms) {
             //Table 36  23B   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.advPaySugarFlourInd,
+                            text: forms.advPaySugarFlourInd == null ? '0.00' : forms.advPaySugarFlourInd % 1 == 0 ? forms.advPaySugarFlourInd + '.00' : forms.advPaySugarFlourInd,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -5, 0, 0]
                         },
@@ -935,14 +935,14 @@ function getContent(forms) {
             //Table 37  23C   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.taxWthld,
+                            text: forms.taxWthld == null ? '0.00' : forms.taxWthld % 1 == 0 ? forms.taxWthld + '.00' : forms.taxWthld,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -5, 0, 0]
                         },
@@ -957,14 +957,14 @@ function getContent(forms) {
             //Table 38  23D   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.prevTaxPaid,
+                            text: forms.prevTaxPaid == null ? '0.00' : forms.prevTaxPaid % 1 == 0 ? forms.prevTaxPaid + '.00' : forms.prevTaxPaid,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -979,14 +979,14 @@ function getContent(forms) {
             //Table 39  23E   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.advPymt,
+                            text: forms.advPymt == null ? '0.00' : forms.advPymt % 1 == 0 ? forms.advPymt + '.00' : forms.advPymt,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -1001,14 +1001,14 @@ function getContent(forms) {
             //Table 40  23F   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.otherTaxCredits,
+                            text: forms.otherTaxCredits == null ? '0.00' : forms.otherTaxCredits % 1 == 0 ? forms.otherTaxCredits + '.00' : forms.otherTaxCredits,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -1023,14 +1023,14 @@ function getContent(forms) {
             //Table 42  23G   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.totalCredits,
+                            text: forms.totalCredits == null ? '0.00' : forms.totalCredits % 1 == 0 ? forms.totalCredits + '.00' : forms.totalCredits,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [410, -4, 0, 0]
                         },
@@ -1045,16 +1045,16 @@ function getContent(forms) {
             //Table 43  24   
             layout: "noBorders",
             table: {
-                widths: [520, 130,],
+                widths: [525, 130,],
                 body: [
                     [
 
                         {
-                            text: forms.amtPaybl,
+                            text: forms.amtPaybl == null ? '0.00' : forms.amtPaybl % 1 == 0 ? forms.amtPaybl + '.00' : forms.amtPaybl,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [410, -5, 0, 0]
+                            margin: [410, -6, 0, 0]
                         },
                     ]
                 ]
@@ -1067,38 +1067,60 @@ function getContent(forms) {
             //Table 44  25 A B C D 
             layout: "noBorders",
             table: {
-                widths: [160, 118, 83, 130],
+                widths: [165, 118, 83, 135],
                 body: [
                     [
 
                         {
-                            text: forms.surcharge,
+                            text: forms.surcharge == null ? '0.00' : forms.surcharge % 1 == 0 ? forms.surcharge + '.00' : forms.surcharge,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [83, 5, 0, 0]
+                            margin: [83, 4, 0, 0]
                         },
                         {
-                            text: forms.interest,
+                            text: forms.interest == null ? '0.00' : forms.interest % 1 == 0 ? forms.interest + '.00' : forms.interest,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [23, 5, 0, 0]
                         },
                         {
-                            text: forms.compromise,
+                            text: forms.compromise == null ? '0.00' : forms.compromise % 1 == 0 ? forms.compromise + '.00' : forms.compromise,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [13, 5, 0, 0]
                         },
                         {
-                            text: forms.penalties,
+                            text: forms.penalties == null ? '0.00' : forms.penalties % 1 == 0 ? forms.penalties + '.00' : forms.penalties,
+                            alignment: 'right',
                             fontSize: 9,
-                            alignment: 'justify',
                             // right,down,left,up
                             margin: [22, 3, 0, 0]
                         },
+                    ]
+                ]
+
+            }
+        },
+        // end
+        // start--------------------------------
+        {
+            //Table 44  25 A B C D 
+            layout: "noBorders",
+            table: {
+                widths: [165],
+                body: [
+                    [
+
+                        {
+                            text: forms.totalAmountPayable == null ? '0.00' : forms.surcharge % 1 == 0 ? forms.surcharge + '.00' : forms.surcharge,
+                            alignment: 'right',
+                            fontSize: 9,
+                            // right,down,left,up
+                            margin: [83, 4, 0, 0]
+                        }
                     ]
                 ]
 
@@ -1114,14 +1136,14 @@ function getContent(forms) {
         //         body: [
         //             [
         //                 {
-        //                     text: "Richard Aguilus Mulawin Gutierez  ",
+        //                     text: "Testing",
         //                     fontSize: 9,
         //                     alignment: 'justify',
         //                     // right,down,left,up
         //                     margin: [80, 27, 0, 0]
         //                 },
         //                 {
-        //                     text: "Junex Mastermind",
+        //                     text: "Testing",
         //                     fontSize: 9,
         //                     alignment: 'justify',
         //                     // right,down,left,up
