@@ -13,6 +13,7 @@ function validate(form_details) {
 
     //validation begins ...
     var errors = [];
+<<<<<<< HEAD
 
     if (!form_details.returnPeriodYear) {
         errors.push({ page: 0, field: "returnPeriodYear", error: constant_helper.MANDATORY_FIELD('Return Period Year') });
@@ -20,12 +21,20 @@ function validate(form_details) {
     }
     if (!form_details.quarter) {
         errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period Quarter') });
+=======
+    if (!form_details.returnPeriod) {
+        errors = [{
+            page: 0,
+            field: "returnPeriod",
+            error: constant_helper.MANDATORY_FIELD("For the year")
+        }]
+>>>>>>> cbed5acdfbca5b049d437039da8c78be32449ccb
         return errors;
     }
 
     form_details.due_date = computeDueDate(form_details.returnPeriod)
     //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1))
     // validate required fields
     errors.push(...validateRequired(form_details));
 
@@ -58,8 +67,8 @@ function validate(form_details) {
         }
     }
 
-//latefiling computations
-console.log('form 1701q validator errors: ', JSON.stringify(errors) )
+    //latefiling computations
+    console.log('form 1701q validator errors: ', JSON.stringify(errors))
 
     return errors
 }
