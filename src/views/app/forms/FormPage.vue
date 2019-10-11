@@ -173,17 +173,10 @@ export default {
 
   data() {
     return {
-<<<<<<< HEAD
-      // view_select:true,
-      selected_index:0,
-      taxpayer_list:[],
-      taxpayer:null,
-=======
       view_select: true,
       selected_index: 0,
       taxpayer_list: [],
       taxpayer: null,
->>>>>>> 1f58036adc6f73fd370e1584557dd26fbc079d3d
       form: {
         taxpayer: {
           contact_details: {},
