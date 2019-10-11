@@ -9,6 +9,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1."
+        :validate-status="error_item('taxpayer.returnPeriodYear')"
+        :help="error_desc('taxpayer.returnPeriodYear')"
       >
         <a-month-picker style="width: 100%" v-model="form.returnPeriodYear" />
       </a-form-item>
