@@ -10,7 +10,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="1."
       >
-        <a-month-picker style="width: 100%" v-model="form.dateFiled" />
+        <a-month-picker style="width: 100%" v-model="form.returnPeriodYear" />
       </a-form-item>
       <a-form-item label="Quarter"></a-form-item>
       <a-form-item
@@ -73,27 +73,30 @@
           <a-radio :value="'II016'">II016 Mixed Income – 8% IT Rate</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="9. Taxpayer’s Name ( ESTATE of / TRUST FAO ):"
-      :validate-status="error_item('taxpayer.Taxpayer_name')"
-      :help="error_desc('taxpayer.Taxpayer_name')"
+      <a-form-item
+        label="9. Taxpayer’s Name ( ESTATE of / TRUST FAO ):"
+        :validate-status="error_item('taxpayer.Taxpayer_name')"
+        :help="error_desc('taxpayer.Taxpayer_name')"
       >
         <a-input
           placeholder="Last Name, First Name, Middle Name"
           v-model="form.taxpayer.taxpayer_name"
         ></a-input>
       </a-form-item>
-      <a-form-item label="10. Registered Address"
-      :validate-status="error_item('taxpayer.registered_address')"
-      :help="error_desc('taxpayer.registered_address')"
+      <a-form-item
+        label="10. Registered Address"
+        :validate-status="error_item('taxpayer.registered_address')"
+        :help="error_desc('taxpayer.registered_address')"
       >
         <a-textarea
           placeholder="Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905"
           v-model="form.taxpayer.registered_address"
         ></a-textarea>
       </a-form-item>
-      <a-form-item label="10A. Zip Code"
-      :validate-status="error_item('taxpayer.zip_code')"
-      :help="error_desc('taxpayer.zip_code')"
+      <a-form-item
+        label="10A. Zip Code"
+        :validate-status="error_item('taxpayer.zip_code')"
+        :help="error_desc('taxpayer.zip_code')"
       >
         <a-input-number style="width: 100%" v-model="form.taxpayer.zip_code"></a-input-number>
       </a-form-item>
@@ -103,18 +106,20 @@
       <a-form-item label="12. Email Address">
         <a-input v-model="form.taxpayer.email_address"></a-input>
       </a-form-item>
-      <a-form-item label="13. Citizenship "
-      :validate-status="error_item('taxpayer.citizenship')"
-      :help="error_desc('taxpayer.citizenship')"
+      <a-form-item
+        label="13. Citizenship "
+        :validate-status="error_item('taxpayer.citizenship')"
+        :help="error_desc('taxpayer.citizenship')"
       >
         <a-input style="width: 100%" v-model="form.taxpayer.citizenship"></a-input>
       </a-form-item>
       <a-form-item label="14. Foreign Tax Number (if applicable)">
         <a-input-number style="width: 100%" v-model="form.taxpayer.foreign_tax_no"></a-input-number>
       </a-form-item>
-      <a-form-item label="15. Claiming Foreign Tax Credits?"
-      :validate-status="error_item('taxpayer.taxCredits')"
-      :help="error_desc('taxpayer.taxCredits')"
+      <a-form-item
+        label="15. Claiming Foreign Tax Credits?"
+        :validate-status="error_item('taxpayer.taxCredits')"
+        :help="error_desc('taxpayer.taxCredits')"
       >
         <a-radio-group v-model="form.taxCredits">
           <a-radio :value="true">Yes</a-radio>
@@ -135,9 +140,10 @@
           </p>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="16A. Method of Deduction:"
-      :validate-status="error_item('method_deduction')"
-      :help="error_desc('method_deduction')"
+      <a-form-item
+        label="16A. Method of Deduction:"
+        :validate-status="error_item('method_deduction')"
+        :help="error_desc('method_deduction')"
       >
         <a-radio-group v-model="form.method_deduction">
           <a-radio :value="'ID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
@@ -715,20 +721,27 @@ export default {
     },
     submit() {
       this.loading = true;
+      this.errors = [];
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "1701Q",
           form_details: this.form
         })
         .then(result => {
-          console.log("VALIDATE_AND_SAVE result:", result.data);
-          this.loading = false;
-          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", {
-            message: "Successfully submitted Form 2550m."
-          });
-          // window.opener.location.reload();
-          window.close();
+          if (result.data.errors && result.data.errors.length > 0) {
+            this.errors = result.data.errors;
+            console.log("this.errors :", this.errors);
+            if (this.errors && this.errors[0] && this.errors[0].page !== null)
+              this.$emit("changeStep", this.errors[0].page);
+            this.$notification.error({ message: "Validation Error" });
+          } else {
+            this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+            this.$store.commit("NOTIFY_MESSAGE", {
+              success: true,
+              message: "Successfully submitted Form 1701q."
+            });
+            window.close();
+          }
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
@@ -744,6 +757,14 @@ export default {
         ? "GR"
         : for_gs.includes(value)
         ? "GS"
+        : "";
+    },
+    error_item(item) {
+      return this.errors.find(x => x.field === item) ? "error" : "";
+    },
+    error_desc(item) {
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
         : "";
     }
     // submit() {
