@@ -5,42 +5,13 @@ var Schema = mongoose.Schema;
 
 var Form1701QSchema = new Schema({
   reference_no: String,
-  taxpayer: {
-    taxpayer_name: String,
-    tin: Number,
-    rdo_code: Number,
-    tax_filer_type: String,
-    registered_address: String,
-    birthday: Date,
-    email_address: String,
-    citizenship: String,
-    foreign_tax_no: Number,
-    atc: {
-        type: Number,
-        default: 0
-    },
-    spouse_tin: Number,
-  },
-  spouse_taxpayer: {
-    spouse_name: String,
-    tin: Number,
-    rdo_code: Number,
-    tax_filer_type: String,
-    registered_address: String,
-    birthday: Date,
-    email_address: String,
-    citizenship: String,
-    foreign_tax_no: Number,
-    spouse_atc: {
-        type: Number,
-        default: 0
-    },
-  },
+  taxpayer: {},
+  spouse_taxpayer: {},
   registered_name: String,
   dateFiled: {
-        type: Date,
-        default: new Date()
-    },
+    type: Date,
+    default: new Date()
+  },
   dueDate: Date,
   returnPeriod: Date,
   returnPeriodMonth: String,
@@ -72,13 +43,13 @@ var Form1701QSchema = new Schema({
     amountRecievedShare: { type: Number, default: 0 },
     totalTaxableIncomeToDate: { type: Number, default: 0 }, //Sum of Items 41 to 44
     totalTaxDue: { type: Number, default: 0 }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
-    }],
+  }],
   sched2: [{
     totalSalesRevenue: { type: Number, default: 0 },
     totalOperationIncome: { type: Number, default: 0 },
     totalIncomeQuarter: { type: Number, default: 0 }, // (Sum of Items 47 and 48)
     totalAllowableItemizedDeductions: { type: Number, default: 0 },
-    totalStandardDeductions: { type: Number, default: 0 }, 
+    totalStandardDeductions: { type: Number, default: 0 },
     totalNetIncome: { type: Number, default: 0 },
     totalCumulativeIncome: { type: Number, default: 0 }, //(Sum of Items 49 and 50)
     totalTaxableIncomeToDate: { type: Number, default: 0 }, //(Item 51 Less Item 52)
@@ -112,16 +83,16 @@ var Form1701QSchema = new Schema({
 });
 
 Form1701QSchema.pre('save', function (callback) {
-    this.date_created = new Date();
-    this.date_modified = new Date();
-    callback();
+  this.date_created = new Date();
+  this.date_modified = new Date();
+  callback();
 });
 
 Form1701QSchema.pre('findOneAndUpdate', function (callback) {
-    this.options.new = true;
-    this.options.runValidators = true;
-    this._update.date_modified = new Date();
-    callback();
+  this.options.new = true;
+  this.options.runValidators = true;
+  this._update.date_modified = new Date();
+  callback();
 });
 
-module.exports = mongoose.model("1701q_forms", Form1701QSchema);
+module.exports = mongoose.model("form_1701q", Form1701QSchema);

@@ -161,4 +161,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('2550m_forms', Form2550MSchema);
+module.exports = mongoose.model('form_2550m', Form2550MSchema);
