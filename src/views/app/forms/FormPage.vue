@@ -133,6 +133,7 @@ import Form1700 from "./1700/1700.vue";
 import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
+import Form2000OT from "./2000ot/2000ot.vue";
 
 export default {
   components: {
@@ -142,7 +143,8 @@ export default {
     Form1700,
     Form2551Q,
     Form1701Q,
-    Form2550Q
+    Form2550Q,
+    Form2000OT
   },
   computed: {
     affix_computation() {
@@ -273,6 +275,23 @@ export default {
           {
             title: "Part II",
             description: "Computation"
+          }
+        ],
+        "2000ot": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Details of Transactions"
+          },
+          {
+            title: "Part III",
+            description: "Computation of Tax"
           }
         ]
       },

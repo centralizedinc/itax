@@ -60,6 +60,68 @@
       </a-card>
     </a-col>
     <a-divider></a-divider>
+
+    <a-col :span="12">
+      <a-card>
+        <a-row type="flex" align="middle" :gutter="8">
+          <a-col :span="8">
+            <a-popover title trigger="click" placement="right">
+              <a-avatar
+                class="avatar_btn"
+                shape="square"
+                :size="60"
+                style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
+              >IT</a-avatar>
+              <template slot="content">
+                <a-menu @click="nav">
+                  <!-- <a-menu-item key="1700">From 1700</a-menu-item> -->
+                  <!-- <a-menu-item key="1701Q">From 1701Q</a-menu-item> -->
+                  <a-menu-item key="1700">Form 1700</a-menu-item>
+                  <a-menu-item key="1702">Form 1702</a-menu-item>
+                  <a-menu-item key="1702q">Form 1702Q</a-menu-item>
+                  <a-menu-item key="1701q">Form 1701Q</a-menu-item>
+                  <a-menu-item key="1702rt">Form 1702-RT</a-menu-item>
+                </a-menu>
+              </template>
+            </a-popover>
+          </a-col>
+          <a-col :span="16">
+            <h4>Income Tax</h4>
+            <p>Income Tax is a tax on a person's income, emoluments, profits arising from property, practice of profession, conduct of trade or business or on the pertinent items of gross income specified in the Tax Code of 1997 (Tax Code), as amended, less the deductions if any, authorized for such types of income, by the Tax Code, as amended, or other special laws.</p>
+            <a>Learn More</a>
+          </a-col>
+        </a-row>
+      </a-card>
+    </a-col>
+    <a-col :span="12">
+      <a-card>
+        <a-row type="flex" align="middle" :gutter="8">
+          <a-col :span="8">
+            <a-popover title trigger="click" placement="right">
+              <a-avatar
+                class="avatar_btn"
+                shape="square"
+                :size="60"
+                style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
+              >DST</a-avatar>
+              <template slot="content">
+                <a-menu @click="nav">
+                  <a-menu-item key="2000ot">From 2000-OT</a-menu-item>
+                  <!-- <a-menu-item key="">Form 2000</a-menu-item> -->
+                </a-menu>
+              </template>
+            </a-popover>
+          </a-col>
+          <a-col :span="16">
+            <h4>Documentary Stamp Tax</h4>
+            <p>Documentary Stamp Tax is a tax on documents, instruments, loan agreements and papers evidencing the acceptance, assignment, sale or transfer of an obligation, right or property incident thereto.</p>
+            <a>Learn More</a>
+          </a-col>
+        </a-row>
+      </a-card>
+    </a-col>
+    <a-divider></a-divider>
+
     <a-col :span="12">
       <a-card>
         <a-row type="flex" align="middle" :gutter="8">
