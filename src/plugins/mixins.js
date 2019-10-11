@@ -50,15 +50,25 @@ export default {
                 },
                 computeSum(data){
                     var total = 0
-                    console.log("compute sum data: " + JSON.stringify(data))
-                    data.forEach(element => {
-                        console.log('for each element: ' + JSON.stringify(element))
-                        if(element == null || element == undefined ){
-                            console.log("element null or undefined: " + element)
-                        element = 0
+                    console.log("compute sum data length: " + JSON.stringify(data.length))
+                    for(var i = 0;i <= data.length ; i++){
+                        if(data[i] == null || data[i] == undefined ){
+                            data[i] = 0
+                            console.log("element null or undefined: " + data[i])
+                        
                         }
-                        total += element
-                    }); 
+                        total += data[i]
+                    }
+                    // data.forEach(element => {
+                    //     console.log('for each element: ' + JSON.stringify(element))
+                    //     if(element == null || element == undefined ){
+                    //         element = 0
+                    //         console.log("element null or undefined: " + element)
+                        
+                    //     }
+                    //     total += element
+                    // }); 
+                    console.log("copute sum data: " + data)
                     console.log("compute sum mixin: " + total)
                     return total
                 }

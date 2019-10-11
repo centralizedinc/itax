@@ -126,7 +126,7 @@
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
-      <a-button type="primary" @click="showDrawer">
+      <a-button type="link" @click="showDrawer">
         Schedule 1
       </a-button>
       <a-drawer
@@ -161,11 +161,11 @@
           </template>
           <template slot="atc" slot-scope="text, record, index">
             <a-select
-              style="width 100%"
+              style="width 50%"
               @change="pickAtc($event, index)"
               :defaultValue="form.sched1[index] && form.sched1[index].atc ? form.sched1[index].atc : 'Pick an ATC'"
             >
-              <a-select-option  v-for="(item, i) in atc_list" :key="i">{{item.atc}}</a-select-option>
+              <a-select-option  v-for="(item, i) in atc_list" :key="i" style="width 100%">{{item.atc}}</a-select-option>
             </a-select>
           </template>
           <template slot="amount" slot-scope="text, record, index">
@@ -382,7 +382,7 @@
         class="computation-item"
         label="18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)"
       />
-      <a-button type="primary" @click="showDrawer2">
+      <a-button type="link" @click="showDrawer2">
         Schedule 2
       </a-button>
       <a-drawer
@@ -453,7 +453,7 @@
         class="computation-item"
         label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
       />
-      <a-button type="primary" @click="showDrawer3A">
+      <a-button type="link" @click="showDrawer3A">
         Schedule 3 A
       </a-button>
       <a-drawer
@@ -683,7 +683,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20B"
       >
-      <a-button type="primary" @click="sched4_drawer = true">
+      <a-button type="link" @click="sched4_drawer = true">
         Schedule 4
       </a-button>
         <a-input-number
@@ -697,7 +697,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20C"
       >
-      <a-button type="primary" @click="sched5_drawer = true">
+      <a-button type="link" @click="sched5_drawer = true">
         Schedule 5
       </a-button>
         <a-input-number
@@ -773,7 +773,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23A"
       >
-      <a-button type="primary" @click="sched6_drawer = true">
+      <a-button type="link" @click="sched6_drawer = true">
         Schedule 6
       </a-button>
         <a-input-number
@@ -787,7 +787,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23B"
       >
-      <a-button type="primary" @click="sched7_drawer = true">
+      <a-button type="link" @click="sched7_drawer = true">
         Schedule 7
       </a-button>
         <a-input-number
@@ -801,7 +801,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23C"
       >
-      <a-button type="primary" @click="sched8_drawer = true">
+      <a-button type="link" @click="sched8_drawer = true">
         Schedule 8
       </a-button>
         <a-input-number
@@ -1560,11 +1560,11 @@ export default {
     return {
       reloadATC: false,
       atc_list: [{
-        description: "Genral", 
+        description: "VAT - ON BUSINESS SERVICES-IN GENERAL", 
         atc:"VB010",
         rate: 0.12
       }, {
-        description: "Genral1", 
+        description: "VAT - ON BUS SERVICE, HOTEL, MOTELS, ETC", 
         atc:"VB011",
         rate: 0.2
       }], 
@@ -1613,7 +1613,7 @@ export default {
       }, {
         title: 'ATC',
         dataIndex: 'atc',
-        width: '30%',
+        width: '5%',
         scopedSlots: { customRender: 'atc'}
       }, {
         title: 'Amount of Sales/Receipts For the Period',

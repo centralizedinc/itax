@@ -301,17 +301,17 @@ export default {
       return this.selected_index == index
     },
     fillup(){
-      // this.form.taxpayer = this.taxpayer
-      // if(!this.form.taxpayer.address_details){
-      //   this.form.taxpayer.address_details = {}
-      // }
-      // if(!this.form.taxpayer.contact_details){
-      //   this.form.taxpayer.contact_details = {}
-      // }
-      // if(!this.form.taxpayer.registered_name){
-      //   this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`
-      // }
-      // console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      this.form.taxpayer = this.taxpayer
+      if(!this.form.taxpayer.address_details){
+        this.form.taxpayer.address_details = {}
+      }
+      if(!this.form.taxpayer.contact_details){
+        this.form.taxpayer.contact_details = {}
+      }
+      if(!this.form.taxpayer.registered_name){
+        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`
+      }
+      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {
