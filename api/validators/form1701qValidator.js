@@ -79,9 +79,9 @@ function validateRequired(field) {
         //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
         // }
 
-        if (!field.taxpayer.tax_filer_type) {
-            error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
-        }
+        // if (!field.taxpayer.tax_filer_type) {
+        //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
+        // }
 
         if (!field.taxpayer.citizenship) {
             error_messages.push({ field: "taxpayer.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
