@@ -29,7 +29,7 @@ function fillup(details) {
  * @param {Array|Object} forms 
  */
 function getContent(forms) {
-    console.log("get content forms: " + forms)
+    console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
@@ -242,7 +242,8 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [455, 50],
+                widths: [455],
+                heights: [9, 9],
                 body: [
                     [{
                         text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
@@ -250,31 +251,33 @@ function getContent(forms) {
                         // right,down,left,up
                         alignment: 'justified',
                         margin: [10, 6, 0, 0]
-                    },
-                    {
-                        text: ''
                     }],
+                    [{
+                        text: ''
+                    }]
                 ]
             }
         },
+        //    zip
         {
 
             layout: "noBorders",
             table: {
-                widths: [510],
+                widths: [455, 50],
                 body: [
-                    [
-                        {
-                            // text: "4012",
-                            text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'left',
-                            margin: [470, -15, 0, 0]
-                        }]
+                    [{
+                        text: '',
+                    },
+                    {
+                        text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                        fontSize: 12,
+                        alignment: 'left',
+                        margin: [5, -13, 0, 0]
+                    }]
                 ]
             }
         },
+
 
 
         // 11-12
@@ -640,7 +643,7 @@ function getContent(forms) {
         layout: "noBorders",
         table: {
             widths: [510],
-            heights: [35],
+            heights: [20],
             body: [
                 [{
                     text: '',
@@ -663,13 +666,13 @@ function getContent(forms) {
                 },
 
                 {
-                    text: '0',
+                    text: forms.item26a == null ? '0.00' : forms.item26a % 1 == 0 ? forms.item26a + '.00' : forms.item26a,
                     fontSize: 13,
                     margin: [0, 0, 0, 0],
                     alignment: 'right'
                 },
                 {
-                    text: '0',
+                    text: forms.item26b == null ? '0.00' : forms.item26b % 1 == 0 ? forms.item26b + '.00' : forms.item26b,
                     fontSize: 13,
                     margin: [0, 0, 0, 0],
                     alignment: 'right'
@@ -692,13 +695,13 @@ function getContent(forms) {
                 },
 
                 {
-                    text: '0',
+                    text: forms.item27a == null ? '0.00' : forms.item27a % 1 == 0 ? forms.item26a + '.00' : forms.item27a,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
                 },
                 {
-                    text: '0',
+                    text: forms.item27b == null ? '0.00' : forms.item27b % 1 == 0 ? forms.item27b + '.00' : forms.item27b,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
@@ -721,13 +724,13 @@ function getContent(forms) {
                 },
 
                 {
-                    text: '0',
+                    text: forms.item28a == null ? '0.00' : forms.item28a % 1 == 0 ? forms.item28a + '.00' : forms.item28a,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
                 },
                 {
-                    text: '0',
+                    text: forms.item28b == null ? '0.00' : forms.item28b % 1 == 0 ? forms.item28b + '.00' : forms.item28b,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
@@ -750,13 +753,13 @@ function getContent(forms) {
                 },
 
                 {
-                    text: '0',
+                    text: forms.item29a == null ? '0.00' : forms.item29a % 1 == 0 ? forms.item29a + '.00' : forms.item29a,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
                 },
                 {
-                    text: '0',
+                    text: forms.item29b == null ? '0.00' : forms.item29b % 1 == 0 ? forms.item29b + '.00' : forms.item29b,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
@@ -779,13 +782,13 @@ function getContent(forms) {
                 },
 
                 {
-                    text: '0',
+                    text: forms.item30a == null ? '0.00' : forms.item30a % 1 == 0 ? forms.item30a + '.00' : forms.item30a,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
                 },
                 {
-                    text: '0',
+                    text: forms.item30b == null ? '0.00' : forms.item30b % 1 == 0 ? forms.item30b + '.00' : forms.item30b,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
@@ -808,13 +811,13 @@ function getContent(forms) {
                 },
 
                 {
-                    text: '0',
+                    text: forms.item31a == null ? '0.00' : forms.item31a % 1 == 0 ? forms.item31a + '.00' : forms.item31a,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'
                 },
                 {
-                    text: '0',
+                    text: forms.item31b == null ? '0.00' : forms.item31ab % 1 == 0 ? forms.item31b + '.00' : forms.item31b,
                     fontSize: 13,
                     margin: [0, -5, 0, 0],
                     alignment: 'right'

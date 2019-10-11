@@ -15,7 +15,7 @@
         />
       </a-form-item>
       <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
-        <a-radio-group v-model="form.amendedYn" style="width: 100%">
+        <a-radio-group v-model="form.amendedYn" :defaultValue="false" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -28,7 +28,8 @@
         <a-input-number
           placeholder="Number of Sheets"
           v-model="form.numOfSheet"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
           style="width: 100%"
         />
       </a-form-item>
@@ -81,7 +82,8 @@
       >
         <a-input-number
           placeholder="Telephone Number"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
           v-model="form.taxpayer.contact_details.telno"
           style="width: 100%"
         ></a-input-number>
@@ -106,7 +108,8 @@
           placeholder="Zip Code"
           v-model="form.taxpayer.address_details.zipCode"
           style="width: 100%"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -126,85 +129,6 @@
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
-      <a-button type="primary" @click="showDrawer">
-      Schedule 1
-    </a-button>
-    <a-drawer
-      title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
-      placement="right"
-      :closable="false"
-      @close="onClose"
-      :visible="visible"
-      width="1000"
-    >
-      <a-button type="primary" @click="addAtc">
-        ADD
-      </a-button>
-      <!-- <a-drawer
-      title="ATC"
-      placement="right"
-      :closable="false"
-      @close="onClose"
-      :visible="visibleATC"
-      width="500"
-      >
-        <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
-      </a-drawer> -->
-      <a-table bordered :dataSource="dataSource" :columns="columns">
-        <template slot="industry" slot-scope="text, record,index">
-        <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
-        <a-input disabled v-model="dataSource[index].industry"></a-input>
-      </template>
-        <template slot="footer" span: 2>
-          <a-button @click="onClose">Proceed</a-button>
-      <p align="right">12A: {{form.totalAtcAmount}} 12B: {{form.totalAtcOutput}}</p>
-    </template>
-        <template slot="atc" slot-scope="text, record, index" :disabled="record.editable">
-        <a-select
-          style="width 100%"
-          @change="pickAtc"
-          defaultValue="Pick an ATC"
-          :disabled="record.editable" 
-          v-model="dataSource[index].atc"          
-        >
-          <a-select-option  v-for="i in atc_list" :key="i">{{i.atc}}</a-select-option>
-        </a-select>
-        <!-- <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)"/> -->
-      </template>
-        <template slot="amount" slot-scope="text, record">
-        <a-input-number @change="changeAmount" :disabled="record.editable" placeholder="text"></a-input-number>
-      </template>
-      <template slot="output" slot-scope="text, record, index">
-        <a-input-number v-model="dataSource[index].output" disabled></a-input-number>
-      </template>
-      <template slot="operation" slot-scope="text, record, index">
-        <a-popconfirm
-          v-if="dataSource[index].editable == false"
-          title="Sure to save?"
-          @confirm="() => saveAtc(index)">
-          <a href="javascript:;">Save</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == true"
-          title="Sure to edit?"
-          @confirm="() => editAtc(index)">
-          <a href="javascript:;">Edit</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == false"
-          title="Sure to Cance;?"
-          @confirm="() => cancelAtc(index)">
-          <a href="javascript:;">Cancel</a>
-        </a-popconfirm>
-        <a-popconfirm
-          v-if="dataSource[index].editable == true"
-          title="Sure to delete?"
-          @confirm="() => deleteAtc(index)">
-          <a href="javascript:;">Delete</a>
-        </a-popconfirm>
-      </template>
-      </a-table>
-    </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -216,7 +140,8 @@
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalAtcAmount"
           disabled
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -227,8 +152,9 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.totalAtcOutput"
-          disabled
-          
+          disbled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -241,7 +167,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.salesGovAmount"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -252,7 +179,8 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.salesGovOutput"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -265,7 +193,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.zeroRatedAmount"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -278,7 +207,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.exemptAmount"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -291,8 +221,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalSales"
-          :data="total_sales"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -303,8 +233,8 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.totalOutputTax"
-          :data="total_output_tax"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -319,7 +249,8 @@
           v-model="form.carriedOverPreviousPeriod"
           :data="total_allowable_less_input_tax"
           :defaultValue="0"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -331,7 +262,8 @@
           placeholder="Input Tax Deferred on Capital Goods Exceeding ₱1Million from Previous Period"
           v-model="form.txbleGoodsServices"
           :defaultValue="0"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -343,7 +275,8 @@
           placeholder="Transitional Input Tax"
           v-model="form.transInputTax"
           :defaultValue="0"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -355,7 +288,8 @@
           placeholder="Presumptive Input Tax"
           v-model="form.presumpInputTax"
           :defaultValue="0"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -367,7 +301,8 @@
           placeholder="Others"
           v-model="form.otherAllowableLessInputTax"
           :defaultValue="0"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -379,7 +314,8 @@
           placeholder="Total"
           :data="total_allowable_less_input_tax"
           v-model="form.totalAllowableLessInputTax"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -388,40 +324,6 @@
         class="computation-item"
         label="18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)"
       />
-      <a-button type="primary" @click="showDrawer2">
-        Schedule 2
-      </a-button>
-      <a-drawer
-      title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
-      placement="right"
-      :closable="false"
-      @close="onClose_sched2"
-      :visible="sched2_drawer"
-      width="1000"
-      >
-      <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
-        <template slot="date_purchased" slot-scope="text, record,index">
-         <a-month-picker
-          v-model="dataSource[index].date_purchased"
-          style="width: 100%"
-        />
-      </template>
-      <template slot="description" slot-scope="text, record,index">
-        <a-input v-model="dataSource[index].description"></a-input>
-      </template>
-      <template slot="vat" slot-scope="text, record,index">
-        <a-input-number v-model="dataSource[index].vat"></a-input-number>
-      </template>
-      <template slot="tax" slot-scope="text, record,index">
-        <a-input-number disabled v-model="dataSource[index].tax"></a-input-number>
-      </template>
-      <template slot="footer" span: 2>
-          <a-button @click="addSched2">Add</a-button>
-          <a-button>Save</a-button>
-      <p align="right">18A: {{form.totalAtcAmount}} 18B: {{form.totalAtcOutput}}</p>
-    </template>
-      </a-table>
-      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -431,7 +333,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purCapGoodsNotExceed"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -443,28 +346,14 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputCapGoodsNotExceed"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
         label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
       />
-      <a-button type="primary" @click="showDrawer3A">
-        Schedule 3
-      </a-button>
-      <a-drawer
-      title="Schedule 3 Purchases/Importation This Period"
-      placement="right"
-      :closable="false"
-      @close="onClose_sched3A"
-      :visible="sched3A_drawer"
-      width="1000"
-      >
-      <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
-
-      </a-table>
-      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -474,7 +363,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purCapGoodsExceed"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -486,7 +376,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputPurCapGoodsExceed"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -502,7 +393,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.domesticPurchaseGoods"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -514,7 +406,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputDomesticPurchaseGoods"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -530,7 +423,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.importationGoods"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -542,7 +436,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputImportationGoods"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18I/J. Domestic Purchase of Services" />
@@ -555,7 +450,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.domesticPurchaseService"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -567,7 +463,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputDomesticPurchaseService"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18K/L. Services rendered by Non-residents" />
@@ -580,7 +477,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.servicesNonResidents"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -592,7 +490,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputServicesNonResidents"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18M. Purchases Not Qualified for Input Tax" />
@@ -605,7 +504,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purchaseNotQualified"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18N/O. Others" />
@@ -618,7 +518,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.purchaseOthers"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -630,7 +531,9 @@
         <a-input-number
           placeholder="Output Tax Due"
           v-model="form.outputPurchaseOthers"
-               ></a-input-number>
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
+        ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18P. Total Current Purchases" />
       <a-form-item
@@ -642,8 +545,8 @@
         <a-input-number
           placeholder="Purchase"
           v-model="form.totalCurrentPurchases"
-          disabled
-          :data="total_current_purchases"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -656,7 +559,8 @@
           placeholder="Total Available Input Tax"
           :data="total_available_input_tax"
           v-model="form.totalAvailableInputTax"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -669,7 +573,8 @@
         <a-input-number
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
           v-model="form.inputTaxPurchaseCapGoods"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -680,7 +585,8 @@
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -691,7 +597,8 @@
         <a-input-number
           placeholder="Input Tax allocable to Exempt Sales"
           v-model="form.inputTaxAllocableToExempt"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -702,7 +609,8 @@
         <a-input-number
           placeholder="VAT Refund/TCC claimed"
           v-model="form.refundTcm"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -713,7 +621,8 @@
         <a-input-number
           placeholder="Others"
           v-model="form.otherDeductionFrInputTax"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -725,7 +634,8 @@
           placeholder="Total"
           :data="total_deduction_from_input_tax"
           v-model="form.totalDeductionFrInputTax"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -737,8 +647,8 @@
         <a-input-number
           placeholder="Total Allowable Input Tax"
           v-model="form.totalInputTax"
-          :data = "total_input_tax"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -750,8 +660,8 @@
         <a-input-number
           placeholder="Net VAT Payable"
           v-model="form.taxDue"
-          :data="tax_due"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -764,7 +674,8 @@
         <a-input-number
           placeholder="Creditable Value-Added Tax Withheld"
           v-model="form.creditableVatWithheld"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -775,7 +686,8 @@
         <a-input-number
           placeholder="Advance Payments for Sugar and Flour Industries"
           v-model="form.advPaySugarFlourInd"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -786,7 +698,8 @@
         <a-input-number
           placeholder="VAT withheld on Sales to Government"
           v-model="form.taxWthld"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -797,7 +710,8 @@
         <a-input-number
           placeholder="VAT paid in return previously filed, if this is an amended return"
           v-model="form.prevTaxPaid"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -808,7 +722,8 @@
         <a-input-number
           placeholder="Advance Payments made"
           v-model="form.advPymt"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -819,7 +734,8 @@
         <a-input-number
           placeholder="Others"
           v-model="form.otherTaxCredits"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -831,7 +747,8 @@
           placeholder="Total Tax Credits/Payments"
           :data="total_credits"
           v-model="form.totalCredits"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -843,8 +760,8 @@
         <a-input-number
           placeholder="Tax Still Payable/(Overpayment)"
           v-model="form.amtPaybl"
-          :data="amount_payable"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -859,7 +776,8 @@
         <a-input-number
           placeholder="Surcharge"
           v-model="form.surcharge"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -872,7 +790,8 @@
         <a-input-number
           placeholder="Interest"
           v-model="form.interest"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -885,7 +804,8 @@
         <a-input-number
           placeholder="Compromise"
           v-model="form.compromise"
-          
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -896,8 +816,8 @@
         <a-input-number
           placeholder="Total Penalties"
           v-model="form.penalties"
-          :data="penalties"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
 
@@ -909,8 +829,8 @@
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
           v-model="form.totalAmountPayable"
-          :data="total_amount_payable"
-          disabled
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
     </a-form>
@@ -922,133 +842,6 @@ export default {
   props: ["form", "step"],
 
   methods: {
-    computeSched1(){
-      this.form.totalAtcAmount = 0
-      this.form.totalAtcOutput = 0
-      this.dataSource.forEach(data =>{
-        console.log("data source data; " + JSON.stringify(data))
-        this.form.totalAtcAmount += data.amount
-        this.form.totalAtcOutput += data.output
-      })
-    },
-    saveAtc(index){
-      this.dataSource[index].editable = true
-      this.forEdit = false     
-      console.log("record index: " + JSON.stringify(this.dataSource))
-      this.holder = {
-        industry: null,
-        atc: null,
-        amount: 0,
-        output: 0
-      }
-      this.computeSched1()
-    },
-    cancelAtc(index){
-      this.dataSource[index].editable = true
-      this.dataSource[index] = this.holder
-      this.holder = {
-        industry: null,
-        atc: null,
-        amount: 0,
-        output: 0
-      }
-      this.forEdit = false
-    },
-    deleteAtc(index){
-      if(this.forEdit){
-     console.log("please save before you can delete")
-      }else{
-         this.dataSource[index].splice(index,1)
-        
-      }
-      console.log("delete atc data: " + JOSN.stringify(index))
-    },
-    editAtc(index){
-      if(this.forEdit){
-        console.log("please save first before you can edit other")
-        
-      }else{
-        this.forEdit = true
-        this.sched1_index = index
-        this.holder = this.dataSource[index]
-      this.dataSource[index].editable  = false
-      }
-      console.log("data source data: " + JSON.stringify(this.dataSource[index]))
-    },
-    pickAtc(value){
-      this.holder.industry = value.industry
-      this.holder.atc = value.atc      
-      console.log("atc holder data: " + JSON.stringify(this.holder))
-      console.log("pick atc value: " + JSON.stringify(value))
-    },
-    changeAmount(value){
-      this.dataSource[this.sched1_index].amount = value
-      console.log("change amount value: " + JSON.stringify(value))
-      this.changeOutput(value)
-    },
-    changeOutput(value){
-      this.dataSource[this.sched1_index].output = value*0.12
-      console.log("change output value: " + JSON.stringify(value))
-    },
-    addAtc() {
-      console.log("updated dataa source: " + JSON.stringify(this.dataSource))
-      if(this.forEdit == true){
-        console.log("please save first before you can add")
-      }else{
-      this.dataSource.push({
-        industry: '',
-        atc: '',
-        amount: 0.00,
-        output: 0.00,
-        editable: true
-      })
-      }
-      // this.visibleATC = true
-    },
-    sched2Save(){
-
-    },
-    addSched2(){
-      console.log('add sched2 date of return: ' + this.form.returnPeriod)
-      var index = this.sched2_data.length()
-      if(this.sched2_data[index].date_purchased == ''){
-
-      }
-      this.sched2_data.push({
-        date_purchased: '',
-        description: '',
-        vat: 0,
-        tax: 0,
-      })
-    },
-    sched2Compute(value){
-
-    },
-    onClose_sched2(){
-      this.sched2_drawer = false
-    },
-    showDrawer() {
-      console.log("data source show drawer; " + this.dataSource)
-      this.visible = true
-    },
-    showDrawer2() {
-      console.log("data source show drawer; " + this.dataSource)
-      this.sched2_drawer = true
-    },
-    showDrawer3A(){
-      this.sched3A_drawer = true
-    },
-    onClose_sched3A(){
-      this.sched3A_drawer = false
-    },
-    onClose() {
-      // this.visible = false
-      if(this.visible = true){
-        this.visible = false
-      } else if(this.visibleATC = true){
-        this.visibleATC = false
-      }
-    },
     // checkDraft() {
     //   if (
     //     this.existing_form &&
@@ -1258,21 +1051,6 @@ export default {
   },
   data() {
     return {
-      atc_list: [{industry: "Genral", atc:"VB010"}, {industry: "Genral1", atc:"VB011"}], 
-      sched1_index: null,
-      holder:{
-        industry: null,
-        atc: "Pick an ATC",
-        amount: 0,
-        output: 0
-      },
-      atc_amount_holder:0,
-      atc_output_holder:0,
-      forEdit: false,
-      visible: false,
-      sched2_drawer: false,
-      sched3A_drawer: false,
-      visibleATC: false,
       errors: [],
       loading: false,
       form_general: this.$form.createForm(this),
@@ -1288,166 +1066,66 @@ export default {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
       },
-      image_height: 1000,
-      atc_options:[],
-      dataSource: [],
-      columns: [{
-        title: 'Industry Covered by VAT',
-        dataIndex: 'industry',
-        scopedSlots: { customRender: 'industry'}
-      }, {
-        title: 'ATC',
-        dataIndex: 'atc',
-        width: '30%',
-        scopedSlots: { customRender: 'atc'}
-      }, {
-        title: 'Amount of Sales/Receipts For the Period',
-        dataIndex: 'amount',
-        scopedSlots: { customRender: 'amount' },
-      }, {
-        title: 'Output Tax for the Period',
-        dataIndex: 'output',
-        scopedSlots: { customRender: 'output' },
-      },
-      {
-        title: '',
-        dataIndex: 'operation',
-        scopedSlots: { customRender: 'operation'}
-      }],
-      sched2_data: [],
-      columns_sched2: [{
-        title: 'Date Purchased',
-        dataIndex: 'date_purchased',
-        scopedSlots: { customRender: 'date_purchased'}
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        scopedSlots: { customRender: 'description'}
-      },
-      {
-        title: 'Amount (Net of VAT)',
-        dataIndex: 'vat',
-        scopedSlots: { customRender: 'vat'}
-      },
-      {
-        title: 'Input Tax',
-        dataIndex: 'tax',
-        scopedSlots: { customRender: 'tax'}
-      }
-      ],
-      sched3A_data:[],
-      columns_sched3A:[
-        {
-        title: 'Date Purchased',
-        dataIndex: 'date_purchased',
-        scopedSlots: { customRender: 'date_purchased'}
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        scopedSlots: { customRender: 'description'}
-      },
-      {
-        title: 'Amount(Net of VAT)',
-        dataIndex: 'vat',
-        scopedSlots: { customRender: 'vat'}
-      },
-      {
-        title: 'Input Tax (C*Tax Rate)',
-        dataIndex: 'tax_rate',
-        scopedSlots: { customRender: 'tax_rate'}
-      },
-      {
-        title: 'Estimate Life (in Months)',
-        dataIndex: 'est_life',
-        scopedSlots: { customRender: 'est_life'}
-      },
-      {
-        title: 'Recognized Life (In Months) Useful life or 60 mos. (whichever is shorter)',
-        dataIndex: 'recog_life',
-        scopedSlots: { customRender: 'recog_life'}
-      },
-      {
-        title: 'Allowable Input Tax for the Period Tax Rate / Recognized Life',
-        dataIndex: 'allowable_input_tax',
-        scopedSlots: { customRender: 'allowable_input_tax'}
-      },
-      {
-        title: 'Balance of Input Tax to be carried to Next Period Tax Rate - Allowable Input Tax',
-        dataIndex: 'balance',
-        scopedSlots: { customRender: 'balance'}
-      },
-      ]
+      image_height: 1000
     };
   },
   computed: {
     // 16A = 12A + 13A + 14 + 15
-    total_sales(){
-      var tosum =[this.form.totalAtcAmount, this.form.salesGovAmount, this.form.zeroRatedAmount, this.form.exemptAmount]
-      return this.form.totalSales = this.computeSum(tosum)
-    },
+    total_sales() {},
     // 16B = 12B + 13B
-    total_output_tax(){
-      var tosum =[this.form.totalAtcOutpu, this.form.salesGovOutput]
-      return this.form.totalOutputTax = this.computeSum(tosum)
-    },
-    // 17F = 17A + 17B + 17C + 17D + 17E
+    total_output_tax() {},
     total_allowable_less_input_tax() {
-      console.log('#########',this.form.carriedOverPreviousPeriod?this.form.carriedOverPreviousPeriod:0);
-      var tosum = [this.form.carriedOverPreviousPeriod,
-      this.form.txbleGoodsServices,this.form.transInputTax,
-      this.form.presumpInputTax,this.form.otherAllowableLessInputTax]
-      console.log('compute sum: ' + this.computeSum(tosum))
-      return this.form.totalAllowableLessInputTax = this.computeSum(tosum)
-},
-// 18P = 18A + 18C + 18E +18G + 18I + 18M + 18N
-total_current_purchases(){
-var tosum = [this.form.purCapGoodsNotExceed,this.form.purCapGoodsExceed,
-this.form.domesticPurchaseGoods,this.form.importationGoods,this.form.domesticPurchaseService,
-this.form.purchaseNotQualified,this.form.purchaseOthers]
-
-return this.form.totalCurrentPurchases = this.computeSum(tosum)
-},
-    // 19 = 17F + 18B + 18D + 18F + 18H + 18J + 18L + 18O
+      console.log(
+        "#########",
+        this.form.carriedOverPreviousPeriod
+          ? this.form.carriedOverPreviousPeriod
+          : 0
+      );
+      var tosum = [
+        this.form.carriedOverPreviousPeriod,
+        this.form.txbleGoodsServices,
+        this.form.transInputTax,
+        this.form.presumpInputTax,
+        this.form.otherAllowableLessInputTax
+      ];
+      console.log("compute sum: " + this.computeSum(tosum));
+      return (this.form.totalAllowableLessInputTax = this.computeSum(tosum));
+    },
     total_available_input_tax() {
-      var tosum = [this.form.totalAllowableLessInputTax,this.form.outputCapGoodsNotExceed,
-      this.form.outputPurCapGoodsExceed,this.form.outputDomesticPurchaseGoods,this.form.outputImportationGoods,
-      this.form.outputDomesticPurchaseService,this.form.outputServicesNonResidents,this.form.outputPurchaseOthers]
-      return this.form.totalAvailableInputTax = this.computeSum(tosum)
+      return (this.form.totalAvailableInputTax =
+        this.form.purCapGoodsNotExceed +
+        this.form.outputCapGoodsNotExceed +
+        this.form.purCapGoodsExceed +
+        this.form.outputPurCapGoodsExceed +
+        this.form.domesticPurchaseGoods +
+        this.form.outputDomesticPurchaseGoods +
+        this.form.importationGoods +
+        this.form.outputImportationGoods +
+        this.form.domesticPurchaseService +
+        this.form.outputDomesticPurchaseService +
+        this.form.servicesNonResidents +
+        this.form.outputServicesNonResidents +
+        this.form.purchaseNotQualified +
+        this.form.purchaseOthers +
+        this.form.outputPurchaseOthers +
+        this.form.totalCurrentPurchases);
     },
-    //  20F = 20A + 20B + 20C + 20D +20E
     total_deduction_from_input_tax() {
-      var tosum = [this.form.inputTaxPurchaseCapGoods,this.form.inputTaxSaleToGovt,
-      this.form.inputTaxAllocableToExempt,this.form.refundTcm,this.form.otherDeductionFrInputTax]
-      return this.form.totalDeductionFrInputTax = this.computeSum(tosum)
+      return (this.form.totalDeductionFrInputTax =
+        this.form.inputTaxPurchaseCapGoods +
+        this.form.inputTaxSaleToGovt +
+        this.form.inputTaxAllocableToExempt +
+        this.form.refundTcm +
+        this.form.otherDeductionFrInputTax);
     },
-    // 21 = 19 - 20F
-    total_input_tax(){
-      return this.form.totalInputTax = this.form.totalAvailableInputTax - this.form.totalDeductionFrInputTax
-    },
-    // 22 = 16B - 21
-    tax_due(){
-      return this.form.taxDue = this.form.totalOutputTax - this.form.totalInputTax
-    },
-    //  23G = 23A + 23B + 23C + 23D + 23E
     total_credits() {
-      var tosum = [this.form.creditableVatWithheld,this.form.advPaySugarFlourInd,this.form.taxWthld,this.form.prevTaxPaid,this.form.advPymt]
-      return this.form.totalCredits = this.computeSum(tosum)
-    },
-    // 24 = 22 - 23F
-    amount_payable(){
-      return this.form.amtPayb = this.form.taxDue - this.form.otherTaxCredits
-    },
-    // 25D = 25A + 25B + 25C
-    penalties(){
-      var tosum = [this.form.surcharge,this.form.interest,this.form.compromise]
-      return this.form.penalties = this.computeSum(tosum)
-    },
-    // 26 = 24 + 25D
-    total_amount_payable(){
-      var tosum = [this.form.amtPaybl,this.form.penalties]
-      return this.form.totalAmountPayable = this. computeSum(tosum)
+      return (this.form.totalCredits =
+        this.form.creditableVatWithheld +
+        this.form.advPaySugarFlourInd +
+        this.form.taxWthld +
+        this.form.prevTaxPaid +
+        this.form.advPymt +
+        this.form.otherTaxCredits);
     }
   },
   watch: {
