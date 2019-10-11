@@ -14,8 +14,6 @@ export default class TaxForm {
      * @param {Object} form_details
      */
     saveAndValidate(form_type, form_details) {
-        console.log('form_type :', form_type);
-        console.log('saveAndValidate :', form_details);
         return axios.post(`tax/returns/validate/${form_type}`, form_details)
     }
 

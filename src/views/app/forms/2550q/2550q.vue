@@ -59,11 +59,13 @@
         <b>Part I: Background Information</b>
       </a-divider>
       <a-form-item label="6. TIN NUMBER">
-        <a-input-number v-model="form.taxpayer.tin"  :formatter="value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ~ ')"></a-input-number> 
+        <a-input-number
+          v-model="form.taxpayer.tin"
+          :formatter="value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ~ ')"
+        ></a-input-number>
         <!-- <a-input-number v-model="form.taxpayer.tin1" :min="0" :max="999" style="width: 10%"></a-input-number> 
-        <a-input-number v-model="form.taxpayer.tin2" :min="0" :max="999" style="width: 10%"></a-input-number> -->
+        <a-input-number v-model="form.taxpayer.tin2" :min="0" :max="999" style="width: 10%"></a-input-number>-->
       </a-form-item>
-
 
       <a-form-item label="7. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
@@ -106,448 +108,510 @@
       <a-divider orientation="left">
         <b>Part II: Computation of Tax</b>
       </a-divider>
-      <!-- <a-form-item class="computation-item" label="15. Vatable Sales/Receipt-Private (Sch.1)"> -->
-      <!-- <a-input-number
-          v-model="form.total_tax_withheld_remitted"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-      ></a-input-number>-->
-      <!-- </a-form-item> -->
-      <a-form-item label="15. Vatable Sales/Receipt-Private (Sch.1)"></a-form-item>
 
-      <!-- <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item> -->
+      <!-- Part II 15 Vatable Sales/Receipt-Private (Sch. 1) -->
+      <a-form-item label="15 Vatable Sales/Receipt-Private (Sch. 1)" />
       <a-form-item
-        class="computation-item"
-        label="15A. Sales/Receipts for the Quarter (Exclusive of VAT)"
+        label="15A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.totalAtcAmount"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="15B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.totalAtcOutput"></a-input-number>
+      </a-form-item>
+      <!-- Part II 16 Sale to Government -->
+      <a-form-item label="16 Sale to Government" />
+      <a-form-item
+        label="16A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Sales/Receipt for the Quarter" v-model="form.salesGovAmount"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="16B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Sales/Receipt for the Quarter" v-model="form.salesGovOutput"></a-input-number>
+      </a-form-item>
+      <!-- Part II 17 Zero Rated Sales/Receipts-->
+      <a-form-item
+        label="17"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Zero Rated Sales/Receipts" v-model="form.zeroRatedSales"></a-input-number>
+      </a-form-item>
+
+      <!-- Part II 18 Exempt Sales/Receipts-->
+      <a-form-item
+        label="18"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Exempt Sales/Receipts" v-model="form.exemptSales18"></a-input-number>
+      </a-form-item>
+
+      <!-- Part II 19 Total Sales/Receipts and Output Tax Due -->
+      <a-form-item label="19 Total Sales/Receipts and Output Tax Due" />
+      <a-form-item
+        label="19A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Sales/Receipt for the Quarter" v-model="form.totalSales19a"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="19B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Sales/Receipt for the Quarter" v-model="form.totalSales19b"></a-input-number>
+      </a-form-item>
+
+      <!-- Part II 20 Less Allowable input tax -->
+      <a-form-item label="20 Total Sales/Receipts and Output Tax Due" />
+      <a-form-item
+        label="20A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
         <a-input-number
-          v-model="form.prevTaxPaidCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          placeholder="Input Tax Carried Over from Previous Quarter"
+          v-model="form.inputTaxcarried"
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="15B. Output Tax Due for the Quarter">
+      <a-form-item
+        label="20B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input-number
-          v-model="form.advPayment"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          placeholder="Input Tax Deferred on Capital Goods"
+          v-model="form.inputTaxdeferred"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="20C"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Transitional Input Tax" v-model="form.transitionalInputtax"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="20D"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Presumptive Input Tax" v-model="form.presumptiveInputtax"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="20E"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Others" v-model="form.others"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="20F"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Total (SUM of item 20A,20B,20C,20D & 20E)"
+          v-model="form.totalSum"
         ></a-input-number>
       </a-form-item>
 
-      <a-form-item label="16. Sale to Government"></a-form-item>
+      <!-- Part II 21 Current Transactions-->
+      <a-form-item label="21 Current Transactions" />
+      <a-form-item label="21A/B Purchase of Capital Goods not exceeding P1Million(see sch.2)" />
       <a-form-item
-        class="computation-item"
-        label="16A. Sales/Receipts for the Quarter (Exclusive of VAT)"
+        label="21A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.purCapgoodsa"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.purCapgoodsb"></a-input-number>
+      </a-form-item>
+      <a-form-item label="21C/D Purchase of Capital Goods exceeding P1Million(see sch.3)" />
+      <a-form-item
+        label="21C"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.purCapgoodsc"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21D"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.purCapgoodsd"></a-input-number>
+      </a-form-item>
+
+      <a-form-item label="21E/F Domestic Purchases of Goods Other than Capital Goods" />
+      <a-form-item
+        label="21E"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.domesticPursere"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21F"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.domesticPurserf"></a-input-number>
+      </a-form-item>
+      <a-form-item label="21G/H Importation of Goods Other than Capital Goods" />
+      <a-form-item
+        label="21G"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.importationCapgoodsg"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21H"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.importationCapgoodsh"></a-input-number>
+      </a-form-item>
+
+      <a-form-item label="21I/J Domestic Purchase of Services" />
+      <a-form-item
+        label="21I"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.domPurservicei"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21J"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.domPurservicej"></a-input-number>
+      </a-form-item>
+      <a-form-item label="21K/L Services rendered by Non-residents" />
+      <a-form-item
+        label="21K"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.servicesRenderedk"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21L"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Purchase of Capital Goods" v-model="form.servicesRenderedl"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21M"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
         <a-input-number
-          v-model="form.totTaxCredits"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          placeholder="Purchases Not Qualified for Input Tax"
+          v-model="form.purNotqualified"
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="16B. Output Tax Due for the Quarter">
-        <a-input-number
-          v-model="form.amtPayblCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item label="17. Zero Rated Sales/Receipts"></a-form-item>
+      <a-form-item label="21N/O Others" />
       <a-form-item
-        class="computation-item"
-        label="17. Sales/Receipts for the Quarter (Exclusive of VAT)"
+        label="21N"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Others" v-model="form.othersn"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21O"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number placeholder="Others" v-model="form.otherso"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="21P"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
         <a-input-number
+          placeholder="Sum items 21A,21C,21E,21G,21I,21K,21M,21N"
+          v-model="form.sumItems"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="22"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Sum items 20F,21B,21D,21F,21H,21J,21L&21O"
+          v-model="form.sumItems22"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item label="23 Less: Deductions from Input Tax" />
+      <a-form-item
+        label="23A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Input Tax on Purchases of Capital"
+          v-model="form.inputTaxpurcapital23"
+        ></a-input-number>
+      </a-form-item>
+
+      <a-form-item
+        label="23B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="Input Tax on Sale to Govt." v-model="form.inputTaxonsalegov"></a-input-number>
+    </a-form-item>
+ <a-form-item
+        label="23C"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="Input Tax allocable to Exempt Sales" v-model="form.inputTaxallocable"></a-input-number>
+    </a-form-item>
+ <a-form-item
+        label="23D"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="VAT Refund/TCC claimed" v-model="form.vatRefundclaimed"></a-input-number>
+    </a-form-item>
+     <a-form-item
+        label="23E"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="Others" v-model="form.others23"></a-input-number>
+    </a-form-item>
+ <a-form-item
+        label="23F"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="Total (Sum 23A,23B,23C,23D & 23F)" v-model="form.totalSum23"></a-input-number>
+    </a-form-item>
+<a-form-item
+        label="24"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="Total Allowable Input Tax (item 22 less item 23E)" v-model="form.totalAllowable24"></a-input-number>
+    </a-form-item>
+<a-form-item
+        label="25"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+      <a-input-number placeholder="Total (Net VAT Payable (item 19B less item 24)" v-model="form.totalNetvatpay"></a-input-number>
+    </a-form-item>
+
+
+ <a-form-item label="26 Less: Tax Credits/Payments" />
+      <a-form-item
+        label="26A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Monthly VAT Payments - previous two months"
+          v-model="form.monthlyVatpaytwo"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="26B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Creditable Value-Added Tax Withheld"
+          v-model="form.credVattaxwithheld"
+        ></a-input-number>
+      </a-form-item>
+<a-form-item
+        label="26C"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Advance Payments for Sugar and Flour Industries"
+          v-model="form.advancePaysugar"
+        ></a-input-number>
+      </a-form-item>
+<a-form-item
+        label="26D"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="VAT withheld on Sales to Government"
+          v-model="form.vatwithheldSalestogov"
+        ></a-input-number>
+      </a-form-item>
+
+<a-form-item
+        label="26E"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="VAT paid in return previously filed"
+          v-model="form.vatpaidReturnprevfiled"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="26F"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Advance Payments made"
+          v-model="form.advancePaymade"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="26G"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Others"
+          v-model="form.others26G"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="26H"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Sum 26A,26B,26C,26D,26E,26F&26G"
+          v-model="form.sum26h"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="27"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Tax"
+          v-model="form.tax"
+        ></a-input-number>
+      </a-form-item>
+<a-form-item label="28 Add Penalties" />
+      <a-form-item
+        label="28A"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Surcharge"
           v-model="form.surcharge"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="18. Exempt Sales/Receipts"></a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="18. Sales/Receipts for the Quarter (Exclusive of VAT)"
+ <a-form-item
+        label="28B"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
         <a-input-number
-          v-model="form.surcharge"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          placeholder="Interest"
+          v-model="form.interest"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="19. Total Sales/Receipts and Output Tax Due"></a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="19A. Sales/Receipts for the Quarter (Exclusive of VAT)"
+ <a-form-item
+        label="28C"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
         <a-input-number
-          v-model="form.amtPayblCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          placeholder="Compromise"
+          v-model="form.compromise"
         ></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="19B. Output Tax Due for the Quarter">
+<a-form-item
+        label="28D"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input-number
-          v-model="form.amtPayblCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+          placeholder=""
+          v-model="form.a28D"
+        ></a-input-number>
+      </a-form-item>
+<a-form-item
+        label="29"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          placeholder="Sum 27 & 28B"
+          v-model="form.sum29"
         ></a-input-number>
       </a-form-item>
 
-      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
+
+
+
+
+
+
+
 
     <!-- Part III -->
     <a-form :form="form_part3" v-show="step===3">
       <a-divider orientation="left">
         <b>Part III: Details of Payment</b>
       </a-divider>
-      <a-form-item label="20. Less: Allowable Input Tax"></a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="20A. Input Tax Carried Over from Previous Quarter"
-      >
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="20B. Input Tax Deferred on Capital Goods">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="20C. Transitional Input Tax">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="20D. Presumptive Input Tax">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="20E. Others">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="20F. Total (SUM of item 20A,20B,20C,20D & 20E">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
 
-      <a-form-item label="21. Current Transactions"></a-form-item>
-      <a-form-item class="computation-item" label="21A. Purchase of Capital Goods">
-        <a-input-number
-          v-model="form.item21a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21B. Purchase of Capital Goods">
-        <a-input-number
-          v-model="form.item22b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21C. Purchase of Capital Goods">
-        <a-input-number
-          v-model="form.item22c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21D. Purchase of Capital Goods">
-        <a-input-number
-          v-model="form.item22d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-
-      <a-form-item class="computation-item" label="21E. Domestic Purchases of Goods">
-        <a-input-number
-          v-model="form.item23a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21F. Domestic Purchase of Goods">
-        <a-input-number
-          v-model="form.item23b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21G. Importation of Goods">
-        <a-input-number
-          v-model="form.item23c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21H. Importation of Goods">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21I. Domestic Purchase of Services">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21J. Domestic Purchase of Servcies">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21K. Servcies rendered by Non-residents">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21L. Servcies rendered by Non-residents">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21M. Purchases Not Qualified for Input Tax">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21N. Others">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21O. Others">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="21P. Total Current Purchase">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
     </a-form>
     <!-- Part IV -->
     <a-form :form="form_part4" v-show="step===4">
       <a-divider orientation="left">
         <b>Part III: Details of Payment</b>
       </a-divider>
-      <a-form-item label="22. Total Available Input Tax"></a-form-item>
-      <a-form-item class="computation-item" label="22. Total Available Input Tax">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-        <a-form-item label="23. Less Deductions from Input Tax"></a-form-item>
-      <a-form-item class="computation-item" label="23A. Input Tax on Purchases">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-       <a-form-item class="computation-item" label="23B. Input Tax on Sale">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-        <a-form-item class="computation-item" label="23C. Input Tax allocable">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-        <a-form-item class="computation-item" label="23D. VAT Refund">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-        <a-form-item class="computation-item" label="23E. Others">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-       <a-form-item class="computation-item" label="23F. Total (Sum of item 23A,23B,23C,23D & 23E)">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
-       <a-form-item label="24. Total Allowable Input Tax"></a-form-item>
-      <a-form-item class="computation-item" label="24. Total Allowable Input Tax">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-         <a-form-item label="25. Net VAT Payable (Item 19B less item 24)"></a-form-item>
-      <a-form-item class="computation-item" label="25. Net VAT Payable (Item 19B less item 24)">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-          <a-form-item label="26. Less: Tax Credits/Payments"></a-form-item>
-      <a-form-item class="computation-item" label="26A. Monthly VAT Payments - previous two months">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-         <a-form-item class="computation-item" label="26B. Creditable Value-Added Tax Witheld">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-         <a-form-item class="computation-item" label="26C. Advance Payments for Sugar and Flour Industries">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="26D. VAT withheld on Sales to Government">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="26E. VAT paid in return previously filed">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="26F. Advance Payments made">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="26G. Others">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="26H. Total Tax Credits/Payments">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-           <a-form-item label="27. Tax Still Payable"></a-form-item>
-      <a-form-item class="computation-item" label="27. Tax Still Payable">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-            <a-form-item label="28. Add: Penalties"></a-form-item>
-      <a-form-item class="computation-item" label="28A. Surcharge">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="28B. Interest">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item class="computation-item" label="28C. Compromise">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        <a-form-item label="29. Total Amount Payable"></a-form-item>
-      <a-form-item class="computation-item" label="29. Total Amount Payable">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-        </a-form-item>
-        
+    
     </a-form>
+
+
     <!-- Part V -->
     <a-form :form="form_part5" v-show="step===5">
       <a-divider orientation="left">
         <b>Part III: Details of Payment</b>
       </a-divider>
-      <a-form-item class="computation-item" label="21. Cash/Bank Debit Memo">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
-      </a-form-item>
+      
     </a-form>
+
     <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>-->
   </div>
 </template>
 
@@ -566,7 +630,8 @@ export default {
       form_part3: this.$form.createForm(this),
       form_part4: this.$form.createForm(this),
       form_part5: this.$form.createForm(this),
-      image_height: 1000
+      image_height: 1000,
+      form_layout: { label_col: { span: 2 }, wrapper_col: { span: 22 } }
     };
   },
   // watch: {
@@ -629,7 +694,9 @@ export default {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          this.$store.commit("NOTIFY_MESSAGE", {
+            message: "Successfully submitted Form 2550m."
+          });
           // window.opener.location.reload();
           window.close();
         })
@@ -642,7 +709,7 @@ export default {
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
-    },
+    }
     // submit() {
     //   this.form.validateFieldsAndScroll((err, values) => {
     //     if (!err) console.log("values :", values);
