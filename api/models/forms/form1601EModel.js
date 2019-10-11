@@ -166,4 +166,4 @@ plugin.applyPlugin()
         console.log("############### init failed: " + e);
     });
 
-module.exports = mongoose.model('1601e_forms', Form1601ESchema);
+module.exports = mongoose.model('form_1601e', Form1601ESchema);

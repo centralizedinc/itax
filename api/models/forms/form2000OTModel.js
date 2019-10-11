@@ -121,4 +121,4 @@ plugin.applyPlugin()
   });
 
 
-module.exports = mongoose.model("Form2000OT", Form2000OTSchema);
+module.exports = mongoose.model("form_2000ot", Form2000OTSchema);

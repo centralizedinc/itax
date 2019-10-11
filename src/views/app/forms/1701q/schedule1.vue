@@ -2,7 +2,7 @@
   <div>
     <a-drawer
       title="Schedule I – For Graduated IT Rate"
-      :visible="visible"
+      :visible="show===1"
       @cancel="$emit('close')"
       @ok="handleOk"
       :width="720"
@@ -318,7 +318,7 @@
 </template>
 <script>
 export default {
-  props: ["show"],
+  props: ["form","show"],
   data() {
     return {
       visible: true,
