@@ -173,7 +173,7 @@ export default {
 
   data() {
     return {
-      view_select: true,
+      // view_select: true,
       selected_index: 0,
       taxpayer_list: [],
       taxpayer: null,
@@ -181,7 +181,8 @@ export default {
         taxpayer: {
           contact_details: {},
           address_details: {}
-        }
+        },
+        sched1: []
       },
       curr_step: 0,
       steps: {
@@ -304,18 +305,18 @@ export default {
     isSelected(index) {
       return this.selected_index == index;
     },
-    fillup() {
-      this.form.taxpayer = this.taxpayer;
-      if (!this.form.taxpayer.address_details) {
-        this.form.taxpayer.address_details = {};
+    fillup(){
+      this.form.taxpayer = this.taxpayer
+      if(!this.form.taxpayer.address_details){
+        this.form.taxpayer.address_details = {}
       }
-      if (!this.form.taxpayer.contact_details) {
-        this.form.taxpayer.contact_details = {};
+      if(!this.form.taxpayer.contact_details){
+        this.form.taxpayer.contact_details = {}
       }
-      if (!this.form.taxpayer.registered_name) {
-        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
+      if(!this.form.taxpayer.registered_name){
+        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`
       }
-      console.log(`form::::`, JSON.stringify(this.form.taxpayer));
+      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
       this.view_select = false;
     },
     saveDraft() {
