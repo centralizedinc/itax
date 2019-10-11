@@ -53,8 +53,7 @@ var Form1701QSchema = new Schema({
         default: 0
     },
     taxRate: {
-        type: Number,
-        default: 0
+        type: String
     },
     method_deduction: {
         type: Number,

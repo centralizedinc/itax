@@ -9,113 +9,119 @@
     </a-layout-header>
     <a-layout-content style="min-height:100vh; margin-top:15vh;">
       <a-card>
-    <a-steps :current="curr_step" size="small">
-      <a-step v-for="(item, index) in form_steps" :key="index" :description="item.description">
-        <b slot="title">{{item.title}}</b>
-      </a-step>
-    </a-steps>
-    <a-row :gutter="10">
-      <a-col :xs="0" :md="12">
-        <!-- Form Display -->
-        <a-affix
-          :offsetTop="in_bottom ? -350: -200"
-          :class="affix_computation? '' : 'prevent-affix'"
-        >
-          <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
-            <form-display ref="form_display_component" :type="form_type" :form="form" />
-          </a-card>
-        </a-affix>
-      </a-col>
-      <a-col :xs="0" :md="12" class="tax-form">
-        <!-- Fill up forms -->
-        <div ref="fillup_form">
-          <a-card :bodyStyle="{ padding: '30px' }">
-            <component
-              ref="form_component"
-              :is="curr_form"
-              :form="form"
-              :step="curr_step"
-              @loading="v=>loading=v"
-              @updateForm="v=>form={...form, ...v}"
-              @changeStep="v=>curr_step=v"
-            />
-          </a-card>
-        </div>
-      </a-col>
-    </a-row>
-    <div class="float-button">
-      <div class="float-content">
-        <a-row type="flex" :gutter="10" align="middle" justify="center">
-          <!-- Previous -->
-          <a-col :span="4">
-            <a-button
-              @click="curr_step--"
-              :disabled="loading || curr_step === 0"
-              v-if="curr_step > -1"
-            >Previous</a-button>
+        <a-steps :current="curr_step" size="small">
+          <a-step v-for="(item, index) in form_steps" :key="index" :description="item.description">
+            <b slot="title">{{item.title}}</b>
+          </a-step>
+        </a-steps>
+        <a-row :gutter="10">
+          <a-col :xs="0" :md="12">
+            <!-- Form Display -->
+            <a-affix
+              :offsetTop="in_bottom ? -350: -200"
+              :class="affix_computation? '' : 'prevent-affix'"
+            >
+              <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
+                <form-display ref="form_display_component" :type="form_type" :form="form" />
+              </a-card>
+            </a-affix>
           </a-col>
-          <!-- Download -->
-          <a-col :span="4">
-            <a-button @click="$refs.form_display_component.download()">Download</a-button>
-          </a-col>
-          <!-- Open -->
-          <a-col :span="4">
-            <a-button @click="$refs.form_display_component.open()">Open</a-button>
-          </a-col>
-          <!-- Save as Draft -->
-          <a-col :span="4">
-            <a-button type="primary" :disabled="loading" @click="saveDraft()">Save as Draft</a-button>
-          </a-col>
-          <!-- Submit -->
-          <a-col :span="4">
-            <a-button
-              type="primary"
-              @click="$refs.form_component.submit()"
-              :loading="loading"
-            >Submit</a-button>
-          </a-col>
-          <!-- Next -->
-          <a-col :span="4">
-            <a-button
-              type="primary"
-              :disabled="curr_step===form_steps.length-1"
-              @click="$refs.form_component.validate()"
-              :loading="loading"
-            >Next</a-button>
+          <a-col :xs="0" :md="12" class="tax-form">
+            <!-- Fill up forms -->
+            <div ref="fillup_form">
+              <a-card :bodyStyle="{ padding: '30px' }">
+                <component
+                  ref="form_component"
+                  :is="curr_form"
+                  :form="form"
+                  :step="curr_step"
+                  @loading="v=>loading=v"
+                  @updateForm="v=>form={...form, ...v}"
+                  @changeStep="v=>curr_step=v"
+                />
+              </a-card>
+            </div>
           </a-col>
         </a-row>
-      </div>
-    </div>
-  </a-card>
+        <div class="float-button">
+          <div class="float-content">
+            <a-row type="flex" :gutter="10" align="middle" justify="center">
+              <!-- Previous -->
+              <a-col :span="4">
+                <a-button
+                  @click="curr_step--"
+                  :disabled="loading || curr_step === 0"
+                  v-if="curr_step > -1"
+                >Previous</a-button>
+              </a-col>
+              <!-- Download -->
+              <a-col :span="4">
+                <a-button @click="$refs.form_display_component.download()">Download</a-button>
+              </a-col>
+              <!-- Open -->
+              <a-col :span="4">
+                <a-button @click="$refs.form_display_component.open()">Open</a-button>
+              </a-col>
+              <!-- Save as Draft -->
+              <a-col :span="4">
+                <a-button type="primary" :disabled="loading" @click="saveDraft()">Save as Draft</a-button>
+              </a-col>
+              <!-- Submit -->
+              <a-col :span="4">
+                <a-button
+                  type="primary"
+                  @click="$refs.form_component.submit()"
+                  :loading="loading"
+                >Submit</a-button>
+              </a-col>
+              <!-- Next -->
+              <a-col :span="4">
+                <a-button
+                  type="primary"
+                  :disabled="curr_step===form_steps.length-1"
+                  @click="$refs.form_component.validate()"
+                  :loading="loading"
+                >Next</a-button>
+              </a-col>
+            </a-row>
+          </div>
+        </div>
+      </a-card>
     </a-layout-content>
     <a-modal :visible="view_select" title="Select Taxpayer" :closable="false">
       <a-list itemLayout="horizontal" :dataSource="taxpayer_list" :loading="loading">
         <a-list-item slot="renderItem" slot-scope="item, index">
-            <a-card style="width:100%" class="tin_card" @click="select(index)">
-              <a-row type="flex" align="middle">
-                <a-col :span="22">
-                  <a-list-item-meta>
-                    <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
-                    <template slot="description" >
-                        <p>{{formatTIN(item.tin)}}</p>
-                        <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
-                    </template>
-                    <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="item.avatar" :size="64" />                                    
+          <a-card style="width:100%" class="tin_card" @click="select(index)">
+            <a-row type="flex" align="middle">
+              <a-col :span="22">
+                <a-list-item-meta>
+                  <p
+                    slot="title"
+                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
+                  <template slot="description">
+                    <p>{{formatTIN(item.tin)}}</p>
+                    <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
+                  </template>
+                  <a-avatar
+                    style="border: solid 1px #1cb5e0"
+                    slot="avatar"
+                    :src="item.avatar"
+                    :size="64"
+                  />
                 </a-list-item-meta>
-                </a-col>
-                <a-col :span="2">
-                  <a-icon v-if="isSelected(index)" type="check" style="color:#115B95;font-size:24px"></a-icon>
-                </a-col>
-              </a-row>
-        </a-card>
+              </a-col>
+              <a-col :span="2">
+                <a-icon v-if="isSelected(index)" type="check" style="color:#115B95;font-size:24px"></a-icon>
+              </a-col>
+            </a-row>
+          </a-card>
         </a-list-item>
-    </a-list>
-    <template slot="footer">
-      <a-button type="primary" @click="fillup">Select</a-button>
-    </template>
+      </a-list>
+      <template slot="footer">
+        <a-button type="primary" @click="fillup">Select</a-button>
+      </template>
     </a-modal>
   </a-layout>
-  
 </template>
 
 <script>
@@ -136,7 +142,7 @@ export default {
     Form1700,
     Form2551Q,
     Form1701Q,
-    Form2550Q,
+    Form2550Q
   },
   computed: {
     affix_computation() {
@@ -167,10 +173,17 @@ export default {
 
   data() {
     return {
+<<<<<<< HEAD
       // view_select:true,
       selected_index:0,
       taxpayer_list:[],
       taxpayer:null,
+=======
+      view_select: true,
+      selected_index: 0,
+      taxpayer_list: [],
+      taxpayer: null,
+>>>>>>> 1f58036adc6f73fd370e1584557dd26fbc079d3d
       form: {
         taxpayer: {
           contact_details: {},
@@ -189,6 +202,23 @@ export default {
           },
           {
             title: "Part II",
+            description: "Computation"
+          }
+        ],
+        "2550q": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II A",
+            description: "Computation"
+          },
+          {
+            title: "Part II B",
             description: "Computation"
           }
         ],
@@ -272,24 +302,27 @@ export default {
   },
   methods: {
     handleScroll() {
-      console.log("refs ", this.$refs);
-      console.log("window :", window);
       this.in_bottom = window.scrollY > 2000;
-      console.log("this.in_bottom :", this.in_bottom);
     },
-    select(index){
-      this.taxpayer = this.taxpayer_list[index]
+    select(index) {
+      this.taxpayer = this.taxpayer_list[index];
       this.selected_index = index;
     },
-    isSelected(index){
-      return this.selected_index == index
+    isSelected(index) {
+      return this.selected_index == index;
     },
-    fillup(){
-      this.form.taxpayer = this.taxpayer
-      if(!this.form.taxpayer.address_details){
-        this.form.taxpayer.address_details = {}
+    fillup() {
+      this.form.taxpayer = this.taxpayer;
+      if (!this.form.taxpayer.address_details) {
+        this.form.taxpayer.address_details = {};
       }
-      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      if (!this.form.taxpayer.contact_details) {
+        this.form.taxpayer.contact_details = {};
+      }
+      if (!this.form.taxpayer.registered_name) {
+        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
+      }
+      console.log(`form::::`, JSON.stringify(this.form.taxpayer));
       this.view_select = false;
     },
     saveDraft() {
@@ -328,33 +361,35 @@ export default {
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
-    this.loading = true
-    //find tp list  
-    this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
-            .then(results=>{
-                console.log('result1 ::: ', JSON.stringify(results.data))
-                this.taxpayer_list.push(results.data.model.taxpayer)
-                return this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
-            })
-            .then(results=>{
-                console.log('result2 ::: ', JSON.stringify(results.data))
-                var tins = []
-                results.data.model.forEach(tin=>{
-                    tins.push(tin.to)
-                })
-                return this.$http.post('/taxpayer/details/',tins)
-            })
-            .then(results =>{
-                console.log('result2 ::: ', JSON.stringify(results.data))
-                this.loading = false;
-                
-                this.taxpayer_list.push(...results.data.model)
-            })
-            .catch(err=>{
-                console.log(`err ::: `, err)
-                this.loading = false;
-            })
-    
+    this.loading = true;
+    //find tp list
+    this.$http
+      .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+      .then(results => {
+        console.log("result1 ::: ", JSON.stringify(results.data));
+        this.taxpayer_list.push(results.data.model.taxpayer);
+        return this.$http.get(
+          `/connections/${this.$store.state.account_session.user.tin}`
+        );
+      })
+      .then(results => {
+        console.log("result2 ::: ", JSON.stringify(results.data));
+        var tins = [];
+        results.data.model.forEach(tin => {
+          tins.push(tin.to);
+        });
+        return this.$http.post("/taxpayer/details/", tins);
+      })
+      .then(results => {
+        console.log("result2 ::: ", JSON.stringify(results.data));
+        this.loading = false;
+
+        this.taxpayer_list.push(...results.data.model);
+      })
+      .catch(err => {
+        console.log(`err ::: `, err);
+        this.loading = false;
+      });
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);

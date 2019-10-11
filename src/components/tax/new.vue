@@ -70,7 +70,7 @@
                 shape="square"
                 :size="60"
                 style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
-              >VT</a-avatar>
+              >WT</a-avatar>
               <template slot="content">
                 <a-menu @click="nav">
                   <a-menu-item key="1601e">Form 1601E</a-menu-item>

@@ -90,7 +90,6 @@ export default {
       window.location.reload();
     },
     init() {
-      console.log('test');
       this.reload_tree = true;
       this.$store
         .dispatch("GET_CONNECTIONS", { tin: this.account_user.tin, refresh: true })
