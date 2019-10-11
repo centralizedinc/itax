@@ -161,4 +161,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('17000_forms', Form1700Schema);
+module.exports = mongoose.model('form_1700', Form1700Schema);
