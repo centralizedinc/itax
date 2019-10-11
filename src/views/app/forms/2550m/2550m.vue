@@ -126,87 +126,15 @@
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
-      <a-button type="primary" @click="showDrawer">
+      <a-button type="primary" @click="visible=true">
         Schedule 1
       </a-button>
-      <a-drawer
-        title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
-        placement="right"
-        :closable="false"
-        @close="onClose"
-        :visible="visible"
-        width="1000"
-      >
-        <a-button type="primary" @click="addAtc">
-          ADD
-        </a-button>
-        <!-- <a-drawer
-        title="ATC"
-        placement="right"
-        :closable="false"
-        @close="onClose"
-        :visible="visibleATC"
-        width="500"
-        >
-          <a-checkbox-group :options="plainOptions" v-model="value" @change="onChange" />
-        </a-drawer> -->
-        <a-table bordered :loading="reloadATC" :dataSource="form.sched1" :columns="columns">
-          <template slot="industry" slot-scope="text, record,index">
-            <!-- <Aa v-if="holder.industry == null">{{text}}</p> -->
-            <a-input disabled v-model="form.sched1[index].description"></a-input>
-          </template>
-          <template slot="footer">
-            <!-- <a-button @click="onClose">Proceed</a-button> -->
-            <p align="right">12A: Total Amount: {{form.totalAtcAmount}} 12B: Total Output Tax: {{form.totalAtcOutput}}</p>
-          </template>
-          <template slot="atc" slot-scope="text, record, index">
-            <a-select
-              style="width 100%"
-              @change="pickAtc($event, index)"
-              :defaultValue="form.sched1[index] && form.sched1[index].atc ? form.sched1[index].atc : 'Pick an ATC'"
-            >
-              <a-select-option  v-for="(item, i) in atc_list" :key="i">{{item.atc}}</a-select-option>
-            </a-select>
-          </template>
-          <template slot="amount" slot-scope="text, record, index">
-            <a-input-number @change="changeAmount($event, index)" v-model="form.sched1[index].amount" placeholder="text"></a-input-number>
-          </template>
-          <template slot="output" slot-scope="text, record, index">
-            <a-input-number v-model="form.sched1[index].output_tax" disabled></a-input-number>
-          </template>
-          <template slot="operation" slot-scope="text, record, index">
-            <!-- <a-popconfirm
-              v-if="dataSource[index].editable == false"
-              title="Sure to save?"
-              @confirm="() => saveAtc(index)">
-              <a href="javascript:;">Save</a>
-            </a-popconfirm>
-            <a-popconfirm
-              v-if="dataSource[index].editable == true"
-              title="Sure to edit?"
-              @confirm="() => editAtc(index)">
-              <a href="javascript:;">Edit</a>
-            </a-popconfirm>
-            <a-popconfirm
-              v-if="dataSource[index].editable == false"
-              title="Sure to Cance;?"
-              @confirm="() => cancelAtc(index)">
-              <a href="javascript:;">Cancel</a>
-            </a-popconfirm> -->
-            <a-popconfirm
-              title="Sure to delete ?"
-              @confirm="deleteAtc(index)">
-              <a href="javascript:;">Delete</a>
-            </a-popconfirm>
-          </template>
-        </a-table>
-      </a-drawer>
+      <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')"></a-form-item>
+      <schedule-one v-if="visible" :show="visible" :form="form" @close="visible=false"/>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="12A"
-        :validate-status="error_item('atc')"
-        :help="error_desc('atc')"
       >
         <a-input-number
           placeholder="Sales/Receipt for the Month"
@@ -921,9 +849,20 @@
 </template>
 
 <script>
+import ScheduleOne from './Schedule1';
+
 export default {
+  components: {
+    ScheduleOne
+  },
   props: ["form", "step"],
   methods: {
+    updateSched1(data){
+      Object.keys(data).forEach(key => {
+        this.form[key] = data[key];
+      })
+      this.visible = false;
+    },
     computeSched1(){
       this.form.totalAtcAmount = 0
       this.form.totalAtcOutput = 0
@@ -1365,29 +1304,6 @@ export default {
       image_height: 1000,
       atc_options:[],
       dataSource: [],
-      columns: [{
-        title: 'Industry Covered by VAT',
-        dataIndex: 'industry',
-        scopedSlots: { customRender: 'industry'}
-      }, {
-        title: 'ATC',
-        dataIndex: 'atc',
-        width: '30%',
-        scopedSlots: { customRender: 'atc'}
-      }, {
-        title: 'Amount of Sales/Receipts For the Period',
-        dataIndex: 'amount',
-        scopedSlots: { customRender: 'amount' },
-      }, {
-        title: 'Output Tax for the Period',
-        dataIndex: 'output',
-        scopedSlots: { customRender: 'output' },
-      },
-      {
-        title: '',
-        dataIndex: 'operation',
-        scopedSlots: { customRender: 'operation'}
-      }],
       sched2_data: [],
       columns_sched2: [{
         title: 'Date Purchased',

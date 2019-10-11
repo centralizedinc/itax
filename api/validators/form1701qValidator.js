@@ -13,9 +13,18 @@ function validate(form_details) {
 
     //validation begins ...
     var errors = [];
+    if (!form_details.returnPeriod) {
+        errors = [{
+            page: 0,
+            field: "returnPeriod",
+            error: constant_helper.MANDATORY_FIELD("For the year")
+        }]
+        return errors;
+    }
+
     form_details.due_date = computeDueDate(form_details.returnPeriod)
     //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1))
     // validate required fields
     errors.push(...validateRequired(form_details));
 
@@ -48,53 +57,53 @@ function validate(form_details) {
     //     }
     // }
 
-//latefiling computations
-console.log('form 1701q validator errors: ', JSON.stringify(errors) )
+    //latefiling computations
+    console.log('form 1701q validator errors: ', JSON.stringify(errors))
 
     return errors
 }
 
 function validateRequired(field) {
     var error_messages = [];
-        var tp = new taxpayerDetails(taxpayer); 
-        console.log('tp', JSON.stringify(field))
-        console.log('!tp.tin', !field.dateFiled)
-        if (!field.dateFiled) {
-            error_messages.push({ field: "dateFiled", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
-        }
-    
-        if (!field.quarter) {
-            error_messages.push({ field: "quarter", name: "Quarter", error: constant_helper.MANDATORY_FIELD("Quarter") });
-        }
-    
-        if (!field.tax_filer_type) {
-            error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
-        }
+    var tp = new taxpayerDetails(taxpayer);
+    console.log('tp', JSON.stringify(field))
+    console.log('!tp.tin', !field.dateFiled)
+    if (!field.dateFiled) {
+        error_messages.push({ field: "dateFiled", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
+    }
 
-        if (!field.taxpayer.atc) {
-            error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD("ATC") });
-        }
-    
-        // if (!field.tax_filer_type) {
-        //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
-        // }
+    if (!field.quarter) {
+        error_messages.push({ field: "quarter", name: "Quarter", error: constant_helper.MANDATORY_FIELD("Quarter") });
+    }
 
-        if (!field.taxpayer.tax_filer_type) {
-            error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
-        }
+    if (!field.tax_filer_type) {
+        error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
+    }
 
-        if (!field.taxpayer.citizenship) {
-            error_messages.push({ field: "taxpayer.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
-        }
+    if (!field.taxpayer.atc) {
+        error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD("ATC") });
+    }
 
-        if (!field.taxCredits) {
-            error_messages.push({ field: "taxCredits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
-        }
-        
-        if (!field.method_deduction) {
-            error_messages.push({ field: "method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
-        }
-        return error_messages;
+    // if (!field.tax_filer_type) {
+    //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
+    // }
+
+    if (!field.taxpayer.tax_filer_type) {
+        error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
+    }
+
+    if (!field.taxpayer.citizenship) {
+        error_messages.push({ field: "taxpayer.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
+    }
+
+    if (!field.taxCredits) {
+        error_messages.push({ field: "taxCredits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
+    }
+
+    if (!field.method_deduction) {
+        error_messages.push({ field: "method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
+    }
+    return error_messages;
 }
 
 
