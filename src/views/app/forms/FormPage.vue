@@ -173,11 +173,7 @@ export default {
 
   data() {
     return {
-<<<<<<< HEAD
       // view_select: true,
-=======
-      view_select: true,
->>>>>>> cbed5acdfbca5b049d437039da8c78be32449ccb
       selected_index: 0,
       taxpayer_list: [],
       taxpayer: null,

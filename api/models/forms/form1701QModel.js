@@ -5,122 +5,93 @@ var Schema = mongoose.Schema;
 
 var Form1701QSchema = new Schema({
   reference_no: String,
-  taxpayer: {},
-  dateFiled: {
-    type: Date,
-    default: new Date()
-   },
-  address: String,
-  address_details: {
-    number: String,
-    street: String,
-    barangay: String,
-    municipality: String,
-    city: String,
-    zipCode: Number
+  taxpayer: {
+    taxpayer_name: String,
+    tin: Number,
+    rdo_code: Number,
+    tax_filer_type: String,
+    registered_address: String,
+    birthday: Date,
+    email_address: String,
+    citizenship: String,
+    foreign_tax_no: Number,
+    atc: {
+        type: Number,
+        default: 0
+    },
+    spouse_tin: Number,
   },
-  contact_details: {
-    telno: String,
-    mobile: String,
-    email: String
-  },
-  individual_details: {
-    firstName: String,
-    middleName: String,
-    lastName: String,
-    gender: String,
-    birthDate: Date,
-    civil_status: String,
-    spouseTin: String,
-    spouseBranchCode: String
-  },
-  corporate_details: {
-    registeredName: String,
-    incorporationDate: Date
+  spouse_taxpayer: {
+    spouse_name: String,
+    tin: Number,
+    rdo_code: Number,
+    tax_filer_type: String,
+    registered_address: String,
+    birthday: Date,
+    email_address: String,
+    citizenship: String,
+    foreign_tax_no: Number,
+    spouse_atc: {
+        type: Number,
+        default: 0
+    },
   },
   registered_name: String,
   dateFiled: {
         type: Date,
         default: new Date()
     },
-    dueDate: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: { type: Number, default: 0 },
-    is_avail_tax_relief: String,
-    avail_tax_relief: String,
-    totalAtcAmount: { type: Number, default: 0 }, //item 12A
-    totalAtcOutput: { type: Number, default: 0 }, // item 12B
-    salesGovAmount: { type: Number, default: 0 },
-    salesGovOutput: { type: Number, default: 0 },
-    zeroRatedAmount: { type: Number, default: 0 },
-    exemptAmount: { type: Number, default: 0 },
-    totalSales: { type: Number, default: 0 },
-    totalOutputTax: { type: Number, default: 0 },
-    carriedOverPreviousPeriod: { type: Number, default: 0 },
-    txbleGoodsServices: { type: Number, default: 0 },
-    transInputTax: { type: Number, default: 0 },
-    presumpInputTax: { type: Number, default: 0 },
-    otherAllowableLessInputTax: { type: Number, default: 0 },
-    totalAllowableLessInputTax: { type: Number, default: 0 },
-    purCapGoodsNotExceed: { type: Number, default: 0 },
-    outputCapGoodsNotExceed: { type: Number, default: 0 },
-    purCapGoodsExceed: { type: Number, default: 0 },
-    outputPurCapGoodsExceed: { type: Number, default: 0 },
-    domesticPurchaseGoods: { type: Number, default: 0 },
-    outputDomesticPurchaseGoods: { type: Number, default: 0 },
-    importationGoods: { type: Number, default: 0 },
-    outputImportationGoods: { type: Number, default: 0 },
-    domesticPurchaseService: { type: Number, default: 0 },
-    outputDomesticPurchaseService: { type: Number, default: 0 },
-    servicesNonResidents: { type: Number, default: 0 },
-    outputServicesNonResidents: { type: Number, default: 0 },
-    purchaseNotQualified: { type: Number, default: 0 },
-    outputPurchaseNotQualified: { type: Number, default: 0 },
-    purchaseOthers: { type: Number, default: 0 },
-    outputPurchaseOthers: { type: Number, default: 0 },
-    totalCurrentPurchases: { type: Number, default: 0 },
-    totalAvailableInputTax: { type: Number, default: 0 },
-    inputTaxPurchaseCapGoods: { type: Number, default: 0 },
-    inputTaxSaleToGovt: { type: Number, default: 0 },
-    inputTaxAllocableToExempt: { type: Number, default: 0 },
-    refundTcm: { type: Number, default: 0 },
-    otherDeductionFrInputTax: { type: Number, default: 0 },
-    totalDeductionFrInputTax: { type: Number, default: 0 },
-    totalInputTax: { type: Number, default: 0 },
-    taxDue: { type: Number, default: 0 },
-    creditableVatWithheld: { type: Number, default: 0 },
-    advPaySugarFlourInd: { type: Number, default: 0 },
-    taxWthld: { type: Number, default: 0 },
-    prevTaxPaid: { type: Number, default: 0 },
-    advPymt: { type: Number, default: 0 },
-    otherTaxCredits: { type: Number, default: 0 },
-    totalCredits: { type: Number, default: 0 },
-    amtPaybl: { type: Number, default: 0 },
+  dueDate: Date,
+  returnPeriod: Date,
+  returnPeriodMonth: String,
+  returnPeriodYear: String,
+  amendedYn: Boolean,
+  numOfSheet: { type: Number, default: 0 },
+  taxRate: String,
+  methodDeduction: String,
+  standardDeduction: String,
+  taxDue: { type: Number, default: 0 }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54)
+  taxCredit: { type: Number, default: 0 }, //(From Part V, Schedule III-Item 62)
+  taxPayable: { type: Number, default: 0 }, //(Item 26 Less Item 27) (From Part V, Item 63)
+  totalPenalties: { type: Number, default: 0 }, //(From Part V, Schedule IV-Item 67)
+  totalAmountPayable: { type: Number, default: 0 }, // (Sum of Items 28 and 29) (From Part V, Item 68)
+  aggregateAmountPayable: { type: Number, default: 0 }, //Sum of Items 30A and 30B
+  particularCash: { type: Number, default: 0 },
+  particularCheck: { type: Number, default: 0 },
+  particularTaxDebit: { type: Number, default: 0 },
+  particularOthers: { type: Number, default: 0 },
+  sched1: [{
+    totalSalesRevenue: { type: Number, default: 0 },
+    totalSalesServices: { type: Number, default: 0 },
+    grossIncome: { type: Number, default: 0 },
+    totalAllowableItemizedDeductions: { type: Number, default: 0 },
+    totalStandardDeductions: { type: Number, default: 0 }, //40% of Item 36
+    totalNetIncome: { type: Number, default: 0 },
+    totalTaxableIncome: { type: Number, default: 0 },
+    totalOperationIncome: { type: Number, default: 0 },
+    amountRecievedShare: { type: Number, default: 0 },
+    totalTaxableIncomeToDate: { type: Number, default: 0 }, //Sum of Items 41 to 44
+    totalTaxDue: { type: Number, default: 0 }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
+    }],
+  sched2: [{
+    totalSalesRevenue: { type: Number, default: 0 },
+    totalOperationIncome: { type: Number, default: 0 },
+    totalIncomeQuarter: { type: Number, default: 0 }, // (Sum of Items 47 and 48)
+    totalAllowableItemizedDeductions: { type: Number, default: 0 },
+    totalStandardDeductions: { type: Number, default: 0 }, 
+    totalNetIncome: { type: Number, default: 0 },
+    totalCumulativeIncome: { type: Number, default: 0 }, //(Sum of Items 49 and 50)
+    totalTaxableIncomeToDate: { type: Number, default: 0 }, //(Item 51 Less Item 52)
+    totalTaxDue: { type: Number, default: 0 }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
+  }],
+  sched3: [],
+  sched4: [{
     surcharge: { type: Number, default: 0 },
     interest: { type: Number, default: 0 },
     compromise: { type: Number, default: 0 },
-    penalties: { type: Number, default: 0 },
-    totalAmountPayable: { type: Number, default: 0 },
-    batchNo: { type: Number, default: 0 },
-    sched1: [{
-        atc: {
-            type: String
-        },
-        amount: {
-            type: Number,
-            default: 0
-        },
-        output_tax: {
-            type: Number,
-            default: 0
-        }
-    }],
-    sched2: [],
-    sched3: [],
-    sched4: [],
+    penalties: { type: Number, default: 0 }, //(Sum of Items 64 to 66) (To Part III, Item 29)
+    totalAmountPayable: { type: Number, default: 0 }, //(Sum of Items 63 and 67) (To Part III, Item 30) 
+  }],
   created_by: {
     type: String
   },
@@ -153,4 +124,4 @@ Form1701QSchema.pre('findOneAndUpdate', function (callback) {
     callback();
 });
 
-module.exports = mongoose.model("taxpayer_details", Form1701QSchema);
+module.exports = mongoose.model("1701q_forms", Form1701QSchema);
