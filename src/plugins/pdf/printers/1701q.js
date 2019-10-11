@@ -29,7 +29,7 @@ function fillup(details) {
  * @param {Array|Object} forms 
  */
 function getContent(forms) {
-    console.log("get content forms: " + forms)
+    console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
@@ -242,7 +242,8 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [455, 50],
+                widths: [455],
+                heights: [9, 9],
                 body: [
                     [{
                         text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
@@ -250,31 +251,33 @@ function getContent(forms) {
                         // right,down,left,up
                         alignment: 'justified',
                         margin: [10, 6, 0, 0]
-                    },
-                    {
-                        text: ''
                     }],
+                    [{
+                        text: ''
+                    }]
                 ]
             }
         },
+        //    zip
         {
 
             layout: "noBorders",
             table: {
-                widths: [510],
+                widths: [455, 50],
                 body: [
-                    [
-                        {
-                            // text: "4012",
-                            text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'left',
-                            margin: [470, -15, 0, 0]
-                        }]
+                    [{
+                        text: '',
+                    },
+                    {
+                        text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                        fontSize: 12,
+                        alignment: 'left',
+                        margin: [5, -13, 0, 0]
+                    }]
                 ]
             }
         },
+
 
 
         // 11-12
@@ -588,21 +591,21 @@ function getContent(forms) {
                     [{
                         // text: 'X',
                         text: forms.spouse_taxRate == 'SGR' ? 'X' : ' ',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'justified',
                         margin: [43, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SID' ? 'X' : ' ',
                         // text: 'X',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'justify',
                         margin: [19, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SOSD' ? 'X' : ' ',
                         // text: 'X',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'justify',
                         margin: [9, 6, 0, 0]
                     }
@@ -611,7 +614,7 @@ function getContent(forms) {
                     [{
                         // text: 'X',
                         text: forms.spouse_taxRate == 'SOGS' ? 'X' : ' ',
-                        fontSize: 10,
+                        fontSize: 12,
                         alignment: 'left',
                         margin: [43, 4, 0, 0]
                     },
@@ -636,226 +639,194 @@ function getContent(forms) {
         },
 
     )
-    // forms.tax_computation.forEach(element => {
-    for (var x = 0; x < 22; x++) {
-        content.push({
-            layout: "noBorders",
-            table: {
-                widths: [220, 40, 82, 42, 115],
-                body: [
-                    [{
-                        // 48 characters only
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-
-                    },
-                    {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    },
-                    {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    }, {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    },
-                    {
-                        text: ' ',
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [0, 0, 0, 0],
-                        alignment: 'center'
-                    }
-                    ]
-                ]
-            }
-        })
-    }
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [510],
+            heights: [20],
+            body: [
+                [{
+                    text: '',
+                }]
+            ]
+        }
+    })
 
     content.push({
         layout: "noBorders",
         table: {
-            widths: ['auto', 'auto'],
+            widths: [300, 96, 96],
             body: [
                 [{
-                    text: '1 000 000',
-                    fontSize: 12,
-                    // right,down,left,up
-                    margin: [330, -268, 0, 0],
-                    alignment: 'right-justified'
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right'
 
                 },
-                {
-                    text: '1 000 000',
-                    fontSize: 12,
-                    // right,down,left,up
-                    margin: [50, -268, 0, 0],
-                    alignment: 'left'
 
-                }
-                ]
+                {
+                    text: forms.item26a == null ? '0.00' : forms.item26a % 1 == 0 ? forms.item26a + '.00' : forms.item26a,
+                    fontSize: 13,
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: forms.item26b == null ? '0.00' : forms.item26b % 1 == 0 ? forms.item26b + '.00' : forms.item26b,
+                    fontSize: 13,
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: forms.item27a == null ? '0.00' : forms.item27a % 1 == 0 ? forms.item26a + '.00' : forms.item27a,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: forms.item27b == null ? '0.00' : forms.item27b % 1 == 0 ? forms.item27b + '.00' : forms.item27b,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: forms.item28a == null ? '0.00' : forms.item28a % 1 == 0 ? forms.item28a + '.00' : forms.item28a,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: forms.item28b == null ? '0.00' : forms.item28b % 1 == 0 ? forms.item28b + '.00' : forms.item28b,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: forms.item29a == null ? '0.00' : forms.item29a % 1 == 0 ? forms.item29a + '.00' : forms.item29a,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: forms.item29b == null ? '0.00' : forms.item29b % 1 == 0 ? forms.item29b + '.00' : forms.item29b,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: forms.item30a == null ? '0.00' : forms.item30a % 1 == 0 ? forms.item30a + '.00' : forms.item30a,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: forms.item30b == null ? '0.00' : forms.item30b % 1 == 0 ? forms.item30b + '.00' : forms.item30b,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
+            ]
+        }
+    })
+
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths: [300, 96, 96],
+            body: [
+                [{
+                    text: '',
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+
+                },
+
+                {
+                    text: forms.item31a == null ? '0.00' : forms.item31a % 1 == 0 ? forms.item31a + '.00' : forms.item31a,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                },
+                {
+                    text: forms.item31b == null ? '0.00' : forms.item31ab % 1 == 0 ? forms.item31b + '.00' : forms.item31b,
+                    fontSize: 13,
+                    margin: [0, -5, 0, 0],
+                    alignment: 'right'
+                }]
             ]
         }
     })
 
 
-
-
-    // content.push({
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     // 20 characters
-    //     text: 'forms.total_tax_withheld_remitted',
-    //     // text: forms.total_tax_withheld_remitted,
-    //     // right,down,left,up
-    //     margin: [416, 8, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.prevTaxPaidCrdtb',
-    //     // right,down,left,up
-    //     margin: [415, 11, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.advPayment',
-    //     // right,down,left,up
-    //     margin: [415, 1, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.totTaxCredits',
-    //     // right,down,left,up
-    //     margin: [415, 1, 0, 0],
-    // }, {
-    //     alignment: 'justify',
-    //     fontSize: 10,
-    //     width: 100,
-    //     text: 'forms.amtPayblCrdtb',
-    //     // right,down,left,up
-    //     margin: [415, 1, 0, 0],
-    // })
-    // content.push({
-    //     layout: "noBorders",
-    //     table: {
-    //         widths: [131, 122, 110, 140],
-    //         body: [
-    //             [{
-    //                     text: 'forms.surcharge',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [52, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'forms.interest',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [26, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'forms.compromise',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [23, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'forms.penaltiesCrdtb',
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [28, 13, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //             ]
-    //         ]
-    //     }
-    // })
-
-    // content.push({
-    //     layout: "noBorders",
-    //     table: {
-    //         widths: [160, 100, 260],
-    //         body: [
-    //             [{
-    //                     text: forms.overremittance == true ? 'X' : ' ',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [155, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: forms.overremittance == false ? 'X' : ' ',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [95, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: forms.total_amount_overremittance,
-    //                     fontSize: 8,
-    //                     // right,down,left,up
-    //                     margin: [140, 0, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 }
-    //             ]
-    //         ]
-    //     }
-    // })
-
-    // -------------To be Continue
-    // content.push({
-    //     text: "\n\n"
-    // }, {
-    //     // layout: "noBorders",
-    //     table: {
-    //         widths: [310, 100],
-    //         body: [
-    //             [{
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [155, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 },
-    //                 {
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [95, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 }
-    //             ]
-    //         ]
-    //     }
-    // })
     return content;
 }
 
