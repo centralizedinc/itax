@@ -1,5 +1,5 @@
 <template>
-  <a-layout>
+  <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
     <a-back-top>
       <a-avatar>
         <a-icon type="up" :size="42"></a-icon>
@@ -57,12 +57,12 @@
           <a-row type="flex" justify="center" style="margin-bottom: 2vh">
             <a-col :span="24">
               <a-card
-                style=" min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);"
+                style=" min-height: 10vh; background: linear-gradient(to right, #000046, #1cb5e0);"
               ></a-card>
             </a-col>
             <a-col :span="6">
               <a-avatar 
-                style="z-index: 1; margin-top: -5vh; border: 3px solid #FFFFFF" 
+                style="z-index: 1; margin-top: -7vh; border: 3px solid #FFFFFF" 
                 :size="60" 
                 :src="user && user.avatar ? user.avatar.location : null">
                 {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
@@ -71,7 +71,8 @@
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
                 <div style="margin-top: 2vh">
-                  <p>{{user.name.first}} {{user.name.last}}</p>
+                  <span>{{user.name.first}} {{user.name.last}}</span>
+                  <p><b>123-000-1212-000</b></p>
                 </div>
               </a-card>
             </a-col>
@@ -93,9 +94,9 @@
               <a-menu-item key="/app/pay">
                 <a-icon type="credit-card" />Payments
               </a-menu-item>
-              <!-- <a-divider></a-divider> -->
-              <!-- <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>-->
+              <a-divider></a-divider>
+              <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
+              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
               <a-menu-item key="logout">
                 <a-icon type="logout" />Logout
               </a-menu-item>
@@ -104,8 +105,17 @@
           <!-- </a-card> -->
         </a-col>
         <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-          <h3>{{$route.name}}</h3>
-          <a-divider></a-divider>
+          <!-- <h3>{{$route.name}}</h3>
+          <a-divider></a-divider> -->
+           <a-col :span="24">
+              <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+                  <h2 style="color: #FFFFFF">{{$route.name}}</h2>
+                  <!-- <a-divider></a-divider> -->
+                  <!-- <p style="color: #FFFFFF">For easier filing of your tax returns, complete your taxpayer profile now! </p>
+                  <a-button ghost ghtype="primary" @click="$router.push('/app/user')">My Profile</a-button> -->
+                  
+              </a-card>
+          </a-col>
           <transition name="fade" mode="out-in">
             <router-view></router-view>
           </transition>
@@ -119,29 +129,39 @@
               <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
             </a-timeline>
           </a-card> -->
-          <h3>My Daily Stats</h3>
-          <a-divider></a-divider>
-
-          <a-card>
+          <!-- <h3>My Daily Stats</h3>
+          <a-divider></a-divider> -->
+          <a-row style="margin-bottom: 2vh">
+            <a-col :span="24">
+              <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+                  <h2 style="color: #FFFFFF">Summary</h2>
+                  <!-- <a-divider></a-divider> -->
+                  <!-- <p style="color: #FFFFFF">For easier filing of your tax returns, complete your taxpayer profile now! </p>
+                  <a-button ghost ghtype="primary" @click="$router.push('/app/user')">My Profile</a-button> -->
+                  
+              </a-card>
+          </a-col>
+          </a-row>
+          <a-card style="margin-bottom:1vh" class="avatar_btn">
             <a-avatar shape="square" style="background: #115B95">
               <a-icon type="user"></a-icon>
             </a-avatar>
             TaxPayers
-            <vue-trend
+            <vue-trend style="margin-top:1vh"
               :data="ttrend"
               :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
               auto-draw
               smooth
-              strokeWidth="5"
+              :strokeWidth="10"
             >
             </vue-trend>
           </a-card>
-           <a-card>
+           <a-card style="margin-bottom:1vh" class="avatar_btn"> 
              <a-avatar shape="square" style="background: #115B95">
               <a-icon type="form"></a-icon>
             </a-avatar>
              Tax Returns
-            <vue-trend
+            <vue-trend style="margin-top:1vh"
               :data="rtrend"
               :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
               auto-draw
@@ -149,12 +169,12 @@
             >
             </vue-trend>
           </a-card>
-           <a-card style="background: ">
+           <a-card style="margin-bottom:1vh" class="avatar_btn">
              <a-avatar shape="square" style="background: #115B95">
               <a-icon type="credit-card"></a-icon>
             </a-avatar>
              Payments
-            <vue-trend
+            <vue-trend style="margin-top:1vh"
               :data="ptrend"
               :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
               auto-draw

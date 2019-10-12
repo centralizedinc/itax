@@ -1,36 +1,36 @@
 <template>
-    <a-row type="flex" :gutter="8">
-        <a-col :span="8">
-            <a-card>
+    <a-row type="flex" justify="center" :gutter="8" style="margin-top:13vh">
+        <a-col :span="12">
+            <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/new')">
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
-                  <a-avatar class="avatar_btn" @click="$router.push('/app/taxpayer/new')" shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
+                  <a-avatar  shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
                         <a-icon style="font-size:24px" type="user-add"></a-icon>
                     </a-avatar>
               </a-col>
               <a-col :span="16">
                   <h4>Add New Taxpayer</h4>
-                  <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+                  <p>Create a new taxpayer and add it on your connections </p>
               </a-col>
             </a-row>
             </a-card>
         </a-col>
-        <a-col :span="8">
-            <a-card>
+        <a-col :span="12">
+            <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/upload')" >
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
-                  <a-avatar class="avatar_btn" @click="$router.push('/app/taxpayer/upload')"  shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
+                  <a-avatar   shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
                         <a-icon style="font-size:24px" type="upload"></a-icon>
                     </a-avatar>
               </a-col>
               <a-col :span="16">
                   <h4>Upload Taxpayer</h4>
-                  <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+                  <p>Create several taxpayer at once using a smart tax template</p>
               </a-col>
             </a-row>
             </a-card>
         </a-col>
-        <a-col :span="8">
+        <!-- <a-col :span="8">
             <a-card>
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
@@ -44,9 +44,9 @@
               </a-col>
             </a-row>
             </a-card>
-        </a-col>
+        </a-col> -->
 
-        <a-col :span="24" style="margin-top: 2vh">
+        <a-col :span="24" style="margin-top: 1vh">
             <a-card>
                  <h3>My Taxpayer Vault</h3>
                  <a-divider></a-divider>
@@ -60,7 +60,7 @@
                             
                             <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
                             <template slot="description" >
-                                <p>{{item.tin}}</p>
+                                <p>{{formatTIN(item.tin)}}</p>
                                 <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                             </template>
                             <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar || 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'" :size="64" />
