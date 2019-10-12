@@ -30,9 +30,11 @@ function validate(form_details) {
     //latefiling computations
     // 25% total amount due
     if (commonValidator.isLateFiling(form_details.due_date)) {
+        console.log('Late filling ...');
         // Compute Surcharge
         const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
         form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
+        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
         if (form_details.surcharge !== surcharge) {
             errors.push({
                 page: 2,
@@ -43,6 +45,7 @@ function validate(form_details) {
         // Compute Interest
         const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
         form_details.interest = form_details.interest ? form_details.interest : 0;
+        console.log('Interest :', interest, ':', form_details.interest);
         if (form_details.interest !== interest) {
             errors.push({
                 page: 2,
@@ -53,6 +56,7 @@ function validate(form_details) {
         // Compute Compromise
         const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
         form_details.compromise = form_details.compromise ? form_details.compromise : 0;
+        console.log('Compromise :', compromise, ':', form_details.compromise);
         if (form_details.compromise !== compromise) {
             errors.push({
                 page: 2,

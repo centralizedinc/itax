@@ -100,11 +100,11 @@
         :validate-status="error_item('taxpayer.address_details.zipCode')"
         :help="error_desc('taxpayer.address_details.zipCode')"
       >
-        <a-input-number
+        <a-input
           placeholder="Zip Code"
           v-model="form.taxpayer.address_details.zipCode"
           style="width: 100%"
-        ></a-input-number>
+        ></a-input>
       </a-form-item>
       <a-form-item
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"

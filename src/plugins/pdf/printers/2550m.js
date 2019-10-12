@@ -662,7 +662,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [17, -4, 0, 0]
+                            margin: [17, -6, 0, 0]
                         },
                     ]
                 ]
@@ -728,7 +728,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [410, 16, 0, 0]
+                            margin: [410, 14, 0, 0]
                         },
                     ]
                 ]
@@ -1080,28 +1080,28 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [83, 4, 0, 0]
+                            margin: [83, 5, 0, 0]
                         },
                         {
                             text: forms.interest == null ? '0.00' : forms.interest % 1 == 0 ? forms.interest + '.00' : forms.interest,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [23, 5, 0, 0]
+                            margin: [23, 6, 0, 0]
                         },
                         {
                             text: forms.compromise == null ? '0.00' : forms.compromise % 1 == 0 ? forms.compromise + '.00' : forms.compromise,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [13, 5, 0, 0]
+                            margin: [13, 6, 0, 0]
                         },
                         {
-                            text: forms.penalties == null ? '0.00' : forms.penalties % 1 == 0 ? forms.penalties + '.00' : forms.penalties,
+                            text: formatCurrency(forms.penalties),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [22, 3, 0, 0]
+                            margin: [22, 4, 0, 0]
                         },
                     ]
                 ]
@@ -1114,16 +1114,16 @@ function getContent(forms) {
             //Table 44  25 A B C D 
             layout: "noBorders",
             table: {
-                widths: [165],
+                widths: [525],
                 body: [
                     [
 
                         {
-                            text: forms.totalAmountPayable == null ? '0.00' : forms.surcharge % 1 == 0 ? forms.surcharge + '.00' : forms.surcharge,
+                            text: formatCurrency(forms.totalAmountPayable),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [83, 4, 0, 0]
+                            margin: [0, -4, 0, 0]
                         }
                     ]
                 ]
