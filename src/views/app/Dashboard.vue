@@ -12,12 +12,12 @@
         <!-- <h3>Updates</h3>
         <a-divider></a-divider> -->
         <!-- <a-card> -->
-        <a-list
+        <!-- <a-list
             itemLayout="horizontal"
             :dataSource="data"
-        >
-            <a-list-item slot="renderItem" slot-scope="item" >
-                <a-card>
+        > -->
+            <!-- <a-list-item slot="renderItem" slot-scope="item" > -->
+        <a-card v-for="item in data" :key="item.content" style="margin-bottom:1vh">
             <a-comment 
                 :author="item.author"
                 :avatar="item.avatar"
@@ -31,8 +31,8 @@
                 </a-tooltip>
             </a-comment>
             </a-card>
-            </a-list-item>
-        </a-list>
+            <!-- </a-list-item>
+        </a-list> -->
         <!-- </a-card> -->
     </a-col>
   </a-row>

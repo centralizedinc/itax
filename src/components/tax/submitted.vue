@@ -3,9 +3,16 @@
     <a-table :loading="loading" :columns="cols" :dataSource="tax_returns">
       <span slot="form" slot-scope="form">Form {{form}}</span>
       <a-tooltip slot="datetime" slot-scope="date_created" :title="moment(date_created).fromNow()">
-        <span>{{formatDate(date_created)}}</span>
+        <span>{{formatDate(date_created, {
+                        hour12: true,
+                        year: "numeric",
+                        month: "long",
+                        day: "2-digit"
+                    })}}</span>
       </a-tooltip>
-
+      <div slot="taxpayer" slot-scope="tin">
+        {{formatTIN(tin)}}
+      </div>
       <div slot="actions">
         <a-tooltip>
           <span slot="title">View</span>

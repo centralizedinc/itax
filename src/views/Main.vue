@@ -72,13 +72,14 @@
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
                 <div style="margin-top: 2vh">
                   <span>{{user.name.first}} {{user.name.last}}</span>
-                  <p><b>123-000-1212-000</b></p>
+                  <p v-if="user.tin"><a @click="$router.push('/app/user')">{{formatTIN(user.tin)}}</a></p>
+                  <p v-else><a @click="$router.push('/app/user')">No taxpayer details. Click here.</a></p>
                 </div>
               </a-card>
             </a-col>
           </a-row>
           <a-affix :offsetTop="100">
-            <a-menu @click="nav">
+            <a-menu @click="nav" :selectedKeys="active_menu">
               <a-menu-item key="/app">
                 <a-icon type="layout" />Dashboard
               </a-menu-item>
@@ -203,6 +204,7 @@ export default {
   },
   data() {
     return {
+      // active_menu:['/app'],
       user: {
         name: {}
       }
@@ -229,7 +231,9 @@ export default {
           onCancel() {}
         });
       } else {
+        // this.active_menu = [e.key]
         this.$router.push(e.key);
+
       }
     },
     randomArray(){
@@ -244,6 +248,10 @@ export default {
     }
   },
   computed:{
+    active_menu(){
+      console.log('PATH :::: ',this.$route.path)
+      return [this.$route.path];
+    },
     ttrend(){
       return this.randomArray()
     },

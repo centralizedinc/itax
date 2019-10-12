@@ -2,8 +2,18 @@
 <div>
     <!-- <a-affix :offsetTop="64"> -->
         <a-tabs @change="changeView" style="background-color:#FFFFFF; margin-top: 13vh ">
-            <a-tab-pane key="0" tab="For Payment"></a-tab-pane>
-            <a-tab-pane key="1" tab="Paid"></a-tab-pane>
+            <a-tab-pane key="0" >
+                <template slot="tab">
+                    <a-icon type="credit-card"></a-icon>
+                    <span>For Payment</span>
+                </template>
+            </a-tab-pane>
+            <a-tab-pane key="1">
+                <template slot="tab">
+                    <a-icon type="file-done"></a-icon>
+                    <span>Paid</span>
+                </template>
+            </a-tab-pane>
         </a-tabs>
     <!-- </a-affix> -->
 
@@ -30,12 +40,7 @@ export default {
             tabView:['new', 'paid']
         }
     },
-    methods:{
-        changeView(key){
-            this.currentView = this.tabView[key]
-            window.scrollTo(0,0)
-        }
-    }
+    
 
 }
 </script>

@@ -25,7 +25,7 @@
               </a-col>
               <a-col :span="16">
                   <h4>Upload Taxpayer</h4>
-                  <p>Create several taxpayer at once using a smart tax template</p>
+                  <p>Create several taxpayers at once using a smart tax template</p>
               </a-col>
             </a-row>
             </a-card>
@@ -63,7 +63,7 @@
                                 <p>{{formatTIN(item.tin)}}</p>
                                 <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                             </template>
-                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar || 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'" :size="64" />
+                            <a-avatar style="border: solid 2px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar? getUserByTin(item.tin).avatar.location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'" :size="64" />
                         </a-list-item-meta>
                         <!-- </a-card> -->
                         </a-list-item>
@@ -119,8 +119,6 @@ export default {
     methods:{
         init(){
             this.loading = true;
-            console.log('user######### ', JSON.stringify(this.$store.state.account_session.user.tin))
-
             this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
             .then(results=>{
                 console.log('result1 ::: ', JSON.stringify(results.data))
