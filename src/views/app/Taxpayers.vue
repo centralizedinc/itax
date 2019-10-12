@@ -63,7 +63,7 @@
                                 <p>{{item.tin}}</p>
                                 <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                             </template>
-                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="item.avatar" :size="64" />
+                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar || 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'" :size="64" />
                         </a-list-item-meta>
                         <!-- </a-card> -->
                         </a-list-item>
@@ -91,6 +91,7 @@ export default {
         return{
             loading:false,
             taxpayers:[],
+            users: [],
             cols:[
                 {
                     title: 'Name',
@@ -123,7 +124,8 @@ export default {
             this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
             .then(results=>{
                 console.log('result1 ::: ', JSON.stringify(results.data))
-                this.taxpayers.push(results.data.model.taxpayer)
+                this.taxpayers.push(results.data.model.taxpayer);
+                this.users.push(results.data.model.user);
                 return this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
             })
             .then(results=>{
@@ -137,8 +139,8 @@ export default {
             .then(results =>{
                 console.log('result2 ::: ', JSON.stringify(results.data))
                 this.loading = false;
-                
-                this.taxpayers.push(...results.data.model)
+                this.users.push(...results.data.model.users);
+                this.taxpayers.push(...results.data.model.taxpayers)
             })
             .catch(err=>{
                 console.log(`err ::: `, err)
@@ -147,6 +149,10 @@ export default {
             // this.taxpayers = this.$store.state.taxpayers.records
             
 
+        },
+        getUserByTin(tin){
+            const user = this.users.find(v => v.tin === tin);
+            return user || {};
         }
     }
 

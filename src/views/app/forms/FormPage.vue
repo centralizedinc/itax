@@ -105,7 +105,7 @@
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
                     slot="avatar"
-                    :src="item.avatar"
+                    :src="getUserByTin(item.tin).avatar || 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
                     :size="64"
                   />
                 </a-list-item-meta>
@@ -176,6 +176,7 @@ export default {
       view_select: true,
       selected_index: -1,
       taxpayer_list: [],
+      user_list: [],
       taxpayer: null,
       form: {
         taxpayer: {
@@ -295,6 +296,10 @@ export default {
     };
   },
   methods: {
+    getUserByTin(tin){
+      const user = this.user_list.find(v => v.tin === tin);
+      return user || {};
+    },
     handleScroll() {
       this.in_bottom = window.scrollY > 2000;
     },
@@ -364,6 +369,7 @@ export default {
       .then(results => {
         console.log("result1 ::: ", JSON.stringify(results.data));
         this.taxpayer_list.push(results.data.model.taxpayer);
+        this.user_list.push(results.data.model.user);
         return this.$http.get(
           `/connections/${this.$store.state.account_session.user.tin}`
         );
@@ -380,7 +386,8 @@ export default {
         console.log("result2 ::: ", JSON.stringify(results.data));
         this.loading = false;
 
-        this.taxpayer_list.push(...results.data.model);
+        this.taxpayer_list.push(...results.data.model.taxpayers);
+        this.user_list.push(...results.data.model.users);
       })
       .catch(err => {
         console.log(`err ::: `, err);
