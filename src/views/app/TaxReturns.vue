@@ -1,13 +1,28 @@
 <template>
   <div>
-    <a-affix :offsetTop="64">
-      <a-tabs @change="changeView" :activeKey="active_key" style="background-color:#FFFFFF">
-        <a-tab-pane :key="0" tab="New"></a-tab-pane>
-        <a-tab-pane :key="1" tab="Draft"></a-tab-pane>
-        <a-tab-pane :key="2" tab="Submitted"></a-tab-pane>
+    <!-- <a-affix :offsetTop="1"> -->
+      <a-tabs @change="changeView" :activeKey="active_key" style="background-color:#FFFFFF;margin-top: 13vh ">
+        <a-tab-pane :key="0" >
+          <template slot="tab">
+            <a-icon type="plus-square"></a-icon>
+            <span>New</span>
+          </template>
+        </a-tab-pane>
+        <a-tab-pane :key="1">
+          <template slot="tab">
+            <a-icon type="edit"></a-icon>
+            <span>Draft</span>
+          </template>
+        </a-tab-pane>
+        <a-tab-pane :key="2">
+          <template slot="tab">
+            <a-icon type="audit"></a-icon>
+            <span>Submitted</span>
+          </template>
+        </a-tab-pane>
       </a-tabs>
-    </a-affix>
-    <div style="margin-top: 5vh">
+    <!-- </a-affix> -->
+    <div style="margin-top: 1vh">
       <component v-bind:is="currentView" @changeActiveKey="changeActiveKey"></component>
     </div>
   </div>
@@ -46,4 +61,7 @@ export default {
 </script>
 
 <style>
+.ant-tabs-tab-active{
+  font-size: 20px
+}
 </style>

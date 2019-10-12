@@ -10,6 +10,9 @@ export default {
 
                     return tin && tin.length == 13 ? `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, 13)}` : tin
                 },
+                formatAmount(amount){
+                    return amount? amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'):'0.00'
+                },
                 formatDate(date, type) {
                     if (!date) {
                         return "";
