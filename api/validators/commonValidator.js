@@ -72,6 +72,7 @@ function isFutureDate(idate) {
  * @param {Date} dueDate 
  */
 function isLateFiling(due_date) {
+    console.log("Due date :", due_date);
     return new Date().getTime() > new Date(due_date).getTime();
 }
 

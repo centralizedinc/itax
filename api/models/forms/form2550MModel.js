@@ -89,12 +89,24 @@ var Form2550MSchema = new Schema({
     sched2: [],
     sched3: [],
     sched4: {
-        // dirInputTax:Number,
-        // inputNotAttrib:Number,
-        // ratInputTax:Number,
-        // totalInputTax:Number,
-        // stanInputTax:Number,
-        // inputSaleExp:Number
+        dirInputTax:{
+            type: Number
+        },
+        inputNotAttrib:{
+            type: Number
+        },
+        ratInputTax:{
+            type: Number
+        },
+        totalInputTax:{
+            type: Number
+        },
+        stanInputTax:{
+            type: Number
+        },
+        inputSaleExp:{
+            type: Number
+        }
     },
     sched5: {
         // inputTaxExmpt:Number,

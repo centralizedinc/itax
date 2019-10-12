@@ -13,12 +13,13 @@ function validate(form_details) {
 
     //validation begins ...
     var errors = [];
-    if (!form_details.returnPeriod) {
-        errors = [{
-            page: 0,
-            field: "returnPeriod",
-            error: constant_helper.MANDATORY_FIELD("For the year")
-        }]
+
+    if (!form_details.returnPeriodYear) {
+        errors.push({ page: 0, field: "returnPeriodYear", error: constant_helper.MANDATORY_FIELD('Return Period Year') });
+        return errors;
+    }
+    if (!form_details.quarter) {
+        errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period Quarter') });
         return errors;
     }
 
@@ -30,32 +31,32 @@ function validate(form_details) {
 
     // LATE FILING
 
-    // if (commonValidator.isLateFiling(form_details.due_date)) {
-    //     // Compute Surcharge
-    //     const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
-    //     if (form_details.surcharge !== surcharge) {
-    //         errors.push({
-    //             field: 'surcharge',
-    //             error: `Surcharge amount must be ${surcharge}`
-    //         })
-    //     }
-    //     // Compute Interest
-    //     const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
-    //     if (form_details.interest !== interest) {
-    //         errors.push({
-    //             field: 'interest',
-    //             error: `Interest amount must be ${interest}`
-    //         })
-    //     }
-    //     // Compute Compromise
-    //     const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
-    //     if (form_details.compromise !== compromise) {
-    //         errors.push({
-    //             field: 'compromise',
-    //             error: `Compromise amount must be ${compromise}`
-    //         })
-    //     }
-    // }
+    if (commonValidator.isLateFiling(form_details.due_date)) {
+        // Compute Surcharge
+        const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
+        if (form_details.surcharge !== surcharge) {
+            errors.push({
+                field: 'surcharge',
+                error: `Surcharge amount must be ${surcharge}`
+            })
+        }
+        // Compute Interest
+        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
+        if (form_details.interest !== interest) {
+            errors.push({
+                field: 'interest',
+                error: `Interest amount must be ${interest}`
+            })
+        }
+        // Compute Compromise
+        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
+        if (form_details.compromise !== compromise) {
+            errors.push({
+                field: 'compromise',
+                error: `Compromise amount must be ${compromise}`
+            })
+        }
+    }
 
     //latefiling computations
     console.log('form 1701q validator errors: ', JSON.stringify(errors))
@@ -68,8 +69,8 @@ function validateRequired(field) {
         var tp = new taxpayerDetails(taxpayer); 
         console.log('tp', JSON.stringify(field))
         console.log('!tp.tin', !field.dateFiled)
-        if (!field.dateFiled) {
-            error_messages.push({ field: "dateFiled", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
+        if (!field.returnPeriodYear) {
+            error_messages.push({ field: "returnPeriodYear", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
         }
     
         if (!field.quarter) {
@@ -111,17 +112,18 @@ function computeDueDate(returnPeriod) {
     console.log("computeDueDate data: " + returnPeriod)
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth() + 3;
+    var month = returnPeriod.getMonth();
     // every 15th of the quarter May 15, Aug 15, Nov 15
     due_date.setDate(15);
     due_date.setMonth(month);
+    due_date.setFullYear(returnPeriodYear)
 
     return due_date;
 }
 
 /**
  * 
- * @param {form2550MModel} form 
+ * @param {form1701qModel} form 
  */
 function validateComputations(form) {
     var error_messages = [];
