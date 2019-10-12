@@ -148,10 +148,11 @@ export default {
       this.data_source.splice(index, 1);
     },
     close() {
-      this.form.sched1 = this.deepCopy(this.data_source);
-      this.form.totalAtcAmount = this.deepCopy(this.total_atc_amount);
-      this.form.totalAtcOutput = this.deepCopy(this.total_atc_output_tax);
-      this.$emit("close");
+      this.$emit("close", {
+        sched1: this.deepCopy(this.data_source),
+        totalAtcAmount: this.deepCopy(this.total_atc_amount),
+        totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
+      });
     }
   }
 };

@@ -795,6 +795,6 @@ function getContent(forms) {
     return content;
 }
 
-module.exports = {
+export default {
     fillup
 };

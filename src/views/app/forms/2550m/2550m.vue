@@ -123,11 +123,9 @@
     <!-- Part II -->
     <a-form v-show="step===2">
       <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
-      <a-button type="primary" @click="show_sched1=true">
-        Schedule 1
-      </a-button>
+      <a-button type="primary" @click="show_sched1=true">Schedule 1</a-button>
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')"></a-form-item>
-      <schedule-one v-if="show_sched1" :show="show_sched1" :form="form" @close="show_sched1=false"/>
+      <schedule-one v-if="show_sched1" :show="show_sched1" :form="form" @close="updateSchedAndClose" />
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -157,20 +155,14 @@
         :wrapperCol="form_layout.wrapper_col"
         label="13A"
       >
-        <a-input-number
-          placeholder="Sales/Receipt for the Month"
-          v-model="form.salesGovAmount"
-        ></a-input-number>
+        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.salesGovAmount"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="13B"
       >
-        <a-input-number
-          placeholder="Output Tax Due for the Month"
-          v-model="form.salesGovOutput"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due for the Month" v-model="form.salesGovOutput"></a-input-number>
       </a-form-item>
 
       <a-form-item label="14. Zero Rated Sales/Receipts" />
@@ -179,10 +171,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="14"
       >
-        <a-input-number
-          placeholder="Sales/Receipt for the Month"
-          v-model="form.zeroRatedAmount"
-        ></a-input-number>
+        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.zeroRatedAmount"></a-input-number>
       </a-form-item>
 
       <a-form-item label="15. Exempt Sales/Receipts" />
@@ -191,10 +180,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="15"
       >
-        <a-input-number
-          placeholder="Sales/Receipt for the Month"
-          v-model="form.exemptAmount"
-        ></a-input-number>
+        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.exemptAmount"></a-input-number>
       </a-form-item>
 
       <a-form-item label="16. Total Sales/Receipts and Output Tax Due" />
@@ -203,10 +189,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="16A"
       >
-        <a-input-number
-          placeholder="Sales/Receipt for the Month"
-          v-model="form.totalSales"
-        ></a-input-number>
+        <a-input-number placeholder="Sales/Receipt for the Month" disabled :value="getTotalSales()"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -215,7 +198,8 @@
       >
         <a-input-number
           placeholder="Output Tax Due for the Month"
-          v-model="form.totalOutputTax"
+          disabled
+          :value="getTotalOutputTax()"
         ></a-input-number>
       </a-form-item>
 
@@ -228,7 +212,6 @@
         <a-input-number
           placeholder="Input Tax Carried Over from Previous Period"
           v-model="form.carriedOverPreviousPeriod"
-          :data="total_allowable_less_input_tax"
           :defaultValue="0"
         ></a-input-number>
       </a-form-item>
@@ -281,11 +264,9 @@
         :wrapperCol="form_layout.wrapper_col"
         label="17F"
       >
-        <a-input-number
-          placeholder="Total"
-          :data="total_allowable_less_input_tax"
-          v-model="form.totalAllowableLessInputTax"
-        ></a-input-number>
+        <a-input-number 
+          placeholder="Total" disabled 
+          :value="getTotalAllowableInputTax()"></a-input-number>
       </a-form-item>
 
       <a-form-item label="18. Current Transaction" />
@@ -343,10 +324,7 @@
         class="computation-item"
         label="18A"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.purCapGoodsNotExceed"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.purCapGoodsNotExceed"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -354,10 +332,7 @@
         class="computation-item"
         label="18B"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputCapGoodsNotExceed"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputCapGoodsNotExceed"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
@@ -380,10 +355,7 @@
         class="computation-item"
         label="18C"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.purCapGoodsExceed"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.purCapGoodsExceed"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -391,10 +363,7 @@
         class="computation-item"
         label="18D"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputPurCapGoodsExceed"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputPurCapGoodsExceed"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
@@ -406,10 +375,7 @@
         class="computation-item"
         label="18E"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.domesticPurchaseGoods"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.domesticPurchaseGoods"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -417,10 +383,7 @@
         class="computation-item"
         label="18F"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputDomesticPurchaseGoods"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputDomesticPurchaseGoods"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
@@ -432,10 +395,7 @@
         class="computation-item"
         label="18G"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.importationGoods"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.importationGoods"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -443,10 +403,7 @@
         class="computation-item"
         label="18H"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputImportationGoods"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputImportationGoods"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18I/J. Domestic Purchase of Services" />
       <a-form-item
@@ -455,10 +412,7 @@
         class="computation-item"
         label="18I"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.domesticPurchaseService"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.domesticPurchaseService"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -466,10 +420,7 @@
         class="computation-item"
         label="18J"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputDomesticPurchaseService"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputDomesticPurchaseService"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18K/L. Services rendered by Non-residents" />
       <a-form-item
@@ -478,10 +429,7 @@
         class="computation-item"
         label="18K"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.servicesNonResidents"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.servicesNonResidents"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -489,10 +437,7 @@
         class="computation-item"
         label="18L"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputServicesNonResidents"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputServicesNonResidents"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18M. Purchases Not Qualified for Input Tax" />
       <a-form-item
@@ -501,10 +446,7 @@
         class="computation-item"
         label="18M"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.purchaseNotQualified"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.purchaseNotQualified"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18N/O. Others" />
       <a-form-item
@@ -513,10 +455,7 @@
         class="computation-item"
         label="18N"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.purchaseOthers"
-        ></a-input-number>
+        <a-input-number placeholder="Purchase" v-model="form.purchaseOthers"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -524,10 +463,7 @@
         class="computation-item"
         label="18O"
       >
-        <a-input-number
-          placeholder="Output Tax Due"
-          v-model="form.outputPurchaseOthers"
-        ></a-input-number>
+        <a-input-number placeholder="Output Tax Due" v-model="form.outputPurchaseOthers"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18P. Total Current Purchases" />
       <a-form-item
@@ -536,10 +472,9 @@
         class="computation-item"
         label="18P"
       >
-        <a-input-number
-          placeholder="Purchase"
-          v-model="form.totalCurrentPurchases"
-        ></a-input-number>
+        <a-input-number 
+          placeholder="Purchase" 
+          :v-model="getTotalCurrentPurchases()"></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -549,8 +484,8 @@
       >
         <a-input-number
           placeholder="Total Available Input Tax"
-          :data="total_available_input_tax"
-          v-model="form.totalAvailableInputTax"
+          disabled
+          :value="getTotalAvailableInputTax()"
         ></a-input-number>
       </a-form-item>
 
@@ -590,20 +525,14 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20D"
       >
-        <a-input-number
-          placeholder="VAT Refund/TCC claimed"
-          v-model="form.refundTcm"
-        ></a-input-number>
+        <a-input-number placeholder="VAT Refund/TCC claimed" v-model="form.refundTcm"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="20E"
       >
-        <a-input-number
-          placeholder="Others"
-          v-model="form.otherDeductionFrInputTax"
-        ></a-input-number>
+        <a-input-number placeholder="Others" v-model="form.otherDeductionFrInputTax"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -612,8 +541,8 @@
       >
         <a-input-number
           placeholder="Total"
-          :data="total_deduction_from_input_tax"
-          v-model="form.totalDeductionFrInputTax"
+          disabled
+          :value="getTotalDeductionFrInputTax()"
         ></a-input-number>
       </a-form-item>
 
@@ -622,10 +551,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="21"
       >
-        <a-input-number
-          placeholder="Total Allowable Input Tax"
-          v-model="form.totalInputTax"
-        ></a-input-number>
+        <a-input-number placeholder="Total Allowable Input Tax" disabled :value="getTotalInputTax()"></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -633,10 +559,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="22"
       >
-        <a-input-number
-          placeholder="Net VAT Payable"
-          v-model="form.taxDue"
-        ></a-input-number>
+        <a-input-number placeholder="Net VAT Payable" disabled :value="getNetVatPayable()"></a-input-number>
       </a-form-item>
 
       <a-form-item label="23. Less: Tax Credits/Payments" />
@@ -665,10 +588,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23C"
       >
-        <a-input-number
-          placeholder="VAT withheld on Sales to Government"
-          v-model="form.taxWthld"
-        ></a-input-number>
+        <a-input-number placeholder="VAT withheld on Sales to Government" v-model="form.taxWthld"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -685,20 +605,14 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23E"
       >
-        <a-input-number
-          placeholder="Advance Payments made"
-          v-model="form.advPymt"
-        ></a-input-number>
+        <a-input-number placeholder="Advance Payments made" v-model="form.advPymt"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="23F"
       >
-        <a-input-number
-          placeholder="Others"
-          v-model="form.otherTaxCredits"
-        ></a-input-number>
+        <a-input-number placeholder="Others" v-model="form.otherTaxCredits"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -707,8 +621,8 @@
       >
         <a-input-number
           placeholder="Total Tax Credits/Payments"
-          :data="total_credits"
-          v-model="form.totalCredits"
+          disabled
+          :value="getTotalCredits()"
         ></a-input-number>
       </a-form-item>
 
@@ -717,10 +631,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="24"
       >
-        <a-input-number
-          placeholder="Tax Still Payable/(Overpayment)"
-          v-model="form.amtPaybl"
-        ></a-input-number>
+        <a-input-number placeholder="Tax Still Payable/(Overpayment)" disabled :value="getAmtPayable()"></a-input-number>
       </a-form-item>
 
       <a-form-item label="25. Add: Penalties" />
@@ -731,10 +642,7 @@
         :validate-status="error_item('surcharge')"
         :help="error_desc('surcharge')"
       >
-        <a-input-number
-          placeholder="Surcharge"
-          v-model="form.surcharge"
-        ></a-input-number>
+        <a-input-number placeholder="Surcharge" v-model="form.surcharge"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -743,10 +651,7 @@
         :validate-status="error_item('interest')"
         :help="error_desc('interest')"
       >
-        <a-input-number
-          placeholder="Interest"
-          v-model="form.interest"
-        ></a-input-number>
+        <a-input-number placeholder="Interest" v-model="form.interest"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -755,20 +660,14 @@
         :validate-status="error_item('compromise')"
         :help="error_desc('compromise')"
       >
-        <a-input-number
-          placeholder="Compromise"
-          v-model="form.compromise"
-        ></a-input-number>
+        <a-input-number placeholder="Compromise" v-model="form.compromise"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25D"
       >
-        <a-input-number
-          placeholder="Total Penalties"
-          v-model="form.penalties"
-        ></a-input-number>
+        <a-input-number placeholder="Total Penalties" disabled :value="getPenalties()"></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -778,7 +677,8 @@
       >
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
-          v-model="form.totalAmountPayable"
+          disabled
+          :value="getTotalAmtPayable()"
         ></a-input-number>
       </a-form-item>
     </a-form>
@@ -786,7 +686,7 @@
 </template>
 
 <script>
-import ScheduleOne from './Schedule1';
+import ScheduleOne from "./Schedule1";
 
 export default {
   components: {
@@ -794,11 +694,143 @@ export default {
   },
   props: ["form", "step"],
   methods: {
-    sched2Save(){
-
+    // 16A
+    getTotalSales(){
+      console.log('this.form.totalAtcAmount :', this.form.totalAtcAmount);
+      var total = this.computeSum([
+        this.form.totalAtcAmount,
+        this.form.salesGovAmount,
+        this.form.zeroRatedAmount,
+        this.form.exemptAmount
+      ]);
+      this.form.totalSales = total;
+      return total;
     },
-    delete_sched2(index){
-      this.sched2_data[index].splice(index,1)
+    // 16B
+    getTotalOutputTax() {
+      var total = this.computeSum([
+        this.form.totalAtcOutput,
+        this.form.salesGovOutput
+      ]);
+      this.form.totalOutputTax = total;
+      return total;
+    },
+    // 17F
+    getTotalAllowableInputTax() {
+      var total = this.computeSum([
+        this.form.carriedOverPreviousPeriod,
+        this.form.txbleGoodsServices,
+        this.form.transInputTax,
+        this.form.presumpInputTax,
+        this.form.otherAllowableLessInputTax
+      ]);
+      this.form.totalAllowableLessInputTax = total;
+      return total;
+    },
+    // 18P
+    getTotalCurrentPurchases(){
+      var total = this.computeSum([
+        this.form.purCapGoodsNotExceed,
+        this.form.purCapGoodsExceed,
+        this.form.domesticPurchaseGoods,
+        this.form.importationGoods,
+        this.form.domesticPurchaseService,
+        this.form.servicesNonResidents,
+        this.form.purchaseNotQualified,
+        this.form.purchaseOthers
+      ])
+      this.form.totalCurrentPurchases = total;
+      return total;
+    },
+    // 19
+    getTotalAvailableInputTax(){
+      var total = this.computeSum([
+        this.form.totalAllowableLessInputTax,
+        this.form.outputCapGoodsNotExceed,
+        this.form.outputPurCapGoodsExceed,
+        this.form.outputDomesticPurchaseGoods,
+        this.form.outputImportationGoods,
+        this.form.outputDomesticPurchaseService,
+        this.form.outputServicesNonResidents,
+        this.form.outputPurchaseOthers
+      ])
+      this.form.totalAvailableInputTax = total;
+      return total;
+    },
+    // 20F
+    getTotalDeductionFrInputTax(){
+      var total = this.computeSum([
+        this.form.inputTaxPurchaseCapGoods,
+        this.form.inputTaxSaleToGovt,
+        this.form.inputTaxAllocableToExempt,
+        this.form.refundTcm,
+        this.form.otherDeductionFrInputTax
+      ])
+      this.form.totalDeductionFrInputTax = total;
+      return total;
+    },
+    // 21
+    getTotalInputTax(){
+      var total = (this.form.totalAvailableInputTax || 0) - (this.form.totalDeductionFrInputTax || 0);
+      this.form.totalInputTax = total;
+      return total
+    },
+    // 22
+    getNetVatPayable(){
+      var total = (this.form.totalOutputTax || 0) - (this.form.totalInputTax || 0);
+      this.form.taxDue = total
+      return total
+    },
+    // 23F
+    getTotalCredits(){
+      var total = this.computeSum([
+        this.form.creditableVatWithheld,
+        this.form.advPaySugarFlourInd,
+        this.form.taxWthld,
+        this.form.prevTaxPaid,
+        this.form.advPymt,
+        this.form.otherTaxCredits
+      ])
+      this.form.totalCredits = total;
+      return total
+    },
+    // 24
+    getAmtPayable(){
+      var total = (this.form.taxDue || 0) - (this.form.totalCredits || 0);
+      this.form.amtPaybl = total;
+      return total
+    },
+    // 25D
+    getPenalties(){
+      var total = this.computeSum([
+        this.form.surcharge,
+        this.form.interest,
+        this.form.compromise
+      ]);
+      this.form.penalties = total;
+      return total
+    },
+    // 26
+    getTotalAmtPayable(){
+      var total = this.computeSum([
+        this.form.amtPaybl,
+        this.form.penalties
+      ]);
+      this.form.totalAmountPayable = total;
+      return total
+    },
+    updateSchedAndClose(data){
+      // Object.keys(data).forEach(key => {
+      //   this.form[key] = data[key];
+      // })
+      this.form.sched1 = data.sched1;
+      this.form.totalAtcAmount = data.totalAtcAmount;
+      this.form.totalAtcOutput = data.totalAtcOutput;
+      this.show_sched1 = false;
+    },
+    sched2Save() {},
+    delete_sched2(index) {
+      this.sched2_data[index].splice(index, 1);
     },
     check_sched2(value) {
       var only = this.formatDtMonth(this.form.returnPeriod);
@@ -863,119 +895,8 @@ export default {
     onClose_sched3A() {
       this.sched3A_drawer = false;
     },
-    // checkDraft() {
-    //   if (
-    //     this.existing_form &&
-    //     Object.keys(this.existing_form).length === 0 &&
-    //     this.existing_form.constructor === Object
-    //   ) {
-    //     // const {
-    //     //     form_general,
-    //     //     form_part1,
-    //     //     form_part2
-    //     //   } = this.existing_form.details,
-    //     //   _self = this;
-    //     // // Mapping General
-    //     // if (form_general) {
-    //     //   var fields = {};
-    //     //   Object.keys(form_general).forEach(key => {
-    //     //     fields[key] = this.$form.createFormField({
-    //     //       value: form_general[key]
-    //     //     });
-    //     //   });
-    //     //   this.form_general = this.$form.createForm(this, {
-    //     //     mapPropsToFields: () => {
-    //     //       return fields;
-    //     //     }
-    //     //   });
-    //     // }
-
-    //     // // Mapping Part1
-    //     // if (form_part1) {
-    //     //   this.form_part1 = this.$form.createForm(this, {
-    //     //     mapPropsToFields: () => {
-    //     //       return {
-    //     //         "taxpayer.tin": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.tin
-    //     //         }),
-    //     //         "taxpayer.rdo_code": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.rdo_code
-    //     //         }),
-    //     //         "taxpayer.line_of_business": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.line_of_business
-    //     //         }),
-    //     //         "taxpayer.registered_name": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.registered_name
-    //     //         }),
-    //     //         "taxpayer.contact_details.telno": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.contact_details.telno
-    //     //         }),
-    //     //         "taxpayer.address": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.address
-    //     //         }),
-    //     //         "taxpayer.address_details.zipCode": this.$form.createFormField({
-    //     //           value: form_part1.taxpayer.address_details.zipCode
-    //     //         }),
-    //     //         specialRate: this.$form.createFormField({
-    //     //           value: form_part1.specialRate
-    //     //         }),
-    //     //         specialRateYn: this.$form.createFormField({
-    //     //           value: form_part1.specialRateYn
-    //     //         })
-    //     //       };
-    //     //     }
-    //     //   });
-    //     // }
-
-    //     // // Mapping Part2
-    //     // if (form_part2) {
-    //     //   var fields = {};
-    //     //   Object.keys(form_part2).forEach(key => {
-    //     //     fields[key] = this.$form.createFormField({
-    //     //       value: form_part2[key]
-    //     //     });
-    //     //   });
-    //     //   this.form_part2 = this.$form.createForm(this, {
-    //     //     mapPropsToFields: () => {
-    //     //       return fields;
-    //     //     }
-    //     //   });
-    //     // }
-    //   }
-    // },
     validate() {
       this.changeStep(this.step + 1);
-      // if(this.step === 0) this.validateGeneral();
-      // else if(this.step === 1) this.validatePartI();
-    },
-    validateGeneral() {
-      this.loading = true;
-      this.form_general.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log("validateGeneral :", values);
-          this.changeStep(1, values);
-        }
-        this.loading = false;
-      });
-    },
-    validatePartI() {
-      this.loading = true;
-      this.form_part1.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log("validatePartI :", values);
-          this.changeStep(2, values);
-        }
-        this.loading = false;
-      });
-    },
-    validatePartII() {
-      this.loading = true;
-      this.form_part2.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log("validatePartII :", values);
-          this.$emit("updateForm", values);
-        } else this.loading = false;
-      });
     },
     submit() {
       this.loading = true;
@@ -1002,66 +923,12 @@ export default {
             });
             window.close();
           }
-
-          // window.opener.location.reload();
-          // window.close();
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
-      // this.form_general.validateFieldsAndScroll((err, form_general_values) => {
-      //   if (!err) {
-      //     this.form_part1.validateFieldsAndScroll((err, form_part1_values) => {
-      //       if (!err) {
-      //         this.form_part2.validateFieldsAndScroll(
-      //           (err, form_part2_values) => {
-      //             if (!err) {
-      //               const form = {
-      //                 ...form_general_values,
-      //                 ...form_part1_values,
-      //                 ...form_part2_values
-      //               };
-
-      //               this.$store
-      //                 .dispatch("VALIDATE_AND_SAVE", {
-      //                   form_type: "2550M",
-      //                   form_details: form
-      //                 })
-      //                 .then(result => {
-      //                   console.log("VALIDATE_AND_SAVE :", result.data);
-      //                   this.loading = false;
-      //                   window.opener.location.reload();
-      //                   window.close();
-      //                 })
-      //                 .catch(err => {
-      //                   console.log("VALIDATE_AND_SAVE", err);
-      //                   this.loading = false;
-      //                 });
-      //             } else this.loading = false;
-      //           }
-      //         );
-      //       } else this.loading = false;
-      //     });
-      //   } else this.loading = false;
-      // });
-      // this.loading = true;
-      // console.log("this.form :", this.form);
-      // this.$store
-      //   .dispatch("VALIDATE_AND_SAVE", {
-      //     form_type: "2550M",
-      //     form_details: this.form
-      //   })
-      //   .then(result => {
-      //     console.log("VALIDATE_AND_SAVE :", result.data);
-      //     this.loading = false;
-      //   })
-      //   .catch(err => {
-      //     console.log("VALIDATE_AND_SAVE", err);
-      //     this.loading = false;
-      //   });
     },
-    save_draft() {},
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
@@ -1077,44 +944,11 @@ export default {
   },
   data() {
     return {
-      reloadATC: false,
-      atc_list: [
-        {
-          description: "Genral",
-          atc: "VB010",
-          rate: 0.12
-        },
-        {
-          description: "Genral1",
-          atc: "VB011",
-          rate: 0.2
-        }
-      ],
-      sched1_index: null,
-      holder: {
-        industry: null,
-        atc: "Pick an ATC",
-        amount: 0,
-        output: 0
-      },
-      atc_amount_holder: 0,
-      atc_output_holder: 0,
-      forEdit: false,
       show_sched1: false,
       sched2_drawer: false,
       sched3A_drawer: false,
-      visibleATC: false,
       errors: [],
       loading: false,
-      form_general: this.$form.createForm(this),
-      form_part1: this.$form.createForm(this),
-      form_part2: this.$form.createForm(this),
-      formatter: {
-        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      },
-      parser: {
-        amount: value => value.replace(/\₱\s?|(,*)/g, "")
-      },
       form_layout: {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
@@ -1203,94 +1037,6 @@ export default {
       ]
     };
   },
-  computed: {
-    // 16A = 12A + 13A + 14 + 15
-    total_sales() {
-      var tosum = [
-        this.form.totalAtcAmount,
-        this.form.salesGovAmount,
-        this.form.zeroRatedAmount,
-        this.form.exemptAmount
-      ];
-      return (this.form.totalSales = this.computeSum(tosum));
-    },
-    total_atc_amount() {
-      if (this.form.sched1 && this.form.sched1.length) {
-        const total = this.form.sched1
-          .map(v => v.amount)
-          .reduce((t, v) => t + v);
-        console.log("total :", total);
-        this.form.totalAtcAmount = total || 0;
-        return total || 0;
-      }
-      return 0;
-    },
-    total_atc_output_tax() {
-      if (this.form.sched1 && this.form.sched1.length) {
-        const total = this.form.sched1
-          .map(v => v.output_tax)
-          .reduce((t, v) => t + v);
-        this.form.totalAtcOutput = total || 0;
-        return total || 0;
-      }
-      return 0;
-    },
-    // 16B = 12B + 13B
-    total_output_tax() {},
-    total_allowable_less_input_tax() {
-      console.log(
-        "#########",
-        this.form.carriedOverPreviousPeriod
-          ? this.form.carriedOverPreviousPeriod
-          : 0
-      );
-      var tosum = [
-        this.form.carriedOverPreviousPeriod,
-        this.form.txbleGoodsServices,
-        this.form.transInputTax,
-        this.form.presumpInputTax,
-        this.form.otherAllowableLessInputTax
-      ];
-      console.log("compute sum: " + this.computeSum(tosum));
-      return (this.form.totalAllowableLessInputTax = this.computeSum(tosum));
-    },
-    total_available_input_tax() {
-      return (this.form.totalAvailableInputTax =
-        this.form.purCapGoodsNotExceed +
-        this.form.outputCapGoodsNotExceed +
-        this.form.purCapGoodsExceed +
-        this.form.outputPurCapGoodsExceed +
-        this.form.domesticPurchaseGoods +
-        this.form.outputDomesticPurchaseGoods +
-        this.form.importationGoods +
-        this.form.outputImportationGoods +
-        this.form.domesticPurchaseService +
-        this.form.outputDomesticPurchaseService +
-        this.form.servicesNonResidents +
-        this.form.outputServicesNonResidents +
-        this.form.purchaseNotQualified +
-        this.form.purchaseOthers +
-        this.form.outputPurchaseOthers +
-        this.form.totalCurrentPurchases);
-    },
-    total_deduction_from_input_tax() {
-      return (this.form.totalDeductionFrInputTax =
-        this.form.inputTaxPurchaseCapGoods +
-        this.form.inputTaxSaleToGovt +
-        this.form.inputTaxAllocableToExempt +
-        this.form.refundTcm +
-        this.form.otherDeductionFrInputTax);
-    },
-    total_credits() {
-      return (this.form.totalCredits =
-        this.form.creditableVatWithheld +
-        this.form.advPaySugarFlourInd +
-        this.form.taxWthld +
-        this.form.prevTaxPaid +
-        this.form.advPymt +
-        this.form.otherTaxCredits);
-    }
-  },
   watch: {
     loading(val) {
       this.$emit("loading", val);
@@ -1298,7 +1044,7 @@ export default {
     form: {
       deep: true,
       handler() {
-        console.log("2550m form: " + this.form.returnPeriod);
+        console.log("2550m form: ", this.form);
         this.form.year = this.formatDtYear(this.form.returnPeriod);
         this.form.month = this.formatDtMonth(this.form.returnPeriod);
         this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
@@ -1309,68 +1055,6 @@ export default {
       }
     },
     step() {}
-  },
-  created() {
-    // if(this.form.totalAmountPayable == null){
-    // this.form.totalAtcAmount = 0
-    //     this.form.totalAtcOutput = 0
-    //     this.form.salesGovAmount = 0
-    //     this.form.salesGovOutput = 0
-    //     this.form.zeroRatedAmount= 0
-    //     this.form.exemptAmount= 0
-    //     this.form.totalSales= 0
-    //     this.form.totalOutputTax= 0
-    //     this.form.carriedOverPreviousPeriod= 0
-    //     this.form.txbleGoodsServices= 0
-    //     this.form.transInputTax= 0
-    //     this.form.presumpInputTax= 0
-    //     this.form.otherAllowableLessInputTax= 0
-    //     this.form.totalAllowableLessInputTax= 0
-    //     this.form.purCapGoodsNotExceed= 0
-    //     this.form.outputCapGoodsNotExceed= 0
-    //     this.form.purCapGoodsExceed= 0
-    //     this.form.outputPurCapGoodsExceed= 0
-    //     this.form.domesticPurchaseGoods= 0
-    //     this.form.outputDomesticPurchaseGoods= 0
-    //     this.form.importationGoods= 0
-    //     this.form.outputImportationGoods= 0
-    //     this.form.domesticPurchaseService= 0
-    //     this.form.outputDomesticPurchaseService= 0
-    //     this.form.servicesNonResidents= 0
-    //     this.form.outputServicesNonResidents= 0
-    //     this.form.purchaseNotQualified= 0
-    //     this.form.purchaseOthers= 0
-    //     this.form.outputPurchaseOthers= 0
-    //     this.form.totalCurrentPurchases= 0
-    //     this.form.totalAvailableInputTax= 0
-    //     this.form.inputTaxPurchaseCapGoods= 0
-    //     this.form.inputTaxSaleToGovt= 0
-    //     this.form.inputTaxAllocableToExempt= 0
-    //     this.form.refundTcm= 0
-    //     this.form.otherDeductionFrInputTax= 0
-    //     this.form.totalDeductionFrInputTax= 0
-    //     this.form.totalInputTax= 0
-    //     this.form.taxDue= 0
-    //     this.form.creditableVatWithheld= 0
-    //     this.form.advPaySugarFlourInd= 0
-    //     this.form.taxWthld= 0
-    //     this.form.prevTaxPaid= 0
-    //     this.form.advPymt= 0
-    //     this.form.otherTaxCredits= 0
-    //     this.form.totalCredits= 0
-    //     this.form.amtPaybl= 0
-    //     this.form.surcharge= 0
-    //     this.form.interest= 0
-    //     this.form.compromise= 0
-    //     this.form.penalties= 0
-    //     this.form.totalAmountPayable= 0
-    // }
-    // this.checkDraft();
-    // this.form.carriedOverPreviousPeriod = 0
-    // this.form.txbleGoodsServices = 0
-    // this.form.transInputTax = 0
-    // this.form.presumpInputTax = 0
-    //    this.form.otherAllowableLessInputTax = 0
   }
 };
 </script>

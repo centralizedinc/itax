@@ -51,14 +51,18 @@ export default {
                 computeSum(data){
                     var total = 0
                     console.log("compute sum data: " + JSON.stringify(data))
-                    data.forEach(element => {
-                        console.log('for each element: ' + JSON.stringify(element))
-                        if(element == null || element == undefined ){
-                            console.log("element null or undefined: " + element)
-                        element = 0
-                        }
-                        total += element
-                    }); 
+                    if(data && data.length) 
+                        total = data.reduce((t, c) => {
+                            return (t || 0) + (c || 0);
+                        });
+                    // data.forEach(element => {
+                    //     console.log('for each element: ' + JSON.stringify(element))
+                    //     if(element == null || element == undefined ){
+                    //         console.log("element null or undefined: " + element)
+                    //     element = 0
+                    //     }
+                    //     total += element
+                    // }); 
                     console.log("compute sum mixin: " + total)
                     return total
                 }

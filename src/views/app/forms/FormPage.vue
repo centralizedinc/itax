@@ -174,7 +174,7 @@ export default {
   data() {
     return {
       view_select: true,
-      selected_index: 0,
+      selected_index: -1,
       taxpayer_list: [],
       taxpayer: null,
       form: {
@@ -299,8 +299,10 @@ export default {
       this.in_bottom = window.scrollY > 2000;
     },
     select(index) {
-      this.taxpayer = this.taxpayer_list[index];
-      this.selected_index = index;
+      if(index > -1){
+        this.taxpayer = this.taxpayer_list[index];
+        this.selected_index = index;
+      }
     },
     isSelected(index) {
       return this.selected_index == index;
