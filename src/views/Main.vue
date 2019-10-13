@@ -103,18 +103,11 @@
               </a-menu-item>
             </a-menu>
           </a-affix>
-          <!-- </a-card> -->
         </a-col>
         <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-          <!-- <h3>{{$route.name}}</h3>
-          <a-divider></a-divider> -->
            <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
                   <h2 style="color: #FFFFFF">{{$route.name}}</h2>
-                  <!-- <a-divider></a-divider> -->
-                  <!-- <p style="color: #FFFFFF">For easier filing of your tax returns, complete your taxpayer profile now! </p>
-                  <a-button ghost ghtype="primary" @click="$router.push('/app/user')">My Profile</a-button> -->
-                  
               </a-card>
           </a-col>
           <transition name="fade" mode="out-in">
@@ -122,73 +115,51 @@
           </transition>
         </a-col>
         <a-col :span="4">
-          <!-- <a-card title="Activities" style="margin-top: 2vh">
-            <a-timeline>
-              <a-timeline-item>Create a services site 2015-09-01</a-timeline-item>
-              <a-timeline-item>Solve initial network problems 2015-09-01</a-timeline-item>
-              <a-timeline-item>Technical testing 2015-09-01</a-timeline-item>
-              <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
-            </a-timeline>
-          </a-card> -->
-          <!-- <h3>My Daily Stats</h3>
-          <a-divider></a-divider> -->
           <a-row style="margin-bottom: 2vh">
             <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
                   <h2 style="color: #FFFFFF">Summary</h2>
-                  <!-- <a-divider></a-divider> -->
-                  <!-- <p style="color: #FFFFFF">For easier filing of your tax returns, complete your taxpayer profile now! </p>
-                  <a-button ghost ghtype="primary" @click="$router.push('/app/user')">My Profile</a-button> -->
-                  
               </a-card>
           </a-col>
           </a-row>
-          <a-card style="margin-bottom:1vh" class="avatar_btn">
-            <a-avatar shape="square" style="background: #115B95">
-              <a-icon type="user"></a-icon>
-            </a-avatar>
-            TaxPayers
-            <vue-trend style="margin-top:1vh"
-              :data="ttrend"
-              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-              :strokeWidth="10"
-            >
-            </vue-trend>
+          <a-card style="margin-bottom:0.5vh; border: 1px solid" class="avatar_btn" >
+            <a-row type="flex" align="middle" justify="left">
+              <a-col :span="8">
+                <a-icon type="team" style="font-size: 46px"></a-icon>
+              </a-col>
+              <a-col :span="16" style="text-align:right">
+                <h4>Total Taxpayers</h4>
+                <h2>10</h2>
+              </a-col>
+            </a-row>
           </a-card>
-           <a-card style="margin-bottom:1vh" class="avatar_btn"> 
-             <a-avatar shape="square" style="background: #115B95">
-              <a-icon type="form"></a-icon>
-            </a-avatar>
-             Tax Returns
-            <vue-trend style="margin-top:1vh"
-              :data="rtrend"
-              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-            >
-            </vue-trend>
+           <a-card style="margin-bottom:0.5vh;border: 1px solid;" class="avatar_btn"> 
+            <a-row type="flex" align="middle" justify="left">
+              <a-col :span="8">
+                <a-icon type="form" style="font-size: 46px"></a-icon>
+              </a-col>
+              <a-col :span="16" style="text-align:right">
+                <h4>Returns Filed</h4>
+                <h2>10</h2>
+              </a-col>
+            </a-row>
           </a-card>
-           <a-card style="margin-bottom:1vh" class="avatar_btn">
-             <a-avatar shape="square" style="background: #115B95">
-              <a-icon type="credit-card"></a-icon>
-            </a-avatar>
-             Payments
-            <vue-trend style="margin-top:1vh"
-              :data="ptrend"
-              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-            >
-            </vue-trend>
+           <a-card style="margin-bottom:0.5vh; border: 1px solid;" class="avatar_btn">
+            <a-row type="flex" align="middle" justify="left">
+              <a-col :span="8">
+                <a-icon type="credit-card" style="font-size: 46px"></a-icon>
+              </a-col>
+              <a-col :span="16" style="text-align:right">
+                <h4>Total Payments</h4>
+                <h2>45,538</h2>
+              </a-col>
+            </a-row>
           </a-card>
         </a-col>
       </a-row>
     </a-layout-content>
-    <a-layout-footer class="footer" style="margin-top: 2vh">
-      <!-- <a-icon type="facebook"></a-icon>
-      <a-icon type="google-plus"></a-icon>-->
+    <a-layout-footer class="footer" style="text-align:right;margin-top: 2vh">
+      Copyright Ⓒ 2019 - Centralized Cloud Computing International Inc.
     </a-layout-footer>
   </a-layout>
 </template>
