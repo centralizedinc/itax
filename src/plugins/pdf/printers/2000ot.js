@@ -50,7 +50,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [80, 20, 20, 35, 50, 15, 20, 10, 60, 25, 55, 60],
-                heights: [25],
+                heights: [22],
                 body: [
                     [{
                         text: '',
@@ -124,24 +124,45 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [290, 130, 200],
+                widths: [80, 45, 35, 40, 170, 100],
                 heights: [25],
                 body: [
                     [{
-                        text: '143-456-789' + '- 000',
-                        fontSize: 14,
+                        text: mapTin(forms.taxpayer.tin, 0, 3),
+                        fontSize: 16,
                         bold: true,
                         alignment: 'justified',
                         margin: [40, 0, 0, 0]
                     },
                     {
-                        text: '01B',
-                        fontSize: 14,
+                        text: mapTin(forms.taxpayer.tin, 3, 6),
+                        fontSize: 16,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 6, 9),
+                        fontSize: 16,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 9, 12),
+                        fontSize: 16,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [10, 0, 0, 0]
+                    },
+                    {
+                        text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                        fontSize: 16,
                         bold: true,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [60, 0, 0, 0]
                     }, {
-                        text: '0469705407',
+                        text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                         fontSize: 14,
                         bold: true,
                         alignment: 'left',
@@ -158,8 +179,8 @@ function getContent(forms) {
                 heights: [25],
                 body: [
                     [{
-                        text: 'FRANCHEZCA T. QUIOCHO',
-                        fontSize: 14,
+                        text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                        fontSize: 16,
                         bold: true,
                         alignment: 'justified',
                         margin: [40, 0, 0, 0]
@@ -175,17 +196,17 @@ function getContent(forms) {
                 heights: [15],
                 body: [
                     [{
-                        text: 'BLK 14 LOT 19 MAHOGANY DRV MEADOWOOD EXECUTIVE VILLAGE PANAPAAN BACOOR CITY',
-                        fontSize: 9,
+                        text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
+                        fontSize: 16,
                         alignment: 'left',
                         bold: true,
                         margin: [40, 3, 0, 0]
                     },
                     {
-                        text: '4102',
-                        fontSize: 14,
+                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
+                        fontSize: 16,
                         alignment: 'left',
-                        margin: [40, 0, 0, 0]
+                        margin: [40, 3, 0, 0]
                     }]
                 ]
             }
@@ -195,7 +216,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [10],
+                heights: [8],
                 body: [
                     [{
                         text: '',
@@ -738,7 +759,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [12],
+                heights: [10],
                 body: [
                     [{
                         text: '',
@@ -763,10 +784,10 @@ function getContent(forms) {
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, -3, 0, 0],
+                        margin: [22, 2, 0, 0],
                     },
                     {
-                        text: 'XX',
+                        text: forms.realPropertyTaxBase == null ? '0.00' : forms.realPropertyTaxBase % 1 == 0 ? forms.realPropertyTaxBase + '.00' : forms.realPropertyTaxBase,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -790,7 +811,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'XX',
+                        text: forms.sharesStockTaxBase == null ? '0.00' : forms.sharesStockTaxBase % 1 == 0 ? forms.sharesStockTaxBase + '.00' : forms.purCapGoodsExceed,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -813,11 +834,11 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: 'XX',
+                        text: forms.taxRate == null ? '0.00' : forms.taxRate % 1 == 0 ? forms.taxRate + '.00' : forms.taxRate,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [0, -2, 0, 0],
+                        margin: [0, 0, 0, 0],
                     }]
 
                 ]
@@ -837,7 +858,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'XX',
+                        text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -857,14 +878,14 @@ function getContent(forms) {
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, -3, 0, 0],
+                        margin: [22, -4, 0, 0],
                     },
                     {
-                        text: 'XX',
+                        text: forms.prevTaxPaid == null ? '0.00' : forms.prevTaxPaid % 1 == 0 ? forms.prevTaxPaid + '.00' : forms.prevTaxPaid,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [0, 0, 0, 0],
+                        margin: [0, -3, 0, 0],
                     }]
                 ]
             }
@@ -883,7 +904,8 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'XX',
+                        // if this is amended return
+                        text: forms.realPropertyTaxBase == null ? '0.00' : forms.realPropertyTaxBase % 1 == 0 ? forms.purCapGoodsExceed + '.00' : forms.purCapGoodsExceed,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -923,7 +945,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'X',
+                        text: forms.surcharge == null ? '0.00' : forms.surcharge % 1 == 0 ? forms.surcharge + '.00' : forms.surcharge,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -937,7 +959,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'X',
+                        text: forms.interest == null ? '0.00' : forms.interest % 1 == 0 ? forms.interest + '.00' : forms.interest,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -951,7 +973,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'X',
+                        text: forms.compromise == null ? '0.00' : forms.compromise % 1 == 0 ? forms.compromise + '.00' : forms.compromise,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -965,7 +987,8 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: 'X',
+                        // 19D
+                        text: forms.realPropertyTaxBase == null ? '0.00' : forms.realPropertyTaxBase % 1 == 0 ? forms.purCapGoodsExceed + '.00' : forms.purCapGoodsExceed,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -988,11 +1011,41 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: 'X',
+                        text: forms.totalAmountPayable == null ? '0.00' : forms.totalAmountPayable % 1 == 0 ? forms.totalAmountPayable + '.00' : forms.totalAmountPayable,
+                        fontSize: 11,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, 0, 0, 0],
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [175, 68, 100],
+                body: [
+                    [{
+                        text: '',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
+                    },
+                    {
+                        text: 'X',
+                        fontSize: 11,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, -5, 0, 0],
+                    },
+                    {
+                        text: 'X',
+                        fontSize: 11,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, -5, 0, 0],
                     }]
                 ]
             }
@@ -1003,7 +1056,10 @@ function getContent(forms) {
     );
     return content;
 }
-
+function mapTin(tin, from, to) {
+    if (!tin || from === null || to === null) return "";
+    return tin.substring(from, to);
+}
 
 module.exports = {
     fillup
