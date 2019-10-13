@@ -21,6 +21,7 @@ import Form1700 from "../plugins/pdf/printers/1700";
 import Form2551q from "../plugins/pdf/printers/2551q";
 import Form1701q from "../plugins/pdf/printers/1701q";
 import Form2550q from "../plugins/pdf/printers/2550q";
+import Form2000ot from "../plugins/pdf/printers/2000ot";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -30,7 +31,8 @@ const printers = {
   FORM1700: Form1700,
   FORM2551Q: Form2551q,
   FORM1701Q: Form1701q,
-  FORM2550Q: Form2550q
+  FORM2550Q: Form2550q,
+  FORM2000OT: Form2000ot
 };
 export default {
   props: ["form", "type"],
@@ -108,7 +110,7 @@ export default {
       var returnPeriod = {
         month: this.formatDtMonth(form.returnPeriod),
         year: this.formatDtYear(form.returnPeriod)
-      }
+      };
       form.returnPeriod = returnPeriod;
       var dateFiled1 = {
         month: this.formatDtMonth(form.dateFiled1),
