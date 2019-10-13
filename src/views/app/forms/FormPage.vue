@@ -38,6 +38,7 @@
                   @loading="v=>loading=v"
                   @updateForm="v=>form={...form, ...v}"
                   @changeStep="v=>curr_step=v"
+                  @success="showSuccessForm"
                 />
               </a-card>
             </div>
@@ -99,13 +100,15 @@
                     slot="title"
                   >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
                   <template slot="description">
-                    <p>{{formatTIN(item.tin)}}</p>
+                    <p>
+                      <b>{{formatTIN(item.tin)}}</b>
+                    </p>
                     <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                   </template>
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
                     slot="avatar"
-                    :src="getUserByTin(item.tin).avatar || 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
+                    :src="getUserByTin(item.tin).avatar.location"
                     :size="64"
                   />
                 </a-list-item-meta>
@@ -121,10 +124,17 @@
         <a-button type="primary" @click="fillup">Select</a-button>
       </template>
     </a-modal>
+    <form-success
+      :show="show_form_success"
+      :details="return_details"
+      @close="closeForm"
+      @payment="proceedPayment"
+    />
   </a-layout>
 </template>
 
 <script>
+import FormSuccess from "./FormSuccess";
 import FormDisplay from "@/components/FormDisplay.vue";
 import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
@@ -136,6 +146,7 @@ import Form2550Q from "./2550q/2550q.vue";
 
 export default {
   components: {
+    FormSuccess,
     FormDisplay,
     Form2550M,
     Form1601E,
@@ -170,7 +181,6 @@ export default {
       return existing_form;
     }
   },
-
   data() {
     return {
       view_select: true,
@@ -292,19 +302,28 @@ export default {
         }
       ],
       in_bottom: false,
-      loading: false
+      loading: false,
+      return_details: {},
+      show_form_success: false
     };
   },
   methods: {
-    getUserByTin(tin){
+    getUserByTin(tin) {
       const user = this.user_list.find(v => v.tin === tin);
-      return user || {};
+      return (
+        user || {
+          avatar: {
+            location:
+              "https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg"
+          }
+        }
+      );
     },
     handleScroll() {
       this.in_bottom = window.scrollY > 2000;
     },
     select(index) {
-      if(index > -1){
+      if (index > -1) {
         this.taxpayer = this.taxpayer_list[index];
         this.selected_index = index;
       }
@@ -312,18 +331,18 @@ export default {
     isSelected(index) {
       return this.selected_index == index;
     },
-    fillup(){
-      this.form.taxpayer = this.taxpayer
-      if(!this.form.taxpayer.address_details){
-        this.form.taxpayer.address_details = {}
+    fillup() {
+      this.form.taxpayer = this.taxpayer;
+      if (!this.form.taxpayer.address_details) {
+        this.form.taxpayer.address_details = {};
       }
-      if(!this.form.taxpayer.contact_details){
-        this.form.taxpayer.contact_details = {}
+      if (!this.form.taxpayer.contact_details) {
+        this.form.taxpayer.contact_details = {};
       }
-      if(!this.form.taxpayer.registered_name){
-        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`
+      if (!this.form.taxpayer.registered_name) {
+        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
       }
-      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      console.log(`form::::`, JSON.stringify(this.form.taxpayer));
       this.view_select = false;
     },
     saveDraft() {
@@ -338,6 +357,22 @@ export default {
       });
       window.opener.location.reload();
       // window.close();
+    },
+    showSuccessForm(details) {
+      this.return_details = details;
+      this.show_form_success = true;
+    },
+    closeForm() {
+      this.show_form_success = false;
+      window.close();
+    },
+    proceedPayment() {
+      this.$store.commit("SET_RETURN_DETAILS", this.return_details);
+      // window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
+      // window.opener.location.reload();
+      this.show_form_success = false;
+      this.$router.push('/app/pay');
+      // window.close();
     }
   },
   watch: {
@@ -346,6 +381,7 @@ export default {
     }
   },
   created() {
+    this.return_details.form_type = this.form_type;
     console.log("this.existing_form :", this.existing_form);
     if (
       this.existing_form &&

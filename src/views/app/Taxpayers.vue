@@ -60,10 +60,10 @@
                             
                             <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
                             <template slot="description" >
-                                <p>{{item.tin}}</p>
+                                <p><b>{{formatTIN(item.tin)}}</b></p>
                                 <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                             </template>
-                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar || 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'" :size="64" />
+                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar.location" :size="64" />
                         </a-list-item-meta>
                         <!-- </a-card> -->
                         </a-list-item>
@@ -152,7 +152,9 @@ export default {
         },
         getUserByTin(tin){
             const user = this.users.find(v => v.tin === tin);
-            return user || {};
+            return user || {
+                avatar: { location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg' }
+            };
         }
     }
 

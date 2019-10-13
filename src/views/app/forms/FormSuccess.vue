@@ -1,24 +1,36 @@
 <template>
-  <a-modal :visible="show" title="Success">
+  <a-modal
+    :visible="show"
+    class="form-success-modal"
+    :title="`You have successfully submitted Form ${details.form_type.toUpperCase()}`"
+    :closable="false"
+  >
+    <a-card slot="footer" hoverable>
+      <a-card-grid class="action-grid payment-button" @click="$emit('payment')">
+        <a-icon type="credit-card" /> Payment
+      </a-card-grid>
+      <a-card-grid class="action-grid" @click="$emit('close')">
+        <a-icon type="close-circle" /> Close
+      </a-card-grid>
+    </a-card>
     <a-card style="width:100%">
-      <a-row type="flex" align="middle">
-        <a-col :span="22">
-            <a-avatar
-              style="border: solid 1px #1cb5e0"
-              :src="item.avatar"
-              :size="64"
-            />
-          <p
-              slot="title"
-            >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
-            <template slot="description">
-              <p>{{formatTIN(item.tin)}}</p>
-              <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
-            </template>
+      <a-row type="flex" justify="center" align="middle" :gutter="10">
+        <a-col :span="24" style="text-align: center; margin-bottom: 20px;">
+          <a-icon
+            type="check-circle"
+            :style="{ fontSize: '64px' }"
+            theme="twoTone"
+            twoToneColor="#52c41a"
+          />
         </a-col>
-        <a-col :span="2">
-          <a-icon v-if="isSelected(index)" type="check" style="color:#115B95;font-size:24px"></a-icon>
-        </a-col>
+        <template v-for="(item, index) in items">
+          <a-col :key="`t${index}`" :span="10" style="text-align: right; margin: 5px 0;">{{item.title}}:</a-col>
+          <a-col :key="`f${index}`" :span="14" style="text-align: left; margin: 5px 0;">
+            <span>
+              <b>{{details[item.field]}}</b>
+            </span>
+          </a-col>
+        </template>
       </a-row>
     </a-card>
   </a-modal>
@@ -26,9 +38,74 @@
 
 <script>
 export default {
-  props: ["show"]
+  props: ["show", "details"],
+  data() {
+    return {
+      form_layout: {
+        label_col: { span: 2 },
+        wrapper_col: { span: 22 }
+      },
+      items: [
+        {
+          title: "Reference No",
+          field: "reference_no"
+        },
+        {
+          title: "Form Type",
+          field: "form_type"
+        },
+        {
+          title: "TIN",
+          field: "tin"
+        },
+        {
+          title: "Registered Name",
+          field: "registered_name"
+        },
+        {
+          title: "Taxpayer Type",
+          field: "taxpayer_type"
+        },
+        {
+          title: "Return Period",
+          field: "return_period"
+        },
+        {
+          title: "Due Date",
+          field: "due_date"
+        },
+        {
+          title: "Tax Due",
+          field: "tax_due"
+        },
+        {
+          title: "Total Penalties",
+          field: "total_penalties"
+        },
+        {
+          title: "Total Amount Payable",
+          field: "total_amount_payable"
+        }
+      ]
+    };
+  }
 };
 </script>
 
 <style>
+.form-success-modal .ant-modal-footer {
+  padding: 0px;
+}
+
+.form-success-modal .action-grid {
+  width: 50%;
+  text-align: center;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.form-success-modal .payment-button {
+  color: white;
+  background: #43A0EF;
+}
 </style>

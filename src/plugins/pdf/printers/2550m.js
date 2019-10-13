@@ -81,24 +81,49 @@ function getContent(forms) {
             }
         },
         {
-
             layout: "noBorders",
             table: {
-                widths: [170, 100, 236],
+                widths: [60, 30, 30, 30, 100, 236],
                 body: [
                     [{
-                        text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                        text: mapTin(forms.taxpayer.tin, 0, 3),
                         fontSize: 14,
+                        characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [33, 9, 0, 0]
+                        margin: [30, 9, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 3, 6),
+                        fontSize: 14,
+                        characterSpacing: 3,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [0, 9, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 6, 9),
+                        fontSize: 14,
+                        characterSpacing: 2.8,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [-1.8, 9, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 9, 12),
+                        fontSize: 14,
+                        characterSpacing: 2.5,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [-1, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
                         fontSize: 14,
+                        characterSpacing: 8.2,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [60, 9, 0, 0]
+                        margin: [55, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
@@ -1142,6 +1167,11 @@ function formatCurrency(amount) {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     // return `₱ ${parts.join(".")}`;
     return parts.join(".");
+}
+
+function mapTin(tin, from, to){
+    if(!tin || from === null || to === null) return "";
+    return tin.substring(from, to);
 }
 
 export default {

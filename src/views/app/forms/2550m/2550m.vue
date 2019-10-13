@@ -1162,7 +1162,10 @@ export default {
               success: true,
               message: "Successfully submitted Form 2550m."
             });
-            window.close();
+            var return_details = result.data.model;
+            return_details.registered_name = this.form.taxpayer.registered_name;
+            return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
+            this.$emit('success', return_details);
           }
         })
         .catch(err => {

@@ -1,7 +1,7 @@
 <template>
   <a-card>
     <a-table :dataSource="records" :columns="cols">
-      <span slot="action" slot-scope="text,record">
+      <span slot="action">
         <a-button type="primary" @click="show">
           <a-icon type="credit-card"></a-icon>Pay Now
         </a-button>
