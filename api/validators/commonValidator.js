@@ -72,6 +72,7 @@ function isFutureDate(idate) {
  * @param {Date} dueDate 
  */
 function isLateFiling(due_date) {
+    console.log("Due date :", due_date);
     return new Date().getTime() > new Date(due_date).getTime();
 }
 
@@ -122,6 +123,11 @@ function validateMandatory(value, message) {
 
 }
 
+function formatAmount(amount) {
+    if (!amount || isNaN(amount)) return "0.00";
+    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '₱&,');
+}
+
 module.exports = {
     isFutureDate,
     validateTaxpayerDetails,
@@ -129,5 +135,6 @@ module.exports = {
     computeSurcharges,
     computeInterest,
     computeCompromise,
-    validateMandatory
+    validateMandatory,
+    formatAmount
 }

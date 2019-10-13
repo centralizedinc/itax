@@ -2,10 +2,10 @@
   <div>
     <!-- <pdf style="display:none" :src="preview"></pdf> -->
     <pdf style="width:100%" :src="prev" @progress="load" v-show="!loading"></pdf>
-    <a-row type="flex" align="middle" justify="center" v-show="loading">
+    <a-row type="flex" justify="center" v-show="loading" style="height:100vh">
       <a-col :span="6">
-        <a-icon type="loading" style="margin-top: 30vh; font-size:42px"></a-icon>
-        <!-- <a-progress type="circle" :percent="percent" /> -->
+        Please wait...
+        <a-icon  theme="twoTone" type="hourglass" style="margin-top: 30vh; font-size:60px" spin></a-icon>
       </a-col>
     </a-row>
   </div>
@@ -103,7 +103,7 @@ export default {
       this.percent = e * 100;
     },
     refresh() {
-      // this.loading = true;
+      this.loading = true;
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
       form.month = this.formatDtMonth(form.dateFiled);

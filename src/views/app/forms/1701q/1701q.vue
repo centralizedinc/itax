@@ -85,7 +85,7 @@
       >
         <a-input
           placeholder="Last Name, First Name, Middle Name"
-          v-model="form.taxpayer.taxpayer_name"
+          v-model="form.taxpayer.registered_name"
         ></a-input>
       </a-form-item>
       <a-form-item

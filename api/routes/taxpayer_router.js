@@ -89,11 +89,16 @@ router
 router.route('/details')
     .post((req, res) => {
         console.log('req.params.tin :', req.params.tin);
+        var taxpayers = [];
         TaxpayerDao.findConnected(req.body)
-            .then(model => {
+            .then(results => {
+                taxpayers = results;
+                return UserDao.find({ tin: { $in: req.body } });
+            })
+            .then(users => {
                 res.json({
                     success: true,
-                    model
+                    model: { taxpayers, users }
                 })
             })
             .catch((errors) => {

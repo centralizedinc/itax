@@ -1,22 +1,31 @@
 <template>
   <a-card>
-    <a-table :dataSource="records" :columns="cols">
-      <span slot="action" slot-scope="text,record">
-        <a-button type="primary" @click="show">
-          <a-icon type="credit-card"></a-icon>Pay Now
-        </a-button>
+    <a-button type="primary" @click="canSelect">{{can_select? 'DESELECT' : 'SELECT'}}</a-button>
+    <a-table
+      :dataSource="tax_returns"
+      :columns="cols"
+      v-bind="can_select ? { rowSelection:{selectedRowKeys: selectedRowKeys, onChange: onSelectChange} } : ''"
+    >
+      <span slot="action" v-if="!can_select" slot-scope="text,record">
+        <a-button type="primary" @click="show(record)" icon="credit-card" shape="circle"></a-button>
         <!-- <a-button type="primary" @click="show_payment=true"><a-icon type="shop"></a-icon>Over the Counter</a-button> -->
       </span>
+      <span slot="tin" slot-scope="tin">{{formatTIN(tin)}}</span>
+      <span slot="amount" slot-scope="amount">₱{{formatAmount(amount)}}</span>
+      <span slot="date" slot-scope="date">{{formatDate(date)}}</span>
+      <template slot="footer" v-if="can_select && selectedRowKeys && selectedRowKeys.length">
+        <a-button type="primary" block @click="showMultiple()">
+          <a-icon type="credit-card" />PAY
+        </a-button>
+      </template>
     </a-table>
-    <a-drawer
-      title="Payment Options"
-      :width="800"
-      @close="show_payment=false"
-      :visible="show_payment"
-    >
+    <a-drawer :closable="false" :width="800" @close="show_payment=false" :visible="show_payment">
       <a-row type="flex" :gutter="16">
-        <a-col :span="14">
-          <a-tabs @change="navigate">
+        <a-col :span="24">
+          <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+            <h2 style="color: #FFFFFF">Payment Options</h2>
+          </a-card>
+          <a-tabs @change="navigate" style="margin-top:2vh">
             <a-tab-pane key="0">
               <template slot="tab">
                 <a-tooltip title="Credit Card">
@@ -39,37 +48,140 @@
               </template>
             </a-tab-pane>
           </a-tabs>
-
+        </a-col>
+        <a-col :span="14">
           <a-card>
             <component :is="current_option" @mounted="init_card" />
           </a-card>
         </a-col>
-        <a-col :span="10" style="margin-top:10vh">
+        <a-col :span="10" v-if="payment_mode==='multiple'" style="margin-top:10vh">
+          <a-card
+            style="background: linear-gradient(to bottom, #000046, #1cb5e0)"
+            :bodyStyle="{ 'padding-bottom': '5px'}"
+          >
+            <h2 style="color: #FFFFFF">Summary</h2>
+            <a-divider></a-divider>
+            <a-row>
+              <a-col :span="24">
+                <p style="color: #FFFFFF">Details:</p>
+              </a-col>
+              <a-col :span="12">
+                <p style="color: #FFFFFF;">Form Type:</p>
+                <p style="color: #FFFFFF">TIN:</p>
+              </a-col>
+              <a-col :span="12">
+                <p style="text-align: right;color: #FFFFFF">{{current_record.form_type}}</p>
+                <p style="text-align: right;color: #FFFFFF">{{formatTIN(current_record.tin)}}</p>
+              </a-col>
+              <a-divider></a-divider>
+              <a-col :span="24">
+                <p style="color: #FFFFFF">Payments:</p>
+              </a-col>
+              <a-col :span="12">
+                <p style="color: #FFFFFF">Tax Due:</p>
+                <p style="color: #FFFFFF">Penalties:</p>
+                <p style="color: #FFFFFF">Transaction Fee:</p>
+              </a-col>
+              <a-col :span="12">
+                <p
+                  style="text-align: right;color: #FFFFFF"
+                >₱ {{formatAmount(current_record.tax_due)}}</p>
+                <p
+                  style="text-align: right;color: #FFFFFF"
+                >₱ {{formatAmount(current_record.total_penalties)}}</p>
+                <p style="text-align: right;color: #FFFFFF">₱ {{formatAmount(fee)}}</p>
+              </a-col>
+              <a-divider></a-divider>
+              <a-col :span="12">
+                <p style="color: #FFFFFF">Sub Total:</p>
+              </a-col>
+              <a-col :span="12">
+                <p
+                  style="text-align: right;color: #FFFFFF"
+                >₱ {{formatAmount(current_record.sub_total)}}</p>
+              </a-col>
+              <a-col :span="12" style="text-align: left;">
+                <a-button
+                  style="color: white; font-weight: bold;"
+                  icon="left"
+                  :type="current_index<=0 ? 'link' : 'primary'"
+                  :disabled="current_index<=0"
+                  @click="current_index--"
+                >Previous</a-button>
+              </a-col>
+              <a-col :span="12" style="text-align: right;">
+                <a-button
+                  style="color: white; font-weight: bold;"
+                  icon="right"
+                  :type="current_index>=(selectedRowKeys.length - 1) ? 'link' : 'primary'"
+                  :disabled="current_index>=(selectedRowKeys.length - 1)"
+                  @click="current_index++"
+                >Next</a-button>
+              </a-col>
+            </a-row>
+          </a-card>
+          <a-card
+            style="background: linear-gradient(to bottom, #000046, #1cb5e0)"
+            :bodyStyle="{ 'padding-bottom': '0'}"
+          >
+            <a-row>
+              <a-col :span="12">
+                <p style="color: #FFFFFF">
+                  <b>Total:</b>
+                </p>
+              </a-col>
+              <a-col :span="12">
+                <p style="text-align: right;color: #FFFFFF">
+                  <b>₱ {{formatAmount(multiple_payments_total)}}</b>
+                </p>
+              </a-col>
+            </a-row>
+          </a-card>
+          <a-button block type="primary" size="large" style="margin-top: 5vh">Submit</a-button>
+        </a-col>
+        <a-col :span="10" v-else style="margin-top:10vh">
           <a-card style="background: linear-gradient(to bottom, #000046, #1cb5e0)">
             <h2 style="color: #FFFFFF">Summary</h2>
             <a-divider></a-divider>
             <a-row>
-              <a-col :span="14">
+              <a-col :span="24">
+                <p style="color: #FFFFFF">Details:</p>
+              </a-col>
+              <a-col :span="12">
+                <p style="color: #FFFFFF;">Form Type:</p>
+                <p style="color: #FFFFFF">TIN:</p>
+              </a-col>
+              <a-col :span="12">
+                <p style="text-align: right;color: #FFFFFF">{{record.form_type}}</p>
+                <p style="text-align: right;color: #FFFFFF">{{formatTIN(record.tin)}}</p>
+              </a-col>
+              <a-divider></a-divider>
+              <a-col :span="24">
+                <p style="color: #FFFFFF">Payments:</p>
+              </a-col>
+              <a-col :span="12">
                 <p style="color: #FFFFFF">Tax Due:</p>
                 <p style="color: #FFFFFF">Penalties:</p>
-                <p style="color: #FFFFFF">Convenience Fee:</p>
+                <p style="color: #FFFFFF">Transaction Fee:</p>
                 <a-divider></a-divider>
                 <p style="color: #FFFFFF">
                   <b>Total:</b>
                 </p>
               </a-col>
-              <a-col :span="10">
-                <p style="text-align: right;color: #FFFFFF">₱ 12,000.00</p>
-                <p style="text-align: right;color: #FFFFFF">₱ 1,200.00</p>
-                <p style="text-align: right;color: #FFFFFF">₱ 50.00</p>
+              <a-col :span="12">
+                <p style="text-align: right;color: #FFFFFF">₱ {{formatAmount(record.tax_due)}}</p>
+                <p
+                  style="text-align: right;color: #FFFFFF"
+                >₱ {{formatAmount(record.total_penalties)}}</p>
+                <p style="text-align: right;color: #FFFFFF">₱ {{formatAmount(fee)}}</p>
                 <a-divider></a-divider>
                 <p style="text-align: right;color: #FFFFFF">
-                  <b>₱ 13,250.00</b>
+                  <b>₱ {{formatAmount(record.total_amount_payable + fee)}}</b>
                 </p>
               </a-col>
             </a-row>
           </a-card>
-          <a-button ghost block type="primary" size="large" style="margin-top: 5vh">Submit</a-button>
+          <a-button block type="primary" size="large" style="margin-top: 5vh">Submit</a-button>
         </a-col>
       </a-row>
     </a-drawer>
@@ -90,60 +202,71 @@ export default {
       card: null,
       show_payment: false,
       tabs: ["CreditCard", "OnlineBanking", "OverCounter"],
-      records: [
-        /**
-         * placeholder only, to be overridden
-         */
-        {
-          frn: "2019-001230012",
-          form: "2550M",
-          tin: "111-222-333-444-0000",
-          amount: "23,500.00",
-          expiry_date: "09/30/2019"
-        },
-        {
-          frn: "2019-001230013",
-          form: "2550M",
-          tin: "111-222-333-444-0000",
-          amount: "23,500.00",
-          expiry_date: "09/30/2019"
-        }
-      ],
+      record: {},
+      fee: 250,
       cols: [
         {
           title: "FRN",
-          dataIndex: "frn"
+          dataIndex: "reference_no"
         },
         {
           title: "Form",
-          dataIndex: "form"
+          dataIndex: "form_type"
         },
         {
           title: "TIN",
-          dataIndex: "tin"
+          dataIndex: "tin",
+          scopedSlots: { customRender: "tin" }
         },
         {
           title: "Amount Due",
-          dataIndex: "amount"
+          dataIndex: "total_amount_payable",
+          scopedSlots: { customRender: "amount" }
         },
         {
-          title: "Expiry",
-          dataIndex: "expiry_date"
+          title: "Due Date",
+          dataIndex: "date_filed",
+          scopedSlots: { customRender: "date" }
         },
         {
-          title: "Action",
+          title: "Pay",
           dataIndex: "action",
           scopedSlots: { customRender: "action" }
         }
-      ]
+      ],
+      can_select: false,
+      selectedRowKeys: [],
+      payment_mode: "single",
+      current_index: 0
     };
   },
   created() {
     this.init();
   },
   methods: {
-    init() {},
-    show() {
+    init() {
+      this.loading = true;
+      console.log("GET_TAX_RETURNS");
+      this.$store
+        .dispatch("GET_TAX_RETURNS")
+        .then(result => {
+          this.loading = false;
+        })
+        .catch(err => {
+          this.loading = false;
+        });
+    },
+    changeView(key) {
+      this.currentView = this.tabView[key];
+      window.scrollTo(0, 0);
+    },
+    show(record) {
+      this.payment_mode = "single";
+      this.record = record;
+      this.show_payment = true;
+    },
+    showMultiple() {
+      this.payment_mode = "multiple";
       this.show_payment = true;
     },
     navigate(e) {
@@ -156,7 +279,57 @@ export default {
           container: ".card-wrapper"
         });
       }
+    },
+    canSelect() {
+      this.selectedRowKeys = [];
+      this.can_select = !this.can_select;
+      console.log("this.can_select :", this.can_select);
+    },
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys;
+    }
+  },
+  computed: {
+    tax_returns() {
+      console.log(
+        "RETURNS :::",
+        JSON.stringify(this.$store.state.tax_form.tax_returns)
+      );
+      const returns = this.deepCopy(this.$store.state.tax_form.tax_returns);
+      const unpaid_returns = returns.filter(v => v.payment_status !== "paid");
+      return unpaid_returns;
+    },
+    current_record() {
+      const index = this.selectedRowKeys[this.current_index];
+      console.log("index :", index);
+      const record = this.tax_returns[index];
+      console.log("record :", record);
+      if (record) {
+        record.sub_total = record.total_amount_payable + this.fee;
+        return record;
+      } else return {};
+    },
+    multiple_payments_total() {
+      var total = 0;
+      if (
+        this.tax_returns &&
+        this.tax_returns.length &&
+        this.selectedRowKeys &&
+        this.selectedRowKeys.length
+      ) {
+        total = this.tax_returns
+          .filter((v, i) => {
+            return this.selectedRowKeys.includes(i);
+          })
+          .map(v => {
+            var total = v.total_amount_payable + this.fee;
+            return total;
+          })
+          .reduce((t, c) => t + c);
+      }
+      return total;
     }
   }
 };
 </script>
+

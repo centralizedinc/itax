@@ -10,7 +10,10 @@ var ReturnsDetailsSchema = new Schema({
         return_period: Date,
         due_date: Date,
         filing_status: String,
-        payment_status: String,
+        payment_status: {
+                type: String,
+                default: 'unpaid'
+        },
         tax_due: Number,
         total_amount_payable: Number,
         total_penalties: Number,

@@ -5,8 +5,6 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
-        :validate-status="error_item('returnPeriod')"
-        :help="error_desc('returnPeriod')"
       >
         <a-date-picker
           placeholder="Date of Transaction Purchase (MM/DD/YYYY)"
@@ -31,34 +29,84 @@
           style="width: 100%"
         />
       </a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="4"
+      >
+        <a-input-number placeholder="ATC" v-model="form.atc" style="width: 100%" />
+      </a-form-item>
     </a-form>
+
+    <!-- Part 1 -->
+    <a-form v-show="step===1">
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="8"
+      >
+        <a-input placeholder="TIN" v-model="form.taxpayer.tin"></a-input>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="8"
+      >
+        <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="7"
+      >
+        <a-input placeholder="Telephone Number" v-model="form.taxpayer.contact_details.tel_no"></a-input>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="8"
+      >
+        <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="9"
+      >
+        <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="10"
+      >
+        <a-input
+          placeholder="Zip Code"
+          v-model="form.taxpayer.address_details.zipCode"
+          style="width: 100%"
+        ></a-input>
+      </a-form-item>
+    </a-form>
+
+    <!-- Part II -->
   </div>
 </template>
 
 <script>
 export default {
   props: ["form", "step"],
-  methods: {
-    changeStep(step, form) {
-      this.$emit("changeStep", step);
-      this.$emit("updateForm", form);
-    },
-    error_item(item) {
-      return this.errors.find(x => x.field === item) ? "error" : "";
-    },
-    error_desc(item) {
-      return this.errors.find(x => x.field === item)
-        ? this.errors.find(x => x.field === item).error
-        : "";
-    }
-  },
   data() {
     return {
       errors: [],
       loading: false,
       form_general: this.$form.createForm(this),
-      //   form_part1: this.$form.createForm(this),
-      //   form_part2: this.$form.createForm(this),
+      form_part1: this.$form.createForm(this),
+      form_part2: this.$form.createForm(this),
       formatter: {
         amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       },
@@ -68,7 +116,8 @@ export default {
       form_layout: {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
-      }
+      },
+      errors: []
     };
   },
   computed: {},
@@ -95,7 +144,20 @@ export default {
     },
     step() {}
   },
-  created() {}
+  methods: {
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
+    error_item(item) {
+      return this.errors.find(x => x.field === item) ? "error" : "";
+    },
+    error_desc(item) {
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
+    }
+  }
 };
 </script>
 

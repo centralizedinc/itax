@@ -54,7 +54,7 @@ returns_router.route("/")
 returns_router.route("/validate/:form_type")
     .post((req, res) => {
         // validation
-        const errors = validateForm(req.params.form_type, req.body);
+        const { errors, due_date } = validateForm(req.params.form_type, req.body);
 
         // check the errors
         if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
@@ -62,6 +62,7 @@ returns_router.route("/validate/:form_type")
             var data = req.body;
             console.log('jwt.decode(req.headers.access_token).account_id :', jwt.decode(req.headers.access_token).account_id);
             data.created_by = jwt.decode(req.headers.access_token).account_id;
+            data.due_date = due_date;
             saveForm(req.params.form_type, data)
                 .then((result) => {
                     res.json({ model: result });

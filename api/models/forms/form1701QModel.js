@@ -7,7 +7,6 @@ var Form1701QSchema = new Schema({
   reference_no: String,
   taxpayer: {},
   spouse_taxpayer: {},
-  registered_name: String,
   dateFiled: {
     type: Date,
     default: new Date()

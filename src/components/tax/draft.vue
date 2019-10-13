@@ -6,8 +6,11 @@
         <span>{{formatDate(created_date)}}</span>
       </a-tooltip>
 
+      <span slot="tin" slot-scope="tin">
+        {{formatTIN(tin)}}
+      </span>
       <a-button-group slot="actions" slot-scope="text, record">
-        <a-button type="primary" @click="reOpenForm(record.form, record.ref_no)">Edit</a-button>
+        <a-button type="primary" @click="reOpenForm(record.form, record.ref_no)">Continue</a-button>
         <a-popconfirm
           title="Remove this from draft?"
           @confirm="removeDraft(record.form, record.ref_no)"
@@ -51,7 +54,8 @@ export default {
         },
         {
           title: "Taxpayer",
-          dataIndex: "taxpayer"
+          dataIndex: "taxpayer",
+          scopedSlots: { customRender: "tin" }
         },
         {
           title: "Date Created",

@@ -10,7 +10,7 @@ var Form1601ESchema = new Schema({
     },
     taxpayer: {},
     dateFiled: Date,
-    dueDate: Date,
+    due_date: Date,
     returnPeriod: Date,
     returnPeriodMonth: String,
     returnPeriodYear: String,
