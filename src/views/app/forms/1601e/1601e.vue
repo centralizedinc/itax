@@ -5,7 +5,7 @@
         <b>Withholding Tax Declaration (1601E)</b>
       </a-divider>
       <a-form-item label="1. For the month of (MM/YYYY)">
-        <a-month-picker v-model="form.dateFiled" />
+        <a-month-picker v-model="form.returnPeriod" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amendedYn">
@@ -247,7 +247,7 @@
       <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
     <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
+    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>-->
   </div>
 </template>
 
@@ -327,7 +327,9 @@ export default {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
+          this.$store.commit("NOTIFY_MESSAGE", {
+            message: "Successfully submitted Form 2550m."
+          });
           // window.opener.location.reload();
           window.close();
         })
@@ -340,7 +342,7 @@ export default {
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
-    },
+    }
     // submit() {
     //   this.form.validateFieldsAndScroll((err, values) => {
     //     if (!err) console.log("values :", values);

@@ -31,8 +31,8 @@ function fillup(details) {
 */
 
 function getContent(forms) {
-    var content = []
-    content.push(
+    console.log('forms.returnPeriod :', forms.returnPeriod);
+    var content = [
         {
             layout: "noBorders",
             table: {
@@ -60,21 +60,21 @@ function getContent(forms) {
 
                     },
                     {
-                        text: forms.returnPeriod.month == null ? ' ' : forms.returnPeriod.month,
+                        text: formatDate(forms.returnPeriod, { month: "2-digit" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [3, 0, 0, 0]
                     },
                     {
-                        text: forms.returnPeriodDay == null ? ' ' : forms.returnPeriodDay,
+                        text: formatDate(forms.returnPeriod, { day: "2-digit" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: forms.returnPeriod.year == null ? ' ' : forms.returnPeriod.year,
+                        text: formatDate(forms.returnPeriod, { year: "numeric" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'justified',
@@ -128,7 +128,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [80, 45, 35, 48, 170, 100],
+                widths: [80, 45, 35, 60, 170, 100],
                 heights: [26],
                 body: [
                     [{
@@ -156,7 +156,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: mapTin(forms.taxpayer.tin, 9, 12),
+                        text: mapTin(forms.taxpayer.tin, 9, 13),
                         fontSize: 16,
                         bold: true,
                         characterSpacing: 4,
@@ -169,7 +169,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [55, 0, 0, 0]
+                        margin: [45, 0, 0, 0]
                     }, {
                         text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                         fontSize: 14,
@@ -1059,12 +1059,26 @@ function getContent(forms) {
                 ]
             }
         },
-
-
-
-    );
+    ]
     return content;
 }
+
+function formatDate(date, type) {
+    if (!date) {
+        return "";
+    }
+    if (type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
+    var dt = new Date(date).toLocaleString("en-US", type ? type : {
+        hour12: true,
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+    return dt;
+}
+
 function mapTin(tin, from, to) {
     if (!tin || from === null || to === null) return "";
     return tin.substring(from, to);
