@@ -1,20 +1,26 @@
 <template>
-  <a-layout>
-    <a-layout-header class="header">
-      <a-row type="flex" justify="start" :gutter="8">
-        <a-col :span="10">
+  <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
+    <a-layout-header class="header" style="height:12vh">
+      <a-row type="flex" justify="start" >
+        <a-col :span="3">
           <h2 style="color:white;">Smart Tax.</h2>
+        </a-col>
+        <a-col :span="21" style="margin-top:2vh">
+          
+          <a-steps :current="curr_step" size="small">
+          <a-step v-for="(item, index) in form_steps" :key="index">
+            <b slot="title" style="color:#ffffff">{{item.title}}</b>
+            <span slot="description" style="font-size:12px; color:#ffffff">{{item.description}}</span>
+          </a-step>
+        </a-steps>
         </a-col>
       </a-row>
     </a-layout-header>
     <a-layout-content style="min-height:100vh; margin-top:15vh;">
       <a-card>
-        <a-steps :current="curr_step" size="small">
-          <a-step v-for="(item, index) in form_steps" :key="index" :description="item.description">
-            <b slot="title">{{item.title}}</b>
-          </a-step>
-        </a-steps>
-        <a-row :gutter="10">
+        
+      </a-card>
+        <a-row :gutter="16" justify="center">
           <a-col :xs="0" :md="12">
             <!-- Form Display -->
             <a-affix
@@ -49,27 +55,28 @@
             <a-row type="flex" :gutter="10" align="middle" justify="center">
               <!-- Previous -->
               <a-col :span="4">
-                <a-button
+                <a-button icon="left"
                   @click="curr_step--"
                   :disabled="loading || curr_step === 0"
                   v-if="curr_step > -1"
+                  type="primary"
                 >Previous</a-button>
               </a-col>
               <!-- Download -->
               <a-col :span="4">
-                <a-button @click="$refs.form_display_component.download()">Download</a-button>
+                <a-button icon="download" :disabled="loading" @click="$refs.form_display_component.download()">Download</a-button>
               </a-col>
               <!-- Open -->
               <a-col :span="4">
-                <a-button @click="$refs.form_display_component.open()">Open</a-button>
+                <a-button icon="printer" :disabled="loading" @click="$refs.form_display_component.open()">Print</a-button>
               </a-col>
               <!-- Save as Draft -->
               <a-col :span="4">
-                <a-button type="primary" :disabled="loading" @click="saveDraft()">Save as Draft</a-button>
+                <a-button icon="save" :disabled="loading" @click="saveDraft()">Save as Draft</a-button>
               </a-col>
               <!-- Submit -->
               <a-col :span="4">
-                <a-button
+                <a-button icon="upload"
                   type="primary"
                   @click="$refs.form_component.submit()"
                   :loading="loading"
@@ -77,17 +84,16 @@
               </a-col>
               <!-- Next -->
               <a-col :span="4">
-                <a-button
+                <a-button 
                   type="primary"
-                  :disabled="curr_step===form_steps.length-1"
+                  :disabled="curr_step===form_steps.length-1 || loading"
                   @click="$refs.form_component.validate()"
-                  :loading="loading"
-                >Next</a-button>
+                >Next <a-icon type="right"></a-icon></a-button>
               </a-col>
             </a-row>
           </div>
         </div>
-      </a-card>
+      <!-- </a-card> -->
     </a-layout-content>
     <a-modal :visible="view_select" title="Select Taxpayer" :closable="false">
       <a-list itemLayout="horizontal" :dataSource="taxpayer_list" :loading="loading">
@@ -121,7 +127,7 @@
         </a-list-item>
       </a-list>
       <template slot="footer">
-        <a-button type="primary" @click="fillup">Select</a-button>
+        <a-button type="primary" @click="fillup" :disabled="!taxpayer">Select</a-button>
       </template>
     </a-modal>
     <form-success
@@ -367,12 +373,10 @@ export default {
       window.close();
     },
     proceedPayment() {
-      this.$store.commit("SET_RETURN_DETAILS", this.return_details);
-      // window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
-      // window.opener.location.reload();
+      window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
+      window.opener.location.reload();
       this.show_form_success = false;
-      this.$router.push('/app/pay');
-      // window.close();
+      window.close();
     }
   },
   watch: {
@@ -393,6 +397,11 @@ export default {
     ) {
       this.form = this.existing_form.details;
       this.form.returnPeriod = moment(this.form.returnPeriod);
+      //check if taxpayer is already set
+      if(this.form.taxpayer.tin){
+        this.view_select = false; 
+      }
+      
     }
     console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);
@@ -462,7 +471,7 @@ export default {
 }
 
 .float-button button {
-  width: 18vh;
+  width: 12vw;
 }
 
 .float-button {
@@ -474,7 +483,7 @@ export default {
 }
 
 .float-button .float-content {
-  width: 117vh;
+  width: 80vw;
   margin: auto;
   padding: 1vh 2vh;
   background: rgba(0, 0, 0, 0.4);

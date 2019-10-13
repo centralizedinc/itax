@@ -3,20 +3,31 @@
     <a-table :loading="loading" :columns="cols" :dataSource="tax_returns">
       <span slot="form" slot-scope="form">Form {{form}}</span>
       <a-tooltip slot="datetime" slot-scope="date_created" :title="moment(date_created).fromNow()">
-        <span>{{formatDate(date_created)}}</span>
+        <span>{{formatDate(date_created, {
+                        hour12: true,
+                        year: "numeric",
+                        month: "long",
+                        day: "2-digit"
+                    })}}</span>
       </a-tooltip>
-
+      <div slot="taxpayer" slot-scope="tin">
+        {{formatTIN(tin)}}
+      </div>
       <div slot="actions">
         <a-tooltip>
-          <span slot="title">View</span>
-          <a-icon type="search" style="cursor: pointer; margin-right: 2vh;" />
+          <span slot="title">Print</span>
+          <a-icon type="printer" style="cursor: pointer; margin-right: 2vh;" />
         </a-tooltip>
-        <a-popconfirm title="Pay this form?" okText="Yes" cancelText="Cancel">
+        <a-tooltip>
+          <span slot="title">Download</span>
+          <a-icon type="download" style="cursor: pointer" />
+        </a-tooltip>
+        <!-- <a-popconfirm title="Pay this form?" okText="Yes" cancelText="Cancel">
           <a-tooltip>
             <span slot="title">Payment</span>
             <a-icon type="shopping-cart" style="cursor: pointer" />
           </a-tooltip>
-        </a-popconfirm>
+        </a-popconfirm> -->
       </div>
     </a-table>
   </a-card>

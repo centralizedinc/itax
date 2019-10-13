@@ -10,52 +10,92 @@ var commonValidator = require('./commonValidator.js');
  * @param {*} callback 
  */
 function validate(form_details, callback) {
-
     //validation begins ...
-    var error_messages = {};
+    var errors = [];
 
-    console.log("FORMS: " + JSON.stringify(form_details));
+    if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
+        errors.push({
+            page: 0,
+            field: "returnPeriod",
+            error: constant_helper.MANDATORY_FIELD('Return Period')
+        });
+        return errors;
+    }
 
-    var success_flag = false;
+    form_details.due_date = computeDueDate(form_details.returnPeriod)
+    //validate required fields
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
+    errors.push(...validateRequired(form_details));
+
+    // late filing computations
+
+
+    // var error_messages = {};
+
+    // console.log("FORMS: " + JSON.stringify(form_details));
+
+    // var success_flag = false;
+
 
     // Validation
-    if (form_details.natureOfTransaction === "") {
-        error_messages.natureOfTransaction = [];
-        error_messages.natureOfTransaction.push("Nature of Transaction is a mandatory field");
+    // if (form_details.natureOfTransaction === "") {
+    //     error_messages.natureOfTransaction = [];
+    //     error_messages.natureOfTransaction.push("Nature of Transaction is a mandatory field");
+    // }
+    // if (form_details.propertySold === "realProperty") {
+    //     if (form_details.realPropertyClass === "") {
+    //         error_messages.realPropertyClass = [];
+    //         error_messages.realPropertyClass.push("Classification of Real Property is a mandatory field");
+    //     }
+    // } else if (form_details.propertySold === "sharesStocks") {
+    //     // Nothing will happen
+    // }
+
+    // error_messages = Object.assign({}, error_messages, validateComputations(form_details));
+
+    // if (!error_messages.length) {
+    //     success_flag = true;
+    // }
+
+    // console.log("############ error_messages: " + error_messages.length);
+
+    // callback({
+    //     success: success_flag,
+    //     errors: error_messages
+    // });
+    return errors
+}
+
+function validateRequired(form) {
+    var error_messages = [];
+
+    if (!form.natureOfTransaction) {
+        error_messages.push({
+            page: 2,
+            field: "natureOfTransaction",
+            error: constant_helper.MANDATORY_FIELD('Nature of Transaction')
+        });
     }
-    if (form_details.propertySold === "realProperty") {
-        if (form_details.realPropertyClass === "") {
-            error_messages.realPropertyClass = [];
-            error_messages.realPropertyClass.push("Classification of Real Property is a mandatory field");
-        }
-    } else if (form_details.propertySold === "sharesStocks") {
-        // Nothing will happen
+    if (form.natureOfTransaction !== 'shares_transfer' && !form.realPropertyClass) {
+        error_messages.push({
+            page: 2,
+            field: "realPropertyClass",
+            error: constant_helper.MANDATORY_FIELD('Classification of Real Property')
+        });
     }
-
-    error_messages = Object.assign({}, error_messages, validateComputations(form_details));
-
-    if (!error_messages.length) {
-        success_flag = true;
-    }
-
-    console.log("############ error_messages: " + error_messages.length);
-
-    callback({
-        success: success_flag,
-        errors: error_messages
-    });
+    return error_messages;
 }
 
 function computeDueDate(returnPeriod) {
-    var due_date = new Date();
+    // var due_date = new Date();
 
     var month = returnPeriod.getMonth() + 1;
-
-    //every 20th of the next month
-    due_date.setDate(20);
-    due_date.setMonth(month);
-
-    return due_date;
+    var year = returnPeriod.getFullYear();
+    //5 days before end of month
+    // due_date.setDate(20);
+    // due_date.setMonth(month);
+    return new Date(year, month, 0).getDate();
+    // return due_date;
 }
 
 /**
@@ -122,14 +162,14 @@ function validateComputations(form) {
     }
 
     var sellingPrice = form.sellingPrice === undefined ||
-        form.sellingPrice === ""
-        ? 0
-        : form.sellingPrice;
+        form.sellingPrice === "" ?
+        0 :
+        form.sellingPrice;
 
     var fairMarketValue = form.fairMarketValue === undefined ||
-        form.fairMarketValue === ""
-        ? 0
-        : form.fairMarketValue;
+        form.fairMarketValue === "" ?
+        0 :
+        form.fairMarketValue;
 
 
     totalRealProperty = Math.max(parseFloat(sellingPrice), parseFloat(fairMarketValue));
@@ -139,14 +179,14 @@ function validateComputations(form) {
     }
 
     var parValueShares = form.parValueShares === undefined ||
-        form.parValueShares === ""
-        ? 0
-        : form.parValueShares;
+        form.parValueShares === "" ?
+        0 :
+        form.parValueShares;
 
     var dstPaid = form.dstPaid === undefined ||
-        form.dstPaid === ""
-        ? 0
-        : form.dstPaid;
+        form.dstPaid === "" ?
+        0 :
+        form.dstPaid;
 
 
     totalSharesStock = Math.max(parseFloat(parValueShares), parseFloat(dstPaid));
@@ -178,9 +218,9 @@ function validateComputations(form) {
     var prevTaxPaid = 0;
     if (form.amendedYn === 'Y') {
         prevTaxPaid = form.prevTaxPaid === undefined ||
-            form.prevTaxPaid === ""
-            ? 0
-            : form.prevTaxPaid;
+            form.prevTaxPaid === "" ?
+            0 :
+            form.prevTaxPaid;
     }
     totalTaxStillDue = parseFloat(totalTaxDue) - parseFloat(prevTaxPaid);
     if (form.taxStillDue !== totalTaxStillDue) {
