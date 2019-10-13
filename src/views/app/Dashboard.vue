@@ -36,7 +36,7 @@
           </a-col>
           <a-col :span="6" style="margin-top:1vh">
               <a-button-group block>
-                    <a-button  icon="link">Attach</a-button>
+                    <a-button type="primary" ghost icon="link">Attach</a-button>
                     <a-button icon="upload" type="primary">Post</a-button>
                 </a-button-group>
           </a-col>
