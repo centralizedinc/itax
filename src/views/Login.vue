@@ -227,10 +227,12 @@ export default {
       });
     },
     registerFacebook() {
+      var left = (screen.width - 500) / 2;
+      var top = (screen.height - 450) / 4;
       window.open(
         `${process.env.VUE_APP_BASE_API_URI}oauth/facebook`,
         "",
-        "width=500,height=450"
+        `width=500,height=450,top=${top},left=${left}, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no`
       );
       this.signup_visible = false;
     },

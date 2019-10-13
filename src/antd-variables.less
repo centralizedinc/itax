@@ -14,7 +14,7 @@ found in https://github.com/vueComponent/ant-design-vue/blob/master/components/s
     z-index: 1000;
     width: 100%;
     color:#ffffff; 
-    background: linear-gradient(to left, #000046, #1cb5e0);
+    background: linear-gradient(to right, #000046, #1cb5e0);
   }
 
 .content {
@@ -29,17 +29,18 @@ found in https://github.com/vueComponent/ant-design-vue/blob/master/components/s
     /* margin-top:300px; */
     /* background-color: red; */
     color:#ffffff; 
-    background: linear-gradient(to right, #000046, #1cb5e0);
+    background: linear-gradient(to left, #000046, #1cb5e0);
     // z-index: 10;
     // text-align: center;
     // height: 5vh;
 }
 
 .avatar_btn{
-    cursor: pointer
+    cursor: pointer;
+    transition: .35s ease-in-out
 }
 .avatar_btn:hover{
-    transform: scale(1.1)
+    transform: scale(0.95)
 }
 
 .profile_pic{
@@ -56,8 +57,9 @@ found in https://github.com/vueComponent/ant-design-vue/blob/master/components/s
     color:#ffffff
   }
   .payment_card:hover{
-    background: linear-gradient(to bottom, #000046, #1cb5e0);
+    background: linear-gradient(to right, #000046, #1cb5e0);
     transform: scale(0.95);
+    
   
   }
 
@@ -68,4 +70,8 @@ found in https://github.com/vueComponent/ant-design-vue/blob/master/components/s
   .tin_card:hover{
     transform: scale(0.95);
     border: 1px solid #115B95
+  }
+
+  .ant-tabs-tab-active{
+    font-size: 20px
   }

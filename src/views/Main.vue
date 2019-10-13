@@ -1,5 +1,5 @@
 <template>
-  <a-layout>
+  <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
     <a-back-top>
       <a-avatar>
         <a-icon type="up" :size="42"></a-icon>
@@ -57,12 +57,12 @@
           <a-row type="flex" justify="center" style="margin-bottom: 2vh">
             <a-col :span="24">
               <a-card
-                style=" min-height: 10vh; background: linear-gradient(to bottom, #000046, #1cb5e0);"
+                style=" min-height: 10vh; background: linear-gradient(to right, #000046, #1cb5e0);"
               ></a-card>
             </a-col>
             <a-col :span="6">
               <a-avatar 
-                style="z-index: 1; margin-top: -5vh; border: 3px solid #FFFFFF" 
+                style="z-index: 1; margin-top: -7vh; border: 3px solid #FFFFFF" 
                 :size="60" 
                 :src="user && user.avatar ? user.avatar.location : null">
                 {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
@@ -71,13 +71,15 @@
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
                 <div style="margin-top: 2vh">
-                  <p>{{user.name.first}} {{user.name.last}}</p>
+                  <span>{{user.name.first}} {{user.name.last}}</span>
+                  <p v-if="user.tin"><a @click="$router.push('/app/user')">{{formatTIN(user.tin)}}</a></p>
+                  <p v-else><a @click="$router.push('/app/user')">No taxpayer details. Click here.</a></p>
                 </div>
               </a-card>
             </a-col>
           </a-row>
           <a-affix :offsetTop="100">
-            <a-menu @click="nav">
+            <a-menu @click="nav" :selectedKeys="active_menu">
               <a-menu-item key="/app">
                 <a-icon type="layout" />Dashboard
               </a-menu-item>
@@ -93,81 +95,71 @@
               <a-menu-item key="/app/pay">
                 <a-icon type="credit-card" />Payments
               </a-menu-item>
-              <!-- <a-divider></a-divider> -->
-              <!-- <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>-->
+              <a-divider></a-divider>
+              <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
+              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
               <a-menu-item key="logout">
                 <a-icon type="logout" />Logout
               </a-menu-item>
             </a-menu>
           </a-affix>
-          <!-- </a-card> -->
         </a-col>
         <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-          <h3>{{$route.name}}</h3>
-          <a-divider></a-divider>
+           <a-col :span="24">
+              <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+                  <h2 style="color: #FFFFFF">{{$route.name}}</h2>
+              </a-card>
+          </a-col>
           <transition name="fade" mode="out-in">
             <router-view></router-view>
           </transition>
         </a-col>
         <a-col :span="4">
-          <!-- <a-card title="Activities" style="margin-top: 2vh">
-            <a-timeline>
-              <a-timeline-item>Create a services site 2015-09-01</a-timeline-item>
-              <a-timeline-item>Solve initial network problems 2015-09-01</a-timeline-item>
-              <a-timeline-item>Technical testing 2015-09-01</a-timeline-item>
-              <a-timeline-item>Network problems being solved 2015-09-01</a-timeline-item>
-            </a-timeline>
-          </a-card> -->
-          <h3>My Daily Stats</h3>
-          <a-divider></a-divider>
-
-          <a-card>
-            <a-avatar shape="square" style="background: #115B95">
-              <a-icon type="user"></a-icon>
-            </a-avatar>
-            TaxPayers
-            <vue-trend
-              :data="ttrend"
-              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-              strokeWidth="5"
-            >
-            </vue-trend>
+          <a-row style="margin-bottom: 2vh">
+            <a-col :span="24">
+              <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+                  <h2 style="color: #FFFFFF">Summary</h2>
+              </a-card>
+          </a-col>
+          </a-row>
+          <a-card style="margin-bottom:0.5vh; border: 1px solid" class="avatar_btn" >
+            <a-row type="flex" align="middle" justify="left">
+              <a-col :span="8">
+                <a-icon type="team" style="font-size: 46px"></a-icon>
+              </a-col>
+              <a-col :span="16" style="text-align:right">
+                <h4>Total Taxpayers</h4>
+                <h2>10</h2>
+              </a-col>
+            </a-row>
           </a-card>
-           <a-card>
-             <a-avatar shape="square" style="background: #115B95">
-              <a-icon type="form"></a-icon>
-            </a-avatar>
-             Tax Returns
-            <vue-trend
-              :data="rtrend"
-              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-            >
-            </vue-trend>
+           <a-card style="margin-bottom:0.5vh;border: 1px solid;" class="avatar_btn"> 
+            <a-row type="flex" align="middle" justify="left">
+              <a-col :span="8">
+                <a-icon type="form" style="font-size: 46px"></a-icon>
+              </a-col>
+              <a-col :span="16" style="text-align:right">
+                <h4>Returns Filed</h4>
+                <h2>10</h2>
+              </a-col>
+            </a-row>
           </a-card>
-           <a-card style="background: ">
-             <a-avatar shape="square" style="background: #115B95">
-              <a-icon type="credit-card"></a-icon>
-            </a-avatar>
-             Payments
-            <vue-trend
-              :data="ptrend"
-              :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-            >
-            </vue-trend>
+           <a-card style="margin-bottom:0.5vh; border: 1px solid;" class="avatar_btn">
+            <a-row type="flex" align="middle" justify="left">
+              <a-col :span="8">
+                <a-icon type="credit-card" style="font-size: 46px"></a-icon>
+              </a-col>
+              <a-col :span="16" style="text-align:right">
+                <h4>Total Payments</h4>
+                <h2>45,538</h2>
+              </a-col>
+            </a-row>
           </a-card>
         </a-col>
       </a-row>
     </a-layout-content>
-    <a-layout-footer class="footer" style="margin-top: 2vh">
-      <!-- <a-icon type="facebook"></a-icon>
-      <a-icon type="google-plus"></a-icon>-->
+    <a-layout-footer class="footer" style="text-align:right;margin-top: 2vh">
+      Copyright Ⓒ 2019 - Centralized Cloud Computing International Inc.
     </a-layout-footer>
   </a-layout>
 </template>
@@ -183,6 +175,7 @@ export default {
   },
   data() {
     return {
+      // active_menu:['/app'],
       user: {
         name: {}
       }
@@ -209,7 +202,9 @@ export default {
           onCancel() {}
         });
       } else {
+        // this.active_menu = [e.key]
         this.$router.push(e.key);
+
       }
     },
     randomArray(){
@@ -224,6 +219,10 @@ export default {
     }
   },
   computed:{
+    active_menu(){
+      console.log('PATH :::: ',this.$route.path)
+      return [this.$route.path];
+    },
     ttrend(){
       return this.randomArray()
     },

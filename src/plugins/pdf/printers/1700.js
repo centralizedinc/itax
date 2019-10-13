@@ -40,7 +40,7 @@ function getContent(forms) {
             widths: [103, 50, 60, 42, 62, 60, 50],
             body: [
                 [{
-                    text: forms.year ? forms.year : ' ' ,
+                    text: forms.year ? forms.year : ' ',
                     fontSize: 12,
                     // text: forms.birthday.month ? forms.birthday.month : ' ',
                     // right,down,left,up
@@ -101,40 +101,40 @@ function getContent(forms) {
 
         }
     }, {
-            layout: "noBorders",
-            // TIN
-            table: {
-                widths: [245, 160, 90],
-                body: [
-                    [{
-                        text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                        // text: '0  1  2   -  3  4  5   -   6  7  8 ',
-                        fontSize: 15,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [83, 15, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                        // text: '0 0 0',
-                        fontSize: 15,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [120, 14, 0, 0]
-                    }, {
-                        // PSOC CODE
-                        text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
-                        // text: '0  0  0  0',
-                        fontSize: 15,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [42, 14, 0, 0]
-                    },
+        layout: "noBorders",
+        // TIN
+        table: {
+            widths: [245, 160, 90],
+            body: [
+                [{
+                    text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                    // text: '0  1  2   -  3  4  5   -   6  7  8 ',
+                    fontSize: 15,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [83, 15, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                    // text: '0 0 0',
+                    fontSize: 15,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [120, 14, 0, 0]
+                }, {
+                    // PSOC CODE
+                    text: forms.taxpayer.psoc_code == null ? ' ' : forms.taxpayer.psoc_code,
+                    // text: '0  0  0  0',
+                    fontSize: 15,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [42, 14, 0, 0]
+                },
 
-                    ]
                 ]
-            }
-        },
+            ]
+        }
+    },
 
         {
             layout: "noBorders",
@@ -168,7 +168,7 @@ function getContent(forms) {
                     ]
                 ]
             }
-        }, 
+        },
         {
             layout: "noBorders",
             table: {
@@ -190,7 +190,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [35, 35 ,70, 350],
+                widths: [35, 35, 70, 350],
                 body: [
                     [
                         {
@@ -322,7 +322,7 @@ function getContent(forms) {
                     },
                     {
                         // 72 characters 
-                        text: forms.taxpayer.spouse_name_first== null ? ' ' : forms.taxpayer.spouse_name_first,
+                        text: forms.taxpayer.spouse_name_first == null ? ' ' : forms.taxpayer.spouse_name_first,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -339,7 +339,7 @@ function getContent(forms) {
                     ]
                 ]
             }
-        }, 
+        },
         {
             layout: "noBorders",
             // TIN
@@ -365,76 +365,76 @@ function getContent(forms) {
                     ]
                 ]
             }
-        },{
-            layout: "noBorders",
-            table: {
-                widths: [35, 35, 70, 350],
-                body: [
-                    [
-                        {
-                            text: forms.sbirthday.month ? forms.sbirthday.month : ' ',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [10, 7, 0, 0]
-                        },
-                        {
-                            text: forms.sbirthday.day ? forms.sbirthday.day : ' ',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [4, 7, 0, 0]
-                        },
-                        {
-                            text: forms.sbirthday.year ? forms.sbirthday.year : ' ',
-                            fontSize: 15,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [10, 7, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.spouse_email == null ? ' ' : forms.taxpayer.spouse_email,
-                            // text: '0 0 0',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [10, 6, 0, 0]
-                        },
-                    ]
+        }, {
+        layout: "noBorders",
+        table: {
+            widths: [35, 35, 70, 350],
+            body: [
+                [
+                    {
+                        text: forms.sbirthday.month ? forms.sbirthday.month : ' ',
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [10, 7, 0, 0]
+                    },
+                    {
+                        text: forms.sbirthday.day ? forms.sbirthday.day : ' ',
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [4, 7, 0, 0]
+                    },
+                    {
+                        text: forms.sbirthday.year ? forms.sbirthday.year : ' ',
+                        fontSize: 15,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [10, 7, 0, 0]
+                    },
+                    {
+                        text: forms.taxpayer.spouse_email == null ? ' ' : forms.taxpayer.spouse_email,
+                        // text: '0 0 0',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [10, 6, 0, 0]
+                    },
                 ]
-            }
-        },{
-            layout: "noBorders",
-            table: {
-                widths: [170, 50, 270],
-                body: [
-                    [
-                        {
-                            text: forms.taxpayer.spouse_claiming_add_exemp == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [161, -4, 0, 0]
-                        },
-                        {
-                            text: forms.taxpayer.spouse_claiming_add_exemp == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [30, -4, 0, 0]
-                        },
-                        {
-                            // text: forms.year ? forms.year : ' ',
-                            text: forms.taxpayer.spouse_no_dependents == null ? ' ' : forms.taxpayer.spouse_no_dependents,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [238, -4, 0, 0]
-                        }
-                    ]
+            ]
+        }
+    }, {
+        layout: "noBorders",
+        table: {
+            widths: [170, 50, 270],
+            body: [
+                [
+                    {
+                        text: forms.taxpayer.spouse_claiming_add_exemp == true ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [161, -4, 0, 0]
+                    },
+                    {
+                        text: forms.taxpayer.spouse_claiming_add_exemp == false ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [30, -4, 0, 0]
+                    },
+                    {
+                        // text: forms.year ? forms.year : ' ',
+                        text: forms.taxpayer.spouse_no_dependents == null ? ' ' : forms.taxpayer.spouse_no_dependents,
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [238, -4, 0, 0]
+                    }
                 ]
-            }
-        },
+            ]
+        }
+    },
         // total payable
         {
             layout: "noBorders",
@@ -443,13 +443,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.tax_filer_tax_due == null ? ' ' : forms.tax_filer_tax_due,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, 6, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -461,13 +461,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.spouse_tax_due == null ? ' ' : forms.spouse_tax_due,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -3, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -479,13 +479,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.total_income_tax_due == null ? ' ' : forms.total_income_tax_due,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -3, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -497,13 +497,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.less_tax_credits == null ? ' ' : forms.less_tax_credits,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -6, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -515,13 +515,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.spouse_less_tax_credits == null ? ' ' : forms.spouse_less_tax_credits,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -6, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -533,13 +533,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.net_tax_payable == null ? ' ' : forms.net_tax_payable,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -5, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -551,13 +551,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.portion_tax_payable == null ? ' ' : forms.portion_tax_payable,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -5, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -569,13 +569,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.total_penalties == null ? ' ' : forms.total_penalties,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -5, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -587,13 +587,13 @@ function getContent(forms) {
                 // heights: [0],
                 body: [
                     [{
-                        
+
                         text: forms.total_amount_payable == null ? ' ' : forms.total_amount_payable,
                         fontSize: 14,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [403, -3, 0, 0]
-                    }    
+                    }
                     ]
                 ]
             }
@@ -660,34 +660,34 @@ function getContent(forms) {
         // right,down,left,up
         margin: [416, 8, 0, 0],
     }, {
-            alignment: 'justify',
-            fontSize: 10,
-            width: 100,
-            text: forms.prevTaxPaidCrdtb,
-            // right,down,left,up
-            margin: [415, 11, 0, 0],
-        }, {
-            alignment: 'justify',
-            fontSize: 10,
-            width: 100,
-            text: forms.advPayment,
-            // right,down,left,up
-            margin: [415, 1, 0, 0],
-        }, {
-            alignment: 'justify',
-            fontSize: 10,
-            width: 100,
-            text: forms.totTaxCredits,
-            // right,down,left,up
-            margin: [415, 1, 0, 0],
-        }, {
-            alignment: 'justify',
-            fontSize: 10,
-            width: 100,
-            text: forms.amtPayblCrdtb,
-            // right,down,left,up
-            margin: [415, 1, 0, 0],
-        })
+        alignment: 'justify',
+        fontSize: 10,
+        width: 100,
+        text: forms.prevTaxPaidCrdtb,
+        // right,down,left,up
+        margin: [415, 11, 0, 0],
+    }, {
+        alignment: 'justify',
+        fontSize: 10,
+        width: 100,
+        text: forms.advPayment,
+        // right,down,left,up
+        margin: [415, 1, 0, 0],
+    }, {
+        alignment: 'justify',
+        fontSize: 10,
+        width: 100,
+        text: forms.totTaxCredits,
+        // right,down,left,up
+        margin: [415, 1, 0, 0],
+    }, {
+        alignment: 'justify',
+        fontSize: 10,
+        width: 100,
+        text: forms.amtPayblCrdtb,
+        // right,down,left,up
+        margin: [415, 1, 0, 0],
+    })
     content.push({
         layout: "noBorders",
         table: {
@@ -795,6 +795,27 @@ function getContent(forms) {
     return content;
 }
 
-module.exports = {
+function formatDate(date, type) {
+    if (!date) {
+        return "";
+    }
+    if (type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
+    var dt = new Date(date).toLocaleString("en-US", type ? type : {
+        hour12: true,
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+    return dt;
+}
+
+function mapTin(tin, from, to) {
+    if (!tin || from === null || to === null) return "";
+    return tin.substring(from, to);
+}
+
+export default {
     fillup
 };

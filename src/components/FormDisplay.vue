@@ -2,10 +2,10 @@
   <div>
     <!-- <pdf style="display:none" :src="preview"></pdf> -->
     <pdf style="width:100%" :src="prev" @progress="load" v-show="!loading"></pdf>
-    <a-row type="flex" align="middle" justify="center" v-show="loading">
+    <a-row type="flex" justify="center" v-show="loading" style="height:100vh">
       <a-col :span="6">
-        <a-icon type="loading" style="margin-top: 30vh; font-size:42px"></a-icon>
-        <!-- <a-progress type="circle" :percent="percent" /> -->
+        Please wait...
+        <a-icon theme="twoTone" type="hourglass" style="margin-top: 30vh; font-size:60px" spin></a-icon>
       </a-col>
     </a-row>
   </div>
@@ -21,6 +21,7 @@ import Form1700 from "../plugins/pdf/printers/1700";
 import Form2551q from "../plugins/pdf/printers/2551q";
 import Form1701q from "../plugins/pdf/printers/1701q";
 import Form2550q from "../plugins/pdf/printers/2550q";
+import Form2000ot from "../plugins/pdf/printers/2000ot";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -30,7 +31,8 @@ const printers = {
   FORM1700: Form1700,
   FORM2551Q: Form2551q,
   FORM1701Q: Form1701q,
-  FORM2550Q: Form2550q
+  FORM2550Q: Form2550q,
+  FORM2000OT: Form2000ot
 };
 export default {
   props: ["form", "type"],
@@ -101,15 +103,15 @@ export default {
       this.percent = e * 100;
     },
     refresh() {
-      // this.loading = true;
+      this.loading = true;
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
-      form.month = this.formatDtMonth(form.dateFiled);
-      var returnPeriod = {
-        month: this.formatDtMonth(form.returnPeriod),
-        year: this.formatDtYear(form.returnPeriod)
-      }
-      form.returnPeriod = returnPeriod;
+      // form.month = this.formatDtMonth(form.dateFiled);
+      // var returnPeriod = {
+      //   month: this.formatDtMonth(form.returnPeriod),
+      //   year: this.formatDtYear(form.returnPeriod)
+      // };
+      // form.returnPeriod = returnPeriod;
       var dateFiled1 = {
         month: this.formatDtMonth(form.dateFiled1),
         year: this.formatDtYear(form.dateFiled1)

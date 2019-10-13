@@ -46,6 +46,15 @@ class ReturnDetailsDao {
      * @param {Object} conditions 
      * @param {Object} updated_details
      */
+    static modify(conditions, updated_details) {
+        return model.updateMany(conditions, updated_details).exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     * @param {Object} updated_details
+     */
     static modifyById(id, updated_details) {
         return model.findByIdAndUpdate(id, updated_details).exec();
     }

@@ -52,8 +52,11 @@
       <a-form-item label="5. Taxpayer Identification Number (TIN)">
         <a-input-number
           style="width:100%"
+          max="9999999999999"
           placeholder="Tax Identification Number"
           v-model="form.taxpayer.tin"
+          :formatter="formatter.amount"
+          :parser="parser.amount"
         ></a-input-number>
       </a-form-item>
       <a-form-item label="6. RDO Code">
@@ -84,7 +87,7 @@
       >
         <a-input
           placeholder="Last Name, First Name, Middle Name"
-          v-model="form.taxpayer.taxpayer_name"
+          v-model="form.taxpayer.registered_name"
         ></a-input>
       </a-form-item>
       <a-form-item
@@ -167,6 +170,7 @@
       <a-form-item label="17. Spouse’s TIN">
         <a-input-number
           style="width:100%"
+          max="9999999999999"
           placeholder="Tax Identification Number"
           v-model="form.taxpayer.spouse_tin"
           :formatter="formatter.amount"
@@ -653,7 +657,7 @@
       <a-button type="link" @click="show = 3">Schedule III</a-button>
       <a-button type="link" @click="show = 4">Schedule IV</a-button>-->
     </a-form>
-    <sched1 :form="form.sched1" :show="show" @close="show = 0"></sched1>
+    <sched1 :show="show" @close="show = 0"></sched1>
     <sched2 :show="show" @close="show = 0"></sched2>
     <sched3 :show="show" @close="show = 0"></sched3>
     <sched4 :show="show" @close="show = 0"></sched4>
@@ -675,7 +679,6 @@ export default {
   props: ["form", "step"],
   data() {
     return {
-      errors: [],
       // sched: 0,
       show: 0,
       sub: false,
@@ -695,7 +698,8 @@ export default {
       form_layout: {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
-      }
+      },
+      errors: []
     };
   },
   // watch: {

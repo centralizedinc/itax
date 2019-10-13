@@ -15,7 +15,7 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="36."
+              label="47."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -40,12 +40,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="37."
+              label="48."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Less: Cost of Sales/Services"
+                placeholder="Add: Non-Operating Income (specify)"
               />
             </a-form-item>
           </a-col>
@@ -54,7 +54,7 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Less: Cost of Sales/Services"
+                placeholder="Add: Non-Operating Income (specify)"
               />
             </a-form-item>
           </a-col>
@@ -64,12 +64,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="38."
+              label="49."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
+                placeholder="Total Income for the quarter (Sums of Items 47 and 48)"
               />
             </a-form-item>
           </a-col>
@@ -78,7 +78,7 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
+                placeholder="Total Income for the quarter (Sums of Items 47 and 48)"
               />
             </a-form-item>
           </a-col>
@@ -88,12 +88,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="39."
+              label="50."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Allowable Itemized Deductions "
+                placeholder="Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)"
               />
             </a-form-item>
           </a-col>
@@ -102,7 +102,7 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Allowable Itemized Deductions "
+                placeholder="Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)"
               />
             </a-form-item>
           </a-col>
@@ -112,12 +112,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="40."
+              label="51."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
               />
             </a-form-item>
           </a-col>
@@ -126,7 +126,7 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
               />
             </a-form-item>
           </a-col>
@@ -136,12 +136,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="41."
+              label="52."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
+                placeholder="Less: Allowable reduction from gross sales/reciepts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00"
               />
             </a-form-item>
           </a-col>
@@ -150,7 +150,7 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
+                placeholder="Less: Allowable reduction from gross sales/reciepts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00"
               />
             </a-form-item>
           </a-col>
@@ -160,12 +160,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="42."
+              label="53."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
+                placeholder="Taxable Income/(Loss) To Date (Item 51 Less Item 52)"
               />
             </a-form-item>
           </a-col>
@@ -174,7 +174,7 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
+                placeholder="Taxable Income/(Loss) To Date (Item 51 Less Item 52)"
               />
             </a-form-item>
           </a-col>
@@ -184,12 +184,12 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="43."
+              label="54."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Non-Operating Income (specify) "
+                placeholder="TAX DUE (Item 53 x 8% Tax Rate) (To Part III, Item 26)"
               />
             </a-form-item>
           </a-col>
