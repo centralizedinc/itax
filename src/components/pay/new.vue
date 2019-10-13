@@ -2,13 +2,13 @@
   <a-card>
     <a-button type="primary" @click="canSelect">{{can_select? 'DESELECT' : 'SELECT'}}</a-button>
     <a-table
+      :loading="loading"
       :dataSource="tax_returns"
       :columns="cols"
       v-bind="can_select ? { rowSelection:{selectedRowKeys: selectedRowKeys, onChange: onSelectChange} } : ''"
     >
       <span slot="action" v-if="!can_select" slot-scope="text,record">
         <a-button type="primary" @click="show(record)" icon="credit-card" shape="circle"></a-button>
-        <!-- <a-button type="primary" @click="show_payment=true"><a-icon type="shop"></a-icon>Over the Counter</a-button> -->
       </span>
       <span slot="tin" slot-scope="tin">{{formatTIN(tin)}}</span>
       <span slot="amount" slot-scope="amount">₱{{formatAmount(amount)}}</span>
@@ -51,7 +51,7 @@
         </a-col>
         <a-col :span="14">
           <a-card>
-            <component :is="current_option" @mounted="init_card" />
+            <component :is="current_option" @mounted="init_card" :details="payment_details" />
           </a-card>
         </a-col>
         <a-col :span="10" v-if="payment_mode==='multiple'" style="margin-top:10vh">
@@ -137,7 +137,7 @@
               </a-col>
             </a-row>
           </a-card>
-          <a-button block type="primary" size="large" style="margin-top: 5vh">Submit</a-button>
+          <a-button block type="primary" size="large" style="margin-top: 5vh" :loading="loading_payments" @click="submit">Submit</a-button>
         </a-col>
         <a-col :span="10" v-else style="margin-top:10vh">
           <a-card style="background: linear-gradient(to bottom, #000046, #1cb5e0)">
@@ -176,12 +176,12 @@
                 <p style="text-align: right;color: #FFFFFF">₱ {{formatAmount(fee)}}</p>
                 <a-divider></a-divider>
                 <p style="text-align: right;color: #FFFFFF">
-                  <b>₱ {{formatAmount(record.total_amount_payable + fee)}}</b>
+                  <b>₱ {{formatAmount(this.record.total)}}</b>
                 </p>
               </a-col>
             </a-row>
           </a-card>
-          <a-button block type="primary" size="large" style="margin-top: 5vh">Submit</a-button>
+          <a-button block type="primary" size="large" style="margin-top: 5vh" :loading="loading_payments" @click="submit">Submit</a-button>
         </a-col>
       </a-row>
     </a-drawer>
@@ -203,6 +203,7 @@ export default {
       show_payment: false,
       tabs: ["CreditCard", "OnlineBanking", "OverCounter"],
       record: {},
+      records: [],
       fee: 250,
       cols: [
         {
@@ -237,7 +238,10 @@ export default {
       can_select: false,
       selectedRowKeys: [],
       payment_mode: "single",
-      current_index: 0
+      current_index: 0,
+      payment_details: {},
+      loading_payments: false,
+      loading: false
     };
   },
   created() {
@@ -263,10 +267,17 @@ export default {
     show(record) {
       this.payment_mode = "single";
       this.record = record;
+      this.record.total = this.record.total_amount_payable + this.fee;
       this.show_payment = true;
     },
     showMultiple() {
       this.payment_mode = "multiple";
+      this.records = this.tax_returns
+        .filter((v, i) => this.selectedRowKeys.includes(i))
+        .map(v => {
+          v.sub_total = v.total_amount_payable + this.fee;
+          return v;
+        });
       this.show_payment = true;
     },
     navigate(e) {
@@ -282,11 +293,57 @@ export default {
     },
     canSelect() {
       this.selectedRowKeys = [];
+      this.records = [];
       this.can_select = !this.can_select;
       console.log("this.can_select :", this.can_select);
     },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys;
+    },
+    getDetails(details) {
+      this.payment_details = details;
+    },
+    submit() {
+      this.loading_payments = true;
+      var payments = {
+        references: [this.record.reference_no],
+        amount_payable: this.record.total,
+        amount_paid: this.record.total,
+        payment_date: new Date(),
+        payment_method: this.current_option,
+        payment_details: this.payment_details
+      };
+      var action = "SINGLE_PAYMENT";
+      if (this.payment_mode === "multiple") {
+        action = "MULTIPLE_PAYMENT";
+        const references = this.records.map(v => v.reference_no);
+        payments.references = references;
+        payments.amount_payable = this.multiple_payments_total;
+        payments.amount_paid = this.multiple_payments_total;
+      }
+      this.$store
+        .dispatch(action, payments)
+        .then(result => {
+          console.log("result.data.model :", result.data.model);
+          this.loading_payments = false;
+          this.init()
+          this.$notification.open({
+            message: "Successfully paid.",
+            icon: <a-icon type="check" style="color: blue" />
+          });
+        })
+        .catch(err => {
+          console.log("PAYMENT err :", err);
+          this.loading_payments = false;
+        });
+    },
+    reset(){
+      this.record = {};
+      this.records = [];
+      this.current_option = "CreditCard";
+      this.payment_details = {};
+      this.selectedRowKeys = [];
+      this.show_payment = false;
     }
   },
   computed: {
@@ -300,32 +357,15 @@ export default {
       return unpaid_returns;
     },
     current_record() {
-      const index = this.selectedRowKeys[this.current_index];
-      console.log("index :", index);
-      const record = this.tax_returns[index];
+      console.log("this.current_index :", this.current_index);
+      const record = this.records[this.current_index];
       console.log("record :", record);
-      if (record) {
-        record.sub_total = record.total_amount_payable + this.fee;
-        return record;
-      } else return {};
+      return record || {};
     },
     multiple_payments_total() {
       var total = 0;
-      if (
-        this.tax_returns &&
-        this.tax_returns.length &&
-        this.selectedRowKeys &&
-        this.selectedRowKeys.length
-      ) {
-        total = this.tax_returns
-          .filter((v, i) => {
-            return this.selectedRowKeys.includes(i);
-          })
-          .map(v => {
-            var total = v.total_amount_payable + this.fee;
-            return total;
-          })
-          .reduce((t, c) => t + c);
+      if (this.records) {
+        total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
       }
       return total;
     }

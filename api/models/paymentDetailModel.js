@@ -4,12 +4,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PaymentDetailsSchema = new Schema({
-    reference_no: String,
+    references: [],
     payment_conf_no: String,
     amount_payable: Number,
     amount_paid: Number,
-    payment_date: Date,
-    payment_method: String
+    payment_date: {
+        type: Date,
+        default: new Date()
+    },
+    payment_method: String,
+    payment_details: {},
+    created_by: String
 });
 
 
