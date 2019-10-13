@@ -15,15 +15,19 @@
       </div>
       <div slot="actions">
         <a-tooltip>
-          <span slot="title">View</span>
-          <a-icon type="search" style="cursor: pointer; margin-right: 2vh;" />
+          <span slot="title">Print</span>
+          <a-icon type="printer" style="cursor: pointer; margin-right: 2vh;" />
         </a-tooltip>
-        <a-popconfirm title="Pay this form?" okText="Yes" cancelText="Cancel">
+        <a-tooltip>
+          <span slot="title">Download</span>
+          <a-icon type="download" style="cursor: pointer" />
+        </a-tooltip>
+        <!-- <a-popconfirm title="Pay this form?" okText="Yes" cancelText="Cancel">
           <a-tooltip>
             <span slot="title">Payment</span>
             <a-icon type="shopping-cart" style="cursor: pointer" />
           </a-tooltip>
-        </a-popconfirm>
+        </a-popconfirm> -->
       </div>
     </a-table>
   </a-card>

@@ -363,6 +363,11 @@ export default {
     ) {
       this.form = this.existing_form.details;
       this.form.returnPeriod = moment(this.form.returnPeriod);
+      //check if taxpayer is already set
+      if(this.form.taxpayer.tin){
+        this.view_select = false; 
+      }
+      
     }
     console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);
