@@ -128,12 +128,13 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [80, 45, 35, 40, 170, 100],
+                widths: [80, 45, 35, 43, 170, 100],
                 heights: [26],
                 body: [
                     [{
                         text: mapTin(forms.taxpayer.tin, 0, 3),
                         fontSize: 16,
+                        characterSpacing: 3,
                         bold: true,
                         alignment: 'justified',
                         margin: [40, 0, 0, 0]
@@ -141,6 +142,7 @@ function getContent(forms) {
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
                         fontSize: 16,
+                        characterSpacing: 3,
                         bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
@@ -149,6 +151,7 @@ function getContent(forms) {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
                         fontSize: 16,
                         bold: true,
+                        characterSpacing: 3,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
                     },
@@ -156,12 +159,14 @@ function getContent(forms) {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
                         fontSize: 16,
                         bold: true,
-                        alignment: 'justified',
+                        characterSpacing: 4,
+                        alignment: 'left',
                         margin: [10, 0, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
                         fontSize: 16,
+                        characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
                         margin: [60, 0, 0, 0]

@@ -102,11 +102,8 @@ export default {
   props: ["form", "step"],
   data() {
     return {
-      errors: [],
       loading: false,
-      form_general: this.$form.createForm(this),
-      form_part1: this.$form.createForm(this),
-      form_part2: this.$form.createForm(this),
+      image_height: 1000,
       formatter: {
         amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       },
