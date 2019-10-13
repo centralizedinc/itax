@@ -11,7 +11,7 @@ var Form2550MSchema = new Schema({
         type: Date,
         default: new Date()
     },
-    dueDate: Date,
+    due_date: Date,
     returnPeriod: Date,
     returnPeriodMonth: String,
     returnPeriodYear: String,

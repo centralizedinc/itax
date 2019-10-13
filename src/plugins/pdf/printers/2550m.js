@@ -235,14 +235,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: formatCurrency(forms.totalAtcAmount),
+                            text: formatAmount(forms.totalAtcAmount),
                             fontSize: 9,
                             alignment: 'right',
                             // right,down,left,up
                             margin: [270, 23, 0, 0]
                         },
                         {
-                            text: formatCurrency(forms.totalAtcOutput),
+                            text: formatAmount(forms.totalAtcOutput),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -334,14 +334,14 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: formatCurrency(forms.totalSales),
+                            text: formatAmount(forms.totalSales),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
                             margin: [270, -3, 0, 0]
                         },
                         {
-                            text: formatCurrency(forms.totalOutputTax),
+                            text: formatAmount(forms.totalOutputTax),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1122,7 +1122,7 @@ function getContent(forms) {
                             margin: [13, 6, 0, 0]
                         },
                         {
-                            text: formatCurrency(forms.penalties),
+                            text: formatAmount(forms.penalties),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1144,7 +1144,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: formatCurrency(forms.totalAmountPayable),
+                            text: formatAmount(forms.totalAmountPayable),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1161,11 +1161,10 @@ function getContent(forms) {
     return content;
 }
 
-function formatCurrency(amount) {
+function formatAmount(amount) {
     if (!amount || isNaN(amount)) return "0.00";
     var parts = parseFloat(amount).toFixed(2).toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    // return `₱ ${parts.join(".")}`;
     return parts.join(".");
 }
 

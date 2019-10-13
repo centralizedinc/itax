@@ -122,11 +122,11 @@
 
     <!-- Part II -->
     <a-form v-show="step===2">
-      <a-form-item label="12. Vatable Sales/Receipt-Private (Sch. 1)" />
-      <a-button type="link" @click="show_sched1=true">
-        Schedule 1
-      </a-button>
-      <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')"></a-form-item>
+      <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')">
+        <div style="color: black">
+          12. Vatable Sales/Receipt-Private (<span class="text-link" @click="show_sched1=true">Schedule 1</span>)
+        </div>
+      </a-form-item>
       <schedule-one v-if="show_sched1" :show="show_sched1" :form="form" @close="updateSchedAndClose" />
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -283,7 +283,7 @@
         title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
         placement="right"
         :closable="false"
-        @close="onClose_sched2"
+        @close="sched2_drawer=false"
         :visible="sched2_drawer"
         width="1000"
       >
@@ -349,7 +349,7 @@
         title="Schedule 3 Purchases/Importation This Period"
         placement="right"
         :closable="false"
-        @close="onClose_sched3A"
+        @close="sched3A_drawer=false"
         :visible="sched3A_drawer"
         width="1500"
       >
@@ -714,7 +714,7 @@
       title="Schedule 3 B Purchases/Importation Previous Period"
       placement="right"
       :closable="false"
-      @close="onClose_sched3B"
+      @close="sched3B_drawer=false"
       :visible="sched3B_drawer"
       width="1000"
       >
@@ -889,7 +889,7 @@
       title="Schedule 6 Purchases/Importation Previous Period"
       placement="right"
       :closable="false"
-      @close="onClose_sched3B"
+      @close="sched6_drawer=false"
       :visible="sched6_drawer"
       width="1000"
       >
@@ -902,7 +902,7 @@
       title="Schedule 7 Purchases/Importation Previous Period"
       placement="right"
       :closable="false"
-      @close="onClose_sched3B"
+      @close="sched7_drawer=false"
       :visible="sched7_drawer"
       width="1000"
       >
@@ -915,7 +915,7 @@
       title="Schedule 8 Purchases/Importation Previous Period"
       placement="right"
       :closable="false"
-      @close="onClose_sched8"
+      @close="sched8_drawer=false"
       :visible="sched8_drawer"
       width="1000"
       >
@@ -945,6 +945,7 @@ export default {
         this.form.exemptAmount
       ]);
       this.form.totalSales = total;
+      console.log('this.form.totalSales :', this.form.totalSales);
       return total;
     },
     // 16B
@@ -1126,6 +1127,9 @@ export default {
     onClose_sched2() {
       this.sched2_drawer = false;
     },
+    onClose_sched2() {
+      this.sched2_drawer = false;
+    },
     showDrawer2() {
       console.log("data source show drawer; " + this.dataSource);
       this.sched2_drawer = true;
@@ -1150,6 +1154,7 @@ export default {
         .then(result => {
           console.log("VALIDATE_AND_SAVE result:", result.data);
           this.loading = false;
+          this.$emit("updateForm", null); //to refresh pdf
           if (result.data.errors && result.data.errors.length > 0) {
             this.errors = result.data.errors;
             console.log("this.errors :", this.errors);
@@ -1477,5 +1482,14 @@ export default {
 .tax-form .computation-item .ant-input-number,
 .tax-form .computation-item-2 .ant-input-number {
   width: 40vh;
+}
+
+.text-link{
+  cursor: pointer;
+  color: blue;
+}
+
+.text-link:hover {
+  text-decoration: underline;
 }
 </style>
