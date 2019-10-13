@@ -16,14 +16,18 @@
       >
         <span slot="extra">
             <a-row type="flex" justify="end" align="bottom" style="margin-right: 2vh">
-              <a-col :span="3" v-for="i in subscribers" :key="i.name" v-if="!loading">
+                <template v-if="!loading">
+              <a-col :span="3" v-for="i in subscribers" :key="i.name" >
                   <a-badge status="success" :offset="[-10,3]">
                   <a-avatar style="border: solid 1px #1cb5e0" :src="i.avatar"></a-avatar>
                   </a-badge>
               </a-col>
-              <a-col :span="3" v-for="i in subscribers" :key="i.name" v-else>
-                  <a-skeleton style="border: solid 1px #1cb5e0" active avatar :paragraph="{rows: 0}" :title="{width:0}" />
+              </template>
+              <template v-else>
+              <a-col :span="2" v-for="i in 4" :key="i" >
+                  <a-skeleton active avatar :paragraph="{rows: 0}" :title="{width:0}" />
               </a-col>
+              </template>
             </a-row>
         </span>
         <a-row type="flex" justify="end" >
@@ -40,10 +44,11 @@
         
        </a-card>
        
-        <a-card v-for="item in data" :key="item.content" style="margin-top:1vh; margin-bottom:1vh">
+       <template v-if="!loading">
+        <a-card v-for="item in data" :key="item.content" style="margin-top:1vh; margin-bottom:1vh" >
             <a-comment 
                 :author="item.author"
-                :avatar="item.avatar"
+                :avatar="subscribers[0].avatar"
             >
                 <template slot="actions">
                 <span v-for="action in item.actions" :key="action">{{action}}</span>
@@ -57,9 +62,13 @@
                 </a-tooltip>
             </a-comment>
             </a-card>
-            <!-- </a-list-item>
-        </a-list> -->
-        <!-- </a-card> -->
+       </template>
+       <template v-else>
+           <a-card v-for="i in 4" :key="i" style="margin-top: 1vh">
+            <a-skeleton active avatar :paragraph="{rows: 4}" />
+            <!-- <a-divider></a-divider> -->
+        </a-card>
+       </template>
     </a-col>
   </a-row>
 
@@ -207,5 +216,10 @@ export default {
 </script>
 
 <style>
-
+.ant-skeleton-content .ant-skeleton-title {
+  height: 9px;
+}
+.ant-skeleton-content .ant-skeleton-paragraph > li {
+  height: 9px;
+}
 </style>
