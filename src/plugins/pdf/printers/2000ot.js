@@ -128,7 +128,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [80, 45, 35, 43, 170, 100],
+                widths: [80, 45, 35, 48, 170, 100],
                 heights: [26],
                 body: [
                     [{
@@ -169,7 +169,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [60, 0, 0, 0]
+                        margin: [55, 0, 0, 0]
                     }, {
                         text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                         fontSize: 14,
