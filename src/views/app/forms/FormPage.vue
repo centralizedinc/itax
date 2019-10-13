@@ -1,97 +1,108 @@
 <template>
   <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
     <a-layout-header class="header" style="height:12vh">
-      <a-row type="flex" justify="start" >
+      <a-row type="flex" justify="start">
         <a-col :span="3">
           <h2 style="color:white;">Smart Tax.</h2>
         </a-col>
         <a-col :span="21" style="margin-top:2vh">
-          
           <a-steps :current="curr_step" size="small">
-          <a-step v-for="(item, index) in form_steps" :key="index">
-            <b slot="title" style="color:#ffffff">{{item.title}}</b>
-            <span slot="description" style="font-size:12px; color:#ffffff">{{item.description}}</span>
-          </a-step>
-        </a-steps>
+            <a-step v-for="(item, index) in form_steps" :key="index">
+              <b slot="title" style="color:#ffffff">{{item.title}}</b>
+              <span slot="description" style="font-size:12px; color:#ffffff">{{item.description}}</span>
+            </a-step>
+          </a-steps>
         </a-col>
       </a-row>
     </a-layout-header>
     <a-layout-content style="min-height:100vh; margin-top:15vh;">
-      <a-card>
-        
-      </a-card>
-        <a-row :gutter="16" justify="center">
-          <a-col :xs="0" :md="12">
-            <!-- Form Display -->
-            <a-affix
-              :offsetTop="in_bottom ? -350: -200"
-              :class="affix_computation? '' : 'prevent-affix'"
-            >
-              <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
-                <form-display ref="form_display_component" :type="form_type" :form="form" />
-              </a-card>
-            </a-affix>
-          </a-col>
-          <a-col :xs="0" :md="12" class="tax-form">
-            <!-- Fill up forms -->
-            <div ref="fillup_form">
-              <a-card :bodyStyle="{ padding: '30px' }">
-                <component
-                  ref="form_component"
-                  :is="curr_form"
-                  :form="form"
-                  :step="curr_step"
-                  @loading="v=>loading=v"
-                  @updateForm="v=>form={...form, ...v}"
-                  @changeStep="v=>curr_step=v"
-                />
-              </a-card>
-            </div>
-          </a-col>
-        </a-row>
-        <div class="float-button">
-          <div class="float-content">
-            <a-row type="flex" :gutter="10" align="middle" justify="center">
-              <!-- Previous -->
-              <a-col :span="4">
-                <a-button icon="left"
-                  @click="curr_step--"
-                  :disabled="loading || curr_step === 0"
-                  v-if="curr_step > -1"
-                  type="primary"
-                >Previous</a-button>
-              </a-col>
-              <!-- Download -->
-              <a-col :span="4">
-                <a-button icon="download" :disabled="loading" @click="$refs.form_display_component.download()">Download</a-button>
-              </a-col>
-              <!-- Open -->
-              <a-col :span="4">
-                <a-button icon="printer" :disabled="loading" @click="$refs.form_display_component.open()">Print</a-button>
-              </a-col>
-              <!-- Save as Draft -->
-              <a-col :span="4">
-                <a-button icon="save" :disabled="loading" @click="saveDraft()">Save as Draft</a-button>
-              </a-col>
-              <!-- Submit -->
-              <a-col :span="4">
-                <a-button icon="upload"
-                  type="primary"
-                  @click="$refs.form_component.submit()"
-                  :loading="loading"
-                >Submit</a-button>
-              </a-col>
-              <!-- Next -->
-              <a-col :span="4">
-                <a-button 
-                  type="primary"
-                  :disabled="curr_step===form_steps.length-1 || loading"
-                  @click="$refs.form_component.validate()"
-                >Next <a-icon type="right"></a-icon></a-button>
-              </a-col>
-            </a-row>
+      <a-card></a-card>
+      <a-row :gutter="16" justify="center">
+        <a-col :xs="0" :md="12">
+          <!-- Form Display -->
+          <a-affix
+            :offsetTop="in_bottom ? -350: -200"
+            :class="affix_computation? '' : 'prevent-affix'"
+          >
+            <a-card :bodyStyle="{'padding': '10px', 'box-shadow': '5px 5px #eee'}">
+              <form-display ref="form_display_component" :type="form_type" :form="form" />
+            </a-card>
+          </a-affix>
+        </a-col>
+        <a-col :xs="0" :md="12" class="tax-form">
+          <!-- Fill up forms -->
+          <div ref="fillup_form">
+            <a-card :bodyStyle="{ padding: '30px' }">
+              <component
+                ref="form_component"
+                :is="curr_form"
+                :form="form"
+                :step="curr_step"
+                @loading="v=>loading=v"
+                @updateForm="v=>form={...form, ...v}"
+                @changeStep="v=>curr_step=v"
+                @success="showSuccessForm"
+              />
+            </a-card>
           </div>
+        </a-col>
+      </a-row>
+      <div class="float-button">
+        <div class="float-content">
+          <a-row type="flex" :gutter="10" align="middle" justify="center">
+            <!-- Previous -->
+            <a-col :span="4">
+              <a-button
+                icon="left"
+                @click="curr_step--"
+                :disabled="loading || curr_step === 0"
+                v-if="curr_step > -1"
+                type="primary"
+              >Previous</a-button>
+            </a-col>
+            <!-- Download -->
+            <a-col :span="4">
+              <a-button
+                icon="download"
+                :disabled="loading"
+                @click="$refs.form_display_component.download()"
+              >Download</a-button>
+            </a-col>
+            <!-- Open -->
+            <a-col :span="4">
+              <a-button
+                icon="printer"
+                :disabled="loading"
+                @click="$refs.form_display_component.open()"
+              >Print</a-button>
+            </a-col>
+            <!-- Save as Draft -->
+            <a-col :span="4">
+              <a-button icon="save" :disabled="loading" @click="saveDraft()">Save as Draft</a-button>
+            </a-col>
+            <!-- Submit -->
+            <a-col :span="4">
+              <a-button
+                icon="upload"
+                type="primary"
+                @click="$refs.form_component.submit()"
+                :loading="loading"
+              >Submit</a-button>
+            </a-col>
+            <!-- Next -->
+            <a-col :span="4">
+              <a-button
+                type="primary"
+                :disabled="curr_step===form_steps.length-1 || loading"
+                @click="$refs.form_component.validate()"
+              >
+                Next
+                <a-icon type="right"></a-icon>
+              </a-button>
+            </a-col>
+          </a-row>
         </div>
+      </div>
       <!-- </a-card> -->
     </a-layout-content>
     <a-modal :visible="view_select" title="Select Taxpayer" :closable="false">
@@ -105,13 +116,15 @@
                     slot="title"
                   >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
                   <template slot="description">
-                    <p>{{formatTIN(item.tin)}}</p>
+                    <p>
+                      <b>{{formatTIN(item.tin)}}</b>
+                    </p>
                     <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
                   </template>
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
                     slot="avatar"
-                    :src="getUserByTin(item.tin).avatar?getUserByTin(item.tin).avatar.location:'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
+                    :src="getUserByTin(item.tin).avatar.location"
                     :size="64"
                   />
                 </a-list-item-meta>
@@ -127,10 +140,17 @@
         <a-button type="primary" @click="fillup" :disabled="!taxpayer">Select</a-button>
       </template>
     </a-modal>
+    <form-success
+      :show="show_form_success"
+      :details="return_details"
+      @close="closeForm"
+      @payment="proceedPayment"
+    />
   </a-layout>
 </template>
 
 <script>
+import FormSuccess from "./FormSuccess";
 import FormDisplay from "@/components/FormDisplay.vue";
 import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
@@ -142,6 +162,7 @@ import Form2550Q from "./2550q/2550q.vue";
 
 export default {
   components: {
+    FormSuccess,
     FormDisplay,
     Form2550M,
     Form1601E,
@@ -176,7 +197,6 @@ export default {
       return existing_form;
     }
   },
-
   data() {
     return {
       view_select: true,
@@ -298,19 +318,28 @@ export default {
         }
       ],
       in_bottom: false,
-      loading: false
+      loading: false,
+      return_details: {},
+      show_form_success: false
     };
   },
   methods: {
-    getUserByTin(tin){
+    getUserByTin(tin) {
       const user = this.user_list.find(v => v.tin === tin);
-      return user || {};
+      return (
+        user || {
+          avatar: {
+            location:
+              "https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg"
+          }
+        }
+      );
     },
     handleScroll() {
       this.in_bottom = window.scrollY > 2000;
     },
     select(index) {
-      if(index > -1){
+      if (index > -1) {
         this.taxpayer = this.taxpayer_list[index];
         this.selected_index = index;
       }
@@ -318,18 +347,18 @@ export default {
     isSelected(index) {
       return this.selected_index == index;
     },
-    fillup(){
-      this.form.taxpayer = this.taxpayer
-      if(!this.form.taxpayer.address_details){
-        this.form.taxpayer.address_details = {}
+    fillup() {
+      this.form.taxpayer = this.taxpayer;
+      if (!this.form.taxpayer.address_details) {
+        this.form.taxpayer.address_details = {};
       }
-      if(!this.form.taxpayer.contact_details){
-        this.form.taxpayer.contact_details = {}
+      if (!this.form.taxpayer.contact_details) {
+        this.form.taxpayer.contact_details = {};
       }
-      if(!this.form.taxpayer.registered_name){
-        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`
+      if (!this.form.taxpayer.registered_name) {
+        this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
       }
-      console.log(`form::::` , JSON.stringify(this.form.taxpayer))
+      console.log(`form::::`, JSON.stringify(this.form.taxpayer));
       this.view_select = false;
     },
     saveDraft() {
@@ -344,6 +373,32 @@ export default {
       });
       window.opener.location.reload();
       // window.close();
+    },
+    showSuccessForm(details) {
+      details.taxpayer_type =
+        details.taxpayer_type === "I" ? "Individual" : "Non-Individual";
+      details.tin = this.formatTIN(details.tin);
+      details.return_period = this.formatDate(
+        details.return_period,
+        "dateonly"
+      );
+      details.due_date = this.formatDate(details.due_date, "dateonly");
+      details.tax_due = `₱ ${this.formatAmount(details.tax_due)}`;
+      details.total_amount_payable = `₱ ${this.formatAmount(
+        details.total_amount_payable
+      )}`;
+      details.total_penalties = `₱ ${this.formatAmount(details.total_penalties)}`;
+      this.return_details = details;
+      this.show_form_success = true;
+    },
+    closeForm() {
+      this.show_form_success = false;
+      window.close();
+    },
+    proceedPayment() {
+      window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
+      window.opener.location.reload();
+      window.close();
     }
   },
   watch: {
@@ -352,6 +407,7 @@ export default {
     }
   },
   created() {
+    this.return_details.form_type = this.form_type;
     console.log("this.existing_form :", this.existing_form);
     if (
       this.existing_form &&
@@ -364,10 +420,9 @@ export default {
       this.form = this.existing_form.details;
       this.form.returnPeriod = moment(this.form.returnPeriod);
       //check if taxpayer is already set
-      if(this.form.taxpayer.tin){
-        this.view_select = false; 
+      if (this.form.taxpayer.tin) {
+        this.view_select = false;
       }
-      
     }
     console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);

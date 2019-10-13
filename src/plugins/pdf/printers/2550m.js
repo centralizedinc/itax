@@ -82,24 +82,49 @@ function getContent(forms) {
             }
         },
         {
-
             layout: "noBorders",
             table: {
-                widths: [170, 100, 236],
+                widths: [60, 30, 30, 30, 100, 236],
                 body: [
                     [{
-                            text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
                             fontSize: 14,
+                            characterSpacing: 3,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [33, 9, 0, 0]
+                            margin: [30, 9, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 14,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [0, 9, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 14,
+                            characterSpacing: 2.8,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [-1.8, 9, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 9, 12),
+                            fontSize: 14,
+                            characterSpacing: 2.5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [-1, 9, 0, 0]
                         },
                         {
                             text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
                             fontSize: 14,
+                            characterSpacing: 8.2,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [60, 9, 0, 0]
+                            margin: [55, 9, 0, 0]
                         },
                         {
                             text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
@@ -208,14 +233,14 @@ function getContent(forms) {
 
                 body: [
                     [{
-                            text: formatCurrency(forms.totalAtcAmount),
+                            text: formatAmount(forms.totalAtcAmount),
                             fontSize: 9,
                             alignment: 'right',
                             // right,down,left,up
                             margin: [270, 23, 0, 0]
                         },
                         {
-                            text: formatCurrency(forms.totalAtcOutput),
+                            text: formatAmount(forms.totalAtcOutput),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -303,14 +328,14 @@ function getContent(forms) {
                 widths: [385, 132, ],
                 body: [
                     [{
-                            text: formatCurrency(forms.totalSales),
+                            text: formatAmount(forms.totalSales),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
                             margin: [270, -3, 0, 0]
                         },
                         {
-                            text: formatCurrency(forms.totalOutputTax),
+                            text: formatAmount(forms.totalOutputTax),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1081,7 +1106,7 @@ function getContent(forms) {
                             margin: [13, 6, 0, 0]
                         },
                         {
-                            text: formatCurrency(forms.penalties),
+                            text: formatAmount(forms.penalties),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1103,7 +1128,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: formatCurrency(forms.totalAmountPayable),
+                            text: formatAmount(forms.totalAmountPayable),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1120,12 +1145,16 @@ function getContent(forms) {
     return content;
 }
 
-function formatCurrency(amount) {
+function formatAmount(amount) {
     if (!amount || isNaN(amount)) return "0.00";
     var parts = parseFloat(amount).toFixed(2).toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    // return `₱ ${parts.join(".")}`;
     return parts.join(".");
+}
+
+function mapTin(tin, from, to) {
+    if (!tin || from === null || to === null) return "";
+    return tin.substring(from, to);
 }
 
 export default {

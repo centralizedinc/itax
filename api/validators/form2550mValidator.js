@@ -17,7 +17,7 @@ function validate(form_details) {
 
     if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
         errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
-        return errors;
+        return { errors };
     }
 
     form_details.due_date = computeDueDate(form_details.returnPeriod)
@@ -35,40 +35,40 @@ function validate(form_details) {
         const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
         form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
         console.log('Surcharge :', surcharge, ':', form_details.surcharge);
-        if (form_details.surcharge !== surcharge) {
+        if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
             errors.push({
                 page: 2,
                 field: 'surcharge',
-                error: `Surcharge amount must be ${surcharge}`
+                error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
             })
         }
         // Compute Interest
         const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
         form_details.interest = form_details.interest ? form_details.interest : 0;
         console.log('Interest :', interest, ':', form_details.interest);
-        if (form_details.interest !== interest) {
+        if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
             errors.push({
                 page: 2,
                 field: 'interest',
-                error: `Interest amount must be ${interest}`
+                error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
             })
         }
         // Compute Compromise
         const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
         form_details.compromise = form_details.compromise ? form_details.compromise : 0;
         console.log('Compromise :', compromise, ':', form_details.compromise);
-        if (form_details.compromise !== compromise) {
+        if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
             errors.push({
                 page: 2,
                 field: 'compromise',
-                error: `Compromise amount must be ${compromise}`
+                error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
             })
         }
     }
 
     console.log('form 2550m validator errors: ', JSON.stringify(errors))
 
-    return errors
+    return { errors, due_date: form_details.due_date }
 }
 
 /**
@@ -84,7 +84,7 @@ function validateRequired(form) {
 
     if (!form.sched1 || !form.sched1.length) {
         error_messages.push({ page: 2, field: "atc", error: constant_helper.MANDATORY_FIELD('Schedule 1') });
-    } 
+    }
     return error_messages;
 }
 
