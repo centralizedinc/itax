@@ -8,11 +8,11 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 var Form2000OTSchema = new Schema({
   referenceNo: Number,
   taxpayer: {},
-  // dateFiled: Date,
-  dateOfTransaction: {
-    type: Date,
-    default: new Date()
-  },
+  dateFiled: Date,
+  // transactionDate: {
+  //   type: Date,
+  //   default: new Date()
+  // },
   amendedYn: Boolean,
   numOfSheet: { type: Number, default: 0 },
   atc: {

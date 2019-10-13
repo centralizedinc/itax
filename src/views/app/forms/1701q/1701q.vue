@@ -696,7 +696,8 @@ export default {
       form_layout: {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
-      }
+      },
+      errors: []
     };
   },
   // watch: {
