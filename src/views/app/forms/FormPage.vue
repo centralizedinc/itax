@@ -173,7 +173,7 @@ export default {
 
   data() {
     return {
-      // view_select: true,
+      view_select: true,
       selected_index: 0,
       taxpayer_list: [],
       taxpayer: null,
