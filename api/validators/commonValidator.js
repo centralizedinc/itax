@@ -125,7 +125,9 @@ function validateMandatory(value, message) {
 
 function formatAmount(amount) {
     if (!amount || isNaN(amount)) return "0.00";
-    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '₱&,');
+    var parts = parseFloat(amount).toFixed(2).toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
 }
 
 module.exports = {
