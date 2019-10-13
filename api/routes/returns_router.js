@@ -60,8 +60,8 @@ returns_router.route("/validate/:form_type")
         if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
             // save if there is no error
             var data = req.body;
-            console.log('jwt.decode(req.headers.access_token).account_id :', jwt.decode(req.headers.access_token).account_id);
-            data.created_by = jwt.decode(req.headers.access_token).account_id;
+            // console.log('jwt.decode(req.headers.access_token).account_id :', jwt.decode(req.headers.access_token).account_id);
+            // data.created_by = jwt.decode(req.headers.access_token).account_id;
             data.due_date = due_date;
             saveForm(req.params.form_type, data)
                 .then((result) => {

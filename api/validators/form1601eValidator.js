@@ -3,127 +3,90 @@
 var Form1601EModel = require('../models/forms/form1601EModel.js');
 var commonValidator = require('./commonValidator.js');
 
+// utils
+const constant_helper = require('../utils/constant_helper');
 
 /**
- * 
+ * @returns {Object} errors, due_date
  * @param {*} form_details 
- * @param {*} callback 
  */
-function validate(form_details, callback) {
-    var form = new Form1601EModel(form_details);
-
+function validate(form_details) {
+    console.log("validation form details(1601e): " + JSON.stringify(form_details))
     //validation begins ...
-    var errors = null;
+    var errors = [];
 
-    //1. validate mandatory fields
-    //1.1 taxpayer details
-    // error_messages = commonValidator.validateTaxpayerDetails(form.taxpayer);
+    if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
+        errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
+        return { errors };
+    }
 
-    //1.2 form details
-    // if (!form.returnPeriod) {
-    //     error_messages.returnPeriod = [];
-    //     error_messages.returnPeriod.push("Return Period is a mandatory field");
-    //     // error_messages.push({ field: "returnPeriod", error: "Return Period is a mandatory field" });
-    // } else if (commonValidator.isFutureDate(form.returnPeriod)) {
-    //     // error_messages.push({ field: "returnPeriodMonth", error: "Invalid Return Period" });
-    //     // error_messages.push({ field: "returnPeriodYear", error: "Invalid Return Period" });
-    //     error_messages.returnPeriodMonth = [];
-    //     error_messages.returnPeriodMonth.push("Invalid Return Period");
+    form_details.due_date = computeDueDate(form_details.returnPeriod)
+    console.log('form 1601e due date :', form_details.due_date);
+    //validate required fields
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
 
-    //     error_messages.returnPeriodYear = [];
-    //     error_messages.returnPeriodYear.push("Invalid Return Period");
-    // }
+    errors.push(...validateRequired(form_details));
 
-    // if (!form.opnYn) {
-    //     error_messages.push({ field: "opnYn", error: "Any Tax Withheld is a mandatory field" });
-    //     error_messages.opnYn = [];
-    //     error_messages.opnYn.push("Any Tax Withheld is a mandatory field");
-    // }
+    if (commonValidator.isLateFiling(form_details.due_date)) {
+        console.log('Late filling ...');
+        // Compute Surcharge
+        const surcharge = commonValidator.computeSurcharges(form_details.amtPayblCrdtb);
+        form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
+        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
+        if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
+            errors.push({
+                page: 2,
+                field: 'surcharge',
+                error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
+            })
+        }
+        // Compute Interest
+        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPayblCrdtb);
+        form_details.interest = form_details.interest ? form_details.interest : 0;
+        console.log('Interest :', interest, ':', form_details.interest);
+        if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
+            errors.push({
+                page: 2,
+                field: 'interest',
+                error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
+            })
+        }
+        // Compute Compromise
+        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPayblCrdtb);
+        form_details.compromise = form_details.compromise ? form_details.compromise : 0;
+        console.log('Compromise :', compromise, ':', form_details.compromise);
+        if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
+            errors.push({
+                page: 2,
+                field: 'compromise',
+                error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
+            })
+        }
+    }
 
-    // if (form.opnYn === 'YES') {
-    //     if (form.amtDueCrdtb === 0) {
-            
-    //         error_messages.amtDueCrdtb = [];
-    //         error_messages.amtDueCrdtb.push("Amount Due is zero");
-    //     }
-    //     if (!form.categoryOfAgent) {
-    //         // error_messages.push({ field: "categoryOfAgent", error: "categoryOfAgent" });
-    //         error_messages.categoryOfAgent = [];
-    //         error_messages.categoryOfAgent.push("Category of Agent is mandatory");
-    //     }
-    // }
+    console.log('form 1601e validator errors: ', JSON.stringify(errors))
 
-    // if (form.atcList && form.atcList.length) {
-    //     form.atcList.forEach((atc) => {
-    //         error_messages.atc = {};
-    //         if (!atc.description) {
-    //             // error_messages.push({ field: "atcList.description", error: "atcList.description" });
-    //             error_messages.atc.description = [];
-    //             error_messages.atc.description .push("ATC Description is mandatory field");
-    //         }
+    return { errors, due_date: form_details.due_date }
+}
 
-    //         if (!atc.code) {
-    //             // error_messages.push({ field: "atcList.code", error: "atcList.code" });
-    //             error_messages.atc.code = [];
-    //             error_messages.atc.code.push("ATC Code is mandatory field");
-    //         }
+function validateRequired(form) {
+    var errors = []
+    console.log('form.taxes_withheld :', form.taxes_withheld);
+    if (form.taxes_withheld === undefined || form.taxes_withheld === null) {
+        errors.push({ page: 0, field: "taxes_withheld", error: constant_helper.MANDATORY_FIELD('Any Taxes Withheld') });
+    } else if(form.taxes_withheld){
+        if (!form.atc_list || !form.atc_list.length) {
+            errors.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('ATC') });
+        }
+    }
 
-    //         if (!atc.txbleAmt) {
-    //             // error_messages.push({ field: "atcList.txbleAmt", error: "atcList.txbleAmt" });
-    //             error_messages.atc.txbleAmt = [];
-    //             error_messages.atc.txbleAmt.push("ATC Taxable Amount is mandatory field");
-    //         }
+    if (!form.taxpayer.line_of_business) {
+        errors.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
+    }
 
-    //         if (!atc.taxRate) {
-    //             // error_messages.push({ field: "atcList.taxRate", error: "atcList.taxRate" });
-    //             error_messages.atc.taxRate = [];
-    //             error_messages.atc.taxRate.push("ATC Tax Rate is mandatory field");
-    //         }
-
-    //         if (!atc.taxDue) {
-    //             // error_messages.push({ field: "atcList.taxDue", error: "atcList.taxDue" });
-    //             error_messages.atc.taxDue = [];
-    //             error_messages.atc.taxDue.push("ATC Tax Due is mandatory field");
-    //         }
-    //     })
-    // }
-
-    // if (!form.categoryOfAgent) {
-    //     // error_messages.push({ field: "categoryOfAgent", error: "categoryOfAgent" });
-    //     error_messages.categoryOfAgent = [];
-    //     error_messages.categoryOfAgent.push("ATC Description is mandatory field");
-    // }
-
-    // if (form.totalAmtPayblCrdtb < 0) {
-    //     // error_messages.push({ field: "totalAmtPayblCrdtb", error: "totalAmtPayblCrdtb" });
-    //     error_messages.totalAmtPayblCrdtb = [];
-    //     error_messages.totalAmtPayblCrdtb.push("Total Amount Payable is mandatory field");
-    // }
-
-
-    // //2. validate due date
-    // if (form.returnPeriod) {
-    //     form.dueDate = computeDueDate(form.returnPeriod);
-    // }
-    
-
-    // //4. validate ammended return
-
-    // //5. validate computations
-    // // error_messages.concat(validateComputations(form));
-
-    // var success_flag = false;
-
-    // if(!error_messages.length){
-    //     success_flag = true;
-    // }
-
-    // console.log("############ error_messages: " + error_messages);
-    // callback({
-    //     success:success_flag,
-    //     errors: error_messages
-    // });
-    return errors;
+    if (!form.categoryOfAgent) {
+        errors.push({ page: 1, field: "categoryOfAgent", error: constant_helper.MANDATORY_FIELD('Category of Withholding Agent') });
+    }
 }
 
 function computeDueDate(returnPeriod) {
