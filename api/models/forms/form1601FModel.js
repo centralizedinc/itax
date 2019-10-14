@@ -54,11 +54,11 @@ var Form1601FSchema = new Schema({
     tot_schedule1: { type: Number, default: 0 }, //15 (form schedule 1)
     amt_due_final: { type: Number, default: 0 }, //16 (sum of items 14 and 15)
     prev_tax_paid_final: { type: Number, default: 0 }, //17 (Less: Tax Remitted in return previously Filed)
-    amt_paybl_final: { type: Number, default: 0 },//18 overremittance
+    tax_due: { type: Number, default: 0 },//18 overremittance
     surcharge: { type: Number, default: 0 },//19A
     interest: { type: Number, default: 0 },//19B
     compromise: { type: Number, default: 0 },//19C
-    penalties: { type: Number, default: 0 },//19D
+    penalties: { type: Number, default: 0 },//19D total penalties
     total_amt_paybl: { type: Number, default: 0 }//20 (Sum of item 18 and 19D)
     
 }); 
