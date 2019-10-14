@@ -1,10 +1,26 @@
 <template>
   <div>
-    <a-tabs @change="changetab" style="background-color:#FFFFFF">
-      <a-tab-pane key="0" tab="Account Information" />
-      <a-tab-pane key="1" tab="Taxpayer Information" />
-      <a-tab-pane key="2" tab="Billing Information" />
-      <a-tab-pane key="3" tab="Connections" />
+    <a-tabs @change="changetab" style="background-color:#FFFFFF; margin-top: 16vh">
+      <a-tab-pane key="0">
+        <template slot="tab">
+          <a-icon type="solution"></a-icon>
+          <span>Account</span>
+        </template>
+      </a-tab-pane>
+      <a-tab-pane key="1">
+        <template slot="tab">
+          <a-icon type="user"></a-icon>
+          <span>Taxpayer</span>
+        </template>
+      </a-tab-pane>
+      <!-- <a-tab-pane key="2" tab="Billing Information" /> -->
+      <a-tab-pane key="3">
+        <template slot="tab">
+          <a-icon type="share-alt"></a-icon>
+          <span>Connections</span>
+        </template>
+
+      </a-tab-pane>
 
       <a-button
         slot="tabBarExtraContent"
@@ -17,13 +33,13 @@
       <!-- <transition-group name="fade" mode="out-in"> -->
       <template v-if="curr_tab == 0">
         <a-row type="flex" justify="center">
-          <a-col :span="24">
+          <!-- <a-col :span="24">
             <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
               <span style="color:#FFFFFF">
                 <a-icon type="exclamation-circle"></a-icon>This is the your account details on iTax.
               </span>
             </a-card>
-          </a-col>
+          </a-col> -->
           <a-col :span="4" style="margin-top:2vh; margin-bottom: 5vh">
             <a-avatar class="profile_pic" :size="150" shape="square" :src="user && user.avatar && user.avatar.location ? user.avatar.location : null">
                 {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
@@ -47,13 +63,13 @@
       </template>
       <template v-else-if="curr_tab ==1">
         <a-row type="flex" justify="center">
-          <a-col :span="24" style="margin-top:2vh; margin-bottom: 5vh">
+          <!-- <a-col :span="24" style="margin-top:2vh; margin-bottom: 5vh">
             <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
               <span style="color:#FFFFFF">
                 <a-icon type="exclamation-circle"></a-icon>Your Taxpayer details. These information will serve as your tax filing reference.
               </span>
             </a-card>
-          </a-col>
+          </a-col> -->
         </a-row>
         <a-form>
           <a-form-item label="TIN" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
