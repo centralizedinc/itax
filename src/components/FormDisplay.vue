@@ -22,6 +22,7 @@ import Form2551q from "../plugins/pdf/printers/2551q";
 import Form1701q from "../plugins/pdf/printers/1701q";
 import Form2550q from "../plugins/pdf/printers/2550q";
 import Form2000ot from "../plugins/pdf/printers/2000ot";
+import Form1600wp from "../plugins/pdf/printers/1600wp";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -32,7 +33,8 @@ const printers = {
   FORM2551Q: Form2551q,
   FORM1701Q: Form1701q,
   FORM2550Q: Form2550q,
-  FORM2000OT: Form2000ot
+  FORM2000OT: Form2000ot,
+  FORM1600WP: Form1600wp
 };
 export default {
   props: ["form", "type"],
