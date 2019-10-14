@@ -15,12 +15,12 @@ function validate(form_details) {
     var errors = [];
 
     //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
+    // errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('form 1700m validator errors: ', JSON.stringify(errors) )
+    // console.log('form 1700m validator errors: ', JSON.stringify(errors) )
 
-    return errors
+    return {errors}
 }
 
 function computeDueDate(returnPeriod) {
@@ -37,7 +37,7 @@ function computeDueDate(returnPeriod) {
 
 /**
  * 
- * @param {form2550MModel} form 
+ * @param {form1700Model} form 
  */
 function validateComputations(form) {
     var error_messages = [];
