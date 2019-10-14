@@ -105,10 +105,10 @@ function saveForm(form_type, form_details) {
                         reference_no: result.reference_no,
                         tin: result.taxpayer.tin,
                         form_type: form_type,
-                        return_period: result.returnPeriod,
+                        return_period: result.return_period,
                         due_date: result.due_date,
-                        tax_due: result.taxStillDue,
-                        total_amount_payable: result.totalAmountPayable,
+                        tax_due: result.tax_due,
+                        total_amount_payable: result.total_amount_payable,
                         total_penalties: result.penalties,
                         date_filed: result.date_created,
                         created_by: result.created_by

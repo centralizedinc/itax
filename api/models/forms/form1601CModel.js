@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var Form1601CSchema = new Schema({
     reference_no: Number,
-    dueDate: Date,
+    due_date: Date,
     return_period: Date,
     return_period_month:String,
     return_period_year: String,

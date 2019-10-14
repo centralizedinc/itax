@@ -15,58 +15,59 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
-        errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
-        return { errors };
-    }
+    // if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
+    //     errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
+    //     return { errors };
+    // }
 
-    form_details.due_date = computeDueDate(form_details.returnPeriod)
-    console.log('form 1601c due date :', form_details.due_date);
-    //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
+    // form_details.due_date = computeDueDate(form_details.returnPeriod)
+    // console.log('form 1601c due date :', form_details.due_date);
+    // //validate required fields
+    // errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
 
-    errors.push(...validateRequired(form_details));
+    // errors.push(...validateRequired(form_details));
 
-    if (commonValidator.isLateFiling(form_details.due_date)) {
-        console.log('Late filling ...');
-        // Compute Surcharge
-        const surcharge = commonValidator.computeSurcharges(form_details.amtPayblCrdtb);
-        form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
-        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
-        if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
-            errors.push({
-                page: 2,
-                field: 'surcharge',
-                error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
-            })
-        }
-        // Compute Interest
-        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPayblCrdtb);
-        form_details.interest = form_details.interest ? form_details.interest : 0;
-        console.log('Interest :', interest, ':', form_details.interest);
-        if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
-            errors.push({
-                page: 2,
-                field: 'interest',
-                error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
-            })
-        }
-        // Compute Compromise
-        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPayblCrdtb);
-        form_details.compromise = form_details.compromise ? form_details.compromise : 0;
-        console.log('Compromise :', compromise, ':', form_details.compromise);
-        if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
-            errors.push({
-                page: 2,
-                field: 'compromise',
-                error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
-            })
-        }
-    }
+    // if (commonValidator.isLateFiling(form_details.due_date)) {
+    //     console.log('Late filling ...');
+    //     // Compute Surcharge
+    //     const surcharge = commonValidator.computeSurcharges(form_details.amtPayblCrdtb);
+    //     form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
+    //     console.log('Surcharge :', surcharge, ':', form_details.surcharge);
+    //     if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
+    //         errors.push({
+    //             page: 2,
+    //             field: 'surcharge',
+    //             error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
+    //         })
+    //     }
+    //     // Compute Interest
+    //     const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPayblCrdtb);
+    //     form_details.interest = form_details.interest ? form_details.interest : 0;
+    //     console.log('Interest :', interest, ':', form_details.interest);
+    //     if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
+    //         errors.push({
+    //             page: 2,
+    //             field: 'interest',
+    //             error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
+    //         })
+    //     }
+    //     // Compute Compromise
+    //     const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPayblCrdtb);
+    //     form_details.compromise = form_details.compromise ? form_details.compromise : 0;
+    //     console.log('Compromise :', compromise, ':', form_details.compromise);
+    //     if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
+    //         errors.push({
+    //             page: 2,
+    //             field: 'compromise',
+    //             error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
+    //         })
+    //     }
+    // }
 
-    console.log('form 1601c validator errors: ', JSON.stringify(errors))
+    // console.log('form 1601c validator errors: ', JSON.stringify(errors))
 
-    return { errors, due_date: form_details.due_date }
+    // return { errors, due_date: form_details.due_date }
+    return {errors}
 }
 
 function validateRequired(form) {
@@ -80,12 +81,8 @@ function validateRequired(form) {
         }
     }
 
-    if (!form.taxpayer.line_of_business) {
-        errors.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
-    }
-
-    if (!form.categoryOfAgent) {
-        errors.push({ page: 1, field: "categoryOfAgent", error: constant_helper.MANDATORY_FIELD('Category of Withholding Agent') });
+    if (!form.category_of_agent) {
+        errors.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Withholding Agent') });
     }
 }
 
@@ -122,23 +119,23 @@ function validateComputations(form) {
             item14Total = item14Total + atc.taxDue;
         });
 
-        if (item14Total !== form.amtDueCrdtb) {
-            error_messages.push({ field: "amtDueCrdtb", error: "amtDueCrdtb" });
+        if (item14Total !== form.tax_due) {
+            error_messages.push({ field: "tax_due", error: "tax_due" });
         }
     }
 
-    item15C = form.prevTaxPaidCrdtb + form.advPayment;
-    if (item15C !== form.totTaxCredits) {
-        error_messages.push({ field: "totTaxCredits", error: "totTaxCredits" });
+    item15C = form.other_payments_made + form.adv_payment;
+    if (item15C !== form.total_payments_made) {
+        error_messages.push({ field: "total_payments_made", error: "total_payments_made" });
     }
 
-    item16 = form.prevTaxPaidCrdtb - form.totTaxCredits;
-    if (item16 !== form.totalAmtPayblCrdtb) {
-        error_messages.push({ field: "totalAmtPayblCrdtb", error: "totalAmtPayblCrdtb" });
+    item16 = form.other_payments_made - form.total_payments_made;
+    if (item16 !== form.total_amount_payable) {
+        error_messages.push({ field: "totalAmtPayblCrdtb", error: "total_amount_payable" });
     }
 
     //late filing
-    var late_filing = commonValidator.isLateFiling(form.dueDate);
+    var late_filing = commonValidator.isLateFiling(form.tax_due);
 
     if (late_filing) {
         item17A_surcharge = commonValidator.computeSurcharges(item16);
@@ -146,7 +143,7 @@ function validateComputations(form) {
             error_messages.push({ field: "surcharge", error: "surcharge" });
         }
 
-        item17B_interest = commonValidator.computeInterest(form.dueDate, item16);
+        item17B_interest = commonValidator.computeInterest(form.tax_due, item16);
         if (item17B_interest ==! form.interest) {
             error_messages.push({ field: "interest", error: "interest" });
         }
@@ -160,13 +157,13 @@ function validateComputations(form) {
 
 
     item17D_total = item17A_surcharge + item17B_interest + item17C_compromise;
-    if (item17D_total !== form.penaltiesCrdtb) {
-        error_messages.push({ field: "penaltiesCrdtb", error: "penaltiesCrdtb" });
+    if (item17D_total !== form.penalties) {
+        error_messages.push({ field: "penalties", error: "penalties" });
     }
 
     item18 = item16 + item17D_total;
-    if (item18 !== form.totalAmtPayblCrdtb) {
-        error_messages.push({ field: "totalAmtPayblCrdtb", error: "totalAmtPayblCrdtb" });
+    if (item18 !== form.total_amount_payable) {
+        error_messages.push({ field: "total_amount_payable", error: "total_amount_payable" });
     }
 
 
