@@ -340,6 +340,7 @@ export default {
             message: "Successfully paid.",
             icon: <a-icon type="check" style="color: blue" />
           });
+          this.reset();
         })
         .catch(err => {
           console.log("PAYMENT err :", err);
@@ -373,6 +374,7 @@ export default {
     },
     multiple_payments_total() {
       var total = 0;
+      console.log('this.records :', this.records);
       if (this.records) {
         total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
       }

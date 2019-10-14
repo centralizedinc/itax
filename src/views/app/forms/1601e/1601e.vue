@@ -5,16 +5,16 @@
         <b>Withholding Tax Declaration (1601E)</b>
       </a-divider>
       <a-form-item label="1. For the month of (MM/YYYY)">
-        <a-month-picker v-model="form.returnPeriod" />
+        <a-month-picker v-model="form.return_period" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-model="form.numOfSheet"></a-input-number>
+        <a-input-number v-model="form.num_of_sheet"></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
         <a-radio-group v-model="form.taxes_withheld">
