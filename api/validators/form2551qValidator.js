@@ -37,7 +37,7 @@ function computeDueDate(returnPeriod) {
 
 /**
  * 
- * @param {form2550MModel} form 
+ * @param {form2551QModel} form 
  */
 function validateComputations(form) {
     var error_messages = [];

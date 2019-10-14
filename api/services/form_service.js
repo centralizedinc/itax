@@ -2,6 +2,7 @@
 
 // Dao
 const Form2550MDao = require('../dao/forms/Form2550MDao');
+const Form2551QDao = require('../dao/forms/Form2551QDao')
 const Form1601EDao = require('../dao/forms/Form1601EDao');
 const Form1601FDao = require('../dao/forms/Form1601FDao');
 const Form2000OTDao = require('../dao/forms/Form2000OTDao');
@@ -142,6 +143,27 @@ function saveForm(form_type, form_details) {
         } else if (form_type.toUpperCase() === '1603') {
             console.log('form_details :', form_details);
             Form1603Dao.create(form_details)
+                .then((result) => {
+                    console.log('saveForm : ', result);
+                    resolve({
+                        reference_no: result.reference_no,
+                        tin: result.taxpayer.tin,
+                        form_type: form_type,
+                        return_period: result.return_period,
+                        due_date: result.due_date,
+                        tax_due: result.tax_due,
+                        total_amount_payable: result.total_amount_payable,
+                        total_penalties: result.penalties,
+                        date_filed: result.date_created,
+                        created_by: result.created_by
+                    })
+                }).catch((err) => {
+                    console.log('saveForm rejected err : ', err)
+                    reject(err)
+                });
+        } else if (form_type.toUpperCase() === '2551Q') {
+            console.log('form_details :', form_details);
+            Form2551QDao.create(form_details)
                 .then((result) => {
                     console.log('saveForm : ', result);
                     resolve({
