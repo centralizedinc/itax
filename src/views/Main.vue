@@ -97,7 +97,7 @@
               </a-menu-item>
               <a-divider></a-divider>
               <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
+              <!-- <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item> -->
               <a-menu-item key="logout">
                 <a-icon type="logout" />Logout
               </a-menu-item>

@@ -19,7 +19,7 @@ function validate(form_details) {
         return errors;
     }
     if (!form_details.quarter) {
-        errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period Quarter') });
+        errors.push({ page: 0, field: "quarter", error: constant_helper.MANDATORY_FIELD('Quarter') });
         return errors;
     }
 

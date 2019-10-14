@@ -19,6 +19,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="2."
+        :validate-status="error_item('quarter')"
+        :help="error_desc('quarter')"
       >
         <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
@@ -712,6 +714,18 @@ export default {
   computed: {
     tax_due() {
       var tosum = [this.form];
+    },
+    computeReturnPeriod(){
+      var return_period = new Date();
+      return_period.setFullYear(this.form.returnPeriodYear);
+      if(this.form.quarter === 1){
+        return_period.setMonth(2)
+      } else if(this.form.quarter === 2){
+        return_period.setMonth(5)
+      } else if(this.form.quarter === 3){
+        return_period.setMonth(8)
+      }
+      return return_period;
     }
   },
   methods: {
@@ -728,6 +742,7 @@ export default {
     submit() {
       this.loading = true;
       this.errors = [];
+      this.form.returnPeriod = this.computeReturnPeriod
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "1701Q",
