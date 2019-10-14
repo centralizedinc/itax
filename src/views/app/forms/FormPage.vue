@@ -202,11 +202,7 @@ export default {
   data() {
     return {
       view_select: true,
-<<<<<<< HEAD
       selected_index: 0,
-=======
-      selected_index: -1,
->>>>>>> 717df701513a7cb739fed6a6bdf18b73ed31d99f
       taxpayer_list: [],
       user_list: [],
       taxpayer: null,
