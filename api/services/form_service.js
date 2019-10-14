@@ -6,9 +6,11 @@ const Form2551QDao = require('../dao/forms/Form2551QDao')
 const Form1601EDao = require('../dao/forms/Form1601EDao');
 const Form1601FDao = require('../dao/forms/Form1601FDao');
 const Form2000OTDao = require('../dao/forms/Form2000OTDao');
+const Form1601CDao = require('../dao/forms/Form1601CDao');
 const Form1601CDao = require('../dao/forms/Form1601CDao')
 const Form1603Dao = require('../dao/forms/Form1603Dao')
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
+const Form1700Dao = require('../dao/forms/Form1700Dao');
 
 /**
  * @returns {Promise}
@@ -140,6 +142,8 @@ function saveForm(form_type, form_details) {
                     console.log('saveForm rejected err : ', err)
                     reject(err)
                 });
+        } else if (form_type.toUpperCase() === '1700') {
+            Form1700Dao.create(form_details)
         } else if (form_type.toUpperCase() === '1603') {
             console.log('form_details :', form_details);
             Form1603Dao.create(form_details)
