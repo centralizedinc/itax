@@ -6,6 +6,8 @@ const Form1601EDao = require('../dao/forms/Form1601EDao');
 const Form1601FDao = require('../dao/forms/Form1601FDao');
 const Form2000OTDao = require('../dao/forms/Form2000OTDao');
 const Form1601CDao = require('../dao/forms/Form1601CDao');
+const Form1601CDao = require('../dao/forms/Form1601CDao')
+const Form1603Dao = require('../dao/forms/Form1603Dao')
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
 const Form1700Dao = require('../dao/forms/Form1700Dao');
 
@@ -141,6 +143,9 @@ function saveForm(form_type, form_details) {
                 });
         } else if (form_type.toUpperCase() === '1700') {
             Form1700Dao.create(form_details)
+        } else if (form_type.toUpperCase() === '1603') {
+            console.log('form_details :', form_details);
+            Form1603Dao.create(form_details)
                 .then((result) => {
                     console.log('saveForm : ', result);
                     resolve({
@@ -150,7 +155,7 @@ function saveForm(form_type, form_details) {
                         return_period: result.return_period,
                         due_date: result.due_date,
                         tax_due: result.tax_due,
-                        total_amount_payable: result.total_amt_paybl,
+                        total_amount_payable: result.total_amount_payable,
                         total_penalties: result.penalties,
                         date_filed: result.date_created,
                         created_by: result.created_by
