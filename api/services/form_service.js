@@ -7,6 +7,8 @@ const Form2000OTDao = require('../dao/forms/Form2000OTDao');
 const Form1601CDao = require('../dao/forms/Form1601CDao')
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
 
+const activity = require('../services/actvities_service')
+
 /**
  * @returns {Promise}
  * @param {String} form_type 
@@ -19,7 +21,8 @@ function save(form_type, form_details) {
                 return ReturnDetailsDao.create(result);
             })
             .then((result) => {
-                resolve(result);
+                activity.file(result.tin, result)    
+                resolve(result)            
             })
             .catch((err) => {
                 reject(err)

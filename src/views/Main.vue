@@ -105,14 +105,19 @@
           </a-affix>
         </a-col>
         <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
+          <a-row>
+          
            <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
                   <h2 style="color: #FFFFFF">{{$route.name}}</h2>
               </a-card>
           </a-col>
+          <a-col :span="24">
           <transition name="fade" mode="out-in">
             <router-view></router-view>
           </transition>
+          </a-col>
+          </a-row>
         </a-col>
         <a-col :span="4">
           <a-row style="margin-bottom: 1vh">

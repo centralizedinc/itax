@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
 
 var Form1601CSchema = new Schema({
     reference_no: Number,
