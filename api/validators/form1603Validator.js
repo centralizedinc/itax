@@ -1,6 +1,6 @@
 'use strict'
 
-var Form1601CModel = require('../models/forms/form1601CModel.js');
+var Form1603Model = require('../models/forms/form1603Model.js');
 var commonValidator = require('./commonValidator.js');
 
 
@@ -18,7 +18,7 @@ function validate(form_details) {
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('form 1601c validator errors: ', JSON.stringify(errors) )
+    console.log('form 1603 validator errors: ', JSON.stringify(errors) )
 
     return errors
 }
@@ -37,7 +37,7 @@ function computeDueDate(returnPeriod) {
 
 /**
  * 
- * @param {form1601CModel} form 
+ * @param {form1603Model} form 
  */
 function validateComputations(form) {
     var error_messages = [];
