@@ -20,11 +20,18 @@ var Form2000OTSchema = new Schema({
     description: String,
     rate: String
   },
-  dueDate: Date,
+  due_date: Date,
   returnPeriod: Date,
   returnPeriodMonth: String,
   returnPeriodYear: String,
-  natureOfTransaction: String,
+  natureOfTransaction: {
+    type: String
+    /**
+     * real_property_capital
+     * real_property_ordinary
+     * shares_stock
+     */
+  },
   seller: String,
   sellerTin: String,
   buyer: String,
@@ -32,7 +39,18 @@ var Form2000OTSchema = new Schema({
   propertySold: String,
   locationOfRealProp: String,
   rdoRealProp: String,
-  realPropertyClass: String,
+  realPropertyClass: {
+    type: String
+    /**
+     * residential
+     * agricultural
+     * commercial
+     * industrial
+     * condo_residential
+     * condo_commercial
+     * others
+     */
+  },
   others: String,
   areaOfProperty: String,
   tctNo: String,
