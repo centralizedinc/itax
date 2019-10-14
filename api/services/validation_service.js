@@ -7,6 +7,7 @@ const form2000OTValidator = require('../validators/form2000otValidator');
 const form1700Validator = require('../validators/form1700Validator.js')
 const form1701qValidator = require('../validators/form1701qValidator.js')
 const form2550mValidator = require('../validators/form2550mValidator');
+const form1601cValidator = require('../validators/form1601cValidator')
 
 /**
  * 
@@ -29,6 +30,8 @@ function validate(form_type, form_details) {
             return form1701qValidator.validate(form_details);
         case "2000OT":
             return form2000OTValidator.validate(form_details);
+        case "1601C":
+            return form1601CValidator.validate(form_details);
     }
 }
 
