@@ -102,11 +102,8 @@ export default {
   props: ["form", "step"],
   data() {
     return {
-      errors: [],
       loading: false,
-      form_general: this.$form.createForm(this),
-      form_part1: this.$form.createForm(this),
-      form_part2: this.$form.createForm(this),
+      image_height: 1000,
       formatter: {
         amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       },
@@ -129,16 +126,16 @@ export default {
       deep: true,
       handler() {
         console.log("2000OT form: " + this.form.returnPeriod);
-        this.form.year = this.formatDtYear(this.form.returnPeriod);
-        this.form.month = this.formatDtMonth(this.form.returnPeriod);
-        this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
-        this.form.returnPeriodDay = this.formatDate(this.form.returnPeriod, {
-          day: "2-digit"
-        });
+        // this.form.year = this.formatDtYear(this.form.returnPeriod);
+        // this.form.month = this.formatDtMonth(this.form.returnPeriod);
+        // this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
+        // this.form.returnPeriodDay = this.formatDate(this.form.returnPeriod, {
+        //   day: "2-digit"
+        // });
         console.log("this.form.returnPeriodDay :", this.form.returnPeriodDay);
-        this.form.returnPeriodMonth = this.formatDtMonth(
-          this.form.returnPeriod
-        );
+        // this.form.returnPeriodMonth = this.formatDtMonth(
+        //   this.form.returnPeriod
+        // );
         console.log("year: " + this.form.month);
       }
     },
@@ -156,6 +153,9 @@ export default {
       return this.errors.find(x => x.field === item)
         ? this.errors.find(x => x.field === item).error
         : "";
+    },
+    validate() {
+      this.changeStep(this.step + 1);
     }
   }
 };

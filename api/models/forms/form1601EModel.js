@@ -41,15 +41,17 @@ var Form1601ESchema = new Schema({
         type: Number,
         default: 0
     },
+    // 14
     amtDueCrdtb: {
         type: Number,
         default: 0
     },
-    // 15a
+    // 15
     prevTaxPaidCrdtb: {
         type: Number,
         default: 0
     },
+    // 16
     amtPayblCrdtb: {
         type: Number,
         default: 0
@@ -90,26 +92,18 @@ var Form1601ESchema = new Schema({
         default: 0
     },
     ifOverremittance: String,
-    atcList: [{
-        seqNo: {
+    atc_list: [{
+        atc: {
+            type: String
+        },
+        tax_base: {
             type: Number,
             default: 0
         },
-        atcCode: String,
-        payeeFlag: String,
-        txbleAmt: {
+        tax_withheld: {
             type: Number,
             default: 0
-        },
-        taxRate: {
-            type: Number,
-            default: 0
-        },
-        taxDue: {
-            type: Number,
-            default: 0
-        },
-        description: String
+        }
     }],
     date_created: {
         type: Date,

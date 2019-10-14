@@ -5,7 +5,7 @@
     <a-row type="flex" justify="center" v-show="loading" style="height:100vh">
       <a-col :span="6">
         Please wait...
-        <a-icon  theme="twoTone" type="hourglass" style="margin-top: 30vh; font-size:60px" spin></a-icon>
+        <a-icon theme="twoTone" type="hourglass" style="margin-top: 30vh; font-size:60px" spin></a-icon>
       </a-col>
     </a-row>
   </div>
@@ -106,12 +106,12 @@ export default {
       this.loading = true;
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
-      form.month = this.formatDtMonth(form.dateFiled);
-      var returnPeriod = {
-        month: this.formatDtMonth(form.returnPeriod),
-        year: this.formatDtYear(form.returnPeriod)
-      };
-      form.returnPeriod = returnPeriod;
+      // form.month = this.formatDtMonth(form.dateFiled);
+      // var returnPeriod = {
+      //   month: this.formatDtMonth(form.returnPeriod),
+      //   year: this.formatDtYear(form.returnPeriod)
+      // };
+      // form.returnPeriod = returnPeriod;
       var dateFiled1 = {
         month: this.formatDtMonth(form.dateFiled1),
         year: this.formatDtYear(form.dateFiled1)

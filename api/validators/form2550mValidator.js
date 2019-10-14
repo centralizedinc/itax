@@ -5,15 +5,13 @@ var commonValidator = require('./commonValidator.js');
 
 const constant_helper = require('../utils/constant_helper');
 /**
- * 
+ * @returns {Object} errors, due_date
  * @param {*} form_details 
- * @returns [Array] errors
  */
 function validate(form_details) {
-    console.log("validation form details: " + JSON.stringify(form_details))
+    console.log("validation form details(2550m): " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
-
 
     if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
         errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
@@ -21,7 +19,8 @@ function validate(form_details) {
     }
 
     form_details.due_date = computeDueDate(form_details.returnPeriod)
-    // console.log("due: " + due)
+    console.log('form 2550m due date :', form_details.due_date);
+
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
 
