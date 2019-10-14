@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <a-affix :offsetTop="1"> -->
-      <a-tabs @change="changeView" :activeKey="active_key" style="background-color:#FFFFFF;margin-top: 16vh ">
+      <a-tabs @change="changeView" :activeKey="active_key" style="background-color:#FFFFFF;">
         <a-tab-pane :key="0" >
           <template slot="tab">
             <a-icon type="plus-square"></a-icon>

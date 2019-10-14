@@ -14,12 +14,12 @@ var Form1700Schema = new Schema({
     //     type: Number,
     //     default: 0
     // },
-    // amendedYn: Boolean,
+    // amended_yn: Boolean,
     joint_filing: Boolean,
     source_of_income: "",
     // 0 - Compensation Income
     // 1 - Other Income
-    numOfSheet: {
+    num_of_sheet: {
         type: Number,
         default: 0
     },
@@ -67,12 +67,12 @@ var Form1700Schema = new Schema({
         // spouse_atc: { type: Number, default: 0 },
         // spouse_citizenship: String,
     },
-    dueDate: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: { type: Number, default: 0 },
+    due_date: Date,
+    return_period: Date,
+    return_period_month: String,
+    return_period_year: String,
+    amended_yn: Boolean,
+    num_of_sheet: { type: Number, default: 0 },
 
 
     tax_filer_tax_due: { type: Number, default: 0 },
@@ -99,7 +99,7 @@ var Form1700Schema = new Schema({
     // interest: { type: Number, default: 0 },
     // compromise: { type: Number, default: 0 },
     // penalties: { type: Number, default: 0 },
-    // totalAmountPayable: { type: Number, default: 0 },
+    // total_amount_payable: { type: Number, default: 0 },
     // batchNo: { type: Number, default: 0 },
     // sched1: [],
     // sched2: [],
@@ -161,4 +161,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('form_1700', Form1700Schema);
+module.exports = mongoose.model('1700_forms', Form1700Schema);

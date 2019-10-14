@@ -1,5 +1,5 @@
 <template>
-    <a-row type="flex" justify="center" :gutter="8" style="margin-top:13vh">
+    <a-row type="flex" justify="center" :gutter="8">
         <a-col :span="12">
             <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/new')">
             <a-row type="flex" align="middle" :gutter="8">

@@ -7,12 +7,12 @@ var Form1601CSchema = new Schema({
     referenceNo: Number,
     taxpayer: {},
     dateFiled: Date,
-    dueDate: Date,
-    returnPeriod: Date,
-    returnPeriodMonth:String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: Number,
+    due_date: Date,
+    return_period: Date,
+    return_period_month:String,
+    return_period_year: String,
+    amended_yn: Boolean,
+    num_of_sheet: Number,
     opnYn: String,
     categoryOfAgent: String,
     atc: String,
@@ -54,4 +54,4 @@ var Form1601CSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('form_1601c', Form1601CSchema);
+module.exports = mongoose.model('1601c_forms', Form1601CSchema);

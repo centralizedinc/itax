@@ -5,11 +5,11 @@ var Schema = mongoose.Schema;
 
 var Form1603Schema = new Schema({
     referenceNo: Number,
-    returnPeriodYear: String,
-    returnPeriodMonth: String,
-    returnPeriod: String,
+    return_period_year: String,
+    return_period_month: String,
+    return_period: String,
     quarter: String,
-    amendedYn: Boolean,
+    amended_yn: Boolean,
     opnYn: String,
     reflected: String,
     taxpayer: {},
@@ -40,12 +40,12 @@ var Form1603Schema = new Schema({
     //     payeeFlag: String,
     //     txbleAmt: Number,
     //     taxRate: Number,
-    //     taxDue: Number,
+    //     tax_due: Number,
     //     description: String
     // }],
     dateFiled: Date,
-    dueDate: Date
+    due_date: Date
 });
 
 
-module.exports = mongoose.model('form_1603', Form1603Schema); 
+module.exports = mongoose.model('1603_forms', Form1603Schema); 

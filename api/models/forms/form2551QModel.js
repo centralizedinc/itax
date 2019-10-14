@@ -8,16 +8,16 @@ var Form2551qSchema = new Schema({
     yearType: String,
     yearEndedMonth: String,
     yearEndedYear: String,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    returnPeriod: String,
-    amendedYn: Boolean,
+    return_period_month: String,
+    return_period_year: String,
+    return_period: String,
+    amended_yn: Boolean,
     numSheets: Number,
     taxpayer: {},
     accountingType: Boolean,
     specialRateFlag: Boolean,
     internationalTreatyFlag: Boolean,
-    taxDue: Number,
+    tax_due: Number,
     taxWithheld: Number,
     prevTaxPaid: Number,
     totalCredits: Number,
@@ -26,14 +26,14 @@ var Form2551qSchema = new Schema({
     interest: Number,
     compromise: Number,
     penalties: Number,
-    totalAmountPayable: Number,
+    total_amount_payable: Number,
     refundType: String,
     part2List: [{
         txbleTransaction: Number,
         atcCode: String,
         txbleAmt: Number,
         taxRate: Number,
-        taxDue: Number,
+        tax_due: Number,
         seqNo: Number
     }],
     sched1List: [{
@@ -45,8 +45,8 @@ var Form2551qSchema = new Schema({
         seqNo: Number
     }],
     dateFiled: Date,
-    dueDate: Date
+    due_date: Date
 });
 
 
-module.exports = mongoose.model('form_2551q', Form2551qSchema);
+module.exports = mongoose.model('2551q_forms', Form2551qSchema);

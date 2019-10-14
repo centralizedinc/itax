@@ -11,11 +11,11 @@ var Form1601ESchema = new Schema({
     taxpayer: {},
     dateFiled: Date,
     due_date: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: {
+    return_period: Date,
+    return_period_month: String,
+    return_period_year: String,
+    amended_yn: Boolean,
+    num_of_sheet: {
         type: Number,
         default: 0
     },
@@ -160,4 +160,4 @@ plugin.applyPlugin()
         console.log("############### init failed: " + e);
     });
 
-module.exports = mongoose.model('form_1601e', Form1601ESchema);
+module.exports = mongoose.model('1601e_forms', Form1601ESchema);
