@@ -1,69 +1,77 @@
 'use strict'
 
-var Form2000OTModel = require('../models/forms/form2000OTModel');
 var commonValidator = require('./commonValidator.js');
 
+// utils
+const constant_helper = require('../utils/constant_helper');
 
 /**
- * 
+ * @returns {Object} errors, due_date
  * @param {*} form_details 
- * @param {*} callback 
  */
-function validate(form_details, callback) {
+function validate(form_details) {
+    console.log("validation form details(2000ot): " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
 
-    if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
+    if (!form_details.returnPeriod) {
         errors.push({
             page: 0,
             field: "returnPeriod",
-            error: constant_helper.MANDATORY_FIELD('Return Period')
+            error: constant_helper.MANDATORY_FIELD('Date of Transaction')
         });
-        return errors;
+        return { errors };
     }
 
-    form_details.due_date = computeDueDate(form_details.returnPeriod)
-    //validate required fields
+    form_details.due_date = computeDueDate(form_details.returnPeriod);
+    console.log('form 2000ot due date :', form_details.due_date);
+
+    // validate Taxpayer
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
+
+    //validate required fields
     errors.push(...validateRequired(form_details));
 
-    // late filing computations
+    if (commonValidator.isLateFiling(form_details.due_date)) {
+        console.log('Late filling ...');
+        // Compute Surcharge
+        const surcharge = commonValidator.computeSurcharges(form_details.taxStillDue);
+        form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
+        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
+        if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
+            errors.push({
+                page: 3,
+                field: 'surcharge',
+                error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
+            })
+        }
+        // Compute Interest
+        const interest = commonValidator.computeInterest(form_details.due_date, form_details.taxStillDue);
+        form_details.interest = form_details.interest ? form_details.interest : 0;
+        console.log('Interest :', interest, ':', form_details.interest);
+        if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
+            errors.push({
+                page: 3,
+                field: 'interest',
+                error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
+            })
+        }
+        // Compute Compromise
+        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.taxStillDue);
+        form_details.compromise = form_details.compromise ? form_details.compromise : 0;
+        console.log('Compromise :', compromise, ':', form_details.compromise);
+        if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
+            errors.push({
+                page: 3,
+                field: 'compromise',
+                error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
+            })
+        }
+    }
 
+    console.log('form 2000ot validator errors: ', JSON.stringify(errors))
 
-    // var error_messages = {};
-
-    // console.log("FORMS: " + JSON.stringify(form_details));
-
-    // var success_flag = false;
-
-
-    // Validation
-    // if (form_details.natureOfTransaction === "") {
-    //     error_messages.natureOfTransaction = [];
-    //     error_messages.natureOfTransaction.push("Nature of Transaction is a mandatory field");
-    // }
-    // if (form_details.propertySold === "realProperty") {
-    //     if (form_details.realPropertyClass === "") {
-    //         error_messages.realPropertyClass = [];
-    //         error_messages.realPropertyClass.push("Classification of Real Property is a mandatory field");
-    //     }
-    // } else if (form_details.propertySold === "sharesStocks") {
-    //     // Nothing will happen
-    // }
-
-    // error_messages = Object.assign({}, error_messages, validateComputations(form_details));
-
-    // if (!error_messages.length) {
-    //     success_flag = true;
-    // }
-
-    // console.log("############ error_messages: " + error_messages.length);
-
-    // callback({
-    //     success: success_flag,
-    //     errors: error_messages
-    // });
-    return errors
+    return { errors, due_date: form_details.due_date }
 }
 
 function validateRequired(form) {
@@ -75,27 +83,26 @@ function validateRequired(form) {
             field: "natureOfTransaction",
             error: constant_helper.MANDATORY_FIELD('Nature of Transaction')
         });
+    } else if (form.natureOfTransaction === 'real_property_capital' ||
+        form.natureOfTransaction === 'real_property_ordinary') {
+        if (!form.realPropertyClass) {
+            error_messages.push({
+                page: 2,
+                field: "realPropertyClass",
+                error: constant_helper.MANDATORY_FIELD('Classification of Real Property')
+            });
+        }
     }
-    if (form.natureOfTransaction !== 'shares_transfer' && !form.realPropertyClass) {
-        error_messages.push({
-            page: 2,
-            field: "realPropertyClass",
-            error: constant_helper.MANDATORY_FIELD('Classification of Real Property')
-        });
-    }
+
     return error_messages;
 }
 
 function computeDueDate(returnPeriod) {
-    // var due_date = new Date();
-
-    var month = returnPeriod.getMonth() + 1;
-    var year = returnPeriod.getFullYear();
-    //5 days before end of month
-    // due_date.setDate(20);
-    // due_date.setMonth(month);
-    return new Date(year, month, 0).getDate();
-    // return due_date;
+    var return_period = new Date(returnPeriod);
+    var lastDate = return_period.getMonth() + 1;
+    lastDate = lastDate - 5;
+    const due_date = new Date(return_period.getFullYear(), lastDate, return_period.getMonth());
+    return due_date;
 }
 
 /**
