@@ -70,10 +70,10 @@
             </a-col>
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
-                <div style="margin-top: 2vh">
+                <div style="margin-top: 1vh">
                   <span>{{user.name.first}} {{user.name.last}}</span>
-                  <p v-if="user.tin"><a @click="$router.push('/app/user')">{{formatTIN(user.tin)}}</a></p>
-                  <p v-else><a @click="$router.push('/app/user')">No taxpayer details. Click here.</a></p>
+                  <p v-if="user.tin"><a style="font-size:12px" @click="$router.push('/app/user')">{{formatTIN(user.tin)}}</a></p>
+                  <p v-else><a-icon type="warning" style="color:red"></a-icon><a style="font-size:10px" @click="$router.push('/app/user')"> No taxpayer details. Click here.</a></p>
                 </div>
               </a-card>
             </a-col>
@@ -97,7 +97,7 @@
               </a-menu-item>
               <a-divider></a-divider>
               <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
+              <!-- <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item> -->
               <a-menu-item key="logout">
                 <a-icon type="logout" />Logout
               </a-menu-item>
@@ -115,7 +115,7 @@
           </transition>
         </a-col>
         <a-col :span="4">
-          <a-row style="margin-bottom: 2vh">
+          <a-row style="margin-bottom: 1vh">
             <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
                   <h2 style="color: #FFFFFF">Summary</h2>

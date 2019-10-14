@@ -97,7 +97,7 @@
       >
         <a-textarea
           placeholder="Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905"
-          v-model="form.taxpayer.registered_address"
+          v-model="form.taxpayer.address"
         ></a-textarea>
       </a-form-item>
       <a-form-item
@@ -105,7 +105,7 @@
         :validate-status="error_item('taxpayer.zip_code')"
         :help="error_desc('taxpayer.zip_code')"
       >
-        <a-input-number style="width: 100%" v-model="form.taxpayer.zip_code"></a-input-number>
+        <a-input-number style="width: 100%" v-model="form.taxpayer.address_details.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item label="11. Date of Birth (MM/DD/YYYY)">
         <a-date-picker style="width: 100%" v-model="form.taxpayer.birthday"></a-date-picker>
