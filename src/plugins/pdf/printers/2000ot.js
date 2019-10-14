@@ -31,7 +31,7 @@ function fillup(details) {
 */
 
 function getContent(forms) {
-    console.log('forms.returnPeriod :', forms.returnPeriod);
+    console.log('forms.return_period :', forms.return_period);
     var content = [
         {
             layout: "noBorders",
@@ -60,21 +60,21 @@ function getContent(forms) {
 
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { month: "2-digit" }),
+                        text: formatDate(forms.return_period, { month: "2-digit" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [3, 0, 0, 0]
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { day: "2-digit" }),
+                        text: formatDate(forms.return_period, { day: "2-digit" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { year: "numeric" }),
+                        text: formatDate(forms.return_period, { year: "numeric" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'justified',
@@ -84,7 +84,7 @@ function getContent(forms) {
                         text: ''
                     },
                     {
-                        text: forms.amendedYn == true ? 'X' : ' ',
+                        text: forms.amended_yn == true ? 'X' : ' ',
                         fontSize: 14,
                         bold: true,
                         alignment: 'justified',
@@ -94,7 +94,7 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.amendedYn == false ? 'X' : ' ',
+                        text: forms.amended_yn == false ? 'X' : ' ',
                         fontSize: 14,
                         bold: true,
                         alignment: 'justified',
@@ -104,7 +104,7 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                        text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                         fontSize: 14,
                         bold: true,
                         alignment: 'justified',
@@ -867,7 +867,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
+                        text: forms.tax_due == null ? '0.00' : forms.tax_due % 1 == 0 ? forms.tax_due + '.00' : forms.tax_due,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -1020,7 +1020,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: forms.totalAmountPayable == null ? '0.00' : forms.totalAmountPayable % 1 == 0 ? forms.totalAmountPayable + '.00' : forms.totalAmountPayable,
+                        text: forms.total_amount_payable == null ? '0.00' : forms.total_amount_payable % 1 == 0 ? forms.total_amount_payable + '.00' : forms.total_amount_payable,
                         fontSize: 11,
                         bold: true,
                         alignment: 'justified',

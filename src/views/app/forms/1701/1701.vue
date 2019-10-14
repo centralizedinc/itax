@@ -10,14 +10,14 @@
       >
         <a-month-picker
           placeholder="For the month of (MM/YYYY)"
-          v-model="form.returnPeriod"
+          v-model="form.return_period"
           style="width: 100%"
         />
       </a-form-item>
 
       <!-- amended return -->
       <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
-        <a-radio-group v-model="form.amendedYn" :defaultValue="false" style="width: 100%">
+        <a-radio-group v-model="form.amended_yn" :defaultValue="false" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -693,7 +693,7 @@
       >
         <a-input-number
           placeholder="Net VAT Payable"
-          v-model="form.taxDue"
+          v-model="form.tax_due"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -856,7 +856,7 @@
       >
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
-          v-model="form.totalAmountPayable"
+          v-model="form.total_amount_payable"
           :formatter="formatter.amount"
           :parser="parser.amount"
         ></a-input-number>
@@ -1157,9 +1157,9 @@ export default {
       this.$emit("loading", val);
     },
     form() {
-      console.log("2550m form: " + this.form.returnPeriod);
-      this.form.year = this.formatDtYear(this.form.returnPeriod);
-      this.form.month = this.formatDtMonth(this.form.returnPeriod);
+      console.log("2550m form: " + this.form.return_period);
+      this.form.year = this.formatDtYear(this.form.return_period);
+      this.form.month = this.formatDtMonth(this.form.return_period);
       console.log("year: " + this.form.month);
     }
   },

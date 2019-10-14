@@ -75,7 +75,7 @@ var Form1700Schema = new Schema({
     // interest: { type: Number, default: 0 },
     // compromise: { type: Number, default: 0 },
     // penalties: { type: Number, default: 0 },
-    // totalAmountPayable: { type: Number, default: 0 },
+    // total_amount_payable: { type: Number, default: 0 },
     // batchNo: { type: Number, default: 0 },
     // sched1: [],
     // sched2: [],

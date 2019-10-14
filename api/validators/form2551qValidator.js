@@ -23,10 +23,10 @@ function validate(form_details) {
     return errors
 }
 
-function computeDueDate(returnPeriod) {
+function computeDueDate(return_period) {
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth() + 1;
+    var month = return_period.getMonth() + 1;
 
     //every 20th of the next month
     due_date.setDate(20);

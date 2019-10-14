@@ -15,12 +15,12 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
-        errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
+    if (!form_details.return_period_year || !form_details.return_period_month || !form_details.return_period) {
+        errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
         return { errors };
     }
 
-    form_details.due_date = computeDueDate(form_details.returnPeriod)
+    form_details.due_date = computeDueDate(form_details.return_period)
     console.log('form 1601e due date :', form_details.due_date);
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
@@ -89,10 +89,10 @@ function validateRequired(form) {
     }
 }
 
-function computeDueDate(returnPeriod) {
+function computeDueDate(return_period) {
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth() + 1;
+    var month = return_period.getMonth() + 1;
 
     //every 10th of the next month
     due_date.setDate(10);
@@ -119,7 +119,7 @@ function validateComputations(form) {
 
     if (form.atcList && form.atcList.length) {
         form.atcList.forEach((atc) => {
-            item14Total = item14Total + atc.taxDue;
+            item14Total = item14Total + atc.tax_due;
         });
 
         if (item14Total !== form.amtDueCrdtb) {
@@ -138,7 +138,7 @@ function validateComputations(form) {
     }
 
     //late filing
-    var late_filing = commonValidator.isLateFiling(form.dueDate);
+    var late_filing = commonValidator.isLateFiling(form.due_date);
 
     if (late_filing) {
         item17A_surcharge = commonValidator.computeSurcharges(item16);
@@ -146,7 +146,7 @@ function validateComputations(form) {
             error_messages.push({ field: "surcharge", error: "surcharge" });
         }
 
-        item17B_interest = commonValidator.computeInterest(form.dueDate, item16);
+        item17B_interest = commonValidator.computeInterest(form.due_date, item16);
         if (item17B_interest ==! form.interest) {
             error_messages.push({ field: "interest", error: "interest" });
         }
