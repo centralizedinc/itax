@@ -32,17 +32,17 @@ function getContent(forms) {
     console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
-    var content = []
-    content.push(
+    var content = [
         // 1-4
         {
             layout: "noBorders",
             table: {
                 widths: [103, 50, 60, 60, 60, 60, 62],
+                heights: [70],
                 body: [
                     [{
                         // text: '2019',
-                        text: forms.year == null ? ' ' : forms.year,
+                        text: formatDate(forms.returnPeriodYear, { year: "numeric" }),
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -98,23 +98,46 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [380, 120],
+                widths: [158, 45, 45, 45, 55, 120],
+                heights: 18,
                 body: [
                     [{
-                        text: forms.taxpayer.tin == null ? ' ' : forms.taxpayer.tin,
-                        // text: '0 1 2  -  3 4 5  -  6 7 8 ',
-                        fontSize: 16,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [170, 9, 0, 0]
+                        text: ''
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 0, 3),
+                        fontSize: 14,
+                        characterSpacing: 3,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 3, 6),
+                        fontSize: 14,
+                        characterSpacing: 3,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.taxpayer.tin, 6, 9),
+                        fontSize: 14,
+                        bold: true,
+                        characterSpacing: 3,
+                        alignment: 'justified',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: ''
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                        // text: '0 0 0',
-                        fontSize: 16,
-                        // right,down,left,up
+                        fontSize: 14,
+                        bold: true,
+                        characterSpacing: 3,
                         alignment: 'justify',
-                        margin: [80, 9, 0, 0]
+                        margin: [80, 0, 0, 0]
                     }
 
                     ]
@@ -230,8 +253,9 @@ function getContent(forms) {
                 widths: [510],
                 body: [
                     [{
-                        text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
-                        fontSize: 12,
+                        text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                        fontSize: 16,
+                        bold: true,
                         // right,down,left,up
                         alignment: 'justified',
                         margin: [10, 6, 0, 0]
@@ -246,11 +270,12 @@ function getContent(forms) {
                 heights: [9, 9],
                 body: [
                     [{
-                        text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
-                        fontSize: 12,
+                        text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
+                        fontSize: 16,
+                        bold: true,
                         // right,down,left,up
                         alignment: 'justified',
-                        margin: [10, 6, 0, 0]
+                        margin: [10, 0, 0, 0]
                     }],
                     [{
                         text: ''
@@ -269,16 +294,15 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
                         fontSize: 12,
+                        characterSpacing: 3,
                         alignment: 'left',
-                        margin: [5, -13, 0, 0]
+                        margin: [5, -16, 0, 0]
                     }]
                 ]
             }
         },
-
-
 
         // 11-12
         {
@@ -638,194 +662,194 @@ function getContent(forms) {
             }
         },
 
-    )
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [510],
-            heights: [20],
-            body: [
-                [{
-                    text: '',
-                }]
-            ]
+        {
+            layout: "noBorders",
+            table: {
+                widths: [510],
+                heights: [20],
+                body: [
+                    [{
+                        text: '',
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [300, 96, 96],
+                body: [
+                    [{
+                        text: '',
+                        fontSize: 13,
+                        margin: [0, 0, 0, 0],
+                        alignment: 'right'
+
+                    },
+
+                    {
+                        text: forms.item26a == null ? '0.00' : forms.item26a % 1 == 0 ? forms.item26a + '.00' : forms.item26a,
+                        fontSize: 13,
+                        margin: [0, 0, 0, 0],
+                        alignment: 'right'
+                    },
+                    {
+                        text: forms.item26b == null ? '0.00' : forms.item26b % 1 == 0 ? forms.item26b + '.00' : forms.item26b,
+                        fontSize: 13,
+                        margin: [0, 0, 0, 0],
+                        alignment: 'right'
+                    }]
+                ]
+            }
+        },
+
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [300, 96, 96],
+                body: [
+                    [{
+                        text: '',
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+
+                    },
+
+                    {
+                        text: forms.item27a == null ? '0.00' : forms.item27a % 1 == 0 ? forms.item26a + '.00' : forms.item27a,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    },
+                    {
+                        text: forms.item27b == null ? '0.00' : forms.item27b % 1 == 0 ? forms.item27b + '.00' : forms.item27b,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [300, 96, 96],
+                body: [
+                    [{
+                        text: '',
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+
+                    },
+
+                    {
+                        text: forms.item28a == null ? '0.00' : forms.item28a % 1 == 0 ? forms.item28a + '.00' : forms.item28a,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    },
+                    {
+                        text: forms.item28b == null ? '0.00' : forms.item28b % 1 == 0 ? forms.item28b + '.00' : forms.item28b,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [300, 96, 96],
+                body: [
+                    [{
+                        text: '',
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+
+                    },
+
+                    {
+                        text: forms.item29a == null ? '0.00' : forms.item29a % 1 == 0 ? forms.item29a + '.00' : forms.item29a,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    },
+                    {
+                        text: forms.item29b == null ? '0.00' : forms.item29b % 1 == 0 ? forms.item29b + '.00' : forms.item29b,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [300, 96, 96],
+                body: [
+                    [{
+                        text: '',
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+
+                    },
+
+                    {
+                        text: forms.item30a == null ? '0.00' : forms.item30a % 1 == 0 ? forms.item30a + '.00' : forms.item30a,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    },
+                    {
+                        text: forms.item30b == null ? '0.00' : forms.item30b % 1 == 0 ? forms.item30b + '.00' : forms.item30b,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [300, 96, 96],
+                body: [
+                    [{
+                        text: '',
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+
+                    },
+
+                    {
+                        text: forms.item31a == null ? '0.00' : forms.item31a % 1 == 0 ? forms.item31a + '.00' : forms.item31a,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    },
+                    {
+                        text: forms.item31b == null ? '0.00' : forms.item31ab % 1 == 0 ? forms.item31b + '.00' : forms.item31b,
+                        fontSize: 13,
+                        margin: [0, -5, 0, 0],
+                        alignment: 'right'
+                    }]
+                ]
+            }
         }
-    })
-
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [300, 96, 96],
-            body: [
-                [{
-                    text: '',
-                    fontSize: 13,
-                    margin: [0, 0, 0, 0],
-                    alignment: 'right'
-
-                },
-
-                {
-                    text: forms.item26a == null ? '0.00' : forms.item26a % 1 == 0 ? forms.item26a + '.00' : forms.item26a,
-                    fontSize: 13,
-                    margin: [0, 0, 0, 0],
-                    alignment: 'right'
-                },
-                {
-                    text: forms.item26b == null ? '0.00' : forms.item26b % 1 == 0 ? forms.item26b + '.00' : forms.item26b,
-                    fontSize: 13,
-                    margin: [0, 0, 0, 0],
-                    alignment: 'right'
-                }]
-            ]
-        }
-    })
-
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [300, 96, 96],
-            body: [
-                [{
-                    text: '',
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-
-                },
-
-                {
-                    text: forms.item27a == null ? '0.00' : forms.item27a % 1 == 0 ? forms.item26a + '.00' : forms.item27a,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                },
-                {
-                    text: forms.item27b == null ? '0.00' : forms.item27b % 1 == 0 ? forms.item27b + '.00' : forms.item27b,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                }]
-            ]
-        }
-    })
-
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [300, 96, 96],
-            body: [
-                [{
-                    text: '',
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-
-                },
-
-                {
-                    text: forms.item28a == null ? '0.00' : forms.item28a % 1 == 0 ? forms.item28a + '.00' : forms.item28a,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                },
-                {
-                    text: forms.item28b == null ? '0.00' : forms.item28b % 1 == 0 ? forms.item28b + '.00' : forms.item28b,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                }]
-            ]
-        }
-    })
-
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [300, 96, 96],
-            body: [
-                [{
-                    text: '',
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-
-                },
-
-                {
-                    text: forms.item29a == null ? '0.00' : forms.item29a % 1 == 0 ? forms.item29a + '.00' : forms.item29a,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                },
-                {
-                    text: forms.item29b == null ? '0.00' : forms.item29b % 1 == 0 ? forms.item29b + '.00' : forms.item29b,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                }]
-            ]
-        }
-    })
-
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [300, 96, 96],
-            body: [
-                [{
-                    text: '',
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-
-                },
-
-                {
-                    text: forms.item30a == null ? '0.00' : forms.item30a % 1 == 0 ? forms.item30a + '.00' : forms.item30a,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                },
-                {
-                    text: forms.item30b == null ? '0.00' : forms.item30b % 1 == 0 ? forms.item30b + '.00' : forms.item30b,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                }]
-            ]
-        }
-    })
-
-    content.push({
-        layout: "noBorders",
-        table: {
-            widths: [300, 96, 96],
-            body: [
-                [{
-                    text: '',
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-
-                },
-
-                {
-                    text: forms.item31a == null ? '0.00' : forms.item31a % 1 == 0 ? forms.item31a + '.00' : forms.item31a,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                },
-                {
-                    text: forms.item31b == null ? '0.00' : forms.item31ab % 1 == 0 ? forms.item31b + '.00' : forms.item31b,
-                    fontSize: 13,
-                    margin: [0, -5, 0, 0],
-                    alignment: 'right'
-                }]
-            ]
-        }
-    })
-
+    ]
 
     return content;
 }
