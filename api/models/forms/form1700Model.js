@@ -3,102 +3,53 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
+var common_model = require('./commonModels');
 
-var Form1700Schema = new Schema({
-    reference_no: String,
-    dateFiled: {
-        type: Date,
-        default: new Date()
-    },
-    return_period_year: String,
-    return_period: {type: Date, default: new Date()},
-    amended_yn: Boolean,
-
-    taxpayer: {},
-    spouse_taxpayer: {},
+const model_schema = {
 
     prev_tax_due: { type: Number, default: 0 }, //26 Tax Due
-    // total_tax_credit: { type: Number, default: 0 }, //27
+    total_tax_credit: { type: Number, default: 0 }, //27 
     net_tax_payable: { type: Number, default: 0 }, //28  item26 Less Item 27
     portion_of_tax_payabe: { type: Number, default: 0 }, //29 
-    tax_due: { type: Number, default: 0 }, //30 Item 28 less Item 29
-
-    //penalties
-    surcharge: { type: Number, default: 0 }, 
-    interest: { type: Number, default: 0 }, 
-    compromise: { type: Number, default: 0 }, 
-    penalties: { type: Number, default: 0 }, // 34 Sum of item 31 to 33
-
     total_amount_payable: { type: Number, default: 0 }, //35 sum of item 30 and 34
     aggregate_amount_payable: { type: Number, default: 0 }, //36 sum of item 35A and 35B
-    num_of_sheet: { type: Number, default: 0 }, //37 no of attachments
 
     //Page 2
+    //Part V.A Graduate Rates
+    grad_rates_gross_compensation_income: { type: Number, default: 0 },  //42 A
+    grad_rates_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
+    grad_rates_non_taxable: { type: Number, default: 0 }, //43 A
+    grad_rates_spouse_non_taxable: { type: Number, default: 0 }, //43 B
+    grad_rates_gross_taxable: { type: Number, default: 0 }, //44 A
+    grad_rates_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
+    grad_rates_other_taxable: { type: Number, default: 0 }, //45 A
+    grad_rates_spouse_other_taxable: { type: Number, default: 0 }, //45 B
+    grad_rates_tot_taxable_income: { type: Number, default: 0 },
+    grad_rates_spouse_tot_taxable_income: { type: Number, default: 0 },
+    grad_rates_tax_due: { type: Number, default: 0 },
+    grad_rates_spouse_tax_due: { type: Number, default: 0 },
+    
+
+    //Part V.B Flat Rate
+    flat_rate_gross_compensation_income: { type: Number, default: 0 },  //48 A
+    flat_rate_spouse_gross_compensation_income: { type: Number, default: 0 }, //48 B
+    flat_rate_non_taxable: { type: Number, default: 0 }, //49 A
+    flat_rate_spouse_non_taxable: { type: Number, default: 0 }, //49 B
+    flat_rate_gross_taxable: { type: Number, default: 0 }, //50 A
+    flat_rate_spouse_gross_taxable: { type: Number, default: 0 }, //50 B
+    flat_rate_other_taxable: { type: Number, default: 0 }, //51 A
+    flat_rate_spouse_other_taxable: { type: Number, default: 0 }, //51 B
+    flat_rate_tot_taxable_income: { type: Number, default: 0 }, //52 A
+    flat_rate_spouse_tot_taxable_income: { type: Number, default: 0 }, //52 B
+    flat_rate_tax_due: { type: Number, default: 0 }, //53 A
+    flat_rate_spouse_tax_due: { type: Number, default: 0 }, //53 B
+    
+    //Part V.C Tax Credit Payment
 
     
-    // joint_filing: Boolean,
+};
 
-    // source_of_income: "",
-    // 0 - Compensation Income
-    // 1 - Other Income
-    
-
-    // dueDate: Date,
-    // returnPeriod: Date,
-    // returnPeriodMonth: String,
-    // returnPeriodYear: String,
-    // amendedYn: Boolean,
-    // numOfSheet: { type: Number, default: 0 },
-
-
-    tax_filer_tax_due: { type: Number, default: 0 },
-    spouse_tax_due: { type: Number, default: 0 },
-    total_income_tax_due: { type: Number, default: 0 },
-    less_tax_credits: { type: Number, default: 0 },
-    spouse_less_tax_credits: { type: Number, default: 0 },
-    net_tax_payable: { type: Number, default: 0 },
-    portion_tax_payable: { type: Number, default: 0 },
-    total_penalties: { type: Number, default: 0 },
-    total_amount_payable: { type: Number, default: 0 },
-    // atc: { type: Number, default: 0 }, 
-    // taxCredits: { type: Number, default: 0 },
-    // taxRate: { type: Number, default: 0 },
-    // method_deduction: { type: Number, default: 0 },
-    // spouse_atc: { type: Number, default: 0 },
-    // spouse_taxCredits: { type: Number, default: 0 },
-    // spouse_taxRate: { type: Number, default: 0 },
-    // spouse_method_deduction: { type: Number, default: 0 },
-    // otherTaxCredits: { type: Number, default: 0 },
-    // totalCredits: { type: Number, default: 0 },
-    // amtPaybl: { type: Number, default: 0 },
-    // surcharge: { type: Number, default: 0 },
-    // interest: { type: Number, default: 0 },
-    // compromise: { type: Number, default: 0 },
-    // penalties: { type: Number, default: 0 },
-    // total_amount_payable: { type: Number, default: 0 },
-    // batchNo: { type: Number, default: 0 },
-    // sched1: [],
-    // sched2: [],
-    // sched3: [],
-    // sched4: [],
-    date_created: {
-        type: Date,
-        default: new Date()
-    },
-    date_modified: {
-        type: Date,
-        default: new Date()
-    },
-    auto_id: {
-        type: Number
-    },
-    created_by: {
-        type: String
-    },
-    modified_by: {
-        type: String
-    }
-});
+var Form1700Schema = new Schema({ ...common_model, ...model_schema });
 
 Form1700Schema.pre('save', function (callback) {
     var form = this;
