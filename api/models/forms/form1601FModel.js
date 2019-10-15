@@ -6,30 +6,22 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    reference_no: Number,
-    // common
-    // taxpayer: {},
-    // date_filed: {type: Date, default: new Date()},
-    // due_date: {type: Date, default: new Date()},
-    // return_period: {type: Date, default: new Date()},
-    // return_period_month:String,
-    // return_period_year: String,
-    // amended_yn: Boolean,
-    // num_of_sheet: { type: Number, default: 0 },
-    // opn_yn: String,
-    // category_of_agent: String,
-    // special_rate_yn: String,
-    // international_treaty_yn: String,
-    any_tax_withheld: { type:Boolean },
-    atc_list:[{
+    category_of_agent: { 
+        type: String
+        /**
+         * government
+         * private
+         */
+    },
+    any_tax_withheld: { type: Boolean },
+    atc_list: [{
         nature_of_income_payment: String,
         atc_code: String,
         tax_base: { type: Number, default: 0 },
         tax_rate: { type: Number, default: 0 },
-        tax_withheld: { type: Number, default: 0 }        
+        tax_withheld: { type: Number, default: 0 }
     }],
-    // total_final_wthld: { type: Number, default: 0 },
-    sched_list: [{
+    sched1: [{
         treaty_code: String,
         atc: String,
         amt_income_payment: { type: Number, default: 0 },
@@ -38,18 +30,11 @@ const model_schema = {
         total: { type: Number, default: 0 }
     }],
     tax_wthld_under_treaty: String, //14 Regular rates
-    tot_schedule1: { type: Number, default: 0 }, //15 (form schedule 1)
+    total_schedule1: { type: Number, default: 0 }, //15 (form schedule 1)
     amt_due_final: { type: Number, default: 0 }, //16 (sum of items 14 and 15)
     prev_tax_paid_final: { type: Number, default: 0 }, //17 (Less: Tax Remitted in return previously Filed)
-    // common
-    // tax_due: { type: Number, default: 0 },//18 overremittance
-    // surcharge: { type: Number, default: 0 },//19A
-    // interest: { type: Number, default: 0 },//19B
-    // compromise: { type: Number, default: 0 },//19C
-    // penalties: { type: Number, default: 0 },//19D total penalties
-    // total_amt_paybl: { type: Number, default: 0 }//20 (Sum of item 18 and 19D)
-    
-}; 
+
+};
 
 var Form1601FSchema = new Schema({ ...common_model, ...model_schema });
 

@@ -33,7 +33,7 @@ function validate(form_details) {
 
     // validate required fields
     errors.push(...validateRequired(form_details));
-    
+
     // Check Due date if late filing
     errors.push(...commonValidator.checkDueDate(form_details, 2));
 
@@ -48,16 +48,26 @@ function validate(form_details) {
  * @param {Object} form 
  */
 function validateRequired(form) {
-    var error_messages = [];
+    var errors = [];
 
-    if (!form.taxpayer.line_of_business) {
-        error_messages.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
+    console.log('form.any_tax_withheld :', form.any_tax_withheld);
+    if (form.any_tax_withheld === undefined || form.any_tax_withheld === null) {
+        errors.push({ page: 0, field: "any_tax_withheld", error: constant_helper.MANDATORY_FIELD('Any Taxes Withheld') });
+    } else if(form.any_tax_withheld){
+        if (!form.atc_list || !form.atc_list.length) {
+            errors.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('ATC') });
+        }
     }
 
-    if (!form.sched1 || !form.sched1.length) {
-        error_messages.push({ page: 2, field: "atc", error: constant_helper.MANDATORY_FIELD('Schedule 1') });
+    if (form.taxpayer && !form.taxpayer.line_of_business) {
+        errors.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
     }
-    return error_messages;
+
+    if (!form.category_of_agent) {
+        errors.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Withholding Agent') });
+    }
+
+    return errors;
 }
 
 function computeDueDate(returnPeriod) {

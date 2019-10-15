@@ -9,51 +9,29 @@ function validateTaxpayerDetails(tp, page) {
     // var tp = new taxpayerDetails(taxpayer);
     console.log('page :', page);
     console.log('tp', JSON.stringify(tp))
-    console.log('!tp.tin', !tp.tin)
-    if (!tp.tin) {
+
+    if (!tp || !tp.tin) {
         error_messages.push({ page, field: "taxpayer.tin", error: constant_helper.MANDATORY_FIELD('TIN') });
     }
 
-    if (!tp.rdo_code) {
+    if (!tp || !tp.rdo_code) {
         error_messages.push({ page, field: "taxpayer.rdo_code", error: constant_helper.MANDATORY_FIELD('RDO Code') });
     }
 
-    // if (!tp.branch_code) {
-    //     error_messages.push({ field: "taxpayer.branch_code", error: "Branch Code is a mandatory field" });
-    // }
-
-    if (!tp.registered_name) {
+    if (!tp || !tp.registered_name) {
         error_messages.push({ page, field: "taxpayer.registered_name", error: constant_helper.MANDATORY_FIELD('Registered Name') });
     }
-    if (!tp.contact_details.telno) {
+
+    if (!tp || !tp.contact_details || !tp.contact_details.telno) {
         error_messages.push({ page, field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Telephone no') });
     }
-    if (!tp.address) {
+    if (!tp || !tp.address) {
         error_messages.push({ page, field: "taxpayer.address", error: constant_helper.MANDATORY_FIELD('Registered Address') });
     }
-    if (!tp.address_details.zipCode) {
+
+    if (!tp || !tp.address_details || !tp.address_details.zipCode) {
         error_messages.push({ page, field: "taxpayer.address_details.zipCode", error: constant_helper.MANDATORY_FIELD('Zip Code') });
     }
-
-    // if (!tp.taxpayer.taxpayer_name) {
-    //     error_messages.push({ field: "taxpayer.taxpayer_name", error: "Tax payer name is a mandatory field" });
-    // }
-
-    // if (!tp.taxpayer.registered_address) {
-    //     error_messages.push({ field: "taxpayer.registered_address", error: "Tax payer registered address is a mandatory field" });
-    // }
-
-    // if (!tp.taxpayer.zip_code) {
-    //     error_messages.push({ field: "taxpayer.zip_code", error: "Zip code is a mandatory field" });
-    // }
-
-    // if (!tp.taxpayer.birthday) {
-    //     error_messages.push({ field: "taxpayer.birthday", error: "Tax payer birthday is a mandatory field" });
-    // }
-
-    // if (!tp.taxpayer.email_address) {
-    //     error_messages.push({ field: "taxpayer.email_address", error: "Email address is a mandatory field" });
-    // }
 
     return error_messages;
 
