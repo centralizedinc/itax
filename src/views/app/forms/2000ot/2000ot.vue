@@ -34,7 +34,14 @@
         :wrapperCol="form_layout.wrapper_col"
         label="4"
       >
-        <a-input-number placeholder="ATC" v-model="form.atc" style="width: 100%" />
+        <a-select v-model="form.atc">
+          <a-select-option value="DS102">
+            DS 102 Sales, Agreements to Sell, Memoranda of Sales, Deliveries or Transfer of
+            Shares or Certificates of Stock with par value
+          </a-select-option>
+          <a-select-option value="DS125">DS 125 In case of stock without par value</a-select-option>
+          <a-select-option value="DS122">DS 122 Deed of Sale and conveyance of real propert</a-select-option>
+        </a-select>
       </a-form-item>
     </a-form>
 
@@ -98,12 +105,16 @@
       <a-form-item>
         <div style="color: black">11. Nature of transaction</div>
         <a-form-item>
-          <a-radio-group v-model="form.natureOfTransaction">
-            <a-radio :value="'CA'">Transfer of Real Property classified as capital asset</a-radio>
+          <a-radio-group v-model="form.natureOfTransaction" @change="changeNatureOfTrans">
+            <a-radio
+              value="real_property_capital"
+            >Transfer of Real Property classified as capital asset</a-radio>
             <br />
-            <a-radio :value="'OA'">Transfer of Real Property classified as ordinary asset</a-radio>
+            <a-radio
+              value="real_property_ordinary"
+            >Transfer of Real Property classified as ordinary asset</a-radio>
             <br />
-            <a-radio :value="'NT'">
+            <a-radio value="shares_stock">
               Transfer of shares of stock not traded through the local stock exchange
               <br />
               <span
@@ -168,13 +179,16 @@
         <div style="color: black">12. Brief Description of Property Sold</div>
         <a-form-item>
           <a-radio-group v-model="form.propertySold">
-            <a-radio :value="'PropDesc_RP'" @change="sel_property_desc">Real Property</a-radio>
-            <a-radio :value="'PropDesc_SS'">Shares of Stocks not Traded in the Local Stock Exchange</a-radio>
+            <a-radio disabled value="real_property">Real Property</a-radio>
+            <a-radio
+              disabled
+              value="shares_stock"
+            >Shares of Stocks not Traded in the Local Stock Exchange</a-radio>
           </a-radio-group>
         </a-form-item>
       </a-form-item>
 
-      <a-form-item v-show="form.propertySold=='PropDesc_RP'">
+      <a-form-item v-show="form.propertySold=='real_property'">
         <a-form-item>
           <a-row :gutter="12">
             <a-col :span="12">
@@ -256,6 +270,7 @@
                   label="12F"
                 >
                   <a-input
+                    disabled
                     v-model="form.fairMarketValue"
                     placeholder="Fair Market Value of Property Sold (Schedule 1)."
                   ></a-input>
@@ -277,7 +292,7 @@
 
       <br />
 
-      <a-form-item v-show="form.propertySold=='PropDesc_SS'">
+      <a-form-item v-show="form.propertySold=='shares_stock'">
         <a-row :gutter="12">
           <a-col :span="24">
             <a-form-item
@@ -288,7 +303,8 @@
               <a-input v-model="form.stockname" placeholder="Name of Corporate Stock"></a-input>
             </a-form-item>
           </a-col>
-
+        </a-row>
+        <a-row :gutter="12">
           <a-col :span="24">
             <a-form-item
               :labelCol="form_layout.label_col"
@@ -564,6 +580,17 @@ export default {
     step() {}
   },
   methods: {
+    changeNatureOfTrans() {
+      if (
+        this.form.natureOfTransaction === "real_property_capital" ||
+        this.form.natureOfTransaction === "real_property_ordinary"
+      ) {
+        this.form.propertySold = "real_property";
+      } else if (this.form.natureOfTransaction === "shares_stock") {
+        this.form.propertySold = "shares_stock";
+      }
+      console.log("this.form.propertySold :", this.form.propertySold);
+    },
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
@@ -578,6 +605,9 @@ export default {
     },
     validate() {
       this.changeStep(this.step + 1);
+    },
+    updateSchedAndClose() {
+      this.show_sched1 = false;
     }
   }
 };
