@@ -30,15 +30,19 @@
         </a-popconfirm> -->
       </div>
     </a-table>
+    <!-- <form-display ref="form_display_component" :type="form_type" :form="form"  style="display:none"/> -->
   </a-card>
 </template>
 
 <script>
 import moment from "moment";
+// import FormDisplay from "@/components/FormDisplay.vue";
 export default {
   data() {
     return {
       moment,
+      form_type:'',
+      form:{},
       loading: false,
       cols: [
         {
