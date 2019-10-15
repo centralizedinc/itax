@@ -24,9 +24,15 @@ const model_schema = {
     mortgage_assumed: { type: Number, default: 0 },
     total_payments_initial_year: { type: Number, default: 0 },
     amount_installment_month: { type: Number, default: 0 },
-    tax_declaration: { type: Number, default: 0 },
-    total_tax_credits: { type: Number, default: 0 },
-    if_overremittance: String,
+    tax_declaration_land: { type: Number, default: 0 },
+    tax_declaration_improvements: { type: Number, default: 0 },
+    zonal_value: { type: Number, default: 0 },
+    commissioner: { type: Number, default: 0 },
+    gross_selling_price: { type: Number, default: 0 },
+    fair_market_value: { type: Number, default: 0 }, // Sum of 27A & 27B/ 27C & 27D/ 27B & 27C/27A & 27D whichever is higher
+    bid_price: { type: Number, default: 0 },
+    installment_collected: { type: Number, default: 0 }, //Installment Sale excluding interest
+    taxable_base_computation: { type: Number, default: 0 },
     particular_cash: { type: Number, default: 0 },
     particular_check: { type: Number, default: 0 },
     particular_tax_debit: { type: Number, default: 0 },
