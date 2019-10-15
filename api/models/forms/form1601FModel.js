@@ -3,37 +3,24 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
+const common_model = require('./commonModels');
 
-var Form1601FSchema = new Schema({
+const model_schema = {
     reference_no: Number,
-    taxpayer: {},
-
-    date_filed: {type: Date, default: new Date()},
-    due_date: {type: Date, default: new Date()},
-    return_period: {type: Date, default: new Date()},
-    return_period_month:String,
-    return_period_year: String,
-    amended_yn: Boolean,
-    num_of_sheet: { type: Number, default: 0 },
-    opn_yn: String,
-
-    category_of_agent: String,
-    special_rate_yn: String,
-    international_treaty_yn: String,
-
-    // amtDueCrdtb: Number,
-    // prevTaxPaidCrdtb: Number,
-    // amtPayblCrdtb: Number,
-    // surcharge: Number,
-    // interest: Number,
-    // compromise: Number,
-    // penaltiesCrdtb: Number,
-    // totalAmtPayblCrdtb: Number,
-    // refundType: String,
-
-    // advPayment: Number,
-    // totTaxCredits: Number,
-    // ifOverremittance: String,
+    // common
+    // taxpayer: {},
+    // date_filed: {type: Date, default: new Date()},
+    // due_date: {type: Date, default: new Date()},
+    // return_period: {type: Date, default: new Date()},
+    // return_period_month:String,
+    // return_period_year: String,
+    // amended_yn: Boolean,
+    // num_of_sheet: { type: Number, default: 0 },
+    // opn_yn: String,
+    // category_of_agent: String,
+    // special_rate_yn: String,
+    // international_treaty_yn: String,
+    any_tax_withheld: { type:Boolean },
     atc_list:[{
         nature_of_income_payment: String,
         atc_code: String,
@@ -41,7 +28,7 @@ var Form1601FSchema = new Schema({
         tax_rate: { type: Number, default: 0 },
         tax_withheld: { type: Number, default: 0 }        
     }],
-    total_final_wthld: { type: Number, default: 0 },
+    // total_final_wthld: { type: Number, default: 0 },
     sched_list: [{
         treaty_code: String,
         atc: String,
@@ -54,14 +41,18 @@ var Form1601FSchema = new Schema({
     tot_schedule1: { type: Number, default: 0 }, //15 (form schedule 1)
     amt_due_final: { type: Number, default: 0 }, //16 (sum of items 14 and 15)
     prev_tax_paid_final: { type: Number, default: 0 }, //17 (Less: Tax Remitted in return previously Filed)
-    tax_due: { type: Number, default: 0 },//18 overremittance
-    surcharge: { type: Number, default: 0 },//19A
-    interest: { type: Number, default: 0 },//19B
-    compromise: { type: Number, default: 0 },//19C
-    penalties: { type: Number, default: 0 },//19D total penalties
-    total_amt_paybl: { type: Number, default: 0 }//20 (Sum of item 18 and 19D)
+    // common
+    // tax_due: { type: Number, default: 0 },//18 overremittance
+    // surcharge: { type: Number, default: 0 },//19A
+    // interest: { type: Number, default: 0 },//19B
+    // compromise: { type: Number, default: 0 },//19C
+    // penalties: { type: Number, default: 0 },//19D total penalties
+    // total_amt_paybl: { type: Number, default: 0 }//20 (Sum of item 18 and 19D)
     
-}); 
+}; 
+
+var Form1601FSchema = new Schema({ ...common_model, ...model_schema });
+
 
 Form1601FSchema.pre('save', function (callback) {
     var form = this;
