@@ -20,6 +20,7 @@ const model_schema = {
     // category_of_agent: String,
     // special_rate_yn: String,
     // international_treaty_yn: String,
+    any_tax_withheld: { type:Boolean },
     atc_list:[{
         nature_of_income_payment: String,
         atc_code: String,

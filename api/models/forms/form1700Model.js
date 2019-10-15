@@ -16,37 +16,70 @@ const model_schema = {
 
     //Page 2
     //Part V.A Graduate Rates
-    grad_rates_gross_compensation_income: { type: Number, default: 0 },  //42 A
-    grad_rates_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
-    grad_rates_non_taxable: { type: Number, default: 0 }, //43 A
-    grad_rates_spouse_non_taxable: { type: Number, default: 0 }, //43 B
-    grad_rates_gross_taxable: { type: Number, default: 0 }, //44 A
-    grad_rates_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
-    grad_rates_other_taxable: { type: Number, default: 0 }, //45 A
-    grad_rates_spouse_other_taxable: { type: Number, default: 0 }, //45 B
-    grad_rates_tot_taxable_income: { type: Number, default: 0 },
-    grad_rates_spouse_tot_taxable_income: { type: Number, default: 0 },
-    grad_rates_tax_due: { type: Number, default: 0 },
-    grad_rates_spouse_tax_due: { type: Number, default: 0 },
+    gr_gross_compensation_income: { type: Number, default: 0 },  //42 A
+    gr_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
+    gr_non_taxable: { type: Number, default: 0 }, //43 A
+    gr_spouse_non_taxable: { type: Number, default: 0 }, //43 B
+    gr_gross_taxable: { type: Number, default: 0 }, //44 A
+    gr_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
+    gr_other_taxable: { type: Number, default: 0 }, //45 A
+    gr_spouse_other_taxable: { type: Number, default: 0 }, //45 B
+    gr_tot_taxable_income: { type: Number, default: 0 },
+    gr_spouse_tot_taxable_income: { type: Number, default: 0 },
+    gr_tax_due: { type: Number, default: 0 },
+    gr_spouse_tax_due: { type: Number, default: 0 },
     
 
     //Part V.B Flat Rate
-    flat_rate_gross_compensation_income: { type: Number, default: 0 },  //48 A
-    flat_rate_spouse_gross_compensation_income: { type: Number, default: 0 }, //48 B
-    flat_rate_non_taxable: { type: Number, default: 0 }, //49 A
-    flat_rate_spouse_non_taxable: { type: Number, default: 0 }, //49 B
-    flat_rate_gross_taxable: { type: Number, default: 0 }, //50 A
-    flat_rate_spouse_gross_taxable: { type: Number, default: 0 }, //50 B
-    flat_rate_other_taxable: { type: Number, default: 0 }, //51 A
-    flat_rate_spouse_other_taxable: { type: Number, default: 0 }, //51 B
-    flat_rate_tot_taxable_income: { type: Number, default: 0 }, //52 A
-    flat_rate_spouse_tot_taxable_income: { type: Number, default: 0 }, //52 B
-    flat_rate_tax_due: { type: Number, default: 0 }, //53 A
-    flat_rate_spouse_tax_due: { type: Number, default: 0 }, //53 B
+    fr_gross_compensation_income: { type: Number, default: 0 },  //48 A
+    fr_spouse_gross_compensation_income: { type: Number, default: 0 }, //48 B
+    fr_non_taxable: { type: Number, default: 0 }, //49 A
+    fr_spouse_non_taxable: { type: Number, default: 0 }, //49 B
+    fr_gross_taxable: { type: Number, default: 0 }, //50 A
+    fr_spouse_gross_taxable: { type: Number, default: 0 }, //50 B
+    fr_other_taxable: { type: Number, default: 0 }, //51 A
+    fr_spouse_other_taxable: { type: Number, default: 0 }, //51 B
+    fr_tot_taxable_income: { type: Number, default: 0 }, //52 A
+    fr_spouse_tot_taxable_income: { type: Number, default: 0 }, //52 B
+    fr_tax_due: { type: Number, default: 0 }, //53 A
+    fr_spouse_tax_due: { type: Number, default: 0 }, //53 B
     
     //Part V.C Tax Credit Payment
+    tp_tax_wittheld: { type: Number, default: 0 }, //54 A
+    tp__spousetax_wittheld: { type: Number, default: 0 },// 54 B
+    tp_tax_paid_return:  { type: Number, default: 0 },// 55 A
+    tp__spouse_tax_paid_return:  { type: Number, default: 0 },//55 B
+    tp_foreign_tax_credit:  { type: Number, default: 0 },// 56 A
+    tp__spouse_foreign_credit:  { type: Number, default: 0 },// 56 B
+    tp_other_tax:  { type: Number, default: 0 },//57 A
+    tp_spouse_other_tax:  { type: Number, default: 0 },//57 B
+    tp_total_tax:  { type: Number, default: 0 },//58 A
+    tp_spouse_total_tax:  { type: Number, default: 0 },//58 B
+    tp_net_tax_payable:  { type: Number, default: 0 },//59 A
+    tp_spouse_net_tax_payable:  { type: Number, default: 0 },//59 B
 
-    
+    //Part VI schedule
+    sched1: [{
+        filer_type: {
+            type: String
+            /**
+             * taxpayer
+             * spouse
+             */
+        },
+        name_of_employer: String,
+        employer_tin: String,
+        comp_inc_sub_reg_grad: { type: Number, default: 0 },
+        tax_withheld: { type: Number, default: 0 },
+        // gros_comp_tot_tax_withld_taxpayer: { type: Number, default: 0 },
+        // gros_comp_tot_tax_withld_spouse: { type: Number, default: 0 },
+    }],
+    taxpayer_regular_grad_total: { type: Number, default: 0 },
+    taxpayer_flat_total: { type: Number, default: 0 },
+    taxpayer_tax_withheld_total: { type: Number, default: 0 },
+    spouse_regular_grad_total: { type: Number, default: 0 },
+    spouse_flat_total: { type: Number, default: 0 },
+    spouse_tax_withheld_total: { type: Number, default: 0 },
 };
 
 var Form1700Schema = new Schema({ ...common_model, ...model_schema });
