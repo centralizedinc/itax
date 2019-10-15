@@ -13,18 +13,25 @@ var Form2000OTSchema = new Schema({
   //   type: Date,
   //   default: new Date()
   // },
-  amendedYn: Boolean,
-  numOfSheet: { type: Number, default: 0 },
+  amended_yn: Boolean,
+  num_of_sheet: { type: Number, default: 0 },
   atc: {
     code: String,
     description: String,
     rate: String
   },
-  dueDate: Date,
-  returnPeriod: Date,
-  returnPeriodMonth: String,
-  returnPeriodYear: String,
-  natureOfTransaction: String,
+  due_date: Date,
+  return_period: Date,
+  return_period_month: String,
+  return_period_year: String,
+  natureOfTransaction: {
+    type: String
+    /**
+     * real_property_capital
+     * real_property_ordinary
+     * shares_stock
+     */
+  },
   seller: String,
   sellerTin: String,
   buyer: String,
@@ -32,7 +39,18 @@ var Form2000OTSchema = new Schema({
   propertySold: String,
   locationOfRealProp: String,
   rdoRealProp: String,
-  realPropertyClass: String,
+  realPropertyClass: {
+    type: String
+    /**
+     * residential
+     * agricultural
+     * commercial
+     * industrial
+     * condo_residential
+     * condo_commercial
+     * others
+     */
+  },
   others: String,
   areaOfProperty: String,
   tctNo: String,
@@ -59,14 +77,17 @@ var Form2000OTSchema = new Schema({
   realPropertyTaxBase: Number,
   sharesStockTaxBase: Number,
   taxRate: Number,
-  taxDue: Number,
+  prev_tax_due: Number,
   prevTaxPaid: Number,
-  taxStillDue: Number,
+  tax_due: {
+    type: Number,
+    default: 0
+  },
   surcharge: Number,
   interest: Number,
   compromise: Number,
   penalties: Number,
-  totalAmountPayable: Number,
+  total_amount_payable: Number,
   date_created: {
     type: Date,
     default: new Date()
@@ -121,4 +142,4 @@ plugin.applyPlugin()
   });
 
 
-module.exports = mongoose.model("form_2000ot", Form2000OTSchema);
+module.exports = mongoose.model("2000ot_forms", Form2000OTSchema);

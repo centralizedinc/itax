@@ -8,12 +8,12 @@
       >
         <a-date-picker
           placeholder="Date of Transaction Purchase (MM/DD/YYYY)"
-          v-model="form.returnPeriod"
+          v-model="form.return_period"
           style="width: 100%"
         />
       </a-form-item>
       <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
-        <a-radio-group v-model="form.amendedYn" :defaultValue="false" style="width: 100%">
+        <a-radio-group v-model="form.amended_yn" :defaultValue="false" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -25,7 +25,7 @@
       >
         <a-input-number
           placeholder="Number of Sheets"
-          v-model="form.numOfSheet"
+          v-model="form.num_of_sheet"
           style="width: 100%"
         />
       </a-form-item>
@@ -547,16 +547,16 @@ export default {
     form: {
       deep: true,
       handler() {
-        console.log("2000OT form: " + this.form.returnPeriod);
-        // this.form.year = this.formatDtYear(this.form.returnPeriod);
-        // this.form.month = this.formatDtMonth(this.form.returnPeriod);
-        // this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
-        // this.form.returnPeriodDay = this.formatDate(this.form.returnPeriod, {
+        console.log("2000OT form: " + this.form.return_period);
+        // this.form.year = this.formatDtYear(this.form.return_period);
+        // this.form.month = this.formatDtMonth(this.form.return_period);
+        // this.form.return_period_year = this.formatDtYear(this.form.return_period);
+        // this.form.returnPeriodDay = this.formatDate(this.form.return_period, {
         //   day: "2-digit"
         // });
         console.log("this.form.returnPeriodDay :", this.form.returnPeriodDay);
-        // this.form.returnPeriodMonth = this.formatDtMonth(
-        //   this.form.returnPeriod
+        // this.form.return_period_month = this.formatDtMonth(
+        //   this.form.return_period
         // );
         console.log("year: " + this.form.month);
       }

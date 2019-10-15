@@ -31,7 +31,7 @@ function fillup(details) {
 */
 
 function getContent(forms) {
-    console.log('forms.returnPeriod :', forms.returnPeriod);
+    console.log('forms.return_period :', forms.return_period);
     var content = [
         {
             layout: "noBorders",
@@ -60,21 +60,21 @@ function getContent(forms) {
 
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { month: "2-digit" }),
+                        text: formatDate(forms.return_period, { month: "2-digit" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [4, 0, 0, 0]
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { day: "2-digit" }),
+                        text: formatDate(forms.return_period, { day: "2-digit" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [-1, 0, 0, 0]
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { year: "numeric" }),
+                        text: formatDate(forms.return_period, { year: "numeric" }),
                         bold: true,
                         fontSize: 14,
                         alignment: 'justified',
@@ -84,7 +84,7 @@ function getContent(forms) {
                         text: ''
                     },
                     {
-                        text: forms.amendedYn == true ? 'X' : ' ',
+                        text: forms.amended_yn == true ? 'X' : ' ',
                         fontSize: 14,
                         bold: true,
                         alignment: 'justified',
@@ -94,7 +94,7 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.amendedYn == false ? 'X' : ' ',
+                        text: forms.amended_yn == false ? 'X' : ' ',
                         fontSize: 14,
                         bold: true,
                         alignment: 'justified',
@@ -104,7 +104,7 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                        text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                         fontSize: 14,
                         bold: true,
                         alignment: 'justified',
@@ -1083,7 +1083,7 @@ function formatDate(date, type) {
 }
 
 function mapTin(tin, from, to) {
-    if (!tin || from === null || to === null) return "";
+    if (!tin || from === null || to === null) return " ";
     return tin.substring(from, to);
 }
 
