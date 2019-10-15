@@ -243,7 +243,7 @@ function getContent(forms) {
                 heights: [15],
                 body: [
                     [{
-                        text: forms.natureOfTransaction == 'CA' ? 'X' : '',
+                        text: forms.natureOfTransaction == 'real_property_capital' ? 'X' : '',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
@@ -252,7 +252,7 @@ function getContent(forms) {
                         text: ''
                     },
                     {
-                        text: forms.natureOfTransaction == 'NT' ? 'X' : '',
+                        text: forms.natureOfTransaction == 'shares_stock' ? 'X' : '',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
@@ -270,7 +270,7 @@ function getContent(forms) {
                 heights: [8],
                 body: [
                     [{
-                        text: forms.natureOfTransaction == 'OA' ? 'X' : '',
+                        text: forms.natureOfTransaction == 'real_property_ordinary' ? 'X' : '',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
