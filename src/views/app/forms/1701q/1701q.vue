@@ -50,7 +50,6 @@
       <a-form-item label="5. Taxpayer Identification Number (TIN)">
         <a-input-number
           style="width:100%"
-          max="9999999999999"
           placeholder="Tax Identification Number"
           v-model="form.taxpayer.tin"
           :formatter="formatter.amount"
@@ -168,7 +167,6 @@
       <a-form-item label="17. Spouse’s TIN">
         <a-input-number
           style="width:100%"
-          max="9999999999999"
           placeholder="Tax Identification Number"
           v-model="form.taxpayer.spouse_tin"
           :formatter="formatter.amount"
@@ -252,29 +250,17 @@
             :wrapperCol="form_layout.wrapper_col"
             label="26."
           >
-            <a-input-number
-              disabled
-              v-model="form.item26a"
-              :data="tax_due"
-              placeholder="Tax Due"
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
-            ></a-input-number>
+            <a-input-number disabled v-model="form.item26a" :data="tax_due" placeholder="Tax Due"></a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="B) Spouse"></a-form-item>
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              v-model="form.item26b"
-              placeholder="Tax Due"
-              disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
-            ></a-input-number>
+            <a-input-number v-model="form.item26b" placeholder="Tax Due" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="show = 1">Schedule I</a-button>
+        <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
+        <a-button style="margin-left: 15px;" type="link" @click="sched = 2">Schedule II</a-button>
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
@@ -287,8 +273,6 @@
               v-model="form.item27a"
               placeholder="Less: Tax Credits/Payments(From "
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -298,12 +282,10 @@
               v-model="form.item27b"
               placeholder="Part V, Schedule III-Item 62)"
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="show = 3">Schedule III</a-button>
+        <a-button style="margin-left: 15px;" type="link" @click="sched = 3">Schedule III</a-button>
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
@@ -316,8 +298,6 @@
               v-model="form.item28a"
               placeholder="Tax Payable/(Overpayment)(Item "
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -327,8 +307,6 @@
               v-model="form.item28b"
               placeholder="26 Less Item 27 From Part V,Item 63)"
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -344,23 +322,15 @@
               v-model="form.item29a"
               placeholder="Add: Total Penalties (From Part V, "
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              v-model="form.item29b"
-              placeholder="Schedule IV-Item 67)"
-              disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
-            ></a-input-number>
+            <a-input-number v-model="form.item29b" placeholder="Schedule IV-Item 67)" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="show = 4">Schedule IV</a-button>
+        <a-button style="margin-left: 15px;" type="link" @click="sched = 4">Schedule IV</a-button>
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
@@ -373,8 +343,6 @@
               v-model="form.item30a"
               placeholder="Total Amount Payable/Overpayment"
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -384,8 +352,6 @@
               v-model="form.item30b"
               placeholder="Sum of Items 28/29 From Part V,Item 68"
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -401,8 +367,6 @@
               v-model="form.item31a"
               placeholder="Aggregate Amount Payable/(Overpayment)"
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -412,8 +376,6 @@
               v-model="form.item31b"
               placeholder="(Sum of Items 30A and 30B)"
               disabled
-              :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :parser="value => value.replace(/\₱ \s?|(,*)/g, '')"
             ></a-input-number>
           </a-form-item>
         </a-col>
@@ -421,7 +383,7 @@
     </a-form>
 
     <!-- Part IV -->
-    <a-form :form="form_part4" v-show="step===4">
+    <!-- <a-form :form="form_part4" v-show="step===4">
       <a-divider orientation="left">
         <b>Part IV: DETAILS OF PAYMENT</b>
       </a-divider>
@@ -650,15 +612,15 @@
         ></a-input-number>
       </a-form-item>
       <br />
-      <!-- <a-button type="link" @click="show = 1">Schedule I</a-button>
+      <a-button type="link" @click="show = 1">Schedule I</a-button>
       <a-button type="link" @click="show = 2">Schedule II</a-button>
       <a-button type="link" @click="show = 3">Schedule III</a-button>
-      <a-button type="link" @click="show = 4">Schedule IV</a-button>-->
-    </a-form>
-    <sched1 :show="show" @close="show = 0"></sched1>
-    <sched2 :show="show" @close="show = 0"></sched2>
-    <sched3 :show="show" @close="show = 0"></sched3>
-    <sched4 :show="show" @close="show = 0"></sched4>
+      <a-button type="link" @click="show = 4">Schedule IV</a-button>
+    </a-form>-->
+    <sched1 v-if="sched == 1" :show="show" :form="form" @close="show = 0"></sched1>
+    <sched2 v-if="sched == 2" :show="show" :form="form" @close="show = 0"></sched2>
+    <sched3 v-if="sched == 3" :show="show" :form="form" @close="show = 0"></sched3>
+    <sched4 v-if="sched == 4" :show="show" :form="form" @close="show = 0"></sched4>
   </div>
 </template>
 
@@ -677,7 +639,7 @@ export default {
   props: ["form", "step"],
   data() {
     return {
-      // sched: 0,
+      sched: 0,
       show: 0,
       sub: false,
       // form_1601e_image,
@@ -715,6 +677,8 @@ export default {
     }
   },
   methods: {
+    item26a() {},
+    item26b() {},
     save_draft() {},
     changeStep(step, form) {
       this.$emit("changeStep", step);
