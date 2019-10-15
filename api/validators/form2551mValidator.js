@@ -27,26 +27,26 @@ function validate(form_details, callback) {
         error_messages.yearEndedYear.push("Year Ended Year is a mandatory field");
     }
 
-    if (!form.returnPeriodMonth) {
-        error_messages.returnPeriodMonth = [];
-        error_messages.returnPeriodMonth.push("Return Period Month is a mandatory field");
+    if (!form.return_period_month) {
+        error_messages.return_period_month = [];
+        error_messages.return_period_month.push("Return Period Month is a mandatory field");
     }
 
-    if (!form.returnPeriodYear) {
-        error_messages.returnPeriodYear = [];
-        error_messages.returnPeriodYear.push("Return Period Year is a mandatory field");
+    if (!form.return_period_year) {
+        error_messages.return_period_year = [];
+        error_messages.return_period_year.push("Return Period Year is a mandatory field");
     }
 
-    if (!form.returnPeriod) {
-        error_messages.returnPeriod = [];
-        error_messages.returnPeriod.push("Return Period is a mandatory field");
+    if (!form.return_period) {
+        error_messages.return_period = [];
+        error_messages.return_period.push("Return Period is a mandatory field");
     }
-    //  else if (commonValidator.isFutureDate(form.returnPeriod)) {
-    //     error_messages.returnPeriodMonth = [];
-    //     error_messages.returnPeriodMonth.push("Invalid Return Period");
+    //  else if (commonValidator.isFutureDate(form.return_period)) {
+    //     error_messages.return_period_month = [];
+    //     error_messages.return_period_month.push("Invalid Return Period");
 
-    //     error_messages.returnPeriodYear = [];
-    //     error_messages.returnPeriodYear.push("Invalid Return Period");
+    //     error_messages.return_period_year = [];
+    //     error_messages.return_period_year.push("Invalid Return Period");
     // }
 
     if (form.part2List) {
@@ -74,9 +74,9 @@ function validate(form_details, callback) {
                 part2Err.taxRate.push('Tax Rate is a mandatory field');
             }
 
-            if (!part2.taxDue) {
-                part2Err.taxDue = [];
-                part2Err.taxDue.push('Tax Required to be Withheld is a mandatory field');
+            if (!part2.tax_due) {
+                part2Err.tax_due = [];
+                part2Err.tax_due.push('Tax Required to be Withheld is a mandatory field');
             }
 
             if (!part2Err !== {}) {
@@ -128,8 +128,8 @@ function validate(form_details, callback) {
     }
 
     //2. validate due date
-    if (form.returnPeriod) {
-        form.dueDate = computeDueDate(form.returnPeriod);
+    if (form.return_period) {
+        form.due_date = computeDueDate(form.return_period);
     }
 
     // 3. validate computations and late filing
@@ -150,10 +150,10 @@ function validate(form_details, callback) {
     });
 }
 
-function computeDueDate(returnPeriod) {
+function computeDueDate(return_period) {
     var due_date = new Date();
-    console.log('return period:::' + returnPeriod);
-    var month = new Date(returnPeriod).getMonth() + 1;
+    console.log('return period:::' + return_period);
+    var month = new Date(return_period).getMonth() + 1;
 
     //every 20th of the next month
     due_date.setDate(20);
@@ -175,16 +175,16 @@ function validateComputations(form, error_messages) {
     var interest = 0;
     var compromise = 0;
     var totalPenalties = 0;
-    var totalAmountPayable = 0;
+    var total_amount_payable = 0;
 
     if (form.part2List && form.part2List.length) {
         form.part2List.forEach((part2) => {
-            item19Total += part2.taxDue;
+            item19Total += part2.tax_due;
         });
 
-        if (item19Total !== form.taxDue) {
-            error_messages.taxDue = [];
-            error_messages.taxDue.push("Invalid Amount of Tax Due. Computed amount: " + item19Total);
+        if (item19Total !== form.tax_due) {
+            error_messages.tax_due = [];
+            error_messages.tax_due.push("Invalid Amount of Tax Due. Computed amount: " + item19Total);
         }
     }
 
@@ -212,8 +212,8 @@ function validateComputations(form, error_messages) {
     }
 
     //late filing
-    var late_filing = commonValidator.isLateFiling(form.dueDate);
-    console.log('LATE FILING:::' + form.dueDate);
+    var late_filing = commonValidator.isLateFiling(form.due_date);
+    console.log('LATE FILING:::' + form.due_date);
     if (late_filing) {
         surcharge = commonValidator.computeSurcharges(item22);
         if (surcharge !== form.surcharge) {
@@ -221,7 +221,7 @@ function validateComputations(form, error_messages) {
             error_messages.surcharge.push("Invalid Amount of Surcharge. Computed amount: " + surcharge);
         }
 
-        interest = commonValidator.computeInterest(form.dueDate, item22);
+        interest = commonValidator.computeInterest(form.due_date, item22);
         if (interest !== form.interest) {
             error_messages.interest = [];
             error_messages.interest.push("Invalid Amount of Interest. Computed amount: " + interest);
@@ -242,10 +242,10 @@ function validateComputations(form, error_messages) {
 
 
 
-    totalAmountPayable = item22 + totalPenalties;
-    if (totalAmountPayable !== form.totalAmountPayable) {
-        error_messages.totalAmountPayable = [];
-        error_messages.totalAmountPayable.push("Invalid Amount of Total Amount Payable. Computed amount: " + totalAmountPayable);
+    total_amount_payable = item22 + totalPenalties;
+    if (total_amount_payable !== form.total_amount_payable) {
+        error_messages.total_amount_payable = [];
+        error_messages.total_amount_payable.push("Invalid Amount of Total Amount Payable. Computed amount: " + total_amount_payable);
     }
 
     return error_messages;

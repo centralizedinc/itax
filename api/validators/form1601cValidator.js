@@ -1,6 +1,6 @@
 'use strict'
 
-var Form2551QModel = require('../models/forms/form2551QModel.js');
+var Form1601CModel = require('../models/forms/form1601CModel.js');
 var commonValidator = require('./commonValidator.js');
 
 
@@ -18,15 +18,15 @@ function validate(form_details) {
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('form 2551q validator errors: ', JSON.stringify(errors) )
+    console.log('form 1601c validator errors: ', JSON.stringify(errors) )
 
     return errors
 }
 
-function computeDueDate(return_period) {
+function computeDueDate(returnPeriod) {
     var due_date = new Date();
 
-    var month = return_period.getMonth() + 1;
+    var month = returnPeriod.getMonth() + 1;
 
     //every 20th of the next month
     due_date.setDate(20);
@@ -37,7 +37,7 @@ function computeDueDate(return_period) {
 
 /**
  * 
- * @param {form2551QModel} form 
+ * @param {form1601CModel} form 
  */
 function validateComputations(form) {
     var error_messages = [];

@@ -1,25 +1,32 @@
 <template>
   <a-card>
-    <a-button type="primary" @click="canSelect">{{can_select? 'DESELECT' : 'SELECT'}}</a-button>
+    <!-- <a-button type="primary" @click="canSelect">{{can_select? 'DESELECT' : 'SELECT'}}</a-button> -->
     <a-table
       :loading="loading"
       :dataSource="tax_returns"
       :columns="cols"
-      v-bind="can_select ? { rowSelection:{selectedRowKeys: selectedRowKeys, onChange: onSelectChange} } : ''"
+      v-bind="{ rowSelection:{selectedRowKeys: selectedRowKeys, onChange: onSelectChange} }"
     >
-      <span slot="action" v-if="!can_select" slot-scope="text,record">
-        <a-button type="primary" @click="show(record)" icon="credit-card" shape="circle"></a-button>
+      <span slot="action" slot-scope="text,record">
+        <a-tooltip title="Quick Payment">
+          <a-button type="primary" @click="show(record)" icon="credit-card" shape="circle"></a-button>
+        </a-tooltip>
       </span>
       <span slot="tin" slot-scope="tin">{{formatTIN(tin)}}</span>
       <span slot="amount" slot-scope="amount">₱{{formatAmount(amount)}}</span>
       <span slot="date" slot-scope="date">{{formatDate(date)}}</span>
-      <template slot="footer" v-if="can_select && selectedRowKeys && selectedRowKeys.length">
-        <a-button type="primary" block @click="showMultiple()">
-          <a-icon type="credit-card" />PAY
-        </a-button>
+      <template slot="footer" v-if="selectedRowKeys && selectedRowKeys.length>1">
+        <a-row type="flex" justify="end">
+          <a-col :span="8">
+            <a-button type="primary" block @click="showMultiple()">
+              <a-icon type="credit-card" />Mutliple Payments ({{selectedRowKeys.length}})
+            </a-button>
+          </a-col>
+        </a-row>
+        
       </template>
     </a-table>
-    <a-drawer :closable="false" :width="800" @close="show_payment=false" :visible="show_payment">
+    <a-drawer :closable="false" :width="850" @close="show_payment=false" :visible="show_payment">
       <a-row type="flex" :gutter="16">
         <a-col :span="24">
           <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
@@ -54,7 +61,7 @@
             <component :is="current_option" @mounted="init_card" :details="payment_details" />
           </a-card>
         </a-col>
-        <a-col :span="10" v-if="payment_mode==='multiple'" style="margin-top:10vh">
+        <a-col :span="10" v-if="payment_mode==='multiple'" >
           <a-card
             style="background: linear-gradient(to bottom, #000046, #1cb5e0)"
             :bodyStyle="{ 'padding-bottom': '5px'}"
@@ -62,21 +69,23 @@
             <h2 style="color: #FFFFFF">Summary</h2>
             <a-divider></a-divider>
             <a-row>
-              <a-col :span="24">
+              <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Details:</p>
-              </a-col>
+              </a-col> -->
               <a-col :span="12">
-                <p style="color: #FFFFFF;">Form Type:</p>
+                <p style="color: #FFFFFF;">Reference No:</p>
+                <p style="color: #FFFFFF;">Tax Return:</p>
                 <p style="color: #FFFFFF">TIN:</p>
               </a-col>
               <a-col :span="12">
+                <p style="text-align: right;color: #FFFFFF">{{current_record.reference_no}}</p>
                 <p style="text-align: right;color: #FFFFFF">{{current_record.form_type}}</p>
                 <p style="text-align: right;color: #FFFFFF">{{formatTIN(current_record.tin)}}</p>
               </a-col>
               <a-divider></a-divider>
-              <a-col :span="24">
+              <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Payments:</p>
-              </a-col>
+              </a-col> -->
               <a-col :span="12">
                 <p style="color: #FFFFFF">Tax Due:</p>
                 <p style="color: #FFFFFF">Penalties:</p>
@@ -139,14 +148,14 @@
           </a-card>
           <a-button block type="primary" size="large" style="margin-top: 5vh" :loading="loading_payments" @click="submit">Submit</a-button>
         </a-col>
-        <a-col :span="10" v-else style="margin-top:10vh">
+        <a-col :span="10" v-else>
           <a-card style="background: linear-gradient(to bottom, #000046, #1cb5e0)">
             <h2 style="color: #FFFFFF">Summary</h2>
             <a-divider></a-divider>
             <a-row>
-              <a-col :span="24">
+              <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Details:</p>
-              </a-col>
+              </a-col> -->
               <a-col :span="12">
                 <p style="color: #FFFFFF;">Form Type:</p>
                 <p style="color: #FFFFFF">TIN:</p>
@@ -156,9 +165,9 @@
                 <p style="text-align: right;color: #FFFFFF">{{formatTIN(record.tin)}}</p>
               </a-col>
               <a-divider></a-divider>
-              <a-col :span="24">
+              <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Payments:</p>
-              </a-col>
+              </a-col> -->
               <a-col :span="12">
                 <p style="color: #FFFFFF">Tax Due:</p>
                 <p style="color: #FFFFFF">Penalties:</p>
@@ -331,6 +340,7 @@ export default {
             message: "Successfully paid.",
             icon: <a-icon type="check" style="color: blue" />
           });
+          this.reset();
         })
         .catch(err => {
           console.log("PAYMENT err :", err);
@@ -364,6 +374,7 @@ export default {
     },
     multiple_payments_total() {
       var total = 0;
+      console.log('this.records :', this.records);
       if (this.records) {
         total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
       }

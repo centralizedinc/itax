@@ -9,16 +9,18 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1."
-        :validate-status="error_item('taxpayer.returnPeriodYear')"
-        :help="error_desc('taxpayer.returnPeriodYear')"
+        :validate-status="error_item('taxpayer.return_period_year')"
+        :help="error_desc('taxpayer.return_period_year')"
       >
-        <a-month-picker style="width: 100%" v-model="form.returnPeriodYear" />
+        <a-month-picker style="width: 100%" v-model="form.return_period_year" />
       </a-form-item>
       <a-form-item label="Quarter"></a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="2."
+        :validate-status="error_item('quarter')"
+        :help="error_desc('quarter')"
       >
         <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
@@ -32,13 +34,13 @@
         :wrapperCol="form_layout.wrapper_col"
         label="3."
       >
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="4. Number of Sheets">
-        <a-input-number v-model="form.numOfSheet" style="width: 100%" />
+        <a-input-number v-model="form.num_of_sheet" style="width: 100%" />
       </a-form-item>
     </a-form>
 
@@ -94,7 +96,7 @@
       >
         <a-textarea
           placeholder="Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905"
-          v-model="form.taxpayer.registered_address"
+          v-model="form.taxpayer.address"
         ></a-textarea>
       </a-form-item>
       <a-form-item
@@ -102,7 +104,7 @@
         :validate-status="error_item('taxpayer.zip_code')"
         :help="error_desc('taxpayer.zip_code')"
       >
-        <a-input-number style="width: 100%" v-model="form.taxpayer.zip_code"></a-input-number>
+        <a-input-number style="width: 100%" v-model="form.taxpayer.address_details.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item label="11. Date of Birth (MM/DD/YYYY)">
         <a-date-picker style="width: 100%" v-model="form.taxpayer.birthday"></a-date-picker>
@@ -674,6 +676,18 @@ export default {
   computed: {
     tax_due() {
       var tosum = [this.form];
+    },
+    computeReturnPeriod(){
+      var return_period = new Date();
+      return_period.setFullYear(this.form.returnPeriodYear);
+      if(this.form.quarter === 1){
+        return_period.setMonth(2)
+      } else if(this.form.quarter === 2){
+        return_period.setMonth(5)
+      } else if(this.form.quarter === 3){
+        return_period.setMonth(8)
+      }
+      return return_period;
     }
   },
   methods: {
@@ -692,6 +706,7 @@ export default {
     submit() {
       this.loading = true;
       this.errors = [];
+      this.form.returnPeriod = this.computeReturnPeriod
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "1701Q",

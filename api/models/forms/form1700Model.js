@@ -10,69 +10,45 @@ var Form1700Schema = new Schema({
         type: Date,
         default: new Date()
     },
-    // year: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // amendedYn: Boolean,
-    joint_filing: Boolean,
-    source_of_income: "",
+    return_period_year: String,
+    return_period: {type: Date, default: new Date()},
+    amended_yn: Boolean,
+
+    taxpayer: {},
+    spouse_taxpayer: {},
+
+    prev_tax_due: { type: Number, default: 0 }, //26 Tax Due
+    // total_tax_credit: { type: Number, default: 0 }, //27
+    net_tax_payable: { type: Number, default: 0 }, //28  item26 Less Item 27
+    portion_of_tax_payabe: { type: Number, default: 0 }, //29 
+    tax_due: { type: Number, default: 0 }, //30 Item 28 less Item 29
+
+    //penalties
+    surcharge: { type: Number, default: 0 }, 
+    interest: { type: Number, default: 0 }, 
+    compromise: { type: Number, default: 0 }, 
+    penalties: { type: Number, default: 0 }, // 34 Sum of item 31 to 33
+
+    total_amount_payable: { type: Number, default: 0 }, //35 sum of item 30 and 34
+    aggregate_amount_payable: { type: Number, default: 0 }, //36 sum of item 35A and 35B
+    num_of_sheet: { type: Number, default: 0 }, //37 no of attachments
+
+    //Page 2
+
+    
+    // joint_filing: Boolean,
+
+    // source_of_income: "",
     // 0 - Compensation Income
     // 1 - Other Income
-    numOfSheet: {
-        type: Number,
-        default: 0
-    },
-    taxpayer: {
+    
 
-
-        tin: Number,
-        rdo_code: Number,
-        // tax_filer_type: String,
-        psoc_code: Number,
-
-        contact_details: {
-            last: String,
-            first: String,
-            middle: String
-        },
-
-        registered_address: String,
-
-        birthday: Date,
-
-        email_address: String,
-
-        telephone_no: Number,
-
-        civil_status: { type: Number },
-        // 0 - Single , 1 - Married , 2 - Legally Separated, 3 - widowed
-
-        claiming_add_exemp: String,
-        no_dependents: Number,
-
-        // spouse details
-        spouse_name_last: String,
-        spouse_name_first: String,
-        spouse_name_middle: String,
-        spouse_tin: Number,
-        spouse_contact_number: Number,
-        sbirthday: Date,
-        spouse_email: String,
-        spouse_claiming_add_exemp: Boolean,
-        spouse_no_dependents: Number,
-
-        // spouse_rdo_code: Number,
-        // spouse_tax_filer_type: String,
-        // spouse_atc: { type: Number, default: 0 },
-        // spouse_citizenship: String,
-    },
-    dueDate: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: { type: Number, default: 0 },
+    // dueDate: Date,
+    // returnPeriod: Date,
+    // returnPeriodMonth: String,
+    // returnPeriodYear: String,
+    // amendedYn: Boolean,
+    // numOfSheet: { type: Number, default: 0 },
 
 
     tax_filer_tax_due: { type: Number, default: 0 },
@@ -99,7 +75,7 @@ var Form1700Schema = new Schema({
     // interest: { type: Number, default: 0 },
     // compromise: { type: Number, default: 0 },
     // penalties: { type: Number, default: 0 },
-    // totalAmountPayable: { type: Number, default: 0 },
+    // total_amount_payable: { type: Number, default: 0 },
     // batchNo: { type: Number, default: 0 },
     // sched1: [],
     // sched2: [],
@@ -161,4 +137,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('form_1700', Form1700Schema);
+module.exports = mongoose.model('1700_forms', Form1700Schema);

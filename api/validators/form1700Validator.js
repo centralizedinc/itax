@@ -15,18 +15,18 @@ function validate(form_details) {
     var errors = [];
 
     //validate required fields
-    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
+    // errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer)) 
 
     //latefiling computations
-    console.log('form 1700m validator errors: ', JSON.stringify(errors) )
+    // console.log('form 1700m validator errors: ', JSON.stringify(errors) )
 
-    return errors
+    return {errors}
 }
 
-function computeDueDate(returnPeriod) {
+function computeDueDate(return_period) {
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth() + 1;
+    var month = return_period.getMonth() + 1;
 
     //every 20th of the next month
     due_date.setDate(20);
@@ -37,7 +37,7 @@ function computeDueDate(returnPeriod) {
 
 /**
  * 
- * @param {form2550MModel} form 
+ * @param {form1700Model} form 
  */
 function validateComputations(form) {
     var error_messages = [];

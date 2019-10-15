@@ -17,7 +17,7 @@
         <a-month-picker v-model="form.yearEndedMonth" />
       </a-form-item>
       <a-form-item label="4. Amended Return">
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>

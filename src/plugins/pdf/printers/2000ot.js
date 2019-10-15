@@ -31,13 +31,13 @@ function fillup(details) {
 */
 
 function getContent(forms) {
-    var content = []
-    content.push(
+    console.log('forms.return_period :', forms.return_period);
+    var content = [
         {
             layout: "noBorders",
             table: {
                 widths: [500],
-                heights: [55],
+                heights: [54],
                 body: [
                     [{
                         text: ''
@@ -49,7 +49,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [80, 20, 20, 35, 50, 15, 20, 10, 60, 25, 55, 60],
+                widths: [80, 20, 16, 40, 46, 15, 20, 10, 60, 25, 55, 60],
                 heights: [22],
                 body: [
                     [{
@@ -60,22 +60,22 @@ function getContent(forms) {
 
                     },
                     {
-                        text: forms.returnPeriod.month == null ? ' ' : forms.returnPeriod.month,
-                        // text: '08',
+                        text: formatDate(forms.return_period, { month: "2-digit" }),
+                        bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [3, 0, 0, 0]
                     },
                     {
-                        text: forms.returnPeriodDay == null ? ' ' : forms.returnPeriodDay,
-                        // text: '08',
+                        text: formatDate(forms.return_period, { day: "2-digit" }),
+                        bold: true,
                         fontSize: 14,
                         alignment: 'left',
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: forms.returnPeriod.year == null ? ' ' : forms.returnPeriod.year,
-                        // text: '2019',
+                        text: formatDate(forms.return_period, { year: "numeric" }),
+                        bold: true,
                         fontSize: 14,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
@@ -84,8 +84,9 @@ function getContent(forms) {
                         text: ''
                     },
                     {
-                        text: forms.amendedYn == true ? 'X' : ' ',
+                        text: forms.amended_yn == true ? 'X' : ' ',
                         fontSize: 14,
+                        bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
                     },
@@ -93,8 +94,9 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.amendedYn == false ? 'X' : ' ',
+                        text: forms.amended_yn == false ? 'X' : ' ',
                         fontSize: 14,
+                        bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
                     },
@@ -102,10 +104,11 @@ function getContent(forms) {
                         text: '',
                     },
                     {
-                        text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                        text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                         fontSize: 14,
+                        bold: true,
                         alignment: 'justified',
-                        margin: [0, 0, 0, 0]
+                        margin: [2, 0, 0, 0]
                     },
                     {
                         text: ''
@@ -113,6 +116,7 @@ function getContent(forms) {
                     {
                         text: forms.atc == null ? ' ' : forms.atc,
                         fontSize: 14,
+                        bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
                     }
@@ -124,12 +128,13 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [80, 45, 35, 40, 170, 100],
-                heights: [25],
+                widths: [80, 45, 35, 60, 170, 100],
+                heights: [26],
                 body: [
                     [{
                         text: mapTin(forms.taxpayer.tin, 0, 3),
                         fontSize: 16,
+                        characterSpacing: 3,
                         bold: true,
                         alignment: 'justified',
                         margin: [40, 0, 0, 0]
@@ -137,6 +142,7 @@ function getContent(forms) {
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
                         fontSize: 16,
+                        characterSpacing: 3,
                         bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
@@ -145,22 +151,25 @@ function getContent(forms) {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
                         fontSize: 16,
                         bold: true,
+                        characterSpacing: 3,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: mapTin(forms.taxpayer.tin, 9, 12),
+                        text: mapTin(forms.taxpayer.tin, 9, 13),
                         fontSize: 16,
                         bold: true,
-                        alignment: 'justified',
+                        characterSpacing: 4,
+                        alignment: 'left',
                         margin: [10, 0, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
                         fontSize: 16,
+                        characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [60, 0, 0, 0]
+                        margin: [45, 0, 0, 0]
                     }, {
                         text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                         fontSize: 14,
@@ -858,7 +867,7 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
+                        text: forms.tax_due == null ? '0.00' : forms.tax_due % 1 == 0 ? forms.tax_due + '.00' : forms.tax_due,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -1011,7 +1020,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: forms.totalAmountPayable == null ? '0.00' : forms.totalAmountPayable % 1 == 0 ? forms.totalAmountPayable + '.00' : forms.totalAmountPayable,
+                        text: forms.total_amount_payable == null ? '0.00' : forms.total_amount_payable % 1 == 0 ? forms.total_amount_payable + '.00' : forms.total_amount_payable,
                         fontSize: 11,
                         bold: true,
                         alignment: 'justified',
@@ -1050,12 +1059,26 @@ function getContent(forms) {
                 ]
             }
         },
-
-
-
-    );
+    ]
     return content;
 }
+
+function formatDate(date, type) {
+    if (!date) {
+        return "";
+    }
+    if (type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
+    var dt = new Date(date).toLocaleString("en-US", type ? type : {
+        hour12: true,
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+    return dt;
+}
+
 function mapTin(tin, from, to) {
     if (!tin || from === null || to === null) return "";
     return tin.substring(from, to);

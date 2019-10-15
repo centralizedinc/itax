@@ -3,22 +3,23 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
+const common_model = require('./commonModels');
 
-var Form2550MSchema = new Schema({
-    reference_no: String,
-    taxpayer: {},
+const model_schema = {
+    // reference_no: String,
+    // taxpayer: {},
     dateFiled: {
         type: Date,
         default: new Date()
     },
-    due_date: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: { type: Number, default: 0 },
-    is_avail_tax_relief: String,
-    avail_tax_relief: String,
+    // due_date: Date,
+    // return_period: Date,
+    // return_period_month: String,
+    // return_period_year: String,
+    // amended_yn: Boolean,
+    // num_of_sheet: { type: Number, default: 0 },
+    // is_avail_tax_relief: String,
+    // avail_tax_relief: String,
     totalAtcAmount: { type: Number, default: 0 }, //item 12A
     totalAtcOutput: { type: Number, default: 0 }, // item 12B
     salesGovAmount: { type: Number, default: 0 },
@@ -58,7 +59,7 @@ var Form2550MSchema = new Schema({
     otherDeductionFrInputTax: { type: Number, default: 0 },
     totalDeductionFrInputTax: { type: Number, default: 0 },
     totalInputTax: { type: Number, default: 0 },
-    taxDue: { type: Number, default: 0 },
+    net_vat_payable: { type: Number, default: 0 },
     creditableVatWithheld: { type: Number, default: 0 },
     advPaySugarFlourInd: { type: Number, default: 0 },
     taxWthld: { type: Number, default: 0 },
@@ -66,12 +67,12 @@ var Form2550MSchema = new Schema({
     advPymt: { type: Number, default: 0 },
     otherTaxCredits: { type: Number, default: 0 },
     totalCredits: { type: Number, default: 0 },
-    amtPaybl: { type: Number, default: 0 },
-    surcharge: { type: Number, default: 0 },
-    interest: { type: Number, default: 0 },
-    compromise: { type: Number, default: 0 },
-    penalties: { type: Number, default: 0 },
-    totalAmountPayable: { type: Number, default: 0 },
+    // amtPaybl: { type: Number, default: 0 },
+    // surcharge: { type: Number, default: 0 },
+    // interest: { type: Number, default: 0 },
+    // compromise: { type: Number, default: 0 },
+    // penalties: { type: Number, default: 0 },
+    // total_amount_payable: { type: Number, default: 0 },
     batchNo: { type: Number, default: 0 },
     sched1: [{
         atc: {
@@ -89,22 +90,22 @@ var Form2550MSchema = new Schema({
     sched2: [],
     sched3: [],
     sched4: {
-        dirInputTax:{
+        dirInputTax: {
             type: Number
         },
-        inputNotAttrib:{
+        inputNotAttrib: {
             type: Number
         },
-        ratInputTax:{
+        ratInputTax: {
             type: Number
         },
-        totalInputTax:{
+        totalInputTax: {
             type: Number
         },
-        stanInputTax:{
+        stanInputTax: {
             type: Number
         },
-        inputSaleExp:{
+        inputSaleExp: {
             type: Number
         }
     },
@@ -117,24 +118,26 @@ var Form2550MSchema = new Schema({
     sched6: [],
     sched7: [],
     sched8: [],
-    date_created: {
-        type: Date,
-        default: new Date()
-    },
-    date_modified: {
-        type: Date,
-        default: new Date()
-    },
-    auto_id: {
-        type: Number
-    },
-    created_by: {
-            type: String
-    },
-    modified_by: {
-            type: String
-    }
-});
+    // date_created: {
+    //     type: Date,
+    //     default: new Date()
+    // },
+    // date_modified: {
+    //     type: Date,
+    //     default: new Date()
+    // },
+    // auto_id: {
+    //     type: Number
+    // },
+    // created_by: {
+    //         type: String
+    // },
+    // modified_by: {
+    //         type: String
+    // }
+};
+
+var Form2550MSchema = new Schema({ ...common_model, ...model_schema });
 
 Form2550MSchema.pre('save', function (callback) {
     var form = this;
@@ -173,4 +176,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('form_2550m', Form2550MSchema);
+module.exports = mongoose.model('2550m_forms', Form2550MSchema);
