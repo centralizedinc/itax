@@ -94,7 +94,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [30, 6, 0, 0]
+                        margin: [30, 9, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
@@ -102,7 +102,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [0, 6, 0, 0]
+                        margin: [0, 9, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
@@ -110,7 +110,7 @@ function getContent(forms) {
                         characterSpacing: 2.8,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [-1.8, 6, 0, 0]
+                        margin: [-1.8, 9, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
@@ -118,7 +118,7 @@ function getContent(forms) {
                         characterSpacing: 2.5,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [-1, 6, 0, 0]
+                        margin: [-1, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -126,7 +126,7 @@ function getContent(forms) {
                         characterSpacing: 8.2,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [55, 6, 0, 0]
+                        margin: [55, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
