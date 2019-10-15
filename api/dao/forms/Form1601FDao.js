@@ -1,6 +1,6 @@
 const model = require('../../models/forms/form1601FModel');
 
-class Form1601CDao {
+class Form1601FDao {
     /**
      * @returns {Promise}
      */

@@ -38,6 +38,7 @@
                 :is="curr_form"
                 :form="form"
                 :step="curr_step"
+                :errors="errors"
                 @loading="v=>loading=v"
                 @updateForm="v=>form={...form, ...v}"
                 @changeStep="v=>curr_step=v"
@@ -82,12 +83,7 @@
             </a-col>
             <!-- Submit -->
             <a-col :span="4">
-              <a-button
-                icon="upload"
-                type="primary"
-                @click="$refs.form_component.submit()"
-                :loading="loading"
-              >Submit</a-button>
+              <a-button icon="upload" type="primary" @click="submit()" :loading="loading">Submit</a-button>
             </a-col>
             <!-- Next -->
             <a-col :span="4">
@@ -355,7 +351,8 @@ export default {
       in_bottom: false,
       loading: false,
       return_details: {},
-      show_form_success: false
+      show_form_success: false,
+      errors: []
     };
   },
   methods: {
@@ -433,9 +430,48 @@ export default {
       window.close();
     },
     proceedPayment() {
-      window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
-      window.opener.location.reload();
+      if (window.opener && window.opener.location) {
+        console.log('window.opener :', window.opener);
+        window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
+        window.opener.location.reload();
+      }
       window.close();
+    },
+    submit() {
+      this.loading = true;
+      this.errors = [];
+      this.$store
+        .dispatch("VALIDATE_AND_SAVE", {
+          form_type: this.form_type,
+          form_details: this.form
+        })
+        .then(result => {
+          console.log("VALIDATE_AND_SAVE result:", result.data);
+          this.loading = false;
+          // this.$emit("updateForm", null); //to refresh pdf
+          this.form = { ...this.form, ...null };
+          if (result.data.errors && result.data.errors.length > 0) {
+            this.errors = result.data.errors;
+            console.log("this.errors :", this.errors);
+            if (this.errors && this.errors[0] && this.errors[0].page !== null)
+              this.curr_step = this.errors[0].page;
+            this.$notification.error({ message: "Validation Error" });
+          } else {
+            this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+            this.$store.commit("NOTIFY_MESSAGE", {
+              success: true,
+              message: `Successfully submitted Form ${this.form_type}`
+            });
+            var return_details = result.data.model;
+            return_details.registered_name = this.form.taxpayer.registered_name;
+            return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
+            this.showSuccessForm(return_details);
+          }
+        })
+        .catch(err => {
+          console.log("VALIDATE_AND_SAVE", err);
+          this.loading = false;
+        });
     }
   },
   watch: {
@@ -455,7 +491,7 @@ export default {
       this.existing_form.details.constructor === Object
     ) {
       this.form = this.existing_form.details;
-      this.form.returnPeriod = moment(this.form.returnPeriod);
+      this.form.return_period = moment(this.form.return_period);
       //check if taxpayer is already set
       if (this.form.taxpayer.tin) {
         this.view_select = false;

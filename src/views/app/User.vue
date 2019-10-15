@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-tabs @change="changetab" style="background-color:#FFFFFF; margin-top: 16vh">
+    <a-tabs @change="changetab" style="background-color:#FFFFFF;">
       <a-tab-pane key="0">
         <template slot="tab">
           <a-icon type="solution"></a-icon>

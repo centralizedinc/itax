@@ -69,7 +69,7 @@ function isFutureDate(idate) {
 
 /**
  * 
- * @param {Date} dueDate 
+ * @param {Date} due_date 
  */
 function isLateFiling(due_date) {
     console.log("Due date :", due_date);
@@ -94,15 +94,15 @@ function computeSurcharges(amount) {
 
 /**
  * 
- * @param {Date} dueDate 
+ * @param {Date} due_date 
  * @param {Number} amount 
  */
-function computeInterest(dueDate, amount) {
+function computeInterest(due_date, amount) {
     var interest = 0;
     var dayDifference = 0;
 
     var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-    var firstDate = dueDate;
+    var firstDate = due_date;
     var secondDate = new Date();
 
     if (!amount || amount <= 0) {
@@ -130,6 +130,47 @@ function formatAmount(amount) {
     return parts.join(".");
 }
 
+function checkDueDate(form_details, page){
+    var errors = [];
+    if (isLateFiling(form_details.due_date)) {
+        console.log('Late filling ... ', page);
+        // Compute Surcharge
+        const surcharge = computeSurcharges(form_details.tax_due);
+        form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
+        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
+        if (formatAmount(form_details.surcharge) !== formatAmount(surcharge)) {
+            errors.push({
+                page,
+                field: 'surcharge',
+                error: `Surcharge amount must be ${formatAmount(surcharge)}`
+            })
+        }
+        // Compute Interest
+        const interest = computeInterest(form_details.due_date, form_details.tax_due);
+        form_details.interest = form_details.interest ? form_details.interest : 0;
+        console.log('Interest :', interest, ':', form_details.interest);
+        if (formatAmount(form_details.interest) !== formatAmount(interest)) {
+            errors.push({
+                page,
+                field: 'interest',
+                error: `Interest amount must be ${formatAmount(interest)}`
+            })
+        }
+        // Compute Compromise
+        const compromise = computeCompromise(form_details.due_date, form_details.tax_due);
+        form_details.compromise = form_details.compromise ? form_details.compromise : 0;
+        console.log('Compromise :', compromise, ':', form_details.compromise);
+        if (formatAmount(form_details.compromise) !== formatAmount(compromise)) {
+            errors.push({
+                page,
+                field: 'compromise',
+                error: `Compromise amount must be ${formatAmount(compromise)}`
+            })
+        }
+    }
+    return errors;
+}
+
 module.exports = {
     isFutureDate,
     validateTaxpayerDetails,
@@ -138,5 +179,6 @@ module.exports = {
     computeInterest,
     computeCompromise,
     validateMandatory,
-    formatAmount
+    formatAmount,
+    checkDueDate
 }

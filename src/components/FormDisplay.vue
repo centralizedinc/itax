@@ -109,11 +109,11 @@ export default {
       var form = this.deepCopy(this.form);
       form.year = this.formatDtYear(form.dateFiled);
       // form.month = this.formatDtMonth(form.dateFiled);
-      // var returnPeriod = {
-      //   month: this.formatDtMonth(form.returnPeriod),
-      //   year: this.formatDtYear(form.returnPeriod)
+      // var return_period = {
+      //   month: this.formatDtMonth(form.return_period),
+      //   year: this.formatDtYear(form.return_period)
       // };
-      // form.returnPeriod = returnPeriod;
+      // form.return_period = return_period;
       var dateFiled1 = {
         month: this.formatDtMonth(form.dateFiled1),
         year: this.formatDtYear(form.dateFiled1)

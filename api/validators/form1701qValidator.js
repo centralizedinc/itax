@@ -4,18 +4,18 @@ var Form1701QModel = require('../models/forms/form1701QModel.js');
 var commonValidator = require('./commonValidator.js');
 
 const constant_helper = require('../utils/constant_helper');
+
 /**
- * 
+ * @returns {Object} errors, due_date
  * @param {*} form_details 
- * @returns [Array] errors
  */
 function validate(form_details) {
-
+    console.log("validation form details(1701q): " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
 
-    if (!form_details.returnPeriodYear) {
-        errors.push({ page: 0, field: "returnPeriodYear", error: constant_helper.MANDATORY_FIELD('Return Period Year') });
+    if (!form_details.return_period_year) {
+        errors.push({ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('Return Period Year') });
         return errors;
     }
     if (!form_details.quarter) {
@@ -23,7 +23,8 @@ function validate(form_details) {
         return errors;
     }
 
-    form_details.due_date = computeDueDate(form_details.returnPeriod)
+    form_details.due_date = computeDueDate(form_details.return_period)
+    console.log('form_details.due_date :', form_details.due_date);
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1))
     // validate required fields
@@ -69,8 +70,8 @@ function validateRequired(field) {
         var tp = new taxpayerDetails(taxpayer); 
         console.log('tp', JSON.stringify(field))
         console.log('!tp.tin', !field.dateFiled)
-        if (!field.returnPeriodYear) {
-            error_messages.push({ field: "returnPeriodYear", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
+        if (!field.return_period_year) {
+            error_messages.push({ field: "return_period_year", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
         }
     
         if (!field.quarter) {
@@ -108,15 +109,15 @@ function validateRequired(field) {
 }
 
 
-function computeDueDate(returnPeriod) {
-    console.log("computeDueDate data: " + returnPeriod)
+function computeDueDate(return_period) {
+    console.log("computeDueDate data: " + return_period)
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth();
+    var month = return_period.getMonth();
     // every 15th of the quarter May 15, Aug 15, Nov 15
     due_date.setDate(15);
     due_date.setMonth(month);
-    due_date.setFullYear(returnPeriodYear)
+    due_date.setFullYear(return_period_year)
 
     return due_date;
 }

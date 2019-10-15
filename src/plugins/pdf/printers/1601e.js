@@ -39,14 +39,14 @@ function getContent(forms) {
             widths: [103, 50, 60, 50, 80, 60, 50],
             body: [
                 [{
-                    text: formatDate(forms.returnPeriod, { month: "2-digit" }),
+                    text: formatDate(forms.return_period, { month: "2-digit" }),
                     fontSize: 15,
                     characterSpacing: 3,
                     alignment: 'justify',
                     margin: [80, 78, 0, 0]
                 },
                 {
-                    text: formatDate(forms.returnPeriod, { year: "numeric" }),
+                    text: formatDate(forms.return_period, { year: "numeric" }),
                     fontSize: 15,
                     characterSpacing: 3,
                     // right,down,left,up
@@ -54,21 +54,21 @@ function getContent(forms) {
                     margin: [0, 78, 0, 0]
                 },
                 {
-                    text: forms.amendedYn == true ? 'X' : ' ',
+                    text: forms.amended_yn == true ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
                     margin: [40, 82, 0, 0]
                 },
                 {
-                    text: forms.amendedYn == false ? 'X' : ' ',
+                    text: forms.amended_yn == false ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
                     margin: [13, 82, 0, 0]
                 },
                 {
-                    text: forms.numOfSheet,
+                    text: forms.num_of_sheet,
                     fontSize: 10,
                     // right,down,left,up
                     alignment: 'justify',

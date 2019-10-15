@@ -28,7 +28,7 @@ var Form1603Schema = new Schema({
     interest: { type: Number, default: 0 },
     compromise: { type: Number, default: 0 },
     penalties: { type: Number, default: 0 },
-    total_amount_payable: Number,
+    total_amount_payable: Number,  // Item 21D to 22
     refund_type: String,
     adv_payment: { type: Number, default: 0 },
     total_tax_credits: { type: Number, default: 0 },

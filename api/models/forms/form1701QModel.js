@@ -11,20 +11,20 @@ var Form1701QSchema = new Schema({
     type: Date,
     default: new Date()
   },
-  dueDate: Date,
-  returnPeriod: Date,
-  returnPeriodMonth: String,
-  returnPeriodYear: String,
-  amendedYn: Boolean,
-  numOfSheet: { type: Number, default: 0 },
+  due_date: Date,
+  return_period: Date,
+  return_period_month: String,
+  return_period_year: String,
+  amended_yn: Boolean,
+  num_of_sheet: { type: Number, default: 0 },
   taxRate: String,
   methodDeduction: String,
   standardDeduction: String,
-  taxDue: { type: Number, default: 0 }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54)
+  tax_due: { type: Number, default: 0 }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54)
   taxCredit: { type: Number, default: 0 }, //(From Part V, Schedule III-Item 62)
   taxPayable: { type: Number, default: 0 }, //(Item 26 Less Item 27) (From Part V, Item 63)
   totalPenalties: { type: Number, default: 0 }, //(From Part V, Schedule IV-Item 67)
-  totalAmountPayable: { type: Number, default: 0 }, // (Sum of Items 28 and 29) (From Part V, Item 68)
+  total_amount_payable: { type: Number, default: 0 }, // (Sum of Items 28 and 29) (From Part V, Item 68)
   aggregateAmountPayable: { type: Number, default: 0 }, //Sum of Items 30A and 30B
   particularCash: { type: Number, default: 0 },
   particularCheck: { type: Number, default: 0 },
@@ -60,7 +60,7 @@ var Form1701QSchema = new Schema({
     interest: { type: Number, default: 0 },
     compromise: { type: Number, default: 0 },
     penalties: { type: Number, default: 0 }, //(Sum of Items 64 to 66) (To Part III, Item 29)
-    totalAmountPayable: { type: Number, default: 0 }, //(Sum of Items 63 and 67) (To Part III, Item 30) 
+    total_amount_payable: { type: Number, default: 0 }, //(Sum of Items 63 and 67) (To Part III, Item 30) 
   }],
   created_by: {
     type: String
@@ -94,4 +94,4 @@ Form1701QSchema.pre('findOneAndUpdate', function (callback) {
   callback();
 });
 
-module.exports = mongoose.model("form_1701q", Form1701QSchema);
+module.exports = mongoose.model("1701q_forms", Form1701QSchema);
