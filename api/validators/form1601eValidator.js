@@ -27,42 +27,7 @@ function validate(form_details) {
 
     errors.push(...validateRequired(form_details));
 
-    if (commonValidator.isLateFiling(form_details.due_date)) {
-        console.log('Late filling ...');
-        // Compute Surcharge
-        const surcharge = commonValidator.computeSurcharges(form_details.amtPayblCrdtb);
-        form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
-        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
-        if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
-            errors.push({
-                page: 2,
-                field: 'surcharge',
-                error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
-            })
-        }
-        // Compute Interest
-        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPayblCrdtb);
-        form_details.interest = form_details.interest ? form_details.interest : 0;
-        console.log('Interest :', interest, ':', form_details.interest);
-        if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
-            errors.push({
-                page: 2,
-                field: 'interest',
-                error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
-            })
-        }
-        // Compute Compromise
-        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPayblCrdtb);
-        form_details.compromise = form_details.compromise ? form_details.compromise : 0;
-        console.log('Compromise :', compromise, ':', form_details.compromise);
-        if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
-            errors.push({
-                page: 2,
-                field: 'compromise',
-                error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
-            })
-        }
-    }
+    errors.push(...commonValidator.checkDueDate(form_details, 2));
 
     console.log('form 1601e validator errors: ', JSON.stringify(errors))
 

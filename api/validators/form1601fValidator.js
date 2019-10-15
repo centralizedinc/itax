@@ -1,6 +1,5 @@
 'use strict'
 
-var form1601FModel = require('../models/forms/form1601FModel.js');
 var commonValidator = require('./commonValidator.js');
 
 const constant_helper = require('../utils/constant_helper');
@@ -14,67 +13,39 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    // if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
-    //     errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
-    //     return { errors };
-    // }
+    console.log('Return Period :', form_details.return_period);
+    if (!form_details.return_period_year || !form_details.return_period_month || !form_details.return_period) {
+        errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
+        return { errors };
+    }
+    if (form_details.return_period_year >= 2018 || new Date(form_details.return_period).getFullYear() >= 2018) {
+        errors.push({ page: 0, field: "return_period", error: 'Cannot file for year 2018 onwards. Please use the Form 1601FQ', redirect_form: '1601fq' });
+        return { errors };
+    }
 
-    // form_details.due_date = computeDueDate(form_details.returnPeriod)
-    // console.log('form 2550m due date :', form_details.due_date);
 
-    // //validate required fields
-    // errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
+    form_details.due_date = computeDueDate(form_details.return_period)
+    console.log('form 1601f due date :', form_details.due_date);
 
-    // // validate required fields
-    // errors.push(...validateRequired(form_details));
-    // //latefiling computations
-    // // 25% total amount due
-    // if (commonValidator.isLateFiling(form_details.due_date)) {
-    //     console.log('Late filling ...');
-    //     // Compute Surcharge
-    //     const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
-    //     form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
-    //     console.log('Surcharge :', surcharge, ':', form_details.surcharge);
-    //     if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
-    //         errors.push({
-    //             page: 2,
-    //             field: 'surcharge',
-    //             error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
-    //         })
-    //     }
-    //     // Compute Interest
-    //     const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
-    //     form_details.interest = form_details.interest ? form_details.interest : 0;
-    //     console.log('Interest :', interest, ':', form_details.interest);
-    //     if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
-    //         errors.push({
-    //             page: 2,
-    //             field: 'interest',
-    //             error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
-    //         })
-    //     }
-    //     // Compute Compromise
-    //     const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
-    //     form_details.compromise = form_details.compromise ? form_details.compromise : 0;
-    //     console.log('Compromise :', compromise, ':', form_details.compromise);
-    //     if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
-    //         errors.push({
-    //             page: 2,
-    //             field: 'compromise',
-    //             error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
-    //         })
-    //     }
-    // }
 
-    // console.log('form 2550m validator errors: ', JSON.stringify(errors))
+    //validate required fields
+    errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
 
-    // return { errors, due_date: form_details.due_date }
-    return {errors}
+    // validate required fields
+    errors.push(...validateRequired(form_details));
+    
+    // Check Due date if late filing
+    errors.push(...commonValidator.checkDueDate(form_details, 2));
+
+    console.log('form 2550m validator errors: ', JSON.stringify(errors))
+
+    
+    return { errors, due_date: form_details.due_date }
 }
 
 /**
  * 
- * @param {form1601FModel} form 
+ * @param {Object} form 
  */
 function validateRequired(form) {
     var error_messages = [];
