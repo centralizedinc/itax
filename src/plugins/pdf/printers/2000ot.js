@@ -1046,14 +1046,14 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: 'X',
+                        text: '',
                         fontSize: 11,
                         bold: true,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
-                        text: 'X',
+                        text: '',
                         fontSize: 11,
                         bold: true,
                         alignment: 'justified',
@@ -1068,7 +1068,7 @@ function getContent(forms) {
 
 function formatDate(date, type) {
     if (!date) {
-        return "";
+        return " ";
     }
     if (type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
     var dt = new Date(date).toLocaleString("en-US", type ? type : {

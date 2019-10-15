@@ -249,7 +249,7 @@
                   <a-input v-model="form.sellingPrice" placeholder="Selling Price"></a-input>
                 </a-form-item>
               </a-col>
-              <a-col :span="24">
+              <a-col :span="20">
                 <a-form-item
                   :labelCol="form_layout.label_col"
                   :wrapperCol="form_layout.wrapper_col"
@@ -260,6 +260,15 @@
                     placeholder="Fair Market Value of Property Sold (Schedule 1)."
                   ></a-input>
                 </a-form-item>
+              </a-col>
+              <a-col :span="4">
+                <a-button type="link" @click="show_sched1=true">Schedule 1</a-button>
+                <schedule-one
+                  v-if="show_sched1"
+                  :show="show_sched1"
+                  :form="form"
+                  @close="updateSchedAndClose"
+                />
               </a-col>
             </a-row>
           </a-form-item>
@@ -505,11 +514,17 @@
 </template>
 
 <script>
+import ScheduleOne from "./Schedule1";
+
 export default {
+  components: {
+    ScheduleOne
+  },
   props: ["form", "step"],
   data() {
     return {
       loading: false,
+      show_sched1: false,
       image_height: 1000,
       formatter: {
         amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
