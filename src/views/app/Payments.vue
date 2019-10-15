@@ -1,7 +1,7 @@
 <template>
 <div>
     <!-- <a-affix :offsetTop="64"> -->
-        <a-tabs @change="changeView" style="background-color:#FFFFFF;">
+        <a-tabs @change="changeView" style="background-color:#FFFFFF; margin-top: 1vh ">
             <a-tab-pane key="0" >
                 <template slot="tab">
                     <a-icon type="credit-card"></a-icon>
