@@ -6,6 +6,7 @@ const model = {
         type: String
     },
     taxpayer: {},
+    spouse_details: {},
     due_date: {
         type: Date
     },
