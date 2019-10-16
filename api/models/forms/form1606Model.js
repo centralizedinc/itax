@@ -9,7 +9,6 @@ const model_schema = {
     seller_details: {},
     category_of_agent: String,
     atc_code: String, // WI155
-    category_of_agent: String,
     classification_property: String,
     location_property: String,
     brief_description: String,
