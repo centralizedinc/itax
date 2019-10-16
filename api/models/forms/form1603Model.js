@@ -19,7 +19,7 @@ const model_schema = {
     total_payments_made: { type: Number, default: 0 },
     other_payments_made: { type: Number, default: 0 },
     refund_type: String,
-    atc: String // WI 320, WI 330, WI 360
+    atc_code: String // WI 320, WI 330, WI 360
 };
 
 var Form1603Schema = new Schema({...common_model, ...model_schema });
