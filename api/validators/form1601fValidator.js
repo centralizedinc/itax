@@ -13,16 +13,14 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    console.log('Return Period :', form_details.return_period);
-    if (!form_details.return_period_year || !form_details.return_period_month || !form_details.return_period) {
-        errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
+    const validated_return = commonValidator.validateReturnPeriodByMonthYear(form_details.return_period_year, form_details.return_period_month, 0);
+    if (validated_return.errors && validated_return.errors.length) return { errors: validated_return.errors };
+    else if (form_details.return_period_year >= 2018) {
+        errors.push({ page: 0, field: "return_period_year", error: 'Cannot file for year 2018 onwards. Please use the Form 1601FQ', redirect_form: '1601fq' });
         return { errors };
     }
-    if (form_details.return_period_year >= 2018 || new Date(form_details.return_period).getFullYear() >= 2018) {
-        errors.push({ page: 0, field: "return_period", error: 'Cannot file for year 2018 onwards. Please use the Form 1601FQ', redirect_form: '1601fq' });
-        return { errors };
-    }
-
+    else form_details.return_period = validated_return.return_period;
+    console.log('form 1601f return period :', form_details.return_period);
 
     form_details.due_date = computeDueDate(form_details.return_period)
     console.log('form 1601f due date :', form_details.due_date);
@@ -35,12 +33,13 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
 
     // Check Due date if late filing
-    errors.push(...commonValidator.checkDueDate(form_details, 2));
+    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 2);
+    errors.push(...error_messages);
 
     console.log('form 2550m validator errors: ', JSON.stringify(errors))
 
-    
-    return { errors, due_date: form_details.due_date }
+
+    return { errors, form_details }
 }
 
 /**
@@ -53,7 +52,7 @@ function validateRequired(form) {
     console.log('form.any_tax_withheld :', form.any_tax_withheld);
     if (form.any_tax_withheld === undefined || form.any_tax_withheld === null) {
         errors.push({ page: 0, field: "any_tax_withheld", error: constant_helper.MANDATORY_FIELD('Any Taxes Withheld') });
-    } else if(form.any_tax_withheld){
+    } else if (form.any_tax_withheld) {
         if (!form.atc_list || !form.atc_list.length) {
             errors.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('ATC') });
         }
