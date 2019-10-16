@@ -19,7 +19,12 @@
         </a-select>
       </template>
       <template slot="amount" slot-scope="text, record, index">
-        <a-input-number :disabled="!record.atc" @change="e => changeAmount(e, index)" :value="text" placeholder="text"></a-input-number>
+        <a-input-number
+          :disabled="!record.atc"
+          @change="e => changeAmount(e, index)"
+          :value="text"
+          placeholder="text"
+        ></a-input-number>
       </template>
       <template slot="output_tax" slot-scope="text, record, index">
         <span>{{getOutputTax(record.atc, index)}}</span>
@@ -31,8 +36,15 @@
       </template>
       <template slot="footer">
         <p align="left">
-            <span>12A. Total Amount: <b>{{total_atc_amount}}</b></span> <br />
-            <span>12B. Total Output Tax: <b>{{total_atc_output_tax}}</b></span>
+          <span>
+            12A. Total Amount:
+            <b>{{total_atc_amount}}</b>
+          </span>
+          <br />
+          <span>
+            12B. Total Output Tax:
+            <b>{{total_atc_output_tax}}</b>
+          </span>
         </p>
       </template>
     </a-table>

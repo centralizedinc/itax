@@ -218,6 +218,11 @@ export default new Router({
         name: 'Form 2000-OT',
         component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2000ot/2000ot.vue')
       },
+      {
+        path: '1604e',
+        name: 'Form 1604e',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1604e/1604e.vue')
+      },  
 
       ]
     },
@@ -363,7 +368,12 @@ export default new Router({
       path: '2000ot',
       name: 'Form 2000-OT',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2000ot/2000ot.vue')
-    }
+    },
+    {
+      path: '1604e',
+      name: 'Form 1604e',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1604e/1604e.vue')
+    }, 
 
     ]
   }

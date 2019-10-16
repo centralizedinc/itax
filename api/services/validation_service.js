@@ -11,6 +11,9 @@ const form1601fValidator = require('../validators/form1601fValidator.js');
 const form1601cValidator = require('../validators/form1601cValidator');
 // const form1700Validator = require('../validators/form1700Validator.js');
 const form1603Validator = require('../validators/form1603Validator')
+const form1606Validator = require('../validators/form1606Validator')
+const form1600wpValidator = require('../validators/form1600wpValidator')
+const form1604eValidator = require('../validators/form1604EValidator')
 
 /**
  * 
@@ -39,6 +42,12 @@ function validate(form_type, form_details) {
             return form1601cValidator.validate(form_details);
         case "1603":
             return form1603Validator.validate(form_details);
+        case "1606":
+            return form1606Validator.validate(form_details);
+        case "1600WP":
+            return form1600wpValidator.validate(form_details);
+        case "1604E":
+            return form1604eValidator.validate(form_details);
     }
 }
 

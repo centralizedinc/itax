@@ -156,6 +156,9 @@ import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
+import Form1604E from "./1604e/1604e.vue";
+
+
 
 export default {
   components: {
@@ -167,7 +170,8 @@ export default {
     Form2551Q,
     Form1701Q,
     Form2550Q,
-    Form2000OT
+    Form2000OT,
+    Form1604E
   },
   computed: {
     affix_computation() {
@@ -356,7 +360,7 @@ export default {
     },
     select(index) {
       if (index > -1) {
-        this.taxpayer = this.taxpayer_list[index];
+        this.taxpayer = this.deepCopy(this.taxpayer_list[index]);
         this.selected_index = index;
       }
     },
@@ -422,8 +426,12 @@ export default {
       window.close();
     },
     submit() {
+
       this.loading = true;
-      this.errors = [];
+      this.errors = [];  
+
+
+      
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: this.form_type,
@@ -450,12 +458,35 @@ export default {
             return_details.registered_name = this.form.taxpayer.registered_name;
             return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
             this.showSuccessForm(return_details);
+
+            this.$refs.form_display_component.upload()
+              .getBuffer(buffer=>{
+                  var file = new Blob([buffer], {type: "application/pdf"});
+                  // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
+                  var data = new FormData();
+                  data.append('tax_returns', file);
+                  data.append('content-type', 'application/pdf');
+
+                  this.$store.dispatch('UPLOAD_TAX_RETURNS',
+                    {
+                      form:this.form_type,
+                      ref_no: return_details.reference_no,
+                      form_data: data
+                    })
+                    .then(result=>{
+                      console.log('UPLOAD RESULT ::: ', JSON.stringify(result))
+                    })
+                    .catch(err=>{
+                      console.log('UPLOAD ERROR ::: ', JSON.stringify(result))
+                    })
+              })
           }
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
+      
     }
   },
   watch: {

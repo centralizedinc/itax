@@ -13,15 +13,15 @@
       <div slot="taxpayer" slot-scope="tin">
         {{formatTIN(tin)}}
       </div>
-      <div slot="actions">
+      <div slot="actions" slot-scope="text, record">
         <a-tooltip>
           <span slot="title">Print</span>
-          <a-icon type="printer" style="cursor: pointer; margin-right: 2vh;" />
+          <a-icon :type="printing && record.reference_no===selected_record?'loading':'printer'" @click="print(record)" style="cursor: pointer; font-size: 18px;" />
         </a-tooltip>
-        <a-tooltip>
+        <!-- <a-tooltip>
           <span slot="title">Download</span>
           <a-icon type="download" style="cursor: pointer" />
-        </a-tooltip>
+        </a-tooltip> -->
         <!-- <a-popconfirm title="Pay this form?" okText="Yes" cancelText="Cancel">
           <a-tooltip>
             <span slot="title">Payment</span>
@@ -30,16 +30,22 @@
         </a-popconfirm> -->
       </div>
     </a-table>
+    <!-- <form-display ref="form_display_component" :type="form_type" :form="form"  style="display:none"/> -->
   </a-card>
 </template>
 
 <script>
 import moment from "moment";
+// import FormDisplay from "@/components/FormDisplay.vue";
 export default {
   data() {
     return {
       moment,
+      form_type:'',
+      form:{},
+      printing:false,
       loading: false,
+      selected_record:'',
       cols: [
         {
           title: "Reference No",
@@ -66,7 +72,7 @@ export default {
           scopedSlots: { customRender: "status" }
         },
         {
-          title: "Actions",
+          title: "",
           dataIndex: "actions",
           scopedSlots: { customRender: "actions" }
         }
@@ -94,6 +100,25 @@ export default {
   },
   created() {
     this.init();
+  }, 
+  methods:{
+    print(record){
+      this.selected_record = record.reference_no
+      this.printing = true;
+      this.$store.dispatch("GET_UPLOAD_TAX_RETURNS", {
+        form: record.form_type,
+        ref_no:record.reference_no
+      })
+      .then(result=>{
+        console.log('RESULT :::',JSON.stringify(result))
+        this.printing = false;
+        window.open(result.data.model.url)
+      })
+      .catch(error=>{
+        this.printing = false;
+        console.log('ERROR :::',JSON.stringify(error))
+      })
+    }
   }
 };
 </script>

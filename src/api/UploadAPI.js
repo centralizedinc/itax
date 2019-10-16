@@ -12,5 +12,15 @@ export default class UploadAPI {
         if (!form_data) return Promise.resolve();
         return axios.post(`upload/avatar/${account_id}`, form_data);
     }
+
+    uploadForms({ form, ref_no, form_data }) {
+        if (!form_data) return Promise.resolve();
+        console.log(':::: UPloading forms ...')
+        return axios.post(`upload/forms/${form}/${ref_no}`, form_data);
+    }
+
+    getForm({form, ref_no}){
+        return axios.get(`upload/forms/${form}/${ref_no}`)
+    }
     
 }

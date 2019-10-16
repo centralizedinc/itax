@@ -9,14 +9,16 @@ function file(tin, form) {
         var activity = new model({
             created_by: { tin },
             subscribers: [tin],
-            activity:'2',
-            description:`Successfully filed ${form.form_type} Tax Return for ${form.tin}.\nReference Number: ${form.reference_no}`
+            activity: '2',
+            description: `Successfully filed ${form.form_type} Tax Return for ${form.tin}.\nReference Number: ${form.reference_no}`
         })
-        user.findOne({ tin:tin })
+        user.findOne({ tin: tin })
             .then(result => {
-                console.log('result ::: ' , JSON.stringify(result))
-                activity.created_by.display_name = `${result.name.first} ${result.name.last}`;
-                activity.created_by.avatar = result.avatar
+                console.log('result ::: ', JSON.stringify(result))
+                if (result) {
+                    activity.created_by.display_name = result.name ? `${result.name.first} ${result.name.last}` : '';
+                    activity.created_by.avatar = result.avatar
+                }
                 //find connections
                 return connections.find({ from: tin })
             })

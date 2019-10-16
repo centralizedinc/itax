@@ -1,4 +1,5 @@
 import TaxForm from "../../api/TaxFormAPI";
+import UploadAPI from "../../api/UploadAPI"
 
 function initialState() {
     return {
@@ -57,7 +58,14 @@ const actions = {
                     reject(err)
                 });
         })
+    },
+    UPLOAD_TAX_RETURNS(context, data){
+        return new UploadAPI(context.rootState.account_session.token).uploadForms(data)
+    },
+    GET_UPLOAD_TAX_RETURNS(context, data){
+        return new UploadAPI(context.rootState.account_session.token).getForm(data)
     }
+
 }
 
 export default {
