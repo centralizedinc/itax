@@ -24,6 +24,7 @@ class Uploader {
     s3 = new aws.S3();
   }
 
+
   static uploadAvatar(account_id) {
     const upload = multer({
       storage: multerS3({
@@ -43,6 +44,28 @@ class Uploader {
       })
     });
     return upload.single("avatar");
+  }
+
+  static uploadForm(form, ref_no) {
+    console.log("UploadForm ...")
+    const upload = multer({
+      storage: multerS3({
+        s3: s3,
+        bucket: ApplicationSettings.getValue("AWS_BUCKET"),
+        acl: "public-read",
+        contentType: multerS3.AUTO_CONTENT_TYPE,
+        contentDisposition: "inline",
+        metadata: function (req, file, cb) {
+          cb(null, {
+            fieldName: file.fieldname
+          });
+        },
+        key: function (req, file, cb) {
+          cb(null, `forms/${form}/${ref_no}.pdf`);
+        }
+      })
+    });
+    return upload.single("tax_returns");
   }
 
   /**
