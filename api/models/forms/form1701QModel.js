@@ -9,18 +9,11 @@ const model_schema = {
     quarter: {
         type: Number,
         default: 0
-            // first,
-            // second,
-            // third
+            /**
+             * 0, 1, 2
+             */
     },
-    taxpayer_filer_type: {
-        type: String
-            // single_proprietor,
-            // professional,
-            // estate,
-            // trust
-    },
-    taxpayer_atc_code: [{
+    taxpayer_atc_code: {
         type: String
             // II012,
             // II015,
@@ -28,10 +21,9 @@ const model_schema = {
             // II017,
             // II013,
             // II016
-    }],
+    },
     taxpayer_foreign_tax_credits: {
-        type: Boolean,
-        default: false
+        type: Boolean
     },
     taxpayer_tax_rate: {
         type: String
@@ -47,12 +39,6 @@ const model_schema = {
         type: String
             // itemized_deduction,
             // optional_standard_deduction
-    },
-    spouse_filer_type: {
-        type: String
-            // single_proprietor,
-            // professional,
-            // compensation_earner
     },
     spouse_atc_code: [{
         type: String
