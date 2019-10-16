@@ -160,6 +160,9 @@ import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
+import Form1604E from "./1604e/1604e.vue";
+
+
 
 export default {
   components: {
@@ -171,7 +174,8 @@ export default {
     Form2551Q,
     Form1701Q,
     Form2550Q,
-    Form2000OT
+    Form2000OT,
+    Form1604E
   },
   computed: {
     affix_computation() {
