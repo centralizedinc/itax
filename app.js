@@ -49,7 +49,7 @@ app.use(passport.initialize());
 
 app.use('/oauth', require('./api/routes/oauth_router'));
 
-
+app.use('/account', require('./api/routes/account_router'));
 app.use('/auth', require('./api/routes/auth_router'));
 app.use('/notify', require('./api/routes/notification_router'));
 app.use('/profile', require('./api/routes/profile_router'));

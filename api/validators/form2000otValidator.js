@@ -32,10 +32,11 @@ function validate(form_details) {
     //validate required fields
     errors.push(...validateRequired(form_details));
 
-    errors.push(...commonValidator.checkDueDate(form_details, 3));
+    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
+    errors.push(...error_messages);
     console.log('form 2000ot validator errors: ', JSON.stringify(errors))
 
-    return { errors, due_date: form_details.due_date }
+    return { errors, form_details }
 }
 
 function validateRequired(form) {
@@ -63,9 +64,9 @@ function validateRequired(form) {
 
 function computeDueDate(return_period) {
     var return_period = new Date(return_period);
-    var lastDate = return_period.getMonth() + 1;
-    lastDate = lastDate - 5;
-    const due_date = new Date(return_period.getFullYear(), lastDate, return_period.getMonth());
+    var month = return_period.getMonth() + 1;
+    const due_date = new Date(return_period.getFullYear(), month, 0);
+    due_date.setDate(due_date.getDate() - 5);
     return due_date;
 }
 
