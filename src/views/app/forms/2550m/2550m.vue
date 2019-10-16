@@ -5,17 +5,17 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
-        :validate-status="error_item('returnPeriod')"
-        :help="error_desc('returnPeriod')"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
       >
         <a-month-picker
           placeholder="For the month of (MM/YYYY)"
-          v-model="form.returnPeriod"
+          v-model="form.return_period"
           style="width: 100%"
         />
       </a-form-item>
       <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
-        <a-radio-group v-model="form.amendedYn" style="width: 100%">
+        <a-radio-group v-model="form.amended_yn" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -27,7 +27,7 @@
       >
         <a-input-number
           placeholder="Number of Sheets"
-          v-model="form.numOfSheet"
+          v-model="form.num_of_sheet"
           style="width: 100%"
         />
       </a-form-item>
@@ -893,7 +893,7 @@ export default {
   components: {
     ScheduleOne
   },
-  props: ["form", "step"],
+  props: ["form", "step", "errors"],
   methods: {
     // 16A
     getTotalSales() {
@@ -983,7 +983,7 @@ export default {
     getNetVatPayable() {
       var total =
         (this.form.totalOutputTax || 0) - (this.form.totalInputTax || 0);
-      this.form.taxDue = total;
+      this.form.net_vat_payable = total;
       return total;
     },
     // 23F
@@ -1001,8 +1001,8 @@ export default {
     },
     // 24
     getAmtPayable() {
-      var total = (this.form.taxDue || 0) - (this.form.totalCredits || 0);
-      this.form.amtPaybl = total;
+      var total = (this.form.net_vat_payable || 0) - (this.form.totalCredits || 0);
+      this.form.tax_due = total;
       return total;
     },
     // 25D
@@ -1017,8 +1017,8 @@ export default {
     },
     // 26
     getTotalAmtPayable() {
-      var total = this.computeSum([this.form.amtPaybl, this.form.penalties]);
-      this.form.totalAmountPayable = total;
+      var total = this.computeSum([this.form.tax_due, this.form.penalties]);
+      this.form.total_amount_payable = total;
       return total;
     },
     updateSchedAndClose(data) {
@@ -1035,7 +1035,7 @@ export default {
       this.sched2_data[index].splice(index, 1);
     },
     check_sched2(value) {
-      var only = this.formatDtMonth(this.form.returnPeriod);
+      var only = this.formatDtMonth(this.form.return_period);
       var picked = this.formatDtMonth(value);
       console.log("check sched2: " + value);
       if (picked !== only) {
@@ -1101,42 +1101,13 @@ export default {
       this.sched3A_drawer = false;
     },
     validate() {
+      if(this.step === 0) this.validatePage1();
       this.changeStep(this.step + 1);
     },
-    submit() {
-      this.loading = true;
-      this.errors = [];
-      this.$store
-        .dispatch("VALIDATE_AND_SAVE", {
-          form_type: "2550M",
-          form_details: this.form
-        })
-        .then(result => {
-          console.log("VALIDATE_AND_SAVE result:", result.data);
-          this.loading = false;
-          this.$emit("updateForm", null); //to refresh pdf
-          if (result.data.errors && result.data.errors.length > 0) {
-            this.errors = result.data.errors;
-            console.log("this.errors :", this.errors);
-            if (this.errors && this.errors[0] && this.errors[0].page !== null)
-              this.$emit("changeStep", this.errors[0].page);
-            this.$notification.error({ message: "Validation Error" });
-          } else {
-            this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-            this.$store.commit("NOTIFY_MESSAGE", {
-              success: true,
-              message: "Successfully submitted Form 2550m."
-            });
-            var return_details = result.data.model;
-            return_details.registered_name = this.form.taxpayer.registered_name;
-            return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
-            this.$emit("success", return_details);
-          }
-        })
-        .catch(err => {
-          console.log("VALIDATE_AND_SAVE", err);
-          this.loading = false;
-        });
+    validatePage1(){
+      if (!this.form.return_period) {
+          this.errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
+      }
     },
     changeStep(step, form) {
       this.$emit("changeStep", step);
@@ -1162,7 +1133,6 @@ export default {
       sched6_drawer: false,
       sched7_drawer: false,
       sched8_drawer: false,
-      errors: [],
       loading: false,
       form_layout: {
         label_col: { span: 2 },
@@ -1415,11 +1385,11 @@ export default {
       deep: true,
       handler() {
         console.log("2550m form: ", this.form);
-        this.form.year = this.formatDtYear(this.form.returnPeriod);
-        this.form.month = this.formatDtMonth(this.form.returnPeriod);
-        this.form.returnPeriodYear = this.formatDtYear(this.form.returnPeriod);
-        this.form.returnPeriodMonth = this.formatDtMonth(
-          this.form.returnPeriod
+        this.form.year = this.formatDtYear(this.form.return_period);
+        this.form.month = this.formatDtMonth(this.form.return_period);
+        this.form.return_period_year = this.formatDtYear(this.form.return_period);
+        this.form.return_period_month = this.formatDtMonth(
+          this.form.return_period
         );
         console.log("year: " + this.form.month);
       }

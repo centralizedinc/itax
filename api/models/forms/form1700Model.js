@@ -3,126 +3,86 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
+var common_model = require('./commonModels');
 
-var Form1700Schema = new Schema({
-    reference_no: String,
-    dateFiled: {
-        type: Date,
-        default: new Date()
-    },
-    // year: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // amendedYn: Boolean,
-    joint_filing: Boolean,
-    source_of_income: "",
-    // 0 - Compensation Income
-    // 1 - Other Income
-    numOfSheet: {
-        type: Number,
-        default: 0
-    },
-    taxpayer: {
+const model_schema = {
 
+    prev_tax_due: { type: Number, default: 0 }, //26 Tax Due
+    total_tax_credit: { type: Number, default: 0 }, //27 
+    net_tax_payable: { type: Number, default: 0 }, //28  item26 Less Item 27
+    portion_of_tax_payabe: { type: Number, default: 0 }, //29 
+    total_amount_payable: { type: Number, default: 0 }, //35 sum of item 30 and 34
+    aggregate_amount_payable: { type: Number, default: 0 }, //36 sum of item 35A and 35B
 
-        tin: Number,
-        rdo_code: Number,
-        // tax_filer_type: String,
-        psoc_code: Number,
+    //Page 2
+    //Part V.A Graduate Rates
+    gr_gross_compensation_income: { type: Number, default: 0 },  //42 A
+    gr_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
+    gr_non_taxable: { type: Number, default: 0 }, //43 A
+    gr_spouse_non_taxable: { type: Number, default: 0 }, //43 B
+    gr_gross_taxable: { type: Number, default: 0 }, //44 A
+    gr_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
+    gr_other_taxable: { type: Number, default: 0 }, //45 A
+    gr_spouse_other_taxable: { type: Number, default: 0 }, //45 B
+    gr_tot_taxable_income: { type: Number, default: 0 },
+    gr_spouse_tot_taxable_income: { type: Number, default: 0 },
+    gr_tax_due: { type: Number, default: 0 },
+    gr_spouse_tax_due: { type: Number, default: 0 },
+    
 
-        contact_details: {
-            last: String,
-            first: String,
-            middle: String
+    //Part V.B Flat Rate
+    fr_gross_compensation_income: { type: Number, default: 0 },  //48 A
+    fr_spouse_gross_compensation_income: { type: Number, default: 0 }, //48 B
+    fr_non_taxable: { type: Number, default: 0 }, //49 A
+    fr_spouse_non_taxable: { type: Number, default: 0 }, //49 B
+    fr_gross_taxable: { type: Number, default: 0 }, //50 A
+    fr_spouse_gross_taxable: { type: Number, default: 0 }, //50 B
+    fr_other_taxable: { type: Number, default: 0 }, //51 A
+    fr_spouse_other_taxable: { type: Number, default: 0 }, //51 B
+    fr_tot_taxable_income: { type: Number, default: 0 }, //52 A
+    fr_spouse_tot_taxable_income: { type: Number, default: 0 }, //52 B
+    fr_tax_due: { type: Number, default: 0 }, //53 A
+    fr_spouse_tax_due: { type: Number, default: 0 }, //53 B
+    
+    //Part V.C Tax Credit Payment
+    tp_tax_wittheld: { type: Number, default: 0 }, //54 A
+    tp__spousetax_wittheld: { type: Number, default: 0 },// 54 B
+    tp_tax_paid_return:  { type: Number, default: 0 },// 55 A
+    tp__spouse_tax_paid_return:  { type: Number, default: 0 },//55 B
+    tp_foreign_tax_credit:  { type: Number, default: 0 },// 56 A
+    tp__spouse_foreign_credit:  { type: Number, default: 0 },// 56 B
+    tp_other_tax:  { type: Number, default: 0 },//57 A
+    tp_spouse_other_tax:  { type: Number, default: 0 },//57 B
+    tp_total_tax:  { type: Number, default: 0 },//58 A
+    tp_spouse_total_tax:  { type: Number, default: 0 },//58 B
+    tp_net_tax_payable:  { type: Number, default: 0 },//59 A
+    tp_spouse_net_tax_payable:  { type: Number, default: 0 },//59 B
+
+    //Part VI schedule
+    sched1: [{
+        filer_type: {
+            type: String
+            /**
+             * taxpayer
+             * spouse
+             */
         },
+        name_of_employer: String,
+        employer_tin: String,
+        comp_inc_sub_reg_grad: { type: Number, default: 0 },
+        tax_withheld: { type: Number, default: 0 },
+        // gros_comp_tot_tax_withld_taxpayer: { type: Number, default: 0 },
+        // gros_comp_tot_tax_withld_spouse: { type: Number, default: 0 },
+    }],
+    taxpayer_regular_grad_total: { type: Number, default: 0 },
+    taxpayer_flat_total: { type: Number, default: 0 },
+    taxpayer_tax_withheld_total: { type: Number, default: 0 },
+    spouse_regular_grad_total: { type: Number, default: 0 },
+    spouse_flat_total: { type: Number, default: 0 },
+    spouse_tax_withheld_total: { type: Number, default: 0 },
+};
 
-        registered_address: String,
-
-        birthday: Date,
-
-        email_address: String,
-
-        telephone_no: Number,
-
-        civil_status: { type: Number },
-        // 0 - Single , 1 - Married , 2 - Legally Separated, 3 - widowed
-
-        claiming_add_exemp: String,
-        no_dependents: Number,
-
-        // spouse details
-        spouse_name_last: String,
-        spouse_name_first: String,
-        spouse_name_middle: String,
-        spouse_tin: Number,
-        spouse_contact_number: Number,
-        sbirthday: Date,
-        spouse_email: String,
-        spouse_claiming_add_exemp: Boolean,
-        spouse_no_dependents: Number,
-
-        // spouse_rdo_code: Number,
-        // spouse_tax_filer_type: String,
-        // spouse_atc: { type: Number, default: 0 },
-        // spouse_citizenship: String,
-    },
-    dueDate: Date,
-    returnPeriod: Date,
-    returnPeriodMonth: String,
-    returnPeriodYear: String,
-    amendedYn: Boolean,
-    numOfSheet: { type: Number, default: 0 },
-
-
-    tax_filer_tax_due: { type: Number, default: 0 },
-    spouse_tax_due: { type: Number, default: 0 },
-    total_income_tax_due: { type: Number, default: 0 },
-    less_tax_credits: { type: Number, default: 0 },
-    spouse_less_tax_credits: { type: Number, default: 0 },
-    net_tax_payable: { type: Number, default: 0 },
-    portion_tax_payable: { type: Number, default: 0 },
-    total_penalties: { type: Number, default: 0 },
-    total_amount_payable: { type: Number, default: 0 },
-    // atc: { type: Number, default: 0 }, 
-    // taxCredits: { type: Number, default: 0 },
-    // taxRate: { type: Number, default: 0 },
-    // method_deduction: { type: Number, default: 0 },
-    // spouse_atc: { type: Number, default: 0 },
-    // spouse_taxCredits: { type: Number, default: 0 },
-    // spouse_taxRate: { type: Number, default: 0 },
-    // spouse_method_deduction: { type: Number, default: 0 },
-    // otherTaxCredits: { type: Number, default: 0 },
-    // totalCredits: { type: Number, default: 0 },
-    // amtPaybl: { type: Number, default: 0 },
-    // surcharge: { type: Number, default: 0 },
-    // interest: { type: Number, default: 0 },
-    // compromise: { type: Number, default: 0 },
-    // penalties: { type: Number, default: 0 },
-    // totalAmountPayable: { type: Number, default: 0 },
-    // batchNo: { type: Number, default: 0 },
-    // sched1: [],
-    // sched2: [],
-    // sched3: [],
-    // sched4: [],
-    date_created: {
-        type: Date,
-        default: new Date()
-    },
-    date_modified: {
-        type: Date,
-        default: new Date()
-    },
-    auto_id: {
-        type: Number
-    },
-    created_by: {
-        type: String
-    },
-    modified_by: {
-        type: String
-    }
-});
+var Form1700Schema = new Schema({ ...common_model, ...model_schema });
 
 Form1700Schema.pre('save', function (callback) {
     var form = this;
@@ -161,4 +121,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('form_1700', Form1700Schema);
+module.exports = mongoose.model('1700_forms', Form1700Schema);

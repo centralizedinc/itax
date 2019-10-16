@@ -49,15 +49,15 @@ function getContent(forms) {
                 },
                 {
                     // text: forms.year ? forms.year : ' ',
-                    text: forms.amendedYn == true ? 'X' : ' ',
+                    text: forms.amended_yn == true ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
                     margin: [41, 82, 0, 0]
                 },
                 {
-                    // text: forms.amendedYn == true ? 'X' : ' ',
-                    text: forms.amendedYn == false ? 'X' : ' ',
+                    // text: forms.amended_yn == true ? 'X' : ' ',
+                    text: forms.amended_yn == false ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',

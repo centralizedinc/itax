@@ -97,7 +97,7 @@
               </a-menu-item>
               <a-divider></a-divider>
               <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
-              <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item>
+              <!-- <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item> -->
               <a-menu-item key="logout">
                 <a-icon type="logout" />Logout
               </a-menu-item>
@@ -105,14 +105,18 @@
           </a-affix>
         </a-col>
         <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-           <a-col :span="24">
-              <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
-                  <h2 style="color: #FFFFFF">{{$route.name}}</h2>
-              </a-card>
-          </a-col>
-          <transition name="fade" mode="out-in">
-            <router-view></router-view>
-          </transition>
+           <a-row>
+             <a-col :span="24">
+                <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+                    <h2 style="color: #FFFFFF">{{$route.name}}</h2>
+                </a-card>
+            </a-col>
+            <a-col :span="24">
+              <transition name="fade" mode="out-in">
+                <router-view></router-view>
+              </transition>
+            </a-col>
+           </a-row>
         </a-col>
         <a-col :span="4">
           <a-row style="margin-bottom: 1vh">
@@ -216,6 +220,9 @@ export default {
     },
     random(){
       return Math.floor(Math.random() *10)
+    },
+    onSearch(e){
+
     }
   },
   computed:{

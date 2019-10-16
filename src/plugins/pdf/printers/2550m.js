@@ -39,15 +39,15 @@ function getContent(forms) {
                 widths: [170, 79, 49, 49, 150, 10],
                 body: [
                     [{
-                        text: formatDate(forms.returnPeriod, { month: "2-digit" }),
+                        text: formatDate(forms.return_period, { month: "2-digit" }),
                         fontSize: 15,
                         characterSpacing: 3,
-                        akignment: 'justify',
+                        alignment: 'justify',
                         // right,down,left,up
                         margin: [145, 34, 0, 0]
                     },
                     {
-                        text: formatDate(forms.returnPeriod, { year: "numeric" }),
+                        text: formatDate(forms.return_period, { year: "numeric" }),
                         fontSize: 14,
                         characterSpacing: 3,
                         alignment: 'justify',
@@ -55,21 +55,21 @@ function getContent(forms) {
                         margin: [0, 34, 0, 0]
                     },
                     {
-                        text: forms.amendedYn == true ? 'X' : ' ',
+                        text: forms.amended_yn == true ? 'X' : ' ',
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [35, 39, 0, 0]
                     },
                     {
-                        text: forms.amendedYn == false ? 'X' : ' ',
+                        text: forms.amended_yn == false ? 'X' : ' ',
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [12, 39, 0, 0]
                     },
                     {
-                        text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                        text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                         fontSize: 12,
                         alignment: 'justify',
                         // right,down,left,up
@@ -94,7 +94,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [30, 6, 0, 0]
+                        margin: [30, 9, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
@@ -102,7 +102,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [0, 6, 0, 0]
+                        margin: [0, 9, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
@@ -110,7 +110,7 @@ function getContent(forms) {
                         characterSpacing: 2.8,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [-1.8, 6, 0, 0]
+                        margin: [-1.8, 9, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
@@ -118,7 +118,7 @@ function getContent(forms) {
                         characterSpacing: 2.5,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [-1, 6, 0, 0]
+                        margin: [-1, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -126,7 +126,7 @@ function getContent(forms) {
                         characterSpacing: 8.2,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [55, 6, 0, 0]
+                        margin: [55, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
@@ -889,7 +889,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
+                            text: formatAmount(forms.net_vat_payable),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1065,7 +1065,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: forms.amtPaybl == null ? '0.00' : forms.amtPaybl % 1 == 0 ? forms.amtPaybl + '.00' : forms.amtPaybl,
+                            text: formatAmount(forms.tax_due),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1130,7 +1130,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: formatAmount(forms.totalAmountPayable),
+                            text: formatAmount(forms.total_amount_payable),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up

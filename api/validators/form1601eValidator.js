@@ -15,54 +15,19 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    if (!form_details.returnPeriodYear || !form_details.returnPeriodMonth || !form_details.returnPeriod) {
-        errors.push({ page: 0, field: "returnPeriod", error: constant_helper.MANDATORY_FIELD('Return Period') });
+    if (!form_details.return_period_year || !form_details.return_period_month || !form_details.return_period) {
+        errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
         return { errors };
     }
 
-    form_details.due_date = computeDueDate(form_details.returnPeriod)
+    form_details.due_date = computeDueDate(form_details.return_period)
     console.log('form 1601e due date :', form_details.due_date);
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
 
     errors.push(...validateRequired(form_details));
 
-    if (commonValidator.isLateFiling(form_details.due_date)) {
-        console.log('Late filling ...');
-        // Compute Surcharge
-        const surcharge = commonValidator.computeSurcharges(form_details.amtPayblCrdtb);
-        form_details.surcharge = form_details.surcharge ? form_details.surcharge : 0;
-        console.log('Surcharge :', surcharge, ':', form_details.surcharge);
-        if (commonValidator.formatAmount(form_details.surcharge) !== commonValidator.formatAmount(surcharge)) {
-            errors.push({
-                page: 2,
-                field: 'surcharge',
-                error: `Surcharge amount must be ${commonValidator.formatAmount(surcharge)}`
-            })
-        }
-        // Compute Interest
-        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPayblCrdtb);
-        form_details.interest = form_details.interest ? form_details.interest : 0;
-        console.log('Interest :', interest, ':', form_details.interest);
-        if (commonValidator.formatAmount(form_details.interest) !== commonValidator.formatAmount(interest)) {
-            errors.push({
-                page: 2,
-                field: 'interest',
-                error: `Interest amount must be ${commonValidator.formatAmount(interest)}`
-            })
-        }
-        // Compute Compromise
-        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPayblCrdtb);
-        form_details.compromise = form_details.compromise ? form_details.compromise : 0;
-        console.log('Compromise :', compromise, ':', form_details.compromise);
-        if (commonValidator.formatAmount(form_details.compromise) !== commonValidator.formatAmount(compromise)) {
-            errors.push({
-                page: 2,
-                field: 'compromise',
-                error: `Compromise amount must be ${commonValidator.formatAmount(compromise)}`
-            })
-        }
-    }
+    errors.push(...commonValidator.checkDueDate(form_details, 2));
 
     console.log('form 1601e validator errors: ', JSON.stringify(errors))
 
@@ -89,10 +54,10 @@ function validateRequired(form) {
     }
 }
 
-function computeDueDate(returnPeriod) {
+function computeDueDate(return_period) {
     var due_date = new Date();
 
-    var month = returnPeriod.getMonth() + 1;
+    var month = return_period.getMonth() + 1;
 
     //every 10th of the next month
     due_date.setDate(10);
@@ -119,7 +84,7 @@ function validateComputations(form) {
 
     if (form.atcList && form.atcList.length) {
         form.atcList.forEach((atc) => {
-            item14Total = item14Total + atc.taxDue;
+            item14Total = item14Total + atc.tax_due;
         });
 
         if (item14Total !== form.amtDueCrdtb) {
@@ -138,7 +103,7 @@ function validateComputations(form) {
     }
 
     //late filing
-    var late_filing = commonValidator.isLateFiling(form.dueDate);
+    var late_filing = commonValidator.isLateFiling(form.due_date);
 
     if (late_filing) {
         item17A_surcharge = commonValidator.computeSurcharges(item16);
@@ -146,7 +111,7 @@ function validateComputations(form) {
             error_messages.push({ field: "surcharge", error: "surcharge" });
         }
 
-        item17B_interest = commonValidator.computeInterest(form.dueDate, item16);
+        item17B_interest = commonValidator.computeInterest(form.due_date, item16);
         if (item17B_interest ==! form.interest) {
             error_messages.push({ field: "interest", error: "interest" });
         }

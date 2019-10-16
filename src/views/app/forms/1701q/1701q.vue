@@ -9,16 +9,18 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1."
-        :validate-status="error_item('taxpayer.returnPeriodYear')"
-        :help="error_desc('taxpayer.returnPeriodYear')"
+        :validate-status="error_item('taxpayer.return_period_year')"
+        :help="error_desc('taxpayer.return_period_year')"
       >
-        <a-month-picker style="width: 100%" v-model="form.returnPeriodYear" />
+        <a-month-picker style="width: 100%" v-model="form.return_period_year" />
       </a-form-item>
       <a-form-item label="Quarter"></a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="2."
+        :validate-status="error_item('quarter')"
+        :help="error_desc('quarter')"
       >
         <a-radio-group v-model="form.quarter">
           <a-radio :value="1">First</a-radio>
@@ -32,13 +34,13 @@
         :wrapperCol="form_layout.wrapper_col"
         label="3."
       >
-        <a-radio-group v-model="form.amendedYn">
+        <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="4. Number of Sheets">
-        <a-input-number v-model="form.numOfSheet" style="width: 100%" />
+        <a-input-number v-model="form.num_of_sheet" style="width: 100%" />
       </a-form-item>
     </a-form>
 
@@ -712,6 +714,18 @@ export default {
   computed: {
     tax_due() {
       var tosum = [this.form];
+    },
+    computeReturnPeriod(){
+      var return_period = new Date();
+      return_period.setFullYear(this.form.returnPeriodYear);
+      if(this.form.quarter === 1){
+        return_period.setMonth(2)
+      } else if(this.form.quarter === 2){
+        return_period.setMonth(5)
+      } else if(this.form.quarter === 3){
+        return_period.setMonth(8)
+      }
+      return return_period;
     }
   },
   methods: {
@@ -728,6 +742,7 @@ export default {
     submit() {
       this.loading = true;
       this.errors = [];
+      this.form.returnPeriod = this.computeReturnPeriod
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "1701Q",

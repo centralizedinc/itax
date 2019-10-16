@@ -2,9 +2,18 @@
 
 // Dao
 const Form2550MDao = require('../dao/forms/Form2550MDao');
+const Form2551QDao = require('../dao/forms/Form2551QDao')
 const Form1601EDao = require('../dao/forms/Form1601EDao');
+const Form1601FDao = require('../dao/forms/Form1601FDao');
 const Form2000OTDao = require('../dao/forms/Form2000OTDao');
+const Form1601CDao = require('../dao/forms/Form1601CDao');
+const Form1603Dao = require('../dao/forms/Form1603Dao')
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
+const Form1700Dao = require('../dao/forms/Form1700Dao');
+const Form1606Dao = require('../dao/forms/Form1606Dao');
+const Form1701QDao = require('../dao/forms/Form1701QDao');
+
+const activity = require('../services/actvities_service')
 
 /**
  * @returns {Promise}
@@ -15,10 +24,24 @@ function save(form_type, form_details) {
     return new Promise((resolve, reject) => {
         saveForm(form_type, form_details)
             .then((result) => {
-                return ReturnDetailsDao.create(result);
+                const model = {
+                    reference_no: result.reference_no,
+                    tin: result.taxpayer.tin,
+                    form_type: form_type,
+                    return_period: result.return_period,
+                    due_date: result.due_date,
+                    tax_due: result.tax_due,
+                    total_amount_payable: result.total_amount_payable,
+                    total_penalties: result.penalties,
+                    date_filed: result.date_created,
+                    date_created: result.date_created,
+                    created_by: result.created_by
+                }
+                return ReturnDetailsDao.create(model);
             })
             .then((result) => {
-                resolve(result);
+                activity.file(result.tin, result)
+                resolve(result)
             })
             .catch((err) => {
                 reject(err)
@@ -32,71 +55,17 @@ function save(form_type, form_details) {
  * @param {Object} form_details 
  */
 function saveForm(form_type, form_details) {
-    return new Promise((resolve, reject) => {
-        if (form_type.toUpperCase() === '2550M') {
-            console.log('form_details :', form_details);
-            Form2550MDao.create(form_details)
-                .then((result) => {
-                    console.log('saveForm : ', result);
-                    resolve({
-                        reference_no: result.reference_no,
-                        tin: result.taxpayer.tin,
-                        form_type: form_type,
-                        return_period: result.returnPeriod,
-                        due_date: result.due_date,
-                        tax_due: result.taxDue,
-                        total_amount_payable: result.totalAmountPayable,
-                        total_penalties: result.penalties,
-                        date_filed: result.date_created,
-                        created_by: result.created_by
-                    })
-                }).catch((err) => {
-                    console.log('saveForm rejected err : ', err)
-                    reject(err)
-                });
-        } else if (form_type.toUpperCase() === '1601E') {
-            Form1601EDao.create(form_details)
-                .then((result) => {
-                    console.log('saveForm : ', result);
-                    resolve({
-                        reference_no: result.reference_no,
-                        tin: result.taxpayer.tin,
-                        form_type: form_type,
-                        return_period: result.returnPeriod,
-                        due_date: result.due_date,
-                        tax_due: result.amtPayblCrdtb,
-                        total_amount_payable: result.totalAmtPayblCrdtb,
-                        total_penalties: result.penaltiesCrdtb,
-                        date_filed: result.date_created,
-                        created_by: result.created_by
-                    })
-                }).catch((err) => {
-                    console.log('saveForm rejected err : ', err)
-                    reject(err)
-                });
-        } else if (form_type.toUpperCase() === '2000OT') {
-            console.log('form_details :', form_details);
-            Form2000OTDao.create(form_details)
-                .then((result) => {
-                    console.log('saveForm : ', result);
-                    resolve({
-                        reference_no: result.reference_no,
-                        tin: result.taxpayer.tin,
-                        form_type: form_type,
-                        return_period: result.returnPeriod,
-                        due_date: result.due_date,
-                        tax_due: result.taxStillDue,
-                        total_amount_payable: result.totalAmountPayable,
-                        total_penalties: result.penalties,
-                        date_filed: result.date_created,
-                        created_by: result.created_by
-                    })
-                }).catch((err) => {
-                    console.log('saveForm rejected err : ', err)
-                    reject(err)
-                });
-        } else reject({ message: "Form does not exist" })
-    })
+    if (form_type.toUpperCase() === '2550M') return Form2550MDao.create(form_details);
+    else if (form_type.toUpperCase() === '1601E') return Form1601EDao.create(form_details);
+    else if (form_type.toUpperCase() === '1601F') return Form1601FDao.create(form_details);
+    else if (form_type.toUpperCase() === '2000OT') return Form2000OTDao.create(form_details);
+    else if (form_type.toUpperCase() === '1601C') return Form1601CDao.create(form_details);
+    else if (form_type.toUpperCase() === '1700') return Form1700Dao.create(form_details);
+    else if (form_type.toUpperCase() === '1603') return Form1603Dao.create(form_details);
+    else if (form_type.toUpperCase() === '2551Q') return Form2551QDao.create(form_details);
+    else if (form_type.toUpperCase() === '1606') return Form1606Dao.create(form_details);
+    else if (form_type.toUpperCase() === '1701q') return Form1701QDao.create(form_details);
+    else Promise.reject({ message: "Form does not exist" });
 }
 
 

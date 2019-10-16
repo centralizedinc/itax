@@ -53,21 +53,21 @@ function getContent(forms) {
                     margin: [0, 78, 0, 0]
                 },
                 {
-                    text: forms.amendedYn == true ? 'X' : ' ',
+                    text: forms.amended_yn == true ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
                     margin: [40, 82, 0, 0]
                 },
                 {
-                    text: forms.amendedYn == false ? 'X' : ' ',
+                    text: forms.amended_yn == false ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
                     margin: [13, 82, 0, 0]
                 },
                 {
-                    text: forms.numOfSheet,
+                    text: forms.num_of_sheet,
                     fontSize: 10,
                     // right,down,left,up
                     alignment: 'justify',

@@ -42,7 +42,7 @@ function getContent(forms) {
                 body: [
                     [{
                         // text: '2019',
-                        text: formatDate(forms.returnPeriodYear, { year: "numeric" }),
+                        text: formatDate(forms.return_period_year, { year: "numeric" }),
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -70,21 +70,21 @@ function getContent(forms) {
                         margin: [11, 45, 0, 0]
                     },
                     {
-                        text: forms.amendedYn == true ? 'X' : ' ',
+                        text: forms.amended_yn == true ? 'X' : ' ',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [62, 46, 0, 0]
                     },
                     {
-                        text: forms.amendedYn == false ? 'X' : ' ',
+                        text: forms.amended_yn == false ? 'X' : ' ',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [32, 46, 0, 0]
                     },
                     {
-                        text: forms.numOfSheet,
+                        text: forms.num_of_sheet,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',

@@ -175,14 +175,14 @@ function getContent(forms) {
                 widths: [90, 50],
                 body: [
                     [{
-                        text: forms.amendedYn == true ? 'X' : ' ',
+                        text: forms.amended_yn == true ? 'X' : ' ',
                         fontSize: 15,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [442, -40, 0, 0]
                     },
                     {
-                        text: forms.amendedYn == false ? 'X' : ' ',
+                        text: forms.amended_yn == false ? 'X' : ' ',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -292,7 +292,7 @@ function getContent(forms) {
                 body: [
                     [
                         {
-                            text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                            text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                             fontSize: 15,
                             // right,down,left,up
                             alignment: 'justify',
