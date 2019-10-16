@@ -30,9 +30,12 @@ function validate(form_details) {
     var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
     errors.push(...error_messages);
 
-    console.log('form 1701q validator errors: ', JSON.stringify(errors))
+    // Compute total
+    // if(form_details.)
 
-    return errors
+    console.log('form 1701q validator errors: ', JSON.stringify(errors))
+    console.log('form_details :', form_details);
+    return { errors, form_details }
 }
 
 function validateRequired(field) {
@@ -40,8 +43,8 @@ function validateRequired(field) {
 
     // Validate Taxpayer
 
-    if (!field.taxpayer || !field.taxpayer.tax_filer_type) { //item 7
-        error_messages.push({ page: 1, field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Taxpayer/Filer Type") });
+    if (!field.taxpayer || !field.taxpayer.filer_type) { //item 7
+        error_messages.push({ page: 1, field: "taxpayer.filer_type", error: constant_helper.MANDATORY_FIELD("Taxpayer/Filer Type") });
     }
 
     if (!field.taxpayer_atc_code) { // item 8
@@ -56,16 +59,16 @@ function validateRequired(field) {
         error_messages.push({ page: 1, field: "taxpayer.contact_details.email", error: constant_helper.MANDATORY_FIELD("Email Address") });
     }
 
-    if (!field.taxpayer || !field.taxpayer.citizenship) { // item 13
-        error_messages.push({ page: 1, field: "taxpayer.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
+    if (!field.taxpayer || !field.taxpayer.individual_details || !field.taxpayer.individual_details.citizenship) { // item 13
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
     }
 
-    if (field.claiming_tax_credits === null || field.claiming_tax_credits === undefined) { // item 15
-        error_messages.push({ page: 1, field: "taxCredits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
+    if (field.taxpayer_foreign_tax_credits === null || field.taxpayer_foreign_tax_credits === undefined) { // item 15
+        error_messages.push({ page: 1, field: "taxpayer_foreign_tax_credits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
     }
 
-    if (!field.method_deduction) { // item 16A
-        error_messages.push({ page: 1, field: "method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
+    if (!field.taxpayer_method_deduction) { // item 16A
+        error_messages.push({ page: 1, field: "taxpayer_method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
     }
 
 
@@ -95,7 +98,6 @@ function computeDueDate(return_period) {
     // every 15th of the quarter May 15, Aug 15, Nov 15
     due_date.setDate(15);
     due_date.setMonth(month);
-    due_date.setFullYear(return_period_year)
 
     return due_date;
 }

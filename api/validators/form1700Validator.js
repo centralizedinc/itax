@@ -13,7 +13,7 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    return { errors, due_date: form_details.due_date }
+    return { errors, form_details }
 }
 
 function computeDueDate(return_period) {
