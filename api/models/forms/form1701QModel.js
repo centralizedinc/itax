@@ -20,7 +20,7 @@ const model_schema = {
             // estate,
             // trust
     },
-    taxpayer_atc_list: [{
+    taxpayer_atc_code: [{
         type: String
             // II012,
             // II015,
@@ -54,7 +54,7 @@ const model_schema = {
             // professional,
             // compensation_earner
     },
-    spouse_atc_list: [{
+    spouse_atc_code: [{
         type: String
             // II012,
             // II015,
@@ -88,7 +88,7 @@ const model_schema = {
         type: Number,
         default: 0
     }, //(From Part V, Schedule III-Item 62)
-    taxPayable: {
+    tax_payable: {
         type: Number,
         default: 0
     }, //(Item 26 Less Item 27) (From Part V, Item 63)
