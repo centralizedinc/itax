@@ -14,10 +14,10 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    if (!form_details.return_period_year || !form_details.return_period_month || !form_details.return_period) {
-        errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
-        return { errors };
-    }
+    const validated_return = commonValidator.validateReturnPeriodByMonthYear(form_details.return_period_year, form_details.return_period_month, 0);
+    if (validated_return.errors && validated_return.errors.length) return { errors: validated_return.errors };
+    else form_details.return_period = validated_return.return_period;
+    console.log('form 2550m return period :', form_details.return_period);
 
     form_details.due_date = computeDueDate(form_details.return_period)
     console.log('form 2550m due date :', form_details.due_date);
@@ -29,11 +29,12 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
     //latefiling computations
     // 25% total amount due
-    errors.push(...commonValidator.checkDueDate(form_details, 2));
+    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 2);
+    errors.push(...error_messages);
 
-    console.log('form 2550m validator errors: ', JSON.stringify(errors))
+    console.log('form 2550m validator errors: ', JSON.stringify(errors));
 
-    return { errors, due_date: form_details.due_date }
+    return { errors, form_details }
 }
 
 /**

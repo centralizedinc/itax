@@ -7,7 +7,10 @@ const common_model = require('./commonModels');
 
 const model_schema = {
     quarter: String,
-    reflected: String,
+    months_reflected: [],
+    /**
+     * JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+     */
     taxes_withheld: String,
     line_of_business: String,
     category_of_agent: String,
@@ -19,19 +22,19 @@ const model_schema = {
     total_payments_made: { type: Number, default: 0 },
     other_payments_made: { type: Number, default: 0 },
     refund_type: String,
-    atc: String // WI 320, WI 330, WI 360
+    atc_list: [] // WI 320, WI 330, WI 360
 };
 
-var Form1603Schema = new Schema({...common_model, ...model_schema });
+var Form1603Schema = new Schema({ ...common_model, ...model_schema });
 
-Form1603Schema.pre('save', function(callback) {
+Form1603Schema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1603Schema.pre('findOneAndUpdate', function(callback) {
+Form1603Schema.pre('findOneAndUpdate', function (callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;
