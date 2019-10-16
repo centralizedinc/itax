@@ -182,6 +182,13 @@ export default {
       });
       console.log("open form data: " + JSON.stringify(this.form));
       this.refresh();
+    },
+    upload(){
+      var printer = printers[this.form_type];
+      var document = printer.fillup(this.form);
+      var self = this;
+      return pdfMake.createPdf(document)
+      
     }
   }
 };
