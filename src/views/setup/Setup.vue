@@ -36,7 +36,7 @@
 import PersonalDetails from "./PersonalDetails";
 import TaxpayerInformation from "./TaxpayerInformation";
 import Connections from "./Connections";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   components: {
@@ -80,6 +80,9 @@ export default {
           birthDate: "",
           contact_details: {
             email: ""
+          },
+          address_details: {
+            zipCode: ""
           }
         }
       },
@@ -105,11 +108,13 @@ export default {
           .dispatch("GET_TAXPAYER_BY_TIN", this.user.tin)
           .then(result => {
             this.details.taxpayer = result.taxpayer;
-            this.details.taxpayer.individual_details.birthDate = moment(this.details.taxpayer.individual_details);
+            this.details.taxpayer.individual_details.birthDate = moment(
+              this.details.taxpayer.individual_details.birthDate
+            );
             this.fetching_data = false;
           })
           .catch(err => {
-            console.log('GET_TAXPAYER_BY_TIN err :', err);
+            console.log("GET_TAXPAYER_BY_TIN err :", err);
             this.fetching_data = false;
           });
       } else {
@@ -117,7 +122,7 @@ export default {
         this.details.taxpayer.individual_details.lastName = this.user.name.last;
         this.details.taxpayer.contact_details.email = this.user.email;
         this.details.taxpayer.taxpayer_type = "I";
-      this.fetching_data = false;
+        this.fetching_data = false;
       }
     },
     next(i) {

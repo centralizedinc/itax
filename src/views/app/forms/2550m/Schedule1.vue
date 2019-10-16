@@ -78,13 +78,13 @@ export default {
       ],
       atc_list: [
         {
-          description: "Genral",
+          description: "BUSINESS SERVICES-IN GENERAL",
           atc: "VB010",
           rate: 0.12
         },
         {
-          description: "Genral1",
-          atc: "VB011",
+          description: "CONSTRUCTION",
+          atc: "VC010",
           rate: 0.25
         }
       ],

@@ -36,9 +36,7 @@ function validate(form_type, form_details) {
         case "1601F":
             return form1601fValidator.validate(form_details);
         case "1601C":
-            return form1601CValidator.validate(form_details);
-        case "1700":
-            return form1700Validator.validate(form_details);
+            return form1601cValidator.validate(form_details);
         case "1603":
             return form1603Validator.validate(form_details);
     }
