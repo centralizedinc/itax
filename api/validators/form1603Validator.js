@@ -11,7 +11,7 @@ function validate(form_details) {
     const validated_return = commonValidator.validateReturnPeriodByQuarter(form_details.return_period_year, form_details.quarter, 0);
     if (validated_return.errors && validated_return.errors.length) return { errors: validated_return.errors };
     else form_details.return_period = validated_return.return_period;
-    console.log('form 1601e return period :', form_details.return_period);
+    console.log('form 1603 return period :', form_details.return_period);
 
 
     form_details.due_date = computeDueDate(form_details.return_period)

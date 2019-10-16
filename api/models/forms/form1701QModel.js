@@ -6,54 +6,472 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    taxRate: String,
-    method_deduction: String,
-    standardDeduction: String,
-    tax_due: { type: Number, default: 0 }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54)
-    taxCredit: { type: Number, default: 0 }, //(From Part V, Schedule III-Item 62)
-    taxPayable: { type: Number, default: 0 }, //(Item 26 Less Item 27) (From Part V, Item 63)
-    totalPenalties: { type: Number, default: 0 }, //(From Part V, Schedule IV-Item 67)
-    total_amount_payable: { type: Number, default: 0 }, // (Sum of Items 28 and 29) (From Part V, Item 68)
-    aggregateAmountPayable: { type: Number, default: 0 }, //Sum of Items 30A and 30B
-    particularCash: { type: Number, default: 0 },
-    particularCheck: { type: Number, default: 0 },
-    particularTaxDebit: { type: Number, default: 0 },
-    particularOthers: { type: Number, default: 0 },
+    quarter: {
+        type: Number,
+        default: 0
+            /**
+             * 0, 1, 2
+             */
+    },
+    taxpayer_atc_code: {
+        type: String
+            // II012,
+            // II015,
+            // II014,
+            // II017,
+            // II013,
+            // II016
+    },
+    taxpayer_foreign_tax_credits: {
+        type: Boolean
+    },
+    taxpayer_tax_rate: {
+        type: String
+            // graduated_rates ,
+            //  non_operating_income
+    },
+    taxpayer_method_deduction: {
+        type: String
+            // itemized_deduction,
+            // optional_standard_deduction
+    },
+    spouse_method_deduction: {
+        type: String
+            // itemized_deduction,
+            // optional_standard_deduction
+    },
+    spouse_atc_code: [{
+        type: String
+            // II012,
+            // II015,
+            // II014,
+            // II013,
+            // II016,
+            // II011
+    }],
+    spouse_foreign_tax_credits: {
+        type: Boolean,
+        default: false
+    },
+    spouse_tax_rate: {
+        type: String
+            // graduated_rates ,
+            //  non_operating_income
+    },
+    taxpayer_prev_tax_due: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54)
+    spouse_prev_tax_due: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54)
+    taxpayer_tax_credit: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule III-Item 62)
+    spouse_tax_credit: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule III-Item 62)
+    taxpayer_tax_due: {
+        type: Number,
+        default: 0
+    }, //(Item 26 Less Item 27) (From Part V, Item 63)
+    spouse_tax_due: {
+        type: Number,
+        default: 0
+    }, //(Item 26 Less Item 27) (From Part V, Item 63)
+    taxpayer_total_penalties: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule IV-Item 67)
+    spouse_total_penalties: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule IV-Item 67)
+    taxpayer_total_amount_payable: {
+        type: Number,
+        default: 0
+    }, // (Sum of Items 28 and 29) (From Part V, Item 68)
+    spouse_total_amount_payable: {
+        type: Number,
+        default: 0
+    }, // (Sum of Items 28 and 29) (From Part V, Item 68)
+    taxpayer_aggregate_amount_payable: {
+        type: Number,
+        default: 0
+    }, //Sum of Items 30A and 30B
+    spouse_aggregate_amount_payable: {
+        type: Number,
+        default: 0
+    }, //Sum of Items 30A and 30B
+    particular_cash: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_check: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_tax_debit: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_others: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    // Part V Graduated IT Rate
     sched1: [{
-        totalSalesRevenue: { type: Number, default: 0 },
-        totalSalesServices: { type: Number, default: 0 },
-        grossIncome: { type: Number, default: 0 },
-        totalAllowableItemizedDeductions: { type: Number, default: 0 },
-        totalStandardDeductions: { type: Number, default: 0 }, //40% of Item 36
-        totalNetIncome: { type: Number, default: 0 },
-        totalTaxableIncome: { type: Number, default: 0 },
-        totalOperationIncome: { type: Number, default: 0 },
-        amountRecievedShare: { type: Number, default: 0 },
-        totalTaxableIncomeToDate: { type: Number, default: 0 }, //Sum of Items 41 to 44
-        totalTaxDue: { type: Number, default: 0 }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
+        taxpayer: [{
+            total_sales_revenue: {
+                type: Number,
+                default: 0
+            },
+            total_sales_services: {
+                type: Number,
+                default: 0
+            },
+            gross_income: {
+                type: Number,
+                default: 0
+            },
+            total_allowable_itemized_deductions: {
+                type: Number,
+                default: 0
+            },
+            total_standard_deductions: {
+                type: Number,
+                default: 0
+            }, //40% of Item 36
+            total_net_income: {
+                type: Number,
+                default: 0
+            },
+            total_taxable_income: {
+                type: Number,
+                default: 0
+            },
+            total_operation_income: {
+                type: Number,
+                default: 0
+            },
+            amount_recieved_share: {
+                type: Number,
+                default: 0
+            },
+            total_taxable_income_date: {
+                type: Number,
+                default: 0
+            }, //Sum of Items 41 to 44
+            total_tax_due: {
+                type: Number,
+                default: 0
+            }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
+        }],
+        spouse: [{
+            total_sales_revenue: {
+                type: Number,
+                default: 0
+            },
+            total_sales_services: {
+                type: Number,
+                default: 0
+            },
+            gross_income: {
+                type: Number,
+                default: 0
+            },
+            total_allowable_itemized_deductions: {
+                type: Number,
+                default: 0
+            },
+            total_standard_deductions: {
+                type: Number,
+                default: 0
+            }, //40% of Item 36
+            total_net_income: {
+                type: Number,
+                default: 0
+            },
+            total_taxable_income: {
+                type: Number,
+                default: 0
+            },
+            total_operation_income: {
+                type: Number,
+                default: 0
+            },
+            amount_recieved_share: {
+                type: Number,
+                default: 0
+            },
+            total_taxable_income_date: {
+                type: Number,
+                default: 0
+            }, //Sum of Items 41 to 44
+            total_tax_due: {
+                type: Number,
+                default: 0
+            }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
+        }]
     }],
+    // Part V IT Rate
     sched2: [{
-        totalSalesRevenue: { type: Number, default: 0 },
-        totalOperationIncome: { type: Number, default: 0 },
-        totalIncomeQuarter: { type: Number, default: 0 }, // (Sum of Items 47 and 48)
-        totalAllowableItemizedDeductions: { type: Number, default: 0 },
-        totalStandardDeductions: { type: Number, default: 0 },
-        totalNetIncome: { type: Number, default: 0 },
-        totalCumulativeIncome: { type: Number, default: 0 }, //(Sum of Items 49 and 50)
-        totalTaxableIncomeToDate: { type: Number, default: 0 }, //(Item 51 Less Item 52)
-        totalTaxDue: { type: Number, default: 0 }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
+        taxpayer: [{
+            total_sales_revenue: {
+                type: Number,
+                default: 0
+            },
+            total_operation_income: {
+                type: Number,
+                default: 0
+            },
+            total_income_quarter: {
+                type: Number,
+                default: 0
+            }, // (Sum of Items 47 and 48)
+            total_allowable_itemized_deductions: {
+                type: Number,
+                default: 0
+            },
+            total_standard_deductions: {
+                type: Number,
+                default: 0
+            },
+            total_net_income: {
+                type: Number,
+                default: 0
+            },
+            total_cumulative_income: {
+                type: Number,
+                default: 0
+            }, //(Sum of Items 49 and 50)
+            total_taxable_income_date: {
+                type: Number,
+                default: 0
+            }, //(Item 51 Less Item 52)
+            total_tax_due: {
+                type: Number,
+                default: 0
+            }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
+        }],
+        spouse: [{
+            total_sales_revenue: {
+                type: Number,
+                default: 0
+            },
+            total_operation_income: {
+                type: Number,
+                default: 0
+            },
+            total_income_quarter: {
+                type: Number,
+                default: 0
+            }, // (Sum of Items 47 and 48)
+            total_allowable_itemized_deductions: {
+                type: Number,
+                default: 0
+            },
+            total_standard_deductions: {
+                type: Number,
+                default: 0
+            },
+            total_net_income: {
+                type: Number,
+                default: 0
+            },
+            total_cumulative_income: {
+                type: Number,
+                default: 0
+            }, //(Sum of Items 49 and 50)
+            total_taxable_income_date: {
+                type: Number,
+                default: 0
+            }, //(Item 51 Less Item 52)
+            total_tax_due: {
+                type: Number,
+                default: 0
+            }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
+        }]
     }],
-    sched3: [],
+    // Part V Tax Credits/Payments
+    sched3: [{
+        taxpayer: [{
+            year_excess_credits: {
+                type: Number,
+                default: 0
+            },
+            payment_previous_quarter: {
+                type: Number,
+                default: 0
+            },
+            creditable_tax_withheld: {
+                type: Number,
+                default: 0
+            },
+            creditable_tax_withheld_per_bir: {
+                type: Number,
+                default: 0
+            },
+            tax_paid_return: {
+                type: Number,
+                default: 0
+            },
+            foriegn_tax_credits: {
+                type: Number,
+                default: 0
+            },
+            other_tax_credit: {
+                type: Number,
+                default: 0
+            },
+            total_tax_credit: {
+                type: Number,
+                default: 0
+            }, //Sum of Items 55 to 61/To Part III, Item 27
+        }],
+        spouse: [{
+            year_excess_credits: {
+                type: Number,
+                default: 0
+            },
+            payment_previous_quarter: {
+                type: Number,
+                default: 0
+            },
+            creditable_tax_withheld: {
+                type: Number,
+                default: 0
+            },
+            creditable_tax_withheld_per_bir: {
+                type: Number,
+                default: 0
+            },
+            tax_paid_return: {
+                type: Number,
+                default: 0
+            },
+            foriegn_tax_credits: {
+                type: Number,
+                default: 0
+            },
+            other_tax_credit: {
+                type: Number,
+                default: 0
+            },
+            total_tax_credit: {
+                type: Number,
+                default: 0
+            }, //Sum of Items 55 to 61/To Part III, Item 27
+        }]
+    }],
+    // Part V Penalties
     sched4: [{
-        surcharge: { type: Number, default: 0 },
-        interest: { type: Number, default: 0 },
-        compromise: { type: Number, default: 0 },
-        penalties: { type: Number, default: 0 }, //(Sum of Items 64 to 66) (To Part III, Item 29)
-        total_amount_payable: { type: Number, default: 0 }, //(Sum of Items 63 and 67) (To Part III, Item 30) 
+        taxpayer: [{
+            surcharge: {
+                type: Number,
+                default: 0
+            },
+            interest: {
+                type: Number,
+                default: 0
+            },
+            compromise: {
+                type: Number,
+                default: 0
+            },
+            penalties: {
+                type: Number,
+                default: 0
+            }, //(Sum of Items 64 to 66) (To Part III, Item 29)
+            total_amount_payable: {
+                type: Number,
+                default: 0
+            }, //(Sum of Items 63 and 67) (To Part III, Item 30)
+        }],
+        spouse: [{
+            surcharge: {
+                type: Number,
+                default: 0
+            },
+            interest: {
+                type: Number,
+                default: 0
+            },
+            compromise: {
+                type: Number,
+                default: 0
+            },
+            penalties: {
+                type: Number,
+                default: 0
+            }, //(Sum of Items 64 to 66) (To Part III, Item 29)
+            total_amount_payable: {
+                type: Number,
+                default: 0
+            }, //(Sum of Items 63 and 67) (To Part III, Item 30)
+        }]
     }]
 };
 
-var Form1701QSchema = new Schema({...common_model, ...model_schema });
+var Form1701QSchema = new Schema({
+    ...common_model,
+    ...model_schema
+});
 
 Form1701QSchema.pre('save', function(callback) {
     this.date_created = new Date();
