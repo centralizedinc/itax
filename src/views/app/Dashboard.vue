@@ -55,7 +55,12 @@
                 </template>
                 <template slot="content">
                     <p>{{item.description}}</p>
-                    <!-- <pdf style="width:100%" src="https://s3.us-west-2.amazonaws.com/fdav3.0/upload/l20191609000130/1568606860737?response-content-disposition=inline&X-Amz-Security-Token=AgoJb3JpZ2luX2VjEBAaCXVzLWVhc3QtMSJIMEYCIQC8EdsUBT%2B1zMxasM6oVBaqReA0JdoWpxN3ftMX3UvM2wIhAKsuUgpjp%2BAkuQ2JUcJVKGwejeWZKiv%2BtCRSoKkyJ812KqYCCPn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMOTk3NTE0NjM1MDM5IgxYfKtTd4hHPC%2BjmVAq%2BgEIE00Rl03i5XapW%2FxkKSDHyFayTCd%2FIMrFDcMLwIqUCc1gRayv9UZhqQfNDH%2BMMkFEVu%2BLpzkwmiBmZcdzmNI66NDOqm5TJN5Av%2FM5C3ek80otEY%2FbDDqW5zJ42fQhooUzWyFWYUNAUKQQOAcIRdhLS5plzssBOjv4174GapvN7PiR%2BELOBRi8QwmMc5AiV1B8Ivt%2FBaRT5dKeVryvmvrB%2FXmsiiSKIeniGDrdO6PaPzo0rG2Fpxl0aNUZ0Wq8qaOie0V1CfxMHiyD12b7%2FCaPCPmQF47g6AvRaXAqbCJ3ZL%2FtnmyaAaSH6DPn8WqRkWpXWzIggLVUo%2Ff5MKTTie0FOrMB2%2F%2F%2FGCUsMxwr5fGiLYlkiFq7dsqZT1oYjXR3VmY%2BKJq4vWiuwg8rKhgNcwdujH6rCLF%2Fn2RnMClMOtagVzlzW6rItrhDjwuj%2BOvGIMbPom4XmaCYC5dpDR0wWJRnEQ5bCEpYxE4eXPGLiFVM0A6%2BvkIBc01tSsLdAG2k9jAgkMnwFIzwMFzo%2F3j6NuQ2%2Flsw5f1r94behFyyuBpEyAdK%2B%2FcNZJQ0dzjwFWTxL06gHf99FUc%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20191013T000527Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIA6QQEBM4P5CLLYPVJ%2F20191013%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Signature=dce88311e7a2dd7521c9dc8a19f07ed79b796c9cb4202f8a578139d3a3f13d36"></pdf> -->
+
+                    <a-row type="flex" align="middle" justify="center">
+                      <a-col :span="8">
+                          <pdf :src="item.url" style="width:100%"></pdf>
+                      </a-col>
+                    </a-row>
                 </template>
                 <a-tooltip slot="datetime" >
                 <span>{{moment(item.created_date).fromNow()}}</span>
@@ -172,9 +177,18 @@ export default {
             this.loading =true;
             this.$http.get(`/activities/${this.$store.state.account_session.user.tin}`)
             .then(result=>{
-                console.log('RESULT ::: ', JSON.stringify(result.data))
+                
+                
                 this.data = result.data.model
-                this.loading=false;                
+                this.loading=false;   
+                var ref_nos = this.data.map(a => a.reference_no);
+                this.$http.post(`/uploads/activities`, ref_nos)
+                .then(results=>{
+                    console.log('uploads ::: ', JSON.stringify(results))
+                })
+                .catch(errors =>{
+                    console.log('errors ::: ', JSON.stringify(errors))
+                })           
             })
             .catch(error=>{
                 console.log('ERROR ::::',error);
