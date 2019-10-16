@@ -356,7 +356,7 @@ export default {
     },
     select(index) {
       if (index > -1) {
-        this.taxpayer = this.taxpayer_list[index];
+        this.taxpayer = this.deepCopy(this.taxpayer_list[index]);
         this.selected_index = index;
       }
     },
@@ -450,6 +450,8 @@ export default {
             return_details.registered_name = this.form.taxpayer.registered_name;
             return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
             this.showSuccessForm(return_details);
+
+            //upload pdf
           }
         })
         .catch(err => {
