@@ -110,7 +110,7 @@
                 <a-list-item-meta>
                   <p
                     slot="title"
-                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
+                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`:'item.corporate_details.registeredName'}}</p>
                   <template slot="description">
                     <p>
                       <b>{{formatTIN(item.tin)}}</b>
@@ -157,6 +157,7 @@ import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
 import Form1604E from "./1604e/1604e.vue";
+import Form1601F from "./1601f/1601f.vue";
 
 
 
@@ -171,7 +172,8 @@ export default {
     Form1701Q,
     Form2550Q,
     Form2000OT,
-    Form1604E
+    Form1604E,
+    Form1601F,
   },
   computed: {
     affix_computation() {
@@ -378,7 +380,7 @@ export default {
       if (!this.form.taxpayer.registered_name) {
         this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
       }
-      console.log(`form::::`, JSON.stringify(this.form.taxpayer));
+      console.log(`form::::`, this.form.taxpayer);
       this.view_select = false;
     },
     saveDraft() {
@@ -419,7 +421,7 @@ export default {
     },
     proceedPayment() {
       if (window.opener && window.opener.location) {
-        console.log('window.opener :', window.opener);
+        console.log("window.opener :", window.opener);
         window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
         window.opener.location.reload();
       }

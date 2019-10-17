@@ -12,6 +12,13 @@ var taxpayerDetailsSchema = new Schema({
   taxpayer_type: String,
   start_month: Number,
   accounting_type: String,
+  filer_type: {
+    type: String
+    // single_proprietor,
+    // professional,
+    // estate,
+    // trust
+  },
   address: String,
   address_details: {
     number: String,
@@ -34,7 +41,8 @@ var taxpayerDetailsSchema = new Schema({
     birthDate: Date,
     civil_status: String,
     spouseTin: String,
-    spouseBranchCode: String
+    spouseBranchCode: String,
+    citizenship: String
   },
   corporate_details: {
     registeredName: String,
@@ -59,16 +67,16 @@ var taxpayerDetailsSchema = new Schema({
 });
 
 taxpayerDetailsSchema.pre('save', function (callback) {
-    this.date_created = new Date();
-    this.date_modified = new Date();
-    callback();
+  this.date_created = new Date();
+  this.date_modified = new Date();
+  callback();
 });
 
 taxpayerDetailsSchema.pre('findOneAndUpdate', function (callback) {
-    this.options.new = true;
-    this.options.runValidators = true;
-    this._update.date_modified = new Date();
-    callback();
+  this.options.new = true;
+  this.options.runValidators = true;
+  this._update.date_modified = new Date();
+  callback();
 });
 
 module.exports = mongoose.model("taxpayer_details", taxpayerDetailsSchema);

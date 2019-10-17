@@ -589,20 +589,20 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [43, 160, 10, 140],
+                widths: [43, 160, 15, 128],
                 body: [
                     [{
                         text: '',
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 4, 0, 0],
                     },
                     {
-                        text: forms.sellingPrice == null ? ' ' : forms.sellingPrice,
+                        text: formatAmount(forms.sellingPrice),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 6, 0, 0],
                     }, {
                         text: '',
@@ -612,10 +612,10 @@ function getContent(forms) {
                         margin: [0, 6, 0, 0],
                     },
                     {
-                        text: forms.fairMarketValue == null ? ' ' : forms.fairMarketValue,
+                        text: formatAmount(forms.fairMarketValue),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 6, 0, 0],
                     }]
 
@@ -731,7 +731,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [120, 120, 150, 120],
+                widths: [110, 120, 150, 120],
                 heights: [10],
                 body: [
                     [{
@@ -742,10 +742,10 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: forms.parValueShares == null ? ' ' : forms.parValueShares,
+                        text: formatAmount(forms.parValueShares),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, -2, 0, 0],
                     },
                     {
@@ -756,10 +756,10 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: forms.dstPaid == null ? ' ' : forms.dstPaid,
+                        text: formatAmount(forms.dstPaid),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, -2, 0, 0],
                     }]
 
@@ -771,7 +771,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [10],
+                heights: [9],
                 body: [
                     [{
                         text: '',
@@ -789,21 +789,21 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [370, 160],
+                widths: [370, 150],
                 body: [
                     [{
                         text: '',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, 2, 0, 0],
+                        margin: [22, 0, 0, 0],
                     },
                     {
                         text: formatAmount(forms.realPropertyTaxBase),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
-                        margin: [0, 0, 0, 0],
+                        alignment: 'right',
+                        margin: [0, 2, 0, 0],
                     }]
 
                 ]
@@ -813,20 +813,20 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [370, 160],
+                widths: [370, 150],
                 body: [
                     [{
                         text: '',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, -3, 0, 0],
+                        margin: [22, 0, 0, 0],
                     },
                     {
                         text: formatAmount(forms.sharesStockTaxBase),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 0, 0, 0],
                     }]
                 ]
@@ -836,7 +836,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [450, 60],
+                widths: [450, 70],
                 body: [
                     [{
                         text: '',
@@ -846,10 +846,10 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: formatAmount(forms.taxRate),
+                        text: forms.taxRate == null ? ' ' : forms.taxRate,
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 0, 0, 0],
                     }]
 
@@ -860,7 +860,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [370, 160],
+                widths: [360, 160],
                 body: [
                     [{
                         text: '',
@@ -870,11 +870,11 @@ function getContent(forms) {
                         margin: [22, -3, 0, 0],
                     },
                     {
-                        text: formatAmount(forms.prev_tax_due),
+                        text: formatAmount(forms.tax_due),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
-                        margin: [0, 0, 0, 0],
+                        alignment: 'right',
+                        margin: [0, -2, 0, 0],
                     }]
                 ]
             }
@@ -906,7 +906,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [370, 160],
+                widths: [370, 150],
                 body: [
                     [{
                         text: '',
@@ -917,10 +917,10 @@ function getContent(forms) {
                     },
                     {
                         // if this is amended return
-                        text: formatAmount(forms.tax_due),
+                        text: formatAmount(forms.prev_tax_due),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 0, 0, 0],
                     }]
                 ]
@@ -947,7 +947,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [8, 95, 10, 95, 10, 95, 8, 155],
+                widths: [8, 95, 10, 95, 10, 95, 8, 150],
                 body: [
                     [{
                         text: '',
@@ -1003,7 +1003,7 @@ function getContent(forms) {
                         text: formatAmount(forms.penalties),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 0, 0, 0],
                     }]
                 ]
@@ -1013,7 +1013,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [370, 170],
+                widths: [370, 150],
                 body: [
                     [{
                         text: '',
@@ -1023,10 +1023,10 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: formatAmount(forms.totalAmountPayable),
+                        text: formatAmount(forms.total_amount_payable),
                         fontSize: 11,
                         bold: true,
-                        alignment: 'justified',
+                        alignment: 'right',
                         margin: [0, 0, 0, 0],
                     }]
                 ]
