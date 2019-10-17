@@ -6,6 +6,8 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
+   
+    taxes_withheld: { type: Boolean },
     category_of_agent: { 
         type: String
         /**
@@ -13,14 +15,56 @@ const model_schema = {
          * private
          */
     },
-    tax_withheld: { type: Boolean },
-
     // Part II computation of tax
-    atc_code:{type: String},
-    tax_base:{type: Number, default: 0},
-    tax_rate:{type: Number, defult: 0},
-    tax_withheld:{type: Number, default: 0}
+    atc_list: [{
+        atc_code: {
+            type: String
+        },
+        tax_base: {
+            type: Number,
+            default: 0
+        },
+        tax_rate: {
+            type: Number,
+            default: 0
+        },
+        tax_withheld: {
+            type: Number,
+            default: 0
+        }
+    }],
+    tax_withheld_reg_rate: { type: Number, default: 0}, // item20 Sum of items 14 to 19
+    tax_withheld_tax_treaty_rates: { type: Number, default: 0}, //item21 from part IV-schedule 1
+    tot_tax_withheld_quarter: { type: Number, default: 0}, // item22 Sum of items 20 and 21
+    remittance_made_first: { type: Number, default: 0}, //item23
+    remittance_made_second: { type: Number, default: 0}, //item24
+    tot_tax_remittance_prev: { type: Number, default: 0}, //item25
+    tot_remittance_made: { type: Number, default: 0}, //item26 sum of items 23 to 25
+    tax_due: { type: Number, default: 0}, //item27 item 22 less item 26
+    total_amount_due: { type: Number, default: 0}, //item32 Sum of items 27 and 31
 
+    sched1:[{
+        seq_no: { type: Number, default: 0},
+        treaty_code: {
+            type: String,
+        /**
+         * treaty code w/
+         * country
+         */
+        },
+        atc_code: {
+            type: String,
+          /**
+         * 
+         * 
+         */  
+        },
+        nature_of_income: {type: String},
+        amount_income_payment: { type: Number, default: 0},
+        tax_rate: { type: Number, default: 0},
+        tax_withheld: { type: Number, default: 0},
+        tot_tax_withheld: { type: Number, default: 0},
+    }],
 };
 
 var Form1601FQSchema = new Schema({ ...common_model, ...model_schema });
