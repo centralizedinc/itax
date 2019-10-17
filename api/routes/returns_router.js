@@ -15,6 +15,7 @@ var ReturnsDetailsModel = require('../models/ReturnDetailsModel.js');
 
 // Dao
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
+const ReturnPeriodDao = require('../dao/references/ReturnPeriodDao');
 
 /**
  * route /returns/
@@ -53,6 +54,12 @@ returns_router.route("/")
 
 returns_router.route("/validate/:form_type")
     .post((req, res) => {
+        // ReturnPeriodDao.findOneByForm(req.params.form_type)
+        //     .then((reference) => {
+        //         if (reference) {
+
+
+
         // validation
         var { errors, form_details } = validateForm(req.params.form_type, req.body);
 
@@ -72,6 +79,17 @@ returns_router.route("/validate/:form_type")
             // return the errors
             res.json({ errors });
         }
+        //     } else {
+        //         res.json({
+        //             success: false,
+        //             errors: [{
+        //                 message: "Invalid Form Type"
+        //             }]
+        //         })
+        //     }
+        // }).catch((err) => {
+
+        // });
     })
 
 returns_router.route("/:tin")

@@ -1,11 +1,11 @@
-const model = require('../../models/forms/form1601CModel');
+const model = require('../../models/reference/ReturnPeriodReference');
 
 class ReturnPeriodDao {
     /**
      * @returns {Promise}
      */
     static findAll() {
-        return model.find({}).lean().exec();
+        return model.find({ status: 'A' }).lean().exec();
     }
 
     /**
@@ -22,6 +22,14 @@ class ReturnPeriodDao {
      */
     static findOne(conditions) {
         return model.findOne(conditions).lean().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {String} form 
+     */
+    static findOneByForm(form) {
+        return model.findOne({ form }).lean().exec();
     }
 
     /**
@@ -47,7 +55,7 @@ class ReturnPeriodDao {
      * @param {Object} data 
      */
     static create(data) {
-        return (new model(form_details)).save();
+        return (new model(data)).save();
     }
 }
 
