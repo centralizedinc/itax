@@ -5,6 +5,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
       >
         <a-date-picker
           placeholder="Date of Transaction Purchase (MM/DD/YYYY)"
@@ -12,7 +14,13 @@
           style="width: 100%"
         />
       </a-form-item>
-      <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
+      <a-form-item
+        :labelCol="{ span: 12 }"
+        :wrapperCol="{ span: 12 }"
+        label="2. Ammended Return"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
+      >
         <a-radio-group v-model="form.amended_yn" :defaultValue="false" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -22,6 +30,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="3"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
       >
         <a-input-number
           placeholder="Number of Sheets"
@@ -33,6 +43,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="4"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
       >
         <a-select v-model="form.atc">
           <a-select-option value="DS102">
@@ -40,7 +52,7 @@
             Shares or Certificates of Stock with par value
           </a-select-option>
           <a-select-option value="DS125">DS 125 In case of stock without par value</a-select-option>
-          <a-select-option value="DS122">DS 122 Deed of Sale and conveyance of real propert</a-select-option>
+          <a-select-option value="DS122">DS 122 Deed of Sale and conveyance of real property</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>
@@ -51,6 +63,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="5"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
       >
         <a-input placeholder="TIN" v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
@@ -375,8 +389,9 @@
               label="13"
             >
               <a-input
+                disabled
                 placeholder="Taxable Base - Real Property (Item 12E or 12F, whichever is applicable)"
-                v-model="form.realPropertyTaxBase"
+                :value="getRealPropertyTaxBase()"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -392,8 +407,9 @@
               label="14"
             >
               <a-input
+                disabled
                 placeholder="Taxable Base - Shares of Stock ( Item 12K or 12L, whichever is applicable)"
-                v-model="form.sharesStockTaxBase"
+                :value="getsharesStockTaxBase()"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -408,7 +424,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="15"
             >
-              <a-input placeholder="Tax Rate " v-model="form.taxRate"></a-input>
+              <a-input disabled placeholder="Tax Rate " :value="getTaxRate()"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -422,7 +438,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="16"
             >
-              <a-input placeholder="Tax Due " v-model="form.prev_tax_due"></a-input>
+              <a-input disabled :value="getTaxDue()" placeholder="Tax Due"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -437,6 +453,7 @@
               label="17"
             >
               <a-input
+                disabled
                 placeholder="Less : Tax Paid in Return previously filed, if this is an amended return"
                 v-model="form.prevTaxPaid"
               ></a-input>
@@ -453,7 +470,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="18"
             >
-              <a-input placeholder="Tax Still Due/(Overpayment)" v-model="form.tax_due"></a-input>
+              <a-input
+                disabled
+                v-model="form.prev_tax_due"
+                placeholder="Tax Still Due/(Overpayment)"
+              ></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -471,7 +492,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="19A"
             >
-              <a-input placeholder="Surcharge" v-model="form.surcharge"></a-input>
+              <a-input-number placeholder="Surcharge" v-model="form.surcharge"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -480,7 +501,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="19B"
             >
-              <a-input placeholder="Interest" v-model="form.interest"></a-input>
+              <a-input-number placeholder="Interest" v-model="form.interest"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -494,7 +515,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="19C"
             >
-              <a-input placeholder="Compromise" v-model="form.compromise"></a-input>
+              <a-input-number placeholder="Compromise" v-model="form.compromise"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -503,7 +524,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="19D"
             >
-              <a-input placeholder="Penalties" v-model="form.penalties"></a-input>
+              <a-input disabled placeholder="Penalties" :value="getPenalties()"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -518,8 +539,9 @@
               label="20"
             >
               <a-input
+                disabled
+                :value="getTotalAmountPayable()"
                 placeholder="Total Amount Payable/(overpayment)(Sum of Items 18 and 19D) "
-                v-model="form.totalAmountPayable"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -563,27 +585,106 @@ export default {
     form: {
       deep: true,
       handler() {
-        console.log("2000OT form: " + this.form.return_period);
-        // this.form.year = this.formatDtYear(this.form.return_period);
-        // this.form.month = this.formatDtMonth(this.form.return_period);
-        // this.form.return_period_year = this.formatDtYear(this.form.return_period);
-        // this.form.returnPeriodDay = this.formatDate(this.form.return_period, {
-        //   day: "2-digit"
-        // });
-        console.log("this.form.returnPeriodDay :", this.form.returnPeriodDay);
-        // this.form.return_period_month = this.formatDtMonth(
-        //   this.form.return_period
-        // );
-        console.log("year: " + this.form.month);
+        // console.log("2000OT form: " + this.form.return_period);
+        // console.log("this.form.returnPeriodDay :", this.form.returnPeriodDay);
+        // console.log("year: " + this.form.month);
       }
     },
     step() {}
   },
   methods: {
+    getTotalAmountPayable() {
+      var total = this.computeSum([
+        this.form.realPropertyTaxBase,
+        this.form.sharesStockTaxBase,
+        this.form.tax_due
+      ]);
+      this.form.total_amount_payable = total;
+      console.log("TOTALAMTPYBLE :", this.form.total_amount_payable);
+    },
+    getPenalties() {
+      var total = this.computeSum([
+        this.form.surcharge,
+        this.form.interest,
+        this.form.compromise
+      ]);
+      this.form.penalties = total;
+      console.log("this.form.penalties :", this.form.penalties);
+
+      return total;
+    },
+    getTaxDue() {
+      var total = 0;
+      if (this.form.atc === "DS102") {
+        (this.form.realPropertyTaxBase / 200) * 1.5;
+      } else if (this.form.atc === "DS125") {
+        this.form.realPropertyTaxBase / 2;
+      } else {
+        (this.form.realPropertyTaxBase / 1000) * 15;
+      }
+      console.log("#####TAXBASE :", this.form.realPropertyTaxBase);
+      this.form.tax_due = total;
+      console.log("#####TOTAL :", total);
+      return total;
+
+      // var total = (this.form.realPropertyTaxBase / 200) * 1.5;
+      // this.form.tax_due = total;
+      // return total;
+    },
+    getRealPropertyTaxBase() {
+      var a = this.form.sellingPrice;
+      var b = this.form.fairMarketValue;
+      console.log("a value: " + a);
+      console.log("b value: " + b);
+      if (
+        this.form.fairMarketValue == null ||
+        this.form.fairMarketValue == undefined
+      ) {
+        this.form.fairMarketValue = 0;
+      }
+      if (
+        this.form.sellingPrice == null ||
+        this.form.sellingPrice == undefined
+      ) {
+        this.form.sellingPrice = 0;
+      }
+      console.log("this.form.sellingPrice value: " + this.form.sellingPrice);
+      console.log(
+        "this.form.fairMarketValue  value: " + this.form.fairMarketValue
+      );
+      var total = Math.max(this.form.sellingPrice, this.form.fairMarketValue);
+      console.log("total :", total);
+      this.form.realPropertyTaxBase = total;
+      console.log("fair market value: " + this.form.fairMarketValue);
+      return total;
+    },
+    getsharesStockTaxBase() {
+      var a = this.form.parValueShares;
+      var b = this.form.dstPaid;
+
+      if (
+        this.form.parValueShares == null ||
+        this.form.parValueShares == undefined
+      ) {
+        this.form.parValueShares = 0;
+      }
+      if (this.form.parValueShares == null || this.form.dstPaid == undefined) {
+        this.form.dstPaid = 0;
+      }
+      console.log(
+        "this.form.parValueShares value: " + this.form.parValueShares
+      );
+      console.log(
+        "this.form.parValueShares  value: " + this.form.parValueShares
+      );
+      var total = Math.max(this.form.parValueShares, this.form.dstPaid);
+      this.form.sharesStockTaxBase = total;
+      return total;
+    },
     changeNatureOfTrans() {
       if (
-        this.form.natureOfTransaction === "real_property_capital" ||
-        this.form.natureOfTransaction === "real_property_ordinary"
+        this.form.natureOfTransaction === "real_property_ordinary" ||
+        this.form.natureOfTransaction === "real_property_capital"
       ) {
         this.form.propertySold = "real_property";
       } else if (this.form.natureOfTransaction === "shares_stock") {
@@ -591,6 +692,22 @@ export default {
       }
       console.log("this.form.propertySold :", this.form.propertySold);
     },
+    getTaxRate() {
+      var total = 0;
+      if (this.form.atc === "DS102") {
+        total = "P1.5/200";
+      } else if (this.form.atc === "DS125") {
+        total = "0.5";
+      } else {
+        total = "P15/1000";
+      }
+      console.log("####VALUE :", total);
+      console.log("form.atc :", this.form.atc);
+      this.form.taxRate = total;
+      // this.$emit("updateForm", null);
+      return total;
+    },
+
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);

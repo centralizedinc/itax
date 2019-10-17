@@ -74,7 +74,11 @@ const model_schema = {
         type: Number,
         default: 0
     }, //(From Part V, Schedule III-Item 62)
-    tax_payable: {
+    taxpayer_tax_due: {
+        type: Number,
+        default: 0
+    }, //(Item 26 Less Item 27) (From Part V, Item 63)
+    spouse_tax_due: {
         type: Number,
         default: 0
     }, //(Item 26 Less Item 27) (From Part V, Item 63)
