@@ -1,10 +1,13 @@
 'use strict'
 
-var request = require('request');
 var express = require('express');
-var path = require('path');
+
+
 var ATCModel = require('../models/reference/atcModel')
 var RDOModel = require('../models/reference/rdoModel')
+var ReturnPeriodDao = require('../dao/references/ReturnPeriodDao')
+
+const jwt = require('jsonwebtoken');
 
 
 var reference_router = express.Router();
@@ -12,7 +15,7 @@ var reference_router = express.Router();
 reference_router.route("/")
 
     .get((req, res) => {
-        
+
     })
 
 reference_router.route("/atc")
@@ -23,10 +26,10 @@ reference_router.route("/atc")
                     success: true,
                     atcs: results
                 })
-            }else{
+            } else {
                 res.json({
                     success: false,
-                    error_code:"0000",
+                    error_code: "0000",
                     error_msg: err
                 });
             }
@@ -34,19 +37,50 @@ reference_router.route("/atc")
     });
 
 reference_router.route("/rdos")
-    .get((req, res)=>{
-        RDOModel.find({},(err, rdos)=>{
+    .get((req, res) => {
+        RDOModel.find({}, (err, rdos) => {
             res.json(rdos);
         })
     })
-    
-    .post((req, res)=>{
+
+    .post((req, res) => {
         var rdo = new RDOModel(req.body);
-        rdo.save((err)=>{
+        rdo.save((err) => {
             res.json(rdo);
         });
-        
+
     });
 
+reference_router.route('/return_period')
+    .get((req, res) => {
+        ReturnPeriodDao.findAll()
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
+    .post((req, res) => {
+        var data = req.body;
+        data.created_by = jwt.decode(req.headers.access_token).account_id;
+        ReturnPeriodDao.create(data)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
 
 module.exports = reference_router;

@@ -157,6 +157,7 @@ import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
 import Form1604E from "./1604e/1604e.vue";
+import Form1601F from "./1601f/1601f.vue";
 
 export default {
   components: {
@@ -169,7 +170,8 @@ export default {
     Form1701Q,
     Form2550Q,
     Form2000OT,
-    Form1604E
+    Form1604E,
+    Form1601F
   },
   computed: {
     affix_computation() {
@@ -421,7 +423,6 @@ export default {
     },
     proceedPayment() {
       if (window.opener && window.opener.location) {
-        console.log("window.opener :", window.opener);
         window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
         window.opener.location.reload();
       }
@@ -444,8 +445,11 @@ export default {
           if (result.data.errors && result.data.errors.length > 0) {
             this.errors = result.data.errors;
             console.log("this.errors :", this.errors);
-            if (this.errors && this.errors[0] && this.errors[0].page !== null)
-              this.curr_step = this.errors[0].page;
+            if (this.errors && this.errors.length) {
+              var errors = this.errors.sort((a, b) => a.page - b.page);
+              console.log("this.errors :", errors);
+              this.curr_step = errors[0].page;
+            }
             this.$notification.error({ message: "Validation Error" });
           } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
@@ -509,7 +513,6 @@ export default {
         this.view_select = false;
       }
     }
-    console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
@@ -518,7 +521,6 @@ export default {
     this.$http
       .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
       .then(results => {
-        console.log("result1 ::: ", JSON.stringify(results.data));
         this.taxpayer_list.push(results.data.model.taxpayer);
         this.user_list.push(results.data.model.user);
         return this.$http.get(
@@ -526,7 +528,6 @@ export default {
         );
       })
       .then(results => {
-        console.log("result2 ::: ", JSON.stringify(results.data));
         var tins = [];
         results.data.model.forEach(tin => {
           tins.push(tin.to);
@@ -534,7 +535,6 @@ export default {
         return this.$http.post("/taxpayer/details/", tins);
       })
       .then(results => {
-        console.log("result2 ::: ", JSON.stringify(results.data));
         this.loading = false;
 
         this.taxpayer_list.push(...results.data.model.taxpayers);
@@ -547,14 +547,6 @@ export default {
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
-  },
-  watch: {
-    form: {
-      handler(val) {
-        console.log("val :", val);
-      },
-      deep: true
-    }
   }
 };
 </script>
