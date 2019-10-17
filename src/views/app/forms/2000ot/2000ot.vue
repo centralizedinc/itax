@@ -693,7 +693,7 @@ export default {
       console.log("this.form.propertySold :", this.form.propertySold);
     },
     getTaxRate() {
-      var total = "";
+      var total = 0;
       if (this.form.atc === "DS102") {
         total = "P1.5/200";
       } else if (this.form.atc === "DS125") {
