@@ -109,6 +109,15 @@ export default {
     refresh() {
       this.loading = true;
       var form = this.deepCopy(this.form);
+      if (!form.taxpayer) {
+        form.taxpayer = {};
+      }
+      if (!form.taxpayer.address_details) {
+        form.taxpayer.address_details = {};
+      }
+      if (!form.taxpayer.contact_details) {
+        form.taxpayer.contact_details = {};
+      }
       form.year = this.formatDtYear(form.dateFiled);
       // form.month = this.formatDtMonth(form.dateFiled);
       // var return_period = {

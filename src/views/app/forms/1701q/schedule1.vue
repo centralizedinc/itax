@@ -2,7 +2,7 @@
   <div>
     <a-drawer
       title="Schedule I – For Graduated IT Rate"
-      :visible="show===1"
+      :visible="visible"
       @cancel="$emit('close')"
       @ok="handleOk"
       :width="720"
@@ -71,7 +71,7 @@
               label="38."
             >
               <a-input
-                v-model="form.item38a"
+                :value="item38a()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
@@ -81,7 +81,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item38b"
+                :value="item38b()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
@@ -123,7 +123,7 @@
               label="40."
             >
               <a-input
-                v-model="form.item40a"
+                :value="item40a()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
@@ -133,7 +133,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item40b"
+                :value="item40b()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
@@ -149,7 +149,7 @@
               label="41."
             >
               <a-input
-                v-model="form.item41a"
+                :value="item41a()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
@@ -159,7 +159,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item41b"
+                :value="item41b()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
@@ -253,7 +253,7 @@
               label="45."
             >
               <a-input
-                v-model="form.item45a"
+                :value="item45a()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
@@ -263,7 +263,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item45b"
+                :value="item45b()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
@@ -318,7 +318,7 @@
 </template>
 <script>
 export default {
-  props: ["form","show"],
+  props: ["form", "show"],
   data() {
     return {
       visible: true,
@@ -337,7 +337,7 @@ export default {
   computed: {},
   created() {
     console.log("show sched 1: " + this.show);
-    this.visible = this.show;
+    // this.visible = this.show;
   },
   watch: {
     show() {
@@ -354,8 +354,113 @@ export default {
     },
     handleOk(e) {
       console.log(e);
-      this.show = 0;
+      // this.show = 0;
       this.visible = false;
+    },
+    // schedule 1 computation
+    item38a() {
+      console.log("this.form.item36a value: " + this.form.item36a);
+      var total = (this.form.item36a || 0) - (this.form.item37a || 0);
+      this.form.item38a = total;
+      return total;
+    },
+    item38b() {
+      var total = (this.form.item36b || 0) - (this.form.item37b || 0);
+      this.form.item38b = total;
+      return total;
+    },
+    item40a() {
+      var total = (this.form.item40a || 0) * 0.4;
+      this.form.item40a = total;
+      return total;
+    },
+    item40b() {
+      var total = (this.form.item40b || 0) * 0.4;
+      this.form.item40b = total;
+      return total;
+    },
+    item41a() {
+      var total = 0;
+      if (
+        this.form.item39a == undefined ||
+        this.form.item39a == 0 ||
+        this.form.item39a == null
+      ) {
+        total = this.form.item38a - this.form.item40a;
+      } else if (
+        this.form.item40a == undefined ||
+        this.form.item40a == 0 ||
+        this.form.item40a == null
+      ) {
+        total = this.form.item38a - this.form.item39a;
+      } else {
+        this.form.item38a = 0;
+        this.form.item39a = 0;
+        this.form.item40a = 0;
+      }
+      this.form.form.item41a = total;
+      return total;
+    },
+    item41b() {
+      var total = 0;
+      if (
+        this.form.item39b == undefined ||
+        this.form.item39b == 0 ||
+        this.form.item39b == null
+      ) {
+        total = this.form.item38b - this.form.item40b;
+      } else if (
+        this.form.item40b == undefined ||
+        this.form.item40a == 0 ||
+        this.form.item40a == null
+      ) {
+        total = this.form.item38b - this.form.item39b;
+      } else {
+        this.form.item38b = 0;
+        this.form.item39b = 0;
+        this.form.item40b = 0;
+      }
+      this.form.form.item41b = total;
+      return total;
+    },
+    item45a() {
+      var total = this.computeSum([
+        this.form.item41a,
+        this.form.item42a,
+        this.form.item43a,
+        this.form.item44a
+      ]);
+      this.form.item45a = total;
+      var total46 = this.tax_rate(this.form.item45b);
+      this.form.item46a = total46;
+      return total;
+    }
+  },
+  item45b() {
+    var total = this.computeSum([
+      this.form.item41b,
+      this.form.item42b,
+      this.form.item43b,
+      this.form.item44b
+    ]);
+    this.form.item45b = total;
+    var total46 = this.tax_rate(this.form.item45b);
+    this.form.item46b = total46;
+    return total;
+  },
+  tax_rate(income) {
+    if (income <= 250000) {
+      return 0;
+    } else if (income >= 250000 && income <= 400000) {
+      return income * 0.2;
+    } else if (income >= 400000 && income <= 800000) {
+      return income * 0.25 + 30000;
+    } else if (income >= 800000 && income <= 2000000) {
+      return income * 0.3 + 130000;
+    } else if (income >= 2000000 && income <= 8000000) {
+      return income * 0.32 + 490000;
+    } else if (income > 8000000) {
+      return income * 0.35 + 2410000;
     }
   }
 };
