@@ -415,7 +415,7 @@ export default {
     },
     proceedPayment() {
       if (window.opener && window.opener.location) {
-        console.log('window.opener :', window.opener);
+        console.log("window.opener :", window.opener);
         window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
         window.opener.location.reload();
       }
