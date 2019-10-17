@@ -17,21 +17,13 @@
               :wrapperCol="form_layout.wrapper_col"
               label="64."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Surcharge"
-              />
+              <a-input-number v-model="form.sched4.taxpayer.surcharge" placeholder="Surcharge"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Surcharge"
-              />
+              <a-input-number v-model="form.sched4.spouse.surcharge" placeholder="Surcharge"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -42,20 +34,12 @@
               :wrapperCol="form_layout.wrapper_col"
               label="65."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Interest"
-              />
+              <a-input-number v-model="form.sched4.taxpayer.interest" placeholder="Interest"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Interest"
-              />
+              <a-input-number v-model="form.sched4.spouse.interest" placeholder="Interest"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -66,20 +50,12 @@
               :wrapperCol="form_layout.wrapper_col"
               label="66."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Compromise"
-              />
+              <a-input-number v-model="form.sched4.taxpayer.compromise" placeholder="Compromise"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Compromise"
-              />
+              <a-input-number v-model="form.sched4.spouse.compromise" placeholder="Compromise"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -90,20 +66,19 @@
               :wrapperCol="form_layout.wrapper_col"
               label="67."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+              <a-input-number
+                :value="penalties()"
                 placeholder="Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+              <a-input-number
+                :value="spouse_penalties()"
+                x&#x60;
                 placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -152,7 +127,7 @@
 </template>
 <script>
 export default {
-  props: ["show"],
+  props: ["form", "show"],
   data() {
     return {
       visible: true,
@@ -182,22 +157,24 @@ export default {
     }
   },
   methods: {
-    item67a() {
+    penalties() {
       var total = this.computeSum([
-        this.form.item64a,
-        this.form.item65a,
-        this.form.item66a
+        this.form.sched4.taxpayer.surcharge,
+        this.form.sched4.taxpayer.interest,
+        this.form.sched4.taxpayer.compromise
       ]);
-      this.form.item67a = total;
+      this.form.sched4.taxpayer.penalties = total;
+      this.form.taxpayer_total_penalties = total;
       return total;
     },
-    item67b() {
+    spouse_penalties() {
       var total = this.computeSum([
-        this.form.item64b,
-        this.form.item65b,
-        this.form.item66b
+        this.form.sched4.spouse.surcharge,
+        this.form.sched4.spouse.interest,
+        this.form.sched4.spouse.compromise
       ]);
-      this.form.item67b = total;
+      this.form.sched4.spouse.penalties = total;
+      this.form.spouse_total_penalties = total;
       return total;
     },
     showModal() {

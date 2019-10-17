@@ -158,8 +158,6 @@ import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
 import Form1604E from "./1604e/1604e.vue";
 
-
-
 export default {
   components: {
     FormSuccess,
@@ -211,7 +209,11 @@ export default {
           contact_details: {},
           address_details: {}
         },
-        sched1: []
+        spouse_details: {},
+        sched1: { taxpayer: {}, spouse: {} },
+        sched2: { taxpayer: {}, spouse: {} },
+        sched3: { taxpayer: {}, spouse: {} },
+        sched4: { taxpayer: {}, spouse: {} }
       },
       curr_step: 0,
       steps: {
@@ -426,12 +428,9 @@ export default {
       window.close();
     },
     submit() {
-
       this.loading = true;
-      this.errors = [];  
+      this.errors = [];
 
-
-      
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: this.form_type,
@@ -459,34 +458,32 @@ export default {
             return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
             this.showSuccessForm(return_details);
 
-            this.$refs.form_display_component.upload()
-              .getBuffer(buffer=>{
-                  var file = new Blob([buffer], {type: "application/pdf"});
-                  // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
-                  var data = new FormData();
-                  data.append('tax_returns', file);
-                  data.append('content-type', 'application/pdf');
+            this.$refs.form_display_component.upload().getBuffer(buffer => {
+              var file = new Blob([buffer], { type: "application/pdf" });
+              // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
+              var data = new FormData();
+              data.append("tax_returns", file);
+              data.append("content-type", "application/pdf");
 
-                  this.$store.dispatch('UPLOAD_TAX_RETURNS',
-                    {
-                      form:this.form_type,
-                      ref_no: return_details.reference_no,
-                      form_data: data
-                    })
-                    .then(result=>{
-                      console.log('UPLOAD RESULT ::: ', JSON.stringify(result))
-                    })
-                    .catch(err=>{
-                      console.log('UPLOAD ERROR ::: ', JSON.stringify(result))
-                    })
-              })
+              this.$store
+                .dispatch("UPLOAD_TAX_RETURNS", {
+                  form: this.form_type,
+                  ref_no: return_details.reference_no,
+                  form_data: data
+                })
+                .then(result => {
+                  console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
+                })
+                .catch(err => {
+                  console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
+                });
+            });
           }
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
-      
     }
   },
   watch: {

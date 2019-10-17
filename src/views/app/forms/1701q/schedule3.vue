@@ -18,7 +18,7 @@
               label="55."
             >
               <a-input
-                v-model="form.item55a"
+                v-model="form.sched3.taxpayer.year_excess_credits"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Prior Year's Excess Credits"
@@ -29,7 +29,7 @@
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.form.item55b"
+                v-model="form.sched3.spouse.year_excess_credits"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Prior Year's Excess Credits"
@@ -45,7 +45,7 @@
               label="56."
             >
               <a-input
-                v-model="form.item56a"
+                v-model="form.sched3.taxpayer.payment_previous_quarter"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Tax Payment/s for the Previous Quarter/s"
@@ -55,7 +55,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item56b"
+                v-model="form.sched3.spouse.payment_previous_quarter"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Tax Payment/s for the Previous Quarter/s"
@@ -71,7 +71,7 @@
               label="57."
             >
               <a-input
-                v-model="form.item57a"
+                v-model="form.sched3.taxpayer.creditable_tax_withheld"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Creditable Tax Withheld for the Previous Quarter/s"
@@ -81,7 +81,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item57b"
+                v-model="form.sched3.spouse.creditable_tax_withheld"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Creditable Tax Withheld for the Previous Quarter/s"
@@ -97,7 +97,7 @@
               label="58."
             >
               <a-input
-                v-model="form.item58a"
+                v-model="form.sched3.taxpayer.creditable_tax_withheld_per_bir"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Creditable Tax Withheld per BIR Form No. 2307 for this Quarter"
@@ -107,7 +107,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                v-model="form.item58b"
+                v-model="form.sched3.spouse.creditable_tax_withheld_per_bir"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Creditable Tax Withheld per BIR Form No. 2307 for this Quarter"
@@ -123,7 +123,7 @@
               label="59."
             >
               <a-input
-                v-model="form.item59a"
+                v-model="form.sched3.taxpayer.tax_paid_return"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Tax Paid in Return Previously Filed, if this is an Amended Return"
@@ -149,7 +149,7 @@
               label="60."
             >
               <a-input
-                v-model="form.item60a"
+                v-model="form.sched3.taxpayer.foriegn_tax_credits"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Foreign Tax Credits, if applicable"
@@ -175,7 +175,7 @@
               label="61."
             >
               <a-input
-                v-model="form.item61a"
+                v-model="form.sched3.taxpayer.other_tax_credit"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Other Tax Credits/Payments (specify)"
@@ -201,7 +201,7 @@
               label="62."
             >
               <a-input
-                :value="item62a()"
+                :value="total_tax_credit()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Tax Credits/Payments (Sum of Items 55 to 61) (To Part III, Item 27)"
@@ -211,7 +211,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                :value="item62b()"
+                :value="spouse_total_tax_credit()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Tax Credits/Payments (Sum of Items 55 to 61) (To Part III, Item 27)"
@@ -264,7 +264,7 @@
 </template>
 <script>
 export default {
-  props: ["show"],
+  props: ["form", "show"],
   data() {
     return {
       visible: true,
@@ -294,30 +294,32 @@ export default {
     }
   },
   methods: {
-    item62a() {
+    total_tax_credit() {
       var total = this.computeSum([
-        this.form.item55a,
-        this.form.item56a,
-        this.form.item57a,
-        this.form.item58a,
-        this.form.item59a,
-        this.form.item60a,
-        this.form.item61a
+        this.form.sched3.taxpayer.year_excess_credits,
+        this.form.sched3.taxpayer.payment_previous_quarter,
+        this.form.sched3.taxpayer.creditable_tax_withheld,
+        this.form.sched3.taxpayer.creditable_tax_withheld_per_bir,
+        this.form.sched3.taxpayer.tax_paid_return,
+        this.form.sched3.taxpayer.foriegn_tax_credits,
+        this.form.sched3.taxpayer.other_tax_credit
       ]);
-      this.formitem62a = total;
+      this.form.sched3.taxpayer.total_tax_credit = total;
+      this.form.taxpayer_tax_due = this.form.sched3.taxpayer.total_tax_credit;
       return total;
     },
-    item62b() {
+    spouse_total_tax_credit() {
       var total = this.computeSum([
-        this.form.item55b,
-        this.form.item56b,
-        this.form.item57b,
-        this.form.item58b,
-        this.form.item59b,
-        this.form.item60b,
-        this.form.item61b
+        this.form.sched3.spouse.year_excess_credits,
+        this.form.sched3.spouse.payment_previous_quarter,
+        this.form.sched3.spouse.creditable_tax_withheld,
+        this.form.sched3.spouse.creditable_tax_withheld_per_bir,
+        this.form.sched3.spouse.tax_paid_return,
+        this.form.sched3.spouse.foriegn_tax_credits,
+        this.form.sched3.spouse.other_tax_credit
       ]);
-      this.formitem62b = total;
+      this.form.sched3.spouse.total_tax_credit = total;
+      this.form.spouse_tax_due = this.form.sched3.spouse.total_tax_credit;
       return total;
     },
     showModal() {
