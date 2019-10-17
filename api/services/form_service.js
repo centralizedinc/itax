@@ -24,8 +24,10 @@ const activity = require('../services/actvities_service')
  */
 function save(form_type, form_details) {
     return new Promise((resolve, reject) => {
+        console.log('test');
         saveForm(form_type, form_details)
             .then((result) => {
+                console.log('result :', result);
                 const model = {
                     reference_no: result.reference_no,
                     tin: result.taxpayer.tin,
