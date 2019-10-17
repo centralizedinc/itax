@@ -3,17 +3,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
-const common_model = require('./commonModels');
+var common_model = require('./commonModels');
 
 const model_schema = {
-    category_of_agent: { 
+    any_tax_withheld: { type: Boolean },
+    category_of_agent: {
         type: String
         /**
          * government
          * private
          */
     },
-    any_tax_withheld: { type: Boolean },
+    // Part II Computation of Tax
+
     atc_list: [{
         nature_of_income_payment: String,
         atc_code: String,
@@ -21,32 +23,51 @@ const model_schema = {
         tax_rate: { type: Number, default: 0 },
         tax_withheld: { type: Number, default: 0 }
     }],
+    tax_req_withld_remtd: { type: Number, default: 0 },
+    less_tax_remtd_retrn: { type: Number, default: 0 },
+    tax_due: { type: Number, default: 0 },
+    total_amount_payable: { type: Number, default: 0 },
+
+    //Schedule 1.1
     sched1: [{
-        treaty_code: String,
-        atc: String,
-        amt_income_payment: { type: Number, default: 0 },
+        seq_no: { type: Number, default: 0 }, //(1)
+        tin: { type: Number },//(2)
+        name: {
+            first: { type: String },
+            middle: { type: String }, //(3)
+            last: { type: String }
+        },
+        atc_code: {
+            type: String
+            /*
+                atc code
+                WB 191
+                WB 192
+                WB 193
+                WB 194
+            */
+
+        },
+        nature_of_payment: { type: Number, default: 0 },
+        amount: { type: Number, default: 0 },
         tax_rates: { type: Number, default: 0 },
         tax_req_withheld: { type: Number, default: 0 },
-        total: { type: Number, default: 0 }
     }],
-    tax_wthld_under_treaty: String, //14 Regular rates
-    total_schedule1: { type: Number, default: 0 }, //15 (form schedule 1)
-    amt_due_final: { type: Number, default: 0 }, //16 (sum of items 14 and 15)
-    prev_tax_paid_final: { type: Number, default: 0 }, //17 (Less: Tax Remitted in return previously Filed)
 
+    total_tax_req_withheld: { type: Number, default: 0 },
+    total_amount: { type: Number, default: 0 }
 };
 
-var Form1601FSchema = new Schema({ ...common_model, ...model_schema });
+var Form1600WPSchema = new Schema({ ...common_model, ...model_schema });
 
-
-Form1601FSchema.pre('save', function (callback) {
+Form1600WPSchema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1601FSchema.pre('findOneAndUpdate', function (callback) {
+Form1600WPSchema.pre('findOneAndUpdate', function (callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;
@@ -63,7 +84,7 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form1601FSchema, '1601f_forms', options);
+const plugin = new autoIncrement(Form1600WPSchema, '1600wp_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin()
@@ -76,4 +97,4 @@ plugin.applyPlugin()
     });
 
 
-module.exports = mongoose.model('1601f_forms', Form1601FSchema);
+module.exports = mongoose.model('1600wp_forms', Form1600WPSchema);

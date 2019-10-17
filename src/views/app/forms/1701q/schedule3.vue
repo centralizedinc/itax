@@ -15,12 +15,13 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="36."
+              label="55."
             >
               <a-input
+                v-model="form.item55a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Sales/Revenues/Receipts/Fees"
+                placeholder="Prior Year's Excess Credits"
               />
             </a-form-item>
           </a-col>
@@ -28,9 +29,10 @@
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.form.item55b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Sales/Revenues/Receipts/Fees"
+                placeholder="Prior Year's Excess Credits"
               />
             </a-form-item>
           </a-col>
@@ -40,21 +42,23 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="37."
+              label="56."
             >
               <a-input
+                v-model="form.item56a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Less: Cost of Sales/Services"
+                placeholder="Tax Payment/s for the Previous Quarter/s"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.item56b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Less: Cost of Sales/Services"
+                placeholder="Tax Payment/s for the Previous Quarter/s"
               />
             </a-form-item>
           </a-col>
@@ -64,21 +68,23 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="38."
+              label="57."
             >
               <a-input
+                v-model="form.item57a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
+                placeholder="Creditable Tax Withheld for the Previous Quarter/s"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.item57b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
+                placeholder="Creditable Tax Withheld for the Previous Quarter/s"
               />
             </a-form-item>
           </a-col>
@@ -88,21 +94,23 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="39."
+              label="58."
             >
               <a-input
+                v-model="form.item58a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Allowable Itemized Deductions "
+                placeholder="Creditable Tax Withheld per BIR Form No. 2307 for this Quarter"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.item58b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Allowable Itemized Deductions "
+                placeholder="Creditable Tax Withheld per BIR Form No. 2307 for this Quarter"
               />
             </a-form-item>
           </a-col>
@@ -112,21 +120,23 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="40."
+              label="59."
             >
               <a-input
+                v-model="form.item59a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                placeholder="Tax Paid in Return Previously Filed, if this is an Amended Return"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.item59b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                placeholder="Tax Paid in Return Previously Filed, if this is an Amended Return"
               />
             </a-form-item>
           </a-col>
@@ -136,21 +146,23 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="41."
+              label="60."
             >
               <a-input
+                v-model="form.item60a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
+                placeholder="Foreign Tax Credits, if applicable"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.item60b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
+                placeholder="Foreign Tax Credits, if applicable"
               />
             </a-form-item>
           </a-col>
@@ -160,21 +172,23 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="42."
+              label="61."
             >
               <a-input
+                v-model="form.item61a"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
+                placeholder="Other Tax Credits/Payments (specify)"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                v-model="form.item61b"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
+                placeholder="Other Tax Credits/Payments (specify)"
               />
             </a-form-item>
           </a-col>
@@ -184,36 +198,38 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="43."
+              label="62."
             >
               <a-input
+                :value="item62a()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Non-Operating Income (specify) "
+                placeholder="Total Tax Credits/Payments (Sum of Items 55 to 61) (To Part III, Item 27)"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
+                :value="item62b()"
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Non-Operating Income (specify) "
+                placeholder="Total Tax Credits/Payments (Sum of Items 55 to 61) (To Part III, Item 27)"
               />
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <!-- <a-row :gutter="16">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="44."
+              label="63."
             >
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
+                placeholder="Tax Payable/(Overpayment) (Item 46 or 54, Less Item 62) (To part III, Item 28)"
               />
             </a-form-item>
           </a-col>
@@ -222,59 +238,11 @@
               <a-input
                 :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                 :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
+                placeholder="Tax Payable/(Overpayment) (Item 46 or 54, Less Item 62) (To part III, Item 28)"
               />
             </a-form-item>
           </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="45."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="46."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        </a-row>-->
       </a-form>
       <div
         :style="{
@@ -314,7 +282,7 @@ export default {
   },
   created() {
     console.log("show sched 3: " + this.show);
-    this.visible = this.show;
+    // this.visible = this.show;
   },
   watch: {
     show() {
@@ -326,12 +294,38 @@ export default {
     }
   },
   methods: {
+    item62a() {
+      var total = this.computeSum([
+        this.form.item55a,
+        this.form.item56a,
+        this.form.item57a,
+        this.form.item58a,
+        this.form.item59a,
+        this.form.item60a,
+        this.form.item61a
+      ]);
+      this.formitem62a = total;
+      return total;
+    },
+    item62b() {
+      var total = this.computeSum([
+        this.form.item55b,
+        this.form.item56b,
+        this.form.item57b,
+        this.form.item58b,
+        this.form.item59b,
+        this.form.item60b,
+        this.form.item61b
+      ]);
+      this.formitem62b = total;
+      return total;
+    },
     showModal() {
       this.visible = true;
     },
     handleOk(e) {
       console.log(e);
-      this.show = 0;
+      // this.show = 0;
       this.visible = false;
     }
   }

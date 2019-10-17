@@ -22,11 +22,13 @@ import Form2551q from "../plugins/pdf/printers/2551q";
 import Form1701q from "../plugins/pdf/printers/1701q";
 import Form2550q from "../plugins/pdf/printers/2550q";
 import Form2000ot from "../plugins/pdf/printers/2000ot";
+import Form1604e from "../plugins/pdf/printers/1604e";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const printers = {
   FORM1601E: Form1601e,
+  FORM1604E: Form1604e,
   FORM2550M: Form2550m,
   FORM1700: Form1700,
   FORM2551Q: Form2551q,
@@ -105,6 +107,15 @@ export default {
     refresh() {
       this.loading = true;
       var form = this.deepCopy(this.form);
+      if (!form.taxpayer) {
+        form.taxpayer = {};
+      }
+      if (!form.taxpayer.address_details) {
+        form.taxpayer.address_details = {};
+      }
+      if (!form.taxpayer.contact_details) {
+        form.taxpayer.contact_details = {};
+      }
       form.year = this.formatDtYear(form.dateFiled);
       // form.month = this.formatDtMonth(form.dateFiled);
       // var return_period = {
@@ -180,6 +191,13 @@ export default {
       });
       console.log("open form data: " + JSON.stringify(this.form));
       this.refresh();
+    },
+    upload(){
+      var printer = printers[this.form_type];
+      var document = printer.fillup(this.form);
+      var self = this;
+      return pdfMake.createPdf(document)
+      
     }
   }
 };
