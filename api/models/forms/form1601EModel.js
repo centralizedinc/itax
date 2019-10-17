@@ -5,27 +5,8 @@ var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
 
 var Form1601ESchema = new Schema({
-    reference_no: {
-        type: Number
-    },
-    taxpayer: {},
-    dateFiled: Date,
-    due_date: Date,
-    return_period: Date,
-    return_period_month: String,
-    return_period_year: String,
-    amended_yn: Boolean,
-    num_of_sheet: {
-        type: Number,
-        default: 0
-    },
-    opnYn: String,
-    categoryOfAgent: String,
-    specialRateYn: String,
-    internationalTreatyYn: String,
+    category_of_agent: String,
     taxes_withheld: Boolean,
-    availing_tax_relief: Boolean,
-    // 14
     total_tax_withheld_remitted: {
         type: Number,
         default: 0
@@ -35,24 +16,24 @@ var Form1601ESchema = new Schema({
         type: Number,
         default: 0
     },
-    overremittance: Boolean,
+    over_remittance: Boolean,
     // 18
     total_amount_overremittance:{
         type: Number,
         default: 0
     },
     // 14
-    amtDueCrdtb: {
+    amt_due_crdtb: {
         type: Number,
         default: 0
     },
     // 15
-    prevTaxPaidCrdtb: {
+    prev_tax_paid_crdtb: {
         type: Number,
         default: 0
     },
     // 16
-    amtPayblCrdtb: {
+    amt_paybl_crdtb: {
         type: Number,
         default: 0
     },
@@ -61,42 +42,32 @@ var Form1601ESchema = new Schema({
         type: Number,
         default: 0
     },
-    // 17b
-    interest: {
+    total_amt_paybl_crdtb: {
         type: Number,
         default: 0
     },
-    // 17c
-    compromise: {
-        type: Number,
-        default: 0
-    },
-    // 17D
-    penaltiesCrdtb: {
-        type: Number,
-        default: 0
-    },
-    totalAmtPayblCrdtb: {
-        type: Number,
-        default: 0
-    },
-    refundType: String,
+    refund_type: String,
     // 15b
-    advPayment: {
+    adv_payment: {
         type: Number,
         default: 0
     },
     // 15c
-    totTaxCredits: {
+    tot_tax_credits: {
         type: Number,
         default: 0
     },
-    ifOverremittance: String,
+    if_over_remittance: String,
     atc_list: [{
-        atc: {
+        nature_of_income: String,
+        atc_code: {
             type: String
         },
         tax_base: {
+            type: Number,
+            default: 0
+        },
+        tax_rate: {
             type: Number,
             default: 0
         },
