@@ -41,6 +41,14 @@ function validate(form_details) {
 
 function validateRequired(form) {
     var error_messages = [];
+    console.log('form.atc_code :', form.atc_code);
+    if(!form.atc_code){
+        error_messages.push({
+            page: 0,
+            field: "atc_code",
+            error: constant_helper.MANDATORY_FIELD('ATC')
+        });
+    }
 
     if (!form.natureOfTransaction) {
         error_messages.push({

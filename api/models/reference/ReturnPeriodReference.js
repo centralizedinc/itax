@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 
 const ReturnPeriodSchema = new mongoose.Schema({
+    form: {
+        type: String
+    },
     form_type: {
         type: String
     },
@@ -13,12 +16,9 @@ const ReturnPeriodSchema = new mongoose.Schema({
          * a - annual
          */
     },
-    accounting_type: {
-        type: String
-        /**
-         * c - calendar
-         * f - fiscal
-         */
+    is_calendar: {
+        type: Boolean,
+        default: false
     },
     month_offset: {
         type: Number
