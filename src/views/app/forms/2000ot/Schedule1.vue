@@ -20,7 +20,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1A"
             >
-              <a-input-number v-model="form.commissionerLand" placeholder="Land"></a-input-number>
+              <a-input-number v-model="form.schedule1.commissionerLand" placeholder="Land"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -29,7 +29,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1B"
             >
-              <a-input-number v-model="form.commissionerImprovement" placeholder="Improvement"></a-input-number>
+              <a-input-number v-model="form.schedule1.commissionerImprovement" placeholder="Improvement"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -56,7 +56,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2A"
             >
-              <a-input-number v-model="form.provincialLand" placeholder="Land"></a-input-number>
+              <a-input-number v-model="form.schedule1.provincialLand" placeholder="Land"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -65,7 +65,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2B"
             >
-              <a-input-number v-model="form.provincialImprovement" placeholder="Improvement"></a-input-number>
+              <a-input-number v-model="form.schedule1.provincialImprovement" placeholder="Improvement"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -158,56 +158,56 @@ export default {
     // 3A = 1A + 2B
     getSum1A2B() {
       var total = this.computeSum([
-        this.form.commissionerLand,
-        this.form.provincialImprovement
+        this.form.schedule1.commissionerLand,
+        this.form.schedule1.provincialImprovement
       ]);
-      this.form.sum1A2B = total;
-      console.log("this.form.sum1A2B :", this.form.sum1A2B);
+      this.form.schedule1.sum1A2B = total;
+      console.log("this.form.sum1A2B :", this.form.schedule1.sum1A2B);
       return total;
     },
     // 1C = 1A + 1B
     getCommissionerTotal() {
       var total = this.computeSum([
-        this.form.commissionerLand,
-        this.form.commissionerImprovement
+        this.form.schedule1.commissionerLand,
+        this.form.schedule1.commissionerImprovement
       ]);
-      this.form.commissionerTotal = total;
-      console.log("this.form.commissionerTotal :", this.form.commissionerTota);
+      this.form.schedule1.commissionerTotal = total;
+      console.log("this.form.commissionerTotal :", this.form.schedule1.commissionerTota);
       return total;
     },
     // 2C = 2A + 2B
     getProvincialTotal() {
       var total = this.computeSum([
-        this.form.provincialLand,
-        this.form.provincialImprovement
+        this.form.schedule1.provincialLand,
+        this.form.schedule1.provincialImprovement
       ]);
-      this.form.provincialTotal = total;
-      console.log("this.form.provincialTotal :", this.form.provincialTotal);
+      this.form.schedule1.provincialTotal = total;
+      console.log("this.form.provincialTotal :", this.form.schedule1.provincialTotal);
       return total;
     },
     // 4A = 1B + 2A
     getSum1B2A() {
       var total = this.computeSum([
-        this.form.commissionerImprovement,
-        this.form.provincialLand
+        this.form.schedule1.commissionerImprovement,
+        this.form.schedule1.provincialLand
       ]);
-      this.form.sum1B2A = total;
-      console.log("this.form.sum1B2A :", this.form.sum1B2A);
+      this.form.schedule1.sum1B2A = total;
+      console.log("this.form.sum1B2A :", this.form.schedule1.sum1B2A);
       return total;
     },
     getFairMarketValue() {
       console.log("Math.max :" + Math.max(29, 55));
-      console.log("this.form.commissionerTotal :", this.form.commissionerTotal);
-      console.log("this.form.provincialTotal :", this.form.provincialTotal);
-      console.log("this.form.sum1A2B :", this.form.sum1A2B);
-      console.log("this.form.sum1B2A :", this.form.sum1B2A);
-      var a = this.form.commissionerTotal;
-      var b = this.form.provincialTotal;
+      console.log("this.form.commissionerTotal :", this.form.schedule1.commissionerTotal);
+      console.log("this.form.provincialTotal :", this.form.schedule1.provincialTotal);
+      console.log("this.form.sum1A2B :", this.form.schedule1.sum1A2B);
+      console.log("this.form.sum1B2A :", this.form.schedule1.sum1B2A);
+      var a = this.form.schedule1.commissionerTotal;
+      var b = this.form.schedule1.provincialTotal;
       var total = Math.max(
-        this.form.commissionerTotal,
-        this.form.provincialTotal,
-        this.form.sum1A2B,
-        this.form.sum1B2A
+        this.form.schedule1.commissionerTotal,
+        this.form.schedule1.provincialTotal,
+        this.form.schedule1.sum1A2B,
+        this.form.schedule1.sum1B2A
       );
       console.log("total :", total);
       this.form.fairMarketValue = total;

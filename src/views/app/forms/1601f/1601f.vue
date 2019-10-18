@@ -2,7 +2,7 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Withholding Tax   (1604E)</b>
+        <b>Withholding Tax   (1601F)</b>
       </a-divider>
       <a-form-item label="1. For the month of (MM/YYYY)">
         <a-month-picker v-model="form.returnPeriod" />
@@ -247,14 +247,14 @@
 </template>
 
 <script>
-// import form_1604e_image from "@/assets/forms/1604e.jpg";
+// import form_1601f_image from "@/assets/forms/1601f.jpg";
 
 export default {
   props: ["form", "step"],
   data() {
     return {
       sub: false,
-      // form_1604e_image,
+      // form_1601f_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
@@ -315,7 +315,7 @@ export default {
       this.loading = true;
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
-          form_type: "1604E",
+          form_type: "1601F",
           form_details: this.form
         })
         .then(result => {
@@ -347,7 +347,7 @@ export default {
   // watch: {
   //   form: {
   //     handler(val) {
-  //       console.log("##### update 1604e");
+  //       console.log("##### update 1601f");
   //     },
   //     deep: true
   //   }

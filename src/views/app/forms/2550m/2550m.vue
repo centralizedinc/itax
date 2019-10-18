@@ -100,11 +100,11 @@
         :validate-status="error_item('taxpayer.address_details.zipCode')"
         :help="error_desc('taxpayer.address_details.zipCode')"
       >
-        <a-input
+        <a-input-number
           placeholder="Zip Code"
           v-model="form.taxpayer.address_details.zipCode"
           style="width: 100%"
-        ></a-input>
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
@@ -279,11 +279,16 @@
       </a-form-item>
 
       <a-form-item label="18. Current Transaction" />
-      <a-form-item
-        class="computation-item"
-        label="18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)"
-      />
-      <a-button type="link" @click="showDrawer2">Schedule 2</a-button>
+      <a-form-item class="computation-item">
+        <div style="color: black">
+          18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
+          <span
+            class="text-link"
+          >Schedule 2</span>)
+          <!-- @click="show_sched2=true" -->
+        </div>
+      </a-form-item>
+      <!-- <a-button type="link" @click="showDrawer2">Schedule 2</a-button> -->
       <a-drawer
         title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
         placement="right"
@@ -333,7 +338,7 @@
         class="computation-item"
         label="18A"
       >
-        <a-input-number placeholder="Purchase" v-model="form.purCapGoodsNotExceed"></a-input-number>
+        <a-input-number disabled placeholder="Purchase" v-model="form.purCapGoodsNotExceed"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -341,13 +346,19 @@
         class="computation-item"
         label="18B"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputCapGoodsNotExceed"></a-input-number>
+        <a-input-number
+          placeholder="Output Tax Due"
+          disabled
+          v-model="form.outputCapGoodsNotExceed"
+        ></a-input-number>
       </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="18C/D. Purchase of Capital Goods(Exceeding ₱1Million)"
-      />
-      <a-button type="link" @click="showDrawer3A">Schedule 3 A</a-button>
+      <a-form-item class="computation-item" label>
+        <div style="color: black">
+          18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
+          <span class="text-link">Schedule 3A</span>)
+        </div>
+      </a-form-item>
+      <!-- <a-button type="link" @click="showDrawer3A">Schedule 3 A</a-button> -->
       <a-drawer
         title="Schedule 3 Purchases/Importation This Period"
         placement="right"
@@ -364,7 +375,7 @@
         class="computation-item"
         label="18C"
       >
-        <a-input-number placeholder="Purchase" v-model="form.purCapGoodsExceed"></a-input-number>
+        <a-input-number placeholder="Purchase" disabled v-model="form.purCapGoodsExceed"></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -372,7 +383,11 @@
         class="computation-item"
         label="18D"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputPurCapGoodsExceed"></a-input-number>
+        <a-input-number
+          placeholder="Output Tax Due"
+          disabled
+          v-model="form.outputPurCapGoodsExceed"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
@@ -481,7 +496,7 @@
         class="computation-item"
         label="18P"
       >
-        <a-input-number placeholder="Purchase" :v-model="getTotalCurrentPurchases()"></a-input-number>
+        <a-input-number placeholder="Purchase" disabled :v-model="getTotalCurrentPurchases()"></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -497,34 +512,34 @@
       </a-form-item>
 
       <a-form-item label="20. Less: Deductions from Input Tax" />
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="20A"
-      >
-        <a-button type="primary" @click="sched3B_drawer = true">Schedule 3B</a-button>
+      <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+        <div style="color: black">
+          20A (
+          <span class="text-link">Schedule 3B</span>)
+        </div>
+        <!-- <a-button type="primary" @click="sched3B_drawer = true">Schedule 3B</a-button> -->
         <a-input-number
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
           v-model="form.inputTaxPurchaseCapGoods"
         ></a-input-number>
       </a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="20B"
-      >
-        <a-button type="link" @click="sched4_drawer = true">Schedule 4</a-button>
+      <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+        <div style="color: black">
+          20B (
+          <span class="text-link">Schedule 4</span>)
+        </div>
+        <!-- <a-button type="link" @click="sched4_drawer = true">Schedule 4</a-button> -->
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
         ></a-input-number>
       </a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="20C"
-      >
-        <a-button type="link" @click="sched5_drawer = true">Schedule 5</a-button>
+      <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+        <div style="color: black">
+          20C (
+          <span class="text-link">Schedule 5</span>)
+        </div>
+        <!-- <a-button type="link" @click="sched5_drawer = true">Schedule 5</a-button> -->
         <a-input-number
           placeholder="Input Tax allocable to Exempt Sales"
           v-model="form.inputTaxAllocableToExempt"
@@ -573,35 +588,42 @@
       </a-form-item>
 
       <a-form-item label="23. Less: Tax Credits/Payments" />
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="23A"
-      >
-        <a-button type="link" @click="sched6_drawer = true">Schedule 6</a-button>
+      <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+        <div style="color: black">
+          23A (
+          <span class="text-link">Schedule 6</span>)
+        </div>
+
+        <!-- <a-button type="link" @click="sched6_drawer = true">Schedule 6</a-button> -->
         <a-input-number
+          disabled
           placeholder="Creditable Value-Added Tax Withheld"
           v-model="form.creditableVatWithheld"
         ></a-input-number>
       </a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="23B"
-      >
-        <a-button type="link" @click="sched7_drawer = true">Schedule 7</a-button>
+      <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+        <div style="color: black">
+          23B (
+          <span class="text-link">Schedule 7</span>)
+        </div>
+        <!-- <a-button type="link" @click="sched7_drawer = true">Schedule 7</a-button> -->
         <a-input-number
+          disabled
           placeholder="Advance Payments for Sugar and Flour Industries"
           v-model="form.advPaySugarFlourInd"
         ></a-input-number>
       </a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="23C"
-      >
-        <a-button type="link" @click="sched8_drawer = true">Schedule 8</a-button>
-        <a-input-number placeholder="VAT withheld on Sales to Government" v-model="form.taxWthld"></a-input-number>
+      <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+        <div style="color: black">
+          23C (
+          <span class="text-link">Schedule 8</span>)
+        </div>
+        <!-- <a-button type="link" @click="sched8_drawer = true">Schedule 8</a-button> -->
+        <a-input-number
+          placeholder="VAT withheld on Sales to Government"
+          v-model="form.taxWthld"
+          disabled
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -609,6 +631,7 @@
         label="23D"
       >
         <a-input-number
+          disabled
           placeholder="VAT paid in return previously filed, if this is an amended return"
           v-model="form.prevTaxPaid"
         ></a-input-number>
@@ -893,7 +916,25 @@ export default {
   components: {
     ScheduleOne
   },
-  props: ["form", "step", "errors"],
+  props: {
+    form: {
+      type: Object,
+      default: () => {
+        return { taxpayer: { contact_details: {}, address_details: {} } };
+      }
+    },
+    step: {
+      type: Number,
+      default: 0
+    },
+    errors: {
+      type: Array,
+      default: () => []
+    }
+  },
+  created() {
+    console.log("this.form###### :", this.form);
+  },
   methods: {
     // 16A
     getTotalSales() {
@@ -1001,7 +1042,8 @@ export default {
     },
     // 24
     getAmtPayable() {
-      var total = (this.form.net_vat_payable || 0) - (this.form.totalCredits || 0);
+      var total =
+        (this.form.net_vat_payable || 0) - (this.form.totalCredits || 0);
       this.form.tax_due = total;
       return total;
     },
@@ -1101,12 +1143,16 @@ export default {
       this.sched3A_drawer = false;
     },
     validate() {
-      if(this.step === 0) this.validatePage1();
+      if (this.step === 0) this.validatePage1();
       this.changeStep(this.step + 1);
     },
-    validatePage1(){
+    validatePage1() {
       if (!this.form.return_period) {
-          this.errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') });
+        this.errors.push({
+          page: 0,
+          field: "return_period",
+          error: "Return Period is mandatory field."
+        });
       }
     },
     changeStep(step, form) {
@@ -1387,12 +1433,17 @@ export default {
         console.log("2550m form: ", this.form);
         this.form.year = this.formatDtYear(this.form.return_period);
         this.form.month = this.formatDtMonth(this.form.return_period);
-        this.form.return_period_year = this.formatDtYear(this.form.return_period);
+        this.form.return_period_year = this.formatDtYear(
+          this.form.return_period
+        );
         this.form.return_period_month = this.formatDtMonth(
           this.form.return_period
         );
         console.log("year: " + this.form.month);
       }
+    },
+    "form.taxpayer.address_details.zipCode": val => {
+      console.log("form.taxpayer.address_details.zipCode ", val);
     },
     step() {}
   }

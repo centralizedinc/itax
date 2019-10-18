@@ -14,14 +14,10 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    if (!form_details.return_period_year) {
-        errors.push({ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('Return Period Year') });
-        return {errors};
-    }
-    if (!form_details.quarter) {
-        errors.push({ page: 0, field: "quarter", error: constant_helper.MANDATORY_FIELD('Quarter') });
-        return {errors};
-    }
+    const validated_return = commonValidator.validateReturnPeriodByQuarter(form_details.return_period_year, form_details.quarter, 0);
+    if (validated_return.errors && validated_return.errors.length) return { errors: validated_return.errors };
+    else form_details.return_period = validated_return.return_period;
+    console.log('form 1701q return period :', form_details.return_period);
 
     form_details.due_date = computeDueDate(form_details.return_period)
     console.log('form_details.due_date :', form_details.due_date);
@@ -31,35 +27,12 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
 
     // LATE FILING
+    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
+    errors.push(...error_messages);
 
-    if (commonValidator.isLateFiling(form_details.due_date)) {
-        // Compute Surcharge
-        const surcharge = commonValidator.computeSurcharges(form_details.amtPaybl);
-        if (form_details.surcharge !== surcharge) {
-            errors.push({
-                field: 'surcharge',
-                error: `Surcharge amount must be ${surcharge}`
-            })
-        }
-        // Compute Interest
-        const interest = commonValidator.computeInterest(form_details.due_date, form_details.amtPaybl);
-        if (form_details.interest !== interest) {
-            errors.push({
-                field: 'interest',
-                error: `Interest amount must be ${interest}`
-            })
-        }
-        // Compute Compromise
-        const compromise = commonValidator.computeCompromise(form_details.due_date, form_details.amtPaybl);
-        if (form_details.compromise !== compromise) {
-            errors.push({
-                field: 'compromise',
-                error: `Compromise amount must be ${compromise}`
-            })
-        }
-    }
+    // Compute total
+    // if(form_details.)
 
-    //latefiling computations
     console.log('form 1701q validator errors: ', JSON.stringify(errors))
     console.log('form_details :', form_details);
     return { errors, form_details }
@@ -67,44 +40,52 @@ function validate(form_details) {
 
 function validateRequired(field) {
     var error_messages = [];
-    var tp = new taxpayerDetails(taxpayer);
-    console.log('tp', JSON.stringify(field))
-    console.log('!tp.tin', !field.dateFiled)
-    if (!field.return_period_year) {
-        error_messages.push({ field: "return_period_year", name: "Year", error: constant_helper.MANDATORY_FIELD("Year") });
+
+    // Validate Taxpayer
+
+    if (!field.taxpayer || !field.taxpayer.filer_type) { //item 7
+        error_messages.push({ page: 1, field: "taxpayer.filer_type", error: constant_helper.MANDATORY_FIELD("Taxpayer/Filer Type") });
     }
 
-    if (!field.quarter) {
-        error_messages.push({ field: "quarter", name: "Quarter", error: constant_helper.MANDATORY_FIELD("Quarter") });
+    if (!field.taxpayer_atc_code) { // item 8
+        error_messages.push({ page: 1, field: "taxpayer_atc_code", error: constant_helper.MANDATORY_FIELD("ATC") });
     }
 
-    if (!field.tax_filer_type) {
-        error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
+    if (!field.taxpayer || !field.taxpayer.individual_details || !field.taxpayer.individual_details.birthDate) { // item 11
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.birthDate", error: constant_helper.MANDATORY_FIELD("Date of Birth") });
     }
 
-    if (!field.taxpayer.atc) {
-        error_messages.push({ field: "atc", error: constant_helper.MANDATORY_FIELD("ATC") });
+    if (!field.taxpayer || !field.taxpayer.contact_details || !field.taxpayer.contact_details.email) { // item 11
+        error_messages.push({ page: 1, field: "taxpayer.contact_details.email", error: constant_helper.MANDATORY_FIELD("Email Address") });
     }
 
-    // if (!field.tax_filer_type) {
-    //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
-    // }
-
-    // if (!field.taxpayer.tax_filer_type) {
-    //     error_messages.push({ field: "taxpayer.tax_filer_type", error: constant_helper.MANDATORY_FIELD("Tax payer type") });
-    // }
-
-    if (!field.taxpayer.citizenship) {
-        error_messages.push({ field: "taxpayer.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
+    if (!field.taxpayer || !field.taxpayer.individual_details || !field.taxpayer.individual_details.citizenship) { // item 13
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.citizenship", error: constant_helper.MANDATORY_FIELD("Citizenship") });
     }
 
-    if (!field.taxCredits) {
-        error_messages.push({ field: "taxCredits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
+    if (field.taxpayer_foreign_tax_credits === null || field.taxpayer_foreign_tax_credits === undefined) { // item 15
+        error_messages.push({ page: 1, field: "taxpayer_foreign_tax_credits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
     }
 
-    if (!field.method_deduction) {
-        error_messages.push({ field: "method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
+    if (!field.taxpayer_method_deduction) { // item 16A
+        error_messages.push({ page: 1, field: "taxpayer_method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
     }
+
+
+    // Validate Spouse
+
+    if (!field.spouse_details || !field.spouse_details.tin) { //item 17
+        error_messages.push({ page: 2, field: "spouse_details.tin", error: constant_helper.MANDATORY_FIELD("Spouse's TIN") });
+    }
+
+    if (!field.spouse_details || !field.spouse_details.rdo_code) { // item 18
+        error_messages.push({ page: 2, field: "spouse_details.rdo_code", error: constant_helper.MANDATORY_FIELD("Spouse's RDO Code") });
+    }
+
+    if (!field.spouse_details || !field.spouse_details.registered_name) { // item 21
+        error_messages.push({ page: 2, field: "spouse_details.registered_name", error: constant_helper.MANDATORY_FIELD("Spouse's Name") });
+    }
+
     return error_messages;
 }
 
@@ -117,7 +98,6 @@ function computeDueDate(return_period) {
     // every 15th of the quarter May 15, Aug 15, Nov 15
     due_date.setDate(15);
     due_date.setMonth(month);
-    due_date.setFullYear(return_period_year)
 
     return due_date;
 }
