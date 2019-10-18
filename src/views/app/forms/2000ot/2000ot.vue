@@ -14,13 +14,7 @@
           style="width: 100%"
         />
       </a-form-item>
-      <a-form-item
-        :labelCol="{ span: 12 }"
-        :wrapperCol="{ span: 12 }"
-        label="2. Ammended Return"
-        :validate-status="error_item('return_period')"
-        :help="error_desc('return_period')"
-      >
+      <a-form-item :labelCol="{ span: 12 }" :wrapperCol="{ span: 12 }" label="2. Ammended Return">
         <a-radio-group v-model="form.amended_yn" :defaultValue="false" style="width: 100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -30,8 +24,6 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="3"
-        :validate-status="error_item('return_period')"
-        :help="error_desc('return_period')"
       >
         <a-input-number
           placeholder="Number of Sheets"
@@ -43,10 +35,10 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="4"
-        :validate-status="error_item('return_period')"
-        :help="error_desc('return_period')"
+        :validate-status="error_item('atc_code')"
+        :help="error_desc('atc_code')"
       >
-        <a-select v-model="form.atc">
+        <a-select v-model="form.atc_code" @change="changeATC">
           <a-select-option value="DS102">
             DS 102 Sales, Agreements to Sell, Memoranda of Sales, Deliveries or Transfer of
             Shares or Certificates of Stock with par value
@@ -63,8 +55,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="5"
-        :validate-status="error_item('return_period')"
-        :help="error_desc('return_period')"
+        :validate-status="error_item('taxpayer.tin')"
+        :help="error_desc('taxpayer.tin')"
       >
         <a-input placeholder="TIN" v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
@@ -73,6 +65,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="6"
+        :validate-status="error_item('taxpayer.rdo_code')"
+        :help="error_desc('taxpayer.rdo_code')"
       >
         <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
@@ -81,14 +75,18 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="7"
+        :validate-status="error_item('taxpayer.contact_details.telno')"
+        :help="error_desc('taxpayer.contact_details.telno')"
       >
-        <a-input placeholder="Telephone Number" v-model="form.taxpayer.contact_details.tel_no"></a-input>
+        <a-input placeholder="Telephone Number" v-model="form.taxpayer.contact_details.telno"></a-input>
       </a-form-item>
 
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="8"
+        :validate-status="error_item('taxpayer.registered_name')"
+        :help="error_desc('taxpayer.registered_name')"
       >
         <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
@@ -97,6 +95,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="9"
+        :validate-status="error_item('taxpayer.address')"
+        :help="error_desc('taxpayer.address')"
       >
         <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
       </a-form-item>
@@ -105,6 +105,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="10"
+        :validate-status="error_item('taxpayer.address_details.zipCode')"
+        :help="error_desc('taxpayer.address_details.zipCode')"
       >
         <a-input
           placeholder="Zip Code"
@@ -119,7 +121,10 @@
       <a-divider>Part II: Computation of Tax</a-divider>
       <a-form-item>
         <div style="color: black">11. Nature of transaction</div>
-        <a-form-item>
+        <a-form-item
+          :validate-status="error_item('natureOfTransaction')"
+          :help="error_desc('natureOfTransaction')"
+        >
           <a-radio-group v-model="form.natureOfTransaction" @change="changeNatureOfTrans">
             <a-radio
               value="real_property_capital"
@@ -220,7 +225,10 @@
           </a-row>
         </a-form-item>
         <div style="color: black">12A. Classification of Real Property</div>
-        <a-form-item>
+        <a-form-item
+          :validate-status="error_item('realPropertyClass')"
+          :help="error_desc('realPropertyClass')"
+        >
           <a-radio-group v-model="form.realPropertyClass">
             <a-radio :value="'R'">Residential</a-radio>
             <a-radio :value="'C'">Commercial</a-radio>
@@ -425,7 +433,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="15"
             >
-              <a-input disabled placeholder="Tax Rate " :value="getTaxRate()"></a-input>
+              <a-input disabled placeholder="Tax Rate " v-model="form.taxRate"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -439,7 +447,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="16"
             >
-              <a-input disabled :value="getTaxDue()" placeholder="Tax Due"></a-input>
+              <a-input disabled :value="getPrevTaxDue()" placeholder="Tax Due"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -456,7 +464,7 @@
               <a-input
                 disabled
                 placeholder="Less : Tax Paid in Return previously filed, if this is an amended return"
-                v-model="form.prevTaxPaid"
+                v-model="form.prev_tax_paid"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -473,7 +481,7 @@
             >
               <a-input
                 disabled
-                v-model="form.prev_tax_due"
+                :value="getTaxDue()"
                 placeholder="Tax Still Due/(Overpayment)"
               ></a-input>
             </a-form-item>
@@ -492,6 +500,8 @@
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="19A"
+              :validate-status="error_item('surcharge')"
+              :help="error_desc('surcharge')"
             >
               <a-input-number placeholder="Surcharge" v-model="form.surcharge"></a-input-number>
             </a-form-item>
@@ -501,6 +511,8 @@
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="19B"
+              :validate-status="error_item('interest')"
+              :help="error_desc('interest')"
             >
               <a-input-number placeholder="Interest" v-model="form.interest"></a-input-number>
             </a-form-item>
@@ -515,6 +527,8 @@
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="19C"
+              :validate-status="error_item('compromise')"
+              :help="error_desc('compromise')"
             >
               <a-input-number placeholder="Compromise" v-model="form.compromise"></a-input-number>
             </a-form-item>
@@ -559,7 +573,7 @@ export default {
   components: {
     ScheduleOne
   },
-  props: ["form", "step"],
+  props: ["form", "step", "errors"],
   data() {
     return {
       loading: false,
@@ -574,8 +588,7 @@ export default {
       form_layout: {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
-      },
-      errors: []
+      }
     };
   },
   computed: {},
@@ -585,10 +598,8 @@ export default {
     },
     form: {
       deep: true,
-      handler() {
-        // console.log("2000OT form: " + this.form.return_period);
-        // console.log("this.form.returnPeriodDay :", this.form.returnPeriodDay);
-        // console.log("year: " + this.form.month);
+      handler(val) {
+        console.log("form :", val);
       }
     },
     step() {}
@@ -596,12 +607,10 @@ export default {
   methods: {
     getTotalAmountPayable() {
       var total = this.computeSum([
-        this.form.realPropertyTaxBase,
-        this.form.sharesStockTaxBase,
+        this.form.penalties,
         this.form.tax_due
       ]);
       this.form.total_amount_payable = total;
-      console.log("TOTALAMTPYBLE :", this.form.total_amount_payable);
     },
     getPenalties() {
       var total = this.computeSum([
@@ -610,77 +619,58 @@ export default {
         this.form.compromise
       ]);
       this.form.penalties = total;
-      console.log("this.form.penalties :", this.form.penalties);
 
       return total;
+    },
+    getPrevTaxDue() {
+      var total = 0;
+      if (this.form.atc_code === "DS102") {
+        total =
+          ((this.form.realPropertyTaxBase ||
+            this.form.sharesStockTaxBase ||
+            0) /
+            200) *
+          1.5;
+      } else if (this.form.atc_code === "DS125") {
+        total =
+          (this.form.realPropertyTaxBase || this.form.sharesStockTaxBase || 0) /
+          2;
+      } else if (this.form.atc_code === "DS122") {
+        total =
+          ((this.form.realPropertyTaxBase ||
+            this.form.sharesStockTaxBase ||
+            0) /
+            1000) *
+          15;
+      }
+      this.form.prev_tax_due = total;
     },
     getTaxDue() {
-      var total = 0;
-      if (this.form.atc === "DS102") {
-        (this.form.realPropertyTaxBase / 200) * 1.5;
-      } else if (this.form.atc === "DS125") {
-        this.form.realPropertyTaxBase / 2;
-      } else {
-        (this.form.realPropertyTaxBase / 1000) * 15;
+      var total = this.form.prev_tax_due;
+      if (!this.form.prev_tax_paid) {
+        total = this.form.prev_tax_due - this.form.prev_tax_paid;
       }
-      console.log("#####TAXBASE :", this.form.realPropertyTaxBase);
       this.form.tax_due = total;
-      console.log("#####TOTAL :", total);
-      return total;
 
-      // var total = (this.form.realPropertyTaxBase / 200) * 1.5;
-      // this.form.tax_due = total;
-      // return total;
+      return total;
     },
+    // item 13
     getRealPropertyTaxBase() {
-      var a = this.form.sellingPrice;
-      var b = this.form.fairMarketValue;
-      console.log("a value: " + a);
-      console.log("b value: " + b);
-      if (
-        this.form.fairMarketValue == null ||
-        this.form.fairMarketValue == undefined
-      ) {
-        this.form.fairMarketValue = 0;
-      }
-      if (
-        this.form.sellingPrice == null ||
-        this.form.sellingPrice == undefined
-      ) {
-        this.form.sellingPrice = 0;
-      }
-      console.log("this.form.sellingPrice value: " + this.form.sellingPrice);
-      console.log(
-        "this.form.fairMarketValue  value: " + this.form.fairMarketValue
+      var max_value = Math.max(
+        this.form.sellingPrice || 0,
+        this.form.fairMarketValue || 0
       );
-      var total = Math.max(this.form.sellingPrice, this.form.fairMarketValue);
-      console.log("total :", total);
-      this.form.realPropertyTaxBase = total;
-      console.log("fair market value: " + this.form.fairMarketValue);
-      return total;
+      this.form.realPropertyTaxBase = max_value;
+      return max_value;
     },
+    // item 14
     getsharesStockTaxBase() {
-      var a = this.form.parValueShares;
-      var b = this.form.dstPaid;
-
-      if (
-        this.form.parValueShares == null ||
-        this.form.parValueShares == undefined
-      ) {
-        this.form.parValueShares = 0;
-      }
-      if (this.form.parValueShares == null || this.form.dstPaid == undefined) {
-        this.form.dstPaid = 0;
-      }
-      console.log(
-        "this.form.parValueShares value: " + this.form.parValueShares
+      var max_value = Math.max(
+        this.form.parValueShares || 0,
+        this.form.dstPaid || 0
       );
-      console.log(
-        "this.form.parValueShares  value: " + this.form.parValueShares
-      );
-      var total = Math.max(this.form.parValueShares, this.form.dstPaid);
-      this.form.sharesStockTaxBase = total;
-      return total;
+      this.form.sharesStockTaxBase = max_value;
+      return max_value;
     },
     changeNatureOfTrans() {
       if (
@@ -691,24 +681,41 @@ export default {
       } else if (this.form.natureOfTransaction === "shares_stock") {
         this.form.propertySold = "shares_stock";
       }
-      console.log("this.form.propertySold :", this.form.propertySold);
+      this.form.locationOfRealProp = "";
+      this.form.rdoRealProp = "";
+      this.form.realPropertyClass = "";
+      this.form.others = "";
+      this.form.areaOfProperty = "";
+      this.form.tctNo = "";
+      this.form.taxDecNo = "";
+      this.form.sellingPrice = 0;
+      this.form.fairMarketValue = 0;
+      this.form.stockname = "";
+      this.form.stockTin = "";
+      this.form.sharesSold = "";
+      this.form.stockCertNo = "";
+      this.form.parValueShares = 0;
+      this.form.dstPaid = 0;
+      this.form.schedule1 = {
+        commissionerLand: 0,
+        commissionerImprovement: 0,
+        commissionerTotal: 0,
+        provincialLand: 0,
+        provincialImprovement: 0,
+        provincialTotal: 0,
+        sum1A2B: 0,
+        sum1B2A: 0
+      };
     },
-    getTaxRate() {
-      var total = 0;
-      if (this.form.atc === "DS102") {
-        total = "P1.5/200";
-      } else if (this.form.atc === "DS125") {
-        total = "0.5";
-      } else {
-        total = "P15/1000";
+    changeATC(e) {
+      if (this.form.atc_code === "DS102") {
+        this.form.taxRate = "P1.5/200";
+      } else if (this.form.atc_code === "DS125") {
+        this.form.taxRate = "0.5";
+      } else if (this.form.atc_code === "DS122") {
+        this.form.taxRate = "P15/1000";
       }
-      console.log("####VALUE :", total);
-      console.log("form.atc :", this.form.atc);
-      this.form.taxRate = total;
-      // this.$emit("updateForm", null);
-      return total;
     },
-
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);

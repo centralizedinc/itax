@@ -12,11 +12,11 @@ var Form1601ESchema = new Schema({
         default: 0
     },
     // 16
-    tax_overrimittance:{
+    tax_overremittance:{
         type: Number,
         default: 0
     },
-    over_remittance: Boolean,
+    overremittance: Boolean,
     // 18
     total_amount_overremittance:{
         type: Number,
@@ -57,7 +57,7 @@ var Form1601ESchema = new Schema({
         type: Number,
         default: 0
     },
-    if_over_remittance: String,
+    if_overremittance: String,
     atc_list: [{
         nature_of_income: String,
         atc_code: {

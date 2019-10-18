@@ -82,4 +82,21 @@ router.route('/forms/:form/:ref_no')
         })
     })
 
+router.route("/activities")
+.post((req, res)=>{
+    model.find({reference_no:{$in:req.body}})
+    .then(model=>{
+        res.json({
+            success: true,
+            model
+        })
+    })
+    .catch(errors=>{
+        res.json({
+            success: false,
+            errors
+        })
+    })
+})
+
 module.exports = router;

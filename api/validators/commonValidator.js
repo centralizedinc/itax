@@ -180,6 +180,36 @@ function validateReturnPeriodByMonthYear(year, month, page) {
     return { errors, return_period };
 }
 
+/**
+ * @param {Object} reference 
+ * @param {Object} form 
+ */
+function validateReturnPeriod(reference, form) {
+    // Validation depends on period type
+    if(reference.period_type === 'o'){
+        if (!form.return_period) {
+            return { errors: [{ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') }] }
+        }
+    } else if (reference.period_type === 'm') {
+        if (!form.return_period_year || !form.return_period_month) {
+            return { errors: [{ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') }] }
+        }
+    } else if(reference.period_type === 'q'){
+        if (!form.return_period_year) {
+            errors.push({ page, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') });
+        }
+        form.accounting_type = 'c'
+        if (!form.return_period_year) {
+            errors.push({ page, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') });
+        }
+        if (!form.quarter) {
+            errors.push({ page, field: "quarter", error: constant_helper.MANDATORY_FIELD('Quarter') });
+        }
+    } else if(reference.period_type === 'a'){
+        
+    }
+}
+
 module.exports = {
     isFutureDate,
     validateTaxpayerDetails,
