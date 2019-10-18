@@ -55,12 +55,14 @@
                 </template>
                 <template slot="content">
                     <p>{{item.description}}</p>
-
-                    <a-row type="flex" align="middle" justify="center">
-                      <a-col :span="8">
-                          <pdf :src="item.url" style="width:100%"></pdf>
-                      </a-col>
-                    </a-row>
+                    <template v-if="getAttachments(item.reference_no)">
+                        <a-row>
+                          <a-col :span="8">
+                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom" @click="window.open(getAttachments(item.reference_no))" /> 
+                          </a-col>
+                        </a-row>
+                        
+                    </template>
                 </template>
                 <a-tooltip slot="datetime" >
                 <span>{{moment(item.created_date).fromNow()}}</span>
@@ -166,7 +168,8 @@ export default {
             loading:false,
             subscribers:[],
             data: [],
-            moment
+            moment, 
+            attachments:[]
         }
     },
     created(){
@@ -176,53 +179,27 @@ export default {
         init(){
             this.loading =true;
             this.$http.get(`/activities/${this.$store.state.account_session.user.tin}`)
-            .then(result=>{
-                
-                
+            .then(result=>{                                
                 this.data = result.data.model
                 this.loading=false;   
                 var ref_nos = this.data.map(a => a.reference_no);
-                this.$http.post(`/uploads/activities`, ref_nos)
-                .then(results=>{
-                    console.log('uploads ::: ', JSON.stringify(results))
-                })
-                .catch(errors =>{
-                    console.log('errors ::: ', JSON.stringify(errors))
-                })           
+                return this.$http.post(`/upload/activities`, ref_nos)
             })
+            .then(results=>{
+                this.attachments = results.data.model
+                // this.data = posts;
+            })      
             .catch(error=>{
                 console.log('ERROR ::::',error);
                 this.loading=false;
             })
+        },
+        getAttachments(ref_no){
+            return this.attachments.find(x=> x.reference_no === ref_no)?this.attachments.find(x=> x.reference_no === ref_no).url:''
+        },
+        view(url){
+            window.open(url)
         }
-        // this.$http
-        //     .get("https://randomuser.me/api/?results=6")
-        //     .then(results => {
-        //     this.loading =false;
-        //   console.log("::::", JSON.stringify(results));
-        //   const subscribers = results.data.results.map(v => {
-        //     var sub = {
-        //       name: v.name,
-        //       avatar: v.picture.thumbnail,
-        //       post: [
-        //         {
-        //           name: v.name,
-        //           avatar: v.picture.thumbnail,
-        //           date_created: new Date()
-        //         }
-        //       ]
-        //     };
-        //     return sub;
-        //   });
-        //   this.subscribers = subscribers;
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        //   this.loading = false;
-        //   // this.$notification.error({
-        //   // })
-        // });
-        // }
     }
 }
 </script>
