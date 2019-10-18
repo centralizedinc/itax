@@ -6,14 +6,26 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    quarter: String,
+    quarter: {
+        type: Number,
+        default: 0
+            /**
+             * 0, 1, 2
+             */
+    },
     months_reflected: [],
     /**
      * JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
      */
-    taxes_withheld: String,
-    line_of_business: String,
-    category_of_agent: String,
+    taxes_withheld: {
+        type: String
+    },
+    line_of_business: {
+        type: String
+    },
+    category_of_agent: {
+        type: String
+    },
     monetary_value: { type: Number, default: 0 },
     taxable_amount: { type: Number, default: 0 },
     compute_monetary_value: { type: Number, default: 0 },
@@ -21,20 +33,73 @@ const model_schema = {
     percentage_divisor: { type: Number, default: 0 },
     total_payments_made: { type: Number, default: 0 },
     other_payments_made: { type: Number, default: 0 },
-    refund_type: String,
-    atc_list: [] // WI 320, WI 330, WI 360
+    refund_type: {
+        type: String
+    },
+    atc_list: [], // WI 320, WI 330, WI 360
+    particular_cash: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_check: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_others: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
 };
 
-var Form1603Schema = new Schema({ ...common_model, ...model_schema });
+var Form1603Schema = new Schema({...common_model, ...model_schema });
 
-Form1603Schema.pre('save', function (callback) {
+Form1603Schema.pre('save', function(callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1603Schema.pre('findOneAndUpdate', function (callback) {
+Form1603Schema.pre('findOneAndUpdate', function(callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;

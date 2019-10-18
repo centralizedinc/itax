@@ -22,6 +22,9 @@ const model_schema = {
             // II013,
             // II016
     },
+    taxpayer_foreign_tax_number: {
+        type: String
+    },
     taxpayer_foreign_tax_credits: {
         type: Boolean
     },
@@ -52,6 +55,9 @@ const model_schema = {
     spouse_foreign_tax_credits: {
         type: Boolean,
         default: false
+    },
+    spouse_foreign_tax_number: {
+        type: String
     },
     spouse_tax_rate: {
         type: String
