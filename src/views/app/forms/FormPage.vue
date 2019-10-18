@@ -333,7 +333,7 @@ export default {
             title: "Part II",
             description: "Computation"
           }
-        ]
+        ],
       },
       default_steps: [
         {
