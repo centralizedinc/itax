@@ -76,7 +76,7 @@ function computeDueDate(returnPeriod) {
     var month = new Date(returnPeriod).getMonth() + 1;
 
     //every 20th of the next month
-    due_date.setDate(20);
+    due_date.setDate(10);
     due_date.setMonth(month);
 
     return due_date;
