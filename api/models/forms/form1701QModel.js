@@ -7,57 +7,62 @@ const common_model = require('./commonModels');
 
 const model_schema = {
     quarter: {
-        type: Number,
-        default: 0
-        /**
-         * 0, 1, 2
-         */
+        type: Number
+            /**
+             * 1, 2, 3, 4
+             */
     },
     taxpayer_atc_code: {
         type: String
-        // II012,
-        // II015,
-        // II014,
-        // II017,
-        // II013,
-        // II016
+            // II012,
+            // II015,
+            // II014,
+            // II017,
+            // II013,
+            // II016
     },
-    // -------------foreign tax number
+    taxpayer_foreign_tax_number: {
+        type: String
+    },
     taxpayer_foreign_tax_credits: {
         type: Boolean
+            // taxCredits
     },
     taxpayer_tax_rate: {
         type: String
-        // graduated_rates ,
-        //  non_operating_income
+            // graduated_rates ,
+            //  non_operating_income
     },
     taxpayer_method_deduction: {
         type: String
-        // itemized_deduction,
-        // optional_standard_deduction
+            // itemized_deduction,
+            // optional_standard_deduction
     },
     spouse_method_deduction: {
         type: String
-        // itemized_deduction,
-        // optional_standard_deduction
+            // itemized_deduction,
+            // optional_standard_deduction
     },
     spouse_atc_code: [{
         type: String
-        // II012,
-        // II015,
-        // II014,
-        // II013,
-        // II016,
-        // II011
+            // II012,
+            // II015,
+            // II014,
+            // II013,
+            // II016,
+            // II011
     }],
     spouse_foreign_tax_credits: {
         type: Boolean,
         default: false
     },
+    spouse_foreign_tax_number: {
+        type: String
+    },
     spouse_tax_rate: {
         type: String
-        // graduated_rates ,
-        //  non_operating_income
+            // graduated_rates ,
+            //  non_operating_income
     },
     taxpayer_prev_tax_due: {
         type: Number,
@@ -177,22 +182,22 @@ const model_schema = {
             total_sales_revenue: {
                 type: Number,
                 default: 0
-                // 36
+                    // 36
             },
             total_sales_services: {
                 type: Number,
                 default: 0
-                // 37
+                    // 37
             },
             gross_income: {
                 type: Number,
                 default: 0
-                // 38
+                    // 38
             },
             total_allowable_itemized_deductions: {
                 type: Number,
                 default: 0
-                // 39
+                    // 39
             },
             total_standard_deductions: {
                 type: Number,
@@ -201,22 +206,22 @@ const model_schema = {
             total_net_income: {
                 type: Number,
                 default: 0
-                // 41
+                    // 41
             },
             total_taxable_income: {
                 type: Number,
                 default: 0
-                // 42
+                    // 42
             },
             total_operation_income: {
                 type: Number,
                 default: 0
-                // 43
+                    // 43
             },
             amount_recieved_share: {
                 type: Number,
                 default: 0
-                // 44
+                    // 44
             },
             total_taxable_income_date: {
                 type: Number,
@@ -281,84 +286,84 @@ const model_schema = {
             total_sales_revenue: {
                 type: Number,
                 default: 0
-                // 47
+                    // 47
             },
             total_operation_income: {
                 type: Number,
                 default: 0
-                // 48
+                    // 48
             },
             total_income_quarter: {
                 type: Number,
                 default: 0
-                // 49
+                    // 49
             }, // (Sum of Items 47 and 48)
             previous_quarter_taxable_income: {
                 type: Number,
                 default: 0
-                // 50
+                    // 50
             },
             total_cumulative_income: {
                 type: Number,
                 default: 0
-                // 51
+                    // 51
             }, //(Sum of Items 49 and 50)
             less_allowable_reduction: {
                 type: Number,
                 default: 0
-                //52 
+                    //52 
             },
             total_taxable_income_date: {
                 type: Number,
                 default: 0
-                // 53
+                    // 53
             }, //(Item 51 Less Item 52)
             total_tax_due: {
                 type: Number,
                 default: 0
-                // 54
+                    // 54
             }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
         },
         spouse: {
             total_sales_revenue: {
                 type: Number,
                 default: 0
-                // 47
+                    // 47
             },
             total_operation_income: {
                 type: Number,
                 default: 0
-                // 48
+                    // 48
             },
             total_income_quarter: {
                 type: Number,
                 default: 0
-                // 49
+                    // 49
             }, // (Sum of Items 47 and 48)
             previous_quarter_taxable_income: {
                 type: Number,
                 default: 0
-                // 50
+                    // 50
             },
             total_cumulative_income: {
                 type: Number,
                 default: 0
-                // 51
+                    // 51
             }, //(Sum of Items 49 and 50)
             less_allowable_reduction: {
                 type: Number,
                 default: 0
-                //52 
+                    //52 
             },
             total_taxable_income_date: {
                 type: Number,
                 default: 0
-                // 53
+                    // 53
             }, //(Item 51 Less Item 52)
             total_tax_due: {
                 type: Number,
                 default: 0
-                // 54
+                    // 54
             }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
         }
     },
@@ -368,42 +373,42 @@ const model_schema = {
             year_excess_credits: {
                 type: Number,
                 default: 0
-                // 55
+                    // 55
             },
             payment_previous_quarter: {
                 type: Number,
                 default: 0
-                // 56
+                    // 56
             },
             creditable_tax_withheld: {
                 type: Number,
                 default: 0
-                // 57
+                    // 57
             },
             creditable_tax_withheld_per_bir: {
                 type: Number,
                 default: 0
-                // 58
+                    // 58
             },
             tax_paid_return: {
                 type: Number,
                 default: 0
-                // 59
+                    // 59
             },
             foriegn_tax_credits: {
                 type: Number,
                 default: 0
-                // 60
+                    // 60
             },
             other_tax_credit: {
                 type: Number,
                 default: 0
-                // 61
+                    // 61
             },
             total_tax_credit: {
                 type: Number,
                 default: 0
-                // 62
+                    // 62
             }, //Sum of Items 55 to 61/To Part III, Item 27
         },
         spouse: {
@@ -447,27 +452,27 @@ const model_schema = {
             surcharge: {
                 type: Number,
                 default: 0
-                // 64
+                    // 64
             },
             interest: {
                 type: Number,
                 default: 0
-                // 65
+                    // 65
             },
             compromise: {
                 type: Number,
                 default: 0
-                // 66
+                    // 66
             },
             penalties: {
                 type: Number,
                 default: 0
-                // 67
+                    // 67
             }, //(Sum of Items 64 to 66) (To Part III, Item 29)
             total_amount_payable: {
                 type: Number,
                 default: 0
-                // 68
+                    // 68
             }, //(Sum of Items 63 and 67) (To Part III, Item 30)
         },
         spouse: {
@@ -500,13 +505,13 @@ var Form1701QSchema = new Schema({
     ...model_schema
 });
 
-Form1701QSchema.pre('save', function (callback) {
+Form1701QSchema.pre('save', function(callback) {
     this.date_created = new Date();
     this.date_modified = new Date();
     callback();
 });
 
-Form1701QSchema.pre('findOneAndUpdate', function (callback) {
+Form1701QSchema.pre('findOneAndUpdate', function(callback) {
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();

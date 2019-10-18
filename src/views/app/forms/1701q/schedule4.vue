@@ -76,13 +76,12 @@
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 :value="spouse_penalties()"
-                x&#x60;
                 placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
               ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <!-- <a-row :gutter="16">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
@@ -90,8 +89,6 @@
               label="68."
             >
               <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Amount Payable/(Overpayment) (Sum of Items 63 and 67) (To Part III, Item 30)"
               />
             </a-form-item>
@@ -99,13 +96,11 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Amount Payable/(Overpayment) (Sum of Items 63 and 67) (To Part III, Item 30)"
               />
             </a-form-item>
           </a-col>
-        </a-row>
+        </a-row>-->
       </a-form>
       <div
         :style="{

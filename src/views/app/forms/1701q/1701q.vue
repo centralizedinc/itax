@@ -151,7 +151,7 @@
         :validate-status="error_item('taxpayer.taxCredits')"
         :help="error_desc('taxpayer.taxCredits')"
       >
-        <a-radio-group v-model="form.taxCredits">
+        <a-radio-group v-model="form.taxpayer_foreign_tax_credits">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -205,7 +205,7 @@
       </a-form-item>
       <a-form-item label="18. RDO Code">
         <a-input
-          v-model="form.spouse_details.spouse_rdo_code"
+          v-model="form.spouse_details.rdo_code"
           :disabled="form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
@@ -273,20 +273,20 @@
       <a-form-item label="21. Spouse’s Name:">
         <a-input
           placeholder="Last Name, First Name, Middle Name"
-          v-model="form.taxpayer.spouse_name"
+          v-model="form.spouse_details.registered_name"
           :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
       <a-form-item label="22. Citizenship ">
         <a-input
-          v-model="form.taxpayer.spouse_citizenship"
+          v-model="form.spouse_details.citizenship"
           :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
       <a-form-item label="23. Foreign Tax Number (if applicable)">
         <a-input-number
           style="width: 100%"
-          v-model="form.taxpayer.spouse_foreign_tax_no"
+          v-model="form.spouse_details.foreign_tax_no"
           :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
         ></a-input-number>
       </a-form-item>
@@ -342,6 +342,7 @@
           >
             <a-input-number
               disabled
+              style="width:100%"
               :value="total_tax_payable()"
               v-model="form.taxpayer_prev_tax_due"
               placeholder="Tax Due"
@@ -351,7 +352,12 @@
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="B) Spouse"></a-form-item>
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number v-model="form.spouse_prev_tax_due" placeholder="Tax Due" disabled></a-input-number>
+            <a-input-number
+              style="width:100%"
+              v-model="form.spouse_prev_tax_due"
+              placeholder="Tax Due"
+              disabled
+            ></a-input-number>
           </a-form-item>
         </a-col>
         <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
@@ -366,6 +372,7 @@
           >
             <a-input-number
               v-model="form.taxpayer_tax_credit"
+              style="width:100%"
               placeholder="Less: Tax Credits/Payments(From "
               disabled
             ></a-input-number>
@@ -375,6 +382,7 @@
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
               v-model="form.spouse_tax_credit"
+              style="width:100%"
               placeholder="Part V, Schedule III-Item 62)"
               disabled
             ></a-input-number>
@@ -390,6 +398,7 @@
             label="28."
           >
             <a-input-number
+              style="width:100%"
               :value="taxpayer_tax_due()"
               v-model="form.taxpayer_tax_due"
               placeholder="Tax Payable/(Overpayment)(Item "
@@ -400,6 +409,7 @@
         <a-col :span="12">
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
+              style="width:100%"
               :value="taxpayer_tax_due()"
               v-model="form.spouse_tax_due"
               placeholder="26 Less Item 27 From Part V,Item 63)"
@@ -416,6 +426,7 @@
             label="29."
           >
             <a-input-number
+              style="width:100%"
               v-model="form.taxpayer_total_penalties"
               placeholder="Add: Total Penalties (From Part V, "
               disabled
@@ -425,6 +436,7 @@
         <a-col :span="12">
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
+              style="width:100%"
               v-model="form.spouse_total_penalties"
               placeholder="Schedule IV-Item 67)"
               disabled
@@ -441,6 +453,7 @@
             label="30."
           >
             <a-input-number
+              style="width:100%"
               :value="taxpayer_total_amount_payable()"
               v-model="form.taxpayer_total_amount_payable"
               placeholder="Total Amount Payable/Overpayment"
@@ -451,6 +464,7 @@
         <a-col :span="12">
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
+              style="width:100%"
               :value="taxpayer_total_amount_payable()"
               v-model="form.spouse_total_amount_payable"
               placeholder="Sum of Items 28/29 From Part V,Item 68"
@@ -467,17 +481,9 @@
             label="31."
           >
             <a-input-number
+              style="width:100%"
               v-model="form.taxpayer_aggregate_amount_payable"
               placeholder="Aggregate Amount Payable/(Overpayment)"
-              disabled
-            ></a-input-number>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              v-model="form.item31b"
-              placeholder="(Sum of Items 30A and 30B)"
               disabled
             ></a-input-number>
           </a-form-item>
@@ -658,19 +664,28 @@ export default {
     taxpayer_tax_due() {
       // Item 26 Less Item 27
       this.form.taxpayer_tax_due =
-        this.form.taxpayer_prev_tax_due - this.form.taxpayer_tax_credit;
+        (this.form.taxpayer_prev_tax_due || 0) -
+        (this.form.taxpayer_tax_credit || 0);
       this.form.spouse_tax_due =
-        this.form.spouse_prev_tax_due - this.form.spouse_tax_credit;
+        (this.form.spouse_prev_tax_due || 0) -
+        (this.form.spouse_tax_credit || 0);
     },
     taxpayer_total_amount_payable() {
       // Sum of Items 28 and 29
-      this.form.taxpayer_total_amount_payable =
-        this.form.taxpayer_tax_due + this.form.taxpayer_total_penalties;
-      this.form.spouse_total_amount_payable =
-        this.form.spouse_tax_due + this.form.spouse_total_penalties;
-      this.form.taxpayer_aggregate_amount_payable =
-        this.form.taxpayer_total_amount_payable +
-        this.form.spouse_total_amount_payable;
+      this.form.taxpayer_total_amount_payable = this.computeSum([
+        this.form.taxpayer_tax_due,
+        this.form.taxpayer_total_penalties
+      ]);
+
+      this.form.spouse_total_amount_payable = this.computeSum([
+        this.form.spouse_tax_due,
+        this.form.spouse_total_penalties
+      ]);
+
+      this.form.taxpayer_aggregate_amount_payable = this.computeSum([
+        this.form.taxpayer_total_amount_payable,
+        this.form.spouse_total_amount_payable
+      ]);
     },
     item26b() {},
     save_draft() {},
