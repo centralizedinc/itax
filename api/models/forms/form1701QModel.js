@@ -7,10 +7,9 @@ const common_model = require('./commonModels');
 
 const model_schema = {
     quarter: {
-        type: Number,
-        default: 0
+        type: Number
             /**
-             * 0, 1, 2
+             * 1, 2, 3, 4
              */
     },
     taxpayer_atc_code: {
