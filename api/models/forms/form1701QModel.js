@@ -22,9 +22,11 @@ const model_schema = {
         // II013,
         // II016
     },
-    // -------------foreign tax number
+    // -------------foreign tax number missing
+
     taxpayer_foreign_tax_credits: {
         type: Boolean
+        // taxCredits
     },
     taxpayer_tax_rate: {
         type: String
@@ -50,6 +52,7 @@ const model_schema = {
         // II016,
         // II011
     }],
+    // ------------- spouse foreign tax number missing
     spouse_foreign_tax_credits: {
         type: Boolean,
         default: false

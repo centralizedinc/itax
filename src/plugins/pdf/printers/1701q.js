@@ -21,7 +21,8 @@ function fillup(details) {
         images: {
             form: form
         },
-        pageSize: 'LEGAL'
+        pageSize: 'LEGAL',
+        pages: 4
     };
 }
 /**
@@ -846,12 +847,6 @@ function getContent(forms) {
 
                         {
                             text: forms.item31a == null ? '0.00' : forms.item31a % 1 == 0 ? forms.item31a + '.00' : forms.item31a,
-                            fontSize: 13,
-                            margin: [0, -5, 0, 0],
-                            alignment: 'right'
-                        },
-                        {
-                            text: forms.item31b == null ? '0.00' : forms.item31ab % 1 == 0 ? forms.item31b + '.00' : forms.item31b,
                             fontSize: 13,
                             margin: [0, -5, 0, 0],
                             alignment: 'right'
