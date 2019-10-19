@@ -17,23 +17,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="47."
             >
-              <a-input
+              <a-input-number
                 v-model="form.sched2.taxpayer.total_sales_revenue"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Sales/Revenues/Receipts/Fees"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
                 v-model="form.sched2.spouse.total_sales_revenue"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Sales/Revenues/Receipts/Fees"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -44,22 +41,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="48."
             >
-              <a-input
+              <a-input-number
                 v-model="form.sched2.taxpayer.total_operation_income"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Add: Non-Operating Income (specify)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
                 v-model="form.sched2.spouse.total_operation_income"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Add: Non-Operating Income (specify)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -70,22 +65,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="49."
             >
-              <a-input
+              <a-input-number
                 :value="total_income_quarter()"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Total Income for the quarter (Sums of Items 47 and 48)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
+                style="width:100%"
                 :value="spouse_total_income_quarter()"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Total Income for the quarter (Sums of Items 47 and 48)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -96,22 +89,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="50."
             >
-              <a-input
+              <a-input-number
+                style="width:100%"
                 v-model="form.sched2.taxpayer.previous_quarter_taxable_income"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
+                style="width:100%"
                 v-model="form.sched2.spouse.previous_quarter_taxable_income"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -122,22 +113,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="51."
             >
-              <a-input
+              <a-input-number
+                style="width:100%"
                 :value="total_cumulative_income()"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                 placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
                 :value="spouse_total_cumulative_income()"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -148,22 +137,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="52."
             >
-              <a-input
+              <a-input-number
                 v-model="form.sched2.taxpayer.less_allowable_reduction"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Less: Allowable reduction from gross sales/reciepts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
                 v-model="form.sched2.spouse.less_allowable_reduction"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Less: Allowable reduction from gross sales/reciepts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -174,22 +161,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="53."
             >
-              <a-input
+              <a-input-number
                 :value="total_taxable_income_date()"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Taxable Income/(Loss) To Date (Item 51 Less Item 52)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
                 :value="spouse_total_taxable_income_date()"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="Taxable Income/(Loss) To Date (Item 51 Less Item 52)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -200,22 +185,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="54."
             >
-              <a-input
+              <a-input-number
                 v-model="form.sched2.taxpayer.total_tax_due"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="TAX DUE (Item 53 x 8% Tax Rate) (To Part III, Item 26)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
+              <a-input-number
                 v-model="form.sched2.spouse.total_tax_due"
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                style="width:100%"
                 placeholder="TAX DUE (Item 53 x 8% Tax Rate) (To Part III, Item 26)"
-              />
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>

@@ -155,25 +155,25 @@ function getContent(forms) {
                 body: [
                     [{
                             // text: 'X',
-                            text: forms.taxpayer.tax_filer_type == 'SP' ? 'X' : ' ',
+                            text: forms.taxpayer.filer_type == 'SP' ? 'X' : ' ',
                             fontSize: 12,
                             alignment: 'left',
                             margin: [88, -6, 0, 0]
                         },
                         {
-                            text: forms.taxpayer.tax_filer_type == 'PRO' ? 'X' : ' ',
+                            text: forms.taxpayer.filer_type == 'PRO' ? 'X' : ' ',
                             // text: 'X',
                             fontSize: 12,
                             alignment: 'justify',
                             margin: [7, -6, 0, 0]
                         }, {
-                            text: forms.taxpayer.tax_filer_type == 'EST' ? 'X' : ' ',
+                            text: forms.taxpayer.filer_type == 'EST' ? 'X' : ' ',
                             // text: 'X',
                             fontSize: 12,
                             alignment: 'justify',
                             margin: [72, -6, 0, 0]
                         }, {
-                            text: forms.taxpayer.tax_filer_type == 'TRU' ? 'X' : ' ',
+                            text: forms.taxpayer.filer_type == 'TRU' ? 'X' : ' ',
                             // text: 'X',
                             fontSize: 12,
                             alignment: 'justify',
@@ -464,19 +464,19 @@ function getContent(forms) {
                 body: [
                     [{
                             // text: 'Xxx',
-                            text: forms.taxpayer.spouse_tax_filer_type == 'SSP' ? 'X' : ' ',
+                            text: forms.spouse_details.filer_type == 'SSP' ? 'X' : ' ',
                             fontSize: 12,
                             alignment: 'left',
                             margin: [112, -6, 0, 0]
                         },
                         {
-                            text: forms.taxpayer.spouse_tax_filer_type == 'SPRO' ? 'X' : ' ',
+                            text: forms.spouse_details.filer_type == 'SPRO' ? 'X' : ' ',
                             // text: 'X',
                             fontSize: 12,
                             alignment: 'justify',
                             margin: [23, -6, 0, 0]
                         }, {
-                            text: forms.taxpayer.spouse_tax_filer_type == 'SCE' ? 'X' : ' ',
+                            text: forms.spouse_details.filer_type == 'SCE' ? 'X' : ' ',
                             // text: 'X',
                             fontSize: 12,
                             alignment: 'justify',

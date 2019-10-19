@@ -17,7 +17,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="64."
             >
-              <a-input-number v-model="form.sched4.taxpayer.surcharge" placeholder="Surcharge"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.taxpayer.surcharge"
+                style="width:100%"
+                placeholder="Surcharge"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -34,7 +38,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="65."
             >
-              <a-input-number v-model="form.sched4.taxpayer.interest" placeholder="Interest"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.taxpayer.interest"
+                style="width:100%"
+                placeholder="Interest"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -50,12 +58,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="66."
             >
-              <a-input-number v-model="form.sched4.taxpayer.compromise" placeholder="Compromise"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.taxpayer.compromise"
+                style="width:100%"
+                placeholder="Compromise"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number v-model="form.sched4.spouse.compromise" placeholder="Compromise"></a-input-number>
+              <a-input-number
+                style="width:100%"
+                v-model="form.sched4.spouse.compromise"
+                placeholder="Compromise"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -67,6 +83,7 @@
               label="67."
             >
               <a-input-number
+                style="width:100%"
                 :value="penalties()"
                 placeholder="Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)"
               ></a-input-number>
@@ -75,6 +92,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
+                style="width:100%"
                 :value="spouse_penalties()"
                 placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
               ></a-input-number>

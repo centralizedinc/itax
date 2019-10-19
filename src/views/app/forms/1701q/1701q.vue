@@ -62,7 +62,7 @@
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
       <a-form-item label="7. Tax Filer Type">
-        <a-radio-group v-model="form.taxpayer.tax_filer_type">
+        <a-radio-group v-model="form.taxpayer.filer_type">
           <a-radio :value="'SP'">Single Proprietor</a-radio>
           <a-radio :value="'PRO'">Professional</a-radio>
           <a-radio :value="'EST'">Estate</a-radio>
@@ -74,32 +74,32 @@
           <a-radio
             :value="'II012'"
             @change="form.taxpayer_tax_rate = 'GR'"
-            :disabled="form.taxpayer.tax_filer_type == 'PRO' || form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null"
+            :disabled="form.taxpayer.filer_type == 'PRO' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II012 Business Income-Graduated IT Rates</a-radio>
           <a-radio
             :value="'II015'"
             @change="form.taxpayer_tax_rate = 'GS'"
-            :disabled="form.taxpayer.tax_filer_type == 'PRO' || form.taxpayer.tax_filer_type == 'TRU' || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null"
+            :disabled="form.taxpayer.filer_type == 'PRO' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II015 Business Income - 8% IT Rate</a-radio>
           <a-radio
             :value="'II014'"
             @change="form.taxpayer_tax_rate = 'GR'"
-            :disabled="form.taxpayer.tax_filer_type == 'SP' || form.taxpayer.tax_filer_type == 'TRU' || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null"
+            :disabled="form.taxpayer.filer_type == 'SP' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II014 Income from Profession–Graduated IT Rates</a-radio>
           <a-radio
             :value="'II017'"
             @change="form.taxpayer_tax_rate = 'GS'"
-            :disabled="form.taxpayer.tax_filer_type == 'SP' ||form.taxpayer.tax_filer_type == 'TRU' || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null"
+            :disabled="form.taxpayer.filer_type == 'SP' ||form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II017 Income from Profession – 8% IT Rate</a-radio>
           <a-radio
             :value="'II013'"
             @change="form.taxpayer_tax_rate = 'GR'"
-            :disabled="form.taxpayer.tax_filer_type == 'TRU' || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null"
+            :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II013 Mixed Income–Graduated IT Rates</a-radio>
           <a-radio
             :value="'II016'"
             @change="form.taxpayer_tax_rate = 'GS'"
-            :disabled="form.taxpayer.tax_filer_type == 'TRU' || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null"
+            :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II016 Mixed Income – 8% IT Rate</a-radio>
         </a-radio-group>
       </a-form-item>
@@ -144,7 +144,7 @@
         <a-input style="width: 100%" v-model="form.taxpayer.citizenship"></a-input>
       </a-form-item>
       <a-form-item label="14. Foreign Tax Number (if applicable)">
-        <a-input-number style="width: 100%" v-model="form.taxpayer.foreign_tax_no"></a-input-number>
+        <a-input-number style="width: 100%" v-model="form.taxpayer_foreign_tax_number"></a-input-number>
       </a-form-item>
       <a-form-item
         label="15. Claiming Foreign Tax Credits?"
@@ -195,7 +195,7 @@
       </a-divider>
       <a-form-item label="17. Spouse’s TIN">
         <a-input-number
-          :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
           style="width:100%"
           placeholder="Tax Identification Number"
           v-model="form.spouse_details.tin"
@@ -206,24 +206,24 @@
       <a-form-item label="18. RDO Code">
         <a-input
           v-model="form.spouse_details.rdo_code"
-          :disabled="form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
       <a-form-item label="19. Filer’s Spouse Type">
         <a-checkbox
           @change="spouse_type"
           v-model="single"
-          :disabled="form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >Single Proprietor</a-checkbox>
         <a-checkbox
           @change="spouse_type"
           v-model="pro"
-          :disabled="form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >Professional</a-checkbox>
         <a-checkbox
           @change="spouse_type"
           v-model="pensation"
-          :disabled="form.taxpayer.tax_filer_type == '' || form.taxpayer.tax_filer_type == null || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >Compensation Earner</a-checkbox>
         <!-- <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
           <a-radio :value="'SSP'">Single Proprietor</a-radio>
@@ -274,26 +274,26 @@
         <a-input
           placeholder="Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
-          :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
       <a-form-item label="22. Citizenship ">
         <a-input
           v-model="form.spouse_details.citizenship"
-          :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
       <a-form-item label="23. Foreign Tax Number (if applicable)">
         <a-input-number
           style="width: 100%"
-          v-model="form.spouse_details.foreign_tax_no"
-          :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          v-model="form.spouse_foreign_tax_number"
+          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         ></a-input-number>
       </a-form-item>
       <a-form-item label="24. Claiming Foreign Tax Credits?">
         <a-radio-group
           v-model="form.spouse_foreign_tax_credits"
-          :disabled="form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -316,7 +316,7 @@
       <a-form-item label="25A. Method of Deduction:">
         <a-radio-group
           v-model="form.spouse_method_deduction"
-          :disabled="form.spouse_tax_rate ='SGR' || form.taxpayer.tax_filer_type == 'EST' || form.taxpayer.tax_filer_type == 'TRU'"
+          :disabled="form.spouse_tax_rate ='SGR' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >
           <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
           <a-radio
