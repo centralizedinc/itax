@@ -6,8 +6,8 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    opn_yn: {
-        type: String
+    taxes_withheld: {
+        type: Boolean
     },
     category_of_agent: {
         type: String
