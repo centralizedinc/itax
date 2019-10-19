@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
 
+    reference_no:String,
     created_date: {
         type: Date,
         default: new Date()
@@ -20,7 +21,12 @@ const schema = new mongoose.Schema({
      */
     activity:String,
     description:String,
-    attachments:[],
+    attachments:[
+        {
+            file_type:String,
+            url: String
+        }
+    ],
     subscribers:[]
 });
 

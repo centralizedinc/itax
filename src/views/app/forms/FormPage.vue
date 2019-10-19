@@ -211,7 +211,11 @@ export default {
           contact_details: {},
           address_details: {}
         },
-        sched1: []
+        spouse_details: {},
+        sched1: { taxpayer: {}, spouse: {} },
+        sched2: { taxpayer: {}, spouse: {} },
+        sched3: { taxpayer: {}, spouse: {} },
+        sched4: { taxpayer: {}, spouse: {} }
       },
       curr_step: 0,
       steps: {
@@ -443,7 +447,7 @@ export default {
             console.log("this.errors :", this.errors);
             if (this.errors && this.errors.length) {
               var errors = this.errors.sort((a, b) => a.page - b.page);
-            console.log("this.errors :", errors);
+              console.log("this.errors :", errors);
               this.curr_step = errors[0].page;
             }
             this.$notification.error({ message: "Validation Error" });
