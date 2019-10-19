@@ -24,11 +24,11 @@ const activity = require('../services/actvities_service')
  * @param {Object} form_details 
  */
 function save(form_type, form_details) {
+    console.log('Saving form ...');
     return new Promise((resolve, reject) => {
-        console.log('test');
         saveForm(form_type, form_details)
             .then((result) => {
-                console.log('result :', result);
+                console.log(`result is saving form(${form_type}):`, result);
                 const model = {
                     reference_no: result.reference_no,
                     tin: result.taxpayer.tin,
@@ -45,6 +45,7 @@ function save(form_type, form_details) {
                 return ReturnDetailsDao.create(model);
             })
             .then((result) => {
+                console.log(`Return Details(${form_type}) :`, result);
                 activity.file(result.tin, result)
                 resolve(result)
             })

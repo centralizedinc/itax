@@ -42,57 +42,55 @@ function getContent(forms) {
                 heights: [70],
                 body: [
                     [{
-                            // text: '2019',
-                            text: formatDate(forms.return_period_year, {
-                                year: "numeric"
-                            }),
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [62, 47, 0, 0]
-                        },
-                        {
-                            text: forms.quarter == 1 ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [46, 47, 0, 0]
-                        },
-                        {
-                            text: forms.quarter == 2 ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [28, 45, 0, 0]
-                        },
-                        {
-                            text: forms.quarter == 3 ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [11, 45, 0, 0]
-                        },
-                        {
-                            text: forms.amended_yn == true ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [62, 46, 0, 0]
-                        },
-                        {
-                            text: forms.amended_yn == false ? 'X' : ' ',
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [32, 46, 0, 0]
-                        },
-                        {
-                            text: forms.num_of_sheet,
-                            fontSize: 12,
-                            // right,down,left,up
-                            alignment: 'justify',
-                            margin: [60, 46, 0, 0]
-                        }
+                        // text: '2019',
+                        text: checkField(forms.return_period_year),
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [62, 47, 0, 0]
+                    },
+                    {
+                        text: forms.quarter == 1 ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [46, 47, 0, 0]
+                    },
+                    {
+                        text: forms.quarter == 2 ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [28, 45, 0, 0]
+                    },
+                    {
+                        text: forms.quarter == 3 ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [11, 45, 0, 0]
+                    },
+                    {
+                        text: forms.amended_yn == true ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [62, 46, 0, 0]
+                    },
+                    {
+                        text: forms.amended_yn == false ? 'X' : ' ',
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [32, 46, 0, 0]
+                    },
+                    {
+                        text: forms.num_of_sheet,
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'justify',
+                        margin: [60, 46, 0, 0]
+                    }
                     ],
                 ]
             }
@@ -883,6 +881,11 @@ function formatDate(date, type) {
 function mapTin(tin, from, to) {
     if (!tin || from === null || to === null) return "";
     return tin.substring(from, to);
+}
+
+function checkField(field) {
+    if (!field) return " ";
+    else return field;
 }
 
 export default {

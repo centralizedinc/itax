@@ -6,12 +6,6 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    quarter: {
-        type: Number
-            /**
-             * 1, 2, 3, 4
-             */
-    },
     taxpayer_atc_code: {
         type: String
             // II012,
