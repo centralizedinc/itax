@@ -194,8 +194,11 @@ class CommonValidator {
         } else if (reference.period_type === 'q') {
             var errors = [];
             form.accounting_type = reference.is_calendar ? 'c' : form.accounting_type;
-            if (!form.return_period_year) {
-                errors.push({ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') });
+            if (!form.accounting_type) {
+                errors.push({ page: 0, field: "accounting_type", error: constant_helper.MANDATORY_FIELD('Please select if Calendar or Fiscal') });
+            }
+            if (!form.return_period_year || (!form.start_month && !form.end_month)) {
+                errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('For the year') });
             }
             if (!form.quarter) {
                 errors.push({ page: 0, field: "quarter", error: constant_helper.MANDATORY_FIELD('Quarter') });
