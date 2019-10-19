@@ -11,7 +11,13 @@ var taxpayerDetailsSchema = new Schema({
   line_of_business: String,
   taxpayer_type: String,
   start_month: Number,
-  accounting_type: String,
+  accounting_type: {
+    type: String
+    /**
+     * c - calendar
+     * f - fiscal
+     */
+  },
   filer_type: {
     type: String
     // single_proprietor,

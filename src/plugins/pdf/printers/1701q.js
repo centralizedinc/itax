@@ -42,7 +42,7 @@ function getContent(forms) {
                 body: [
                     [{
                         // text: '2019',
-                        text: formatDate(forms.return_period_year, { year: "numeric" }),
+                        text: checkField(forms.return_period_year),
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -873,6 +873,11 @@ function formatDate(date, type) {
 function mapTin(tin, from, to) {
     if (!tin || from === null || to === null) return "";
     return tin.substring(from, to);
+}
+
+function checkField(field) {
+    if (!field) return " ";
+    else return field;
 }
 
 export default {

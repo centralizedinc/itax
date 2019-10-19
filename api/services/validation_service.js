@@ -23,7 +23,6 @@ const form1601fqValidator = require('../validators/form1601fqValidator')
  */
 function validate(form_type, form_details) {
     console.log('Validation... :', form_type);
-    console.log('Form details... :', form_details);
     switch (form_type.toUpperCase()) {
         case "2550M":
             return form2550mValidator.validate(form_details);
