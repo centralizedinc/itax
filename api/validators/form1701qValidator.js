@@ -12,14 +12,6 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    // const validated_return = commonValidator.validateReturnPeriodByQuarter(form_details.return_period_year, form_details.quarter, 0);
-    // if (validated_return.errors && validated_return.errors.length) return { errors: validated_return.errors };
-    // else form_details.return_period = validated_return.return_period;
-    // console.log('form 1701q return period :', form_details.return_period);
-
-    // form_details.due_date = computeDueDate(form_details.return_period)
-    // console.log('form_details.due_date :', form_details.due_date);
-
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1))
     console.log('done validating taxpayer');
@@ -28,7 +20,7 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
     console.log('done validating required fields');
 
-    // LATE FILING
+    // check due date if late filing
     var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
     errors.push(...error_messages);
     console.log('done checking due date');

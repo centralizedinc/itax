@@ -220,7 +220,7 @@ class CommonValidator {
             form.return_period = new Date(form.return_period_year, form.end_month + (form.quarter * 3) + 1, 0);
         } else if (reference.period_type === 'a') {
             if (!form.return_period_year) {
-                errors.push({ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') });
+                return { errors: [{ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') }] };
             }
             form.return_period = new Date(form.return_period_year, 12, 0);
         } else if (!form.return_period) {
