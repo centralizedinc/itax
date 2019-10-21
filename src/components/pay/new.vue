@@ -341,6 +341,7 @@ export default {
         .dispatch(action, payments)
         .then(result => {
           console.log("result.data.model :", result.data.model);
+          this.printReceipt(result.data.model)
           this.loading_payments = false;
           this.init()
           this.$notification.success({            
@@ -353,6 +354,31 @@ export default {
           console.log("PAYMENT err :", err);
           this.loading_payments = false;
         });
+    },
+    printReceipt(details){
+      console.log('PRINTING RECEIPT :::: ', JSON.stringify(details))
+      var document = printer.fillup({})
+      pdfMake.createPdf(document).getBuffer(buffer => {
+        var file = new Blob([buffer], { type: "application/pdf" });
+
+        var data = new FormData();
+        data.append("tax_returns", file);
+        data.append("content-type", "application/pdf");
+
+        this.$store
+          .dispatch("UPLOAD_TAX_RETURNS", {
+            form: 'e-receipt',
+            ref_no: details.payments.payment_conf_no,
+            form_data: data
+          })
+          .then(result => {
+            console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
+          })
+          .catch(err => {
+            console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
+          });
+
+      })
     },
     reset(){
       this.record = {};
@@ -387,30 +413,7 @@ export default {
       }
       return total;
     },
-    printReceipt(){
-      var document = printer.fillup({})
-      pdfMake.createPdf(document).getBuffer(buffer => {
-        var file = new Blob([buffer], { type: "application/pdf" });
-
-        var data = new FormData();
-        data.append("tax_returns", file);
-        data.append("content-type", "application/pdf");
-
-        this.$store
-          .dispatch("UPLOAD_TAX_RETURNS", {
-            form: this.form_type,
-            ref_no: return_details.reference_no,
-            form_data: data
-          })
-          .then(result => {
-            console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
-          })
-          .catch(err => {
-            console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
-          });
-
-      })
-    }
+    
   }
 };
 </script>

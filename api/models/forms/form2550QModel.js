@@ -24,6 +24,48 @@ const model_schema = {
     year_ended_year: {
         type: Date
     },
+    short_period_return: {
+        type: Boolean
+    },
+    line_of_business: { 
+        type: String
+    },
+    exclusive_of_vat:[{
+        vatabale_sales:{
+            type: Number,
+            default: 0
+        }, // item15A / Sched. 1
+        sale_to_government:{
+            type: Number,
+            default: 0
+        }, //item16A
+        zero_rated_sales:{
+            type: Number,
+            default: 0
+        }, //item17
+        exempt_sales:{
+            type: Number,
+            default: 0
+        }, //item18
+        total_tax_due:{
+            type: Number,
+            default: 0
+        }, //item19A
+    }],
+    output_tax_due:[{
+        vatabale_sales:{
+            type: Number,
+            default: 0
+        }, // item15B
+        sale_to_government:{
+            type: Number,
+            default: 0
+        }, //item16B
+        total_tax_due:{
+            type: Number,
+            default: 0
+        }, //item19B
+    }],
     refund_type: {
         type: String
     },
@@ -148,11 +190,7 @@ const options = {
 const plugin = new autoIncrement(Form2550qSchema, '2550q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
+plugin.applyPlugin().catch(e => {
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });

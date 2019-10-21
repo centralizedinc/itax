@@ -48,6 +48,8 @@ function validate(form_type, form_details) {
             return form1600wpValidator.validate(form_details);
         case "1604E":
             return form1604eValidator.validate(form_details);
+        case "2550Q":
+            return form2550qValidator.validate(form_details);
         case "1601FQ":
             return form1601fqValidator.validate(form_details);
         case "2551M":

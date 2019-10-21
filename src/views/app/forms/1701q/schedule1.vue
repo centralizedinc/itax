@@ -3,8 +3,8 @@
     <a-drawer
       title="Schedule I – For Graduated IT Rate"
       :visible="visible"
-      @cancel="$emit('close')"
-      @ok="handleOk"
+      :closable="false"
+      @close="onClose"
       :width="720"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
@@ -78,6 +78,7 @@
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 disabled
+                style="width:100%"
                 :value="spouse_gross_income()"
                 placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
               ></a-input-number>
@@ -101,6 +102,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
+                style="width:100%"
                 v-model="form.sched1.spouse.total_allowable_itemized_deductions"
                 placeholder="Total Allowable Itemized Deductions "
               ></a-input-number>
@@ -290,8 +292,8 @@
           textAlign: 'right',
         }"
       >
-        <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
-        <a-button @click="handleOk" type="primary">Submit</a-button>
+        <!-- <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
+        <a-button @click="handleOk" type="primary">Submit</a-button>-->
       </div>
     </a-drawer>
   </div>
@@ -332,6 +334,9 @@ export default {
   methods: {
     showModal() {
       this.visible = true;
+    },
+    onClose() {
+      this.visible = false;
     },
     handleOk(e) {
       console.log(e);
@@ -434,6 +439,9 @@ export default {
       );
       this.form.sched1.taxpayer.total_tax_due = total46;
       this.form.taxpayer_prev_tax_due = this.form.sched1.taxpayer.total_tax_due;
+      console.log(
+        "taxpayer_prev_tax_due data: " + this.form.taxpayer_prev_tax_due
+      );
       return total;
     },
     spouse_total_taxable_income_date() {
