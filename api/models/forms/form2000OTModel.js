@@ -92,11 +92,7 @@ const options = {
 };
 
 const plugin = new autoIncrement(Form2000OTSchema, '2000ot_forms', options);
-plugin.applyPlugin()
-  .then(() => {
-    console.log("############### init plugin")
-  })
-  .catch(e => {
+plugin.applyPlugin().catch(e => {
     // Plugin failed to initialise
     console.log("############### init failed: " + e);
   });

@@ -6,12 +6,6 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    quarter: {
-        type: Number
-            /**
-             * 1, 2, 3, 4
-             */
-    },
     taxpayer_atc_code: {
         type: String
             // II012,
@@ -530,11 +524,7 @@ const options = {
 const plugin = new autoIncrement(Form1701QSchema, '1701q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
+plugin.applyPlugin().catch(e => {
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });

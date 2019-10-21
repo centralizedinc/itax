@@ -208,7 +208,7 @@
         </a-form-item>
       </a-form-item>
 
-      <a-form-item v-show="form.propertySold=='real_property'">
+      <a-form-item v-if="form.propertySold=='real_property'">
         <a-form-item>
           <a-row :gutter="12">
             <a-col :span="12">
@@ -312,10 +312,7 @@
           </a-form-item>
         </a-form-item>
       </a-form-item>
-
-      <br />
-
-      <a-form-item v-show="form.propertySold=='shares_stock'">
+      <a-form-item v-else-if="form.propertySold=='shares_stock'">
         <a-row :gutter="12">
           <a-col :span="24">
             <a-form-item
@@ -479,11 +476,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="18"
             >
-              <a-input
-                disabled
-                :value="getTaxDue()"
-                placeholder="Tax Still Due/(Overpayment)"
-              ></a-input>
+              <a-input disabled :value="getTaxDue()" placeholder="Tax Still Due/(Overpayment)"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -591,7 +584,35 @@ export default {
       }
     };
   },
-  computed: {},
+  // created() {
+  //   this.$emit("updateForm", {
+  //     locationOfRealProp: "",
+  //     rdoRealProp: "",
+  //     realPropertyClass: "",
+  //     others: "",
+  //     areaOfProperty: "",
+  //     tctNo: "",
+  //     taxDecNo: "",
+  //     sellingPrice: 0,
+  //     fairMarketValue: 0,
+  //     stockname: "",
+  //     stockTin: "",
+  //     sharesSold: "",
+  //     stockCertNo: "",
+  //     parValueShares: 0,
+  //     dstPaid: 0,
+  //     schedule1: {
+  //       commissionerLand: 0,
+  //       commissionerImprovement: 0,
+  //       commissionerTotal: 0,
+  //       provincialLand: 0,
+  //       provincialImprovement: 0,
+  //       provincialTotal: 0,
+  //       sum1A2B: 0,
+  //       sum1B2A: 0
+  //     }
+  //   });
+  // },
   watch: {
     loading(val) {
       this.$emit("loading", val);
@@ -601,15 +622,11 @@ export default {
       handler(val) {
         console.log("form :", val);
       }
-    },
-    step() {}
+    }
   },
   methods: {
     getTotalAmountPayable() {
-      var total = this.computeSum([
-        this.form.penalties,
-        this.form.tax_due
-      ]);
+      var total = this.computeSum([this.form.penalties, this.form.tax_due]);
       this.form.total_amount_payable = total;
     },
     getPenalties() {
@@ -678,34 +695,40 @@ export default {
         this.form.natureOfTransaction === "real_property_capital"
       ) {
         this.form.propertySold = "real_property";
+        // Clear shares stock fields
+        this.$emit("updateForm", {
+          stockname: "",
+          stockTin: "",
+          sharesSold: "",
+          stockCertNo: "",
+          parValueShares: 0,
+          dstPaid: 0
+        });
       } else if (this.form.natureOfTransaction === "shares_stock") {
         this.form.propertySold = "shares_stock";
+        // Clear real property fields
+        this.$emit("updateForm", {
+          locationOfRealProp: "",
+          rdoRealProp: "",
+          realPropertyClass: "",
+          others: "",
+          areaOfProperty: "",
+          tctNo: "",
+          taxDecNo: "",
+          sellingPrice: 0,
+          fairMarketValue: 0,
+          schedule1: {
+            commissionerLand: 0,
+            commissionerImprovement: 0,
+            commissionerTotal: 0,
+            provincialLand: 0,
+            provincialImprovement: 0,
+            provincialTotal: 0,
+            sum1A2B: 0,
+            sum1B2A: 0
+          }
+        });
       }
-      this.form.locationOfRealProp = "";
-      this.form.rdoRealProp = "";
-      this.form.realPropertyClass = "";
-      this.form.others = "";
-      this.form.areaOfProperty = "";
-      this.form.tctNo = "";
-      this.form.taxDecNo = "";
-      this.form.sellingPrice = 0;
-      this.form.fairMarketValue = 0;
-      this.form.stockname = "";
-      this.form.stockTin = "";
-      this.form.sharesSold = "";
-      this.form.stockCertNo = "";
-      this.form.parValueShares = 0;
-      this.form.dstPaid = 0;
-      this.form.schedule1 = {
-        commissionerLand: 0,
-        commissionerImprovement: 0,
-        commissionerTotal: 0,
-        provincialLand: 0,
-        provincialImprovement: 0,
-        provincialTotal: 0,
-        sum1A2B: 0,
-        sum1B2A: 0
-      };
     },
     changeATC(e) {
       if (this.form.atc_code === "DS102") {

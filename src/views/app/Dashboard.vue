@@ -51,14 +51,33 @@
                 :avatar="item.created_by.avatar.location"
             >
                 <template slot="actions">
-                <span v-for="action in item.actions" :key="action">{{action}}</span>
+                     <span>
+                        <a-tooltip title="Like">
+                        <a-icon type="like" :theme="action === 'liked' ? 'filled' : 'outlined'" @click="like" />
+                        </a-tooltip>
+                        <span style="padding-left: '8px';cursor: 'auto'">
+                        {{90}}
+                        </span>
+                    </span>
+                    <span>
+                        <a-tooltip title="Dislike">
+                        <a-icon
+                            type="dislike"
+                            :theme="action === 'disliked' ? 'filled' : 'outlined'"
+                            @click="dislike"
+                        />
+                        </a-tooltip>
+                        <span style="padding-left: '8px';cursor: 'auto'">
+                        {{5}}
+                        </span>
+                    </span>
                 </template>
                 <template slot="content">
                     <p>{{item.description}}</p>
                     <template v-if="getAttachments(item.reference_no)">
                         <a-row>
                           <a-col :span="8">
-                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom" @click="window.open(getAttachments(item.reference_no))" /> 
+                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom; border: 1px solid" @click="window.open(getAttachments(item.reference_no))" /> 
                           </a-col>
                         </a-row>
                         

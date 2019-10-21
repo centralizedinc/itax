@@ -4,17 +4,17 @@
 const form1601eValidator = require('../validators/form1601eValidator.js');
 const form2551qValidator = require('../validators/form2551qValidator.js');
 const form2000OTValidator = require('../validators/form2000otValidator');
-const form1700Validator = require('../validators/form1700Validator.js')
-const form1701qValidator = require('../validators/form1701qValidator.js')
+const form1700Validator = require('../validators/form1700Validator.js');
+const form1701qValidator = require('../validators/form1701qValidator.js');
 const form2550mValidator = require('../validators/form2550mValidator');
 const form1601fValidator = require('../validators/form1601fValidator.js');
 const form1601cValidator = require('../validators/form1601cValidator');
-// const form1700Validator = require('../validators/form1700Validator.js');
-const form1603Validator = require('../validators/form1603Validator')
-const form1606Validator = require('../validators/form1606Validator')
-const form1600wpValidator = require('../validators/form1600wpValidator')
-const form1604eValidator = require('../validators/form1604eValidator')
-const form1601fqValidator = require('../validators/form1601fqValidator')
+const form1603Validator = require('../validators/form1603Validator');
+const form1606Validator = require('../validators/form1606Validator');
+const form1600wpValidator = require('../validators/form1600wpValidator');
+const form1604eValidator = require('../validators/form1604eValidator');
+const form1601fqValidator = require('../validators/form1601fqValidator');
+const form2551mValidator = require('../validators/form2551mValidator');
 
 /**
  * 
@@ -23,7 +23,6 @@ const form1601fqValidator = require('../validators/form1601fqValidator')
  */
 function validate(form_type, form_details) {
     console.log('Validation... :', form_type);
-    console.log('Form details... :', form_details);
     switch (form_type.toUpperCase()) {
         case "2550M":
             return form2550mValidator.validate(form_details);
@@ -51,6 +50,8 @@ function validate(form_type, form_details) {
             return form1604eValidator.validate(form_details);
         case "1601FQ":
             return form1601fqValidator.validate(form_details);
+        case "2551M":
+            return form2551mValidator.validate(form_details);
     }
 }
 
