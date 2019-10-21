@@ -21,14 +21,15 @@ const model_schema = {
     year_ended_year: {
         type: Date
     },
-    sched1_tax_due: { type: Number, default: 0 }, //From Schedule 1 Item 7
-    tax_withheld: { type: Number, default: 0 },
-    prev_tax_paid: { type: Number, default: 0 },
-    total_credits: { type: Number, default: 0 }, // Sum of Items 15 to 17
+    sched1_tax_due: { type: Number, default: 0 }, //item14 From Schedule 1 Item 7
+    tax_withheld: { type: Number, default: 0 }, //item15
+    prev_tax_paid: { type: Number, default: 0 }, //item16
+    other_tax_credits: { type: Number, default: 0 }, //item17
+    total_tax_credits: { type: Number, default: 0 }, //item18 Sum of Items 15 to 17
     refund_type: {
         type: String
     },
-    particular_cash: [{
+    particular_cash: [{ //item25
         drawee_bank: {
             type: Number,
             default: 0
@@ -45,7 +46,7 @@ const model_schema = {
             default: 0
         }
     }],
-    particular_check: [{
+    particular_check: [{ //item26
         drawee_bank: {
             type: Number,
             default: 0
@@ -62,7 +63,7 @@ const model_schema = {
             default: 0
         }
     }],
-    particular_tax_debit: [{
+    particular_tax_debit: [{ //item27
         drawee_bank: {
             type: Number,
             default: 0
@@ -79,7 +80,7 @@ const model_schema = {
             default: 0
         }
     }],
-    particular_others: [{
+    particular_others: [{ //item28
         drawee_bank: {
             type: Number,
             default: 0
@@ -96,6 +97,7 @@ const model_schema = {
             default: 0
         }
     }],
+    //Computation of tax
     sched1: [{
         taxable_transaction: { type: Number, default: 0 },
         atc_code: String,
@@ -134,9 +136,9 @@ const options = {
 
 const plugin = new autoIncrement(Form2551qSchema, '2551q_forms', options);
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 
 module.exports = mongoose.model('2551q_forms', Form2551qSchema);
