@@ -15,23 +15,15 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="36."
+              label="64."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Sales/Revenues/Receipts/Fees"
-              />
+              <a-input-number v-model="form.sched4.taxpayer.surcharge" placeholder="Surcharge"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Sales/Revenues/Receipts/Fees"
-              />
+              <a-input-number v-model="form.sched4.spouse.surcharge" placeholder="Surcharge"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -40,22 +32,14 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="37."
+              label="65."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Less: Cost of Sales/Services"
-              />
+              <a-input-number v-model="form.sched4.taxpayer.interest" placeholder="Interest"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Less: Cost of Sales/Services"
-              />
+              <a-input-number v-model="form.sched4.spouse.interest" placeholder="Interest"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -64,22 +48,14 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="38."
+              label="66."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
-              />
+              <a-input-number v-model="form.sched4.taxpayer.compromise" placeholder="Compromise"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
-              />
+              <a-input-number v-model="form.sched4.spouse.compromise" placeholder="Compromise"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -88,193 +64,43 @@
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="39."
+              label="67."
             >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Allowable Itemized Deductions "
-              />
+              <a-input-number
+                :value="penalties()"
+                placeholder="Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Allowable Itemized Deductions "
-              />
+              <a-input-number
+                :value="spouse_penalties()"
+                placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <!-- <a-row :gutter="16">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
-              label="40."
+              label="68."
             >
               <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                placeholder="Total Amount Payable/(Overpayment) (Sum of Items 63 and 67) (To Part III, Item 30)"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                placeholder="Total Amount Payable/(Overpayment) (Sum of Items 63 and 67) (To Part III, Item 30)"
               />
             </a-form-item>
           </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="41."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="42."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="43."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Non-Operating Income (specify) "
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Non-Operating Income (specify) "
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="44."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="45."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="46."
-            >
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input
-                :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        </a-row>-->
       </a-form>
       <div
         :style="{
@@ -296,7 +122,7 @@
 </template>
 <script>
 export default {
-  props: ["show"],
+  props: ["form", "show"],
   data() {
     return {
       visible: true,
@@ -314,7 +140,7 @@ export default {
   },
   created() {
     console.log("show sched 4: " + this.show);
-    this.visible = this.show;
+    // this.visible = this.show;
   },
   watch: {
     show() {
@@ -326,12 +152,32 @@ export default {
     }
   },
   methods: {
+    penalties() {
+      var total = this.computeSum([
+        this.form.sched4.taxpayer.surcharge,
+        this.form.sched4.taxpayer.interest,
+        this.form.sched4.taxpayer.compromise
+      ]);
+      this.form.sched4.taxpayer.penalties = total;
+      this.form.taxpayer_total_penalties = total;
+      return total;
+    },
+    spouse_penalties() {
+      var total = this.computeSum([
+        this.form.sched4.spouse.surcharge,
+        this.form.sched4.spouse.interest,
+        this.form.sched4.spouse.compromise
+      ]);
+      this.form.sched4.spouse.penalties = total;
+      this.form.spouse_total_penalties = total;
+      return total;
+    },
     showModal() {
       this.visible = true;
     },
     handleOk(e) {
       console.log(e);
-      this.show = 0;
+      // this.show = 0;
       this.visible = false;
     }
   }

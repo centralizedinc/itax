@@ -3,27 +3,12 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
-// var sequenceGenerator = require("mongoose-sequence-plugin");
+const common_model = require('./commonModels');
 
-var Form2000OTSchema = new Schema({
-  referenceNo: Number,
-  taxpayer: {},
-  dateFiled: Date,
-  // transactionDate: {
-  //   type: Date,
-  //   default: new Date()
-  // },
-  amended_yn: Boolean,
-  num_of_sheet: { type: Number, default: 0 },
-  atc: {
-    code: String,
-    description: String,
-    rate: String
+const model_schema = {
+  atc_code: {
+    type: String
   },
-  due_date: Date,
-  return_period: Date,
-  return_period_month: String,
-  return_period_year: String,
   natureOfTransaction: {
     type: String
     /**
@@ -65,8 +50,7 @@ var Form2000OTSchema = new Schema({
     provincialImprovement: Number,
     provincialTotal: Number,
     sum1A2B: Number,
-    sum1B2A: Number,
-    fairMarketValue: Number
+    sum1B2A: Number
   },
   stockName: String,
   stockTin: String,
@@ -78,34 +62,10 @@ var Form2000OTSchema = new Schema({
   sharesStockTaxBase: Number,
   taxRate: Number,
   prev_tax_due: Number,
-  prevTaxPaid: Number,
-  tax_due: {
-    type: Number,
-    default: 0
-  },
-  surcharge: Number,
-  interest: Number,
-  compromise: Number,
-  penalties: Number,
-  total_amount_payable: Number,
-  date_created: {
-    type: Date,
-    default: new Date()
-  },
-  date_modified: {
-    type: Date,
-    default: new Date()
-  },
-  auto_id: {
-    type: Number
-  },
-  created_by: {
-    type: String
-  },
-  modified_by: {
-    type: String
-  }
-});
+  prev_tax_paid: Number
+}
+
+var Form2000OTSchema = new Schema({ ...common_model, ...model_schema });
 
 Form2000OTSchema.pre('save', function (callback) {
   var form = this;
@@ -132,11 +92,7 @@ const options = {
 };
 
 const plugin = new autoIncrement(Form2000OTSchema, '2000ot_forms', options);
-plugin.applyPlugin()
-  .then(() => {
-    console.log("############### init plugin")
-  })
-  .catch(e => {
+plugin.applyPlugin().catch(e => {
     // Plugin failed to initialise
     console.log("############### init failed: " + e);
   });

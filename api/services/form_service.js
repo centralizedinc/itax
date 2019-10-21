@@ -14,6 +14,8 @@ const Form1606Dao = require('../dao/forms/Form1606Dao');
 const Form1600WPDao = require('../dao/forms/Form1600WPDao');
 const Form1701QDao = require('../dao/forms/Form1701QDao');
 const Form1604EDao = require('../dao/forms/Form1604EDao');
+const Form1601FQDao = require('../dao/forms/Form1601FQDao')
+const Form2551MDao = require('../dao/forms/Form2551MDao')
 
 const activity = require('../services/actvities_service')
 
@@ -23,9 +25,11 @@ const activity = require('../services/actvities_service')
  * @param {Object} form_details 
  */
 function save(form_type, form_details) {
+    console.log('Saving form ...');
     return new Promise((resolve, reject) => {
         saveForm(form_type, form_details)
             .then((result) => {
+                console.log(`result is saving form(${form_type}):`, result);
                 const model = {
                     reference_no: result.reference_no,
                     tin: result.taxpayer.tin,
@@ -42,6 +46,7 @@ function save(form_type, form_details) {
                 return ReturnDetailsDao.create(model);
             })
             .then((result) => {
+                console.log(`Return Details(${form_type}) :`, result);
                 activity.file(result.tin, result)
                 resolve(result)
             })
@@ -69,6 +74,8 @@ function saveForm(form_type, form_details) {
     else if (form_type.toUpperCase() === '1600WP') return Form1600WPDao.create(form_details);
     else if (form_type.toUpperCase() === '1701Q') return Form1701QDao.create(form_details);
     else if (form_type.toUpperCase() === '1604E') return Form1604EDao.create(form_details);
+    else if (form_type.toUpperCase() === '1601FQ') return Form1601FQDao.create(form_details);
+    else if (form_type.toUpperCase() === '2551M') return Form2551MDao.create(form_details);
     else Promise.reject({ message: "Form does not exist" });
 }
 

@@ -34,7 +34,7 @@ function getContent(forms) {
     var content = [
         // General Info
         {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [190, 60, 49, 190, 150,],
                 body: [
@@ -79,9 +79,9 @@ function getContent(forms) {
             }
         },
         {
-            layout: "noBorders",
+            //layout: "noBorders",
             table: {
-                widths: [60, 30, 30, 30, 100, 236],
+                widths: [43, 41, 38, 45, 100, 220],
                 body: [
                     [{
                         text: mapTin(forms.taxpayer.tin, 0, 3),

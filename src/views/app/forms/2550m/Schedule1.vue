@@ -90,13 +90,13 @@ export default {
       ],
       atc_list: [
         {
-          description: "Genral",
+          description: "BUSINESS SERVICES-IN GENERAL",
           atc: "VB010",
           rate: 0.12
         },
         {
-          description: "Genral1",
-          atc: "VB011",
+          description: "CONSTRUCTION",
+          atc: "VC010",
           rate: 0.25
         }
       ],
@@ -104,8 +104,13 @@ export default {
     };
   },
   created() {
-    console.log("Open Schedule 1");
-    this.data_source = this.deepCopy(this.form.sched1);
+    console.log("Open Schedule 1 :::", JSON.stringify(this.form.sched1));
+    // if(this.form.sched1){
+    //   this.data_source = this.deepCopy(this.form.sched1);
+    // }else{
+    //   this.data_source = [{}]
+    // }
+    
   },
   computed: {
     total_atc_amount() {

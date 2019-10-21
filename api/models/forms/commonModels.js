@@ -19,6 +19,19 @@ const model = {
     return_period_year: {
         type: String
     },
+    quarter: {
+        type: Number,
+        default: 0
+            /**
+             * 1, 2, 3, 4
+             */
+    },
+    start_month: {
+        type: Number
+    },
+    end_month: {
+        type: Number
+    },
     amended_yn: {
         type: Boolean,
         default: false

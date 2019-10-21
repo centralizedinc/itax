@@ -26,12 +26,16 @@ function validate(form_details) {
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields ...');
-    if (form.any_tax_withheld === null || form.any_tax_withheld === undefined) {
-        error_messages.push({ page: 0, field: "any_tax_withheld", error: constant_helper.MANDATORY_FIELD('Any Taxes Withheld') });
-    } else if(form.any_tax_withheld){
-        if (!form.atc_list || !form.atc_list.length) {
-            error_messages.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('ATC') });
-        }
+    if (form.taxes_withheld === null || form.taxes_withheld === undefined) {
+        error_messages.push({ page: 0, field: "taxes_withheld", error: constant_helper.MANDATORY_FIELD('Any Taxes Withheld') });
+    }
+    
+    if (!form.taxpayer || !form.taxpayer.contact_details || !form.taxpayer.contact_details.email) {
+        error_messages.push({ page: 1, field: "taxpayer.contact_details.email", error: constant_helper.MANDATORY_FIELD('Email Address') });
+    }
+
+    if (!form.taxpayer || !form.taxpayer.contact_details || !form.taxpayer.contact_details.mobile) {
+        error_messages.push({ page: 1, field: "taxpayer.contact_details.mobile", error: constant_helper.MANDATORY_FIELD('Contact Number') });
     }
 
     if (!form.category_of_agent) {

@@ -6,22 +6,103 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    year_type: String,
-    year_ended_month: String,
-    year_ended_year: String,
-    accounting_type: Boolean,
+    quarter: {
+        type: Number
+            /**
+             * 1, 2, 3, 4
+             */
+    },
+    year_type: {
+        type: Date
+    },
+    year_ended_month: {
+        type: Date
+    },
+    year_ended_year: {
+        type: Date
+    },
     sched1_tax_due: { type: Number, default: 0 }, //From Schedule 1 Item 7
     tax_withheld: { type: Number, default: 0 },
     prev_tax_paid: { type: Number, default: 0 },
     total_credits: { type: Number, default: 0 }, // Sum of Items 15 to 17
-    amount_payable: { type: Number, default: 0 },
-    refund_type: String,
+    refund_type: {
+        type: String
+    },
+    particular_cash: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_check: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_tax_debit: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_others: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
     sched1: [{
         taxable_transaction: { type: Number, default: 0 },
         atc_code: String,
         taxable_amount: { type: Number, default: 0 },
         tax_rate: { type: Number, default: 0 },
-        tax_due: { type: Number, default: 0 }
+        tax_due: { type: Number, default: 0 },
+        total_amount_payable: { type: Number, default: 0 } //(Sum of Items 1 to 6)(To Part II Item 14)
     }],
 };
 
@@ -52,13 +133,7 @@ const options = {
 };
 
 const plugin = new autoIncrement(Form2551qSchema, '2551q_forms', options);
-// users._nextCount()
-//     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
+plugin.applyPlugin().catch(e => {
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });

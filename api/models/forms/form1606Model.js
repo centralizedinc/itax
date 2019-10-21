@@ -7,17 +7,31 @@ const common_model = require('./commonModels');
 
 const model_schema = {
     seller_details: {},
-    category_of_agent: String,
-    atc_code: String, // WI155
-    classification_property: String,
-    location_property: String,
-    brief_description: String,
-    area_sold: String,
+    category_of_agent: {
+        type: String
+    },
+    atc_code: {
+        type: String
+    }, // WI155
+    classification_property: {
+        type: String
+    },
+    location_property: {
+        type: String
+    },
+    brief_description: {
+        type: String
+    },
+    area_sold: {
+        type: String
+    },
     selling_price_property: {
         type: Boolean,
         default: false
     },
-    description_transaction: String,
+    description_transaction: {
+        type: String
+    },
     selling_price: { type: Number, default: 0 },
     cost_expenses: { type: Number, default: 0 },
     mortgage_assumed: { type: Number, default: 0 },
@@ -32,10 +46,74 @@ const model_schema = {
     bid_price: { type: Number, default: 0 },
     installment_collected: { type: Number, default: 0 }, //Installment Sale excluding interest
     taxable_base_computation: { type: Number, default: 0 },
-    particular_cash: { type: Number, default: 0 },
-    particular_check: { type: Number, default: 0 },
-    particular_tax_debit: { type: Number, default: 0 },
-    particular_others: { type: Number, default: 0 }
+    particular_cash: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_check: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_tax_debit: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_others: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
 };
 
 var Form1606Schema = new Schema({...common_model, ...model_schema });
@@ -68,11 +146,7 @@ const options = {
 const plugin = new autoIncrement(Form1606Schema, '1606_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
+plugin.applyPlugin().catch(e => {
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });

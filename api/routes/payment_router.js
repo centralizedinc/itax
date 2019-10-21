@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 // dao
 const PaymentDao = require('../dao/PaymentDao');
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
+const activity = require('../services/actvities_service')
 
 router.route("/")
     .get((req, res) => {
@@ -29,6 +30,7 @@ router.route("/")
     .post((req, res) => {
         const created_by = jwt.decode(req.headers.access_token).account_id;
         const data = req.body;
+        console.log(`payment_details: `, JSON.stringify(data))
         data.created_by = created_by;
         var payments = {};
         PaymentDao.create(data)
@@ -37,6 +39,7 @@ router.route("/")
                 return ReturnDetailsDao.modifyOne({ reference_no: data.references[0] }, { payment_status: 'paid' })
             })
             .then((return_details) => {
+                activity.pay(return_details.tin, {payments, return_details})
                 res.json({
                     success: true,
                     model: {

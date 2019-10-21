@@ -15,6 +15,8 @@ var ReturnsDetailsModel = require('../models/ReturnDetailsModel.js');
 
 // Dao
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
+const ReturnPeriodDao = require('../dao/references/ReturnPeriodDao');
+const CommonValidator = require('../validators/commonValidator');
 
 /**
  * route /returns/
@@ -53,25 +55,48 @@ returns_router.route("/")
 
 returns_router.route("/validate/:form_type")
     .post((req, res) => {
-        // validation
-        var { errors, form_details } = validateForm(req.params.form_type, req.body);
+        const form_type = req.params.form_type;
+        console.log(`validation form details(${form_type}) :`, req.body)
+        ReturnPeriodDao.findOneByForm(form_type)
+            .then((reference) => {
+                if (reference) {
+                    // Validate and compute return period and due date first
+                    var data = CommonValidator.validateReturnPeriod(reference, req.body);
+                    console.log('validated return period errors :', data.errors);
+                    if (data.errors && data.errors.length) {
+                        res.json({ success: false, errors: data.errors });
+                    } else {
+                        // validation
+                        var { errors, form_details } = validateForm(form_type, data.form);
+                        console.log(`Form ${form_type} errors :`, errors);
 
-        // check the errors
-        if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
-            // save if there is no error
-            console.log('form_details :', form_details);
-            console.log('jwt.decode(req.headers.access_token).account_id :', jwt.decode(req.headers.access_token).account_id);
-            form_details.created_by = jwt.decode(req.headers.access_token).account_id;
-            saveForm(req.params.form_type, form_details)
-                .then((result) => {
-                    res.json({ model: result });
-                }).catch((err) => {
-                    res.status(500).json({ errors: err });
-                });
-        } else {
-            // return the errors
-            res.json({ errors });
-        }
+                        // check the errors
+                        if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
+                            // save if there is no error
+                            form_details.created_by = jwt.decode(req.headers.access_token).account_id;
+                            console.log(`save form(${form_type}) :`, form_details);
+                            saveForm(form_type, form_details)
+                                .then((result) => {
+                                    res.json({ success: true, model: result });
+                                }).catch((err) => {
+                                    res.status(500).json({ success: false, errors: err });
+                                });
+                        } else {
+                            // return the errors
+                            res.json({ success: false, errors });
+                        }
+                    }
+                } else {
+                    res.json({
+                        success: false,
+                        errors: [{
+                            message: "Invalid Form Type"
+                        }]
+                    })
+                }
+            }).catch((err) => {
+
+            });
     })
 
 returns_router.route("/:tin")

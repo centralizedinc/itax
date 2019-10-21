@@ -6,9 +6,15 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    opn_yn: String,
-    category_of_agent: String,
-    atc: String, // WW010
+    taxes_withheld: {
+        type: Boolean
+    },
+    category_of_agent: {
+        type: String
+    },
+    atc_code: {
+        type: String
+    }, // WW010
     compensation: { type: Number, default: 0 }, //item14
     statutory_minimum_wage: { type: Number, default: 0 }, //item15
     minimum_wager: { type: Number, default: 0 },
@@ -20,14 +26,79 @@ const model_schema = {
     tax_remitted: { type: Number, default: 0 }, //Sum of Items 28 and 29
     other_payments_made: { type: Number, default: 0 },
     total_payments_made: { type: Number, default: 0 },
-    refund_type: String,
+    refund_type: {
+        type: String
+    },
     adv_payment: { type: Number, default: 0 },
     total_tax_credits: { type: Number, default: 0 },
-    if_overremittance: String,
-    particular_cash: { type: Number, default: 0 },
-    particular_check: { type: Number, default: 0 },
-    particular_tax_debit: { type: Number, default: 0 },
-    particular_others: { type: Number, default: 0 },
+    particular_cash: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_check: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_tax_debit: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_others: [{
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
     sched1: [{
         previous_month: {
             type: Date,
@@ -86,11 +157,7 @@ const options = {
 const plugin = new autoIncrement(Form1601CSchema, '1601c_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
+plugin.applyPlugin().catch(e => {
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });

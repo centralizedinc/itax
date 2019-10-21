@@ -6,6 +6,15 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
+    quarter: {
+        type: Number
+            /**
+             * 1, 2, 3, 4
+             */
+    },
+    line_of_business: {
+        type: String
+    },
     year_type: {
         type: Date
     },
@@ -14,13 +23,6 @@ const model_schema = {
     },
     year_ended_year: {
         type: Date
-    },
-    quarter: {
-        type: Number,
-        default: 0
-            /**
-             * 0, 1, 2
-             */
     },
     short_period_return: {
         type: Boolean
@@ -63,8 +65,100 @@ const model_schema = {
             type: Number,
             default: 0
         }, //item19B
-    }]
     }],
+    refund_type: {
+        type: String
+    },
+    exclusive_vat: [{
+        taxable_sales: {
+            type: Number,
+            default: 0
+        }, // item15A Schedule 1
+        sale_government: {
+            type: Number,
+            default: 0
+        }, // item16A
+        zero_rated: {
+            type: Number,
+            default: 0
+        }, // item17
+        exempt_sale: {
+            type: Number,
+            default: 0
+        }, // item18
+        total_sale_tax_due: {
+            type: Number,
+            default: 0
+        } // item19A
+    }],
+    output_tax_due: [{
+        taxable_sales: {
+            type: Number,
+            default: 0
+        }, // item15B Schedule 1
+        sale_government: {
+            type: Number,
+            default: 0
+        }, // item16B
+        total_sale_tax_due: {
+            type: Number,
+            default: 0
+        }, // item19B
+        tax_carried_over: {
+            type: Number,
+            default: 0
+        }, // item20A
+        tax_deferred_capital: {
+            type: Number,
+            default: 0
+        }, // item20B
+        transactional_input_tax: {
+            type: Number,
+            default: 0
+        }, // item20C
+        presumptive_input_tax: {
+            type: Number,
+            default: 0
+        }, // item20D
+        others_input_tax: {
+            type: Number,
+            default: 0
+        }, // item20E
+        total_input_tax: {
+            type: Number,
+            default: 0
+        }, // item20F Sum of Item 20A, 20B, 20C, 20D&20E
+    }],
+    purchases_transactions: [{
+        taxable_sales: {
+            type: Number,
+            default: 0
+        }, // item15B Schedule 1
+        sale_government: {
+            type: Number,
+            default: 0
+        }, // item16B
+        total_sale_tax_due: {
+            type: Number,
+            default: 0
+        }, // item19B
+    }],
+    sched1: [{
+        periodCovered: Date,
+        name: String,
+        incPymt: Number,
+        taxWthld: Number,
+        wthldAppliedCurr: Number,
+        seqNo: Number
+    }],
+    sched2: [{
+        periodCovered: Date,
+        name: String,
+        incPymt: Number,
+        taxWthld: Number,
+        wthldAppliedCurr: Number,
+        seqNo: Number
+    }]
 };
 
 var Form2550qSchema = new Schema({...common_model, ...model_schema });
@@ -96,11 +190,7 @@ const options = {
 const plugin = new autoIncrement(Form2550qSchema, '2550q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
+plugin.applyPlugin().catch(e => {
         // Plugin failed to initialise
         console.log("############### init failed: " + e);
     });

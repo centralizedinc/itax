@@ -10,6 +10,7 @@
       <span slot="action" slot-scope="text,record">
         <a-tooltip title="Quick Payment">
           <a-button type="primary" @click="show(record)" icon="credit-card" shape="circle"></a-button>
+          <!-- <a-button type="primary" @click="printReceipt()" icon="credit-card" shape="circle"></a-button> -->
         </a-tooltip>
       </span>
       <span slot="tin" slot-scope="tin">{{formatTIN(tin)}}</span>
@@ -198,6 +199,12 @@
 </template>
 
 <script>
+
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import printer from "@/plugins/pdf/printers/ereceipt"
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 import Payment from "@/components/pay/payment";
 import CreditCard from "./creditCard";
 import OnlineBanking from "./onlineBanking";
@@ -334,11 +341,12 @@ export default {
         .dispatch(action, payments)
         .then(result => {
           console.log("result.data.model :", result.data.model);
+          this.printReceipt(result.data.model)
           this.loading_payments = false;
           this.init()
-          this.$notification.open({
+          this.$notification.success({            
             message: "Successfully paid.",
-            icon: <a-icon type="check" style="color: blue" />
+            description:""
           });
           this.reset();
         })
@@ -346,6 +354,31 @@ export default {
           console.log("PAYMENT err :", err);
           this.loading_payments = false;
         });
+    },
+    printReceipt(details){
+      console.log('PRINTING RECEIPT :::: ', JSON.stringify(details))
+      var document = printer.fillup({})
+      pdfMake.createPdf(document).getBuffer(buffer => {
+        var file = new Blob([buffer], { type: "application/pdf" });
+
+        var data = new FormData();
+        data.append("tax_returns", file);
+        data.append("content-type", "application/pdf");
+
+        this.$store
+          .dispatch("UPLOAD_TAX_RETURNS", {
+            form: 'e-receipt',
+            ref_no: details.payments.payment_conf_no,
+            form_data: data
+          })
+          .then(result => {
+            console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
+          })
+          .catch(err => {
+            console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
+          });
+
+      })
     },
     reset(){
       this.record = {};
@@ -379,7 +412,8 @@ export default {
         total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
       }
       return total;
-    }
+    },
+    
   }
 };
 </script>

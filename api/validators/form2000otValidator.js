@@ -10,37 +10,46 @@ const constant_helper = require('../utils/constant_helper');
  * @param {*} form_details 
  */
 function validate(form_details) {
-    console.log("validation form details(2000ot): " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
 
-    if (!form_details.return_period) {
-        errors.push({
-            page: 0,
-            field: "return_period",
-            error: constant_helper.MANDATORY_FIELD('Date of Transaction')
-        });
-        return { errors };
-    }
+    // if (!form_details.return_period) {
+    //     errors.push({
+    //         page: 0,
+    //         field: "return_period",
+    //         error: constant_helper.MANDATORY_FIELD('Date of Transaction')
+    //     });
+    //     return { errors };
+    // }
 
-    form_details.due_date = computeDueDate(form_details.return_period);
-    console.log('form 2000ot due date :', form_details.due_date);
+    // form_details.due_date = computeDueDate(form_details.return_period);
+    // console.log('form 2000ot due date :', form_details.due_date);
 
-    // validate Taxpayer
+    // validate taxpayer
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
+    console.log('done validating taxpayer...');
 
     //validate required fields
     errors.push(...validateRequired(form_details));
+    console.log('done validating required fields...');
 
     var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
     errors.push(...error_messages);
-    console.log('form 2000ot validator errors: ', JSON.stringify(errors))
+    console.log('done checking due date...');
 
     return { errors, form_details }
 }
 
 function validateRequired(form) {
     var error_messages = [];
+    console.log('Validating required fields ...');
+    if(!form.atc_code){
+        error_messages.push({
+            page: 0,
+            field: "atc_code",
+            error: constant_helper.MANDATORY_FIELD('ATC')
+        });
+    }
 
     if (!form.natureOfTransaction) {
         error_messages.push({
