@@ -37,6 +37,14 @@ function validateRequired(form) {
     } else if (form.taxes_withheld) {
         if (!form.atc_list || !form.atc_list.length) {
             errors.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('ATC') });
+        } else {
+            if (!form.atc_list[0].atc_code) {
+                errors.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('ATC Code') });
+            }
+
+            if (!form.atc_list[0].tax_base) {
+                errors.push({ page: 2, field: "atc_list", error: constant_helper.MANDATORY_FIELD('Tax Base') });
+            }
         }
     }
 
