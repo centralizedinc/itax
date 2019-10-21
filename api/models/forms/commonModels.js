@@ -39,6 +39,10 @@ const model = {
         type: Boolean,
         default: false
     },
+    short_period: {
+        type: Boolean,
+        default: false
+    },
     num_of_sheet: {
         type: Number,
         default: 0
