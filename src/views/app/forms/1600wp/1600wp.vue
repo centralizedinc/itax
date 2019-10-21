@@ -2,10 +2,11 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Withholding Tax Declaration (1601E)</b>
+        <b>Withholding Tax Declaration (1600WP)</b>
       </a-divider>
-      <a-form-item label="1. For the month of (MM/YYYY)">
-        <a-month-picker v-model="form.return_period" />
+      <a-form-item label="1. For the month of (MM/DD/YYYY)">
+        <a-date-picker v-model="form.fromPeriod" />
+        <a-date-picker v-model="form.toPeriod" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amended_yn">
@@ -35,29 +36,23 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-model="form.taxpayer.line_business"></a-input>
-      </a-form-item>
-      <a-form-item label="8. Withholding Agent's Name/Registered Name">
-        <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
-      </a-form-item>
-      <a-form-item label="9. Telephone Number">
-        <a-input-number v-model="form.taxpayer.telephone_no"></a-input-number>
-      </a-form-item>
-      <a-form-item label="10. Registered Address">
-        <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
-      </a-form-item>
-      <a-form-item label="11. Zip Code">
-        <a-input-number v-model="form.taxpayer.zip_code"></a-input-number>
-      </a-form-item>
-      <a-form-item label="12. Category of Withholding Agent">
-        <a-radio-group v-model="form.categoryOfAgent">
+      <a-form-item label="7. Category of Withholding Agent">
+        <a-radio-group v-model="form.taxpayer.category_withholding_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
+      <a-form-item label="8. Withholding Agent's Name/Registered Name">
+        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      </a-form-item>
+      <a-form-item label="9. Registered Address">
+        <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
+      </a-form-item>
+      <a-form-item label="10. Zip Code">
+        <a-input-number v-model="form.taxpayer.zip_code"></a-input-number>
+      </a-form-item>
       <a-form-item
-        label="13. Are you availing of tax relief under Special Law or International Tax Treaty?"
+        label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
       >
         <a-radio-group v-model="form.availing_tax_relief">
           <a-radio :value="true">Yes</a-radio>
@@ -68,122 +63,61 @@
         <a-input v-model="form.internationalTreatyYn"></a-input>
       </a-form-item>
     </a-form>
-
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
         <b>Part II: Computation of Tax</b>
       </a-divider>
-      <a-form-item
-        class="computation-item"
-        label="14. Total Tax Required to be Withheld and Remitted"
-      >
-        <a-input-number v-model="form.total_tax_withheld_remitted" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
-      >
-        <a-input-number v-model="form.prevTaxPaidCrdtb" style="width:100%"></a-input-number>
+      <a-form-item label="12. Tax Required to be Withheld and Remitted">
+        <a-input-number v-model="form.taxpayer.required_withheld_and_remitted"></a-input-number>
       </a-form-item>
       <a-form-item
-        class="computation-item"
-        label="15B. Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
+        label="13. Less: Tax Remitted in Return Previously filed, if this is an amended return "
       >
-        <a-input-number v-model="form.advPayment" style="width:100%"></a-input-number>
+        <a-input-number v-model="form.taxpayer.less_tax_remitted"></a-input-number>
       </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="15C. Total Tax Credits/Payments(Sum of Items 15A&15b)"
-      >
-        <a-input-number v-model="form.totTaxCredits" style="width:100%"></a-input-number>
+      <a-form-item label="14. Tax Still Due(Overremittance) ">
+        <a-input-number v-model="form.taxpayer.tax_still_due"></a-input-number>
       </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
-      >
-        <a-input-number v-model="form.amtPayblCrdtb" style="width:100%"></a-input-number>
+      <a-form-item label="15A. Surcharge ">
+        <a-input-number v-model="form.taxpayer.surcharge"></a-input-number>
       </a-form-item>
-      <a-form-item label="17. Add: Penalties"></a-form-item>
-      <a-form-item class="computation-item" label="17A. Surcharge">
-        <a-input-number v-model="form.surcharge" style="width:100%"></a-input-number>
+      <a-form-item label="15B. Interest ">
+        <a-input-number v-model="form.taxpayer.interest"></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="17B. Interest">
-        <a-input-number v-model="form.interest" style="width:100%"></a-input-number>
+      <a-form-item label="15C. Compromise ">
+        <a-input-number v-model="form.taxpayer.compromise"></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="17C. Compromise">
-        <a-input-number v-model="form.compromise" style="width:100%"></a-input-number>
+      <a-form-item label="15D. Tax Required to be withheld ">
+        <a-input-number v-model="form.taxpayer.taxrequiredtobewithheld"></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="17D">
-        <a-input-number v-model="form.penaltiesCrdtb" style="width:100%"></a-input-number>
+      <a-form-item label="16. Tax Required to be withheld ">
+        <a-input-number v-model="form.taxpayer.taxrequiredtobewithheld16"></a-input-number>
       </a-form-item>
-      <a-form-item
-        class="computation-item"
-        label="18. Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
-      >
-        <a-input-number v-model="form.total_amount_overremitance" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item label="if overremittance, mark one box only:">
-        <a-radio-group v-model="form.overremittance">
+      <a-form-item label="16. if overremittance">
+        <a-radio-group v-model="form.taxpayer.overremittance">
           <a-radio :value="true">To be Refunded</a-radio>
           <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
         </a-radio-group>
       </a-form-item>
+      <a-form-item label="16. For the month of (MM/DD/YYYY)">
+        <a-date-picker v-model="form.frommPeriod" />
+        <a-date-picker v-model="form.tooPeriod" />
+      </a-form-item>
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
-
-    <!-- Part III -->
-    <a-form :form="form_part3" v-show="step===3">
-      <a-divider orientation="left">
-        <b>Part III: Details of Payment</b>
-      </a-divider>
-      <a-form-item class="computation-item" label="21. Cash/Bank Debit Memo">
-        <a-input-number v-model="form.item21" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item label="22. Check"></a-form-item>
-      <a-form-item class="computation-item" label="22A">
-        <a-input-number v-model="form.item21a" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22B">
-        <a-input-number v-model="form.item22b" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22C">
-        <a-input-number v-model="form.item22c" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="22D">
-        <a-input-number v-model="form.item22d" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item label="23. Others"></a-form-item>
-      <a-form-item class="computation-item" label="23A">
-        <a-input-number v-model="form.item23a" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23B">
-        <a-input-number v-model="form.item23b" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23C">
-        <a-input-number v-model="form.item23c" style="width:100%"></a-input-number>
-      </a-form-item>
-      <a-form-item class="computation-item" label="23D">
-        <a-input-number v-model="form.item23d" style="width:100%"></a-input-number>
-      </a-form-item>
-
-      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
-    </a-form>
-    <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>-->
   </div>
 </template>
 
 <script>
-// import form_1601e_image from "@/assets/forms/1601e.jpg";
+// import form_1601e_image from "@/assets/forms/1600wp.jpg";
 
 export default {
   props: ["form", "step"],
   data() {
     return {
       sub: false,
-      // form_1601e_image,
+      // form_1600wp_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
@@ -192,6 +126,11 @@ export default {
     };
   },
   watch: {
+    form() {
+      console.log(
+        "created taxpayer data: " + JSON.stringify(this.form.taxpayer)
+      );
+    }
     // step() {
     //   if (this.step < 0) {
     //     this.$router.push("/");
@@ -244,7 +183,7 @@ export default {
       this.loading = true;
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
-          form_type: "1601E",
+          form_type: "1600WP",
           form_details: this.form
         })
         .then(result => {
@@ -276,7 +215,7 @@ export default {
   // watch: {
   //   form: {
   //     handler(val) {
-  //       console.log("##### update 1601e ");
+  //       console.log("##### update 1600wp ");
   //     },
   //     deep: true
   //   }

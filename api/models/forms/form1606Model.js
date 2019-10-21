@@ -6,20 +6,25 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    seller_details: {},
     category_of_agent: {
         type: String
     },
     atc_code: {
         type: String
     }, // WI155
+    taxes_withheld: {
+        type: Boolean
+    },
     classification_property: {
         type: String
     },
     location_property: {
         type: String
     },
-    brief_description: {
+    location_rdo_code: {
+        type: String
+    },
+    tct_no: {
         type: String
     },
     area_sold: {

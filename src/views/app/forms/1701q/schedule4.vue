@@ -3,8 +3,8 @@
     <a-drawer
       title="Schedule IV - Penalties"
       :visible="visible"
-      @cancel="$emit('close')"
-      @ok="handleOk"
+      :closable="false"
+      @close="onClose"
       :width="720"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
@@ -17,13 +17,21 @@
               :wrapperCol="form_layout.wrapper_col"
               label="64."
             >
-              <a-input-number v-model="form.sched4.taxpayer.surcharge" placeholder="Surcharge"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.taxpayer.surcharge"
+                style="width:100%"
+                placeholder="Surcharge"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number v-model="form.sched4.spouse.surcharge" placeholder="Surcharge"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.spouse.surcharge"
+                style="width:100%"
+                placeholder="Surcharge"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -34,12 +42,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="65."
             >
-              <a-input-number v-model="form.sched4.taxpayer.interest" placeholder="Interest"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.taxpayer.interest"
+                style="width:100%"
+                placeholder="Interest"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number v-model="form.sched4.spouse.interest" placeholder="Interest"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.spouse.interest"
+                placeholder="Interest"
+                style="width:100%"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -50,12 +66,20 @@
               :wrapperCol="form_layout.wrapper_col"
               label="66."
             >
-              <a-input-number v-model="form.sched4.taxpayer.compromise" placeholder="Compromise"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.taxpayer.compromise"
+                style="width:100%"
+                placeholder="Compromise"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number v-model="form.sched4.spouse.compromise" placeholder="Compromise"></a-input-number>
+              <a-input-number
+                style="width:100%"
+                v-model="form.sched4.spouse.compromise"
+                placeholder="Compromise"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -67,6 +91,7 @@
               label="67."
             >
               <a-input-number
+                style="width:100%"
                 :value="penalties()"
                 placeholder="Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)"
               ></a-input-number>
@@ -75,6 +100,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
+                style="width:100%"
                 :value="spouse_penalties()"
                 placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
               ></a-input-number>
@@ -152,6 +178,9 @@ export default {
     }
   },
   methods: {
+    onClose() {
+      this.visible = false;
+    },
     penalties() {
       var total = this.computeSum([
         this.form.sched4.taxpayer.surcharge,

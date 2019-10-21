@@ -46,6 +46,12 @@ var taxpayerDetailsSchema = new Schema({
     gender: String,
     birthDate: Date,
     civil_status: String,
+    /**
+     * s - single
+     * m - married
+     * l - legally separated
+     * w - widow/er
+     */
     spouseTin: String,
     spouseBranchCode: String,
     citizenship: String
@@ -55,7 +61,6 @@ var taxpayerDetailsSchema = new Schema({
     incorporationDate: Date
   },
   registered_name: String,
-
   created_by: {
     type: String
   },

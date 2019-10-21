@@ -41,6 +41,14 @@ function validateRequired(form) {
 
     if (!form.sched1 || !form.sched1.length) {
         error_messages.push({ page: 2, field: "atc", error: constant_helper.MANDATORY_FIELD('Schedule 1') });
+    } else {
+        if (!form.sched1[0].atc) {
+            error_messages.push({ page: 2, field: "atc", error: constant_helper.MANDATORY_FIELD('ATC Code') });
+        }
+
+        if (!form.sched1[0].amount) {
+            error_messages.push({ page: 2, field: "atc", error: constant_helper.MANDATORY_FIELD('Tax Base') });
+        }
     }
     return error_messages;
 }
