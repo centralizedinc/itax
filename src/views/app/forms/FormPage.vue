@@ -159,7 +159,7 @@ import Form2000OT from "./2000ot/2000ot.vue";
 import Form1600WP from "./1600wp/1600wp.vue";
 import Form1604E from "./1604e/1604e.vue";
 import Form1601F from "./1601f/1601f.vue";
-
+import Form1601FQ from "./1601fq/1601fq.vue";
 export default {
   components: {
     FormSuccess,
@@ -173,7 +173,8 @@ export default {
     Form2000OT,
     Form1600WP,
     Form1604E,
-    Form1601F
+    Form1601F,
+    Form1606FQ,
   },
   computed: {
     affix_computation() {

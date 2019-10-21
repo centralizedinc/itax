@@ -49,7 +49,7 @@ function getContent(forms) {
             }
         },
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [84, 46, 57, 49, 140, 50, 48],
                 heights: [24], 
@@ -80,7 +80,7 @@ function getContent(forms) {
                         fontSize: 10,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [41, 14, 0, 0]
+                        margin: [42, 14, 0, 0]
                     },
                     {
                         text: forms.amendedYn == false ? 'X' : ' ',
@@ -108,7 +108,7 @@ function getContent(forms) {
             }
         },
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [40, 30, 46 , 47, 100, 225],
                 body: [
@@ -139,10 +139,10 @@ function getContent(forms) {
                     {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
                         fontSize: 14,
-                        characterSpacing: 7,
+                        characterSpacing: 3.4,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [10, 10, 0, 0]
+                        margin: [2, 6, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -153,8 +153,8 @@ function getContent(forms) {
                         margin: [70, 7, 0, 0]
                     },
                     {
-                        text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
-                        fontSize: 20,
+                        text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
+                        fontSize: 18   ,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [130, 7, 0, 0]
@@ -168,7 +168,7 @@ function getContent(forms) {
         },
         {
             //Table 3 Taxpayer
-            layout: "noBorders",
+            //layout: "noBorders",
             table: {
                 widths: [395, 120],
                 body: [
@@ -177,14 +177,14 @@ function getContent(forms) {
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [18, 9, 0, 0]
+                        margin: [6, 3, 0, 0]
                     },
                     {
                         text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [40, 9, 0, 0]
+                        margin: [140, 9, 0, 0]
                     },
                     ]
                 ]
@@ -202,7 +202,7 @@ function getContent(forms) {
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [16, 8, 0, 0]
+                        margin: [14, 8, 0, 0]
                     },
                     {
                         text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
