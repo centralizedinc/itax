@@ -38,25 +38,42 @@ function file(tin, form) {
     });
 }
 
-function pay(tin) {
+function pay(tin, data) {
 
+    return new Promise((resolve, reject) => {
+    console.log('saving payment activity ....')
     var activity = new model({
-        created_by: { tin }
+        reference_no: data.payments.payment_conf_no,
+        created_by: { tin },
+        subscribers: [tin],
+        activity: '3',
+        description: `Successfully paid the amount of ${data.payments.amount_paid} as payment for ${data.return_details.form_type} Tax Return.\n Payment Confirmation Number: ${data.payments.payment_conf_no}`
     })
-    user.findOne({ tin })
+
+    user.findOne({ tin: tin })
         .then(result => {
-            activity.created_by.display_name = `${result.data.name.first} ${result.data.name.last}`;
-            activity.avatar = result.data.avatar
+            console.log('result ::: ', JSON.stringify(result))
+            if (result) {
+                activity.created_by.display_name = result.name ? `${result.name.first} ${result.name.last}` : '';
+                activity.created_by.avatar = result.avatar
+            }
+            //find connections
+            return connections.find({ from: tin })
         })
-    //find connections
-    connections.find({ from: tin })
+        .then(result => {
+            result.forEach(element => {
+                activity.subscribers.push(element.to)
+            });
+            return activity.save()
+        })
         .then(model => {
-            activity.
-                return
+            resolve(model);
         })
         .catch(errors => {
-
+            console.log('PAYMENT ERRORS:::', errors)
+            reject(errors)
         })
+    })
 }
 
 module.exports = {
