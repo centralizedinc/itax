@@ -19,19 +19,18 @@ const model = {
     return_period_year: {
         type: String
     },
-    accounting_type: {
-        type: String
-        /**
-         * c - calendar
-         * f - fiscal
-         */
-    },
     quarter: {
         type: Number,
         default: 0
             /**
-             * 0, 1, 2
+             * 1, 2, 3, 4
              */
+    },
+    start_month: {
+        type: Number
+    },
+    end_month: {
+        type: Number
     },
     amended_yn: {
         type: Boolean,

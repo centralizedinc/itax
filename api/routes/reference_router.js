@@ -69,11 +69,22 @@ reference_router.route('/return_period')
     .post((req, res) => {
         var data = req.body;
         data.created_by = jwt.decode(req.headers.access_token).account_id;
-        ReturnPeriodDao.create(data)
+        var errors = null;
+        ReturnPeriodDao.findOneByForm(data.form)
+            .then((existing_form) => {
+                if (existing_form) {
+                    errors = [{
+                        message: "Form already exist in reference."
+                    }]
+                } else {
+                    return ReturnPeriodDao.create(data);
+                }
+            })
             .then((model) => {
                 res.json({
-                    success: true,
-                    model
+                    success: !errors,
+                    model,
+                    errors
                 })
             }).catch((errors) => {
                 res.json({

@@ -9,10 +9,14 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1."
-        :validate-status="error_item('taxpayer.return_period_year')"
-        :help="error_desc('taxpayer.return_period_year')"
+        :validate-status="error_item('return_period_year')"
+        :help="error_desc('return_period_year')"
       >
-        <a-month-picker style="width: 100%" v-model="form.return_period_year" />
+        <a-select style="width: 100%" v-model="form.return_period_year" placeholder="For the year">
+          <a-select-option key="y0" :value="new Date().getFullYear()">{{new Date().getFullYear()}}</a-select-option>
+          <a-select-option v-for="item in 30" :key="`y${item}`" :value="new Date().getFullYear() - item">{{new Date().getFullYear() - item}}</a-select-option>
+        </a-select>
+        <!-- <a-month-picker style="width: 100%" v-model="form.return_period_year" /> -->
       </a-form-item>
       <a-form-item label="Quarter"></a-form-item>
       <a-form-item
@@ -22,10 +26,10 @@
         :validate-status="error_item('quarter')"
         :help="error_desc('quarter')"
       >
-        <a-radio-group v-model="form.quarter">
-          <a-radio :value="1">First</a-radio>
-          <a-radio :value="2">Second</a-radio>
-          <a-radio :value="3">Third</a-radio>
+        <a-radio-group v-model="form.quarter" buttonStyle="solid">
+          <a-radio-button :value="1">First</a-radio-button>
+          <a-radio-button :value="2">Second</a-radio-button>
+          <a-radio-button :value="3">Third</a-radio-button>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="Amended Return"></a-form-item>
@@ -148,8 +152,8 @@
       </a-form-item>
       <a-form-item
         label="15. Claiming Foreign Tax Credits?"
-        :validate-status="error_item('taxpayer.taxCredits')"
-        :help="error_desc('taxpayer.taxCredits')"
+        :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
+        :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
       >
         <a-radio-group v-model="form.taxpayer_foreign_tax_credits">
           <a-radio :value="true">Yes</a-radio>
@@ -509,7 +513,7 @@ export default {
     sched3,
     sched4
   },
-  props: ["form", "step"],
+  props: ["form", "step", "errors"],
   data() {
     return {
       sched: 0,

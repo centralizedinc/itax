@@ -104,8 +104,13 @@ export default {
     };
   },
   created() {
-    console.log("Open Schedule 1");
-    this.data_source = this.deepCopy(this.form.sched1);
+    console.log("Open Schedule 1 :::", JSON.stringify(this.form.sched1));
+    // if(this.form.sched1){
+    //   this.data_source = this.deepCopy(this.form.sched1);
+    // }else{
+    //   this.data_source = [{}]
+    // }
+    
   },
   computed: {
     total_atc_amount() {

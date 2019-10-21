@@ -1,6 +1,6 @@
-const model = require('../../models/forms/Form2551QDao');
+const model = require('../../models/forms/form2551MModel');
 
-class Form2551QDao {
+class Form2551MDao {
     /**
      * @returns {Promise}
      */
@@ -67,4 +67,4 @@ function generateReferenceNo(auto_id) {
     return new Date().getTime().toString() + auto_id.toString()
 }
 
-module.exports = Form2551QDao
+module.exports = Form2551MDao

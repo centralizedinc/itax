@@ -1433,12 +1433,8 @@ export default {
         console.log("2550m form: ", this.form);
         this.form.year = this.formatDtYear(this.form.return_period);
         this.form.month = this.formatDtMonth(this.form.return_period);
-        this.form.return_period_year = this.formatDtYear(
-          this.form.return_period
-        );
-        this.form.return_period_month = this.formatDtMonth(
-          this.form.return_period
-        );
+        this.form.return_period_year = new Date(this.form.return_period).getFullYear();
+        this.form.return_period_month = new Date(this.form.return_period).getMonth();
         console.log("year: " + this.form.month);
       }
     },

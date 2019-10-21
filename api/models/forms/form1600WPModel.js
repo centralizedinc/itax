@@ -87,12 +87,7 @@ const options = {
 const plugin = new autoIncrement(Form1600WPSchema, '1600wp_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
-plugin.applyPlugin()
-    .then(() => {
-        console.log("############### init plugin")
-    })
-    .catch(e => {
-        // Plugin failed to initialise
+plugin.applyPlugin().catch(e => {
         console.log("############### init failed: " + e);
     });
 

@@ -1,6 +1,5 @@
 'use strict'
 
-var Form1701QModel = require('../models/forms/form1701QModel.js');
 var commonValidator = require('./commonValidator.js');
 
 const constant_helper = require('../utils/constant_helper');
@@ -10,35 +9,27 @@ const constant_helper = require('../utils/constant_helper');
  * @param {*} form_details 
  */
 function validate(form_details) {
-    console.log("validation form details(1701q): " + JSON.stringify(form_details))
     //validation begins ...
     var errors = [];
 
-    const validated_return = commonValidator.validateReturnPeriodByQuarter(form_details.return_period_year, form_details.quarter, 0);
-    if (validated_return.errors && validated_return.errors.length) return { errors: validated_return.errors };
-    else form_details.return_period = validated_return.return_period;
-    console.log('form 1701q return period :', form_details.return_period);
-
-    form_details.due_date = computeDueDate(form_details.return_period)
-    console.log('form_details.due_date :', form_details.due_date);
     //validate required fields
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1))
+    console.log('done validating taxpayer');
+
     // validate required fields
     errors.push(...validateRequired(form_details));
+    console.log('done validating required fields');
 
-    // LATE FILING
+    // check due date if late filing
     var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
     errors.push(...error_messages);
+    console.log('done checking due date');
 
-    // Compute total
-    // if(form_details.)
-
-    console.log('form 1701q validator errors: ', JSON.stringify(errors))
-    console.log('form_details :', form_details);
     return { errors, form_details }
 }
 
 function validateRequired(field) {
+    console.log('Validating required fields...');
     var error_messages = [];
 
     // Validate Taxpayer
@@ -87,58 +78,6 @@ function validateRequired(field) {
     }
 
     return error_messages;
-}
-
-
-function computeDueDate(return_period) {
-    console.log("computeDueDate data: " + return_period)
-    var due_date = new Date();
-
-    var month = return_period.getMonth();
-    // every 15th of the quarter May 15, Aug 15, Nov 15
-    due_date.setDate(15);
-    due_date.setMonth(month);
-
-    return due_date;
-}
-
-/**
- * 
- * @param {form1701qModel} form 
- */
-function validateComputations(form) {
-    var error_messages = [];
-
-    var item12A = 0,
-        item12B = 0,
-        item16A = 0,
-        item16B = 0,
-        item17F = 0,
-        item18A = 0,
-        item18B = 0,
-        item18C = 0,
-        item18D = 0,
-        item18P = 0,
-        item19 = 0,
-        item20A = 0,
-        item20B = 0,
-        item20C = 0,
-        item20F = 0,
-        item21 = 0,
-        item22 = 0,
-        item23A = 0,
-        item23B = 0,
-        item23C = 0,
-        item23G = 0,
-        item24 = 0,
-        item25D = 0,
-        item26 = 0,
-        surcharge = 0,
-        interest = 0,
-        compromise = 0
-
-
-
 }
 
 module.exports = {
