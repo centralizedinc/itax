@@ -3,8 +3,8 @@
     <a-drawer
       title="Schedule III - Tax Credits/Payments"
       :visible="visible"
-      @cancel="$emit('close')"
-      @ok="handleOk"
+      :closable="false"
+      @close="onClose"
       :width="720"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
@@ -278,6 +278,9 @@ export default {
     }
   },
   methods: {
+    onClose() {
+      this.visible = false;
+    },
     total_tax_credit() {
       var total = this.computeSum([
         this.form.sched3.taxpayer.year_excess_credits,

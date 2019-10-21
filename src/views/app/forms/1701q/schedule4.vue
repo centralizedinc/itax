@@ -3,8 +3,8 @@
     <a-drawer
       title="Schedule IV - Penalties"
       :visible="visible"
-      @cancel="$emit('close')"
-      @ok="handleOk"
+      :closable="false"
+      @close="onClose"
       :width="720"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
@@ -27,7 +27,11 @@
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number v-model="form.sched4.spouse.surcharge" placeholder="Surcharge"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.spouse.surcharge"
+                style="width:100%"
+                placeholder="Surcharge"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -47,7 +51,11 @@
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number v-model="form.sched4.spouse.interest" placeholder="Interest"></a-input-number>
+              <a-input-number
+                v-model="form.sched4.spouse.interest"
+                placeholder="Interest"
+                style="width:100%"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -170,6 +178,9 @@ export default {
     }
   },
   methods: {
+    onClose() {
+      this.visible = false;
+    },
     penalties() {
       var total = this.computeSum([
         this.form.sched4.taxpayer.surcharge,

@@ -12,13 +12,13 @@ var Form1601ESchema = new Schema({
         default: 0
     },
     // 16
-    tax_overremittance:{
+    tax_overremittance: {
         type: Number,
         default: 0
     },
     overremittance: Boolean,
     // 18
-    total_amount_overremittance:{
+    total_amount_overremittance: {
         type: Number,
         default: 0
     },
@@ -38,7 +38,7 @@ var Form1601ESchema = new Schema({
         default: 0
     },
     // 17a
-    surcharge: { 
+    surcharge: {
         type: Number,
         default: 0
     },
@@ -88,10 +88,10 @@ var Form1601ESchema = new Schema({
         type: Number
     },
     created_by: {
-            type: String
+        type: String
     },
     modified_by: {
-            type: String
+        type: String
     }
 });
 

@@ -78,91 +78,51 @@
         class="computation-item"
         label="14. Total Tax Required to be Withheld and Remitted"
       >
-        <a-input-number
-          v-model="form.total_tax_withheld_remitted"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.total_tax_withheld_remitted" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
       <a-form-item
         class="computation-item"
         label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
       >
-        <a-input-number
-          v-model="form.prevTaxPaidCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.prevTaxPaidCrdtb" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
         label="15B. Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
       >
-        <a-input-number
-          v-model="form.advPayment"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.advPayment" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
         label="15C. Total Tax Credits/Payments(Sum of Items 15A&15b)"
       >
-        <a-input-number
-          v-model="form.totTaxCredits"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.totTaxCredits" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
         label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
       >
-        <a-input-number
-          v-model="form.amtPayblCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.amtPayblCrdtb" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item label="17. Add: Penalties"></a-form-item>
       <a-form-item class="computation-item" label="17A. Surcharge">
-        <a-input-number
-          v-model="form.surcharge"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.surcharge" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="17B. Interest">
-        <a-input-number
-          v-model="form.interest"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.interest" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="17C. Compromise">
-        <a-input-number
-          v-model="form.compromise"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.compromise" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="17D">
-        <a-input-number
-          v-model="form.penaltiesCrdtb"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.penaltiesCrdtb" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
         label="18. Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
       >
-        <a-input-number
-          v-model="form.total_amount_overremitance"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.total_amount_overremitance" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item label="if overremittance, mark one box only:">
         <a-radio-group v-model="form.overremittance">
@@ -179,69 +139,33 @@
         <b>Part III: Details of Payment</b>
       </a-divider>
       <a-form-item class="computation-item" label="21. Cash/Bank Debit Memo">
-        <a-input-number
-          v-model="form.item21"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item21" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item label="22. Check"></a-form-item>
       <a-form-item class="computation-item" label="22A">
-        <a-input-number
-          v-model="form.item21a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item21a" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="22B">
-        <a-input-number
-          v-model="form.item22b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item22b" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="22C">
-        <a-input-number
-          v-model="form.item22c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item22c" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="22D">
-        <a-input-number
-          v-model="form.item22d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item22d" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item label="23. Others"></a-form-item>
       <a-form-item class="computation-item" label="23A">
-        <a-input-number
-          v-model="form.item23a"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item23a" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="23B">
-        <a-input-number
-          v-model="form.item23b"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item23b" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="23C">
-        <a-input-number
-          v-model="form.item23c"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item23c" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="23D">
-        <a-input-number
-          v-model="form.item23d"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input-number>
+        <a-input-number v-model="form.item23d" style="width:100%"></a-input-number>
       </a-form-item>
 
       <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->

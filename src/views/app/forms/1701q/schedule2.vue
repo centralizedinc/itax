@@ -3,8 +3,8 @@
     <a-drawer
       title="Schedule II – For 8% IT Rate"
       :visible="visible"
-      @cancel="$emit('close')"
-      @ok="handleOk"
+      :closable="false"
+      @close="onClose"
       :width="720"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
@@ -29,6 +29,7 @@
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 v-model="form.sched2.spouse.total_sales_revenue"
+                style="width:100%"
                 placeholder="Sales/Revenues/Receipts/Fees"
               ></a-input-number>
             </a-form-item>
@@ -253,6 +254,9 @@ export default {
     }
   },
   methods: {
+    onClose() {
+      this.visible = false;
+    },
     total_income_quarter() {
       var total = this.computeSum([
         this.form.sched2.taxpayer.total_sales_revenue,

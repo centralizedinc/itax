@@ -14,7 +14,11 @@
       >
         <a-select style="width: 100%" v-model="form.return_period_year" placeholder="For the year">
           <a-select-option key="y0" :value="new Date().getFullYear()">{{new Date().getFullYear()}}</a-select-option>
-          <a-select-option v-for="item in 30" :key="`y${item}`" :value="new Date().getFullYear() - item">{{new Date().getFullYear() - item}}</a-select-option>
+          <a-select-option
+            v-for="item in 30"
+            :key="`y${item}`"
+            :value="new Date().getFullYear() - item"
+          >{{new Date().getFullYear() - item}}</a-select-option>
         </a-select>
         <!-- <a-month-picker style="width: 100%" v-model="form.return_period_year" /> -->
       </a-form-item>
@@ -44,7 +48,7 @@
         </a-radio-group>
       </a-form-item>
       <a-form-item label="4. Number of Sheets">
-        <a-input-number v-model="form.num_of_sheet" style="width: 100%" />
+        <a-input-number v-model="form.num_of_sheet" style="width: 100%"></a-input-number>
       </a-form-item>
     </a-form>
 
@@ -66,7 +70,7 @@
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
       <a-form-item label="7. Tax Filer Type">
-        <a-radio-group v-model="form.taxpayer.filer_type">
+        <a-radio-group v-model="form.taxpayer.filer_type" @change="atc_code_change">
           <a-radio :value="'SP'">Single Proprietor</a-radio>
           <a-radio :value="'PRO'">Professional</a-radio>
           <a-radio :value="'EST'">Estate</a-radio>
@@ -74,35 +78,29 @@
         </a-radio-group>
       </a-form-item>
       <a-form-item label="8. Alphanumeric Tax Code (ATC)">
-        <a-radio-group v-model="form.taxpayer_atc_code" @change="changeATC">
+        <a-radio-group v-model="form.taxpayer_atc_code">
           <a-radio
             :value="'II012'"
-            @change="form.taxpayer_tax_rate = 'GR'"
             :disabled="form.taxpayer.filer_type == 'PRO' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II012 Business Income-Graduated IT Rates</a-radio>
           <a-radio
             :value="'II015'"
-            @change="form.taxpayer_tax_rate = 'GS'"
             :disabled="form.taxpayer.filer_type == 'PRO' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II015 Business Income - 8% IT Rate</a-radio>
           <a-radio
             :value="'II014'"
-            @change="form.taxpayer_tax_rate = 'GR'"
             :disabled="form.taxpayer.filer_type == 'SP' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II014 Income from Profession–Graduated IT Rates</a-radio>
           <a-radio
             :value="'II017'"
-            @change="form.taxpayer_tax_rate = 'GS'"
             :disabled="form.taxpayer.filer_type == 'SP' ||form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II017 Income from Profession – 8% IT Rate</a-radio>
           <a-radio
             :value="'II013'"
-            @change="form.taxpayer_tax_rate = 'GR'"
             :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II013 Mixed Income–Graduated IT Rates</a-radio>
           <a-radio
             :value="'II016'"
-            @change="form.taxpayer_tax_rate = 'GS'"
             :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
           >II016 Mixed Income – 8% IT Rate</a-radio>
         </a-radio-group>
@@ -161,7 +159,7 @@
         </a-radio-group>
       </a-form-item>
       <a-form-item label="16. Tax Rate*(choose one,for income from business/profession):">
-        <a-radio-group v-model="form.taxpayer_tax_rate" disabled>
+        <a-radio-group v-model="form.taxpayer_tax_rate" :value="changeATC()" disabled>
           <a-radio
             :value="'GR'"
           >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
@@ -186,8 +184,7 @@
           <a-radio :value="'ID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
           <a-radio
             :value="'OSD'"
-          >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees</a-radio>
-          <p>[Sec. 34(L), NIRC]</p>
+          >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees[Sec. 34(L), NIRC]</a-radio>
         </a-radio-group>
       </a-form-item>
     </a-form>
@@ -203,8 +200,6 @@
           style="width:100%"
           placeholder="Tax Identification Number"
           v-model="form.spouse_details.tin"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
         ></a-input-number>
       </a-form-item>
       <a-form-item label="18. RDO Code">
@@ -240,37 +235,37 @@
           <a-radio
             :value="'SII012'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.taxpayer.spouse_tax_filter_type !=='SSP'"
+            :disabled="form.spouse_details.filer_type !=='SSP'"
           >II012 Business Income-Graduated IT Rates</a-radio>
           <a-radio
             :value="'SII015'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.taxpayer.spouse_tax_filter_type !=='SSP'"
+            :disabled="form.spouse_details.filer_type !=='SSP'"
           >II015 Business Income - 8% IT Rate</a-radio>
           <a-radio
             :value="'SII014'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.taxpayer.spouse_tax_filter_type !=='SPRO'"
+            :disabled="form.spouse_details.filer_type !=='SPRO'"
           >II014 Income from Profession–Graduated IT Rates</a-radio>
           <a-radio
             :value="'SII017'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.taxpayer.spouse_tax_filter_type !=='SPRO'"
+            :disabled="form.spouse_details.filer_type !=='SPRO'"
           >II017 Income from Profession – 8% IT Rate</a-radio>
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.taxpayer.spouse_tax_filter_type =='SPRO' || form.taxpayer.spouse_tax_filter_type =='SSP' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
+            :disabled="form.spouse_details.filer_type =='SPRO' || form.taxpayer.spouse_tax_filter_type =='SSP' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
           >II013 Mixed Income–Graduated IT Rates</a-radio>
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.taxpayer.spouse_tax_filter_type =='SPRO' || form.taxpayer.spouse_tax_filter_type =='SSP' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
+            :disabled="form.spouse_details.filer_type =='SPRO' || form.taxpayer.spouse_tax_filter_type =='SSP' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
           >II016 Mixed Income – 8% IT Rate</a-radio>
           <a-radio
             :value="'SII011'"
             @change="form.spouse_tax_rate =''"
-            :disabled="form.taxpayer.spouse_tax_filter_type !=='SCE'"
+            :disabled="form.spouse_details.filer_type !=='SCE'"
           >II011 Compensation Income</a-radio>
         </a-radio-group>
       </a-form-item>
@@ -479,6 +474,7 @@
       </a-row>
       <a-row :gutter="16">
         <a-col :span="12">
+          Aggregate Amount Payable/(Overpayment)
           <a-form-item
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
@@ -619,10 +615,9 @@ export default {
         holder = "SCE";
       }
       this.spouse_type_list_holder = this.pro;
-      this.form.taxpayer.spouse_tax_filter_type = holder;
+      this.form.spouse_details.filer_type = holder;
       console.log(
-        "spouse_tax_filter_type data: " +
-          this.form.taxpayer.spouse_tax_filter_type
+        "spouse_tax_filter_type data: " + this.form.spouse_details.filer_type
       );
     },
     spouse_type_filter() {},
@@ -732,8 +727,11 @@ export default {
           this.loading = false;
         });
     },
+    atc_code_change() {
+      this.form.taxpayer_atc_code = "";
+    },
     changeATC(e) {
-      const value = e.target.value;
+      const value = this.form.taxpayer_atc_code;
       console.log("change ATC value :", value);
       const for_gr = ["II012", "II014", "II013"];
       const for_gs = ["II015", "II017", "II016"];
