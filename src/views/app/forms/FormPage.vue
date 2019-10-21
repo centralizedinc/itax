@@ -156,6 +156,7 @@ import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
+import Form1600WP from "./1600wp/1600wp.vue";
 import Form1604E from "./1604e/1604e.vue";
 import Form1601F from "./1601f/1601f.vue";
 
@@ -170,6 +171,7 @@ export default {
     Form1701Q,
     Form2550Q,
     Form2000OT,
+    Form1600WP,
     Form1604E,
     Form1601F
   },
@@ -262,6 +264,7 @@ export default {
             description: "Computation"
           }
         ],
+        
         "1700": [
           {
             title: "General"
@@ -325,7 +328,20 @@ export default {
             title: "Part III",
             description: "Computation of Tax"
           }
-        ]
+        ],
+        "1600wp": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation of Tax"
+          }
+        ],
       },
       default_steps: [
         {

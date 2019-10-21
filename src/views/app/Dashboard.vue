@@ -77,7 +77,7 @@
                     <template v-if="getAttachments(item.reference_no)">
                         <a-row>
                           <a-col :span="8">
-                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom" @click="window.open(getAttachments(item.reference_no))" /> 
+                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom; border: 1px solid" @click="window.open(getAttachments(item.reference_no))" /> 
                           </a-col>
                         </a-row>
                         

@@ -1,4 +1,4 @@
-const model = require('../models/UserModel');
+const model = require('../models/paymentDetailModel');
 
 class PaymentDao {
     /**
@@ -45,7 +45,7 @@ class PaymentDao {
      * @param {Object} details 
      */
     static create(details) {
-        details.payment_conf_no = new Date().getTime();
+        // details.payment_conf_no = new Date().getTime();
         return (new model(details)).save()
     }
 
@@ -56,6 +56,7 @@ class PaymentDao {
     static createMany(details) {
         return model.insertMany(details);
     }
+    
 }
 
 module.exports = PaymentDao

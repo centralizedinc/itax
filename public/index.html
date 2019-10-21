@@ -36,7 +36,7 @@
         color: #1cb5e0;
         width: 100px;
         height: 30px;
-        margin: -7px 0 0 -45px;
+        margin: -1px 0 0 -45px;
         text-align: center;
         font-family:"Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
         font-size: 12px;
@@ -86,12 +86,24 @@
         <div id="loading-text">
           SmartTax.
         </div>
-        <div id="loading-subtext">Getting ready...</div>
+        <div id="loading-subtext"></div>
         <div id="loading-content"></div>
       </div>
     </div>
     <!-- built files will be auto injected -->
+    <script>
     
+      if(document.location.hash.includes('facebook')){
+        document.getElementById('loading-subtext').innerHTML=`Connecting to Facebook...`;
+      }else if(document.location.hash.includes('google')){
+        document.getElementById('loading-subtext').innerHTML=`Connecting to Google...`;
+      }else if(document.location.hash.includes('tax/form')){
+        document.getElementById('loading-subtext').innerHTML=`Preparing your tax returns...`;
+      }else{
+        document.getElementById('loading-subtext').innerHTML=`Loading...`;
+      }
+      
+    </script>
     
   </body>
 </html>
