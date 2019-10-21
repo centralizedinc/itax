@@ -51,7 +51,9 @@ class Form1603Dao {
             (new model(form_details)).save()
                 .then((result) => {
                     const reference_no = generateReferenceNo(result.auto_id);
-                    return this.modifyById(result._id, { reference_no })
+                    return this.modifyById(result._id, {
+                        reference_no
+                    })
                 })
                 .then((result) => {
                     resolve(result);

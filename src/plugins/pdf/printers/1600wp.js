@@ -700,7 +700,7 @@ function getContent(forms) {
             }
         },
         {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [530],
                 heights: [12],
@@ -716,45 +716,132 @@ function getContent(forms) {
             }
         },
         {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
-                widths: [9, 12, 35, 21, 12, 35, 20, 28, 28, 26, 35],
+                widths: [19, 15, 35, 21, 15, 35, 50, 35, 28, 40, 140],
                 heights: [8],
                 body: [
                     [
 
+                        //frommPeriod month
                         {
-                            text: "",
+                            text: formatDate(forms.frommPeriod, {
+                                month: "2-digit"
+                            }),
+
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-3, 0, 0, 0]
+                        },
+                        //fromPeriod day     
+                        {
+                            text: formatDate(forms.frommPeriod, {
+                                day: "2-digit"
+                            }),
+
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-8, 0, 0, 0]
+                        },
+                        //                 //fromPeriod year
+                        {
+                            text: formatDate(forms.frommPeriod, {
+                                year: "numeric"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-9, 0, 0, 0]
+                        },
+                        //tooPeriod month
+                        {
+                            text: formatDate(forms.tooPeriod, {
+                                month: "2-digit"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-2, 0, 0, 0]
+                        },
+                        //toPeriod day
+                        {
+                            text: formatDate(forms.tooPeriod, {
+                                day: "2-digit"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-8, 0, 0, 0]
+                        },
+                        //toPeriod year
+                        {
+                            text: formatDate(forms.tooPeriod, {
+                                year: "numeric"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 4,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-10, 0, 0, 0]
                         },
                         {
-                            text: "",
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [26, 0, 0, 0]
                         },
                         {
-                            text: "",
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [5, 0, 0, 0]
                         },
                         {
-                            text: "",
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-2, 0, 0, 0]
                         },
                         {
-                            text: "",
+                            text: mapTin(forms.taxpayer.tin, 9, 12),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 5,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-1, 0, 0, 0]
                         },
-                        {
-                            text: "",
-                        },
-                        {
-                            text: "",
-                        },
-                        {
-                            text: "",
-                        },
-                        {
-                            text: "",
-                        },
-                        {
-                            text: "",
-                        },
-                        {
-                            text: "",
+                          // #16 withholding agent's name
+                          {
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [17, 0, 0, 0]
                         },
 
                     ]
@@ -763,6 +850,52 @@ function getContent(forms) {
         },
 
 
+        // #5 tin
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [50, 50, 45, 59, 60, 60, 45, 40],
+        //         body: [
+        //             [{
+        //                     text: mapTin(forms.taxpayer.tin, 0, 3),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 3,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [15, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: mapTin(forms.taxpayer.tin, 3, 6),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 3,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [12, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: mapTin(forms.taxpayer.tin, 6, 9),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 3,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [8, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: mapTin(forms.taxpayer.tin, 9, 12),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 5,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [10, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: "",
+
+        //                 },
         //table 2 amendded
         //   {
         // layout: "noBorders",

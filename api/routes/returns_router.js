@@ -15,6 +15,7 @@ var ReturnsDetailsModel = require('../models/ReturnDetailsModel.js');
 
 // Dao
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
+const ReturnPeriodDao = require('../dao/references/ReturnPeriodDao');
 
 /**
  * route /returns/
@@ -53,17 +54,22 @@ returns_router.route("/")
 
 returns_router.route("/validate/:form_type")
     .post((req, res) => {
+        // ReturnPeriodDao.findOneByForm(req.params.form_type)
+        //     .then((reference) => {
+        //         if (reference) {
+
+
+
         // validation
-        const { errors, due_date } = validateForm(req.params.form_type, req.body);
+        var { errors, form_details } = validateForm(req.params.form_type, req.body);
 
         // check the errors
         if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
             // save if there is no error
-            var data = req.body;
+            console.log('form_details :', form_details);
             console.log('jwt.decode(req.headers.access_token).account_id :', jwt.decode(req.headers.access_token).account_id);
-            data.created_by = jwt.decode(req.headers.access_token).account_id;
-            data.due_date = due_date;
-            saveForm(req.params.form_type, data)
+            form_details.created_by = jwt.decode(req.headers.access_token).account_id;
+            saveForm(req.params.form_type, form_details)
                 .then((result) => {
                     res.json({ model: result });
                 }).catch((err) => {
@@ -73,6 +79,17 @@ returns_router.route("/validate/:form_type")
             // return the errors
             res.json({ errors });
         }
+        //     } else {
+        //         res.json({
+        //             success: false,
+        //             errors: [{
+        //                 message: "Invalid Form Type"
+        //             }]
+        //         })
+        //     }
+        // }).catch((err) => {
+
+        // });
     })
 
 returns_router.route("/:tin")

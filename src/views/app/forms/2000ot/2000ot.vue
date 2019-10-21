@@ -5,6 +5,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="1"
+        :validate-status="error_item('return_period')"
+        :help="error_desc('return_period')"
       >
         <a-date-picker
           placeholder="Date of Transaction Purchase (MM/DD/YYYY)"
@@ -33,8 +35,17 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="4"
+        :validate-status="error_item('atc_code')"
+        :help="error_desc('atc_code')"
       >
-        <a-input-number placeholder="ATC" v-model="form.atc" style="width: 100%" />
+        <a-select v-model="form.atc_code" @change="changeATC">
+          <a-select-option value="DS102">
+            DS 102 Sales, Agreements to Sell, Memoranda of Sales, Deliveries or Transfer of
+            Shares or Certificates of Stock with par value
+          </a-select-option>
+          <a-select-option value="DS125">DS 125 In case of stock without par value</a-select-option>
+          <a-select-option value="DS122">DS 122 Deed of Sale and conveyance of real property</a-select-option>
+        </a-select>
       </a-form-item>
     </a-form>
 
@@ -44,6 +55,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="5"
+        :validate-status="error_item('taxpayer.tin')"
+        :help="error_desc('taxpayer.tin')"
       >
         <a-input placeholder="TIN" v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
@@ -52,6 +65,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="6"
+        :validate-status="error_item('taxpayer.rdo_code')"
+        :help="error_desc('taxpayer.rdo_code')"
       >
         <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
@@ -60,14 +75,18 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="7"
+        :validate-status="error_item('taxpayer.contact_details.telno')"
+        :help="error_desc('taxpayer.contact_details.telno')"
       >
-        <a-input placeholder="Telephone Number" v-model="form.taxpayer.contact_details.tel_no"></a-input>
+        <a-input placeholder="Telephone Number" v-model="form.taxpayer.contact_details.telno"></a-input>
       </a-form-item>
 
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="8"
+        :validate-status="error_item('taxpayer.registered_name')"
+        :help="error_desc('taxpayer.registered_name')"
       >
         <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
@@ -76,6 +95,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="9"
+        :validate-status="error_item('taxpayer.address')"
+        :help="error_desc('taxpayer.address')"
       >
         <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
       </a-form-item>
@@ -84,6 +105,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="10"
+        :validate-status="error_item('taxpayer.address_details.zipCode')"
+        :help="error_desc('taxpayer.address_details.zipCode')"
       >
         <a-input
           placeholder="Zip Code"
@@ -97,13 +120,20 @@
     <a-form v-show="step===2">
       <a-form-item>
         <div style="color: black">11. Nature of transaction</div>
-        <a-form-item>
-          <a-radio-group v-model="form.natureOfTransaction">
-            <a-radio :value="'CA'">Transfer of Real Property classified as capital asset</a-radio>
+        <a-form-item
+          :validate-status="error_item('natureOfTransaction')"
+          :help="error_desc('natureOfTransaction')"
+        >
+          <a-radio-group v-model="form.natureOfTransaction" @change="changeNatureOfTrans">
+            <a-radio
+              value="real_property_capital"
+            >Transfer of Real Property classified as capital asset</a-radio>
             <br />
-            <a-radio :value="'OA'">Transfer of Real Property classified as ordinary asset</a-radio>
+            <a-radio
+              value="real_property_ordinary"
+            >Transfer of Real Property classified as ordinary asset</a-radio>
             <br />
-            <a-radio :value="'NT'">
+            <a-radio value="shares_stock">
               Transfer of shares of stock not traded through the local stock exchange
               <br />
               <span
@@ -168,13 +198,16 @@
         <div style="color: black">12. Brief Description of Property Sold</div>
         <a-form-item>
           <a-radio-group v-model="form.propertySold">
-            <a-radio :value="'PropDesc_RP'" @change="sel_property_desc">Real Property</a-radio>
-            <a-radio :value="'PropDesc_SS'">Shares of Stocks not Traded in the Local Stock Exchange</a-radio>
+            <a-radio disabled value="real_property">Real Property</a-radio>
+            <a-radio
+              disabled
+              value="shares_stock"
+            >Shares of Stocks not Traded in the Local Stock Exchange</a-radio>
           </a-radio-group>
         </a-form-item>
       </a-form-item>
 
-      <a-form-item v-show="form.propertySold=='PropDesc_RP'">
+      <a-form-item v-show="form.propertySold=='real_property'">
         <a-form-item>
           <a-row :gutter="12">
             <a-col :span="12">
@@ -191,7 +224,10 @@
           </a-row>
         </a-form-item>
         <div style="color: black">12A. Classification of Real Property</div>
-        <a-form-item>
+        <a-form-item
+          :validate-status="error_item('realPropertyClass')"
+          :help="error_desc('realPropertyClass')"
+        >
           <a-radio-group v-model="form.realPropertyClass">
             <a-radio :value="'R'">Residential</a-radio>
             <a-radio :value="'C'">Commercial</a-radio>
@@ -256,6 +292,7 @@
                   label="12F"
                 >
                   <a-input
+                    disabled
                     v-model="form.fairMarketValue"
                     placeholder="Fair Market Value of Property Sold (Schedule 1)."
                   ></a-input>
@@ -277,7 +314,7 @@
 
       <br />
 
-      <a-form-item v-show="form.propertySold=='PropDesc_SS'">
+      <a-form-item v-show="form.propertySold=='shares_stock'">
         <a-row :gutter="12">
           <a-col :span="24">
             <a-form-item
@@ -288,7 +325,8 @@
               <a-input v-model="form.stockname" placeholder="Name of Corporate Stock"></a-input>
             </a-form-item>
           </a-col>
-
+        </a-row>
+        <a-row :gutter="12">
           <a-col :span="24">
             <a-form-item
               :labelCol="form_layout.label_col"
@@ -359,8 +397,9 @@
               label="13"
             >
               <a-input
+                disabled
                 placeholder="Taxable Base - Real Property (Item 12E or 12F, whichever is applicable)"
-                v-model="form.realPropertyTaxBase"
+                :value="getRealPropertyTaxBase()"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -376,8 +415,9 @@
               label="14"
             >
               <a-input
+                disabled
                 placeholder="Taxable Base - Shares of Stock ( Item 12K or 12L, whichever is applicable)"
-                v-model="form.sharesStockTaxBase"
+                :value="getsharesStockTaxBase()"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -392,7 +432,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="15"
             >
-              <a-input placeholder="Tax Rate " v-model="form.taxRate"></a-input>
+              <a-input disabled placeholder="Tax Rate " v-model="form.taxRate"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -406,7 +446,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="16"
             >
-              <a-input placeholder="Tax Due " v-model="form.prev_tax_due"></a-input>
+              <a-input disabled :value="getPrevTaxDue()" placeholder="Tax Due"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -421,8 +461,9 @@
               label="17"
             >
               <a-input
+                disabled
                 placeholder="Less : Tax Paid in Return previously filed, if this is an amended return"
-                v-model="form.prevTaxPaid"
+                v-model="form.prev_tax_paid"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -437,7 +478,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="18"
             >
-              <a-input placeholder="Tax Still Due/(Overpayment)" v-model="form.tax_due"></a-input>
+              <a-input
+                disabled
+                :value="getTaxDue()"
+                placeholder="Tax Still Due/(Overpayment)"
+              ></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -454,8 +499,10 @@
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="19A"
+              :validate-status="error_item('surcharge')"
+              :help="error_desc('surcharge')"
             >
-              <a-input placeholder="Surcharge" v-model="form.surcharge"></a-input>
+              <a-input-number placeholder="Surcharge" v-model="form.surcharge"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -463,8 +510,10 @@
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="19B"
+              :validate-status="error_item('interest')"
+              :help="error_desc('interest')"
             >
-              <a-input placeholder="Interest" v-model="form.interest"></a-input>
+              <a-input-number placeholder="Interest" v-model="form.interest"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -477,8 +526,10 @@
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="19C"
+              :validate-status="error_item('compromise')"
+              :help="error_desc('compromise')"
             >
-              <a-input placeholder="Compromise" v-model="form.compromise"></a-input>
+              <a-input-number placeholder="Compromise" v-model="form.compromise"></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -487,7 +538,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="19D"
             >
-              <a-input placeholder="Penalties" v-model="form.penalties"></a-input>
+              <a-input disabled placeholder="Penalties" :value="getPenalties()"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -502,8 +553,9 @@
               label="20"
             >
               <a-input
+                disabled
+                :value="getTotalAmountPayable()"
                 placeholder="Total Amount Payable/(overpayment)(Sum of Items 18 and 19D) "
-                v-model="form.totalAmountPayable"
               ></a-input>
             </a-form-item>
           </a-col>
@@ -520,7 +572,7 @@ export default {
   components: {
     ScheduleOne
   },
-  props: ["form", "step"],
+  props: ["form", "step", "errors"],
   data() {
     return {
       loading: false,
@@ -535,8 +587,7 @@ export default {
       form_layout: {
         label_col: { span: 2 },
         wrapper_col: { span: 22 }
-      },
-      errors: []
+      }
     };
   },
   computed: {},
@@ -546,24 +597,124 @@ export default {
     },
     form: {
       deep: true,
-      handler() {
-        console.log("2000OT form: " + this.form.return_period);
-        // this.form.year = this.formatDtYear(this.form.return_period);
-        // this.form.month = this.formatDtMonth(this.form.return_period);
-        // this.form.return_period_year = this.formatDtYear(this.form.return_period);
-        // this.form.returnPeriodDay = this.formatDate(this.form.return_period, {
-        //   day: "2-digit"
-        // });
-        console.log("this.form.returnPeriodDay :", this.form.returnPeriodDay);
-        // this.form.return_period_month = this.formatDtMonth(
-        //   this.form.return_period
-        // );
-        console.log("year: " + this.form.month);
+      handler(val) {
+        console.log("form :", val);
       }
     },
     step() {}
   },
   methods: {
+    getTotalAmountPayable() {
+      var total = this.computeSum([
+        this.form.penalties,
+        this.form.tax_due
+      ]);
+      this.form.total_amount_payable = total;
+    },
+    getPenalties() {
+      var total = this.computeSum([
+        this.form.surcharge,
+        this.form.interest,
+        this.form.compromise
+      ]);
+      this.form.penalties = total;
+
+      return total;
+    },
+    getPrevTaxDue() {
+      var total = 0;
+      if (this.form.atc_code === "DS102") {
+        total =
+          ((this.form.realPropertyTaxBase ||
+            this.form.sharesStockTaxBase ||
+            0) /
+            200) *
+          1.5;
+      } else if (this.form.atc_code === "DS125") {
+        total =
+          (this.form.realPropertyTaxBase || this.form.sharesStockTaxBase || 0) /
+          2;
+      } else if (this.form.atc_code === "DS122") {
+        total =
+          ((this.form.realPropertyTaxBase ||
+            this.form.sharesStockTaxBase ||
+            0) /
+            1000) *
+          15;
+      }
+      this.form.prev_tax_due = total;
+    },
+    getTaxDue() {
+      var total = this.form.prev_tax_due;
+      if (!this.form.prev_tax_paid) {
+        total = this.form.prev_tax_due - this.form.prev_tax_paid;
+      }
+      this.form.tax_due = total;
+
+      return total;
+    },
+    // item 13
+    getRealPropertyTaxBase() {
+      var max_value = Math.max(
+        this.form.sellingPrice || 0,
+        this.form.fairMarketValue || 0
+      );
+      this.form.realPropertyTaxBase = max_value;
+      return max_value;
+    },
+    // item 14
+    getsharesStockTaxBase() {
+      var max_value = Math.max(
+        this.form.parValueShares || 0,
+        this.form.dstPaid || 0
+      );
+      this.form.sharesStockTaxBase = max_value;
+      return max_value;
+    },
+    changeNatureOfTrans() {
+      if (
+        this.form.natureOfTransaction === "real_property_ordinary" ||
+        this.form.natureOfTransaction === "real_property_capital"
+      ) {
+        this.form.propertySold = "real_property";
+      } else if (this.form.natureOfTransaction === "shares_stock") {
+        this.form.propertySold = "shares_stock";
+      }
+      this.form.locationOfRealProp = "";
+      this.form.rdoRealProp = "";
+      this.form.realPropertyClass = "";
+      this.form.others = "";
+      this.form.areaOfProperty = "";
+      this.form.tctNo = "";
+      this.form.taxDecNo = "";
+      this.form.sellingPrice = 0;
+      this.form.fairMarketValue = 0;
+      this.form.stockname = "";
+      this.form.stockTin = "";
+      this.form.sharesSold = "";
+      this.form.stockCertNo = "";
+      this.form.parValueShares = 0;
+      this.form.dstPaid = 0;
+      this.form.schedule1 = {
+        commissionerLand: 0,
+        commissionerImprovement: 0,
+        commissionerTotal: 0,
+        provincialLand: 0,
+        provincialImprovement: 0,
+        provincialTotal: 0,
+        sum1A2B: 0,
+        sum1B2A: 0
+      };
+    },
+    changeATC(e) {
+      if (this.form.atc_code === "DS102") {
+        this.form.taxRate = "P1.5/200";
+      } else if (this.form.atc_code === "DS125") {
+        this.form.taxRate = "0.5";
+      } else if (this.form.atc_code === "DS122") {
+        this.form.taxRate = "P15/1000";
+      }
+    },
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
@@ -578,6 +729,9 @@ export default {
     },
     validate() {
       this.changeStep(this.step + 1);
+    },
+    updateSchedAndClose() {
+      this.show_sched1 = false;
     }
   }
 };

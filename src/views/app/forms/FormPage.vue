@@ -110,7 +110,7 @@
                 <a-list-item-meta>
                   <p
                     slot="title"
-                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
+                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`:'item.corporate_details.registeredName'}}</p>
                   <template slot="description">
                     <p>
                       <b>{{formatTIN(item.tin)}}</b>
@@ -157,6 +157,8 @@ import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
 import Form1600WP from "./1600wp/1600wp.vue";
+import Form1604E from "./1604e/1604e.vue";
+import Form1601F from "./1601f/1601f.vue";
 
 export default {
   components: {
@@ -169,7 +171,9 @@ export default {
     Form1701Q,
     Form2550Q,
     Form2000OT,
-    Form1600WP
+    Form1600WP,
+    Form1604E,
+    Form1601F
   },
   computed: {
     affix_computation() {
@@ -209,7 +213,11 @@ export default {
           contact_details: {},
           address_details: {}
         },
-        sched1: []
+        spouse_details: {},
+        sched1: { taxpayer: {}, spouse: {} },
+        sched2: { taxpayer: {}, spouse: {} },
+        sched3: { taxpayer: {}, spouse: {} },
+        sched4: { taxpayer: {}, spouse: {} }
       },
       curr_step: 0,
       steps: {
@@ -331,7 +339,7 @@ export default {
           },
           {
             title: "Part II",
-            description: "Computation"
+            description: "Computation of Tax"
           }
         ],
       },
@@ -372,7 +380,7 @@ export default {
     },
     select(index) {
       if (index > -1) {
-        this.taxpayer = this.taxpayer_list[index];
+        this.taxpayer = this.deepCopy(this.taxpayer_list[index]);
         this.selected_index = index;
       }
     },
@@ -390,7 +398,7 @@ export default {
       if (!this.form.taxpayer.registered_name) {
         this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
       }
-      console.log(`form::::`, JSON.stringify(this.form.taxpayer));
+      console.log(`form::::`, this.form.taxpayer);
       this.view_select = false;
     },
     saveDraft() {
@@ -431,7 +439,6 @@ export default {
     },
     proceedPayment() {
       if (window.opener && window.opener.location) {
-        console.log('window.opener :', window.opener);
         window.opener.location.href = `${process.env.VUE_APP_HOME_URL}app/pay`;
         window.opener.location.reload();
       }
@@ -440,6 +447,7 @@ export default {
     submit() {
       this.loading = true;
       this.errors = [];
+
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: this.form_type,
@@ -453,8 +461,11 @@ export default {
           if (result.data.errors && result.data.errors.length > 0) {
             this.errors = result.data.errors;
             console.log("this.errors :", this.errors);
-            if (this.errors && this.errors[0] && this.errors[0].page !== null)
-              this.curr_step = this.errors[0].page;
+            if (this.errors && this.errors.length) {
+              var errors = this.errors.sort((a, b) => a.page - b.page);
+              console.log("this.errors :", errors);
+              this.curr_step = errors[0].page;
+            }
             this.$notification.error({ message: "Validation Error" });
           } else {
             this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
@@ -466,6 +477,27 @@ export default {
             return_details.registered_name = this.form.taxpayer.registered_name;
             return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
             this.showSuccessForm(return_details);
+
+            this.$refs.form_display_component.upload().getBuffer(buffer => {
+              var file = new Blob([buffer], { type: "application/pdf" });
+              // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
+              var data = new FormData();
+              data.append("tax_returns", file);
+              data.append("content-type", "application/pdf");
+
+              this.$store
+                .dispatch("UPLOAD_TAX_RETURNS", {
+                  form: this.form_type,
+                  ref_no: return_details.reference_no,
+                  form_data: data
+                })
+                .then(result => {
+                  console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
+                })
+                .catch(err => {
+                  console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
+                });
+            });
           }
         })
         .catch(err => {
@@ -497,7 +529,6 @@ export default {
         this.view_select = false;
       }
     }
-    console.log("this.form :", this.form);
     console.log("Form Type :", this.form_type);
     this.curr_step = 0;
     window.addEventListener("scroll", this.handleScroll);
@@ -506,7 +537,6 @@ export default {
     this.$http
       .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
       .then(results => {
-        console.log("result1 ::: ", JSON.stringify(results.data));
         this.taxpayer_list.push(results.data.model.taxpayer);
         this.user_list.push(results.data.model.user);
         return this.$http.get(
@@ -514,7 +544,6 @@ export default {
         );
       })
       .then(results => {
-        console.log("result2 ::: ", JSON.stringify(results.data));
         var tins = [];
         results.data.model.forEach(tin => {
           tins.push(tin.to);
@@ -522,7 +551,6 @@ export default {
         return this.$http.post("/taxpayer/details/", tins);
       })
       .then(results => {
-        console.log("result2 ::: ", JSON.stringify(results.data));
         this.loading = false;
 
         this.taxpayer_list.push(...results.data.model.taxpayers);
@@ -535,14 +563,6 @@ export default {
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
-  },
-  watch: {
-    form: {
-      handler(val) {
-        console.log("val :", val);
-      },
-      deep: true
-    }
   }
 };
 </script>

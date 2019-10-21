@@ -6,6 +6,7 @@ const model = {
         type: String
     },
     taxpayer: {},
+    spouse_details: {},
     due_date: {
         type: Date
     },
@@ -17,6 +18,20 @@ const model = {
     },
     return_period_year: {
         type: String
+    },
+    accounting_type: {
+        type: String
+        /**
+         * c - calendar
+         * f - fiscal
+         */
+    },
+    quarter: {
+        type: Number,
+        default: 0
+            /**
+             * 0, 1, 2
+             */
     },
     amended_yn: {
         type: Boolean,
