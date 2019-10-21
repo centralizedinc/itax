@@ -1,4 +1,4 @@
-const model = require('../../models/forms/form2551QModel');
+const model = require('../../models/forms/Form2551QDao');
 
 class Form2551QDao {
     /**
