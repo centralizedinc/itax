@@ -36,11 +36,13 @@ const model_schema = {
     //Part V.A Graduate Rates
 
     graduated_rates: [{
+        desc_specify: {type: String}, //45
         taxpayer: {
             gross_compensation_income: { type: Number, default: 0 },  //42 A
             non_taxable: { type: Number, default: 0 }, //43 A
             gross_taxable: { type: Number, default: 0 }, //44 A
             other_taxable: { type: Number, default: 0 }, //45 A
+
             tot_taxable_income: { type: Number, default: 0 }, //46 A
             tax_due: { type: Number, default: 0 }, //47 A
         },
@@ -50,6 +52,7 @@ const model_schema = {
             non_taxable: { type: Number, default: 0 }, //43 B
             gross_taxable: { type: Number, default: 0 }, //44 B
             other_taxable: { type: Number, default: 0 }, //45 B
+
             tot_taxable_income: { type: Number, default: 0 }, //46 B
             tax_due: { type: Number, default: 0 }, //47 B
         }
@@ -59,10 +62,14 @@ const model_schema = {
     //Part V.B Flat Rate
 
     flat_rate: [{
+        desc_specify_non_tax: {type: String}, //49
+        desc_specify_other_tax: {type: String}, //51
         taxpayer: {
             gross_compensation_income: { type: Number, default: 0 },  //48 A
             non_taxable: { type: Number, default: 0 }, //49 A
+
             gross_taxable: { type: Number, default: 0 }, //50 A
+
             other_taxable: { type: Number, default: 0 }, //51 A
             tot_taxable_income: { type: Number, default: 0 }, //52 A
             tax_due: { type: Number, default: 0 }, //53 A
@@ -70,7 +77,9 @@ const model_schema = {
         spouse_taxpayer: {
             gross_compensation_income: { type: Number, default: 0 },  //48 B
             non_taxable: { type: Number, default: 0 }, //49 B
+
             gross_taxable: { type: Number, default: 0 }, //50 B
+
             other_taxable: { type: Number, default: 0 }, //51 B
             tot_taxable_income: { type: Number, default: 0 }, //52 B
             tax_due: { type: Number, default: 0 }, //53 B
@@ -82,11 +91,13 @@ const model_schema = {
     //Part V.C Tax Credit Payment
 
     tax_credit_payment: {
+        desc_specify: {type: String}, //57
         taxpayer: {
             tax_wittheld: { type: Number, default: 0 }, //54 A
             tax_paid_return: { type: Number, default: 0 },// 55 A
             foreign_tax_credit: { type: Number, default: 0 },// 56 A
             other_tax: { type: Number, default: 0 },//57 A
+
             total_tax: { type: Number, default: 0 },//58 A
             net_tax_payable: { type: Number, default: 0 },//59 A
         },
