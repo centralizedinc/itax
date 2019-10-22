@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 1702EX (JANUARY 2018)
+ * @author Mark
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1702-EX%20Jan%202018%20ENCS%20Final%20v3.pdf
+ * @version 1.0 - 10/21/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
