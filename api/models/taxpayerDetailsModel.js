@@ -9,7 +9,7 @@ var taxpayerDetailsSchema = new Schema({
   branch_code: String,
   rdo_code: String,
   line_of_business: String,
-  taxpayer_type: String,
+  taxpayer_type: String, // Individuals || Non individuals
   start_month: Number,
   accounting_type: {
     type: String
@@ -54,7 +54,14 @@ var taxpayerDetailsSchema = new Schema({
      */
     spouseTin: String,
     spouseBranchCode: String,
-    citizenship: String
+    citizenship: String,
+    taxpayer_type: {
+      type: String
+      /**
+       * Employee || Regular Rates - regular
+       * NRANETB - nranetb
+       */
+    }
   },
   corporate_details: {
     registeredName: String,
