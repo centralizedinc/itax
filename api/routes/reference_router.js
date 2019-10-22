@@ -54,7 +54,7 @@ reference_router.route("/rdos")
 reference_router.route('/return_period')
     .get((req, res) => {
         console.log("Fields :", req.query.fields);
-        var query = req.query, fields = '', conditions = {};
+        var query = req.query, fields = '';
         if (query.fields) {
             fields = query.fields.split(',').join(' ');
             query.fields = undefined;
