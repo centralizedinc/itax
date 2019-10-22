@@ -4,20 +4,40 @@
       <a-divider>
         <b>Withholding Tax Declaration (1601E)</b>
       </a-divider>
-      <a-form-item label="1. For the month of (MM/YYYY)">
-        <a-month-picker v-model="form.return_period" />
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="1."
+      >
+        <a-month-picker
+          v-model="form.return_period"
+          style="width:100%"
+          placeholder="For the month of (MM/YYYY)"
+        />
       </a-form-item>
-      <a-form-item label="2. Amended Return">
-        <a-radio-group v-model="form.amended_yn">
+      <a-form-item
+        label="2."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-radio-group v-model="form.amended_yn" placeholder="Amended Return" style="width:100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-model="form.num_of_sheet"></a-input-number>
+      <a-form-item
+        label="3."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          v-model="form.num_of_sheet"
+          style="width:100%"
+          placeholder="No. of Sheets Attached"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
-        <a-radio-group v-model="form.taxes_withheld">
+        <a-radio-group v-model="form.taxes_withheld" style="width:100%">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -29,29 +49,73 @@
       <a-divider orientation="left">
         <b>Part I: Background Information</b>
       </a-divider>
-      <a-form-item label="5. TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+      <a-form-item
+        label="5."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number v-model="form.taxpayer.tin" placeholder="TIN NUMBER" style="width:100%"></a-input-number>
       </a-form-item>
-      <a-form-item label="6. RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      <a-form-item
+        label="6."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number v-model="form.taxpayer.rdo_code" placeholder="RDO Code" style="width:100%"></a-input-number>
       </a-form-item>
-      <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-model="form.taxpayer.line_business"></a-input>
+      <a-form-item
+        label="7."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input
+          v-model="form.taxpayer.line_business"
+          placeholder="Line of Business/Occupation"
+          style="width:100%"
+        ></a-input>
       </a-form-item>
-      <a-form-item label="8. Withholding Agent's Name/Registered Name">
-        <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
+      <a-form-item
+        label="8."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input
+          v-model="form.taxpayer.taxpayer_name"
+          placeholder="Withholding Agent's Name/Registered Name"
+          style="width:100%"
+        ></a-input>
       </a-form-item>
-      <a-form-item label="9. Telephone Number">
-        <a-input-number v-model="form.taxpayer.telephone_no"></a-input-number>
+      <a-form-item
+        label="9."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number
+          v-model="form.taxpayer.telephone_no"
+          placeholder="Telephone Number"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
-      <a-form-item label="10. Registered Address">
-        <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
+      <a-form-item
+        label="10."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-textarea
+          v-model="form.taxpayer.registered_address"
+          placeholder="Registered Address"
+          style="width:100%"
+        ></a-textarea>
       </a-form-item>
-      <a-form-item label="11. Zip Code">
-        <a-input-number v-model="form.taxpayer.zip_code"></a-input-number>
+      <a-form-item
+        label="11."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number v-model="form.taxpayer.zip_code" placeholder="Zip Code" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item label="12. Category of Withholding Agent">
-        <a-radio-group v-model="form.categoryOfAgent">
+        <a-radio-group v-model="form.category_of_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
@@ -64,65 +128,125 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="If yes, specify">
-        <a-input v-model="form.internationalTreatyYn"></a-input>
+      <a-form-item label="If yes, specify" v-show="form.availing_tax_relief = true">
+        <a-input v-model="form.availing_tax_relief_if_yes"></a-input>
       </a-form-item>
     </a-form>
 
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
-        <b>Part II: Computation of Tax</b>
+        <b>
+          Part II: Computation of Tax
+          <a-button type="link" @click="sched=true">(ATC)</a-button>
+        </b>
       </a-divider>
+
       <a-form-item
         class="computation-item"
-        label="14. Total Tax Required to be Withheld and Remitted"
+        label="14."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input-number v-model="form.total_tax_withheld_remitted" style="width:100%"></a-input-number>
+        <a-input-number
+          v-model="form.total_tax_withheld_remitted"
+          placeholder="Total Tax Required to be Withheld and Remitted"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
       <a-form-item
         class="computation-item"
-        label="15A. Tax Remitted in Return Previously Filed, if this is an Amended Return"
+        label="15A."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input-number v-model="form.prevTaxPaidCrdtb" style="width:100%"></a-input-number>
+        <a-input-number
+          v-model="form.prev_tax_paid_crdtb"
+          placeholder="Tax Remitted in Return Previously Filed, if this is an Amended Return"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="15B. Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
+        label="15B."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input-number v-model="form.advPayment" style="width:100%"></a-input-number>
+        <a-input-number
+          v-model="form.adv_payment"
+          placeholder="Advance Payments Made(please attach proof of payments - BIR Form No. 0605)"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="15C. Total Tax Credits/Payments(Sum of Items 15A&15b)"
+        label="15C."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input-number v-model="form.totTaxCredits" style="width:100%"></a-input-number>
+        <a-input-number
+          v-model="form.tot_tax_credits"
+          placeholder="Total Tax Credits/Payments(Sum of Items 15A&15b)"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="16. Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
+        label="16."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input-number v-model="form.amtPayblCrdtb" style="width:100%"></a-input-number>
+        <a-input-number
+          v-model="form.tax_overremittance"
+          placeholder="Tax Still Due/(Overremittance)(Sum of Items 15A&15B)"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="17. Add: Penalties"></a-form-item>
-      <a-form-item class="computation-item" label="17A. Surcharge">
-        <a-input-number v-model="form.surcharge" style="width:100%"></a-input-number>
+      <a-form-item
+        class="computation-item"
+        label="17A."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number v-model="form.surcharge" placeholder="Surcharge" style="width:100%"></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="17B. Interest">
-        <a-input-number v-model="form.interest" style="width:100%"></a-input-number>
+      <a-form-item
+        class="computation-item"
+        label="17B."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number v-model="form.interest" placeholder="Interest" style="width:100%"></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="17C. Compromise">
-        <a-input-number v-model="form.compromise" style="width:100%"></a-input-number>
+      <a-form-item
+        class="computation-item"
+        label="17C."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input-number v-model="form.compromise" placeholder="Compromise" style="width:100%"></a-input-number>
       </a-form-item>
-      <a-form-item class="computation-item" label="17D">
+      <a-form-item
+        class="computation-item"
+        label="17D."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input-number v-model="form.penaltiesCrdtb" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
-        label="18. Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
+        label="18."
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input-number v-model="form.total_amount_overremitance" style="width:100%"></a-input-number>
+        <a-input-number
+          v-model="form.total_amount_overremittance"
+          placeholder="Total Amount Still Due/(Overremittance)(Sum of Items 16&17D)"
+          style="width:100%"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="if overremittance, mark one box only:">
         <a-radio-group v-model="form.overremittance">
@@ -172,17 +296,27 @@
     </a-form>
     <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
     <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button>-->
+    <atc v-if="sched == true" :form="form" @close="sched = false"></atc>
   </div>
 </template>
 
 <script>
 // import form_1601e_image from "@/assets/forms/1601e.jpg";
+import atc from "./atc.vue";
 
 export default {
+  components: {
+    atc
+  },
   props: ["form", "step"],
   data() {
     return {
+      sched: false,
       sub: false,
+      form_layout: {
+        label_col: { span: 2 },
+        wrapper_col: { span: 22 }
+      },
       // form_1601e_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
