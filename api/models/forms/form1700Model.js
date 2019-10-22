@@ -7,61 +7,121 @@ var common_model = require('./commonModels');
 
 const model_schema = {
 
-    prev_tax_due: { type: Number, default: 0 }, //26 Tax Due
-    total_tax_credit: { type: Number, default: 0 }, //27 
-    net_tax_payable: { type: Number, default: 0 }, //28  item26 Less Item 27
-    portion_of_tax_payabe: { type: Number, default: 0 }, //29 
-    total_amount_payable: { type: Number, default: 0 }, //35 sum of item 30 and 34
-    aggregate_amount_payable: { type: Number, default: 0 }, //36 sum of item 35A and 35B
+    atc_code: { type: String }, //3
+    claiming_foreign_tax_credit: { type: Boolean }, //12
+    foreign_tax_number: { type: Number }, //13
+
+
+    // Part III total tax payable
+    total_tax_payable: [{
+        taxpayer: {
+            prev_tax_due: { type: Number, default: 0 }, //26 A
+            total_tax_credit: { type: Number, default: 0 }, //27 A
+            net_tax_payable: { type: Number, default: 0 }, //28  A
+            portion_of_tax_payabe: { type: Number, default: 0 }, //29 A
+            total_amount_payable: { type: Number, default: 0 }, //35 A
+        },
+        taxpayer_spouse: {
+            prev_tax_due: { type: Number, default: 0 }, //26 B
+            total_tax_credit: { type: Number, default: 0 }, //27 B
+            net_tax_payable: { type: Number, default: 0 }, //28 B
+            portion_of_tax_payabe: { type: Number, default: 0 }, //29 
+            total_amount_payable: { type: Number, default: 0 }, //35 B
+            aggregate_amount_payable: { type: Number, default: 0 }, //36 B
+        },
+        aggregate_amount_payable: { type: Number, default: 0 }, //36
+    }],
 
     //Page 2
     //Part V.A Graduate Rates
-    gr_gross_compensation_income: { type: Number, default: 0 },  //42 A
-    gr_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
-    gr_non_taxable: { type: Number, default: 0 }, //43 A
-    gr_spouse_non_taxable: { type: Number, default: 0 }, //43 B
-    gr_gross_taxable: { type: Number, default: 0 }, //44 A
-    gr_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
-    gr_other_taxable: { type: Number, default: 0 }, //45 A
-    gr_spouse_other_taxable: { type: Number, default: 0 }, //45 B
-    gr_tot_taxable_income: { type: Number, default: 0 },
-    gr_spouse_tot_taxable_income: { type: Number, default: 0 },
-    gr_tax_due: { type: Number, default: 0 },
-    gr_spouse_tax_due: { type: Number, default: 0 },
-    
+
+    graduated_rates: [{
+        taxpayer: {
+            gross_compensation_income: { type: Number, default: 0 },  //42 A
+            non_taxable: { type: Number, default: 0 }, //43 A
+            gross_taxable: { type: Number, default: 0 }, //44 A
+            other_taxable: { type: Number, default: 0 }, //45 A
+            tot_taxable_income: { type: Number, default: 0 }, //46 A
+            tax_due: { type: Number, default: 0 }, //47 A
+        },
+
+        taxpayer_spouse: {
+            gross_compensation_income: { type: Number, default: 0 },  //42 B
+            non_taxable: { type: Number, default: 0 }, //43 B
+            gross_taxable: { type: Number, default: 0 }, //44 B
+            other_taxable: { type: Number, default: 0 }, //45 B
+            tot_taxable_income: { type: Number, default: 0 }, //46 B
+            tax_due: { type: Number, default: 0 }, //47 B
+        }
+
+    }],
+
+
+    // gr_gross_compensation_income: { type: Number, default: 0 },  //42 A
+
+    // gr_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
+    // gr_non_taxable: { type: Number, default: 0 }, //43 A
+
+    // gr_spouse_non_taxable: { type: Number, default: 0 }, //43 B
+    // gr_gross_taxable: { type: Number, default: 0 }, //44 A
+    // gr_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
+    // gr_other_taxable: { type: Number, default: 0 }, //45 A
+    // gr_spouse_other_taxable: { type: Number, default: 0 }, //45 B
+    // gr_tot_taxable_income: { type: Number, default: 0 },
+    // gr_spouse_tot_taxable_income: { type: Number, default: 0 },
+    // gr_tax_due: { type: Number, default: 0 },
+    // gr_spouse_tax_due: { type: Number, default: 0 },
+
 
     //Part V.B Flat Rate
-    fr_gross_compensation_income: { type: Number, default: 0 },  //48 A
-    fr_spouse_gross_compensation_income: { type: Number, default: 0 }, //48 B
-    fr_non_taxable: { type: Number, default: 0 }, //49 A
-    fr_spouse_non_taxable: { type: Number, default: 0 }, //49 B
-    fr_gross_taxable: { type: Number, default: 0 }, //50 A
-    fr_spouse_gross_taxable: { type: Number, default: 0 }, //50 B
-    fr_other_taxable: { type: Number, default: 0 }, //51 A
-    fr_spouse_other_taxable: { type: Number, default: 0 }, //51 B
-    fr_tot_taxable_income: { type: Number, default: 0 }, //52 A
-    fr_spouse_tot_taxable_income: { type: Number, default: 0 }, //52 B
-    fr_tax_due: { type: Number, default: 0 }, //53 A
-    fr_spouse_tax_due: { type: Number, default: 0 }, //53 B
-    
+
+    flat_rate: [{
+        taxpayer: {
+            gross_compensation_income: { type: Number, default: 0 },  //48 A
+            non_taxable: { type: Number, default: 0 }, //49 A
+            gross_taxable: { type: Number, default: 0 }, //50 A
+            other_taxable: { type: Number, default: 0 }, //51 A
+            tot_taxable_income: { type: Number, default: 0 }, //52 A
+            tax_due: { type: Number, default: 0 }, //53 A
+        },
+        spouse_taxpayer: {
+            gross_compensation_income: { type: Number, default: 0 },  //48 B
+            non_taxable: { type: Number, default: 0 }, //49 B
+            gross_taxable: { type: Number, default: 0 }, //50 B
+            other_taxable: { type: Number, default: 0 }, //51 B
+            tot_taxable_income: { type: Number, default: 0 }, //52 B
+            tax_due: { type: Number, default: 0 }, //53 B
+        }
+    }],
+
+
+
     //Part V.C Tax Credit Payment
-    tp_tax_wittheld: { type: Number, default: 0 }, //54 A
-    tp__spousetax_wittheld: { type: Number, default: 0 },// 54 B
-    tp_tax_paid_return:  { type: Number, default: 0 },// 55 A
-    tp__spouse_tax_paid_return:  { type: Number, default: 0 },//55 B
-    tp_foreign_tax_credit:  { type: Number, default: 0 },// 56 A
-    tp__spouse_foreign_credit:  { type: Number, default: 0 },// 56 B
-    tp_other_tax:  { type: Number, default: 0 },//57 A
-    tp_spouse_other_tax:  { type: Number, default: 0 },//57 B
-    tp_total_tax:  { type: Number, default: 0 },//58 A
-    tp_spouse_total_tax:  { type: Number, default: 0 },//58 B
-    tp_net_tax_payable:  { type: Number, default: 0 },//59 A
-    tp_spouse_net_tax_payable:  { type: Number, default: 0 },//59 B
+
+    tax_credit_payment: {
+        taxpayer: {
+            tax_wittheld: { type: Number, default: 0 }, //54 A
+            tax_paid_return: { type: Number, default: 0 },// 55 A
+            foreign_tax_credit: { type: Number, default: 0 },// 56 A
+            other_tax: { type: Number, default: 0 },//57 A
+            total_tax: { type: Number, default: 0 },//58 A
+            net_tax_payable: { type: Number, default: 0 },//59 A
+        },
+        spouse_taxpayer: {
+            tax_wittheld: { type: Number, default: 0 }, //54 B
+            tax_paid_return: { type: Number, default: 0 },// 55 B
+            foreign_tax_credit: { type: Number, default: 0 },// 56 B
+            other_tax: { type: Number, default: 0 },//57 B
+            total_tax: { type: Number, default: 0 },//58 B
+            net_tax_payable: { type: Number, default: 0 },//59 B
+        }
+    },
+
 
     //Part VI schedule
     sched1: [{
         filer_type: {
-            type: String
+            type: Boolean
             /**
              * taxpayer
              * spouse
@@ -74,13 +134,17 @@ const model_schema = {
         tax_withheld: { type: Number, default: 0 },
         // gros_comp_tot_tax_withld_taxpayer: { type: Number, default: 0 },
         // gros_comp_tot_tax_withld_spouse: { type: Number, default: 0 },
+        taxpayer:{
+            regular_grad_total:{ type: Number, default: 0 },
+            flat_total: { type: Number, default: 0 },
+            tax_withheld_total: { type: Number, default: 0 },
+        },
+        spouse_taxpayer:{
+            regular_grad_total:{ type: Number, default: 0 },
+            flat_total: { type: Number, default: 0 },
+            tax_withheld_total: { type: Number, default: 0 },
+        }
     }],
-    taxpayer_regular_grad_total: { type: Number, default: 0 },
-    taxpayer_flat_total: { type: Number, default: 0 },
-    taxpayer_tax_withheld_total: { type: Number, default: 0 },
-    spouse_regular_grad_total: { type: Number, default: 0 },
-    spouse_flat_total: { type: Number, default: 0 },
-    spouse_tax_withheld_total: { type: Number, default: 0 },
 };
 
 var Form1700Schema = new Schema({ ...common_model, ...model_schema });
@@ -113,9 +177,9 @@ const plugin = new autoIncrement(Form1700Schema, '1700_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 
 module.exports = mongoose.model('1700_forms', Form1700Schema);
