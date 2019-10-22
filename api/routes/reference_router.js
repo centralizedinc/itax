@@ -53,17 +53,17 @@ reference_router.route("/rdos")
 
 reference_router.route('/return_period')
     .get((req, res) => {
-        ReturnPeriodDao.findAll()
+        console.log("Fields :", req.query.fields);
+        var query = req.query, fields = '', conditions = {};
+        if (query.fields) {
+            fields = query.fields.split(',').join(' ');
+            query.fields = undefined;
+        }
+        ReturnPeriodDao.findByFields(query, fields)
             .then((model) => {
-                res.json({
-                    success: true,
-                    model
-                })
+                res.json(model)
             }).catch((errors) => {
-                res.json({
-                    success: false,
-                    errors
-                })
+                res.json(errors)
             });
     })
     .post((req, res) => {

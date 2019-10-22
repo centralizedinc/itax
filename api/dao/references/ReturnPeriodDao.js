@@ -57,6 +57,15 @@ class ReturnPeriodDao {
     static create(data) {
         return (new model(data)).save();
     }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions
+     * @param {String} fields 
+     */
+    static findByFields(conditions, fields) {
+        return model.find(conditions).select(fields).lean().exec();
+    }
 }
 
 module.exports = ReturnPeriodDao
