@@ -27,7 +27,6 @@ const model_schema = {
             net_tax_payable: { type: Number, default: 0 }, //28 B
             portion_of_tax_payabe: { type: Number, default: 0 }, //29 
             total_amount_payable: { type: Number, default: 0 }, //35 B
-            aggregate_amount_payable: { type: Number, default: 0 }, //36 B
         },
         aggregate_amount_payable: { type: Number, default: 0 }, //36
     }],
