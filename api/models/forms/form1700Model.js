@@ -56,23 +56,6 @@ const model_schema = {
 
     }],
 
-
-    // gr_gross_compensation_income: { type: Number, default: 0 },  //42 A
-
-    // gr_spouse_gross_compensation_income: { type: Number, default: 0 }, //42 B
-    // gr_non_taxable: { type: Number, default: 0 }, //43 A
-
-    // gr_spouse_non_taxable: { type: Number, default: 0 }, //43 B
-    // gr_gross_taxable: { type: Number, default: 0 }, //44 A
-    // gr_spouse_gross_taxable: { type: Number, default: 0 }, //44 B
-    // gr_other_taxable: { type: Number, default: 0 }, //45 A
-    // gr_spouse_other_taxable: { type: Number, default: 0 }, //45 B
-    // gr_tot_taxable_income: { type: Number, default: 0 },
-    // gr_spouse_tot_taxable_income: { type: Number, default: 0 },
-    // gr_tax_due: { type: Number, default: 0 },
-    // gr_spouse_tax_due: { type: Number, default: 0 },
-
-
     //Part V.B Flat Rate
 
     flat_rate: [{
@@ -135,14 +118,14 @@ const model_schema = {
         // gros_comp_tot_tax_withld_taxpayer: { type: Number, default: 0 },
         // gros_comp_tot_tax_withld_spouse: { type: Number, default: 0 },
         taxpayer:{
-            regular_grad_total:{ type: Number, default: 0 },
-            flat_total: { type: Number, default: 0 },
-            tax_withheld_total: { type: Number, default: 0 },
+            regular_grad_total:{ type: Number, default: 0 }, //5A a
+            flat_total: { type: Number, default: 0 }, //5A b
+            tax_withheld_total: { type: Number, default: 0 }, //5A c
         },
         spouse_taxpayer:{
-            regular_grad_total:{ type: Number, default: 0 },
-            flat_total: { type: Number, default: 0 },
-            tax_withheld_total: { type: Number, default: 0 },
+            regular_grad_total:{ type: Number, default: 0 }, //5B a
+            flat_total: { type: Number, default: 0 },   //5B b
+            tax_withheld_total: { type: Number, default: 0 }, //5B c
         }
     }],
 };
