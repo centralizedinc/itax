@@ -16,10 +16,12 @@ const ReturnPeriodSchema = new mongoose.Schema({
          * a - annual
          */
     },
-    is_calendar: {
+    is_calendar: { // for quarterly
         type: Boolean,
         default: false
     },
+
+    // computation of due date
     month_offset: {
         type: Number
     },

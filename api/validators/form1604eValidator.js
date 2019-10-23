@@ -29,6 +29,8 @@ function validateRequired(form) {
     
     if (!form.category_of_agent) {
         error_messages.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Agent') });
+    } else if(form.category_of_agent === 'private' && (form.top_withholding_agent === null || form.top_withholding_agent === undefined)){
+        error_messages.push({ page: 1, field: "top_withholding_agent", error: "If private, choose Yes or No." });
     }
     
     if (!form.taxpayer || !form.taxpayer.line_of_business) {
