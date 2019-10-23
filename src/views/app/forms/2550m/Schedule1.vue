@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
+    title="Schedule 1 – Remittance per BIR Form No. 1601-EQ"
     placement="right"
     :closable="true"
     @close="close"
@@ -110,7 +110,6 @@ export default {
     // }else{
     //   this.data_source = [{}]
     // }
-    
   },
   computed: {
     total_atc_amount() {

@@ -35,9 +35,7 @@
 
     <!-- Part I -->
     <a-form v-show="step===1">
-      <a-divider>
-        <b>Part I: Background Information</b>
-      </a-divider>
+      <a-divider>Part I: Background Information</a-divider>
 
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -141,26 +139,48 @@
       >
         <a-input placeholder="Email Address" v-model="form.taxpayer.contact_details.email"></a-input>
       </a-form-item>
-      <a-divider></a-divider>
-      <a-row :gutter="6">
-        <a-col :span="12">
-          <a-button block type="primary">Schedule 1</a-button>
-        </a-col>
-        <a-col :span="12">
-          <a-button block type="primary">Schedule 2</a-button>
-        </a-col>
-      </a-row>
     </a-form>
 
     <!-- Part II -->
+    <a-form v-show="step===2">
+      <a-divider>Part II – Summary of Remittances</a-divider>
+      <div style="color: black; font-weight: bold">
+        <span class="text-link" @click="show_sched1=true">Schedule 1</span>
+        Remittance per BIR Form No. 1601-EQ
+      </div>
+      <schedule-one
+        v-if="show_sched1"
+        :show="show_sched1"
+        :form="form"
+        @close="updateSchedAndClose"
+      />
+      <br />
+      <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Taxes Withheld">
+        <a-input-number disabled style="width: 15vw"></a-input-number>
+      </a-form-item>
+
+      <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Penalties">
+        <a-input-number disabled style="width: 15vw"></a-input-number>
+      </a-form-item>
+
+      <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Amount Remitted">
+        <a-input-number disabled style="width: 15vw"></a-input-number>
+      </a-form-item>
+    </a-form>
   </div>
 </template>
 
 <script>
+import ScheduleOne from "./Schedule1";
+
 export default {
+  components: {
+    ScheduleOne
+  },
   props: ["form", "step", "errors"],
   data() {
     return {
+      show_sched1: false,
       loading: false,
       image_height: 1000,
       formatter: {
@@ -201,8 +221,22 @@ export default {
     },
     validate() {
       this.changeStep(this.step + 1);
+    },
+    updateSchedAndClose() {
+      this.show_sched1 = false;
     }
   }
 };
 </script>
+
+<style>
+.text-link {
+  cursor: pointer;
+  color: blue;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+</style>
 
