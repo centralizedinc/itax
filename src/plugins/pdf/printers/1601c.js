@@ -6,7 +6,7 @@ const form = require("../templates/1601c_template").template;
  * @returns {Object} document
  */
 function fillup(details) {
-    console.log("fillup details: " + JSON.stringify(details))
+    console.log("fillup details printer: " + JSON.stringify(details))
     var content = getContent(details);
     console.log('get content ###### :', content);
     return {
@@ -32,1113 +32,1633 @@ function getContent(forms) {
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = [
-        // General Info
+        // ----> table #1 <---- //
+        //table space
         {
             layout: "noBorders",
             table: {
-                widths: [190, 60, 49, 190, 150,],
+                widths: [530],
+                heights: [45],
                 body: [
                     [{
-                        text: formatDate(forms.returnPeriod, { year: "numeric" }),
-                        fontSize: 14,
-                        characterSpacing: 4,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [82, 78, 0, 0]
-                    },
-                    {
-                        // YES Option
-                        text: forms.amendedYn == true ? 'X' : ' ',
-                        fontSize: 12,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [35, 80, 0, 0]
-                    },
-                    {
-                        // NO Option
-                        text: forms.amendedYn == false ? 'X' : ' ',
-                        fontSize: 12,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [9, 80, 0, 0]
-                    },
-                    {
-                        // Number of Sheets Attached
-                        text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
-                        fontSize: 12,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [157, 78, 0, 0]
-                    },
-                    {
-                        text: " "
-                    }
-                    ],
+                        text: "",
+
+                    }, ],
 
                 ]
             }
         },
+        //date of transaction MM/DD/YYYY
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
-                widths: [43, 41, 38, 45, 100, 220],
+                widths: [80, 28, 17, 50, 25, 40, 30, 40, 35, 25, 25],
                 body: [
                     [{
-                        text: mapTin(forms.taxpayer.tin, 0, 3),
-                        fontSize: 14,
-                        characterSpacing: 3,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [30, 6, 0, 0]
-                    },
+                            text: ""
+                        },
+                        //fromPeriod month
+                        {
+                            text: formatDate(forms.start_month, {
+                                month: "2-digit"
+                            }),
+
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [10, 0, 0, 0]
+                        },
+                        //fromPeriod day     
+                        {
+                            text: formatDate(forms.start_month, {
+                                day: "2-digit"
+                            }),
+
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 0, 0, 0]
+                        },
+                        //fromPeriod year
+                        {
+                            text: formatDate(forms.start_month, {
+                                year: "numeric"
+                            }),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 0, 0, 0]
+                        },
+
+
+
+                        //#2 amended return?
+                        // amended_yn true
+                        {
+                            text: forms.amended_yn == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [13, 4, 0, 0]
+                        },
+                        // amended_yn false
+                        {
+                            text: forms.amended_yn == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [13, 5, 0, 0]
+                        },
+                        //#3 no. of sheets attached
+                        // space
+                        {
+                            text: "",
+                        },
+                        //No. of Sheets Attached
+                        {
+                            text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
+                            fontSize: 12,
+                            bold: true,
+                            characterSpacing: 4,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [15, 5, 0, 0]
+
+                        },
+                        //space
+                        {
+                            text: "",
+                        },
+                        // #4 any taxes withheld?
+                        // any taxes withheld? true
+                        {
+                            text: forms.any_tax_withheld == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [15, 5, 0, 0]
+                        },
+                        // any taxes withheld? false             
+                        {
+                            text: forms.any_tax_withheld == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [20, 5, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        // ----> end of table #1 <---- //
+
+        //table space
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [530],
+        //         heights: [9],
+        //         body: [
+        //             [{
+        //                 text: "",
+
+        //             }, ],
+
+        //         ]
+        //     }
+        // },
+
+
+
+        // ----> table # 2 <--- //
+
+        // #5 tin buyer
+        {
+            layout: "noBorders",
+            table: {
+                widths: [63, 32, 30, 33, 27, 46, 50, 32, 28, 28, 21, 40],
+                body: [
+                    [{
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [35, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [2, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 9, 12),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+                        {
+                            text: "",
+
+                        },
+                        // #6 rdo code buyer
+                        {
+                            text: forms.taxpayer.rdo_code,
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+                        // #7 category of withoutholding agent true
+                        // {
+                        //     text: forms.category_of_agent == true ? 'X' : ' ',
+                        //     fontSize: 15,
+                        //     bold: true,
+                        //     // right,down,left,up
+                        //     alignment: 'left',
+                        //     margin: [1, 5, 0, 0]
+                        // },
+                        // #7 category of withoutholding agent false
+                        // {
+                        //     text: forms.category_of_agent == false ? 'X' : ' ',
+                        //     fontSize: 15,
+                        //     bold: true,
+                        //     // right,down,left,up
+                        //     alignment: 'left',
+                        //     margin: [1, 5, 0, 0]
+                        // },
+                        // #7 tin seller
+                        {
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [22, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [2, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 9, 12),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+
+                        {
+                            text: "",
+                        },
+                        //#8 RDO seller
+                        {
+                            text: forms.taxpayer.rdo_code,
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [9, 7, 0, 0]
+                        },
+                    ],
+                ]
+            }
+        },
+
+        // ----> end of table #2 <---- //
+
+        // ----> table #3 <---- //
+        {
+            layout: "noBorders",
+            table: {
+                widths: [265, 250],
+                heights: [7],
+                body: [
+                    [
+                        // #9 buyer's name
+                        {
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 12,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [7, 8, 0, 0]
+                        },
+                        //#10 seller's name
+                        {
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 12,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [7, 8, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        // ----> end of table #3 <---- //
+
+        // ----> table #4 <---- //
+        {
+            layout: "noBorders",
+            table: {
+                widths: [524],
+                heights: [5],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [265, 250],
+                heights: [4],
+                body: [
+                    [
+                        // #11 buyers registered address    
+                        {
+                            text: forms.address == null ? ' ' : forms.address,
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [5, 1, 0, 0]
+                        },
+                        // #12 sellers registered address
+                        {
+                            text: forms.address == null ? ' ' : forms.address,
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, 1, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },
+        // ----> end of table #4 <---- //
+        // ----> table #5 <---- //
+        {
+            layout: "noBorders",
+            table: {
+                widths: [120, 80, 130, 30, 20, 30, 30],
+                heights: [10],
+                body: [
+                    [
+                        //#13 ATC
+
+                        {
+                            text: forms.atc == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [93, 1, 0, 0]
+                        },
+
+
+                        {
+                            text: forms.atc == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [75, 1, 0, 0]
+                        },
+
+                        {
+                            text: forms.categoryofwithholding_agent == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [93, 1, 0, 0]
+                        },
+                        //category
+
+                        {
+                            text: ""
+                        },
+                        //#14
+                        {
+                            text: forms.category_of_agent == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [3, 1, 0, 0]
+                        },
+
+                        {
+                            text: ""
+                        },
+                        {
+                            text: forms.category_of_agent == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [8, 1, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+
+
+
+        //#15 classification of property
+        {
+            layout: "noBorders",
+            table: {
+                widths: [50, 70, 70, 300],
+                heights: [1],
+                body: [
+                    [
+                        //residential
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [50],
+                                body: [
+                                    [{
+
+
+
+                                            text: forms.classification_property == 'RES' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 7,
+                                            alignment: 'left',
+                                            margin: [40, -1, 0, 0]
+
+                                        },
+
+
+                                    ],
+                                    [
+                                        //agricultural
+                                        {
+
+
+                                            text: forms.classification_property == 'AGR' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 8,
+                                            alignment: 'left',
+                                            margin: [40, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ]
+
+                                ]
+                            }
+
+
+                        },
+                        //commercial
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [100],
+                                body: [
+                                    [{
+
+
+
+                                            text: forms.classification_property == 'COM' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 7,
+                                            alignment: 'left',
+                                            margin: [65, -1, 0, 0]
+
+                                        },
+
+
+                                    ],
+                                    [
+                                        //industrial
+                                        {
+
+
+                                            text: forms.classification_property == 'IND' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 8,
+                                            alignment: 'left',
+                                            margin: [65, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ]
+
+                                ]
+                            }
+
+
+                        },
+                        //condominum residential 
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [70, 70],
+                                body: [
+                                    [{
+
+
+
+                                            text: forms.classification_property == 'CONR' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 7,
+                                            alignment: 'left',
+                                            margin: [67, -1, 0, 0]
+
+                                        },
+
+
+                                    ],
+                                    [
+                                        //condominum commercial
+                                        {
+
+
+                                            text: forms.classification_property == 'CONC' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 8,
+                                            alignment: 'left',
+                                            margin: [67, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ]
+
+                                ]
+                            }
+
+
+                        },
+
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [295],
+                                body: [
+                                    [{
+
+
+
+
+                                            text: forms.plsspecify == null ? ' ' : forms.plsspecify,
+                                            fontSize: 12,
+                                            bold: true,
+                                            characterSpacing: 3,
+                                            alignment: 'justify',
+                                            // right,down,left,up
+                                            margin: [180, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ],
+
+
+                                ]
+                            }
+
+
+                        },
+
+                    ]
+                ]
+            }
+
+        },
+        //#16 location of property
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [70, 440],
+                heights: [1],
+                body: [
+                    [
+                        //space
+                        {
+                            text: ""
+                        },
+                        {
+                            text: forms.loc_property == null ? ' ' : forms.loc_property,
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [22, -3, 0, 0]
+
+
+                        },
+
+
+                    ]
+                ]
+            }
+
+        },
+ //#17 brief description of the property
+
+ {
+    layout: "noBorders",
+    table: {
+        widths: [200, 130, 100],
+        heights: [1],
+        body: [
+            [
+                //space
+                {
+                    text: ""
+                },
+                {
+                    text: forms.area_sold_sqm == null ? ' ' : forms.area_sold_sqm,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'justify',
+                    // right,down,left,up
+                    margin: [22,4, 0, 0]
+
+
+                },{
+                    text: forms.tax_doc_no == null ? ' ' : forms.tax_doc_no,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'justify',
+                    // right,down,left,up
+                    margin: [22, 4, 0, 0]
+
+
+                },
+
+
+            ]
+        ]
+    }
+
+},
+//#17 continue
+{
+    layout: "noBorders",
+    table: {
+        widths: [70, 130, 130, 160],
+        heights: [1],
+        body: [
+            [
+                //space
+                {
+                    text: ""
+                },
+                {
+                    text: forms.tct == null ? ' ' : forms.tct,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    // right,down,left,up
+                    margin: [19,-4, 0, 0]
+
+
+                },
+                //spaces
+                {
+                    text: ""
+                },
+                {
+                    text: forms.others == null ? ' ' : forms.others,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    // right,down,left,up
+                    margin: [15, -4, 0, 0]
+
+
+                },
+
+
+            ]
+        ]
+    }
+
+},
+//#18 does selling price cover
+{
+    // layout: "noBorders",
+    table: {
+        widths: [90, 40, 40, 50, 40, 40, 165
+        ],
+        heights: [20],
+        body: [
+            [
+                //space
+                {
+                    text: ""
+                },
+                
                     {
-                        text: mapTin(forms.taxpayer.tin, 3, 6),
-                        fontSize: 14,
-                        characterSpacing: 3,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [0, 6, 0, 0]
-                    },
-                    {
-                        text: mapTin(forms.taxpayer.tin, 6, 9),
-                        fontSize: 14,
-                        characterSpacing: 2.8,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [-1.8, 6, 0, 0]
-                    },
-                    {
-                        text: mapTin(forms.taxpayer.tin, 9, 12),
-                        fontSize: 14,
-                        characterSpacing: 2.5,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [-1, 6, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                        fontSize: 14,
-                        characterSpacing: 8.2,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [55, 6, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
+                        text: forms.category_of_agent == true ? 'X' : ' ',
                         fontSize: 13,
-                        alignment: 'justify',
+                        bold: true,
                         // right,down,left,up
-                        margin: [118, 9, 0, 0]
-                    }
-                    ],
+                        alignment: 'left',
+                        margin: [3, 1, 0, 0]
+                    },
 
 
+                
+                //spaces
+                {
+                    text: ""
+                },
+                {
+                    text: forms.others == null ? ' ' : forms.others,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    // right,down,left,up
+                    margin: [15, -4, 0, 0]
 
-                ]
-            }
-        },
+
+                },
+                {
+                    text: ""
+                },
+                {
+                    text: ""
+                },
+                {
+                    text: ""
+                }
+
+
+            ]
+        ]
+    }
+
+},
+
+        // ----> end of table #5 <---- //
+        // ---->  table #6  <---- //
         {
-            //Table 3 Taxpayer
             layout: "noBorders",
             table: {
-                widths: [395, 120],
+                widths: [533],
+                heights: [21],
                 body: [
-                    [{
-                        text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
-                        fontSize: 11,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [18, 9, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
-                        fontSize: 11,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [40, 9, 0, 0]
-                    },
+                    [
+                        //space               
+                        {
+                            text: "",
+                        },
+
                     ]
                 ]
             }
         },
+
+        // ---->  end of table #6  <---- //
+        // ---->  table space #7, #8, #9, #10, #11 <---- //
+        {
+            layout: "noBorders",
+            table: {
+                widths: [320, 60, 50, 76],
+                heights: [3],
+                body: [
+                    [
+                        //WB191 //space
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        //space
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [320, 60, 50, 76],
+                heights: [11],
+                body: [
+                    [
+                        //WB192
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [320, 60, 50, 76],
+                heights: [6],
+                body: [
+                    [
+                        //WB193
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [320, 60, 50, 76],
+                heights: [6],
+                body: [
+                    [
+                        //WB194
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        // ---->  end of table space #7, #8, #9, #10, #11  <---- //
+        // ----> table #12 <---- //
+        {
+            layout: "noBorders",
+            table: {
+                widths: [430, 105],
+                heights: [6],
+                body: [
+                    [
+
+                        {
+                            text: "",
+                        },
+                        // #12 tax required to be withheld and remitted
+                        {
+                            text: forms.tax_req_withld_remtd ? forms.tax_req_withld_remtd : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 0, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [430, 105],
+                heights: [6],
+                body: [
+                    [
+
+                        {
+                            text: "",
+                        },
+                        // #13 less: tax remitted in return previously filed, if this is an amended return
+                        {
+                            text: forms.less_tax_remtd_retrn ? forms.less_tax_remtd_retrn : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, -2, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [430, 105],
+                heights: [8],
+                body: [
+                    [
+                        //space
+                        {
+                            text: "",
+                        },
+                        //#14
+                        {
+                            text: forms.tax_due ? forms.tax_due : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [2, -2, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [532],
+                heights: [4],
+                body: [
+                    [
+
+                        {
+                            text: "",
+                        },
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [45, 105, 111, 110, 32, 100],
+                heights: [8],
+                body: [
+                    [
+                        //space
+                        {
+                            text: "",
+                        },
+                        //15A
+                        {
+
+                            text: forms.surcharge ? forms.surcharge : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 1, 0, 0]
+
+                        },
+                        //15B
+                        {
+
+                            text: forms.interest ? forms.interest : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 1, 0, 0]
+
+                        },
+                        //15C
+                        {
+
+                            text: forms.compromise ? forms.compromise : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 1, 0, 0]
+
+                        },
+                        //space
+                        {
+                            text: "",
+                        },
+                        //15D
+                        {
+                            text: forms.penalties ? forms.penalties : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 1, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [435, 100],
+                heights: [7],
+                body: [
+                    [
+                        //space
+                        {
+                            text: "",
+                        },
+                        //16
+                        {
+                            text: forms.total_amount_payable ? forms.total_amount_payable : '0.00',
+                            fontSize: 10,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, -2, 0, 0]
+                        },
+
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [157, 92, 70],
+                heights: [14],
+                body: [
+                    [
+                        //space
+                        {
+                            text: "",
+                        },
+                        //true #16 refunded
+                        {
+                            text: forms.taxpayer.overremittance == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [3, 3, 0, 0]
+                        },
+                        // false #16 to be issued
+                        {
+                            text: forms.taxpayer.overremittance == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [1, 3, 0, 0]
+                        },
+
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [530],
+                heights: [12],
+                body: [
+                    [
+                        //space
+                        {
+                            text: "",
+                        },
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [19, 15, 35, 21, 15, 35, 50, 35, 28, 40, 140],
+                heights: [8],
+                body: [
+                    [
+
+                        //frommPeriod month
+                        {
+                            text: formatDate(forms.start_month, {
+                                month: "2-digit"
+                            }),
+
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-3, 1, 0, 0]
+                        },
+                        //fromPeriod day     
+                        {
+                            text: formatDate(forms.start_month, {
+                                day: "2-digit"
+                            }),
+
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-8, 1, 0, 0]
+                        },
+                        //                 //fromPeriod year
+                        {
+                            text: formatDate(forms.start_month, {
+                                year: "numeric"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-9, 1, 0, 0]
+                        },
+                        //tooPeriod month
+                        {
+                            text: formatDate(forms.end_month, {
+                                month: "2-digit"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-2, 1, 0, 0]
+                        },
+                        //toPeriod day
+                        {
+                            text: formatDate(forms.end_month, {
+                                day: "2-digit"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-8, 1, 0, 0]
+                        },
+                        //toPeriod year
+                        {
+                            text: formatDate(forms.end_month, {
+                                year: "numeric"
+                            }),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 4,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-10, 1, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [26, 1, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [5, 1, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-2, 1, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 9, 12),
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 5,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [-1, 1, 0, 0]
+                        },
+                        // #16 withholding agent's name
+                        {
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [17, 1, 0, 0]
+                        },
+
+                    ]
+                ]
+            }
+        },
+
+
+        // #5 tin
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [50, 50, 45, 59, 60, 60, 45, 40],
+        //         body: [
+        //             [{
+        //                     text: mapTin(forms.taxpayer.tin, 0, 3),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 3,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [15, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: mapTin(forms.taxpayer.tin, 3, 6),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 3,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [12, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: mapTin(forms.taxpayer.tin, 6, 9),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 3,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [8, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: mapTin(forms.taxpayer.tin, 9, 12),
+        //                     fontSize: 15,
+        //                     bold: true,
+        //                     characterSpacing: 5,
+        //                     alignment: 'left',
+        //                     // right,down,left,up
+        //                     margin: [10, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: "",
+
+        //                 },
+        //table 2 amendded
+        //   {
+        // layout: "noBorders",
+        //     table: {
+        //         widths: [100,100],
+        //         body: [
+        //             [
+        //                 {
+        //                     text: forms.amended_yn == true ? 'X' : ' ',
+        //                     fontSize: 15,
+        //                     // right,down,left,up
+        //                     alignment: 'justify',
+        //                     margin: [0, 0, 0, 0]
+        //                 },
+        //                 {
+        //                     text: forms.amended_yn == false ? 'X' : ' ',
+        //                     fontSize: 12,
+        //                     // right,down,left,up
+        //                     alignment: 'justify',
+        //                     margin: [0, 0, 0, 0]
+        //                 },
+
+
+
+
+        //             ],
+        //         ]
+        //     }
+        // },
+
+
+
+
+
+
+
+
+
+
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [100,100,100],
+        //         body: [
+        //             [
+        //              //---> 1.> toPeriod month
+
+        //             {
+        //                 text: formatDate(forms.toPeriod, { month: "2-digit" }),
+        //                 fontSize: 14,
+        //                 characterSpacing: 3,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [-48, 85, 0, 0]
+        //             },
+        //              //---> 1.> toPeriod day                    
+
+        //             {
+        //                 text: formatDate(forms.toPeriod, { day: "2-digit" }),
+        //                 fontSize: 14,
+        //                 characterSpacing: 3,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [-80, 85, 0, 0]
+        //             },
+        //             //---> 1.> toPeriod year
+
+        //             {
+        //                 text: formatDate(forms.toPeriod, { year: "numeric" }),
+        //                 fontSize: 14,
+        //                 characterSpacing: 4,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [-40, -21, 0, 0]
+        //             },
+        //             ],
+        //         ]
+        //     }
+        // },
+
+        //-----------------------------------------------------------------------//
+
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [50, 50],
+        //         body: [
+        //             [
+
+        // //---> 1.> fromPeriod month
+
+        //             {
+        //                     text: formatDate(forms.fromPeriod, { month: "2-digit" }), 
+        //                     fontSize: 15,
+        //                     characterSpacing: 3,
+        //                     akignment: 'justify',
+        //                     // right,down,left,up
+        //                     margin: [4,85 , 0, 0]
+        //             },
+
+        // //---> 1.> fromPeriod day     
+
+        //             {
+        //                 text: formatDate(forms.fromPeriod, { day: "2-digit" }), 
+        //                 fontSize: 15,
+        //                 characterSpacing: 3,
+        //                 akignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [-27, 85, 0, 0]
+        //             },
+
+
+        //                     ],
+
+        //                 ]
+        //             }
+        //         },
+
+
+
+
+
+        // {
+        //     //Table 3 Taxpayer
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [395, 120],
+        //         body: [
+        //             [{
+        //                 text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+        //                 fontSize: 12,
+        //                 characterSpacing: 2.5,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [10, 15, 0, 0]
+        //             },
+        //             {
+        //                 text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
+        //                 fontSize: 11,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [40, 9, 0, 0]
+        //             },
+        //             ]
+        //         ]
+        //     }
+        // },
         // ------------------------------------------
-        {
-            //Table 4 Registered Address
-            layout: "noBorders",
-            table: {
-                widths: [395, 120],
-                body: [
-                    [{
-                        text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
-                        fontSize: 11,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [16, 8, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
-                        fontSize: 11,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [84, 7, 0, -30]
-                    },
-                    ]
-                ]
-            }
-        },
+        // {
+        //     //Table 4 Registered Address
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [395, 120],
+        //         body: [
+        //             [{
+        //                 text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
+        //                 fontSize: 11,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [16, 8, 0, 0]
+        //             },
+        //             {
+        //                 text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
+        //                 fontSize: 11,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [84, 7, 0, -30]
+        //             },
+        //             ]
+        //         ]
+        //     }
+        // },
+
+
+
+        // Table 2
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [50,50],
+        //         body: [
+        //             [
+        //                 {
+        //                     text: forms.amended_yn == true ? 'X' : ' ',
+        //                     fontSize: 15,
+        //                     alignment: 'justify',
+        //                     // right,down,left,up
+        //                     margin: [258, -4, 0, 0]
+        //                 },
+        //                 {
+        //                     text: forms.amended_yn == false ? 'X' : ' ',
+        //                     fontSize: 15,
+        //                     alignment: 'justify',
+        //                     // right,down,left,up
+        //                     margin: [239, -4, 0, 0]
+        //                 },
+        //             ],
+        //         ]
+        //     }
+        // },
+        // table 3
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [60, 30, 50, 60, 150, 236],
+        //         body: [
+        //             [{
+        //                 text: mapTin(forms.taxpayer.tin, 0, 3),
+        //                 fontSize: 14,
+        //                 characterSpacing: 3,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [14,63, 0, 0]
+        //             },
+        //             {
+        //                 text: mapTin(forms.taxpayer.tin, 3, 6),
+        //                 fontSize: 14,
+        //                 characterSpacing: 3,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [3, 63, 0, 0]
+        //             },
+        //             {
+        //                 text: mapTin(forms.taxpayer.tin, 6, 9),
+        //                 fontSize: 14,
+        //                 characterSpacing: 2.8,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [20,63, 0, 0, 0]
+        //             },
+        //             {
+        //                 text: mapTin(forms.taxpayer.tin, 9, 12),
+        //                 fontSize: 14,
+        //                 characterSpacing: 2.5,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [23, 63, 0, 0]
+        //             },
+        //             {
+        //                 text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+        //                 fontSize: 14,
+        //                 characterSpacing: 8.2,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [84, 63, 0, 0]
+        //             },
+        //             {
+        //                 text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
+        //                 fontSize: 13,
+        //                 alignment: 'justify',
+        //                 // right,down,left,up
+        //                 margin: [118, 9, 0, 0]
+        //             }
+        //             ],
 
-        // --------------------------------------------
-        {
-            //Table 5  Tax Relief
-            layout: "noBorders",
-            table: {
-                widths: [230, 50, 226],
-                body: [
-                    [{
-                        text: forms.is_avail_tax_relief == true ? 'X' : ' ',
-                        fontSize: 10,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [210, 3, 0, 0]
-                    },
-                    {
-                        text: forms.is_avail_tax_relief == false ? 'X' : ' ',
-                        fontSize: 10,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [23, 3, 0, 0]
-                    },
-                    {
-                        text: forms.avail_tax_relief == null || forms.avail_tax_relief == '' ? ' ' : forms.avail_tax_relief,
-                        fontSize: 11,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [64, 2, 0, 0]
-                    },
 
-                    ]
-                ]
-            }
-        },
 
-        // --------------------------------------------
-        {
-            //Table 6 12A 12B Vatable Sales
-            layout: "noBorders",
-            table: {
-                widths: [385, 132],
+        //         ]
+        //     }
+        // },
+        // table 4
 
-                body: [
-                    [{
-                        text: formatAmount(forms.totalAtcAmount),
-                        fontSize: 9,
-                        alignment: 'right',
-                        // right,down,left,up
-                        margin: [270, 23, 0, 0]
-                    },
-                    {
-                        text: formatAmount(forms.totalAtcOutput),
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, 23, 0, 0]
-                    },
 
 
-                    ]
-                ]
-            }
-        },
-        // --------------------------------------------
-        {
-            //Table 7  13A 13B Sales to Goverment
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.salesGovAmount == null ? '0.00' : forms.salesGovAmount % 1 == 0 ? forms.salesGovAmount + '.00' : forms.salesGovAmount,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -5, 0, 0]
-                    },
-                    {
-                        text: forms.salesGovOutput == null ? '0.00' : forms.salesGovOutput % 1 == 0 ? forms.salesGovOutput + '.00' : forms.salesGovOutput,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -5, 0, 0]
-                    },
-                    ]
-                ]
-            }
-        },
 
-        // --------------------------------------------
-        {
-            //Table 8   Zero Rated Sales
-            layout: "noBorders",
-            table: {
-                widths: [385, 130,],
-                body: [
-                    [{
-                        text: forms.zeroRatedAmount == null ? '0.00' : forms.zeroRatedAmount % 1 == 0 ? forms.zeroRatedAmount + '.00' : forms.zeroRatedAmount,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -4, 0, 0]
-                    },
 
-                    ]
-                ]
-            }
-
-        },
-
-        // --------------------------------------------
-        {
-            //Table 9  15 Exempt Sales Receipts
-            layout: "noBorders",
-            table: {
-                widths: [385, 130,],
-                body: [
-                    [{
-                        text: forms.exemptAmount == null ? '0.00' : forms.exemptAmount % 1 == 0 ? forms.exemptAmount + '.00' : forms.exemptAmount,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -5, 0, 0]
-                    },
-
-                    ]
-                ]
-            }
-
-        },
-
-        // --------------------------------------------
-        {
-            //Table 10  16A  16B Total Sales Receipts    
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: formatAmount(forms.totalSales),
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -3, 0, 0]
-                    },
-                    {
-                        text: formatAmount(forms.totalOutputTax),
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -3, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-
-        // --------------------------------------------
-        {
-            //Table 11  17A Less Allowable 
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [{
-                        alignment: 'right',
-                        text: forms.carriedOverPreviousPeriod == null ? '0.00' : forms.carriedOverPreviousPeriod % 1 == 0 ? forms.carriedOverPreviousPeriod + '.00' : forms.carriedOverPreviousPeriod,
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [480, 2, 0, 0]
-                    },
-
-                    ]
-                ]
-            }
-
-        },
-
-        // --------------------------------------------
-        {
-            //Table 12  17B
-            layout: "noBorders",
-            table: {
-                widths: [525,],
-                body: [
-                    [
-
-                        {
-                            text: forms.txbleGoodsServices == null ? '0.00' : forms.txbleGoodsServices % 1 == 0 ? forms.txbleGoodsServices + '.00' : forms.txbleGoodsServices,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -3, 0, 0]
-                        },
-                    ]
-                ]
-            }
-        },
-        // --------------------------------------------
-        {
-            //Table 13  17C
-            layout: "noBorders",
-            table: {
-                widths: [525,],
-                body: [
-                    [
-
-                        {
-                            text: forms.transInputTax == null ? '0.00' : forms.transInputTax % 1 == 0 ? forms.transInputTax + '.00' : forms.transInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-            }
-        },
-        // --------------------------------------------
-        {
-            //Table 14  17D
-            layout: "noBorders",
-            table: {
-                widths: [525,],
-                body: [
-                    [
-
-                        {
-                            text: forms.presumpInputTax == null ? '0.00' : forms.presumpInputTax % 1 == 0 ? forms.presumpInputTax + '.00' : forms.presumpInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-            }
-        },
-        // --------------------------------------------
-        {
-            //Table 15  17E
-            layout: "noBorders",
-            table: {
-                widths: [525,],
-                body: [
-                    [
-
-                        {
-                            text: forms.otherAllowableLessInputTax == null ? '0.00' : forms.otherAllowableLessInputTax % 1 == 0 ? forms.otherAllowableLessInputTax + '.00' : forms.otherAllowableLessInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-            }
-        },
-        // --------------------------------------------
-        {
-            //Table 16  17F
-            layout: "noBorders",
-            table: {
-                widths: [525,],
-                body: [
-                    [
-
-                        {
-                            text: forms.totalAllowableLessInputTax == null ? '0.00' : forms.totalAllowableLessInputTax % 1 == 0 ? forms.totalAllowableLessInputTax + '.00' : forms.totalAllowableLessInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            },
-            // --------------------------------------------
-
-        },
-        // --------------------------------
-        {
-            //Table 17  18A and 18B     
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.purCapGoodsNotExceed == null ? '0.00' : forms.purCapGoodsNotExceed % 1 == 0 ? forms.purCapGoodsNotExceed + '.00' : forms.purCapGoodsNotExceed,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [230, 4, 0, 0]
-                    },
-                    {
-                        text: forms.outputCapGoodsNotExceed == null ? '0.00' : forms.outputCapGoodsNotExceed % 1 == 0 ? forms.outputCapGoodsNotExceed + '.00' : forms.outputCapGoodsNotExceed,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, 4, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // start--------------------------------
-        {
-            //Table 18  18C and 18D   
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.purCapGoodsExceed == null ? '0.00' : forms.purCapGoodsExceed % 1 == 0 ? forms.purCapGoodsExceed + '.00' : forms.purCapGoodsExceed,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -3, 0, 0]
-                    },
-                    {
-                        text: forms.outputPurCapGoodsExceed == null ? '0.00' : forms.outputPurCapGoodsExceed % 1 == 0 ? forms.outputPurCapGoodsExceed + '.00' : forms.outputPurCapGoodsExceed,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -3, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 19  18E and 18F   
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.domesticPurchaseGoods == null ? '0.00' : forms.domesticPurchaseGoods % 1 == 0 ? forms.domesticPurchaseGoods + '.00' : forms.domesticPurchaseGoods,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -5, 0, 0]
-                    },
-                    {
-                        text: forms.outputDomesticPurchaseGoods == null ? '0.00' : forms.outputDomesticPurchaseGoods % 1 == 0 ? forms.outputDomesticPurchaseGoods + '.00' : forms.outputDomesticPurchaseGoods,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -4, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 20  18G and 18H   
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.importationGoods == null ? '0.00' : forms.importationGoods % 1 == 0 ? forms.importationGoods + '.00' : forms.importationGoods,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -6, 0, 0]
-                    },
-                    {
-                        text: forms.outputImportationGoods == null ? '0.00' : forms.outputImportationGoods % 1 == 0 ? forms.outputImportationGoods + '.00' : forms.outputImportationGoods,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -4, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // end\
-        // start--------------------------------
-        {
-            //Table 21  18I and 18J   
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.domesticPurchaseService == null ? '0.00' : forms.domesticPurchaseService % 1 == 0 ? forms.domesticPurchaseService + '.00' : forms.domesticPurchaseService,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -6, 0, 0]
-                    },
-                    {
-                        text: forms.outputDomesticPurchaseService == null ? '0.00' : forms.outputDomesticPurchaseService % 1 == 0 ? forms.outputDomesticPurchaseService + '.00' : forms.outputDomesticPurchaseService,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -5, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 22  18K and 18L   
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.servicesNonResidents == null ? '0.00' : forms.servicesNonResidents % 1 == 0 ? forms.servicesNonResidents + '.00' : forms.servicesNonResidents,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -6, 0, 0]
-                    },
-                    {
-                        text: forms.outputServicesNonResidents == null ? '0.00' : forms.outputServicesNonResidents % 1 == 0 ? forms.outputServicesNonResidents + '.00' : forms.outputServicesNonResidents,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -5, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 23  18M    
-            layout: "noBorders",
-            table: {
-                widths: [385, 130,],
-                body: [
-                    [{
-                        text: forms.purchaseNotQualified == null ? '0.00' : forms.purchaseNotQualified % 1 == 0 ? forms.purchaseNotQualified + '.00' : forms.purchaseNotQualified,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -5, 0, 0]
-                    },
-
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 24  18N and 18O   
-            layout: "noBorders",
-            table: {
-                widths: [385, 133,],
-                body: [
-                    [{
-                        text: forms.purchaseOthers == null ? '0.00' : forms.purchaseOthers % 1 == 0 ? forms.purchaseOthers + '.00' : forms.purchaseOthers,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -5, 0, 0]
-                    },
-                    {
-                        text: forms.outputPurchaseOthers == null ? '0.00' : forms.outputPurchaseOthers % 1 == 0 ? forms.outputPurchaseOthers + '.00' : forms.outputPurchaseOthers,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [17, -6, 0, 0]
-                    },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 25  18P     
-            layout: "noBorders",
-            table: {
-                widths: [385, 132,],
-                body: [
-                    [{
-                        text: forms.totalCurrentPurchases == null ? '0.00' : forms.totalCurrentPurchases % 1 == 0 ? forms.totalCurrentPurchases + '.00' : forms.totalCurrentPurchases,
-                        alignment: 'right',
-                        fontSize: 9,
-                        // right,down,left,up
-                        margin: [270, -5, 0, 0]
-                    },
-
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 26  19   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.totalAvailableInputTax == null ? '0.00' : forms.totalAvailableInputTax % 1 == 0 ? forms.totalAvailableInputTax + '.00' : forms.totalAvailableInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 27  20A   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.inputTaxPurchaseCapGoods == null ? '0.00' : forms.inputTaxPurchaseCapGoods % 1 == 0 ? forms.inputTaxPurchaseCapGoods + '.00' : forms.inputTaxPurchaseCapGoods,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, 14, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 28  20B   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.inputTaxSaleToGovt == null ? '0.00' : forms.inputTaxSaleToGovt % 1 == 0 ? forms.inputTaxSaleToGovt + '.00' : forms.inputTaxSaleToGovt,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 29  20C   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.inputTaxAllocableToExempt == null ? '0.00' : forms.inputTaxAllocableToExempt % 1 == 0 ? forms.inputTaxAllocableToExempt + '.00' : forms.inputTaxAllocableToExempt,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 30  20D   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.refundTcm == null ? '0.00' : forms.refundTcm % 1 == 0 ? forms.refundTcm + '.00' : forms.refundTcm,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 31  20E   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.otherDeductionFrInputTax == null ? '0.00' : forms.otherDeductionFrInputTax % 1 == 0 ? forms.otherDeductionFrInputTax + '.00' : forms.otherDeductionFrInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 32  20F   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.totalDeductionFrInputTax == null ? '0.00' : forms.totalDeductionFrInputTax % 1 == 0 ? forms.totalDeductionFrInputTax + '.00' : forms.totalDeductionFrInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 33  21   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.totalInputTax == null ? '0.00' : forms.totalInputTax % 1 == 0 ? forms.totalInputTax + '.00' : forms.totalInputTax,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 34  22   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 35  23A   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.creditableVatWithheld == null ? '0.00' : forms.creditableVatWithheld % 1 == 0 ? forms.creditableVatWithheld + '.00' : forms.creditableVatWithheld,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, 4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 36  23B   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.advPaySugarFlourInd == null ? '0.00' : forms.advPaySugarFlourInd % 1 == 0 ? forms.advPaySugarFlourInd + '.00' : forms.advPaySugarFlourInd,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 37  23C   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.taxWthld == null ? '0.00' : forms.taxWthld % 1 == 0 ? forms.taxWthld + '.00' : forms.taxWthld,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -5, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 38  23D   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.prevTaxPaid == null ? '0.00' : forms.prevTaxPaid % 1 == 0 ? forms.prevTaxPaid + '.00' : forms.prevTaxPaid,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 39  23E   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.advPymt == null ? '0.00' : forms.advPymt % 1 == 0 ? forms.advPymt + '.00' : forms.advPymt,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 40  23F   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.otherTaxCredits == null ? '0.00' : forms.otherTaxCredits % 1 == 0 ? forms.otherTaxCredits + '.00' : forms.otherTaxCredits,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 42  23G   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.totalCredits == null ? '0.00' : forms.totalCredits % 1 == 0 ? forms.totalCredits + '.00' : forms.totalCredits,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 43  24   
-            layout: "noBorders",
-            table: {
-                widths: [525, 130,],
-                body: [
-                    [
-
-                        {
-                            text: forms.amtPaybl == null ? '0.00' : forms.amtPaybl % 1 == 0 ? forms.amtPaybl + '.00' : forms.amtPaybl,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [410, -6, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 44  25 A B C D 
-            layout: "noBorders",
-            table: {
-                widths: [165, 118, 83, 135],
-                body: [
-                    [
-
-                        {
-                            text: forms.surcharge == null ? '0.00' : forms.surcharge % 1 == 0 ? forms.surcharge + '.00' : forms.surcharge,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [83, 5, 0, 0]
-                        },
-                        {
-                            text: forms.interest == null ? '0.00' : forms.interest % 1 == 0 ? forms.interest + '.00' : forms.interest,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [23, 6, 0, 0]
-                        },
-                        {
-                            text: forms.compromise == null ? '0.00' : forms.compromise % 1 == 0 ? forms.compromise + '.00' : forms.compromise,
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [13, 6, 0, 0]
-                        },
-                        {
-                            text: formatAmount(forms.penalties),
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [22, 4, 0, 0]
-                        },
-                    ]
-                ]
-
-            }
-        },
-        // end
-        // start--------------------------------
-        {
-            //Table 44  25 A B C D 
-            layout: "noBorders",
-            table: {
-                widths: [525],
-                body: [
-                    [
-
-                        {
-                            text: formatAmount(forms.totalAmountPayable),
-                            alignment: 'right',
-                            fontSize: 9,
-                            // right,down,left,up
-                            margin: [0, -4, 0, 0]
-                        }
-                    ]
-                ]
-
-            }
-        }
     ]
-
-
     return content;
 }
 
@@ -1158,7 +1678,11 @@ function formatDate(date, type) {
     if (!date) {
         return "";
     }
-    if (type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
+    if (type === 'dateonly') type = {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    };
     var dt = new Date(date).toLocaleString("en-US", type ? type : {
         hour12: true,
         year: "numeric",
@@ -1172,4 +1696,4 @@ function formatDate(date, type) {
 
 export default {
     fillup
-}
+};
