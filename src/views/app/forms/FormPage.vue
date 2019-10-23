@@ -345,6 +345,19 @@ export default {
             description: "Computation of Tax"
           }
         ],
+         "1601c": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation of Tax"
+          }
+        ],
       },
       default_steps: [
         {
