@@ -51,6 +51,9 @@
 
     <!-- Part 1 -->
     <a-form v-show="step===1">
+      <a-divider>
+        <b>Part I: Background Information</b>
+      </a-divider>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -118,6 +121,7 @@
 
     <!-- Part II -->
     <a-form v-show="step===2">
+      <a-divider>Part II: Computation of Tax</a-divider>
       <a-form-item>
         <div style="color: black">11. Nature of transaction</div>
         <a-form-item

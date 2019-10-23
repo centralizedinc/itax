@@ -1,4 +1,4 @@
-const form = require("../templates/1600wp_template").template;
+ const form = require("../templates/1600wp_template").template;
 
 /**
  *

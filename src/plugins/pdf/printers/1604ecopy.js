@@ -1,4 +1,4 @@
-const form = require("../templates/1601f_template").template;
+const form = require("../templates/1604e_template").template;
 
 /**
  *
@@ -34,70 +34,41 @@ function getContent(forms) {
     var content = [
         // General Info
         {
-            //layout: "noBorders",
-            table: {
-                widths: [532],
-                heights: [45], 
-                body: [
-                    [
-                    {
-                        text: " "
-                    }
-                    ],
-
-                ]
-            }
-        },
-        {
             layout: "noBorders",
             table: {
-                widths: [84, 46, 57, 49, 140, 50, 48],
-                heights: [24], 
+                widths: [190, 60, 49, 190, 150,],
                 body: [
-                    [
-                        // {
-                        //     text: " "
-                        // },
-
-                        {
-                        text: formatDate(forms.returnPeriod, { month: "2-digit" }),
-                        fontSize: 14,
-                        characterSpacing: 3,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [62, 8, 0, 0]
-                    },
-                    {
+                    [{
                         text: formatDate(forms.returnPeriod, { year: "numeric" }),
                         fontSize: 14,
-                        characterSpacing: 3.5,
+                        characterSpacing: 4,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [1 , 8, 0, 0]
+                        margin: [82, 78, 0, 0]
                     },
                     {
+                        // YES Option
                         text: forms.amendedYn == true ? 'X' : ' ',
-                        fontSize: 10,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [42, 14, 0, 0]
-                    },
-                    {
-                        text: forms.amendedYn == false ? 'X' : ' ',
-                        fontSize: 8,
-                        alignment: 'justify',
-                        // right,down,left,up
-                        margin: [26, 16, 0, 0]
-                    },
-                    {
-                        text: forms.numOfSheet == null ? '' : forms.numOfSheet,
                         fontSize: 12,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [114, 9 , 0, 0]
+                        margin: [35, 80, 0, 0]
                     },
                     {
-                        text: " "
+                        // NO Option
+                        text: forms.amendedYn == false ? 'X' : ' ',
+                        fontSize: 12,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [9, 80, 0, 0]
+                    },
+                    {
+                        // Number of Sheets Attached
+                        text: forms.numOfSheet == null ? ' ' : forms.numOfSheet,
+                        fontSize: 12,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [157, 78, 0, 0]
                     },
                     {
                         text: " "
@@ -108,9 +79,9 @@ function getContent(forms) {
             }
         },
         {
-            layout: "noBorders",
+            //layout: "noBorders",
             table: {
-                widths: [40, 30, 46 , 47, 100, 225],
+                widths: [43, 41, 38, 45, 100, 220],
                 body: [
                     [{
                         text: mapTin(forms.taxpayer.tin, 0, 3),
@@ -118,46 +89,46 @@ function getContent(forms) {
                         characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [3, 7, 0, 0]
+                        margin: [30, 6, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
                         fontSize: 14,
-                        characterSpacing:  4,
+                        characterSpacing: 3,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [1 ,7, 0, 0]
+                        margin: [0, 6, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
                         fontSize: 14,
-                        characterSpacing: 3.4,
+                        characterSpacing: 2.8,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [10, 7, 0, 0]
+                        margin: [-1.8, 6, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
                         fontSize: 14,
-                        characterSpacing: 3.4,
+                        characterSpacing: 2.5,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [2, 6, 0, 0]
+                        margin: [-1, 6, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
                         fontSize: 14,
-                        characterSpacing: 3,
+                        characterSpacing: 8.2,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [70, 7, 0, 0]
+                        margin: [55, 6, 0, 0]
                     },
                     {
-                        text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
-                        fontSize: 18   ,
+                        text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
+                        fontSize: 13,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [130, 7, 0, 0]
+                        margin: [118, 9, 0, 0]
                     }
                     ],
 
@@ -168,7 +139,7 @@ function getContent(forms) {
         },
         {
             //Table 3 Taxpayer
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [395, 120],
                 body: [
@@ -177,14 +148,14 @@ function getContent(forms) {
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [6, 3, 0, 0]
+                        margin: [18, 9, 0, 0]
                     },
                     {
                         text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [140 , 9, 0, 0]
+                        margin: [40, 9, 0, 0]
                     },
                     ]
                 ]
@@ -193,7 +164,7 @@ function getContent(forms) {
         // ------------------------------------------
         {
             //Table 4 Registered Address
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [395, 120],
                 body: [
@@ -202,7 +173,7 @@ function getContent(forms) {
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [14, 8, 0, 0]
+                        margin: [16, 8, 0, 0]
                     },
                     {
                         text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
@@ -913,7 +884,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: formatAmount(forms.net_vat_payable),
+                            text: forms.taxDue == null ? '0.00' : forms.taxDue % 1 == 0 ? forms.taxDue + '.00' : forms.taxDue,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1089,7 +1060,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: formatAmount(forms.tax_due),
+                            text: forms.amtPaybl == null ? '0.00' : forms.amtPaybl % 1 == 0 ? forms.amtPaybl + '.00' : forms.amtPaybl,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1154,7 +1125,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: formatAmount(forms.total_amount_payable),
+                            text: formatAmount(forms.totalAmountPayable),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up

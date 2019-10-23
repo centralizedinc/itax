@@ -157,10 +157,11 @@ import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
 import Form2000OT from "./2000ot/2000ot.vue";
 import Form1600WP from "./1600wp/1600wp.vue";
-import Form1604E from "./1604e/1604e.vue";
 import Form1601F from "./1601f/1601f.vue";
 import Form1606 from "./1606/1606.vue";
+import Form1601FQ from "./1601fq/1601fq.vue";
 import Form1601C from "./1601c/1601c.vue";
+import Form1604E from "./1604e/1604e.vue";
 
 export default {
   components: {
@@ -177,6 +178,7 @@ export default {
     Form1604E,
     Form1601F,
     Form1606,
+    Form1601FQ,
     Form1601C
   },
   computed: {
@@ -268,7 +270,7 @@ export default {
             description: "Computation"
           }
         ],
-        
+
         "1700": [
           {
             title: "General"
@@ -344,6 +346,23 @@ export default {
           {
             title: "Part II",
             description: "Computation of Tax"
+          },
+          {
+            title: "Part III",
+            description: "Details of Payment"
+          }
+        ],
+        "1601c": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Computation of Tax"
           }
         ],
          "1606": [
@@ -383,7 +402,7 @@ export default {
         },
         {
           title: "Part II",
-          description: "Computation"
+          description: "Summary of Remittances"
         }
       ],
       in_bottom: false,
