@@ -26,6 +26,7 @@ import Form1600wp from "../plugins/pdf/printers/1600wp";
 import Form1604e from "../plugins/pdf/printers/1604e";
 import Form1601f from "../plugins/pdf/printers/1601f";
 import Form1601fq from "../plugins/pdf/printers/1601fq";
+import Form1601c from "../plugins/pdf/printers/1601c";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -41,6 +42,7 @@ const printers = {
   FORM1600WP: Form1600wp,
   FORM1601F: Form1601f,
   FORM1601FQ: Form1601fq,
+  FORM1601C: Form1601c,
 };
 export default {
   props: ["form", "type"],

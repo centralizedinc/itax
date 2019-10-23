@@ -4,7 +4,7 @@
       <a-divider>
         <b>Withholding Tax   (1604E)</b>
       </a-divider>
-      <a-form-item label="1. For the month of (MM/YYYY)">
+      <a-form-item label="1. For the year of (MM/YYYY)">
         <a-month-picker v-model="form.returnPeriod" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
