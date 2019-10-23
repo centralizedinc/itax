@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="Schedule 1 – Remittance per BIR Form No. 1601-EQ"
+    title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
     placement="right"
     :closable="true"
     @close="close"

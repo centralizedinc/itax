@@ -38,7 +38,7 @@ function getContent(forms) {
                 heights: [85],
                 body: [
                     [{
-                        text: ''
+                        text: ' '
                     }]
                 ]
             }
@@ -50,7 +50,7 @@ function getContent(forms) {
                 widths: [135, 120, 43, 30, 150, 40],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                     },
                     {
                         text: formatDate(forms.returnPeriod, { year: "2-digit" }),
@@ -71,7 +71,7 @@ function getContent(forms) {
                         alignment: 'left',
                         margin: [0, 0, 0, 0]
                     }, {
-                        text: ''
+                        text: ' '
                     }, {
                         text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                         fontSize: 15,
@@ -91,7 +91,7 @@ function getContent(forms) {
                 heights: [10],
                 body: [
                     [{
-                        text: ''
+                        text: ' '
                     }]
                 ]
             }
@@ -101,11 +101,11 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [195, 46, 48, 50, 50, 62, 50],
-                heights: [30],
+                heights: [25],
                 body: [
                     [
                         {
-                            text: '',
+                            text: ' ',
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 0, 3),
@@ -139,7 +139,7 @@ function getContent(forms) {
                             margin: [0, 0, 0, 0]
                         },
                         {
-                            text: '',
+                            text: ' ',
                         },
                         {
                             text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -178,7 +178,7 @@ function getContent(forms) {
                 widths: [530],
                 body: [
                     [{
-                        text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
+                        text: forms.taxpayer.address == null || forms.taxpayer.address == ' ' ? ' ' : forms.taxpayer.address,
                         fontSize: 14,
                         bold: true,
                         alignment: 'left',
@@ -194,10 +194,10 @@ function getContent(forms) {
                 widths: [485, 60],
                 body: [
                     [{
-                        text: ''
+                        text: ' '
                     },
                     {
-                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
+                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == ' ' ? ' ' : forms.taxpayer.address_details.zipCode,
                         fontSize: 12,
                         characterSpacing: 8,
                         bold: true,
@@ -212,11 +212,11 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [138, 53, 60, 170, 42, 30],
-                heights: [25],
+                heights: [28],
                 body: [
                     [
                         {
-                            text: '',
+                            text: ' ',
                         },
                         {
                             text: forms.category_of_agent == true ? 'X' : ' ',
@@ -233,7 +233,7 @@ function getContent(forms) {
                             margin: [0, 0, 0, 0]
                         },
                         {
-                            text: '',
+                            text: ' ',
                         },
                         {
                             text: forms.top_withholding_agent == true ? 'X' : ' ',
