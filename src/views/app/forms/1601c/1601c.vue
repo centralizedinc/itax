@@ -4,7 +4,7 @@
       <a-divider>
         <b>Withholding Tax   (1601FQ)</b>
       </a-divider>
-      <a-form-item label="1. For the year of (YYYY)">
+      <a-form-item label="1. For the Month of (YYYY)">
         <a-month-picker v-model="form.returnPeriod" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
@@ -13,8 +13,17 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
+        <a-form-item label="3. Any Taxes Witheld">
+        <a-radio-group v-model="form.amendedYn">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="4. No. of Sheets Attached">
         <a-input-number v-model="form.numOfSheet"></a-input-number>
+      </a-form-item>
+      <a-form-item label="5. ATC">
+        <a-input v-model="form.taxpayer.atc_code"></a-input>
       </a-form-item>
       
     </a-form>
@@ -24,33 +33,34 @@
       <a-divider orientation="left">
         <b>Part I: Background Information</b>
       </a-divider>
-      <a-form-item label="5. TIN NUMBER">
+      <a-form-item label="6. TIN NUMBER">
         <a-input v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
-      <a-form-item label="6. RDO Code">
+      <a-form-item label="7. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
-      </a-form-item>
-      <a-form-item label="7. Line of Business/Occupation">
-        <a-input v-model="form.taxpayer.line_business"></a-input>
       </a-form-item>
       <a-form-item label="8. Withholding Agent's Name/Registered Name">
         <a-input v-model="form.taxpayer.taxpayer_name"></a-input>
       </a-form-item>
-      <a-form-item label="9. Telephone Number">
-        <a-input-number v-model="form.taxpayer.telephone_no"></a-input-number>
+      <a-form-item label="9. Registered Address">
+      <a-textarea v-model="form.taxpayer.telephone_no"></a-textarea>
       </a-form-item>
-      <a-form-item label="10. Registered Address">
-        <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
-      </a-form-item>
-      <a-form-item label="11. Zip Code">
+      <a-form-item label="9A. Zip Code">
         <a-input-number v-model="form.taxpayer.zip_code"></a-input-number>
       </a-form-item>
-      <a-form-item label="12. Category of Withholding Agent">
+      <a-form-item label="10. Contact Number">
+        <a-input-number v-model="form.taxpayer.contact_number"></a-input-number>
+      </a-form-item>
+      <a-form-item label="11. Category of Withholding Agent">
         <a-radio-group v-model="form.categoryOfAgent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
+      <a-form-item label="12. Email Adress">
+      <a-textarea v-model="form.taxpayer.email_address"></a-textarea>
+      </a-form-item>
+
       <a-form-item
         label="13. Are you availing of tax relief under Special Law or International Tax Treaty?"
       >
