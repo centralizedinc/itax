@@ -84,6 +84,8 @@
             <a-menu-item key="1600wp">Form 1600WP</a-menu-item>
             <a-menu-item key="1604e">Form 1604E</a-menu-item>
             <a-menu-item key="1601f">Form 1601F</a-menu-item>
+            <a-menu-item key="1606">Form 1606</a-menu-item>
+            <a-menu-item key="1601c">Form 1601c</a-menu-item>
           </a-menu>
         </template>
       </a-popover>
