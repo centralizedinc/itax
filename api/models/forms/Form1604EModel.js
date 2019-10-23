@@ -13,11 +13,14 @@ const model_schema = {
          * private
          */
     },
+    top_withholding_agent: { // item 8a
+        type: Boolean
+    },
     // Part II Computation of Tax
 
     // schedule 1 1601EQ
     sched1: [{
-        quarter: String,
+        quarter: Number,
         date_remittance: Date,
         drawee_Bank_Code: String,
         tra_ror_ar_num: {type: Number},
@@ -31,7 +34,7 @@ const model_schema = {
 
     //Schedule 2 1606
     sched2: [{
-        quarter: String,
+        month: Number,
         date_remittance: Date,
         drawee_Bank_Code: String,
         tra_ror_ar_num: {type: Number},
