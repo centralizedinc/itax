@@ -26,12 +26,11 @@ const model_schema = {
         tra_ror_ar_num: { type: Number },
         tax_withheld: { type: Number, default: 0 },
         penalties: { type: Number, default: 0 },
-        tot_amt_remitted: { type: Number, default: 0 },
-        total_tax_withheld: { type: Number, default: 0 },
-        total_penalties: { type: Number, default: 0 },
-        total_tot_amount_remitted: { type: Number, default: 0 }
+        tot_amt_remitted: { type: Number, default: 0 }
     }],
-
+    sched1_total_tax_withheld: { type: Number, default: 0 },
+    sched1_total_penalties: { type: Number, default: 0 },
+    sched1_total_tot_amount_remitted: { type: Number, default: 0 },
     //Schedule 2 1606
     sched2: [{
         month: Number,
@@ -40,12 +39,12 @@ const model_schema = {
         tra_ror_ar_num: { type: Number },
         tax_withheld: { type: Number, default: 0 },
         penalties: { type: Number, default: 0 },
-        tot_amt_remitted: { type: Number, default: 0 },
-        total_tax_withheld: { type: Number, default: 0 },
-        total_penalties: { type: Number, default: 0 },
-        total_tot_amount_remitted: { type: Number, default: 0 }
-    }],
+        tot_amt_remitted: { type: Number, default: 0 }
 
+    }],
+    sched2_total_tax_withheld: { type: Number, default: 0 },
+    sched2_total_penalties: { type: Number, default: 0 },
+    sched2_total_tot_amount_remitted: { type: Number, default: 0 },
     //Schedule 3
     sched3: [{
         seq_no: { type: Number, default: 0 }, //(1)
