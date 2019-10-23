@@ -37,6 +37,12 @@ const model_schema = {
             // itemized_deduction,
             // optional_standard_deduction
     },
+    spouse_filer_type: [], //item19
+    /**
+     * SP - single_proprietor
+     * P - professional
+     * CE - compensation earner
+     */
     spouse_atc_code: [{
         type: String
             // II012,
@@ -525,8 +531,8 @@ const plugin = new autoIncrement(Form1701QSchema, '1701q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 module.exports = mongoose.model("1701q_forms", Form1701QSchema);

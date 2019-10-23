@@ -7,6 +7,9 @@ const model = {
     },
     taxpayer: {},
     spouse_details: {},
+    seller_details: {},
+    employer_details: {},
+    spouse_employer_details: {},
     due_date: {
         type: Date
     },
@@ -33,6 +36,10 @@ const model = {
         type: Number
     },
     amended_yn: {
+        type: Boolean,
+        default: false
+    },
+    short_period: {
         type: Boolean,
         default: false
     },

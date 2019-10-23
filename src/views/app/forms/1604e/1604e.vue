@@ -206,12 +206,3 @@ export default {
 };
 </script>
 
-<style>
-/* .tax-form .computation-item {
-  padding-left: 50px;
-}
-
-.tax-form .computation-item .ant-input-number {
-  width: 40vh;
-} */
-</style>

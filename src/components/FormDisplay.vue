@@ -22,8 +22,10 @@ import Form2551q from "../plugins/pdf/printers/2551q";
 import Form1701q from "../plugins/pdf/printers/1701q";
 import Form2550q from "../plugins/pdf/printers/2550q";
 import Form2000ot from "../plugins/pdf/printers/2000ot";
+import Form1600wp from "../plugins/pdf/printers/1600wp";
 import Form1604e from "../plugins/pdf/printers/1604e";
 import Form1601f from "../plugins/pdf/printers/1601f";
+import Form1601fq from "../plugins/pdf/printers/1601fq";
 import Form1601c from "../plugins/pdf/printers/1601c";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -37,8 +39,10 @@ const printers = {
   FORM1701Q: Form1701q,
   FORM2550Q: Form2550q,
   FORM2000OT: Form2000ot,
+  FORM1600WP: Form1600wp,
   FORM1601F: Form1601f,
-  FORM1601C: Form1601c,
+  FORM1601FQ: Form1601fq,
+  FORM1601C: Form1601c
 };
 export default {
   props: ["form", "type"],
@@ -196,12 +200,11 @@ export default {
       console.log("open form data: " + JSON.stringify(this.form));
       this.refresh();
     },
-    upload(){
+    upload() {
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
-      return pdfMake.createPdf(document)
-      
+      return pdfMake.createPdf(document);
     }
   }
 };

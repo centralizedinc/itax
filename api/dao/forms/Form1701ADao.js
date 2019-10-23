@@ -1,11 +1,11 @@
-const model = require('../../models/reference/ReturnPeriodReference');
+const model = require('../../models/forms/form1701AModel');
 
-class ReturnPeriodDao {
+class Form1701ADao {
     /**
      * @returns {Promise}
      */
     static findAll() {
-        return model.find({ status: 'A' }).lean().exec();
+        return model.find({}).lean().exec();
     }
 
     /**
@@ -22,14 +22,6 @@ class ReturnPeriodDao {
      */
     static findOne(conditions) {
         return model.findOne(conditions).lean().exec();
-    }
-
-    /**
-     * @returns {Promise}
-     * @param {String} form 
-     */
-    static findOneByForm(form) {
-        return model.findOne({ form }).lean().exec();
     }
 
     /**
@@ -52,20 +44,27 @@ class ReturnPeriodDao {
 
     /**
      * @returns {Promise}
-     * @param {Object} data 
+     * @param {Object} form_details 
      */
-    static create(data) {
-        return (new model(data)).save();
-    }
-
-    /**
-     * @returns {Promise}
-     * @param {Object} conditions
-     * @param {String} fields 
-     */
-    static findByFields(conditions, fields) {
-        return model.find(conditions).select(fields).lean().exec();
+    static create(form_details) {
+        return new Promise((resolve, reject) => {
+            (new model(form_details)).save()
+                .then((result) => {
+                    const reference_no = generateReferenceNo(result.auto_id);
+                    return this.modifyById(result._id, { reference_no })
+                })
+                .then((result) => {
+                    resolve(result);
+                })
+                .catch((err) => {
+                    reject(err)
+                });
+        })
     }
 }
 
-module.exports = ReturnPeriodDao
+function generateReferenceNo(auto_id) {
+    return new Date().getTime().toString() + auto_id.toString()
+}
+
+module.exports = Form1701ADao

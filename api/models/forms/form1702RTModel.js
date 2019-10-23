@@ -1,56 +1,46 @@
-'use strict'
+"use strict";
 
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
 const common_model = require('./commonModels');
 
 const model_schema = {
-    category_of_agent: {
-        type: String
+    year_type: {
+        type: Date
+    },
+    year_ended_month: {
+        type: Date
+    },
+    year_ended_year: {
+        type: Date
+    },
+    short_period_return: {
+        type: Boolean
     },
     atc_code: {
         type: String
-    }, // WI155
-    taxes_withheld: {
-        type: Boolean
+            // IC055,
+            // IC010,
+            // IC020,
+            // IC040,
+            // IC041,
+            // IC070
     },
-    classification_property: {
+    date_incorporation_organization: {
+        type: Date
+    }, //item10
+    method_deduction: {
         type: String
+            // itemized_deduction,
+            // optional_standard_deduction
     },
-    location_property: {
-        type: String
-    },
-    location_rdo_code: {
-        type: String
-    },
-    tct_no: {
-        type: String
-    },
-    area_sold: {
-        type: String
-    },
-    selling_price_property: {
-        type: Boolean,
-        default: false
-    },
-    description_transaction: {
-        type: String
-    },
-    selling_price: { type: Number, default: 0 },
-    cost_expenses: { type: Number, default: 0 },
-    mortgage_assumed: { type: Number, default: 0 },
-    total_payments_initial_year: { type: Number, default: 0 },
-    amount_installment_month: { type: Number, default: 0 },
-    tax_declaration_land: { type: Number, default: 0 },
-    tax_declaration_improvements: { type: Number, default: 0 },
-    zonal_value: { type: Number, default: 0 },
-    commissioner: { type: Number, default: 0 },
-    gross_selling_price: { type: Number, default: 0 },
-    fair_market_value: { type: Number, default: 0 }, // Sum of 27A & 27B/ 27C & 27D/ 27B & 27C/27A & 27D whichever is higher
-    bid_price: { type: Number, default: 0 },
-    installment_collected: { type: Number, default: 0 }, //Installment Sale excluding interest
-    taxable_base_computation: { type: Number, default: 0 },
+
+    //Part 2 Total tax payable
+    total_tax_due: {
+        type: Number,
+        default: 0
+    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26a
     particular_cash: [{
         drawee_bank: {
             type: Number,
@@ -119,25 +109,33 @@ const model_schema = {
             default: 0
         }
     }],
+    // Part V Graduated IT Rate
+    sched1: [],
+    // Part V IT Rate
+    sched2: [],
+    // Part V Tax Credits/Payments
+    sched3: [],
+    // Part V Penalties
+    sched4: []
 };
 
-var Form1606Schema = new Schema({...common_model, ...model_schema });
+var Form1702RTSchema = new Schema({
+    ...common_model,
+    ...model_schema
+});
 
-Form1606Schema.pre('save', function(callback) {
-    var form = this;
-    form.date_created = new Date();
-    form.date_modified = new Date();
+Form1702RTSchema.pre('save', function(callback) {
+    this.date_created = new Date();
+    this.date_modified = new Date();
     callback();
 });
 
-Form1606Schema.pre('findOneAndUpdate', function(callback) {
-    console.log('this :', this._update);
+Form1702RTSchema.pre('findOneAndUpdate', function(callback) {
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();
     callback();
 });
-
 
 const options = {
     field: 'auto_id', // auto_id will have an auto-incrementing value
@@ -148,13 +146,12 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form1606Schema, '1606_forms', options);
+const plugin = new autoIncrement(Form1702RTSchema, '1702rt_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
-
-module.exports = mongoose.model('1606_forms', Form1606Schema);
+module.exports = mongoose.model("1702rt_forms", Form1702RTSchema);
