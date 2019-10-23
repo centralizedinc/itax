@@ -51,6 +51,9 @@
 
     <!-- Part 1 -->
     <a-form v-show="step===1">
+      <a-divider>
+        <b>Part I: Background Information</b>
+      </a-divider>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"

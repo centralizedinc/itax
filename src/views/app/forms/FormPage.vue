@@ -344,6 +344,15 @@ export default {
             title: "Part III",
             description: "Details of Payment"
           }
+        ],
+        "1604e": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          }
         ]
       },
       default_steps: [
@@ -356,7 +365,7 @@ export default {
         },
         {
           title: "Part II",
-          description: "Computation"
+          description: "Summary of Remittances"
         }
       ],
       in_bottom: false,
