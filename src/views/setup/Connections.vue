@@ -86,6 +86,7 @@ export default {
   },
   methods: {
     skip() {
+      this.$store.commit("UPDATE_SESSION_MODE");
       this.$router.push("/app");
       window.location.reload();
     },

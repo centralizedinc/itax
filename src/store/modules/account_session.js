@@ -9,7 +9,8 @@ function initialState() {
         account: {},
         user: {},
         token: "",
-        is_authenticated: false
+        is_authenticated: false,
+        mode: ''
     }
 }
 
@@ -21,12 +22,18 @@ const mutations = {
         state.user = data.user;
         state.token = data.token;
         state.is_authenticated = true;
+        state.mode = data.account.status === 0 ? 'INACTIVE' :
+            data.account.status === 1 ? 'SETUP' : 'ACTIVE';
     },
     UPDATE_ACCOUNT(state, data) {
         state.account = data;
     },
     UPDATE_USER(state, data) {
         state.user = data;
+    },
+    UPDATE_SESSION_MODE(state) {
+        state.mode = state.account.status === 0 ? 'INACTIVE' :
+            state.account.status === 1 ? 'SETUP' : 'ACTIVE';
     },
     RESET(state) {
         Object.keys(state).forEach(key => {

@@ -109,7 +109,6 @@ router.route('/details')
             });
     })
 
-
 router
     .route('/:id')
     .post((req, res) => {

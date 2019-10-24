@@ -49,11 +49,11 @@
     </a-row>
 
     <a-row type="flex" align="middle">
-      <a-col :xs="{ span: 24 }" :md="{ span: 18 }">
+      <a-col :span="24" style="margin-left: -0.6vw">
         <a-form-item
           label="Filer Type"
-          :label-col="{ span: 5 }"
-          :wrapper-col="{ span: 19 }"
+          :label-col="{ span: 4 }"
+          :wrapper-col="{ span: 20 }"
           :validate-status="error_desc('filer_type') ? 'error' : ''"
           :help="error_desc('filer_type')"
         >
@@ -344,7 +344,7 @@ export default {
             } else {
               this.tin_validate_status = "success";
             }
-            if (!this.error_messages || !this.error_messages.length) {
+            if (validate_all === true && (!this.error_messages || !this.error_messages.length)) {
               this.next();
             }
           })
