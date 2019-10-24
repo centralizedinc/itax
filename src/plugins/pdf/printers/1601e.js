@@ -42,7 +42,7 @@ function getContent(forms) {
                     text: formatDate(forms.return_period, { month: "2-digit" }),
                     fontSize: 15,
                     characterSpacing: 3,
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [80, 78, 0, 0]
                 },
                 {
@@ -50,42 +50,42 @@ function getContent(forms) {
                     fontSize: 15,
                     characterSpacing: 3,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [0, 78, 0, 0]
                 },
                 {
                     text: forms.amended_yn == true ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [40, 82, 0, 0]
                 },
                 {
                     text: forms.amended_yn == false ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [13, 82, 0, 0]
                 },
                 {
                     text: forms.num_of_sheet,
                     fontSize: 10,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [34, 83, 10, 0]
                 },
                 {
                     text: forms.taxes_withheld == true ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [40, 82, 0, 0]
                 },
                 {
                     text: forms.taxes_withheld == false ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [25, 82, 0, 0]
                 }
                 ],
@@ -97,6 +97,7 @@ function getContent(forms) {
         layout: "noBorders",
         table: {
             widths: [58, 45, 35, 50, 150, 100],
+            heights: [35],
             body: [
                 [{
                     text: mapTin(forms.taxpayer.tin, 0, 3),
@@ -104,7 +105,7 @@ function getContent(forms) {
                     bold: true,
                     characterSpacing: 3,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [15, 7, 0, 0]
                 },
                 {
@@ -112,7 +113,7 @@ function getContent(forms) {
                     fontSize: 16,
                     characterSpacing: 3,
                     bold: true,
-                    alignment: 'justified',
+                    alignment: 'left',
                     margin: [0, 7, 0, 0]
                 },
                 {
@@ -120,7 +121,7 @@ function getContent(forms) {
                     fontSize: 16,
                     bold: true,
                     characterSpacing: 3,
-                    alignment: 'justified',
+                    alignment: 'left',
                     margin: [0, 7, 0, 0]
                 },
                 {
@@ -136,14 +137,14 @@ function getContent(forms) {
                     characterSpacing: 3,
                     fontSize: 16,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [73, 7, 0, 0]
                 }, {
                     // 38 characters only
                     text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
                     fontSize: 16,
                     // right,down,left,up
-                    alignment: 'justify',
+                    alignment: 'left',
                     margin: [50, 7, 0, 0]
                 }
                 ]
@@ -154,22 +155,26 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [420, "*"],
+                widths: [420, 10, 80],
+                heights: [18],
                 body: [
                     [{
                         // 72 characters 
                         text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
                         fontSize: 10,
                         // right,down,left,up
-                        alignment: 'justify',
-                        margin: [14, 5, 0, 0]
+                        alignment: 'left',
+                        margin: [20, 0, 0, 0]
+                    },
+                    {
+                        text: '',
                     },
                     {
                         text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
                         fontSize: 12,
                         // right,down,left,up
-                        alignment: 'justify',
-                        margin: [25, 3, 0, 0]
+                        alignment: 'left',
+                        margin: [10, 0, 0, 0]
                     }
                     ]
                 ]
@@ -177,22 +182,25 @@ function getContent(forms) {
         }, {
         layout: "noBorders",
         table: {
-            widths: [420, "*"],
+            widths: [420, 40, 60],
             body: [
                 [{
                     // 72 characters
                     text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
                     fontSize: 10,
                     // right,down,left,up
-                    alignment: 'justify',
-                    margin: [12, 6, 0, 0]
+                    alignment: 'left',
+                    margin: [20, 0, 0, 0]
+                },
+                {
+                    text: '',
                 },
                 {
                     text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
                     fontSize: 12,
-                    // right,down,left,up
-                    alignment: 'center',
-                    margin: [50, 6, 0, 0]
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    margin: [10, 0, 0, 0]
                 }
                 ]
             ]
@@ -207,7 +215,7 @@ function getContent(forms) {
                     fontSize: 12,
                     // right,down,left,up
                     margin: [13, 6, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 {
@@ -215,20 +223,20 @@ function getContent(forms) {
                     fontSize: 12,
                     // right,down,left,up
                     margin: [28, 6, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
                 },
                 {
                     text: forms.availing_tax_relief == true ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     margin: [85, 6, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
                 }, {
                     text: forms.availing_tax_relief == false ? 'X' : ' ',
                     fontSize: 12,
                     // right,down,left,up
                     margin: [20, 6, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
                 },
                 {
                     // 30 characters
@@ -236,7 +244,7 @@ function getContent(forms) {
                     fontSize: 12,
                     // right,down,left,up
                     margin: [105, 6, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
                 }
                 ]
             ]
@@ -295,7 +303,7 @@ function getContent(forms) {
     }
 
     content.push({
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         // 20 characters
@@ -303,28 +311,28 @@ function getContent(forms) {
         // right,down,left,up
         margin: [416, 8, 0, 0],
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.prevTaxPaidCrdtb,
         // right,down,left,up
         margin: [415, 11, 0, 0],
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.advPayment,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.totTaxCredits,
         // right,down,left,up
         margin: [415, 1, 0, 0],
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.amtPayblCrdtb,
@@ -341,7 +349,7 @@ function getContent(forms) {
                     fontSize: 8,
                     // right,down,left,up
                     margin: [52, 13, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 {
@@ -349,7 +357,7 @@ function getContent(forms) {
                     fontSize: 8,
                     // right,down,left,up
                     margin: [26, 13, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 {
@@ -357,7 +365,7 @@ function getContent(forms) {
                     fontSize: 8,
                     // right,down,left,up
                     margin: [23, 13, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 {
@@ -365,7 +373,7 @@ function getContent(forms) {
                     fontSize: 8,
                     // right,down,left,up
                     margin: [28, 13, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 ]
@@ -383,7 +391,7 @@ function getContent(forms) {
                     fontSize: 12,
                     // right,down,left,up
                     margin: [155, 8, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 {
@@ -391,7 +399,7 @@ function getContent(forms) {
                     fontSize: 12,
                     // right,down,left,up
                     margin: [95, 8, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 },
                 {
@@ -399,7 +407,7 @@ function getContent(forms) {
                     fontSize: 8,
                     // right,down,left,up
                     margin: [140, 0, 0, 0],
-                    alignment: 'justify'
+                    alignment: 'left'
 
                 }
                 ]
@@ -407,34 +415,7 @@ function getContent(forms) {
         }
     })
 
-    // -------------To be Continue
-    // content.push({
-    //     text: "\n\n"
-    // }, {
-    //     // layout: "noBorders",
-    //     table: {
-    //         widths: [310, 100],
-    //         body: [
-    //             [{
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [155, 8, 0, 0],
-    //                     alignment: 'justify'
 
-    //                 },
-    //                 {
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [95, 8, 0, 0],
-    //                     alignment: 'justify'
-
-    //                 }
-    //             ]
-    //         ]
-    //     }
-    // })
     return content;
 }
 

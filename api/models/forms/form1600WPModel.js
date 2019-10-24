@@ -23,10 +23,10 @@ const model_schema = {
         tax_rate: { type: Number, default: 0 },
         tax_withheld: { type: Number, default: 0 }
     }],
-    tax_req_withld_remtd: { type: Number, default: 0 },
-    less_tax_remtd_retrn: { type: Number, default: 0 },
-    tax_due: { type: Number, default: 0 },
-    total_amount_payable: { type: Number, default: 0 },
+    tax_req_withld_remtd: { type: Number, default: 0 }, 
+    less_tax_remtd_retrn: { type: Number, default: 0 }, 
+    tax_due: { type: Number, default: 0 }, 
+    total_amount_payable: { type: Number, default: 0 }, 
 
     //Schedule 1.1
     sched1: [{

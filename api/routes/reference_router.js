@@ -53,45 +53,66 @@ reference_router.route("/rdos")
 
 reference_router.route('/return_period')
     .get((req, res) => {
-        ReturnPeriodDao.findAll()
+        console.log("Fields :", req.query.fields);
+        var query = req.query, fields = '';
+        if (query.fields) {
+            fields = query.fields.split(',').join(' ');
+            query.fields = undefined;
+        }
+        ReturnPeriodDao.findByFields(query, fields)
             .then((model) => {
-                res.json({
-                    success: true,
-                    model
-                })
+                res.json(model)
             }).catch((errors) => {
-                res.json({
-                    success: false,
-                    errors
-                })
+                res.json(errors)
             });
     })
     .post((req, res) => {
-        var data = req.body;
-        data.created_by = jwt.decode(req.headers.access_token).account_id;
-        var errors = null;
-        ReturnPeriodDao.findOneByForm(data.form)
-            .then((existing_form) => {
-                if (existing_form) {
-                    errors = [{
-                        message: "Form already exist in reference."
-                    }]
-                } else {
-                    return ReturnPeriodDao.create(data);
-                }
-            })
-            .then((model) => {
-                res.json({
-                    success: !errors,
-                    model,
-                    errors
+        if (req.query && req.query.mode === 'update') {
+            if (req.query.id) {
+                var data = req.body;
+                data.modified_by = jwt.decode(req.headers.access_token).account_id;
+                ReturnPeriodDao.modifyById(req.query.id, data)
+                    .then((model) => {
+                        res.json({
+                            success: true,
+                            model
+                        })
+                    }).catch((errors) => {
+                        res.json({
+                            success: false,
+                            errors
+                        })
+                    });
+            } else {
+                res.send("Required query 'id'.");
+            }
+        } else {
+            var data = req.body;
+            data.created_by = jwt.decode(req.headers.access_token).account_id;
+            var errors = null;
+            ReturnPeriodDao.findOneByForm(data.form)
+                .then((existing_form) => {
+                    if (existing_form) {
+                        errors = [{
+                            message: "Form already exist in reference."
+                        }]
+                    } else {
+                        return ReturnPeriodDao.create(data);
+                    }
                 })
-            }).catch((errors) => {
-                res.json({
-                    success: false,
-                    errors
-                })
-            });
+                .then((model) => {
+                    res.json({
+                        success: !errors,
+                        model,
+                        errors
+                    })
+                }).catch((errors) => {
+                    res.json({
+                        success: false,
+                        errors
+                    })
+                });
+        }
     })
 
 module.exports = reference_router;

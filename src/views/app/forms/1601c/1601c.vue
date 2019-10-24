@@ -2,11 +2,10 @@
   <div>
     <a-form :form="form_general" v-show="step===0">
       <a-divider>
-        <b>Withholding Tax Declaration (1600WP)</b>
+        <b>Withholding Tax Declaration (1601c)</b>
       </a-divider>
       <a-form-item label="1. For the month of (MM/DD/YYYY)">
         <a-date-picker v-model="form.start_month" />
-        <a-date-picker v-model="form.end_month" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amended_yn">
@@ -30,25 +29,76 @@
       <a-divider orientation="left">
         <b>Part I: Background Information</b>
       </a-divider>
-      <a-form-item label="5. TIN NUMBER">
+      <!-- buyers tin -->
+      <a-form-item label="5. BUYERS TIN NUMBER">
         <a-input v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
-      <a-form-item label="6. RDO Code">
+      <a-form-item label="6. BUYER RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Category of Withholding Agent">
+      <a-form-item label="7. SELLER TIN NUMBER">
+        <a-input v-model="form.taxpayer.tin"></a-input>
+      </a-form-item>
+      <a-form-item label="8. SELLER RDO Code">
+        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      </a-form-item>
+      <a-form-item label="9. Buyers Registered Name">
+        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      </a-form-item>
+      <a-form-item label="10. Seller Registered Name">
+        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      </a-form-item>
+      <a-form-item label="11. Buyers Registered Address">
+        <a-textarea v-model="form.address"></a-textarea>
+      </a-form-item>
+
+      <a-form-item label="12. Seller Registered Address">
+        <a-textarea v-model="form.address"></a-textarea>
+      </a-form-item>
+
+      <a-form-item label="13. ATC">
+        <a-radio-group v-model="form.atc">
+          <a-radio :value="true">Individual</a-radio>
+          <a-radio :value="false">Corporation</a-radio>
+        </a-radio-group>
+      </a-form-item>
+
+      <a-form-item label="14. Category of Withholding Agent">
         <a-radio-group v-model="form.category_of_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="8. Withholding Agent's Name/Registered Name">
-        <a-input v-model="form.taxpayer.registered_name"></a-input>
+
+      <a-form-item label="15.Classification of Property">
+        <a-radio-group v-model="form.classification_property">
+          <a-radio :value="'RES'">Residential</a-radio>
+          <a-radio :value="'AGR'">Agriculture</a-radio>
+          <a-radio :value="'COM'">Commercial</a-radio>
+          <a-radio :value="'IND'">Industrial</a-radio>
+          <a-radio :value="'CONR'">Condominum Residential</a-radio>
+          <a-radio :value="'CONC'">Condominum Commercial</a-radio>
+        </a-radio-group>
+        <a-form-item label="If yes, specify"></a-form-item>
+        <a-textarea v-model="form.plsspecify"></a-textarea>
       </a-form-item>
-      <a-form-item label="9. Registered Address">
-        <a-textarea v-model="form.address"></a-textarea>
+      <a-form-item label="16. location of the Property">
+        <a-input v-model="form.loc_property"></a-input>
       </a-form-item>
-      <a-form-item label="10. Zip Code">
+      <a-form-item label="17. Brief Description of the Property">
+        <a-input v-model="form.area_sold_sqm"></a-input>
+        <a-form-item label="Tax Doc Number">
+          <a-input v-model="form.tax_doc_no"></a-input>
+           <a-form-item label="TCT/OCT/CCT">
+          <a-input v-model="form.tct"></a-input>
+            <a-form-item label="Others">
+          <a-input v-model="form.others"></a-input>
+        </a-form-item>
+      </a-form-item>
+       </a-form-item>
+       </a-form-item>
+
+      <!-- <a-form-item label="10. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item
@@ -58,13 +108,13 @@
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
-      </a-form-item>
-      <a-form-item label="If yes, specify">
+      </a-form-item>-->
+      <!-- <a-form-item label="If yes, specify">
         <a-input v-model="form.avail_tax_relief"></a-input>
-      </a-form-item>
+      </a-form-item>-->
     </a-form>
     <!-- Part II -->
-    <a-form :form="form_part2" v-show="step===2">
+    <!-- <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
         <b>Part II: Computation of Tax</b>
       </a-divider>
@@ -105,19 +155,19 @@
         <a-date-picker v-model="form.end_month" />
       </a-form-item>
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form>
+    </a-form>-->
   </div>
 </template>
 
 <script>
-// import form_1601e_image from "@/assets/forms/1600wp.jpg";
+// import form_1606_image from "@/assets/forms/1606.jpg";
 
 export default {
   props: ["form", "step"],
   data() {
     return {
       sub: false,
-      // form_1600wp_image,
+      // form_1601c_image,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
@@ -183,7 +233,7 @@ export default {
       this.loading = true;
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
-          form_type: "1600WP",
+          form_type: "1601c",
           form_details: this.form
         })
         .then(result => {
@@ -191,7 +241,7 @@ export default {
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
           this.$store.commit("NOTIFY_MESSAGE", {
-            message: "Successfully submitted Form 2550m."
+            message: "Successfully submitted Form 1601c."
           });
           // window.opener.location.reload();
           window.close();
@@ -215,7 +265,7 @@ export default {
   // watch: {
   //   form: {
   //     handler(val) {
-  //       console.log("##### update 1600wp ");
+  //       console.log("##### update 1606 ");
   //     },
   //     deep: true
   //   }

@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="Schedule 1 Schedule of Sales/Receipts and Output Tax"
+    title="Alphanumeric Tax Codes (ATC)"
     placement="right"
     :closable="true"
     @close="close"
@@ -18,34 +18,28 @@
           <a-select-option v-for="item in atc_list" :key="item.atc">{{item.atc}}</a-select-option>
         </a-select>
       </template>
-      <template slot="amount" slot-scope="text, record, index">
+
+      <template slot="taxRate" slot-scope="text, record, index">
+        <span>{{getTaxRate(record.atc, index)}}</span>
+      </template>
+
+      <template slot="taxBase" slot-scope="text, record, index">
         <a-input-number
           :disabled="!record.atc"
-          @change="e => changeAmount(e, index)"
+          @change="e => changeTaxBase(e, index)"
           :value="text"
           placeholder="text"
         ></a-input-number>
       </template>
-      <template slot="output_tax" slot-scope="text, record, index">
-        <span>{{getOutputTax(record.atc, index)}}</span>
+
+      <template slot="taxWithheld" slot-scope="text, record, index">
+        <span>{{getTaxWithheld(record.atc, index)}}</span>
       </template>
+
       <template slot="operation" slot-scope="text, record, index">
         <a-popconfirm placement="left" title="Sure to delete ?" @confirm="deleteAtc(index)">
           <a-icon type="delete" style="color: red; cursor: pointer;"></a-icon>
         </a-popconfirm>
-      </template>
-      <template slot="footer">
-        <p align="left">
-          <span>
-            12A. Total Amount:
-            <b>{{total_atc_amount}}</b>
-          </span>
-          <br />
-          <span>
-            12B. Total Output Tax:
-            <b>{{total_atc_output_tax}}</b>
-          </span>
-        </p>
       </template>
     </a-table>
   </a-drawer>
@@ -58,10 +52,10 @@ export default {
     return {
       columns: [
         {
-          title: "Industry Covered by VAT",
+          title: "NATURE OF INCOME PAYMENT",
           dataIndex: "description",
           scopedSlots: { customRender: "description" },
-          width: "35%"
+          width: "43%"
         },
         {
           title: "ATC",
@@ -70,16 +64,22 @@ export default {
           scopedSlots: { customRender: "atc" }
         },
         {
-          title: "Amount of Sales/Receipts For the Period",
-          dataIndex: "amount",
+          title: "TAX BASE",
+          dataIndex: "taxBase",
           width: "20%",
-          scopedSlots: { customRender: "amount" }
+          scopedSlots: { customRender: "taxBase" }
         },
         {
-          title: "Output Tax for the Period",
-          dataIndex: "output_tax",
+          title: "TAX RATE(%)",
+          dataIndex: "taxRate",
           width: "20%",
-          scopedSlots: { customRender: "output_tax" }
+          scopedSlots: { customRender: "tax_rate" }
+        },
+        {
+          title: "TAX REQUIRED TO BE WITHHELD",
+          dataIndex: "taxWithheld",
+          width: "20%",
+          scopedSlots: { customRender: "taxWithheld" }
         },
         {
           title: "",
@@ -90,40 +90,19 @@ export default {
       ],
       atc_list: [
         {
-          description: "BUSINESS SERVICES-IN GENERAL",
-          atc: "VB010",
-          rate: 0.12
+          description: "PROFL TALENT FEE PD TO JURIDICL (GROSS INC <= 720,000)",
+          atc: "WC010",
+          rate: 10.0
         },
         {
-          description: "CONSTRUCTION",
-          atc: "VC010",
-          rate: 0.25
+          description:
+            "EWT-INC PYMTS MADE BY TOP 20,000 CORP TO LOCAL SUPP OF GOODS",
+          atc: "WC158",
+          rate: 1.0
         }
       ],
       data_source: []
     };
-  },
-  created() {
-    console.log("Open Schedule 1 :::", JSON.stringify(this.form.sched1));
-    // if(this.form.sched1){
-    //   this.data_source = this.deepCopy(this.form.sched1);
-    // }else{
-    //   this.data_source = [{}]
-    // }
-  },
-  computed: {
-    total_atc_amount() {
-      var total = 0;
-      if (this.data_source && this.data_source.length)
-        total = this.data_source.map(v => v.amount).reduce((t, v) => t + v);
-      return total;
-    },
-    total_atc_output_tax() {
-      var total = 0;
-      if (this.data_source && this.data_source.length)
-        total = this.data_source.map(v => v.output_tax).reduce((t, v) => t + v);
-      return total;
-    }
   },
   methods: {
     addAtc() {
@@ -131,8 +110,9 @@ export default {
       const new_sched1 = {
         description: "",
         atc: "",
-        amount: 0,
-        output_tax: 0,
+        taxBase: 0,
+        taxRate: 0,
+        taxWithheld: 0,
         rate: 0
       };
       this.data_source = [...this.data_source, new_sched1];
@@ -145,16 +125,13 @@ export default {
       const atc = this.atc_list.find(v => v.atc === val);
       return atc ? atc.description : "";
     },
-    changeAmount(val, index) {
-      if (index > -1) this.data_source[index].amount = val;
-    },
-    getOutputTax(val, index) {
+    getTaxWithheld(val, index) {
       if (val && index > -1) {
         const atc = this.atc_list.find(v => v.atc === val);
         var total = 0;
         if (atc) {
           total = this.data_source[index].amount * atc.rate;
-          this.data_source[index].output_tax = total;
+          this.data_source[index].taxWitheld = total;
         }
         return total;
       }
@@ -164,11 +141,7 @@ export default {
       this.data_source.splice(index, 1);
     },
     close() {
-      this.$emit("close", {
-        sched1: this.deepCopy(this.data_source),
-        totalAtcAmount: this.deepCopy(this.total_atc_amount),
-        totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
-      });
+      this.$emit("close");
     }
   }
 };

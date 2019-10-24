@@ -1,4 +1,4 @@
- const form = require("../templates/1600wp_template").template;
+const form = require("../templates/1601c_template").template;
 
 /**
  *
@@ -38,7 +38,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [80],
+                heights: [45],
                 body: [
                     [{
                         text: "",
@@ -48,25 +48,27 @@ function getContent(forms) {
                 ]
             }
         },
-        //#1 for the period MM/DD/YYYY
+        //date of transaction MM/DD/YYYY
         {
             layout: "noBorders",
             table: {
-                widths: [22, 24, 48, 26, 20, 60, 30, 30, 60, 30, 20, 30, 30],
+                widths: [80, 28, 17, 50, 25, 40, 30, 40, 35, 25, 25],
                 body: [
-                    [
+                    [{
+                            text: ""
+                        },
                         //fromPeriod month
                         {
                             text: formatDate(forms.start_month, {
                                 month: "2-digit"
                             }),
 
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [1, 0, 0, 0]
+                            margin: [10, 0, 0, 0]
                         },
                         //fromPeriod day     
                         {
@@ -74,79 +76,46 @@ function getContent(forms) {
                                 day: "2-digit"
                             }),
 
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [0, 0, 0, 0]
+                            margin: [1, 0, 0, 0]
                         },
                         //fromPeriod year
                         {
                             text: formatDate(forms.start_month, {
                                 year: "numeric"
                             }),
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [0, 0, 0, 0]
+                            margin: [1, 0, 0, 0]
                         },
-                        //toPeriod month
-                        {
-                            text: formatDate(forms.end_month, {
-                                month: "2-digit"
-                            }),
-                            fontSize: 15,
-                            bold: true,
-                            characterSpacing: 3,
-                            alignment: 'left',
-                            // right,down,left,up
-                            margin: [8, 0, 0, 0]
-                        },
-                        //toPeriod day
-                        {
-                            text: formatDate(forms.end_month, {
-                                day: "2-digit"
-                            }),
-                            fontSize: 15,
-                            bold: true,
-                            characterSpacing: 3,
-                            alignment: 'left',
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0]
-                        },
-                        //toPeriod year
-                        {
-                            text: formatDate(forms.end_month, {
-                                year: "numeric"
-                            }),
-                            fontSize: 15,
-                            bold: true,
-                            characterSpacing: 4,
-                            alignment: 'left',
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0]
-                        },
+
+
+
                         //#2 amended return?
                         // amended_yn true
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [10, 0, 0, 0]
+                            margin: [13, 4, 0, 0]
                         },
                         // amended_yn false
                         {
                             text: forms.amended_yn == false ? 'X' : ' ',
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [11, 0, 0, 0]
+                            margin: [13, 5, 0, 0]
                         },
                         //#3 no. of sheets attached
                         // space
@@ -156,12 +125,12 @@ function getContent(forms) {
                         //No. of Sheets Attached
                         {
                             text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
-                            fontSize: 15,
+                            fontSize: 12,
                             bold: true,
                             characterSpacing: 4,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [3, 0, 0, 0]
+                            margin: [15, 5, 0, 0]
 
                         },
                         //space
@@ -172,20 +141,20 @@ function getContent(forms) {
                         // any taxes withheld? true
                         {
                             text: forms.any_tax_withheld == true ? 'X' : ' ',
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [8, 0, 0, 0]
+                            margin: [15, 5, 0, 0]
                         },
                         // any taxes withheld? false             
                         {
                             text: forms.any_tax_withheld == false ? 'X' : ' ',
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [10, 0, 0, 0]
+                            margin: [20, 5, 0, 0]
                         },
 
                     ]
@@ -195,98 +164,149 @@ function getContent(forms) {
         // ----> end of table #1 <---- //
 
         //table space
-        {
-            layout: "noBorders",
-            table: {
-                widths: [530],
-                heights: [9],
-                body: [
-                    [{
-                        text: "",
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [530],
+        //         heights: [9],
+        //         body: [
+        //             [{
+        //                 text: "",
 
-                    }, ],
+        //             }, ],
 
-                ]
-            }
-        },
+        //         ]
+        //     }
+        // },
 
 
 
         // ----> table # 2 <--- //
 
-        // #5 tin
+        // #5 tin buyer
         {
             layout: "noBorders",
             table: {
-                widths: [50, 50, 45, 59, 60, 60, 45, 40],
+                widths: [63, 32, 30, 33, 27, 46, 50, 32, 28, 28, 21, 40],
                 body: [
                     [{
                             text: mapTin(forms.taxpayer.tin, 0, 3),
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
-                            characterSpacing: 3,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [15, 0, 0, 0]
+                            margin: [35, 7, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 3, 6),
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
-                            characterSpacing: 3,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [12, 0, 0, 0]
+                            margin: [2, 7, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 6, 9),
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
-                            characterSpacing: 3,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [8, 0, 0, 0]
+                            margin: [1, 7, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 9, 12),
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
-                            characterSpacing: 5,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [10, 0, 0, 0]
+                            margin: [1, 7, 0, 0]
                         },
                         {
                             text: "",
 
                         },
-                        // #6 rdo code
+                        // #6 rdo code buyer
                         {
                             text: forms.taxpayer.rdo_code,
-                            fontSize: 15,
+                            fontSize: 13,
                             bold: true,
-                            characterSpacing: 5,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [16, 0, 0, 0]
+                            margin: [1, 7, 0, 0]
                         },
                         // #7 category of withoutholding agent true
-                        {
-                            text: forms.category_of_agent == true ? 'X' : ' ',
-                            fontSize: 15,
-                            bold: true,
-                            // right,down,left,up
-                            alignment: 'left',
-                            margin: [27, 5, 0, 0]
-                        },
+                        // {
+                        //     text: forms.category_of_agent == true ? 'X' : ' ',
+                        //     fontSize: 15,
+                        //     bold: true,
+                        //     // right,down,left,up
+                        //     alignment: 'left',
+                        //     margin: [1, 5, 0, 0]
+                        // },
                         // #7 category of withoutholding agent false
+                        // {
+                        //     text: forms.category_of_agent == false ? 'X' : ' ',
+                        //     fontSize: 15,
+                        //     bold: true,
+                        //     // right,down,left,up
+                        //     alignment: 'left',
+                        //     margin: [1, 5, 0, 0]
+                        // },
+                        // #7 tin seller
                         {
-                            text: forms.category_of_agent == false ? 'X' : ' ',
-                            fontSize: 15,
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
+                            fontSize: 13,
                             bold: true,
-                            // right,down,left,up
+                            characterSpacing: 2,
                             alignment: 'left',
-                            margin: [26, 5, 0, 0]
+                            // right,down,left,up
+                            margin: [22, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [2, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 9, 12),
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 2,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [1, 7, 0, 0]
+                        },
+
+                        {
+                            text: "",
+                        },
+                        //#8 RDO seller
+                        {
+                            text: forms.taxpayer.rdo_code,
+                            fontSize: 13,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'left',
+                            // right,down,left,up
+                            margin: [9, 7, 0, 0]
                         },
                     ],
                 ]
@@ -299,19 +319,29 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [530],
-                heights: [11],
+                widths: [265, 250],
+                heights: [7],
                 body: [
                     [
-                        // #8 withholding agent's name
+                        // #9 buyer's name
                         {
-                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name ,
-                            fontSize: 15,
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 12,
                             bold: true,
                             characterSpacing: 3,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [7, 5, 0, 0]
+                            margin: [7, 8, 0, 0]
+                        },
+                        //#10 seller's name
+                        {
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 12,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [7, 8, 0, 0]
                         },
 
                     ]
@@ -321,33 +351,49 @@ function getContent(forms) {
         // ----> end of table #3 <---- //
 
         // ----> table #4 <---- //
-
         {
             layout: "noBorders",
             table: {
-                widths: [470, 58],
-                heights: [10],
+                widths: [524],
+                heights: [5],
                 body: [
                     [
-                        // #9 registered address    
+
+                        {
+                            text: ""
+                        },
+
+
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [265, 250],
+                heights: [4],
+                body: [
+                    [
+                        // #11 buyers registered address    
                         {
                             text: forms.address == null ? ' ' : forms.address,
-                            fontSize: 15,
+                            fontSize: 10,
                             bold: true,
                             characterSpacing: 3,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [6, 8, 0, 0]
+                            margin: [5, 1, 0, 0]
                         },
-                        // #10 zip code
+                        // #12 sellers registered address
                         {
-                            text: forms.zipCode,
-                            fontSize: 15,
+                            text: forms.address == null ? ' ' : forms.address,
+                            fontSize: 10,
                             bold: true,
-                            characterSpacing: 5,
-                            alignment: 'left',
+                            characterSpacing: 3,
+                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [8, 8, 0, 0]
+                            margin: [3, 1, 0, 0]
                         },
                     ]
                 ]
@@ -358,47 +404,421 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [120, 45, 40, 46, 245],
-                heights: [18],
+                widths: [120, 80, 130, 30, 20, 30, 30],
+                heights: [10],
                 body: [
                     [
-                        //     
+                        //#13 ATC
+
                         {
-                            text: "",
-                        },
-                        {
-                            text: forms.is_avail_tax_relief == true ? 'X' : ' ',
-                            fontSize: 15,
-                            bold: true,
-                            // right,down,left,up
-                            alignment: 'left',
-                            margin: [12, 5, 0, 0]
-                        },
-                        // any taxes withheld? false             
-                        {
-                            text: forms.is_avail_tax_relief == false ? 'X' : ' ',
-                            fontSize: 15,
-                            bold: true,
-                            // right,down,left,up
-                            alignment: 'left',
-                            margin: [13, 5, 0, 0]
-                        },
-                        {
-                            text: "",
-                        },
-                        {
-                            text: forms.avail_tax_relief == null ? ' ' : forms.avail_tax_relief,
+                            text: forms.atc == true ? 'X' : ' ',
                             fontSize: 13,
                             bold: true,
-                            characterSpacing: 3,
-                            alignment: 'justify',
                             // right,down,left,up
-                            margin: [12, 3, 0, 0]
+                            alignment: 'left',
+                            margin: [93, 1, 0, 0]
                         },
+
+
+                        {
+                            text: forms.atc == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [75, 1, 0, 0]
+                        },
+
+                        {
+                            text: forms.categoryofwithholding_agent == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [93, 1, 0, 0]
+                        },
+                        //category
+
+                        {
+                            text: ""
+                        },
+                        //#14
+                        {
+                            text: forms.category_of_agent == true ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [3, 1, 0, 0]
+                        },
+
+                        {
+                            text: ""
+                        },
+                        {
+                            text: forms.category_of_agent == false ? 'X' : ' ',
+                            fontSize: 13,
+                            bold: true,
+                            // right,down,left,up
+                            alignment: 'left',
+                            margin: [8, 1, 0, 0]
+                        },
+
                     ]
                 ]
             }
         },
+
+
+
+        //#15 classification of property
+        {
+            layout: "noBorders",
+            table: {
+                widths: [50, 70, 70, 300],
+                heights: [1],
+                body: [
+                    [
+                        //residential
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [50],
+                                body: [
+                                    [{
+
+
+
+                                            text: forms.classification_property == 'RES' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 7,
+                                            alignment: 'left',
+                                            margin: [40, -1, 0, 0]
+
+                                        },
+
+
+                                    ],
+                                    [
+                                        //agricultural
+                                        {
+
+
+                                            text: forms.classification_property == 'AGR' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 8,
+                                            alignment: 'left',
+                                            margin: [40, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ]
+
+                                ]
+                            }
+
+
+                        },
+                        //commercial
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [100],
+                                body: [
+                                    [{
+
+
+
+                                            text: forms.classification_property == 'COM' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 7,
+                                            alignment: 'left',
+                                            margin: [65, -1, 0, 0]
+
+                                        },
+
+
+                                    ],
+                                    [
+                                        //industrial
+                                        {
+
+
+                                            text: forms.classification_property == 'IND' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 8,
+                                            alignment: 'left',
+                                            margin: [65, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ]
+
+                                ]
+                            }
+
+
+                        },
+                        //condominum residential 
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [70, 70],
+                                body: [
+                                    [{
+
+
+
+                                            text: forms.classification_property == 'CONR' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 7,
+                                            alignment: 'left',
+                                            margin: [67, -1, 0, 0]
+
+                                        },
+
+
+                                    ],
+                                    [
+                                        //condominum commercial
+                                        {
+
+
+                                            text: forms.classification_property == 'CONC' ? 'X' : ' ',
+                                            bold: true,
+                                            fontSize: 8,
+                                            alignment: 'left',
+                                            margin: [67, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ]
+
+                                ]
+                            }
+
+
+                        },
+
+                        {
+                            layout: "noBorders",
+                            table: {
+
+                                widths: [295],
+                                body: [
+                                    [{
+
+
+
+
+                                            text: forms.plsspecify == null ? ' ' : forms.plsspecify,
+                                            fontSize: 12,
+                                            bold: true,
+                                            characterSpacing: 3,
+                                            alignment: 'justify',
+                                            // right,down,left,up
+                                            margin: [180, -2, 0, 0]
+
+
+                                        },
+
+
+                                    ],
+
+
+                                ]
+                            }
+
+
+                        },
+
+                    ]
+                ]
+            }
+
+        },
+        //#16 location of property
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [70, 440],
+                heights: [1],
+                body: [
+                    [
+                        //space
+                        {
+                            text: ""
+                        },
+                        {
+                            text: forms.loc_property == null ? ' ' : forms.loc_property,
+                            fontSize: 10,
+                            bold: true,
+                            characterSpacing: 3,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [22, -3, 0, 0]
+
+
+                        },
+
+
+                    ]
+                ]
+            }
+
+        },
+ //#17 brief description of the property
+
+ {
+    layout: "noBorders",
+    table: {
+        widths: [200, 130, 100],
+        heights: [1],
+        body: [
+            [
+                //space
+                {
+                    text: ""
+                },
+                {
+                    text: forms.area_sold_sqm == null ? ' ' : forms.area_sold_sqm,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'justify',
+                    // right,down,left,up
+                    margin: [22,4, 0, 0]
+
+
+                },{
+                    text: forms.tax_doc_no == null ? ' ' : forms.tax_doc_no,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'justify',
+                    // right,down,left,up
+                    margin: [22, 4, 0, 0]
+
+
+                },
+
+
+            ]
+        ]
+    }
+
+},
+//#17 continue
+{
+    layout: "noBorders",
+    table: {
+        widths: [70, 130, 130, 160],
+        heights: [1],
+        body: [
+            [
+                //space
+                {
+                    text: ""
+                },
+                {
+                    text: forms.tct == null ? ' ' : forms.tct,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    // right,down,left,up
+                    margin: [19,-4, 0, 0]
+
+
+                },
+                //spaces
+                {
+                    text: ""
+                },
+                {
+                    text: forms.others == null ? ' ' : forms.others,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    // right,down,left,up
+                    margin: [15, -4, 0, 0]
+
+
+                },
+
+
+            ]
+        ]
+    }
+
+},
+//#18 does selling price cover
+{
+    // layout: "noBorders",
+    table: {
+        widths: [90, 40, 40, 50, 40, 40, 165
+        ],
+        heights: [20],
+        body: [
+            [
+                //space
+                {
+                    text: ""
+                },
+                
+                    {
+                        text: forms.category_of_agent == true ? 'X' : ' ',
+                        fontSize: 13,
+                        bold: true,
+                        // right,down,left,up
+                        alignment: 'left',
+                        margin: [3, 1, 0, 0]
+                    },
+
+
+                
+                //spaces
+                {
+                    text: ""
+                },
+                {
+                    text: forms.others == null ? ' ' : forms.others,
+                    fontSize: 9,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    // right,down,left,up
+                    margin: [15, -4, 0, 0]
+
+
+                },
+                {
+                    text: ""
+                },
+                {
+                    text: ""
+                },
+                {
+                    text: ""
+                }
+
+
+            ]
+        ]
+    }
+
+},
 
         // ----> end of table #5 <---- //
         // ---->  table #6  <---- //
@@ -424,7 +844,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [320,60,50,76],
+                widths: [320, 60, 50, 76],
                 heights: [3],
                 body: [
                     [
@@ -458,9 +878,9 @@ function getContent(forms) {
             }
         },
         {
-            layout: "noBorders",                              
+            layout: "noBorders",
             table: {
-                widths: [320,60,50,76],
+                widths: [320, 60, 50, 76],
                 heights: [11],
                 body: [
                     [
@@ -495,7 +915,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [320,60,50,76],
+                widths: [320, 60, 50, 76],
                 heights: [6],
                 body: [
                     [
@@ -529,8 +949,7 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [320,60,50,76
-                ],
+                widths: [320, 60, 50, 76],
                 heights: [6],
                 body: [
                     [
@@ -910,8 +1329,8 @@ function getContent(forms) {
                             // right,down,left,up
                             margin: [-1, 1, 0, 0]
                         },
-                          // #16 withholding agent's name
-                          {
+                        // #16 withholding agent's name
+                        {
                             text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
                             fontSize: 10,
                             bold: true,
