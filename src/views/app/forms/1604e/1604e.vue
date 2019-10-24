@@ -148,12 +148,25 @@
         <span class="text-link" @click="show_sched1=true">Schedule 1</span>
         Remittance per BIR Form No. 1601-EQ
       </div>
-      <schedule-one
-        v-if="show_sched1"
-        :show="show_sched1"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+      <schedule-one v-if="show_sched1" :show="show_sched1" :form="form" @close="onClose" />
+      <br />
+      <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Taxes Withheld">
+        <a-input-number disabled style="width: 15vw"></a-input-number>
+      </a-form-item>
+
+      <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Penalties">
+        <a-input-number disabled style="width: 15vw"></a-input-number>
+      </a-form-item>
+
+      <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Amount Remitted">
+        <a-input-number disabled style="width: 15vw"></a-input-number>
+      </a-form-item>
+      <a-divider></a-divider>
+      <div style="color: black; font-weight: bold">
+        <span class="text-link" @click="show_sched2=true">Schedule 2</span>
+        Remittance per BIR Form No. 1606
+      </div>
+      <schedule-two v-if="show_sched2" :show="show_sched2" :form="form" @close="onClose" />
       <br />
       <a-form-item :labelCol="{ span: 8 }" :wrapperCol="{ span: 8 }" label="Total Taxes Withheld">
         <a-input-number disabled style="width: 15vw"></a-input-number>
@@ -172,15 +185,18 @@
 
 <script>
 import ScheduleOne from "./Schedule1";
+import ScheduleTwo from "./Schedule2";
 
 export default {
   components: {
-    ScheduleOne
+    ScheduleOne,
+    ScheduleTwo
   },
   props: ["form", "step", "errors"],
   data() {
     return {
       show_sched1: false,
+      show_sched2: false,
       loading: false,
       image_height: 1000,
       formatter: {
@@ -222,8 +238,9 @@ export default {
     validate() {
       this.changeStep(this.step + 1);
     },
-    updateSchedAndClose() {
+    onClose() {
       this.show_sched1 = false;
+      this.show_sched2 = false;
     }
   }
 };

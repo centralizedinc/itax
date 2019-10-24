@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="Schedule 1 – Remittance per BIR Form No. 1601-EQ"
+    title="Schedule 2 – Remittance per BIR Form No. 1606"
     placement="right"
     :closable="true"
     @close="close"
@@ -9,11 +9,11 @@
   >
     <a-table bordered :dataSource="data_source" :columns="columns" :pagination="false">
       <template slot="desc" slot-scope="text">
-        <span style="font-weight: bold">{{text}}</span>
+        <span>{{text}}</span>
       </template>
 
       <template slot="remitDate" slot-scope="text, record, index">
-        <a-date-picker :disabledDate="disabledDate" />
+        <a-date-picker />
       </template>
 
       <template slot="bank" slot-scope="text, record, index">
@@ -49,7 +49,7 @@ export default {
       visible: true,
       data_source: [
         {
-          desc: "1st Quarter",
+          desc: "January",
           remitDate: "",
           bank: "",
           traNo: "",
@@ -58,7 +58,7 @@ export default {
           totAmtRemit: 0.0
         },
         {
-          desc: "2nd Quarter",
+          desc: "February",
           remitDate: "",
           bank: "",
           traNo: "",
@@ -67,7 +67,7 @@ export default {
           totAmtRemit: 0.0
         },
         {
-          desc: "3rd Quarter",
+          desc: "March",
           remitDate: "",
           bank: "",
           traNo: "",
@@ -76,7 +76,79 @@ export default {
           totAmtRemit: 0.0
         },
         {
-          desc: "4th Quarter",
+          desc: "April",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "May",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "June",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "July",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "August",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "September",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "October",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "November",
+          remitDate: "",
+          bank: "",
+          traNo: "",
+          taxWithheld: 0.0,
+          penalties: 0.0,
+          totAmtRemit: 0.0
+        },
+        {
+          desc: "December",
           remitDate: "",
           bank: "",
           traNo: "",
@@ -86,9 +158,6 @@ export default {
         },
         {
           desc: "Total",
-          remitDate: "",
-          bank: "",
-          traNo: "",
           taxWithheld: 0.0,
           penalties: 0.0,
           totAmtRemit: 0.0
@@ -96,48 +165,51 @@ export default {
       ],
       columns: [
         {
-          title: "Quarter",
+          title: "desc",
           dataIndex: "desc",
-          className: "column-amount",
-          scopedSlots: { customRender: "desc" },
+          className: "column-style",
+          scopedSlots: { customRender: "esc" },
           width: "12%"
         },
         {
           title: "Date of Remittance (MM/DD/YYYY)",
           dataIndex: "remitDate",
+          className: "column-style",
           scopedSlots: { customRender: "remitDate" },
           width: "18%"
         },
         {
           title: "Drawee Bank/ Bank Code/ Agency",
           dataIndex: "bank",
+          className: "column-style",
           scopedSlots: { customRender: "bank" },
           width: "15%"
         },
         {
           title: "TRA/eROR/eAR Number",
           dataIndex: "traNo",
+          className: "column-style",
           scopedSlots: { customRender: "traNo" },
           width: "15%"
         },
         {
           title: "Taxes Withheld",
           dataIndex: "taxWithheld",
-          className: "column-amount",
+          className: "column-style",
           scopedSlots: { customRender: "taxWithheld" },
           width: "15%"
         },
         {
           title: "Penalties",
           dataIndex: "penalties",
-          className: "column-amount",
+          className: "column-style",
           scopedSlots: { customRender: "penalties" },
           width: "15%"
         },
         {
           title: "Total Amount Remitted",
           dataIndex: "totAmtRemit",
-          className: "column-amount",
+          className: "column-style",
           scopedSlots: { customRender: "totAmtRemit" },
           width: "15%"
         }
@@ -158,6 +230,10 @@ export default {
 </script>
 
 <style>
+th.column-style,
+td.column-style {
+  text-align: center !important;
+}
 th.column-amount,
 td.column-amount {
   text-align: right !important;
