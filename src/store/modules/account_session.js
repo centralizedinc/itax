@@ -1,6 +1,7 @@
 import OAuthAPI from "../../api/OAuthAPI";
 import UserAPI from "../../api/UserAPI";
 import UploadAPI from "../../api/UploadAPI";
+import ReferenceAPI from "../../api/ReferenceAPI";
 
 
 function initialState() {
@@ -45,7 +46,8 @@ const actions = {
                         context.commit("LOGIN", result.data.model);
                         resolve(result.data.model);
                     }
-                }).catch((err) => {
+                })
+                .catch((err) => {
                     reject(err);
                 });
         })
@@ -112,17 +114,25 @@ const actions = {
                 })
                 .then((user) => {
                     result.user = user.data.model;
-                    if(context.rootState.account_session.user.tin){
-                        console.log('Updating taxpayer ...');
-                        return context.dispatch("UPDATE_TAXPAYER", { id: details.taxpayer._id, data: details.taxpayer }, { root: true });
-                    }
-                    else {
-                        console.log('creating taxpayer ...');
-                        return context.dispatch("CREATE_TAXPAYER", details.taxpayer, { root: true });
-                    }
+                    // if(context.rootState.account_session.user.tin){
+                    //     console.log('Updating taxpayer ...');
+                    //     return context.dispatch("UPDATE_TAXPAYER", { id: details.taxpayer._id, data: details.taxpayer }, { root: true });
+                    // }
+                    // else {
+                    console.log('creating taxpayer ...');
+                    return context.dispatch("CREATE_TAXPAYER", details.taxpayer, { root: true });
+                    // }
                 })
                 .then((taxpayer) => {
                     result.taxpayer = taxpayer;
+                    if (!details.spouse_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.spouse_details, { root: true });
+                })
+                .then((spouse) => {
+                    result.spouse = spouse;
+                    if (!details.company_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
+                })
+                .then((company) => {
+                    result.company = company;
                     return new OAuthAPI(context.rootState.account_session.token).doneSetup()
                 })
                 .then((account) => {

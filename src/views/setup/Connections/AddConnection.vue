@@ -39,13 +39,8 @@
       <a-spin />
     </div>
     <template v-else-if="is_busy && !error_message">
-      <a-card
-        :bodyStyle="{ padding: '2vh' }"
-        v-if="taxpayer && Object.keys(taxpayer).length"
-      >
-        <a-avatar
-          :src="user && user.avatar ? user.avatar.location : default_user_icon"
-        />
+      <a-card :bodyStyle="{ padding: '2vh' }" v-if="taxpayer && Object.keys(taxpayer).length">
+        <a-avatar :src="user && user.avatar ? user.avatar.location : default_user_icon" />
         <span
           style="margin-left: 1vh;font-weight:bold;"
         >{{taxpayer.individual_details.firstName}} {{taxpayer.individual_details.lastName}}</span>
@@ -156,7 +151,8 @@ export default {
         first_name: "",
         last_name: ""
       },
-      default_user_icon: "https://img.pngio.com/circled-user-icon-user-profile-icon-png-png-image-transparent-profile-icon-png-820_860.png"
+      default_user_icon:
+        "https://img.pngio.com/circled-user-icon-user-profile-icon-png-png-image-transparent-profile-icon-png-820_860.png"
     };
   },
   watch: {
@@ -208,7 +204,7 @@ export default {
         } else {
           this.loading = true;
           this.$store
-            .dispatch("GET_TAXPAYER_BY_TIN", this.search_tin)
+            .dispatch("GET_TAXPAYER_BY_TIN", { tin: this.search_tin })
             .then(data => {
               console.log("data :", data);
               this.loading = false;

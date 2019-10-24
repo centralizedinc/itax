@@ -10,7 +10,16 @@ const model_schema = {
     atc_code: { type: String }, //3
     claiming_foreign_tax_credit: { type: Boolean }, //12
     foreign_tax_number: { type: Number }, //13
-
+    spouse_has_income: {
+        type: Boolean
+    },
+    filing_status: {
+        type: String
+        /**
+         * joint
+         * separate
+         */
+    },
 
     // Part III total tax payable
     total_tax_payable: [{

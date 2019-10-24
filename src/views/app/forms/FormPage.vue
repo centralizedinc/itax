@@ -174,7 +174,7 @@ export default {
     Form1600WP,
     Form1604E,
     Form1601F,
-    Form1606FQ,
+    Form1601FQ,
   },
   computed: {
     affix_computation() {

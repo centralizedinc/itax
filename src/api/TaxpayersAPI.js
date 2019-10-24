@@ -27,10 +27,11 @@ export default class TaxpayersAPI {
 
     /**
      * @returns {Promise}
-     * @param {String} tin 
+     * @param {String} tin
+     * @param {Boolean} ignore_user
      */
-    getTaxpayerByTIN(tin){
-        return axios.get(`/taxpayer/tin/${tin}`);
+    getTaxpayerByTIN(tin, ignore_user){
+        return axios.get(`/taxpayer/tin/${tin}?ignore_user=${ignore_user}`);
     }
 
     /**
