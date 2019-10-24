@@ -179,7 +179,7 @@ export default {
       this.details.company_details.end_month = date.getMonth();
     },
     previous() {
-      var page = this.show_spouse ? 3 : 2;
+      var page = this.show_spouse ? 2 : 1;
       this.$emit("previous", page);
     }
   }
