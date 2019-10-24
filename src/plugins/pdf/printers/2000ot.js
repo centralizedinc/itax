@@ -114,7 +114,7 @@ function getContent(forms) {
                         text: ' '
                     },
                     {
-                        text: forms.atc == null ? ' ' : forms.atc,
+                        text: forms.atc_code == null ? ' ' : forms.atc_code,
                         fontSize: 14,
                         characterSpacing: 4,
                         bold: true,

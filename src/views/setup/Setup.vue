@@ -5,9 +5,21 @@
     </div>
     <template v-else>
       <a-tabs @change="changeView" :activeKey="currentView">
-        <a-tab-pane :disabled="loading || currentView===2" :key="0" tab="Personal Details" />
-        <a-tab-pane :disabled="loading || currentView===2" :key="1" tab="Taxpayer Information" />
-        <a-tab-pane :disabled="loading || currentView!==2" :key="2" tab="Connections" />
+        <a-tab-pane :disabled="loading || currentView===4" :key="0" tab="Personal Details" />
+        <a-tab-pane :disabled="loading || currentView===4" :key="1" tab="Taxpayer Information" />
+        <a-tab-pane
+          :disabled="loading || currentView===4"
+          v-if="show_spouse"
+          :key="2"
+          tab="Spouse Details"
+        />
+        <a-tab-pane
+          :disabled="loading || currentView===4"
+          v-if="show_company"
+          :key="3"
+          tab="Company Details"
+        />
+        <a-tab-pane :disabled="loading || currentView!==4" :key="4" tab="Connections" />
 
         <a-button
           slot="tabBarExtraContent"
@@ -36,13 +48,17 @@
 import PersonalDetails from "./PersonalDetails";
 import TaxpayerInformation from "./TaxpayerInformation";
 import Connections from "./Connections";
+import SpouseDetails from "./SpouseDetails";
+import CompanyDetails from "./CompanyDetails";
 import moment from "moment";
 
 export default {
   components: {
     PersonalDetails,
     TaxpayerInformation,
-    Connections
+    Connections,
+    SpouseDetails,
+    CompanyDetails
   },
   data() {
     return {
@@ -66,8 +82,14 @@ export default {
         },
         taxpayer: {
           tin: "",
-          taxpayer_type: "",
+          taxpayer_type: "I",
+          filer_type: "",
           rdo_code: "",
+          registered_name: "",
+          line_of_business: "",
+          accounting_type: "c",
+          start_month: 0,
+          end_month: 11,
           individual_details: {
             firstName: "",
             middleName: "",
@@ -84,52 +106,119 @@ export default {
           address_details: {
             zipCode: ""
           }
+        },
+        spouse_details: {
+          is_exist: false,
+          tin: "",
+          taxpayer_type: "I",
+          filer_type: "",
+          rdo_code: "",
+          registered_name: "",
+          line_of_business: "",
+          accounting_type: "c",
+          start_month: 0,
+          end_month: 11,
+          individual_details: {
+            firstName: "",
+            middleName: "",
+            lastName: "",
+            gender: "",
+            civil_status: "",
+            spouse_tin: ""
+          },
+          address: "",
+          birthDate: "",
+          contact_details: {
+            email: ""
+          },
+          address_details: {
+            zipCode: ""
+          }
+        },
+        company_details: {
+          is_exist: false,
+          tin: "",
+          taxpayer_type: "C",
+          rdo_code: "",
+          registered_name: "",
+          line_of_business: "",
+          address: "",
+          accounting_type: "c",
+          start_month: 0,
+          end_month: 11,
+          contact_details: {
+            email: ""
+          },
+          address_details: {
+            zipCode: ""
+          },
+          date_incorporation: ""
         }
       },
       currentView: 0,
-      view_components: ["PersonalDetails", "TaxpayerInformation", "Connections"]
+      view_components: [
+        "PersonalDetails",
+        "TaxpayerInformation",
+        "SpouseDetails",
+        "CompanyDetails",
+        "Connections"
+      ]
     };
   },
   computed: {
     user() {
       return this.deepCopy(this.$store.state.account_session.user);
+    },
+    show_spouse() {
+      return this.details.taxpayer.individual_details.civil_status === "M";
+    },
+    show_company() {
+      return ["sp", "p", "em"].includes(this.details.taxpayer.filer_type);
     }
   },
   methods: {
     init() {
       console.log("this.currentView :", this.currentView);
-      this.fetching_data = true;
       this.details.user.name = this.user.name;
       this.avatar.image_url = this.user.avatar ? this.user.avatar.location : "";
       this.details.user.avatar = this.user.avatar;
       this.details.user.email = this.user.email;
+      this.details.taxpayer.individual_details.firstName = this.user.name.first;
+      this.details.taxpayer.individual_details.lastName = this.user.name.last;
+      this.details.taxpayer.contact_details.email = this.user.email;
+      this.details.taxpayer.taxpayer_type = "I";
+      this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`;
       if (this.user.tin) {
+        this.fetching_data = true;
         this.$store
-          .dispatch("GET_TAXPAYER_BY_TIN", this.user.tin)
+          .dispatch("GET_TAXPAYER_BY_TIN", { tin: this.user.tin })
           .then(result => {
             this.details.taxpayer = result.taxpayer;
             this.details.taxpayer.individual_details.birthDate = moment(
               this.details.taxpayer.individual_details.birthDate
             );
+            this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`;
             this.fetching_data = false;
           })
           .catch(err => {
             console.log("GET_TAXPAYER_BY_TIN err :", err);
             this.fetching_data = false;
           });
-      } else {
-        this.details.taxpayer.individual_details.firstName = this.user.name.first;
-        this.details.taxpayer.individual_details.lastName = this.user.name.last;
-        this.details.taxpayer.contact_details.email = this.user.email;
-        this.details.taxpayer.taxpayer_type = "I";
-        this.fetching_data = false;
       }
     },
     next(i) {
-      this.currentView = i;
+      if (i === 4) {
+        this.$confirm({
+          title: "Do you want to save the informations?",
+          okText: "Yes",
+          cancelText: "Cancel",
+          onOk() {
+            this.submitTaxpayer();
+          }
+        });
+      } else this.currentView = i;
     },
     changeView(key) {
-      console.log("key:::", key);
       this.currentView = key;
       window.scrollTo(0, 0);
     },

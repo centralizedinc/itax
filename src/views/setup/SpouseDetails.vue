@@ -3,18 +3,11 @@
     <a-row type="flex" align="middle" :gutter="5" class="row-fields">
       <a-col :xs="{ span: 12 }" :md="{ span: 4  }" class="text-right">TIN:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 7  }">
-        <a-form-item has-feedback :validate-status="tin_validate_status" :help="invalid_tin_msg">
-          <a-input
-            v-model="details.taxpayer.tin"
-            placeholder="TIN"
-            :disabled="this.user.tin"
-            @blur="checkTin"
-          />
-        </a-form-item>
+        <a-input v-model="details.spouse_details.tin" placeholder="TIN" @blur="searchTin" />
       </a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 2  }" class="text-right">RDO:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 3  }">
-        <a-select style="width: 100%" v-model="details.taxpayer.rdo_code">
+        <a-select style="width: 100%" v-model="details.spouse_details.rdo_code">
           <a-select-option
             v-for="(item, index) in rdos"
             :key="index"
@@ -24,14 +17,14 @@
       </a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4  }" class="text-right">Line of Business:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4  }">
-        <a-input v-model="details.taxpayer.line_of_business" placeholder="Line of Business" />
+        <a-input v-model="details.spouse_details.line_of_business" placeholder="Line of Business" />
       </a-col>
     </a-row>
 
     <a-row type="flex" align="middle" :gutter="5" class="row-fields">
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }" class="text-right">Filer Type:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 20 }">
-        <a-radio-group buttonStyle="solid" v-model="details.taxpayer.filer_type">
+        <a-radio-group buttonStyle="solid" v-model="details.spouse_details.filer_type">
           <a-radio-button value="sp">Single Proprietor</a-radio-button>
           <a-radio-button value="p">Professional</a-radio-button>
           <a-radio-button value="em">Employee</a-radio-button>
@@ -42,25 +35,31 @@
     </a-row>
 
     <a-row type="flex" align="middle" :gutter="5" class="row-fields">
-      <a-col :xs="{ span: 24 }" :md="{ span: 4 }" class="text-right">Taxpayer's Name:</a-col>
+      <a-col :xs="{ span: 24 }" :md="{ span: 4 }" class="text-right">Spouse's Name:</a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
-        <a-input v-model="details.taxpayer.individual_details.firstName" placeholder="First Name" />
+        <a-input
+          v-model="details.spouse_details.individual_details.firstName"
+          placeholder="First Name"
+        />
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 6 }">
         <a-input
-          v-model="details.taxpayer.individual_details.middleName"
+          v-model="details.spouse_details.individual_details.middleName"
           placeholder="Middle Name"
         />
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
-        <a-input v-model="details.taxpayer.individual_details.lastName" placeholder="Last Name" />
+        <a-input
+          v-model="details.spouse_details.individual_details.lastName"
+          placeholder="Last Name"
+        />
       </a-col>
     </a-row>
 
     <a-row type="flex" align="middle" :gutter="5" class="row-fields">
       <a-col :span="4" class="text-right">Registered Name:</a-col>
       <a-col :span="20">
-        <a-input v-model="details.taxpayer.registered_name" placeholder="Registered Name" />
+        <a-input v-model="details.spouse_details.registered_name" placeholder="Registered Name" />
       </a-col>
     </a-row>
 
@@ -70,12 +69,15 @@
         <a-date-picker
           style="width:100%"
           placeholder="Date of Birth"
-          v-model="details.taxpayer.individual_details.birthDate"
+          v-model="details.spouse_details.individual_details.birthDate"
         ></a-date-picker>
       </a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 2 }" class="text-right">Gender:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }">
-        <a-radio-group buttonStyle="solid" v-model="details.taxpayer.individual_details.gender">
+        <a-radio-group
+          buttonStyle="solid"
+          v-model="details.spouse_details.individual_details.gender"
+        >
           <a-radio-button value="M">Male</a-radio-button>
           <a-radio-button value="F">Female</a-radio-button>
         </a-radio-group>
@@ -83,7 +85,7 @@
       <a-col :xs="{ span: 12 }" :md="{ span: 3 }" class="text-right">Citizenship:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }">
         <a-input
-          v-model="details.taxpayer.individual_details.citizenship"
+          v-model="details.spouse_details.individual_details.citizenship"
           placeholder="Citizenship"
         />
       </a-col>
@@ -92,45 +94,37 @@
     <a-row type="flex" align="middle" :gutter="5" class="row-fields">
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }" class="text-right">Email:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 7 }">
-        <a-input v-model="details.taxpayer.contact_details.email" placeholder="Email" />
+        <a-input v-model="details.spouse_details.contact_details.email" placeholder="Email" />
       </a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 2 }" class="text-right">Tel No:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }">
-        <a-input v-model="details.taxpayer.contact_details.telno" placeholder="Tel No" />
+        <a-input v-model="details.spouse_details.contact_details.telno" placeholder="Tel No" />
       </a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 3 }" class="text-right">Contact No:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }">
-        <a-input v-model="details.taxpayer.contact_details.mobile" placeholder="Contact No" />
+        <a-input v-model="details.spouse_details.contact_details.mobile" placeholder="Contact No" />
       </a-col>
     </a-row>
 
     <a-row :gutter="5" class="row-fields">
       <a-col :span="4" class="text-right">Registered Address:</a-col>
       <a-col :span="20">
-        <a-textarea :rows="3" placeholder="Registered Address" v-model="details.taxpayer.address"></a-textarea>
+        <a-textarea
+          :rows="3"
+          placeholder="Registered Address"
+          v-model="details.spouse_details.address"
+        ></a-textarea>
       </a-col>
     </a-row>
 
     <a-row type="flex" align="middle" :gutter="5" class="row-fields">
-      <a-col :xs="{ span: 12 }" :md="{ span: 4 }" class="text-right">Civil Status:</a-col>
-      <a-col :xs="{ span: 12 }" :md="{ span: 10 }">
-        <a-radio-group
-          buttonStyle="solid"
-          v-model="details.taxpayer.individual_details.civil_status"
-        >
-          <a-radio-button value="S">Single</a-radio-button>
-          <a-radio-button value="M">Married</a-radio-button>
-          <a-radio-button value="SP">Separated</a-radio-button>
-          <a-radio-button value="W">Widower</a-radio-button>
-        </a-radio-group>
-      </a-col>
-      <a-col :xs="{ span: 12 }" :md="{ span: 6 }" class="text-right">Zip Code:</a-col>
+      <a-col :xs="{ span: 12 }" :md="{ span: 4 }" class="text-right">Zip Code:</a-col>
       <a-col :xs="{ span: 12 }" :md="{ span: 4 }">
-        <a-input v-model="details.taxpayer.address_details.zipCode" placeholder="Zip Code" />
+        <a-input v-model="details.spouse_details.address_details.zipCode" placeholder="Zip Code" />
       </a-col>
     </a-row>
     <a-button-group style="float: right">
-      <a-button @click="$emit('previous', 0)" :disabled="loading">Previous</a-button>
+      <a-button @click="$emit('previous', 1)" :disabled="loading">Previous</a-button>
       <a-button type="primary" @click="next" :loading="loading">Next</a-button>
     </a-button-group>
   </div>
@@ -143,7 +137,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          taxpayer: {
+          spouse_details: {
             individual_details: {},
             contact_details: {},
             address_details: {}
@@ -157,17 +151,11 @@ export default {
     }
   },
   computed: {
-    user() {
-      return this.deepCopy(this.$store.state.account_session.user);
-    },
     rdos() {
       return this.$store.state.tax_form.rdos;
     },
     registered_name() {
-      return `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`;
-    },
-    show_spouse() {
-      return this.details.taxpayer.individual_details.civil_status === "M";
+      return `${this.details.spouse_details.individual_details.firstName} ${this.details.spouse_details.individual_details.middleName} ${this.details.spouse_details.individual_details.lastName}`;
     },
     show_company() {
       return ["sp", "p", "em"].includes(this.details.taxpayer.filer_type);
@@ -175,7 +163,7 @@ export default {
   },
   watch: {
     registered_name(val) {
-      this.details.taxpayer.registered_name = val;
+      this.details.spouse_details.registered_name = val;
     }
   },
   data() {
@@ -187,40 +175,19 @@ export default {
         wrapperCol: {
           span: 20
         }
-      },
-      invalid_tin_msg: "",
-      tin_validate_status: ""
+      }
     };
   },
   methods: {
-    checkTin() {
-      this.tin_validate_status = "validating";
-      this.invalid_tin_msg = "";
-      if (this.details.taxpayer.tin.length !== 13) {
-        this.invalid_tin_msg = "TIN length must be 13.";
-        this.tin_validate_status = "error";
-      } else if (this.details.taxpayer.tin !== this.user.tin) {
-        this.$store
-          .dispatch("GET_TAXPAYER_BY_TIN", {
-            tin: this.details.taxpayer.tin,
-            ignore_user: true
-          })
-          .then(result => {
-            console.log("check tin :", result);
-            if (result && result.taxpayer) {
-              this.invalid_tin_msg =
-                "TIN has already registered. If this is your tin, kindly contact us.";
-              this.tin_validate_status = "error";
-            } else {
-              this.invalid_tin_msg = "";
-              this.tin_validate_status = "success";
-            }
-          })
-          .catch(err => {});
-      }
+    searchTin() {
+      console.log("search tin :", this.details.spouse_details.tin);
+      this.$store
+        .dispatch("SEARCH_TAXPAYER", this.details.spouse_details.tin)
+        .then(result => {})
+        .catch(err => {});
     },
     next() {
-      var page = this.show_spouse ? 2 : this.show_company ? 3 : 4;
+      var page = this.show_company ? 3 : 4;
       this.$emit("next", page);
     }
   }

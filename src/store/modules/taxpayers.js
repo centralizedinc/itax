@@ -42,10 +42,10 @@ const actions = {
                 }).catch((err) => reject(err));
         })
     },
-    GET_TAXPAYER_BY_TIN(context, tin) {
+    GET_TAXPAYER_BY_TIN(context, { tin, ignore_user }) {
         return new Promise((resolve, reject) => {
             new TaxpayersAPI(context.rootState.account_session.token)
-                .getTaxpayerByTIN(tin)
+                .getTaxpayerByTIN(tin, ignore_user)
                 .then((result) => {
                     if (result.data.errors) reject(result.data.errors);
                     else resolve(result.data.model)

@@ -65,11 +65,11 @@ router
     .get((req, res) => {
         var model = {}
         console.log('req.params.tin :', req.params.tin);
+        console.log('req.query.ignore_user :', req.query.ignore_user);
         TaxpayerDao.findOneByTIN(req.params.tin)
             .then((taxpayer) => {
                 model.taxpayer = taxpayer;
-
-                return UserDao.findOne({ tin: req.params.tin });
+                if (!req.query.ignore_user) return UserDao.findOne({ tin: req.params.tin });
             })
             .then((user) => {
                 model.user = user;
