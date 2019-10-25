@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 2551M (SEPTEMBER 2005)
+ * @author Venus
+ * @base_form https://www.bir.gov.ph/images/bir_files/old_files/pdf/267692551M%20final.pdf
+ * @version 1.0 - 10/22/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;

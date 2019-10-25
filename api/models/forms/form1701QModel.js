@@ -1,4 +1,11 @@
-"use strict";
+/**
+ * 
+ * @description FORM 1701Q (JANUARY 2018)
+ * @author Venus
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1701Q%20Jan%202018%20final%20rev2.pdf
+ * @version 1.0 - 10/16/2019
+ * 
+ */
 
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
