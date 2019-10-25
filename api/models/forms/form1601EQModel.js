@@ -1,64 +1,82 @@
 /**
  * 
- * @description FORM 1606 (JULY 1999)
+ * @description FORM 1601EQ (JANUARY 2018)
  * @author Venus
- * @base_form https://www.lawphil.net/administ/bir/frms/pymnt/1606.pdf
- * @version 1.0 - 10/15/2019
+ * @base_form https://www.bir.gov.ph/images/bir_files/internal_communications_2/RMCs/2018/1601-EQ%20Jan%202018%20Annex%20A.pdf
+ * @version 1.0 - 10/25/2019
  * 
  */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
-const common_model = require('./commonModels');
+var common_model = require('./commonModels');
 
 const model_schema = {
-    category_of_agent: {
-        type: String
-    },
-    atc_code: {
-        type: String
-    }, // WI155
-    taxes_withheld: {
+    any_tax_withheld: {
         type: Boolean
     },
-    classification_property: {
+    category_of_agent: {
+        type: String
+            /**
+             * government
+             * private
+             */
+    },
+    // Part II Computation of Tax
+
+    part2_atc_list: {
         type: String
     },
-    location_property: {
+    part2_tax_base: {
+        type: Number,
+        default: 0
+    },
+    part2_tax_withheld: {
+        total_taxes_withheld: { //Item 19 Sum of Items 13 to 18
+            type: Number,
+            default: 0
+        },
+        less_remittances_first_month: { //Item 20
+            type: Number,
+            default: 0
+        },
+        less_remittances_second_month: { //Item 21
+            type: Number,
+            default: 0
+        },
+        tax_remitted: { // item 22
+            type: Number,
+            default: 0
+        },
+        over_tax_remitted: { // item 23
+            type: Number,
+            default: 0
+        },
+        total_tax_remitted: { // item 24 Sum of items 20 to 23
+            type: Number,
+            default: 0
+        },
+        tax_overremittance: { // Item 25 - Item 19 less item 24
+            type: Number,
+            default: 0
+        },
+        total_amount_overremittance: { // item 30 Sum of items 25 to 29
+            type: Number,
+            default: 0
+        },
+    },
+    if_overpayment: {
         type: String
+            /**
+             * 0 - to be refunded
+             * 1 - to be issued a tax credit certificate
+             * 2 - to be carried over as a tax credit for next year
+             */
     },
-    location_rdo_code: {
-        type: String
-    },
-    tct_no: {
-        type: String
-    },
-    area_sold: {
-        type: String
-    },
-    selling_price_property: {
-        type: Boolean,
-        default: false
-    },
-    description_transaction: {
-        type: String
-    },
-    selling_price: { type: Number, default: 0 },
-    cost_expenses: { type: Number, default: 0 },
-    mortgage_assumed: { type: Number, default: 0 },
-    total_payments_initial_year: { type: Number, default: 0 },
-    amount_installment_month: { type: Number, default: 0 },
-    tax_declaration_land: { type: Number, default: 0 },
-    tax_declaration_improvements: { type: Number, default: 0 },
-    zonal_value: { type: Number, default: 0 },
-    commissioner: { type: Number, default: 0 },
-    gross_selling_price: { type: Number, default: 0 },
-    fair_market_value: { type: Number, default: 0 }, // Sum of 27A & 27B/ 27C & 27D/ 27B & 27C/27A & 27D whichever is higher
-    bid_price: { type: Number, default: 0 },
-    installment_collected: { type: Number, default: 0 }, //Installment Sale excluding interest
-    taxable_base_computation: { type: Number, default: 0 },
-    particular_cash: [{
+
+    // Part III - Details of Payment
+    particular_cash: [{ // item 31
         drawee_bank: {
             type: Number,
             default: 0
@@ -75,7 +93,7 @@ const model_schema = {
             default: 0
         }
     }],
-    particular_check: [{
+    particular_check: [{ // item 32
         drawee_bank: {
             type: Number,
             default: 0
@@ -92,7 +110,7 @@ const model_schema = {
             default: 0
         }
     }],
-    particular_tax_debit: [{
+    particular_tax_debit: [{ // item 33
         drawee_bank: {
             type: Number,
             default: 0
@@ -109,7 +127,7 @@ const model_schema = {
             default: 0
         }
     }],
-    particular_others: [{
+    particular_others: [{ // item 34
         drawee_bank: {
             type: Number,
             default: 0
@@ -125,26 +143,28 @@ const model_schema = {
             type: Number,
             default: 0
         }
-    }],
+    }]
 };
 
-var Form1606Schema = new Schema({...common_model, ...model_schema });
+var Form1601EQSchema = new Schema({
+    ...common_model,
+    ...model_schema
+});
 
-Form1606Schema.pre('save', function(callback) {
+Form1601EQSchema.pre('save', function(callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1606Schema.pre('findOneAndUpdate', function(callback) {
+Form1601EQSchema.pre('findOneAndUpdate', function(callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();
     callback();
 });
-
 
 const options = {
     field: 'auto_id', // auto_id will have an auto-incrementing value
@@ -155,13 +175,12 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form1606Schema, '1606_forms', options);
+const plugin = new autoIncrement(Form1601EQSchema, '1601eq_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-    // Plugin failed to initialise
     console.log("############### init failed: " + e);
 });
 
 
-module.exports = mongoose.model('1606_forms', Form1606Schema);
+module.exports = mongoose.model('1601eq_forms', Form1601EQSchema);
