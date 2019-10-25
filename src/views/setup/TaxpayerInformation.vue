@@ -31,7 +31,7 @@
               v-for="(item, index) in rdos"
               :key="index"
               :value="item.code"
-            >{{item.code}}</a-select-option>
+            >{{item.code}} - {{item.description}}</a-select-option>
           </a-select>
         </a-form-item>
       </a-col>
@@ -128,7 +128,8 @@
             style="width:100%"
             placeholder="Date of Birth"
             v-model="details.taxpayer.individual_details.birthDate"
-          ></a-date-picker>
+            :disabledDate="disabledDate"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
@@ -251,6 +252,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: {
     details: {
@@ -304,10 +307,16 @@ export default {
       },
       invalid_tin_msg: "",
       tin_validate_status: "",
-      error_messages: []
+      error_messages: [],
+      moment
     };
   },
   methods: {
+    disabledDate(current) {
+      var date = new Date();
+      date.setFullYear(date.getFullYear() - 18);
+      return new Date(current).getTime() >= date.getTime();
+    },
     checkTin(validate_all) {
       console.log("validate tin : ", validate_all === true);
       this.tin_validate_status = "validating";
@@ -344,7 +353,10 @@ export default {
             } else {
               this.tin_validate_status = "success";
             }
-            if (validate_all === true && (!this.error_messages || !this.error_messages.length)) {
+            if (
+              validate_all === true &&
+              (!this.error_messages || !this.error_messages.length)
+            ) {
               this.next();
             }
           })

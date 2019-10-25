@@ -132,14 +132,34 @@ const actions = {
                 })
                 .then((taxpayer) => {
                     result.taxpayer = taxpayer;
-                    if (!details.spouse_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.spouse_details, { root: true });
+                    if (details.taxpayer.individual_details.civil_status === "M" && !details.spouse_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.spouse_details, { root: true });
                 })
                 .then((spouse) => {
                     result.spouse = spouse;
-                    if (!details.company_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
+                    if (details.taxpayer.individual_details.civil_status === "M") {
+                        const connection = {
+                            relationship: 'spouse',
+                            to: result.spouse.tin,
+                            from: result.taxpayer.tin
+                        }
+                        return context.dispatch("CONNECT", connection, { root: true });
+                    }
+                })
+                .then((spouse_connection) => {
+                    if (["sp", "p", "em"].includes(details.taxpayer.filer_type) && !details.company_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
                 })
                 .then((company) => {
                     result.company = company;
+                    if (details.taxpayer.individual_details.civil_status === "M") {
+                        const connection = {
+                            relationship: 'spouse',
+                            to: result.spouse.tin,
+                            from: result.taxpayer.tin
+                        }
+                        return context.dispatch("CONNECT", connection, { root: true });
+                    }
+                })
+                .then((company_connection) => {
                     return new OAuthAPI(context.rootState.account_session.token).doneSetup()
                 })
                 .then((account) => {
