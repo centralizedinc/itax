@@ -20,6 +20,7 @@ const Form2550QDao = require('../dao/forms/Form2550QDao');
 const Form1702EXDao = require('../dao/forms/Form1702EXDao');
 const Form1702RTDao = require('../dao/forms/Form1702RTDao');
 const Form1701ADao = require('../dao/forms/Form1701ADao');
+const Form1601EQDao = require('../dao/forms/Form1601EQDao');
 
 const activity = require('../services/actvities_service')
 
@@ -84,6 +85,7 @@ function saveForm(form_type, form_details) {
     else if (form_type.toUpperCase() === '1702EX') return Form1702EXDao.create(form_details);
     else if (form_type.toUpperCase() === '1702RT') return Form1702RTDao.create(form_details);
     else if (form_type.toUpperCase() === '1701A') return Form1701ADao.create(form_details);
+    else if (form_type.toUpperCase() === '1601EQ') return Form1601EQDao.create(form_details);
     else Promise.reject({
         message: "Form does not exist"
     });

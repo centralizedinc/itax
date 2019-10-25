@@ -126,11 +126,12 @@ const model_schema = {
             default: 0
         }, //Item 30 Sum of Items 29A and 29B
         if_overpayment: {
-            /**
-             * 0 - to be refunded
-             * 1 - to be issued a tax credit certificate
-             * 2 - to be carried over as a tax credit for next year
-             */
+            type: String
+                /**
+                 * 0 - to be refunded
+                 * 1 - to be issued a tax credit certificate
+                 * 2 - to be carried over as a tax credit for next year
+                 */
         }
     },
     //PART IV Computation of Income Tax
