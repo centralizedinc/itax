@@ -207,14 +207,17 @@ export default {
       }
     },
     next(i) {
+      console.log('i :', i);
       if (i === 4) {
+        var _self = this;
         this.$confirm({
           title: "Do you want to save the informations?",
           okText: "Yes",
           cancelText: "Cancel",
           onOk() {
-            this.submitTaxpayer();
-          }
+            _self.submitTaxpayer();
+          },
+          confirmLoading: _self.loading
         });
       } else this.currentView = i;
     },
@@ -234,7 +237,7 @@ export default {
         })
         .then(result => {
           console.log("submitTaxpayer :", result);
-          this.currentView = 2;
+          this.currentView = 4;
           this.loading = false;
         })
         .catch(err => {
