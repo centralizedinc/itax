@@ -8,6 +8,7 @@ const form = require("../templates/1604e_template").template;
 function fillup(details) {
     console.log("fillup details: " + JSON.stringify(details))
     var content = getContent(details);
+    var x = 0
     console.log('get content ###### :', content);
     return {
         background: function (page) {
@@ -35,7 +36,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [85],
+                heights: [83],
                 body: [
                     [{
                         text: ' '
@@ -283,45 +284,79 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [100],
+                heights: [65],
                 body: [
                     [{
                         text: ' '
                     }]
                 ]
             }
-        },
+        }]
 
-        {
+    // sched1 Part II
+    for (var x = 0; x < 5; x++) {
+        content.push({
             layout: "noBorders",
             table: {
-                widths: [145, 380],
+                widths: [50, 70, 70, 70, 78, 78, 75],
                 body: [
                     [{
-                        text: '10/10/2011',
-                        fontSize: 12,
+                        text: ' ',
+                    },
+                    {
+                        text: formatDate(forms.sched1.date_remittance),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'left',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: forms.sched1[x].drawee_Bank_Code == undefined ? "undefined" : forms.sched1[x].drawee_Bank_Code,
+                        fontSize: 10,
                         characterSpacing: 2,
                         bold: true,
                         alignment: 'left',
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: 'BPI',
-                        fontSize: 12,
-                        characterSpacing: 2,
+                        text: forms.sched1.tra_ror_ar_num,
+                        fontSize: 10,
                         bold: true,
                         alignment: 'left',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.sched1.tax_withheld),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.sched1.penalties),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.sched1.tot_amt_remitted),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
                         margin: [0, 0, 0, 0]
                     }]
                 ]
             }
-        },
+        })
+    }
 
 
 
 
-        // ******************  end of page 1  ****************** //
-    ]
+
+    // ******************  end of page 1  ****************** //
+
     return content;
 }
 
@@ -334,10 +369,10 @@ function formatDate(date, type) {
     var dt = new Date(date).toLocaleString("en-US", type ? type : {
         hour12: true,
         year: "numeric",
-        month: "long",
+        month: "numeric",
         day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
+        // hour: "2-digit",
+        // minute: "2-digit"
     });
     return dt;
 }
