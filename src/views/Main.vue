@@ -54,7 +54,7 @@
         type="flex"
         justify="center"
       >
-        <a-col :span="4" v-if="account_status===2">
+        <a-col :span="4" v-if="session_mode==='ACTIVE'">
           <a-row type="flex" justify="center" style="margin-bottom: 2vh">
             <a-col :span="24">
               <a-card
@@ -117,9 +117,9 @@
             </a-menu>
           </a-affix>
         </a-col>
-        <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
+        <a-col :span="session_mode==='ACTIVE' ? 15 : 24" style="margin-left:2vw; margin-right:2vw">
           <a-row>
-            <a-col :span="24">
+            <a-col :span="24" v-if="session_mode !== 'SETUP'">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
                 <h2 style="color: #FFFFFF">{{$route.name}}</h2>
               </a-card>
@@ -131,7 +131,7 @@
             </a-col>
           </a-row>
         </a-col>
-        <a-col :span="4" v-if="account_status===2">
+        <a-col :span="4" v-if="session_mode==='ACTIVE'">
           <a-row style="margin-bottom: 1vh">
             <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
@@ -206,7 +206,7 @@ export default {
     init() {
       this.user = this.$store.state.account_session.user;
       this.$store.dispatch("GET_RDOS");
-      console.log('test');
+      console.log("test");
     },
     nav(e) {
       if (e.key === "logout") {
@@ -254,6 +254,9 @@ export default {
     },
     account_status() {
       return this.$store.state.account_session.account.status;
+    },
+    session_mode() {
+      return this.$store.state.account_session.mode;
     }
   }
 };

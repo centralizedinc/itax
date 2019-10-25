@@ -13,27 +13,27 @@
       </template>
 
       <template slot="remitDate" slot-scope="text, record, index">
-        <a-date-picker :disabledDate="disabledDate" />
+        <a-date-picker v-model="form.sched1.date_remittance" />
       </template>
 
       <template slot="bank" slot-scope="text, record, index">
-        <a-input></a-input>
+        <a-input v-model="form.sched1.drawee_Bank_Code"></a-input>
       </template>
 
       <template slot="traNo" slot-scope="text, record, index">
-        <a-input></a-input>
+        <a-input v-model="form.sched1.tra_ror_ar_num"></a-input>
       </template>
 
       <template slot="taxWithheld" slot-scope="text, record, index">
-        <a-input></a-input>
+        <a-input-number v-model="form.sched1.tax_withheld"></a-input-number>
       </template>
 
       <template slot="penalties" slot-scope="text, record, index">
-        <a-input-number></a-input-number>
+        <a-input-number v-model="form.sched1.penalties"></a-input-number>
       </template>
 
       <template slot="totAmtRemit" slot-scope="text, record, index">
-        <a-input-number></a-input-number>
+        <a-input-number disabled :value="getTotalAmtRemit()"></a-input-number>
       </template>
     </a-table>
   </a-drawer>
@@ -49,6 +49,7 @@ export default {
       visible: true,
       data_source: [
         {
+          key: "1",
           desc: "1st Quarter",
           remitDate: "",
           bank: "",
@@ -58,6 +59,7 @@ export default {
           totAmtRemit: 0.0
         },
         {
+          key: "2",
           desc: "2nd Quarter",
           remitDate: "",
           bank: "",
@@ -147,9 +149,18 @@ export default {
   created() {
     console.log("show data: " + this.show);
   },
+
   methods: {
     moment,
-
+    //total amount remitted
+    getTotalAmtRemit(val) {
+      var total = this.computeSum([
+        this.form.sched1.tax_withheld,
+        this.form.sched1.penalties
+      ]);
+      this.form.sched1.tot_amt_remitted = total;
+      return total;
+    },
     close() {
       this.$emit("close");
     }

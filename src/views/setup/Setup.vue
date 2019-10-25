@@ -1,47 +1,64 @@
 <template>
-  <a-card>
-    <div v-if="fetching_data" style="width: 100%;" class="align-items-middle">
-      <a-spin />
-    </div>
-    <template v-else>
-      <a-tabs @change="changeView" :activeKey="currentView">
-        <a-tab-pane :disabled="loading || currentView===4" :key="0" tab="Personal Details" />
-        <a-tab-pane :disabled="loading || currentView===4" :key="1" tab="Taxpayer Information" />
-        <a-tab-pane
-          :disabled="loading || currentView===4"
-          v-if="show_spouse"
-          :key="2"
-          tab="Spouse Details"
-        />
-        <a-tab-pane
-          :disabled="loading || currentView===4"
-          v-if="show_company"
-          :key="3"
-          tab="Company Details"
-        />
-        <a-tab-pane :disabled="loading || currentView!==4" :key="4" tab="Connections" />
+  <a-row :gutter="5">
+    <a-col :span="19">
+      <a-card>
+        <div v-if="fetching_data" style="width: 100%;" class="align-items-middle">
+          <a-spin />
+        </div>
+        <template v-else>
+          <a-tabs @change="changeView" :activeKey="currentView">
+            <a-tab-pane :disabled="loading || currentView===4" :key="0" tab="Personal Details" />
+            <a-tab-pane :disabled="loading || currentView===4" :key="1" tab="Taxpayer Information" />
+            <a-tab-pane
+              :disabled="loading || currentView===4"
+              v-if="show_spouse"
+              :key="2"
+              tab="Spouse Details"
+            />
+            <a-tab-pane
+              :disabled="loading || currentView===4"
+              v-if="show_company"
+              :key="3"
+              tab="Company Details"
+            />
+            <a-tab-pane :disabled="loading || currentView!==4" :key="4" tab="Connections" />
 
-        <a-button
-          slot="tabBarExtraContent"
-          type="primary"
-          v-if="currentView===2"
-          @click="showAddTP=true"
-        >Add Taxpayer</a-button>
-      </a-tabs>
-      <component
-        v-bind:is="view_components[currentView]"
-        :details="details"
-        :full="true"
-        :loading="loading"
-        :showAddTP="showAddTP"
-        :avatar="avatar"
-        @showAddTP="showAddTP=$event"
-        @next="next"
-        @previous="next"
-        @submitTaxpayer="submitTaxpayer"
-      />
-    </template>
-  </a-card>
+            <a-button
+              slot="tabBarExtraContent"
+              type="primary"
+              v-if="currentView===2"
+              @click="showAddTP=true"
+            >Add Taxpayer</a-button>
+          </a-tabs>
+          <component
+            v-bind:is="view_components[currentView]"
+            :details="details"
+            :full="true"
+            :loading="loading"
+            :showAddTP="showAddTP"
+            :avatar="avatar"
+            @showAddTP="showAddTP=$event"
+            @next="next"
+            @previous="next"
+            @submitTaxpayer="submitTaxpayer"
+          />
+        </template>
+      </a-card>
+    </a-col>
+    <a-col :span="5">
+      <a-affix :offsetTop="100">
+        <a-card>
+          <a-steps direction="vertical" :current="currentView">
+            <a-step title="Personal Details" description="This is a description." />
+            <a-step title="Taxpayer Information" description="This is a description." />
+            <a-step title="Spouse Details" description="This is a description." />
+            <a-step title="Company Details" description="This is a description." />
+            <a-step title="Connections" description="This is a description." />
+          </a-steps>
+        </a-card>
+      </a-affix>
+    </a-col>
+  </a-row>
 </template>
 
 <script>
@@ -207,14 +224,17 @@ export default {
       }
     },
     next(i) {
+      console.log("i :", i);
       if (i === 4) {
+        var _self = this;
         this.$confirm({
           title: "Do you want to save the informations?",
           okText: "Yes",
           cancelText: "Cancel",
           onOk() {
-            this.submitTaxpayer();
-          }
+            _self.submitTaxpayer();
+          },
+          confirmLoading: _self.loading
         });
       } else this.currentView = i;
     },
@@ -234,7 +254,7 @@ export default {
         })
         .then(result => {
           console.log("submitTaxpayer :", result);
-          this.currentView = 2;
+          this.currentView = 4;
           this.loading = false;
         })
         .catch(err => {
