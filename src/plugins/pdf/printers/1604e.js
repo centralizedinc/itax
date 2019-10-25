@@ -278,6 +278,44 @@ function getContent(forms) {
                 ]
             }
         },
+        // Part II
+        {
+            layout: "noBorders",
+            table: {
+                widths: [530],
+                heights: [100],
+                body: [
+                    [{
+                        text: ' '
+                    }]
+                ]
+            }
+        },
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [145, 380],
+                body: [
+                    [{
+                        text: '10/10/2011',
+                        fontSize: 12,
+                        characterSpacing: 2,
+                        bold: true,
+                        alignment: 'left',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: 'BPI',
+                        fontSize: 12,
+                        characterSpacing: 2,
+                        bold: true,
+                        alignment: 'left',
+                        margin: [0, 0, 0, 0]
+                    }]
+                ]
+            }
+        },
 
 
 
