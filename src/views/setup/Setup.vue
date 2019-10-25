@@ -228,7 +228,7 @@ export default {
       if (i === 4) {
         var _self = this;
         this.$confirm({
-          title: "Do you want to save the informations?",
+          title: "Do you want to save the information?",
           okText: "Yes",
           cancelText: "Cancel",
           onOk() {

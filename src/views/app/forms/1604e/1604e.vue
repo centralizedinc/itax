@@ -238,7 +238,9 @@ export default {
     validate() {
       this.changeStep(this.step + 1);
     },
-    onClose() {
+    onClose(data) {
+      this.form.sched1 = data.sched1;
+      this.form.sched1_total_tax_withheld = this.form.sched1[4].tax_withheld;
       this.show_sched1 = false;
       this.show_sched2 = false;
     }
