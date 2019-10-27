@@ -6,7 +6,9 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 var common_model = require('./commonModels');
 
 const model_schema = {
-    any_tax_withheld: { type: Boolean },
+    any_tax_withheld: {
+        type: Boolean
+    },
     category_of_agent: {
         type: String
         /**
@@ -19,23 +21,55 @@ const model_schema = {
     atc_list: [{
         nature_of_income_payment: String,
         atc_code: String,
-        tax_base: { type: Number, default: 0 },
-        tax_rate: { type: Number, default: 0 },
-        tax_withheld: { type: Number, default: 0 }
+        tax_base: {
+            type: Number,
+            default: 0
+        },
+        tax_rate: {
+            type: Number,
+            default: 0
+        },
+        tax_withheld: {
+            type: Number,
+            default: 0
+        }
     }],
-    tax_req_withld_remtd: { type: Number, default: 0 },
-    less_tax_remtd_retrn: { type: Number, default: 0 },
-    tax_due: { type: Number, default: 0 },
-    total_amount_payable: { type: Number, default: 0 },
+    tax_req_withld_remtd: {
+        type: Number,
+        default: 0
+    }, //12
+    less_tax_remtd_retrn: {
+        type: Number,
+        default: 0
+    }, //13
+    tax_due: {
+        type: Number,
+        default: 0
+    }, //14
+    total_amount_payable: {
+        type: Number,
+        default: 0
+    }, //16
 
     //Schedule 1.1
     sched1: [{
-        seq_no: { type: Number, default: 0 }, //(1)
-        tin: { type: Number },//(2)
+        seq_no: {
+            type: Number,
+            default: 0
+        }, //(1)
+        tin: {
+            type: Number
+        }, //(2)
         name: {
-            first: { type: String },
-            middle: { type: String }, //(3)
-            last: { type: String }
+            first: {
+                type: String
+            },
+            middle: {
+                type: String
+            }, //(3)
+            last: {
+                type: String
+            }
         },
         atc_code: {
             type: String
@@ -48,17 +82,38 @@ const model_schema = {
             */
 
         },
-        nature_of_payment: { type: Number, default: 0 },
-        amount: { type: Number, default: 0 },
-        tax_rates: { type: Number, default: 0 },
-        tax_req_withheld: { type: Number, default: 0 },
+        nature_of_payment: {
+            type: Number,
+            default: 0
+        },
+        amount: {
+            type: Number,
+            default: 0
+        },
+        tax_rates: {
+            type: Number,
+            default: 0
+        },
+        tax_req_withheld: {
+            type: Number,
+            default: 0
+        },
     }],
 
-    total_tax_req_withheld: { type: Number, default: 0 },
-    total_amount: { type: Number, default: 0 }
+    total_tax_req_withheld: {
+        type: Number,
+        default: 0
+    },
+    total_amount: {
+        type: Number,
+        default: 0
+    }
 };
 
-var Form1600WPSchema = new Schema({ ...common_model, ...model_schema });
+var Form1600WPSchema = new Schema({
+    ...common_model,
+    ...model_schema
+});
 
 Form1600WPSchema.pre('save', function (callback) {
     var form = this;
@@ -88,8 +143,8 @@ const plugin = new autoIncrement(Form1600WPSchema, '1600wp_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        console.log("############### init failed: " + e);
-    });
+    console.log("############### init failed: " + e);
+});
 
 
 module.exports = mongoose.model('1600wp_forms', Form1600WPSchema);

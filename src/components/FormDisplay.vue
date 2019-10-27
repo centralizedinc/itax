@@ -40,7 +40,7 @@ const printers = {
   FORM2000OT: Form2000ot,
   FORM1600WP: Form1600wp,
   FORM1601F: Form1601f,
-  FORM1601FQ: Form1601fq,
+  FORM1601FQ: Form1601fq
 };
 export default {
   props: ["form", "type"],
@@ -112,6 +112,7 @@ export default {
     },
     refresh() {
       this.loading = true;
+      console.log("this form data: " + JSON.stringify(this.form));
       var form = this.deepCopy(this.form);
       if (!form.taxpayer) {
         form.taxpayer = {};
@@ -189,6 +190,8 @@ export default {
     },
     open() {
       var printer = printers[this.form_type];
+      this.form.whole_pdf = true;
+      console.log("form details open: " + JSON.stringify(this.form));
       var document = printer.fillup(this.form);
       var self = this;
       pdfMake.createPdf(document).open(dataUrl => {
@@ -198,12 +201,11 @@ export default {
       console.log("open form data: " + JSON.stringify(this.form));
       this.refresh();
     },
-    upload(){
+    upload() {
       var printer = printers[this.form_type];
       var document = printer.fillup(this.form);
       var self = this;
-      return pdfMake.createPdf(document)
-      
+      return pdfMake.createPdf(document);
     }
   }
 };

@@ -174,7 +174,7 @@ export default {
     Form1600WP,
     Form1604E,
     Form1601F,
-    Form1606FQ,
+    Form1601FQ
   },
   computed: {
     affix_computation() {
@@ -214,6 +214,7 @@ export default {
           contact_details: {},
           address_details: {}
         },
+        page: 0,
         spouse_details: {},
         sched1: { taxpayer: {}, spouse: {} },
         sched2: { taxpayer: {}, spouse: {} },
@@ -265,7 +266,7 @@ export default {
             description: "Computation"
           }
         ],
-        
+
         "1700": [
           {
             title: "General"
@@ -342,7 +343,7 @@ export default {
             title: "Part II",
             description: "Computation of Tax"
           }
-        ],
+        ]
       },
       default_steps: [
         {
