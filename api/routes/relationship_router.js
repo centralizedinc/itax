@@ -29,7 +29,11 @@ router.route("/")
     .post((req, res) => {
         var data = req.body;
         data.created_by = jwt.decode(req.headers.access_token).account_id;
-        RelationshipDao.create(data)
+        RelationshipDao.findOne({ from: data.from, to: data.to, status: 'A' })
+            .then((result) => {
+                if (!result) return RelationshipDao.create(data)
+                else return Promise.resolve({ message: 'Connection is already exist' })
+            })
             .then((model) => {
                 console.log('model :', model);
                 res.json({

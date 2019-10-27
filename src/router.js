@@ -184,6 +184,11 @@ export default new Router({
         component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
       },
       {
+        path: '1601c',
+        name: 'Form 1601C',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601c/1601c.vue')
+      },
+      {
         path: '2551q',
         name: 'Form 2551q',
         component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
@@ -217,6 +222,11 @@ export default new Router({
         component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1604e/1604e.vue')
       },
       {
+        path: '1606',
+        name: 'Form 1606',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1606/1606.vue')
+      },
+      {
         path: '1601f',
         name: 'Form 1601f',
         component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601f/1601f.vue')
@@ -225,6 +235,11 @@ export default new Router({
         path: '1601fq',
         name: 'Form 1601fq',
         component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601fq/1601fq.vue')
+      },
+      {
+        path: '1601c',
+        name: 'Form 1601c',
+        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601c/1601c.vue')
       },
       ]
     },
@@ -260,6 +275,11 @@ export default new Router({
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601e/1601e.vue')
     },
     {
+      path: '1601c',
+      name: 'Form 1601C',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601c/1601c.vue')
+    },
+    {
       path: '2551q',
       name: 'Form 2551q',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/2551q/2551q.vue')
@@ -292,17 +312,27 @@ export default new Router({
       path: '1604e',
       name: 'Form 1604e',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1604e/1604e.vue')
-    }, 
+    },
     {
       path: '1601f',
       name: 'Form 1601f',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601f/1601f.vue')
     },
     {
-        path: '1601fq',
-        name: 'Form 1601fq',
-        component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601fq/1601fq.vue'),
-      },
+      path: '1606',
+      name: 'Form 1606',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1606/1606.vue')
+    },
+    {
+      path: '1601fq',
+      name: 'Form 1601fq',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601fq/1601fq.vue'),
+    },
+    {
+      path: '1601c',
+      name: 'Form 1601c',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/forms/1601c/1601c.vue')
+    },
 
     ]
   },
@@ -318,6 +348,26 @@ export default new Router({
     path: '/confirmation/google/:code',
     name: "Google",
     component: () => import('./views/confirmation/Google.vue')
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('./views/admin/Home.vue'),
+    children: [{
+      path: '',
+      name: "Login",
+      component: () => import('./views/admin/Login.vue')
+    }]
+  },
+  {
+    path: '/admin/app',
+    name: 'Admin',
+    component: () => import('./views/admin/Main.vue'),
+    children: [{
+      path: '',
+      name: "Dashboard",
+      component: () => import('./views/admin/Dashboard.vue')
+    }]
   }
   ]
 })

@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 1606 (JULY 1999)
+ * @author Venus
+ * @base_form https://www.lawphil.net/administ/bir/frms/pymnt/1606.pdf
+ * @version 1.0 - 10/15/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -152,9 +159,9 @@ const plugin = new autoIncrement(Form1606Schema, '1606_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 
 module.exports = mongoose.model('1606_forms', Form1606Schema);

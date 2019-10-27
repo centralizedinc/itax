@@ -40,7 +40,7 @@ function getContent(forms) {
                 heights: [54],
                 body: [
                     [{
-                        text: ''
+                        text: ' '
                     }]
                 ]
             }
@@ -53,7 +53,7 @@ function getContent(forms) {
                 heights: [22],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 14,
                         alignment: 'left',
                         margin: [4, 0, 0, 0]
@@ -81,7 +81,7 @@ function getContent(forms) {
                         margin: [-3, 0, 0, 0]
                     },
                     {
-                        text: ''
+                        text: ' '
                     },
                     {
                         text: forms.amended_yn == true ? 'X' : ' ',
@@ -91,7 +91,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: '',
+                        text: ' ',
                     },
                     {
                         text: forms.amended_yn == false ? 'X' : ' ',
@@ -101,7 +101,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: '',
+                        text: ' ',
                     },
                     {
                         text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
@@ -111,10 +111,10 @@ function getContent(forms) {
                         margin: [5, 0, 0, 0]
                     },
                     {
-                        text: ''
+                        text: ' '
                     },
                     {
-                        text: forms.atc == null ? ' ' : forms.atc,
+                        text: forms.atc_code == null ? ' ' : forms.atc_code,
                         fontSize: 14,
                         characterSpacing: 4,
                         bold: true,
@@ -203,17 +203,17 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [450, 100],
-                heights: [15],
+                heights: [20],
                 body: [
                     [{
-                        text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
+                        text: forms.taxpayer.address == null || forms.taxpayer.address == ' ' ? ' ' : forms.taxpayer.address,
                         fontSize: 16,
                         alignment: 'left',
                         // bold: true,
                         margin: [40, 3, 0, 0]
                     },
                     {
-                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
+                        text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == ' ' ? ' ' : forms.taxpayer.address_details.zipCode,
                         fontSize: 16,
                         alignment: 'left',
                         margin: [40, 3, 0, 0]
@@ -222,74 +222,65 @@ function getContent(forms) {
             }
         },
         // Part II
+        // {
+        //     layout: "noBorders",
+        //     table: {
+        //         widths: [530],
+        //         // heights: [8],
+        //         body: [
+        //             [{
+        //                 text: ' ',
+
+        //             }]
+        //         ]
+        //     }
+        // },
+
         {
             layout: "noBorders",
             table: {
-                widths: [530],
-                heights: [8],
+                widths: [25, 250, 40],
+                // heights: [15],
                 body: [
                     [{
-                        text: '',
-
-                    }]
-                ]
-            }
-        },
-
-        {
-            layout: "noBorders",
-            table: {
-                widths: [20, 250, 10],
-                heights: [15],
-                body: [
-                    [{
-                        text: forms.natureOfTransaction == 'real_property_capital' ? 'X' : '',
-                        fontSize: 12,
+                        text: forms.natureOfTransaction == 'real_property_capital' ? 'X' : ' ',
+                        fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, 0, 0, 0],
+                        margin: [24, 12, 0, 0],
                     }, {
-                        text: ''
+                        text: ' '
                     },
                     {
-                        text: forms.natureOfTransaction == 'shares_stock' ? 'X' : '',
-                        fontSize: 12,
+                        text: forms.natureOfTransaction == 'shares_stock' ? 'X' : ' ',
+                        fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [15, 0, 0, 0]
+                        margin: [10, 12, 0, 0]
 
-                    }]
-                ]
-            }
-        },
-
-        {
-            layout: "noBorders",
-            table: {
-                widths: [20, 250, 10],
-                heights: [8],
-                body: [
+                    }],
                     [{
-                        text: forms.natureOfTransaction == 'real_property_ordinary' ? 'X' : '',
-                        fontSize: 12,
+                        text: forms.natureOfTransaction == 'real_property_ordinary' ? 'X' : ' ',
+                        fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, -8, 0, 0]
+                        margin: [22, -3, 0, 0]
                     },
                     {
-                        text: ''
+                        text: ' '
                     }, {
-                        text: ''
+                        text: ' '
                     }]
                 ]
             }
         },
+
+
 
         {
             layout: "noBorders",
             table: {
                 widths: [260, 260],
-                // heights: [5],
                 body: [
                     [{
                         text: forms.seller == null ? ' ' : forms.seller,
@@ -309,22 +300,7 @@ function getContent(forms) {
             }
         },
 
-        {
-            layout: "noBorders",
-            table: {
-                widths: [530],
-                heights: [1],
-                body: [
-                    [{
-                        text: '',
-                        fontSize: 12,
-                        bold: true,
-                        alignment: 'justified',
-                        margin: [30, 0, 0, 0],
-                    }]
-                ]
-            }
-        },
+
 
         {
             layout: "noBorders",
@@ -357,14 +333,14 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [530],
-                heights: [4],
+                // heights: [4],
                 body: [
                     [{
-                        text: forms.propertySold == 'PropDesc_RP' ? 'X' : ' ',
+                        text: forms.propertySold == 'real_property' ? 'X' : ' ',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
-                        margin: [22, 4, 0, 0],
+                        margin: [22, 6, 0, 0],
                     }]
 
                 ]
@@ -378,7 +354,7 @@ function getContent(forms) {
                 widths: [90, 310, 70, 40],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
@@ -392,7 +368,7 @@ function getContent(forms) {
                         margin: [10, -3, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
@@ -416,44 +392,38 @@ function getContent(forms) {
                 widths: [45, 20, 58, 20, 42, 10],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
-                        bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     },
                     {
                         text: forms.realPropertyClass == 'R' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
-                        bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     },
                     {
                         text: forms.realPropertyClass == 'C' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
-                        bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     },
                     {
                         text: forms.realPropertyClass == 'CR' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     }]
@@ -468,49 +438,43 @@ function getContent(forms) {
                 widths: [45, 20, 58, 20, 42, 45, 46, 64, 115],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 12,
-                        bold: true,
+                        text: ' ',
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
                         text: forms.realPropertyClass == 'A' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
-                        bold: true,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
                         text: forms.realPropertyClass == 'I' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
-                        bold: true,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
                         text: forms.realPropertyClass == 'CC' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
@@ -518,15 +482,13 @@ function getContent(forms) {
                     },
                     {
                         text: forms.realPropertyClass == 'O' ? 'X' : ' ',
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
                         text: forms.others == null ? ' ' : forms.others,
-                        fontSize: 12,
-                        bold: true,
+                        fontSize: 10,
                         alignment: 'justified',
                         margin: [0, -8, 0, 0],
                     }]
@@ -541,45 +503,36 @@ function getContent(forms) {
                 widths: [43, 160, 10, 140, 8, 120],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 10,
-                        bold: true,
-                        alignment: 'justified',
-                        margin: [0, 4, 0, 0],
+                        text: ' ',
+
                     },
                     {
                         text: forms.areaOfProperty == null ? ' ' : forms.areaOfProperty,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [0, 4, 0, 0],
+                        margin: [0, 0, 0, 0],
                     }, {
-                        text: '',
-                        fontSize: 10,
-                        bold: true,
-                        alignment: 'justified',
-                        margin: [0, 4, 0, 0],
+                        text: ' ',
+
                     },
                     {
                         text: forms.tctNo == null ? ' ' : forms.tctNo,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [0, 4, 0, 0],
+                        margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
-                        fontSize: 10,
-                        bold: true,
-                        alignment: 'justified',
-                        margin: [0, 4, 0, 0],
+                        text: ' ',
+
                     },
                     {
                         text: forms.taxDecNo == null ? ' ' : forms.taxDecNo,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [0, 4, 0, 0],
+                        margin: [0, 0, 0, 0],
                     }]
 
                 ]
@@ -592,7 +545,7 @@ function getContent(forms) {
                 widths: [43, 160, 15, 128],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'right',
@@ -605,7 +558,7 @@ function getContent(forms) {
                         alignment: 'right',
                         margin: [0, 6, 0, 0],
                     }, {
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -629,11 +582,11 @@ function getContent(forms) {
                 widths: [530],
                 body: [
                     [{
-                        text: forms.propertySold == 'PropDesc_SS' ? 'X' : ' ',
+                        text: forms.propertySold == 'shares_stock' ? 'X' : ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
-                        margin: [24, -3, 0, 0],
+                        margin: [24, -6, 0, 0],
                     }]
 
                 ]
@@ -646,7 +599,7 @@ function getContent(forms) {
                 widths: [150, 370],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -671,7 +624,7 @@ function getContent(forms) {
                 widths: [150, 370],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -696,7 +649,7 @@ function getContent(forms) {
                 heights: [30],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -710,7 +663,7 @@ function getContent(forms) {
                         margin: [0, -2, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -735,7 +688,7 @@ function getContent(forms) {
                 heights: [10],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -749,7 +702,7 @@ function getContent(forms) {
                         margin: [0, -2, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -774,7 +727,7 @@ function getContent(forms) {
                 heights: [9],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 12,
                         bold: true,
                         alignment: 'justified',
@@ -792,7 +745,7 @@ function getContent(forms) {
                 widths: [370, 150],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -816,7 +769,7 @@ function getContent(forms) {
                 widths: [370, 150],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -839,7 +792,7 @@ function getContent(forms) {
                 widths: [450, 70],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -863,7 +816,7 @@ function getContent(forms) {
                 widths: [360, 160],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -886,7 +839,7 @@ function getContent(forms) {
                 widths: [370, 160],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -909,7 +862,7 @@ function getContent(forms) {
                 widths: [370, 150],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -934,7 +887,7 @@ function getContent(forms) {
                 heights: [10],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -950,7 +903,7 @@ function getContent(forms) {
                 widths: [8, 95, 10, 95, 10, 95, 8, 150],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -964,7 +917,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -978,7 +931,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -992,7 +945,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -1016,7 +969,7 @@ function getContent(forms) {
                 widths: [370, 150],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -1039,21 +992,21 @@ function getContent(forms) {
                 widths: [175, 68, 100],
                 body: [
                     [{
-                        text: '',
+                        text: ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
                         margin: [0, 0, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 11,
                         bold: true,
                         alignment: 'justified',
                         margin: [0, -5, 0, 0],
                     },
                     {
-                        text: '',
+                        text: ' ',
                         fontSize: 11,
                         bold: true,
                         alignment: 'justified',

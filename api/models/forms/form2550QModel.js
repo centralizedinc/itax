@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 2550Q (FEBRUARY 2017)
+ * @author Venus
+ * @base_form https://busapcom.files.wordpress.com/2014/10/2550q.pdf
+ * @version 1.0 - 10/16/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;

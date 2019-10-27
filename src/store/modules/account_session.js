@@ -1,6 +1,7 @@
 import OAuthAPI from "../../api/OAuthAPI";
 import UserAPI from "../../api/UserAPI";
 import UploadAPI from "../../api/UploadAPI";
+import ReferenceAPI from "../../api/ReferenceAPI";
 
 
 function initialState() {
@@ -8,7 +9,8 @@ function initialState() {
         account: {},
         user: {},
         token: "",
-        is_authenticated: false
+        is_authenticated: false,
+        mode: ''
     }
 }
 
@@ -20,12 +22,18 @@ const mutations = {
         state.user = data.user;
         state.token = data.token;
         state.is_authenticated = true;
+        state.mode = data.account.status === 0 ? 'INACTIVE' :
+            data.account.status === 1 ? 'SETUP' : 'ACTIVE';
     },
     UPDATE_ACCOUNT(state, data) {
         state.account = data;
     },
     UPDATE_USER(state, data) {
         state.user = data;
+    },
+    UPDATE_SESSION_MODE(state) {
+        state.mode = state.account.status === 0 ? 'INACTIVE' :
+            state.account.status === 1 ? 'SETUP' : 'ACTIVE';
     },
     RESET(state) {
         Object.keys(state).forEach(key => {
@@ -45,7 +53,8 @@ const actions = {
                         context.commit("LOGIN", result.data.model);
                         resolve(result.data.model);
                     }
-                }).catch((err) => {
+                })
+                .catch((err) => {
                     reject(err);
                 });
         })
@@ -112,17 +121,45 @@ const actions = {
                 })
                 .then((user) => {
                     result.user = user.data.model;
-                    if(context.rootState.account_session.user.tin){
-                        console.log('Updating taxpayer ...');
-                        return context.dispatch("UPDATE_TAXPAYER", { id: details.taxpayer._id, data: details.taxpayer }, { root: true });
-                    }
-                    else {
-                        console.log('creating taxpayer ...');
-                        return context.dispatch("CREATE_TAXPAYER", details.taxpayer, { root: true });
-                    }
+                    // if(context.rootState.account_session.user.tin){
+                    //     console.log('Updating taxpayer ...');
+                    //     return context.dispatch("UPDATE_TAXPAYER", { id: details.taxpayer._id, data: details.taxpayer }, { root: true });
+                    // }
+                    // else {
+                    console.log('creating taxpayer ...');
+                    return context.dispatch("CREATE_TAXPAYER", details.taxpayer, { root: true });
+                    // }
                 })
                 .then((taxpayer) => {
                     result.taxpayer = taxpayer;
+                    if (details.taxpayer.individual_details.civil_status === "M" && !details.spouse_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.spouse_details, { root: true });
+                })
+                .then((spouse) => {
+                    result.spouse = spouse;
+                    if (details.taxpayer.individual_details.civil_status === "M") {
+                        const connection = {
+                            relationship: 'spouse',
+                            to: result.spouse.tin,
+                            from: result.taxpayer.tin
+                        }
+                        return context.dispatch("CONNECT", connection, { root: true });
+                    }
+                })
+                .then((spouse_connection) => {
+                    if (["sp", "p", "em"].includes(details.taxpayer.filer_type) && !details.company_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
+                })
+                .then((company) => {
+                    result.company = company;
+                    if (details.taxpayer.individual_details.civil_status === "M") {
+                        const connection = {
+                            relationship: 'spouse',
+                            to: result.spouse.tin,
+                            from: result.taxpayer.tin
+                        }
+                        return context.dispatch("CONNECT", connection, { root: true });
+                    }
+                })
+                .then((company_connection) => {
                     return new OAuthAPI(context.rootState.account_session.token).doneSetup()
                 })
                 .then((account) => {

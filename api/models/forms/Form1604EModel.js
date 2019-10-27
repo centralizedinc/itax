@@ -13,38 +13,40 @@ const model_schema = {
          * private
          */
     },
+    top_withholding_agent: { // item 8a
+        type: Boolean
+    },
     // Part II Computation of Tax
 
     // schedule 1 1601EQ
     sched1: [{
-        quarter: String,
+        quarter: Number,
         date_remittance: Date,
         drawee_Bank_Code: String,
-        tra_ror_ar_num: {type: Number},
-        tax_withheld: {type: Number, default: 0},
-        penalties: {type: Number, default: 0},
-        tot_amt_remitted: {type: Number, default: 0},
-        total_tax_withheld: {type: Number, default: 0},
-        total_penalties: {type: Number, default: 0},
-        total_tot_amount_remitted: {type: Number, default: 0}
+        tra_ror_ar_num: { type: Number },
+        tax_withheld: { type: Number, default: 0 },
+        penalties: { type: Number, default: 0 },
+        tot_amt_remitted: { type: Number, default: 0 }
     }],
-
+    sched1_total_tax_withheld: { type: Number, default: 0 },
+    sched1_total_penalties: { type: Number, default: 0 },
+    sched1_total_tot_amount_remitted: { type: Number, default: 0 },
     //Schedule 2 1606
     sched2: [{
-        quarter: String,
+        month: Number,
         date_remittance: Date,
         drawee_Bank_Code: String,
-        tra_ror_ar_num: {type: Number},
-        tax_withheld: {type: Number, default: 0},
-        penalties: {type: Number, default: 0},
-        tot_amt_remitted: {type: Number, default: 0},
-        total_tax_withheld: {type: Number, default: 0},
-        total_penalties: {type: Number, default: 0},
-        total_tot_amount_remitted: {type: Number, default: 0}
-    }],
+        tra_ror_ar_num: { type: Number },
+        tax_withheld: { type: Number, default: 0 },
+        penalties: { type: Number, default: 0 },
+        tot_amt_remitted: { type: Number, default: 0 }
 
-     //Schedule 3
-     sched3: [{
+    }],
+    sched2_total_tax_withheld: { type: Number, default: 0 },
+    sched2_total_penalties: { type: Number, default: 0 },
+    sched2_total_tot_amount_remitted: { type: Number, default: 0 },
+    //Schedule 3
+    sched3: [{
         seq_no: { type: Number, default: 0 }, //(1)
         tin: { type: Number },//(2)
         name: {
@@ -55,7 +57,7 @@ const model_schema = {
         atc_code: {
             type: String
         },
-        
+
         amount: { type: Number, default: 0 },
         tax_rates: { type: Number, default: 0 },
         amt_of_tax_withheld: { type: Number, default: 0 },
@@ -75,7 +77,7 @@ const model_schema = {
         atc_code: {
             type: String
         },
-        nature_act_payment: {type: String},
+        nature_act_payment: { type: String },
         amount: { type: Number, default: 0 },
     }],
 };
@@ -110,9 +112,9 @@ const plugin = new autoIncrement(Form1604ESchema, '1604e_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 
 module.exports = mongoose.model('1604e_forms', Form1604ESchema);

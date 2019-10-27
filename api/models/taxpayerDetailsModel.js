@@ -11,6 +11,7 @@ var taxpayerDetailsSchema = new Schema({
   line_of_business: String,
   taxpayer_type: String, // Individuals || Non individuals
   start_month: Number,
+  end_month: Number,
   accounting_type: {
     type: String
     /**
@@ -20,10 +21,12 @@ var taxpayerDetailsSchema = new Schema({
   },
   filer_type: {
     type: String
-    // single_proprietor,
-    // professional,
-    // estate,
-    // trust
+    // single_proprietor - s,
+    // professional - p,
+    // estate - e,
+    // trust - t,
+    // employee - em
+    // nranetb - n
   },
   address: String,
   address_details: {
@@ -63,9 +66,8 @@ var taxpayerDetailsSchema = new Schema({
        */
     }
   },
-  corporate_details: {
-    registeredName: String,
-    incorporationDate: Date
+  date_incorporation: {
+    type: Date
   },
   registered_name: String,
   created_by: {

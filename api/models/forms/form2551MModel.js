@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 2551M (SEPTEMBER 2005)
+ * @author Venus
+ * @base_form https://www.bir.gov.ph/images/bir_files/old_files/pdf/267692551M%20final.pdf
+ * @version 1.0 - 10/22/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -6,10 +13,158 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    
+    year_type: {
+        type: Date
+    },
+    year_ended_month: {
+        type: Date
+    },
+    year_ended_year: {
+        type: Date
+    },
+    short_period_return: {
+        type: Boolean
+    },
+    line_of_business: {
+        type: String
+    },
+
+    //Part 2 Computation of Tax
+    taxable_transactions: {
+        type: Number,
+        default: 0
+    }, //item14A - item18A
+    atc_list: [], //item14B - item18B
+    taxable_amount: {
+        type: Number,
+        default: 0
+    }, //item14C - Item18C
+    tax_rate: {
+        type: Number,
+        default: 0
+    }, //item14D - Item18D
+    computation_tax_due: {
+        type: Number,
+        default: 0
+    }, //item14E - Item18E
+    creditable_percentage: {
+        type: Number,
+        default: 0
+    }, //item20A see Schedule 1
+    tax_paid_return_previously: {
+        type: Number,
+        default: 0
+    }, //item20B
+    total_tax_credit_payment: {
+        type: Number,
+        default: 0
+    }, //item21 Sum of items20A&20B
+    tax_payable: {
+        type: Number,
+        default: 0
+    }, //item22 overpayment Item19 less item21
+    refund_type: {
+        type: String
+    }, //item24 if overpayment
+
+    //Part 3 Details Payment
+    particular_cash: [{ //item27A
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_check: [{ //item28A
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_tax_debit: [{ //item29A
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    particular_others: [{ //item30A
+        drawee_bank: {
+            type: Number,
+            default: 0
+        },
+        number: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        },
+        amount: {
+            type: Number,
+            default: 0
+        }
+    }],
+    //Schedule 1 Tax withheld claimed as Tax Credits
+    sched1: [{
+        period_covered: {
+            type: Date
+        },
+        name_withholding: String,
+        income_payments: {
+            type: Number,
+            default: 0
+        },
+        tax_withheld: {
+            type: Number,
+            default: 0
+        },
+        applied: {
+            type: Number,
+            default: 0
+        },
+        total_amount_payable: {
+            type: Number,
+            default: 0
+        } // to item20A
+    }]
 };
 
-var Form2551MSchema = new Schema({...common_model, ...model_schema });
+var Form2551MSchema = new Schema({
+    ...common_model,
+    ...model_schema
+});
 
 Form2551MSchema.pre('save', function(callback) {
     var form = this;
@@ -39,9 +194,9 @@ const plugin = new autoIncrement(Form2551MSchema, '2551m_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 
 module.exports = mongoose.model('2551m_forms', Form2551MSchema);

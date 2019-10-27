@@ -52,8 +52,9 @@
       <a-row
         style="min-height:100vh; margin-top:15vh; margin-left:1vw; margin-right:1vw;"
         type="flex"
-        justify="start">
-        <a-col :span="4">
+        justify="center"
+      >
+        <a-col :span="4" v-if="session_mode==='ACTIVE'">
           <a-row type="flex" justify="center" style="margin-bottom: 2vh">
             <a-col :span="24">
               <a-card
@@ -61,19 +62,29 @@
               ></a-card>
             </a-col>
             <a-col :span="6">
-              <a-avatar 
-                style="z-index: 1; margin-top: -7vh; border: 3px solid #FFFFFF" 
-                :size="60" 
-                :src="user && user.avatar ? user.avatar.location : null">
-                {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
-              </a-avatar>
+              <a-avatar
+                style="z-index: 1; margin-top: -7vh; border: 3px solid #FFFFFF"
+                :size="60"
+                :src="user && user.avatar ? user.avatar.location : null"
+              >{{user && user.name && user.name.first ? user.name.first[0] : '?' }}</a-avatar>
             </a-col>
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
                 <div style="margin-top: 1vh">
                   <span>{{user.name.first}} {{user.name.last}}</span>
-                  <p v-if="user.tin"><a style="font-size:12px" @click="$router.push('/app/user')">{{formatTIN(user.tin)}}</a></p>
-                  <p v-else><a-icon type="warning" style="color:red"></a-icon><a style="font-size:10px" @click="$router.push('/app/user')"> No taxpayer details. Click here.</a></p>
+                  <p v-if="user.tin">
+                    <a
+                      style="font-size:12px"
+                      @click="$router.push('/app/user')"
+                    >{{formatTIN(user.tin)}}</a>
+                  </p>
+                  <p v-else>
+                    <a-icon type="warning" style="color:red"></a-icon>
+                    <a
+                      style="font-size:10px"
+                      @click="$router.push('/app/user')"
+                    >No taxpayer details. Click here.</a>
+                  </p>
                 </div>
               </a-card>
             </a-col>
@@ -88,7 +99,7 @@
               </a-menu-item>
               <!-- <a-menu-item key="/app/taxpayer/network">
                 <a-icon type="deployment-unit" />Taxpayer Network
-              </a-menu-item> -->
+              </a-menu-item>-->
               <a-menu-item key="/app/tax">
                 <a-icon type="form" />Tax Returns
               </a-menu-item>
@@ -96,7 +107,9 @@
                 <a-icon type="credit-card" />Payments
               </a-menu-item>
               <a-divider></a-divider>
-              <a-menu-item key="/app/user"><a-icon type="idcard" />Account</a-menu-item>
+              <a-menu-item key="/app/user">
+                <a-icon type="idcard" />Account
+              </a-menu-item>
               <!-- <a-menu-item key="/app/security"><a-icon type="lock" />Security</a-menu-item> -->
               <a-menu-item key="logout">
                 <a-icon type="logout" />Logout
@@ -104,29 +117,29 @@
             </a-menu>
           </a-affix>
         </a-col>
-        <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
-           <a-row>
-             <a-col :span="24">
-                <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
-                    <h2 style="color: #FFFFFF">{{$route.name}}</h2>
-                </a-card>
+        <a-col :span="session_mode==='ACTIVE' ? 15 : 24" style="margin-left:2vw; margin-right:2vw">
+          <a-row>
+            <a-col :span="24" v-if="session_mode !== 'SETUP'">
+              <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+                <h2 style="color: #FFFFFF">{{$route.name}}</h2>
+              </a-card>
             </a-col>
             <a-col :span="24">
               <transition name="fade" mode="out-in">
                 <router-view></router-view>
               </transition>
             </a-col>
-           </a-row>
+          </a-row>
         </a-col>
-        <a-col :span="4">
+        <a-col :span="4" v-if="session_mode==='ACTIVE'">
           <a-row style="margin-bottom: 1vh">
             <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
-                  <h2 style="color: #FFFFFF">Summary</h2>
+                <h2 style="color: #FFFFFF">Summary</h2>
               </a-card>
-          </a-col>
+            </a-col>
           </a-row>
-          <a-card style="margin-bottom:0.5vh; border: 1px solid" class="avatar_btn" >
+          <a-card style="margin-bottom:0.5vh; border: 1px solid" class="avatar_btn">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
                 <a-icon type="team" style="font-size: 46px"></a-icon>
@@ -137,7 +150,7 @@
               </a-col>
             </a-row>
           </a-card>
-           <a-card style="margin-bottom:0.5vh;border: 1px solid;" class="avatar_btn"> 
+          <a-card style="margin-bottom:0.5vh;border: 1px solid;" class="avatar_btn">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
                 <a-icon type="form" style="font-size: 46px"></a-icon>
@@ -148,7 +161,7 @@
               </a-col>
             </a-row>
           </a-card>
-           <a-card style="margin-bottom:0.5vh; border: 1px solid;" class="avatar_btn">
+          <a-card style="margin-bottom:0.5vh; border: 1px solid;" class="avatar_btn">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
                 <a-icon type="credit-card" style="font-size: 46px"></a-icon>
@@ -162,18 +175,19 @@
         </a-col>
       </a-row>
     </a-layout-content>
-    <a-layout-footer class="footer" style="text-align:right;margin-top: 2vh">
-      Copyright Ⓒ 2019 - Centralized Cloud Computing International Inc.
-    </a-layout-footer>
+    <a-layout-footer
+      class="footer"
+      style="text-align:right;margin-top: 2vh"
+    >Copyright Ⓒ 2019 - Centralized Cloud Computing International Inc.</a-layout-footer>
   </a-layout>
 </template>
 
 
 <script>
-import VueTrend from 'vuetrend'
+import VueTrend from "vuetrend";
 import TrendChart from "vue-trend-chart";
 export default {
-  components:{
+  components: {
     VueTrend,
     TrendChart
   },
@@ -191,6 +205,8 @@ export default {
   methods: {
     init() {
       this.user = this.$store.state.account_session.user;
+      this.$store.dispatch("GET_RDOS");
+      console.log("test");
     },
     nav(e) {
       if (e.key === "logout") {
@@ -208,36 +224,39 @@ export default {
       } else {
         // this.active_menu = [e.key]
         this.$router.push(e.key);
-
       }
     },
-    randomArray(){
-      var arr = []
-      for(var i=0; i<10; i++){
-        arr.push(this.random())
-      }      
+    randomArray() {
+      var arr = [];
+      for (var i = 0; i < 10; i++) {
+        arr.push(this.random());
+      }
       return arr;
     },
-    random(){
-      return Math.floor(Math.random() *10)
+    random() {
+      return Math.floor(Math.random() * 10);
     },
-    onSearch(e){
-
-    }
+    onSearch(e) {}
   },
-  computed:{
-    active_menu(){
-      console.log('PATH :::: ',this.$route.path)
+  computed: {
+    active_menu() {
+      console.log("PATH :::: ", this.$route.path);
       return [this.$route.path];
     },
-    ttrend(){
-      return this.randomArray()
+    ttrend() {
+      return this.randomArray();
     },
-    rtrend(){
-      return this.randomArray()
+    rtrend() {
+      return this.randomArray();
     },
-    ptrend(){
-      return this.randomArray()
+    ptrend() {
+      return this.randomArray();
+    },
+    account_status() {
+      return this.$store.state.account_session.account.status;
+    },
+    session_mode() {
+      return this.$store.state.account_session.mode;
     }
   }
 };
@@ -245,13 +264,13 @@ export default {
 
 <style>
 .curve-vue.stroke {
-    stroke: #39af77;
-  }
+  stroke: #39af77;
+}
 .curve-vue.fill {
-    fill: #39af77;
-  }
+  fill: #39af77;
+}
 .curve-vue.point {
-    fill: #39af77;
-    stroke: #39af77;
-  }
+  fill: #39af77;
+  stroke: #39af77;
+}
 </style>

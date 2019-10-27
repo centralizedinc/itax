@@ -1,10 +1,13 @@
 import TaxForm from "../../api/TaxFormAPI";
 import UploadAPI from "../../api/UploadAPI"
+import ReferenceAPI from "../../api/ReferenceAPI";
+import TaxpayersAPI from "../../api/TaxpayersAPI";
 
 function initialState() {
     return {
         draft_forms: [],
-        tax_returns: []
+        tax_returns: [],
+        rdos: []
     }
 }
 
@@ -30,6 +33,9 @@ const mutations = {
     },
     SET_TAX_RETURNS(state, data) {
         state.tax_returns = data;
+    },
+    SET_RDOS(state, data) {
+        state.rdos = data;
     },
     RESET(state) {
         Object.keys(state).forEach(key => {
@@ -59,13 +65,29 @@ const actions = {
                 });
         })
     },
-    UPLOAD_TAX_RETURNS(context, data){
+    UPLOAD_TAX_RETURNS(context, data) {
         return new UploadAPI(context.rootState.account_session.token).uploadForms(data)
     },
-    GET_UPLOAD_TAX_RETURNS(context, data){
+    GET_UPLOAD_TAX_RETURNS(context, data) {
         return new UploadAPI(context.rootState.account_session.token).getForm(data)
+    },
+    GET_RDOS(context, refresh) {
+        return new Promise((resolve, reject) => {
+            if (refresh || !context.state.rdos || !context.state.rdos.length) {
+                new ReferenceAPI(context.rootState.account_session.token).getRdos()
+                    .then((result) => {
+                        console.log('result.data :', result.data);
+                        context.commit("SET_RDOS", result.data);
+                        resolve(result.data);
+                    }).catch((err) => {
+                        reject(err)
+                    });
+            } else resolve(context.state.rdos);
+        })
+    },
+    SEARCH_TAXPAYER(context, tin) {
+        return new TaxpayersAPI(context.rootState.account_session.token).searchTaxpayerByTIN(tin);
     }
-
 }
 
 export default {

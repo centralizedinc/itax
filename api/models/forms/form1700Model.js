@@ -10,24 +10,42 @@ const model_schema = {
     atc_code: { type: String }, //3
     claiming_foreign_tax_credit: { type: Boolean }, //12
     foreign_tax_number: { type: Number }, //13
-
+    spouse_has_income: {
+        type: Boolean
+    },
+    filing_status: {
+        type: String
+        /**
+         * joint
+         * separate
+         */
+    },
 
     // Part III total tax payable
     total_tax_payable: [{
         taxpayer: {
-            prev_tax_due: { type: Number, default: 0 }, //26 A
-            total_tax_credit: { type: Number, default: 0 }, //27 A
-            net_tax_payable: { type: Number, default: 0 }, //28  A
-            portion_of_tax_payabe: { type: Number, default: 0 }, //29 A
-            total_amount_payable: { type: Number, default: 0 }, //35 A
+            prev_tax_due: { type: Number, default: 0 }, //26A
+            total_tax_credit: { type: Number, default: 0 }, //27A
+            net_tax_payable: { type: Number, default: 0 }, //28A
+            portion_of_tax_payabe: { type: Number, default: 0 }, //29A
+            amount_tax_payable: { type: Number, default: 0 }, //Item 30A
+            surcharge: { type: Number, default: 0 }, //Item 31A
+            interest: { type: Number, default: 0 }, //Item 32A
+            compromise: { type: Number, default: 0 }, //Item 33A
+            total_penalties: { type: Number, default: 0 }, //Item 34A
+            total_amount_payable: { type: Number, default: 0 }, //Item 35A
         },
         taxpayer_spouse: {
-            prev_tax_due: { type: Number, default: 0 }, //26 B
-            total_tax_credit: { type: Number, default: 0 }, //27 B
-            net_tax_payable: { type: Number, default: 0 }, //28 B
-            portion_of_tax_payabe: { type: Number, default: 0 }, //29 
-            total_amount_payable: { type: Number, default: 0 }, //35 B
-            aggregate_amount_payable: { type: Number, default: 0 }, //36 B
+            prev_tax_due: { type: Number, default: 0 }, //26B
+            total_tax_credit: { type: Number, default: 0 }, //27B
+            net_tax_payable: { type: Number, default: 0 }, //28B
+            portion_of_tax_payabe: { type: Number, default: 0 }, //29B
+            amount_tax_payable: { type: Number, default: 0 }, //Item 30B
+            surcharge: { type: Number, default: 0 }, //Item 31B
+            interest: { type: Number, default: 0 }, //Item 32B
+            compromise: { type: Number, default: 0 }, //Item 33B
+            total_penalties: { type: Number, default: 0 }, //Item 34B
+            total_amount_payable: { type: Number, default: 0 }, //35B
         },
         aggregate_amount_payable: { type: Number, default: 0 }, //36
     }],

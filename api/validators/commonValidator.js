@@ -228,16 +228,20 @@ class CommonValidator {
         }
         console.log('return_period :', new Date(form.return_period).toString());
 
+
+
         // Compute Due Date
         var due_date = new Date(form.return_period);
         var day_of_month = reference.day_offset;
-        due_date.setDate(1); // to prevent adding extra month if the month that is going to be set excess the current day of the month
+        // due_date.setDate(1); // to prevent adding extra month if the month that is going to be set excess the current day of the month
         due_date.setMonth(due_date.getMonth() + reference.month_offset);
         if (reference.day_offset <= 0) {
             var endOfMonth = new Date(due_date.getFullYear(), due_date.getMonth() + 1, 0);
             day_of_month = endOfMonth.getDate() + reference.day_offset;
         }
-        due_date.setDate(day_of_month);
+        var current_date = due_date.getDate();
+        if (reference.month_offset > 0) current_date = 0;
+        due_date.setDate(current_date + day_of_month);
         form.due_date = due_date;
         console.log('due_date :', due_date.toString());
         return { errors: null, form }

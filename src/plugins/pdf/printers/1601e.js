@@ -34,6 +34,7 @@ function getContent(forms) {
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = []
     content.push({
+<<<<<<< HEAD
             layout: "noBorders",
             table: {
                 // 
@@ -94,9 +95,68 @@ function getContent(forms) {
                             margin: [25, 82, 0, 0]
                         }
                     ],
+=======
+        layout: "noBorders",
+        table: {
+            // 
+            widths: [103, 50, 60, 50, 80, 60, 50],
+            body: [
+                [{
+                    text: formatDate(forms.return_period, { month: "2-digit" }),
+                    fontSize: 15,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    margin: [80, 78, 0, 0]
+                },
+                {
+                    text: formatDate(forms.return_period, { year: "numeric" }),
+                    fontSize: 15,
+                    characterSpacing: 3,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [0, 78, 0, 0]
+                },
+                {
+                    text: forms.amended_yn == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [40, 82, 0, 0]
+                },
+                {
+                    text: forms.amended_yn == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [13, 82, 0, 0]
+                },
+                {
+                    text: forms.num_of_sheet,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [34, 83, 10, 0]
+                },
+                {
+                    text: forms.taxes_withheld == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [40, 82, 0, 0]
+                },
+                {
+                    text: forms.taxes_withheld == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [25, 82, 0, 0]
+                }
+                ],
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
 
                 ]
 
+<<<<<<< HEAD
             }
         }, {
             layout: "noBorders",
@@ -152,6 +212,63 @@ function getContent(forms) {
                             margin: [50, 7, 0, 0]
                         }
                     ]
+=======
+        }
+    }, {
+        layout: "noBorders",
+        table: {
+            widths: [58, 45, 35, 50, 150, 100],
+            heights: [35],
+            body: [
+                [{
+                    text: mapTin(forms.taxpayer.tin, 0, 3),
+                    fontSize: 16,
+                    bold: true,
+                    characterSpacing: 3,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [15, 7, 0, 0]
+                },
+                {
+                    text: mapTin(forms.taxpayer.tin, 3, 6),
+                    fontSize: 16,
+                    characterSpacing: 3,
+                    bold: true,
+                    alignment: 'left',
+                    margin: [0, 7, 0, 0]
+                },
+                {
+                    text: mapTin(forms.taxpayer.tin, 6, 9),
+                    fontSize: 16,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    margin: [0, 7, 0, 0]
+                },
+                {
+                    text: mapTin(forms.taxpayer.tin, 9, 12),
+                    fontSize: 16,
+                    bold: true,
+                    characterSpacing: 4,
+                    alignment: 'left',
+                    margin: [10, 7, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                    characterSpacing: 3,
+                    fontSize: 16,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [73, 7, 0, 0]
+                }, {
+                    // 38 characters only
+                    text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
+                    fontSize: 16,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [50, 7, 0, 0]
+                }
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
                 ]
             }
         },
@@ -159,9 +276,11 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [420, "*"],
+                widths: [420, 10, 80],
+                heights: [18],
                 body: [
                     [{
+<<<<<<< HEAD
                             // 72 characters 
                             text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
                             fontSize: 10,
@@ -176,10 +295,30 @@ function getContent(forms) {
                             alignment: 'justify',
                             margin: [25, 3, 0, 0]
                         }
+=======
+                        // 72 characters 
+                        text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
+                        fontSize: 10,
+                        // right,down,left,up
+                        alignment: 'left',
+                        margin: [20, 0, 0, 0]
+                    },
+                    {
+                        text: '',
+                    },
+                    {
+                        text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
+                        fontSize: 12,
+                        // right,down,left,up
+                        alignment: 'left',
+                        margin: [10, 0, 0, 0]
+                    }
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
                     ]
                 ]
             }
         }, {
+<<<<<<< HEAD
             layout: "noBorders",
             table: {
                 widths: [420, "*"],
@@ -244,6 +383,74 @@ function getContent(forms) {
                             alignment: 'justify'
                         }
                     ]
+=======
+        layout: "noBorders",
+        table: {
+            widths: [420, 40, 60],
+            body: [
+                [{
+                    // 72 characters
+                    text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'left',
+                    margin: [20, 0, 0, 0]
+                },
+                {
+                    text: '',
+                },
+                {
+                    text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                    fontSize: 12,
+                    characterSpacing: 3,
+                    alignment: 'left',
+                    margin: [10, 0, 0, 0]
+                }
+                ]
+            ]
+        }
+    }, {
+        layout: "noBorders",
+        table: {
+            widths: [25, 30, 100, 30, 310],
+            body: [
+                [{
+                    text: forms.categoryOfAgent == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [13, 6, 0, 0],
+                    alignment: 'left'
+
+                },
+                {
+                    text: forms.categoryOfAgent == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [28, 6, 0, 0],
+                    alignment: 'left'
+                },
+                {
+                    text: forms.availing_tax_relief == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [85, 6, 0, 0],
+                    alignment: 'left'
+                }, {
+                    text: forms.availing_tax_relief == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [20, 6, 0, 0],
+                    alignment: 'left'
+                },
+                {
+                    // 30 characters
+                    text: forms.internationalTreatyYn,
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [105, 6, 0, 0],
+                    alignment: 'left'
+                }
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
                 ]
             }
         }, {
@@ -300,7 +507,7 @@ function getContent(forms) {
     }
 
     content.push({
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         // 20 characters
@@ -309,7 +516,7 @@ function getContent(forms) {
         margin: [416, 8, 0, 0],
         // 14
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.prev_tax_paid_crdtb,
@@ -317,7 +524,7 @@ function getContent(forms) {
         margin: [415, 11, 0, 0],
         // 15 a
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.adv_payment,
@@ -325,7 +532,7 @@ function getContent(forms) {
         margin: [415, 1, 0, 0],
         // 15b
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.tot_tax_credits,
@@ -333,7 +540,7 @@ function getContent(forms) {
         margin: [415, 1, 0, 0],
         // 15c
     }, {
-        alignment: 'justify',
+        alignment: 'left',
         fontSize: 10,
         width: 100,
         text: forms.tax_overremittance,
@@ -347,6 +554,7 @@ function getContent(forms) {
             widths: [131, 122, 110, 140],
             body: [
                 [{
+<<<<<<< HEAD
                         text: forms.surcharge,
                         fontSize: 8,
                         // right,down,left,up
@@ -376,6 +584,37 @@ function getContent(forms) {
                         // right,down,left,up
                         margin: [28, 13, 0, 0],
                         alignment: 'justify'
+=======
+                    text: forms.surcharge,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [52, 13, 0, 0],
+                    alignment: 'left'
+
+                },
+                {
+                    text: forms.interest,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [26, 13, 0, 0],
+                    alignment: 'left'
+
+                },
+                {
+                    text: forms.compromise,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [23, 13, 0, 0],
+                    alignment: 'left'
+
+                },
+                {
+                    text: forms.penaltiesCrdtb,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [28, 13, 0, 0],
+                    alignment: 'left'
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
 
                     },
                 ]
@@ -390,6 +629,7 @@ function getContent(forms) {
             height: [500],
             body: [
                 [{
+<<<<<<< HEAD
                         text: forms.overremittance == true ? 'X' : ' ',
                         fontSize: 12,
                         // right,down,left,up
@@ -411,6 +651,29 @@ function getContent(forms) {
                         // right,down,left,up
                         margin: [140, 0, 0, 0],
                         alignment: 'justify'
+=======
+                    text: forms.overremittance == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [155, 8, 0, 0],
+                    alignment: 'left'
+
+                },
+                {
+                    text: forms.overremittance == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [95, 8, 0, 0],
+                    alignment: 'left'
+
+                },
+                {
+                    text: forms.total_amount_overremittance,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [140, 0, 0, 0],
+                    alignment: 'left'
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
 
                     }
                 ]
@@ -418,29 +681,8 @@ function getContent(forms) {
         }
     })
 
-    // -------------To be Continue
-    // content.push({
-    //     text: "\n\n"
-    // }, {
-    //     // layout: "noBorders",
-    //     table: {
-    //         widths: [310, 100],
-    //         body: [
-    //             [{
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [155, 8, 0, 0],
-    //                     alignment: 'justify'
 
-    //                 },
-    //                 {
-    //                     text: 'X',
-    //                     fontSize: 12,
-    //                     // right,down,left,up
-    //                     margin: [95, 8, 0, 0],
-    //                     alignment: 'justify'
-
+<<<<<<< HEAD
     //                 }
     //             ]
     //         ]
@@ -495,6 +737,8 @@ function getContent(forms) {
         },
     ]
 
+=======
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
     return content;
 }
 

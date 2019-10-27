@@ -1,4 +1,4 @@
-const form = require("../templates/1600wp_template").template;
+ const form = require("../templates/1600wp_template").template;
 
 /**
  *
@@ -57,7 +57,7 @@ function getContent(forms) {
                     [
                         //fromPeriod month
                         {
-                            text: formatDate(forms.fromPeriod, {
+                            text: formatDate(forms.start_month, {
                                 month: "2-digit"
                             }),
 
@@ -70,7 +70,7 @@ function getContent(forms) {
                         },
                         //fromPeriod day     
                         {
-                            text: formatDate(forms.fromPeriod, {
+                            text: formatDate(forms.start_month, {
                                 day: "2-digit"
                             }),
 
@@ -83,7 +83,7 @@ function getContent(forms) {
                         },
                         //fromPeriod year
                         {
-                            text: formatDate(forms.fromPeriod, {
+                            text: formatDate(forms.start_month, {
                                 year: "numeric"
                             }),
                             fontSize: 15,
@@ -95,7 +95,7 @@ function getContent(forms) {
                         },
                         //toPeriod month
                         {
-                            text: formatDate(forms.toPeriod, {
+                            text: formatDate(forms.end_month, {
                                 month: "2-digit"
                             }),
                             fontSize: 15,
@@ -107,7 +107,7 @@ function getContent(forms) {
                         },
                         //toPeriod day
                         {
-                            text: formatDate(forms.toPeriod, {
+                            text: formatDate(forms.end_month, {
                                 day: "2-digit"
                             }),
                             fontSize: 15,
@@ -119,7 +119,7 @@ function getContent(forms) {
                         },
                         //toPeriod year
                         {
-                            text: formatDate(forms.toPeriod, {
+                            text: formatDate(forms.end_month, {
                                 year: "numeric"
                             }),
                             fontSize: 15,
@@ -171,7 +171,7 @@ function getContent(forms) {
                         // #4 any taxes withheld?
                         // any taxes withheld? true
                         {
-                            text: forms.taxes_withheld == true ? 'X' : ' ',
+                            text: forms.any_tax_withheld == true ? 'X' : ' ',
                             fontSize: 15,
                             bold: true,
                             // right,down,left,up
@@ -180,7 +180,7 @@ function getContent(forms) {
                         },
                         // any taxes withheld? false             
                         {
-                            text: forms.taxes_withheld == false ? 'X' : ' ',
+                            text: forms.any_tax_withheld == false ? 'X' : ' ',
                             fontSize: 15,
                             bold: true,
                             // right,down,left,up
@@ -272,7 +272,7 @@ function getContent(forms) {
                         },
                         // #7 category of withoutholding agent true
                         {
-                            text: forms.taxpayer.category_withholding_agent == true ? 'X' : ' ',
+                            text: forms.category_of_agent == true ? 'X' : ' ',
                             fontSize: 15,
                             bold: true,
                             // right,down,left,up
@@ -281,7 +281,7 @@ function getContent(forms) {
                         },
                         // #7 category of withoutholding agent false
                         {
-                            text: forms.taxpayer.category_withholding_agent == false ? 'X' : ' ',
+                            text: forms.category_of_agent == false ? 'X' : ' ',
                             fontSize: 15,
                             bold: true,
                             // right,down,left,up
@@ -305,7 +305,7 @@ function getContent(forms) {
                     [
                         // #8 withholding agent's name
                         {
-                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name ,
                             fontSize: 15,
                             bold: true,
                             characterSpacing: 3,
@@ -331,7 +331,7 @@ function getContent(forms) {
                     [
                         // #9 registered address    
                         {
-                            text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                            text: forms.address == null ? ' ' : forms.address,
                             fontSize: 15,
                             bold: true,
                             characterSpacing: 3,
@@ -341,7 +341,7 @@ function getContent(forms) {
                         },
                         // #10 zip code
                         {
-                            text: forms.taxpayer.zip_code,
+                            text: forms.zipCode,
                             fontSize: 15,
                             bold: true,
                             characterSpacing: 5,
@@ -367,7 +367,7 @@ function getContent(forms) {
                             text: "",
                         },
                         {
-                            text: forms.availing_tax_relief == true ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == true ? 'X' : ' ',
                             fontSize: 15,
                             bold: true,
                             // right,down,left,up
@@ -376,7 +376,7 @@ function getContent(forms) {
                         },
                         // any taxes withheld? false             
                         {
-                            text: forms.availing_tax_relief == false ? 'X' : ' ',
+                            text: forms.is_avail_tax_relief == false ? 'X' : ' ',
                             fontSize: 15,
                             bold: true,
                             // right,down,left,up
@@ -387,7 +387,7 @@ function getContent(forms) {
                             text: "",
                         },
                         {
-                            text: forms.internationalTreatyYn == null ? ' ' : forms.internationalTreatyYn,
+                            text: forms.avail_tax_relief == null ? ' ' : forms.avail_tax_relief,
                             fontSize: 13,
                             bold: true,
                             characterSpacing: 3,
@@ -405,8 +405,8 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [532],
-                heights: [18],
+                widths: [533],
+                heights: [21],
                 body: [
                     [
                         //space               
@@ -424,13 +424,33 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [532],
-                heights: [15],
+                widths: [320,60,50,76],
+                heights: [3],
                 body: [
                     [
-                        //WB191
+                        //WB191 //space
                         {
                             text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        //space
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
                         },
 
                     ]
@@ -438,9 +458,9 @@ function getContent(forms) {
             }
         },
         {
-            layout: "noBorders",
+            layout: "noBorders",                              
             table: {
-                widths: [532],
+                widths: [320,60,50,76],
                 heights: [11],
                 body: [
                     [
@@ -448,21 +468,24 @@ function getContent(forms) {
                         {
                             text: "",
                         },
-
-                    ]
-                ]
-            }
-        },
-        {
-            layout: "noBorders",
-            table: {
-                widths: [532],
-                heights: [13],
-                body: [
-                    [
-                        //WB193
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
                         {
                             text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
                         },
 
                     ]
@@ -472,13 +495,67 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [532],
-                heights: [10],
+                widths: [320,60,50,76],
+                heights: [6],
+                body: [
+                    [
+                        //WB193
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                    ]
+                ]
+            }
+        },
+        {
+            layout: "noBorders",
+            table: {
+                widths: [320,60,50,76
+                ],
+                heights: [6],
                 body: [
                     [
                         //WB194
                         {
                             text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
+                        },
+                        {
+                            text: "",
+                        },
+                        {
+                            text: "0.00",
+                            fontSize: 9,
+                            bold: true,
+                            alignment: 'right',
+                            // right,down,left,up
+                            margin: [1, 3, 0, 0]
                         },
 
                     ]
@@ -500,12 +577,12 @@ function getContent(forms) {
                         },
                         // #12 tax required to be withheld and remitted
                         {
-                            text: forms.taxpayer.required_withheld_and_remitted ? forms.taxpayer.required_withheld_and_remitted : '0.00',
+                            text: forms.tax_req_withld_remtd ? forms.tax_req_withld_remtd : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
                             // right,down,left,up
-                            margin: [1, 8, 0, 0]
+                            margin: [1, 0, 0, 0]
                         },
                     ]
                 ]
@@ -524,7 +601,7 @@ function getContent(forms) {
                         },
                         // #13 less: tax remitted in return previously filed, if this is an amended return
                         {
-                            text: forms.taxpayer.less_tax_remitted ? forms.taxpayer.less_tax_remitted : '0.00',
+                            text: forms.less_tax_remtd_retrn ? forms.less_tax_remtd_retrn : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -549,7 +626,7 @@ function getContent(forms) {
                         },
                         //#14
                         {
-                            text: forms.taxpayer.tax_still_due ? forms.taxpayer.tax_still_due : '0.00',
+                            text: forms.tax_due ? forms.tax_due : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -590,7 +667,7 @@ function getContent(forms) {
                         //15A
                         {
 
-                            text: forms.taxpayer.surcharge ? forms.taxpayer.surcharge : '0.00',
+                            text: forms.surcharge ? forms.surcharge : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -601,7 +678,7 @@ function getContent(forms) {
                         //15B
                         {
 
-                            text: forms.taxpayer.interest ? forms.taxpayer.interest : '0.00',
+                            text: forms.interest ? forms.interest : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -612,7 +689,7 @@ function getContent(forms) {
                         //15C
                         {
 
-                            text: forms.taxpayer.compromise ? forms.taxpayer.compromise : '0.00',
+                            text: forms.compromise ? forms.compromise : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -626,7 +703,7 @@ function getContent(forms) {
                         },
                         //15D
                         {
-                            text: forms.taxpayer.taxrequiredtobewithheld ? forms.taxpayer.taxrequiredtobewithheld : '0.00',
+                            text: forms.penalties ? forms.penalties : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -651,7 +728,7 @@ function getContent(forms) {
                         },
                         //16
                         {
-                            text: forms.taxpayer.taxrequiredtobewithheld16 ? forms.taxpayer.taxrequiredtobewithheld16 : '0.00',
+                            text: forms.total_amount_payable ? forms.total_amount_payable : '0.00',
                             fontSize: 10,
                             bold: true,
                             alignment: 'right',
@@ -725,7 +802,7 @@ function getContent(forms) {
 
                         //frommPeriod month
                         {
-                            text: formatDate(forms.frommPeriod, {
+                            text: formatDate(forms.start_month, {
                                 month: "2-digit"
                             }),
 
@@ -734,11 +811,11 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-3, 0, 0, 0]
+                            margin: [-3, 1, 0, 0]
                         },
                         //fromPeriod day     
                         {
-                            text: formatDate(forms.frommPeriod, {
+                            text: formatDate(forms.start_month, {
                                 day: "2-digit"
                             }),
 
@@ -747,11 +824,11 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-8, 0, 0, 0]
+                            margin: [-8, 1, 0, 0]
                         },
                         //                 //fromPeriod year
                         {
-                            text: formatDate(forms.frommPeriod, {
+                            text: formatDate(forms.start_month, {
                                 year: "numeric"
                             }),
                             fontSize: 10,
@@ -759,11 +836,11 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-9, 0, 0, 0]
+                            margin: [-9, 1, 0, 0]
                         },
                         //tooPeriod month
                         {
-                            text: formatDate(forms.tooPeriod, {
+                            text: formatDate(forms.end_month, {
                                 month: "2-digit"
                             }),
                             fontSize: 10,
@@ -771,11 +848,11 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-2, 0, 0, 0]
+                            margin: [-2, 1, 0, 0]
                         },
                         //toPeriod day
                         {
-                            text: formatDate(forms.tooPeriod, {
+                            text: formatDate(forms.end_month, {
                                 day: "2-digit"
                             }),
                             fontSize: 10,
@@ -783,11 +860,11 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-8, 0, 0, 0]
+                            margin: [-8, 1, 0, 0]
                         },
                         //toPeriod year
                         {
-                            text: formatDate(forms.tooPeriod, {
+                            text: formatDate(forms.end_month, {
                                 year: "numeric"
                             }),
                             fontSize: 10,
@@ -795,7 +872,7 @@ function getContent(forms) {
                             characterSpacing: 4,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-10, 0, 0, 0]
+                            margin: [-10, 1, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 0, 3),
@@ -804,7 +881,7 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [26, 0, 0, 0]
+                            margin: [26, 1, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 3, 6),
@@ -813,7 +890,7 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [5, 0, 0, 0]
+                            margin: [5, 1, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 6, 9),
@@ -822,7 +899,7 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-2, 0, 0, 0]
+                            margin: [-2, 1, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 9, 12),
@@ -831,7 +908,7 @@ function getContent(forms) {
                             characterSpacing: 5,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [-1, 0, 0, 0]
+                            margin: [-1, 1, 0, 0]
                         },
                           // #16 withholding agent's name
                           {
@@ -841,7 +918,7 @@ function getContent(forms) {
                             characterSpacing: 3,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [17, 0, 0, 0]
+                            margin: [17, 1, 0, 0]
                         },
 
                     ]

@@ -5,8 +5,8 @@
         <b>Withholding Tax Declaration (1600WP)</b>
       </a-divider>
       <a-form-item label="1. For the month of (MM/DD/YYYY)">
-        <a-date-picker v-model="form.fromPeriod" />
-        <a-date-picker v-model="form.toPeriod" />
+        <a-date-picker v-model="form.start_month" />
+        <a-date-picker v-model="form.end_month" />
       </a-form-item>
       <a-form-item label="2. Amended Return">
         <a-radio-group v-model="form.amended_yn">
@@ -18,7 +18,7 @@
         <a-input-number v-model="form.num_of_sheet"></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
-        <a-radio-group v-model="form.taxes_withheld">
+        <a-radio-group v-model="form.any_tax_withheld">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -37,7 +37,7 @@
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
       <a-form-item label="7. Category of Withholding Agent">
-        <a-radio-group v-model="form.taxpayer.category_withholding_agent">
+        <a-radio-group v-model="form.category_of_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
@@ -46,21 +46,21 @@
         <a-input v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
       <a-form-item label="9. Registered Address">
-        <a-textarea v-model="form.taxpayer.registered_address"></a-textarea>
+        <a-textarea v-model="form.address"></a-textarea>
       </a-form-item>
       <a-form-item label="10. Zip Code">
-        <a-input-number v-model="form.taxpayer.zip_code"></a-input-number>
+        <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
       >
-        <a-radio-group v-model="form.availing_tax_relief">
+        <a-radio-group v-model="form.is_avail_tax_relief">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="If yes, specify">
-        <a-input v-model="form.internationalTreatyYn"></a-input>
+        <a-input v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
     </a-form>
     <!-- Part II -->

@@ -1,5 +1,11 @@
-
-"use strict";
+/**
+ * 
+ * @description FORM 1701A (JANUARY 2018)
+ * @author Venus
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1701A%20Jan%202018%20v5%20with%20rates.pdf
+ * @version 1.0 - 10/19/2019
+ * 
+ */
 
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
@@ -7,493 +13,418 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
+
+    //For the Year //item 1
+    //Amended Return //item 2
+    //Short Period //item 3
+    //Tin //item 4
+    //RDO //item 5
+    //Taxpayer Type //item 6
+
     taxpayer_atc_code: {
         type: String
-            // II012,
-            // II015,
-            // II014,
-            // II017,
+            /*
+             * item 7
+             * 0 - II012
+             * 1 - II015
+             * 2 - II014
+             * 3 - II017
+             */
     },
-    taxpayer_type: {
-        type: String
+    //Name //item 8
+    //Address //item 9
+    //Birthday //item 10
+    //Email Address //item 11
+    //citizenship //item 12
+
+    claiming_foreign_tax_credits: {
+        type: Boolean //item 13
     },
     taxpayer_foreign_tax_number: {
+        type: String //14
+    },
+    //Contact Number //item 15
+    //Civil Status //item 16
+
+    spouse_income: {
+        type: Boolean //item 17 if married,spouse has income 
+    },
+
+    filing_status: {
         type: String
+            /*
+             * item 18
+             * 0 - Joint Filing
+             * 1 - Separated Filing
+             */
     },
-    taxpayer_foreign_tax_credits: {
-        type: Boolean
-            // taxCredits
-    },
-    taxpayer_tax_rate: {
+
+    tax_rate: {
         type: String
-            // graduated_rates ,
-            //  non_operating_income
+            /*
+             * 0 - graduated rates
+             * 1 - 8% in liue of graduated rates
+             * */
     },
-    taxpayer_method_deduction: {
-        type: String
-            // itemized_deduction,
-            // optional_standard_deduction
-    },
-    spouse_method_deduction: {
-        type: String
-            // itemized_deduction,
-            // optional_standard_deduction
-    },
-    spouse_atc_code: [{
-        type: String
-            // II012,
-            // II015,
-            // II014,
-            // II013,
-            // II016,
-            // II011
-    }],
-    spouse_foreign_tax_credits: {
-        type: Boolean,
-        default: false
-    },
-    spouse_foreign_tax_number: {
-        type: String
-    },
-    spouse_tax_rate: {
-        type: String
-            // graduated_rates ,
-            //  non_operating_income
-    },
-    taxpayer_prev_tax_due: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26a
-    spouse_prev_tax_due: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26b
-    taxpayer_tax_credit: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule III-Item 62) 27a
-    spouse_tax_credit: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule III-Item 62) 27b
-    taxpayer_tax_due: {
-        type: Number,
-        default: 0
-    }, //(Item 26 Less Item 27) (From Part V, Item 63) 28a
-    spouse_tax_due: {
-        type: Number,
-        default: 0
-    }, //(Item 26 Less Item 27) (From Part V, Item 63) 28b
-    taxpayer_total_penalties: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule IV-Item 67) 29a
-    spouse_total_penalties: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule IV-Item 67) 29b
-    taxpayer_total_amount_payable: {
-        type: Number,
-        default: 0
-    }, // (Sum of Items 28 and 29) (From Part V, Item 68) 30a
-    spouse_total_amount_payable: {
-        type: Number,
-        default: 0
-    }, // (Sum of Items 28 and 29) (From Part V, Item 68) 30b
-    taxpayer_aggregate_amount_payable: {
-        type: Number,
-        default: 0
-    }, //Sum of Items 30A and 30B (31)
-    particular_cash: [{
-        drawee_bank: {
+
+    //PART II Total Tax Payable
+    part2_total_tax_payable: {
+        part2_taxpayer: {
+            prev_tax_due: {
+                type: Number,
+                default: 0
+            }, //Item 20 A
+            total_tax_credit: {
+                type: Number,
+                default: 0
+            }, //Item 21 A
+            net_tax_payable: {
+                type: Number,
+                default: 0
+            }, //Item 22  A
+            portion_of_tax_payabe: {
+                type: Number,
+                default: 0
+            }, //Item 23 A
+            amount_tax_payable: {
+                type: Number,
+                default: 0
+            }, //Item 24A   
+            total_amount_payable: {
+                type: Number,
+                default: 0
+            } //Item 29 Sum of Items 24 and 28
+        },
+        part2_taxpayer_spouse: {
+            prev_tax_due: {
+                type: Number,
+                default: 0
+            }, //Item 20 B
+            total_tax_credit: {
+                type: Number,
+                default: 0
+            }, //Item 21 B
+            net_tax_payable: {
+                type: Number,
+                default: 0
+            }, //Item 22 B
+            portion_of_tax_payabe: {
+                type: Number,
+                default: 0
+            }, //Item 23 B 
+            amount_tax_payable: {
+                type: Number,
+                default: 0
+            }, //Item 24B
+            total_amount_payable: {
+                type: Number,
+                default: 0
+            } //Item 29 B Sum of Items 24 and 28
+        },
+        aggregate_amount_payable: {
             type: Number,
             default: 0
-        },
-        number: {
-            type: Number,
-            default: 0
-        },
-        date: {
-            type: Date
-        },
-        amount: {
-            type: Number,
-            default: 0
+        }, //Item 30 Sum of Items 29A and 29B
+        if_overpayment: {
+            type: String
+                /**
+                 * 0 - to be refunded
+                 * 1 - to be issued a tax credit certificate
+                 * 2 - to be carried over as a tax credit for next year
+                 */
         }
-    }],
-    particular_check: [{
-        drawee_bank: {
-            type: Number,
-            default: 0
-        },
-        number: {
-            type: Number,
-            default: 0
-        },
-        date: {
-            type: Date
-        },
-        amount: {
-            type: Number,
-            default: 0
-        }
-    }],
-    particular_tax_debit: [{
-        drawee_bank: {
-            type: Number,
-            default: 0
-        },
-        number: {
-            type: Number,
-            default: 0
-        },
-        date: {
-            type: Date
-        },
-        amount: {
-            type: Number,
-            default: 0
-        }
-    }],
-    particular_others: [{
-        drawee_bank: {
-            type: Number,
-            default: 0
-        },
-        number: {
-            type: Number,
-            default: 0
-        },
-        date: {
-            type: Date
-        },
-        amount: {
-            type: Number,
-            default: 0
-        }
-    }],
-    // Part V Graduated IT Rate
-    sched1: {
-        taxpayer: {
-            total_sales_revenue: {
+    },
+    //PART IV Computation of Income Tax
+
+    //PART IV-A For Graduated Income Tax Rates
+    part4a_inc_tax_rates: {
+        desc1: {
+            type: String
+        }, //Item 41
+        desc2: {
+            type: String
+        }, //Item 42
+        part4a_taxpayer: {
+            sales_rev_rec_fee: {
                 type: Number,
                 default: 0
-                    // 36
-            },
-            total_sales_services: {
+            }, //Item 36A
+            less_sales_ret_allo_disc: {
                 type: Number,
                 default: 0
-                    // 37
-            },
-            gross_income: {
+            }, //Item 37A
+            net_sales_rev_rec_fee: {
                 type: Number,
                 default: 0
-                    // 38
-            },
-            total_allowable_itemized_deductions: {
+            }, //Item 38A
+            less_allowable_deduction: {
                 type: Number,
                 default: 0
-                    // 39
-            },
-            total_standard_deductions: {
+            }, //Item 39A
+            net_income: {
                 type: Number,
                 default: 0
-            }, //40% of Item 36
-            total_net_income: {
+            }, //Item 40A
+            other_operating_incom1: {
                 type: Number,
                 default: 0
-                    // 41
-            },
+            }, //Item 41A
+            other_operating_incom2: {
+                type: Number,
+                default: 0
+            }, //Item 42A
+            amt_rec_gpp: {
+                type: Number,
+                default: 0
+            }, //Item 43A
+            total_other_income: {
+                type: Number,
+                default: 0
+            }, //Item 44A
             total_taxable_income: {
                 type: Number,
                 default: 0
-                    // 42
-            },
-            total_operation_income: {
+            }, //Item 45A
+            tax_due: {
                 type: Number,
                 default: 0
-                    // 43
-            },
-            amount_recieved_share: {
-                type: Number,
-                default: 0
-                    // 44
-            },
-            total_taxable_income_date: {
-                type: Number,
-                default: 0
-            }, //Sum of Items 41 to 44
-            total_tax_due: {
-                type: Number,
-                default: 0
-            }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
+            } //Item 46A
         },
-        spouse: {
-            total_sales_revenue: {
+        part4a_taxpayer_spouse: {
+            sales_rev_rec_fee: {
                 type: Number,
                 default: 0
-            },
-            total_sales_services: {
+            }, //Item 36B
+            less_sales_ret_allo_disc: {
                 type: Number,
                 default: 0
-            },
-            gross_income: {
+            }, //Item 37B
+            net_sales_rev_rec_fee: {
                 type: Number,
                 default: 0
-            },
-            total_allowable_itemized_deductions: {
+            }, //Item 38B
+            less_allowable_deduction: {
                 type: Number,
                 default: 0
-            },
-            total_standard_deductions: {
+            }, //Item 39B
+            net_income: {
                 type: Number,
                 default: 0
-            }, //40% of Item 36
-            total_net_income: {
+            }, //Item 40B
+            other_operating_incom1: {
                 type: Number,
                 default: 0
-            },
+            }, //Item 41B
+            other_operating_incom2: {
+                type: Number,
+                default: 0
+            }, //Item 42B
+            amt_rec_gpp: {
+                type: Number,
+                default: 0
+            }, //Item 43B
+            total_other_income: {
+                type: Number,
+                default: 0
+            }, //Item 44B
             total_taxable_income: {
                 type: Number,
                 default: 0
-            },
-            total_operation_income: {
+            }, //Item 45B
+            tax_due: {
                 type: Number,
                 default: 0
-            },
-            amount_recieved_share: {
+            } //Item 46B
+        }
+    },
+
+    //PART IV-B For 8% Income Tax Rate
+    part4b_inc_tax_rate: {
+        desc1: {
+            type: String
+        }, //Item 50
+        desc2: {
+            type: String
+        }, //Item 51
+        part4b_taxpayer: {
+            sales_rev_rec_fee: {
                 type: Number,
                 default: 0
-            },
-            total_taxable_income_date: {
+            }, //Item 47A
+            less_sales_ret_allo_disc: {
                 type: Number,
                 default: 0
-            }, //Sum of Items 41 to 44
-            total_tax_due: {
+            }, //Item 48A
+            net_sales_rev_rec_fee: {
                 type: Number,
                 default: 0
-            }, //(Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)
+            }, //Item 49A
+            other_non_operating_incom1: {
+                type: Number,
+                default: 0
+            }, //Item 50A
+            other_non_operating_incom2: {
+                type: Number,
+                default: 0
+            }, //Item 51A
+            total_non_operating_income: {
+                type: Number,
+                default: 0
+            }, //Item 52A
+            total_tax_income: {
+                type: Number,
+                default: 0
+            }, //Item 53A
+            tax_due: {
+                type: Number,
+                default: 0
+            }, //Item 54A
+        },
+        part4b_taxpayer_spouse: {
+            sales_rev_rec_fee: {
+                type: Number,
+                default: 0
+            }, //Item 47B
+            less_sales_ret_allo_disc: {
+                type: Number,
+                default: 0
+            }, //Item 48B
+            net_sales_rev_rec_fee: {
+                type: Number,
+                default: 0
+            }, //Item 49B
+            other_non_operating_incom1: {
+                type: Number,
+                default: 0
+            }, //Item 50B
+            other_non_operating_incom2: {
+                type: Number,
+                default: 0
+            }, //Item 51B
+            total_non_operating_income: {
+                type: Number,
+                default: 0
+            }, //Item 52B
+            total_tax_income: {
+                type: Number,
+                default: 0
+            }, //Item 53B
+            tax_due: {
+                type: Number,
+                default: 0
+            }, //Item 54B
+        }
+    },
+
+    //PART IV-C Tax Credits/Payments
+    part4c_desc: {
+        type: String
+    }, //Item 63
+    part4c_taxpayer: {
+        prior_years_excess_cred: {
+            type: Number,
+            default: 0
+        }, //Item 57A
+        tax_payment_three_quarters: {
+            type: Number,
+            default: 0
+        }, //Item 58A
+        cred_tax_withheld_three_quarters: {
+            type: Number,
+            default: 0
+        }, //Item 59A
+        cred_tax_withheld_per_bir_f2307: {
+            type: Number,
+            default: 0
+        }, //Item 60A
+        tax_paid_prev_filed: {
+            type: Number,
+            default: 0
+        }, //Item 61A
+        foreign_tax_credit: {
+            type: Number,
+            default: 0
+        }, //Item 62A
+        other_tax_credit: {
+            type: Number,
+            default: 0
+        }, //Item 63A
+        total_tax_credit_payment: {
+            type: Number,
+            default: 0
+        }, //Item 64A
+        net_tax_payable: {
+            type: Number,
+            default: 0
+        } //Item 65A
+    },
+    part4c_taxpayer_spouse: {
+        prior_years_excess_cred: {
+            type: Number,
+            default: 0
+        }, //Item 57B
+        tax_payment_three_quarters: {
+            type: Number,
+            default: 0
+        }, //Item 58B
+        cred_tax_withheld_three_quarters: {
+            type: Number,
+            default: 0
+        }, //Item 59B
+        cred_tax_withheld_per_bir_f2307: {
+            type: Number,
+            default: 0
+        }, //Item 60B
+        tax_paid_prev_filed: {
+            type: Number,
+            default: 0
+        }, //Item 61B
+        foreign_tax_credit: {
+            type: Number,
+            default: 0
+        }, //Item 62B
+        other_tax_credit: {
+            type: Number,
+            default: 0
+        }, //Item 63B
+        total_tax_credit_payment: {
+            type: Number,
+            default: 0
+        }, //Item 64B
+        net_tax_payable: {
+            type: Number,
+            default: 0
+        } //Item 65B
+    },
+    //PART V information spouse
+    part5_taxpayer_spouse: {
+
+        atc_code: {
+            type: String
+                /*
+                 * item 69
+                 * 0 - II012
+                 * 1 - II015
+                 * 2 - II014
+                 * 3 - II017
+                 */
+        },
+        citizenship: { // item 72
+            type: String
+        },
+        claim_tax_credit: { // item 73
+            type: Boolean,
+            default: false
+        },
+        foreign_tax_no: { // item 74
+            type: Number
+        },
+        tax_rate: { // item 75
+            type: Number
         }
 
-    },
-    // Part V IT Rate
-    sched2: {
-        taxpayer: {
-            total_sales_revenue: {
-                type: Number,
-                default: 0
-                    // 47
-            },
-            total_operation_income: {
-                type: Number,
-                default: 0
-                    // 48
-            },
-            total_income_quarter: {
-                type: Number,
-                default: 0
-                    // 49
-            }, // (Sum of Items 47 and 48)
-            previous_quarter_taxable_income: {
-                type: Number,
-                default: 0
-                    // 50
-            },
-            total_cumulative_income: {
-                type: Number,
-                default: 0
-                    // 51
-            }, //(Sum of Items 49 and 50)
-            less_allowable_reduction: {
-                type: Number,
-                default: 0
-                    //52 
-            },
-            total_taxable_income_date: {
-                type: Number,
-                default: 0
-                    // 53
-            }, //(Item 51 Less Item 52)
-            total_tax_due: {
-                type: Number,
-                default: 0
-                    // 54
-            }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
-        },
-        spouse: {
-            total_sales_revenue: {
-                type: Number,
-                default: 0
-                    // 47
-            },
-            total_operation_income: {
-                type: Number,
-                default: 0
-                    // 48
-            },
-            total_income_quarter: {
-                type: Number,
-                default: 0
-                    // 49
-            }, // (Sum of Items 47 and 48)
-            previous_quarter_taxable_income: {
-                type: Number,
-                default: 0
-                    // 50
-            },
-            total_cumulative_income: {
-                type: Number,
-                default: 0
-                    // 51
-            }, //(Sum of Items 49 and 50)
-            less_allowable_reduction: {
-                type: Number,
-                default: 0
-                    //52 
-            },
-            total_taxable_income_date: {
-                type: Number,
-                default: 0
-                    // 53
-            }, //(Item 51 Less Item 52)
-            total_tax_due: {
-                type: Number,
-                default: 0
-                    // 54
-            }, //(Item 53 x 8% Tax Rate) (To Part III, Item 26)
-        }
-    },
-    // Part V Tax Credits/Payments
-    sched3: {
-        taxpayer: {
-            year_excess_credits: {
-                type: Number,
-                default: 0
-                    // 55
-            },
-            payment_previous_quarter: {
-                type: Number,
-                default: 0
-                    // 56
-            },
-            creditable_tax_withheld: {
-                type: Number,
-                default: 0
-                    // 57
-            },
-            creditable_tax_withheld_per_bir: {
-                type: Number,
-                default: 0
-                    // 58
-            },
-            tax_paid_return: {
-                type: Number,
-                default: 0
-                    // 59
-            },
-            foriegn_tax_credits: {
-                type: Number,
-                default: 0
-                    // 60
-            },
-            other_tax_credit: {
-                type: Number,
-                default: 0
-                    // 61
-            },
-            total_tax_credit: {
-                type: Number,
-                default: 0
-                    // 62
-            }, //Sum of Items 55 to 61/To Part III, Item 27
-        },
-        spouse: {
-            year_excess_credits: {
-                type: Number,
-                default: 0
-            },
-            payment_previous_quarter: {
-                type: Number,
-                default: 0
-            },
-            creditable_tax_withheld: {
-                type: Number,
-                default: 0
-            },
-            creditable_tax_withheld_per_bir: {
-                type: Number,
-                default: 0
-            },
-            tax_paid_return: {
-                type: Number,
-                default: 0
-            },
-            foriegn_tax_credits: {
-                type: Number,
-                default: 0
-            },
-            other_tax_credit: {
-                type: Number,
-                default: 0
-            },
-            total_tax_credit: {
-                type: Number,
-                default: 0
-            }, //Sum of Items 55 to 61/To Part III, Item 27
-        }
-    },
-    // Part V Penalties
-    sched4: {
-        taxpayer: {
-            surcharge: {
-                type: Number,
-                default: 0
-                    // 64
-            },
-            interest: {
-                type: Number,
-                default: 0
-                    // 65
-            },
-            compromise: {
-                type: Number,
-                default: 0
-                    // 66
-            },
-            penalties: {
-                type: Number,
-                default: 0
-                    // 67
-            }, //(Sum of Items 64 to 66) (To Part III, Item 29)
-            total_amount_payable: {
-                type: Number,
-                default: 0
-                    // 68
-            }, //(Sum of Items 63 and 67) (To Part III, Item 30)
-        },
-        spouse: {
-            surcharge: {
-                type: Number,
-                default: 0
-            },
-            interest: {
-                type: Number,
-                default: 0
-            },
-            compromise: {
-                type: Number,
-                default: 0
-            },
-            penalties: {
-                type: Number,
-                default: 0
-            }, //(Sum of Items 64 to 66) (To Part III, Item 29)
-            total_amount_payable: {
-                type: Number,
-                default: 0
-            }, //(Sum of Items 63 and 67) (To Part III, Item 30)
-        }
     }
+
 };
 
 var Form1701ASchema = new Schema({
@@ -527,8 +458,8 @@ const plugin = new autoIncrement(Form1701ASchema, '1701a_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 module.exports = mongoose.model("1701a_forms", Form1701ASchema);

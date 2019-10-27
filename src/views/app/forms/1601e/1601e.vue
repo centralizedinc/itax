@@ -43,7 +43,6 @@
         </a-radio-group>
       </a-form-item>
     </a-form>
-
     <!-- Part I -->
     <a-form :form="form_part1" v-show="step===1">
       <a-divider orientation="left">
@@ -132,9 +131,9 @@
         <a-input v-model="form.availing_tax_relief_if_yes"></a-input>
       </a-form-item>
     </a-form>
-
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
+<<<<<<< HEAD
       <a-divider orientation="left">
         <b>
           Part II: Computation of Tax
@@ -153,7 +152,32 @@
           placeholder="Total Tax Required to be Withheld and Remitted"
           style="width:100%"
         ></a-input-number>
+=======
+      <a-divider>
+        <b>Part II: Computation of Tax</b>
+      </a-divider>
+      <a-button type="primary" block @click="show_sched1=true">ATC</a-button>
+      <br />
+      <schedule-one
+        v-if="show_sched1"
+        :show="show_sched1"
+        :form="form"
+        @close="updateSchedAndClose"
+      />
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="14. Total Tax Required to be Withheld and Remitted"
+      >
+        <a-input
+          v-model="form.total_tax_withheld_remitted"
+          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+        ></a-input>
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
       </a-form-item>
+
       <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
       <a-form-item
         class="computation-item"
@@ -254,9 +278,8 @@
           <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
+      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
-
     <!-- Part III -->
     <a-form :form="form_part3" v-show="step===3">
       <a-divider orientation="left">
@@ -291,7 +314,6 @@
       <a-form-item class="computation-item" label="23D">
         <a-input-number v-model="form.item23d" style="width:100%"></a-input-number>
       </a-form-item>
-
       <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
     <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
@@ -302,6 +324,7 @@
 
 <script>
 // import form_1601e_image from "@/assets/forms/1601e.jpg";
+<<<<<<< HEAD
 import atc from "./atc.vue";
 
 export default {
@@ -309,6 +332,14 @@ export default {
     atc
   },
   props: ["form", "step"],
+=======
+import ScheduleOne from "./Schedule1";
+export default {
+  components: {
+    ScheduleOne
+  },
+  props: ["form", "step", "er rors"],
+>>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
   data() {
     return {
       sched: false,
@@ -318,11 +349,21 @@ export default {
         wrapper_col: { span: 22 }
       },
       // form_1601e_image,
+      show_sched1: false,
+      loading: false,
       form_general: this.$form.createForm(this),
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
       form_part3: this.$form.createForm(this),
-      image_height: 1000
+      image_height: 1000,
+      form_layout: {
+        label_col: {
+          span: 2
+        },
+        wrapper_col: {
+          span: 22
+        }
+      }
     };
   },
   watch: {
@@ -335,45 +376,17 @@ export default {
     // }
   },
   methods: {
+    validate() {
+      this.changeStep(this.step + 1);
+    },
+    updateSchedAndClose() {
+      this.show_sched1 = false;
+    },
     save_draft() {},
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
     },
-    validate() {
-      this.changeStep(this.step + 1);
-      // if(this.step === 0) this.validateGeneral();
-      // else if(this.step === 1) this.validatePartI();
-    },
-    // validateGeneral() {
-    //   this.loading = true;
-    //   this.form_general.validateFieldsAndScroll((err, values) => {
-    //     if (!err) {
-    //       console.log("validateGeneral :", values);
-    //       this.changeStep(1, values);
-    //     }
-    //     this.loading = false;
-    //   });
-    // },
-    // validatePartI() {
-    //   this.loading = true;
-    //   this.form_part1.validateFieldsAndScroll((err, values) => {
-    //     if (!err) {
-    //       console.log("validatePartI :", values);
-    //       this.changeStep(2, values);
-    //     }
-    //     this.loading = false;
-    //   });
-    // },
-    // validatePartII() {
-    //   this.loading = true;
-    //   this.form_part2.validateFieldsAndScroll((err, values) => {
-    //     if (!err) {
-    //       console.log("validatePartII :", values);
-    //       this.$emit("updateForm", values);
-    //     } else this.loading = false;
-    //   });
-    // },
     submit() {
       this.loading = true;
       this.$store
@@ -427,11 +440,4 @@ export default {
 </script>
 
 <style>
-/* .tax-form .computation-item {
-  padding-left: 50px;
-}
-
-.tax-form .computation-item .ant-input-number {
-  width: 40vh;
-} */
 </style>

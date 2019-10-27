@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 2551Q (JANUARY 2018)
+ * @author Venus
+ * @base_form https://www.pwc.com/ph/en/tax-alerts/assets/2018/RMC%2026-2018%20Annex%20A.pdf
+ * @version 1.0 - 10/14/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;

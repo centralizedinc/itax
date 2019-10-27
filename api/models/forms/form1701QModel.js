@@ -1,4 +1,11 @@
-"use strict";
+/**
+ * 
+ * @description FORM 1701Q (JANUARY 2018)
+ * @author Venus
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1701Q%20Jan%202018%20final%20rev2.pdf
+ * @version 1.0 - 10/16/2019
+ * 
+ */
 
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
@@ -37,6 +44,12 @@ const model_schema = {
             // itemized_deduction,
             // optional_standard_deduction
     },
+    spouse_filer_type: [], //item19
+    /**
+     * SP - single_proprietor
+     * P - professional
+     * CE - compensation earner
+     */
     spouse_atc_code: [{
         type: String
             // II012,
@@ -525,8 +538,8 @@ const plugin = new autoIncrement(Form1701QSchema, '1701q_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 module.exports = mongoose.model("1701q_forms", Form1701QSchema);
