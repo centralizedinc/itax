@@ -152,14 +152,21 @@ class CommonValidator {
     }
 
     static checkNestedDueDate(form, nested_field, page) {
-        var nested_form = form[nested_field];
+        console.log('form :', form);
+        var nested_form = {}
+        if (form[nested_field]) {
+            nested_form = form[nested_field];
+        } else form[nested_field] = {}
         nested_form.due_date = form.due_date;
+        console.log('nested_form :', nested_form);
         var { error_messages, form_details } = this.checkDueDate(nested_form, page);
-        var errors = error_messages.map(v => {
+        form[nested_field] = form_details
+        var errors = [];
+        errors = error_messages.map(v => {
             v.field = `${nested_field}.${v.field}`;
             return v
         })
-        return { error_messages: errors, form_details }
+        return { error_messages: errors, form_details: form }
     }
 
     static validateReturnPeriodByQuarter(year, quarter, page) {

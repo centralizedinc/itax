@@ -297,7 +297,7 @@ const model_schema = {
         compensation_income_flat: { // item D
             type: Number
         },
-        tax_wittheld: { // item E
+        tax_withheld: { // item E
             type: Number
         }
     }],

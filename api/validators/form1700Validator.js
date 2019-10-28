@@ -22,6 +22,10 @@ function validate(form_details) {
     errors.push(...error_messages);
     console.log('done checking due date...');
 
+    if (!errors || !errors.length) {
+        form_details = computePayable(form_details);
+    }
+
     return { errors, form_details }
 }
 
@@ -113,6 +117,18 @@ function validateRequired(form) {
         }
     }
     return error_messages;
+}
+
+function computePayable(form) {
+    if (form.taxpayer_tax_payable && form.spouse_tax_payable) {
+        form.tax_due = parseFloat(form.taxpayer_tax_payable.tax_due || 0) + parseFloat(form.spouse_tax_payable.tax_due || 0);
+        form.surcharge = parseFloat(form.taxpayer_tax_payable.surcharge || 0) + parseFloat(form.spouse_tax_payable.surcharge || 0);
+        form.interest = parseFloat(form.taxpayer_tax_payable.interest || 0) + parseFloat(form.spouse_tax_payable.interest || 0);
+        form.compromise = parseFloat(form.taxpayer_tax_payable.compromise || 0) + parseFloat(form.spouse_tax_payable.compromise || 0);
+        form.penalties = parseFloat(form.taxpayer_tax_payable.penalties || 0) + parseFloat(form.spouse_tax_payable.penalties || 0);
+        form.total_amount_payable = parseFloat(form.taxpayer_tax_payable.total_amount_payable || 0) + parseFloat(form.spouse_tax_payable.total_amount_payable || 0);
+    }
+    return form;
 }
 
 module.exports = {
