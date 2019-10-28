@@ -32,13 +32,17 @@ function validate(form_details) {
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields...');
-    if (!form.months_reflected || !Array.isArray(form.months_reflected) || !form.months_reflected.length) {
-        error_messages.push({
-            page: 0,
-            field: "months_reflected",
-            error: constant_helper.MANDATORY_FIELD('Months Reflected')
-        });
+
+    if (!form.category_of_agent) {
+        error_messages.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Agent') });
     }
+    // if (!form.months_reflected || !Array.isArray(form.months_reflected) || !form.months_reflected.length) {
+    //     error_messages.push({
+    //         page: 0,
+    //         field: "months_reflected",
+    //         error: constant_helper.MANDATORY_FIELD('Months Reflected')
+    //     });
+    // }
 
     return error_messages;
 }
