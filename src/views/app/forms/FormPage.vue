@@ -177,13 +177,9 @@ export default {
     Form1600WP,
     Form1604E,
     Form1601F,
-<<<<<<< HEAD
-    Form1601FQ
-=======
     Form1606,
     Form1601FQ,
     Form1601C
->>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
   },
   computed: {
     affix_computation() {
