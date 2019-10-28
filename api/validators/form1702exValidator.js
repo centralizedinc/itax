@@ -35,42 +35,35 @@ function validate(form_details) {
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields...');
-    // if (!form.taxpayer || !form.taxpayer.line_of_business) {
-    //     error_messages.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
-    // }
-    // else if(form.is_avail_tax_relief) {
-    //     if (!form.avail_tax_relief || !form.avail_tax_relief.length) {
-    //         error_messages.push({ page: 1, field: "avail_tax_relief", error: constant_helper.MANDATORY_FIELD('Specify tax relief under special law or international tax treaty') });
-    //     }
-    // }
     if (!form.taxpayer || !form.taxpayer.atc_code) {
-        error_messages.push({ page: 1, field: "taxpayer.atc_code", error: constant_helper.MANDATORY_FIELD('ATC') });
+        error_messages.push({ page: 0, field: "taxpayer.atc_code", error: constant_helper.MANDATORY_FIELD('ATC') });
     }
     if (!form.taxpayer || !form.taxpayer.legal_basis) {
         error_messages.push({ page: 1, field: "taxpayer.legal_basis", error: constant_helper.MANDATORY_FIELD('Legal basis of tax relief/exemption') });
     }
-    if (!form.taxpayer || !form,taxpayer.agency) {
+    if (!form.taxpayer || !form.taxpayer.agency) {
         error_messages.push({ page: 1, field: "taxpayer.agency", error: constant_helper.MANDATORY_FIELD('Investment promotion Agency (IPA)/Government agency') });
     }
-    if (!form.taxpayer || !form,taxpayer.effective_date_from) {
+    if (!form.taxpayer || !form.taxpayer.effective_date_from) {
         error_messages.push({ page: 1, field: "taxpayer.effective_date_from", error: constant_helper.MANDATORY_FIELD('Effective date from') });
     }
-    if (!form.taxpayer || !form,taxpayer.effective_date_to) {
+    if (!form.taxpayer || !form.taxpayer.effective_date_to) {
         error_messages.push({ page: 1, field: "taxpayer.effective_date_to", error: constant_helper.MANDATORY_FIELD('Effective date to') });
     }
-    // atc //
-    //tax relief exemption item 16 //
-    //investment promotion agency item 17 //
-    //registered activity program item 18 //
-    //effective of date tax relief item 19 // 17
-    //ctc or serc Item 23
-    //date issued Item 24
-    //indicate issue Item 25
-    //amount CTC Item 26
-    //total allowable itemized deduction Item 40 schedule 4 page 5
-    //Net taxable income Item 10 sched 6 page 5 must be equal to Net taxable income on Item 39 page 2 part IV
-    //Net taxable income Item 10 sched 6 page 5 must be equal to income on item 39 part IV page 2
-    //
+
+    if (!form.part5_total_deductions) {
+        error_messages.push({ page: 1, field: "part5_total_deductions", error: 'Schedule 1 item 18 must be greater than zero' });
+    } 
+
+    if (form.net_taxable_income !== form.net_income) {
+    // if (form.sched3.net_taxable_income !== form.net_income) {
+    // if (!form.sched3.net_taxable_income) {
+        // form.sched3.net_taxable_income !== form.sched3.net_taxable_income ? form.sched3.net_taxable_income.toFixed(2) : "0.00";
+        error_messages.push({ page: 2, field: "net_taxable_income", error: 'Net taxable income (loss) on Schedule3 Item 10 must be equal to Part IV Item 38' });
+    }
+    // Net taxable income (loss) on Item 10, shedule 6, Page 5 must be equal to Net Taxable income on Item 39, Part IV, Page 2
+
+
 
     return error_messages;
 }

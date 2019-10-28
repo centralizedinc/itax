@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 1700 (JANUARY 2018)
+ * @author Mark
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1700%20Jan%202018%20ENCS%20v6.pdf
+ * @version 1.0 - 10/28/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -6,157 +13,289 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 var common_model = require('./commonModels');
 
 const model_schema = {
+    atc_code: { // item 3
+        type: String
+    },
 
-    atc_code: { type: String }, //3
-    claiming_foreign_tax_credit: { type: Boolean }, //12
-    foreign_tax_number: { type: Number }, //13
-    spouse_has_income: {
+    // Part I
+    taxpayer_filer_type: { // item 6
+        type: String
+    },
+    claiming_foreign_tax_credit: { // item 12
         type: Boolean
     },
-    filing_status: {
+    foreign_tax_number: { // item 13
         type: String
-        /**
-         * joint
-         * separate
-         */
     },
-
-    // Part III total tax payable
-    total_tax_payable: [{
-        taxpayer: {
-            prev_tax_due: { type: Number, default: 0 }, //26A
-            total_tax_credit: { type: Number, default: 0 }, //27A
-            net_tax_payable: { type: Number, default: 0 }, //28A
-            portion_of_tax_payabe: { type: Number, default: 0 }, //29A
-            amount_tax_payable: { type: Number, default: 0 }, //Item 30A
-            surcharge: { type: Number, default: 0 }, //Item 31A
-            interest: { type: Number, default: 0 }, //Item 32A
-            compromise: { type: Number, default: 0 }, //Item 33A
-            total_penalties: { type: Number, default: 0 }, //Item 34A
-            total_amount_payable: { type: Number, default: 0 }, //Item 35A
-        },
-        taxpayer_spouse: {
-            prev_tax_due: { type: Number, default: 0 }, //26B
-            total_tax_credit: { type: Number, default: 0 }, //27B
-            net_tax_payable: { type: Number, default: 0 }, //28B
-            portion_of_tax_payabe: { type: Number, default: 0 }, //29B
-            amount_tax_payable: { type: Number, default: 0 }, //Item 30B
-            surcharge: { type: Number, default: 0 }, //Item 31B
-            interest: { type: Number, default: 0 }, //Item 32B
-            compromise: { type: Number, default: 0 }, //Item 33B
-            total_penalties: { type: Number, default: 0 }, //Item 34B
-            total_amount_payable: { type: Number, default: 0 }, //35B
-        },
-        aggregate_amount_payable: { type: Number, default: 0 }, //36
-    }],
-
-    //Page 2
-    //Part V.A Graduate Rates
-
-    graduated_rates: [{
-        desc_specify: {type: String}, //45
-        taxpayer: {
-            gross_compensation_income: { type: Number, default: 0 },  //42 A
-            non_taxable: { type: Number, default: 0 }, //43 A
-            gross_taxable: { type: Number, default: 0 }, //44 A
-            other_taxable: { type: Number, default: 0 }, //45 A
-
-            tot_taxable_income: { type: Number, default: 0 }, //46 A
-            tax_due: { type: Number, default: 0 }, //47 A
-        },
-
-        taxpayer_spouse: {
-            gross_compensation_income: { type: Number, default: 0 },  //42 B
-            non_taxable: { type: Number, default: 0 }, //43 B
-            gross_taxable: { type: Number, default: 0 }, //44 B
-            other_taxable: { type: Number, default: 0 }, //45 B
-
-            tot_taxable_income: { type: Number, default: 0 }, //46 B
-            tax_due: { type: Number, default: 0 }, //47 B
-        }
-
-    }],
-
-    //Part V.B Flat Rate
-
-    flat_rate: [{
-        desc_specify_non_tax: {type: String}, //49
-        desc_specify_other_tax: {type: String}, //51
-        taxpayer: {
-            gross_compensation_income: { type: Number, default: 0 },  //48 A
-            non_taxable: { type: Number, default: 0 }, //49 A
-
-            gross_taxable: { type: Number, default: 0 }, //50 A
-
-            other_taxable: { type: Number, default: 0 }, //51 A
-            tot_taxable_income: { type: Number, default: 0 }, //52 A
-            tax_due: { type: Number, default: 0 }, //53 A
-        },
-        spouse_taxpayer: {
-            gross_compensation_income: { type: Number, default: 0 },  //48 B
-            non_taxable: { type: Number, default: 0 }, //49 B
-
-            gross_taxable: { type: Number, default: 0 }, //50 B
-
-            other_taxable: { type: Number, default: 0 }, //51 B
-            tot_taxable_income: { type: Number, default: 0 }, //52 B
-            tax_due: { type: Number, default: 0 }, //53 B
-        }
-    }],
-
-
-
-    //Part V.C Tax Credit Payment
-
-    tax_credit_payment: {
-        desc_specify: {type: String}, //57
-        taxpayer: {
-            tax_wittheld: { type: Number, default: 0 }, //54 A
-            tax_paid_return: { type: Number, default: 0 },// 55 A
-            foreign_tax_credit: { type: Number, default: 0 },// 56 A
-            other_tax: { type: Number, default: 0 },//57 A
-
-            total_tax: { type: Number, default: 0 },//58 A
-            net_tax_payable: { type: Number, default: 0 },//59 A
-        },
-        spouse_taxpayer: {
-            tax_wittheld: { type: Number, default: 0 }, //54 B
-            tax_paid_return: { type: Number, default: 0 },// 55 B
-            foreign_tax_credit: { type: Number, default: 0 },// 56 B
-            other_tax: { type: Number, default: 0 },//57 B
-            total_tax: { type: Number, default: 0 },//58 B
-            net_tax_payable: { type: Number, default: 0 },//59 B
-        }
+    spouse_has_income: { // item 16
+        type: Boolean
+    },
+    filing_status: { // item 17
+        type: String
     },
 
 
-    //Part VI schedule
+    // Part II
+    spouse_taxpayer_filer_type: { // item 20
+        type: String
+    },
+    spouse_claiming_foreign_tax: { // item 24
+        type: String
+    },
+    spouse_foreign_tax_number: { // item 25
+        type: String
+    },
+
+
+    // Part III
+    taxpayer_tax_payable: {
+        prev_tax_due: { // item 26A
+            type: Number
+        },
+        tax_credits: { // item 27A
+            type: Number
+        },
+        net_tax_payable: { // item 28A
+            type: Number
+        },
+        portion_of_tax_payable: { // item 29A
+            type: Number
+        },
+        tax_due: { // item 30A
+            type: Number
+        },
+        surcharge: { // item 31A
+            type: Number
+        },
+        interest: { // item 32A
+            type: Number
+        },
+        compromise: { // item 33A
+            type: Number
+        },
+        penalties: { // item 34A
+            type: Number
+        },
+        total_amount_payable: { // item 35A
+            type: Number
+        }
+    },
+    spouse_tax_payable: {
+        prev_tax_due: { // item 26B
+            type: Number
+        },
+        tax_credits: { // item 27B
+            type: Number
+        },
+        net_tax_payable: { // item 28B
+            type: Number
+        },
+        portion_of_tax_payable: { // item 29B
+            type: Number
+        },
+        tax_due: { // item 30B
+            type: Number
+        },
+        surcharge: { // item 31B
+            type: Number
+        },
+        interest: { // item 32B
+            type: Number
+        },
+        compromise: { // item 33B
+            type: Number
+        },
+        penalties: { // item 34B
+            type: Number
+        },
+        total_amount_payable: { // item 35B
+            type: Number
+        }
+    },
+    // Aggregate Ammount Payable is total_amount_payable of commonModel
+
+
+    // Part V - A (Subject to Graduated Rates)
+    part5a: {
+        taxpayer_rates: {
+            gross_compensation_income: { // item 42A
+                type: Number
+            },
+            non_taxable: { // item 43A
+                type: Number
+            },
+            gross_taxable: { // item 44A
+                type: Number
+            },
+            // Item 45A is merge in other_taxables with spouse
+            total_taxable_income: { // item 46A
+                type: Number
+            },
+            tax_due: { // item 47A
+                type: Number
+            }
+        },
+        spouse_rates: {
+            gross_compensation_income: { // item 42B
+                type: Number
+            },
+            non_taxable: { // item 43B
+                type: Number
+            },
+            gross_taxable: { // item 44B
+                type: Number
+            },
+            // Item 45B is merge in other_taxables with taxpayer
+            total_taxable_income: { // item 46B
+                type: Number
+            },
+            tax_due: { // item 47B
+                type: Number
+            }
+        },
+        other_taxables: [{
+            description: { // item 45
+                type: String
+            },
+            taxpayer_amount: { // item 45A
+                type: Number
+            },
+            spouse_amount: { // item 45B
+                type: Number
+            }
+        }]
+    },
+
+
+    // Part V - B (Subject to 25% Flat Rate for NRANETB)
+    part5b: {
+        taxpayer_rates: {
+            gross_compensation_income: { // item 48A
+                type: Number
+            },
+            non_taxable: { // item 49A
+                type: Number
+            },
+            gross_taxable: { // item 50A
+                type: Number
+            },
+            // Item 51A is merge in other_taxables with spouse
+            total_taxable_income: { // item 52A
+                type: Number
+            },
+            tax_due: { // item 53A
+                type: Number
+            }
+        },
+        spouse_rates: {
+            gross_compensation_income: { // item 48B
+                type: Number
+            },
+            non_taxable: { // item 49B
+                type: Number
+            },
+            gross_taxable: { // item 50B
+                type: Number
+            },
+            // Item 51B is merge in other_taxables with taxpayer
+            total_taxable_income: { // item 52B
+                type: Number
+            },
+            tax_due: { // item 53B
+                type: Number
+            }
+        },
+        other_taxables: [{
+            description: { // item 51
+                type: String
+            },
+            taxpayer_amount: { // item 51A
+                type: Number
+            },
+            spouse_amount: { // item 51B
+                type: Number
+            }
+        }]
+    },
+
+
+    // Part V - C (Tax Credits/Payments)
+    part5c: {
+        taxpayer_rates: {
+            tax_wittheld: { // item 54A
+                type: Number
+            },
+            tax_paid: { // item 55A
+                type: Number
+            },
+            foreign_tax_credit: { // item 56A
+                type: Number
+            },
+            // Item 57A is merge in other_taxables with spouse
+            total_tax_credit: { // item 58A
+                type: Number
+            },
+            net_tax_payable: { // item 59A
+                type: Number
+            }
+        },
+        spouse_rates: {
+            tax_wittheld: { // item 54B
+                type: Number
+            },
+            tax_paid: { // item 55B
+                type: Number
+            },
+            foreign_tax_credit: { // item 56B
+                type: Number
+            },
+            // Item 57A is merge in other_taxables with taxpayer
+            total_tax_credit: { // item 58B
+                type: Number
+            },
+            net_tax_payable: { // item 59B
+                type: Number
+            }
+        },
+        other_tax_credits: [{
+            description: { // item 56
+                type: String
+            },
+            taxpayer_amount: { // item 56A
+                type: Number
+            },
+            spouse_amount: { // item 56B
+                type: Number
+            }
+        }]
+    },
+
+
+    // Schedule 1 - Gross Compensation Income and Tax Withheld
     sched1: [{
         filer_type: {
-            type: Boolean
+            type: String
             /**
              * taxpayer
              * spouse
              */
         },
-        name_of_employer: String,
-        employer_tin: String,
-        compensation_income_grad: { type: Number, default: 0 },
-        compensation_income_flat: { type: Number, default: 0 },
-        tax_withheld: { type: Number, default: 0 },
-        // gros_comp_tot_tax_withld_taxpayer: { type: Number, default: 0 },
-        // gros_comp_tot_tax_withld_spouse: { type: Number, default: 0 },
-        taxpayer:{
-            regular_grad_total:{ type: Number, default: 0 }, //5A a
-            flat_total: { type: Number, default: 0 }, //5A b
-            tax_withheld_total: { type: Number, default: 0 }, //5A c
+        name_of_employer: { // item A
+            type: String
         },
-        spouse_taxpayer:{
-            regular_grad_total:{ type: Number, default: 0 }, //5B a
-            flat_total: { type: Number, default: 0 },   //5B b
-            tax_withheld_total: { type: Number, default: 0 }, //5B c
-        }
-    }],
+        employer_tin: { // item B
+            type: String
+        },
+        compensation_income_grad: { // item C
+            type: Number
+        },
+        compensation_income_flat: { // item D
+            type: Number
+        },
+        tax_wittheld: { // item E
+            type: Number
+        },
+    }]
 };
 
 var Form1700Schema = new Schema({ ...common_model, ...model_schema });
@@ -169,7 +308,6 @@ Form1700Schema.pre('save', function (callback) {
 });
 
 Form1700Schema.pre('findOneAndUpdate', function (callback) {
-    console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();

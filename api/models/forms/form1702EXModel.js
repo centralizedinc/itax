@@ -51,18 +51,18 @@ const model_schema = {
     tax_credits: { // item 19
         type: String
     },
-    ctc_no: { // item 23
-        type: String
-    },
-    date_issue: { // item 24
-        type: Date
-    },
-    place_issue: { // item 25
-        type: String
-    },
-    ctc_amount: { // item 26
-        type: Number
-    },
+    // ctc_no: { // item 23
+    //     type: String
+    // },
+    // date_issue: { // item 24
+    //     type: Date
+    // },
+    // place_issue: { // item 25
+    //     type: String
+    // },
+    // ctc_amount: { // item 26
+    //     type: Number
+    // },
 
 
     // Part IV
