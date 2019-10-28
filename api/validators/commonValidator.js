@@ -22,7 +22,7 @@ class CommonValidator {
         }
 
         if (!tp || !tp.contact_details || !tp.contact_details.telno) {
-            error_messages.push({ page, field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Telephone no') });
+            error_messages.push({ page, field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Contact Number/Telephone no') });
         }
         if (!tp || !tp.address) {
             error_messages.push({ page, field: "taxpayer.address", error: constant_helper.MANDATORY_FIELD('Registered Address') });
