@@ -49,11 +49,11 @@
       <a-affix :offsetTop="100">
         <a-card>
           <a-steps direction="vertical" :current="currentView">
-            <a-step title="Personal Details" description="This is a description." />
-            <a-step title="Taxpayer Information" description="This is a description." />
-            <a-step title="Spouse Details" description="This is a description." />
-            <a-step title="Company Details" description="This is a description." />
-            <a-step title="Connections" description="This is a description." />
+            <a-step title="Account Details" description="Your account details in Smart Tax portal." />
+            <a-step title="Taxpayer Information" description="Details that will be using in filing tax form" />
+            <a-step title="Spouse Details" description="Spouse details that will be using in filing tax form." />
+            <a-step title="Company Details" description="Company details that will be using in filing tax form." />
+            <a-step title="Connections" description="Taxpayers that will be link to your account." />
           </a-steps>
         </a-card>
       </a-affix>
