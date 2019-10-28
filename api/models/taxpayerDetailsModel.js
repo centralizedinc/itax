@@ -4,14 +4,20 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var taxpayerDetailsSchema = new Schema({
-  user_id: Number,
-  tin: String,
-  branch_code: String,
-  rdo_code: String,
-  line_of_business: String,
-  taxpayer_type: String, // Individuals || Non individuals
-  start_month: Number,
-  end_month: Number,
+  user_id: Number, // link to taxpayer account
+  tin: String, // Tax Identification Number
+  branch_code: String, // Branch Code
+  rdo_code: String, // RDO Code
+  line_of_business: String, // Line of Business
+  taxpayer_type: String, // Individual || Non individual(Corporate)
+  // if the forms is quarterly and set the accounting_type as fiscal, either start month or end month is required.
+  start_month: { // start month of return period, use to get the quarterly months and end month of return period, must be use only in Quarterly Forms
+    type: Number
+  },
+  end_month: { // end month of return period, use to get the quarterly months and start month of return period, must be use only in Quarterly Forms
+    type: Number
+  },
+  // if the form didn't required a month or accounting_type, that means accounting_type is set as c or Calender else start_month or end_month is a mandatory field
   accounting_type: {
     type: String
     /**
