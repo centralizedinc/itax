@@ -36,7 +36,7 @@ const model_schema = {
 
 
     // Part II
-    spouse_taxpayer_filer_type: { // item 20
+    spouse_filer_type: { // item 20
         type: String
     },
     spouse_claiming_foreign_tax: { // item 24
@@ -112,7 +112,7 @@ const model_schema = {
             type: Number
         }
     },
-    // Aggregate Ammount Payable is total_amount_payable of commonModel
+    // Item 36 - Aggregate Ammount Payable is total_amount_payable of commonModel
 
 
     // Part V - A (Subject to Graduated Rates)
@@ -173,9 +173,6 @@ const model_schema = {
             gross_compensation_income: { // item 48A
                 type: Number
             },
-            non_taxable: { // item 49A
-                type: Number
-            },
             gross_taxable: { // item 50A
                 type: Number
             },
@@ -191,9 +188,6 @@ const model_schema = {
             gross_compensation_income: { // item 48B
                 type: Number
             },
-            non_taxable: { // item 49B
-                type: Number
-            },
             gross_taxable: { // item 50B
                 type: Number
             },
@@ -205,6 +199,17 @@ const model_schema = {
                 type: Number
             }
         },
+        non_taxables: [{
+            description: { // item 49
+                type: String
+            },
+            taxpayer_amount: { // item 49A
+                type: Number
+            },
+            spouse_amount: { // item 49B
+                type: Number
+            }
+        }],
         other_taxables: [{
             description: { // item 51
                 type: String
@@ -292,10 +297,35 @@ const model_schema = {
         compensation_income_flat: { // item D
             type: Number
         },
-        tax_wittheld: { // item E
+        tax_withheld: { // item E
             type: Number
+        }
+    }],
+
+    sched1_totals: {
+        taxpayer_rates: {
+            compensation_graduated_total: {
+                type: Number
+            },
+            compensation_flat_total: {
+                type: Number
+            },
+            total_tax_withheld: {
+                type: Number
+            }
         },
-    }]
+        spouse_rates: {
+            compensation_graduated_total: {
+                type: Number
+            },
+            compensation_flat_total: {
+                type: Number
+            },
+            total_tax_withheld: {
+                type: Number
+            }
+        }
+    }
 };
 
 var Form1700Schema = new Schema({ ...common_model, ...model_schema });
