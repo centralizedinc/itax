@@ -36,7 +36,7 @@ const model_schema = {
 
 
     // Part II
-    spouse_taxpayer_filer_type: { // item 20
+    spouse_filer_type: { // item 20
         type: String
     },
     spouse_claiming_foreign_tax: { // item 24
@@ -112,7 +112,7 @@ const model_schema = {
             type: Number
         }
     },
-    // Aggregate Ammount Payable is total_amount_payable of commonModel
+    // Item 36 - Aggregate Ammount Payable is total_amount_payable of commonModel
 
 
     // Part V - A (Subject to Graduated Rates)

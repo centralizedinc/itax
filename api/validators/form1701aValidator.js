@@ -16,10 +16,9 @@ function validate(form_details) {
     console.log('done required fields...');
 
     // check due date if late filing
-    var {
-        error_messages,
-        form_details
-    } = commonValidator.checkDueDate(form_details, 2);
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "taxpayer_tax_payable", 2);
+    errors.push(...error_messages);
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "spouse_tax_payable", 2);
     errors.push(...error_messages);
     console.log('done checking due date...');
 
@@ -32,12 +31,25 @@ function validate(form_details) {
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields...');
-    if (!form.months_reflected || !Array.isArray(form.months_reflected) || !form.months_reflected.length) {
-        error_messages.push({
-            page: 0,
-            field: "months_reflected",
-            error: constant_helper.MANDATORY_FIELD('Months Reflected')
-        });
+    
+    if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.birthDate) {
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.birthDate", error: constant_helper.MANDATORY_FIELD("Taxpayer's Date of Birth") });
+    }
+    
+    if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.email) {
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.email", error: constant_helper.MANDATORY_FIELD("Taxpayer's Email") });
+    }
+    
+    if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.citizenship) {
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.citizenship", error: constant_helper.MANDATORY_FIELD("Taxpayer's Citizenship") });
+    }
+    
+    if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.filer_type) {
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.filer_type", error: constant_helper.MANDATORY_FIELD("Taxpayer's Filer Type") });
+    }
+    
+    if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.taxpayer_atc_code) {
+        error_messages.push({ page: 1, field: "taxpayer.individual_details.taxpayer_atc_code", error: constant_helper.MANDATORY_FIELD("Taxpayer's ATC") });
     }
 
     return error_messages;

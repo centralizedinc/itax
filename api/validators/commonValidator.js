@@ -151,6 +151,17 @@ class CommonValidator {
         return { error_messages, form_details };
     }
 
+    static checkNestedDueDate(form, nested_field, page) {
+        var nested_form = form[nested_field];
+        nested_form.due_date = form.due_date;
+        var { error_messages, form_details } = this.checkDueDate(nested_form, page);
+        var errors = error_messages.map(v => {
+            v.field = `${nested_field}.${v.field}`;
+            return v
+        })
+        return { error_messages: errors, form_details }
+    }
+
     static validateReturnPeriodByQuarter(year, quarter, page) {
         var errors = [];
         console.log('year :', year);

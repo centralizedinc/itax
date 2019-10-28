@@ -16,7 +16,9 @@ function validate(form_details) {
     console.log('done validating required fields...');
 
     // checking due date if late filing
-    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 2);
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "taxpayer_tax_payable", 2);
+    errors.push(...error_messages);
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "spouse_tax_payable", 2);
     errors.push(...error_messages);
     console.log('done checking due date...');
 
@@ -26,8 +28,8 @@ function validate(form_details) {
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields ...');
-    if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.taxpayer_type) {
-        error_messages.push({ page: 1, field: "taxpayer.individual_details.taxpayer_type", error: constant_helper.MANDATORY_FIELD("Taxpayer's Taxpayer type") });
+    if (!form.taxpayer_filer_type) {
+        error_messages.push({ page: 1, field: "taxpayer_filer_type", error: constant_helper.MANDATORY_FIELD("Taxpayer's Taxpayer type") });
     }
 
     if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.birthDate) {
@@ -48,12 +50,12 @@ function validateRequired(form) {
 
     if (!form.taxpayer || !form.taxpayer.individual_details || !form.taxpayer.individual_details.civil_status) {
         error_messages.push({ page: 1, field: "taxpayer.individual_details.civil_status", error: constant_helper.MANDATORY_FIELD("Taxpayer's Civil Status") });
-    } else if (form.taxpayer.individual_details.civil_status === 'm') {
+    } else if (form.taxpayer.individual_details.civil_status.toUpperCase() === 'M') {
         // Required spouse details
-        if(form.spouse_has_income === null || form.spouse_has_income === undefined){ //item 16
+        if (form.spouse_has_income === null || form.spouse_has_income === undefined) { //item 16
             error_messages.push({ page: 1, field: "spouse_has_income", error: "Please select if Yes or No." });
-        } else if(form.spouse_has_income) {
-            if(!form.filing_status){ //item 17
+        } else if (form.spouse_has_income) {
+            if (!form.filing_status) { //item 17
                 error_messages.push({ page: 1, field: "filing_status", error: constant_helper.MANDATORY_FIELD("Filing Status") });
             }
         }
@@ -66,8 +68,8 @@ function validateRequired(form) {
             error_messages.push({ page: 2, field: "spouse_details.rdo_code", error: constant_helper.MANDATORY_FIELD("Spouse's Rdo Code") });
         }
 
-        if (!form.spouse_details || !form.spouse_details.individual_details || !form.spouse_details.individual_details.taxpayer_type) {
-            error_messages.push({ page: 2, field: "spouse_details.individual_details.taxpayer_type", error: constant_helper.MANDATORY_FIELD("Spouse's Taxpayer type") });
+        if (!form.spouse_filer_type) {
+            error_messages.push({ page: 2, field: "spouse_filer_type", error: constant_helper.MANDATORY_FIELD("Spouse's Taxpayer type") });
         }
 
         if (!form.spouse_details || !form.spouse_details.registered_name) {
