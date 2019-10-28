@@ -133,7 +133,6 @@
     </a-form>
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
-<<<<<<< HEAD
       <a-divider orientation="left">
         <b>
           Part II: Computation of Tax
@@ -152,30 +151,6 @@
           placeholder="Total Tax Required to be Withheld and Remitted"
           style="width:100%"
         ></a-input-number>
-=======
-      <a-divider>
-        <b>Part II: Computation of Tax</b>
-      </a-divider>
-      <a-button type="primary" block @click="show_sched1=true">ATC</a-button>
-      <br />
-      <schedule-one
-        v-if="show_sched1"
-        :show="show_sched1"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
-
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="14. Total Tax Required to be Withheld and Remitted"
-      >
-        <a-input
-          v-model="form.total_tax_withheld_remitted"
-          :formatter="value => `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-        ></a-input>
->>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
       </a-form-item>
 
       <a-form-item label="15. Less: Tax Credits/Payments"></a-form-item>
@@ -324,22 +299,14 @@
 
 <script>
 // import form_1601e_image from "@/assets/forms/1601e.jpg";
-<<<<<<< HEAD
 import atc from "./atc.vue";
-
-export default {
-  components: {
-    atc
-  },
-  props: ["form", "step"],
-=======
 import ScheduleOne from "./Schedule1";
 export default {
   components: {
-    ScheduleOne
+    ScheduleOne,
+    atc
   },
-  props: ["form", "step", "er rors"],
->>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
+  props: ["form", "step", "errors"],
   data() {
     return {
       sched: false,

@@ -1,4 +1,13 @@
 'use strict'
+/**
+ * 
+ * @description FORM 1702EX  VALIDATOR(JANUARY 2018)
+ * @author Kris
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1702-EX%20Jan%202018%20ENCS%20Final%20v3.pdf
+ * @version 1.0 - 10/24/2019
+ * 
+ */
+
 var commonValidator = require('./commonValidator.js');
 
 const constant_helper = require('../utils/constant_helper');
@@ -26,20 +35,34 @@ function validate(form_details) {
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields...');
-    if (!form.taxpayer || !form.taxpayer.line_of_business) {
-        error_messages.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
+    // if (!form.taxpayer || !form.taxpayer.line_of_business) {
+    //     error_messages.push({ page: 1, field: "taxpayer.line_of_business", error: constant_helper.MANDATORY_FIELD('Line of Business') });
+    // }
+    // else if(form.is_avail_tax_relief) {
+    //     if (!form.avail_tax_relief || !form.avail_tax_relief.length) {
+    //         error_messages.push({ page: 1, field: "avail_tax_relief", error: constant_helper.MANDATORY_FIELD('Specify tax relief under special law or international tax treaty') });
+    //     }
+    // }
+    if (!form.taxpayer || !form.taxpayer.atc_code) {
+        error_messages.push({ page: 1, field: "taxpayer.atc_code", error: constant_helper.MANDATORY_FIELD('ATC') });
     }
-    else if(form.is_avail_tax_relief) {
-        if (!form.avail_tax_relief || !form.avail_tax_relief.length) {
-            error_messages.push({ page: 1, field: "avail_tax_relief", error: constant_helper.MANDATORY_FIELD('Specify tax relief under special law or international tax treaty') });
-        }
+    if (!form.taxpayer || !form.taxpayer.legal_basis) {
+        error_messages.push({ page: 1, field: "taxpayer.legal_basis", error: constant_helper.MANDATORY_FIELD('Legal basis of tax relief/exemption') });
     }
-
-    // atc
-    //tax relief exemption item 16
-    //investment promotion agency item 17
-    //registered activity program item 18
-    //effective of date tax relief item 19
+    if (!form.taxpayer || !form,taxpayer.agency) {
+        error_messages.push({ page: 1, field: "taxpayer.agency", error: constant_helper.MANDATORY_FIELD('Investment promotion Agency (IPA)/Government agency') });
+    }
+    if (!form.taxpayer || !form,taxpayer.effective_date_from) {
+        error_messages.push({ page: 1, field: "taxpayer.effective_date_from", error: constant_helper.MANDATORY_FIELD('Effective date from') });
+    }
+    if (!form.taxpayer || !form,taxpayer.effective_date_to) {
+        error_messages.push({ page: 1, field: "taxpayer.effective_date_to", error: constant_helper.MANDATORY_FIELD('Effective date to') });
+    }
+    // atc //
+    //tax relief exemption item 16 //
+    //investment promotion agency item 17 //
+    //registered activity program item 18 //
+    //effective of date tax relief item 19 // 17
     //ctc or serc Item 23
     //date issued Item 24
     //indicate issue Item 25
