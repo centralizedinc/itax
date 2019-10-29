@@ -13,8 +13,12 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-model="form.num_of_sheet"></a-input-number>
+      <a-form-item label="3." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input-number
+          style="width:100%"
+          v-model="form.num_of_sheet"
+          placeholder="No. of Sheets Attached"
+        ></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
         <a-radio-group v-model="form.any_tax_withheld">
@@ -30,47 +34,58 @@
         <b>Part I: Background Information</b>
       </a-divider>
       <!-- buyers tin -->
-      <a-form-item label="5. BUYERS TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+      <a-form-item label="5." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxpayer.tin" placeholder="BUYERS TIN NUMBER"></a-input>
       </a-form-item>
-      <a-form-item label="6. BUYER RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      <a-form-item label="6." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxpayer.rdo_code" placeholder="RDO CODE"></a-input>
       </a-form-item>
-      <a-form-item label="7. SELLER TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+      <!-- seller tin? -->
+      <a-form-item label="7." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.seller_details" placeholder="SELLER TIN NUMBER"></a-input>
       </a-form-item>
-      <a-form-item label="8. SELLER RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      <!-- seller rdo code? -->
+      <a-form-item label="8." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxpayer.rdo_code" placeholder="SELLER RDO CODE"></a-input>
       </a-form-item>
-      <a-form-item label="9. Buyers Registered Name">
-        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      <a-form-item label="9." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input
+          style="100%"
+          v-model="form.taxpayer.registered_name"
+          placeholder="BUYERS REGISTERED NAME"
+        ></a-input>
       </a-form-item>
-      <a-form-item label="10. Seller Registered Name">
-        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      <!-- seller register name? -->
+      <a-form-item label="10." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input
+          style="100%"
+          v-model="form.taxpayer.registered_name"
+          placeholder="SELLER REGISTERED NAME"
+        ></a-input>
       </a-form-item>
-      <a-form-item label="11. Buyers Registered Address">
-        <a-textarea v-model="form.address"></a-textarea>
+      <a-form-item label="11." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-textarea style="100%" v-model="form.address" placeholder="BUYERS REGISTERED ADDRESS"></a-textarea>
       </a-form-item>
-
-      <a-form-item label="12. Seller Registered Address">
-        <a-textarea v-model="form.address"></a-textarea>
+      <!-- seller registered address -->
+      <a-form-item label="12." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-textarea style="100%" v-model="form.address" placeholder="SELLER REGISTERED ADDRESS"></a-textarea>
       </a-form-item>
 
       <a-form-item label="13. ATC">
-        <a-radio-group v-model="form.atc">
+        <a-radio-group v-model="form.atc_code">
           <a-radio :value="true">Individual</a-radio>
           <a-radio :value="false">Corporation</a-radio>
         </a-radio-group>
       </a-form-item>
 
       <a-form-item label="14. Category of Withholding Agent">
-        <a-radio-group v-model="form.category_of_agent">
+        <a-radio-group v-model="form.taxes_withheld">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
 
-      <a-form-item label="15.Classification of Property">
+      <a-form-item label="15. Classification of Property">
         <a-radio-group v-model="form.classification_property">
           <a-radio :value="'RES'">Residential</a-radio>
           <a-radio :value="'AGR'">Agriculture</a-radio>
@@ -79,83 +94,243 @@
           <a-radio :value="'CONR'">Condominum Residential</a-radio>
           <a-radio :value="'CONC'">Condominum Commercial</a-radio>
         </a-radio-group>
-        <a-form-item label="If yes, specify"></a-form-item>
-        <a-textarea v-model="form.plsspecify"></a-textarea>
-      </a-form-item>
-      <a-form-item label="16. location of the Property">
-        <a-input v-model="form.loc_property"></a-input>
-      </a-form-item>
-      <a-form-item label="17. Brief Description of the Property">
-        <a-input v-model="form.area_sold_sqm"></a-input>
-        <a-form-item label="Tax Doc Number">
-          <a-input v-model="form.tax_doc_no"></a-input>
-           <a-form-item label="TCT/OCT/CCT">
-          <a-input v-model="form.tct"></a-input>
-            <a-form-item label="Others">
-          <a-input v-model="form.others"></a-input>
+        <!-- specify? -->
+        <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+          <a-textarea style="100%" v-model="form.plsspecify" placeholder="IF YES, SPECIFY"></a-textarea>
         </a-form-item>
       </a-form-item>
-       </a-form-item>
-       </a-form-item>
 
-      <!-- <a-form-item label="10. Zip Code">
-        <a-input-number v-model="form.zipCode"></a-input-number>
+      <!-- ok -->
+      <a-form-item label="16." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input
+          style="100%"
+          v-model="form.location_property"
+          placeholder="LOCATION OF THE PROPERTY"
+        ></a-input>
       </a-form-item>
-      <a-form-item
-        label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
-      >
-        <a-radio-group v-model="form.is_avail_tax_relief">
+      <a-form-item label="17." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <!-- ok -->
+        <a-input
+          style="100%"
+          v-model="form.area_sold"
+          placeholder="BRIEF DESCRIPTION OF THE PROPERTY"
+        ></a-input>
+
+        <a-input v-model="form.tax_doc_no" placeholder="TAX DOC NUMBER"></a-input>
+        <!-- ok -->
+
+        <a-input style="100%" v-model="form.tct_no" placeholder="TCT/OCT/CCT"></a-input>
+
+        <a-input style="100%" v-model="form.others" placeholder="OTHERS"></a-input>
+      </a-form-item>
+      <!-- ok -->
+      <a-form-item label="18. Does the Selling price cover more than one property?">
+        <a-radio-group v-model="form.selling_property">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
-      </a-form-item>-->
-      <!-- <a-form-item label="If yes, specify">
-        <a-input v-model="form.avail_tax_relief"></a-input>
-      </a-form-item>-->
-    </a-form>
-    <!-- Part II -->
-    <!-- <a-form :form="form_part2" v-show="step===2">
-      <a-divider orientation="left">
-        <b>Part II: Computation of Tax</b>
-      </a-divider>
-      <a-form-item label="12. Tax Required to be Withheld and Remitted">
-        <a-input-number v-model="form.tax_req_withld_remtd"></a-input-number>
       </a-form-item>
+
       <a-form-item
-        label="13. Less: Tax Remitted in Return Previously filed, if this is an amended return "
+        label="19. Are you availing of tax relief under an international Tax treaty of special law?"
       >
-        <a-input-number v-model="form.less_tax_remtd_retrn"></a-input-number>
-      </a-form-item>
-      <a-form-item label="14. Tax Still Due(Overremittance) ">
-        <a-input-number v-model="form.tax_due"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15A. Surcharge ">
-        <a-input-number v-model="form.surcharge"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15B. Interest ">
-        <a-input-number v-model="form.interest"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15C. Compromise ">
-        <a-input-number v-model="form.compromise"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15D. Tax Required to be withheld ">
-        <a-input-number v-model="form.penalties"></a-input-number>
-      </a-form-item>
-      <a-form-item label="16. Tax Required to be withheld ">
-        <a-input-number v-model="form.total_amount_payable"></a-input-number>
-      </a-form-item>
-      <a-form-item label="16. if overremittance">
-        <a-radio-group v-model="form.taxpayer.overremittance">
-          <a-radio :value="true">To be Refunded</a-radio>
-          <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
+        <a-radio-group v-model="form.selling_property1">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="16. For the month of (MM/DD/YYYY)">
-        <a-date-picker v-model="form.start_month" />
-        <a-date-picker v-model="form.end_month" />
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-textarea style="100%" v-model="form.plsspecifyy" placeholder="IF YES SPECIFY"></a-textarea>
       </a-form-item>
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form>-->
+
+      <a-form-item label="20. Description if Transaction (Mark one box only) ">
+        <a-radio-group v-model="form.transaction_payment">
+          <a-radio :value="'CAS'">Cash</a-radio>
+          <a-radio :value="'EXE'">Exempt</a-radio>
+          <a-radio :value="'INS'">Installment Sale</a-radio>
+          <a-radio :value="'FOR'">Foreclosure Sale</a-radio>
+          <a-radio :value="'OTH'">Others</a-radio>
+        </a-radio-group>
+        <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+          <a-textarea
+            style="100%"
+            v-model="form.trans_specify"
+            placeholder="IF EXEMPT, OR OTHERS SPECIFY"
+          ></a-textarea>
+        </a-form-item>
+      </a-form-item>
+      <!-- ok 21-->
+
+      <a-form-item label="21. " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.selling_price" placeholder="SELLING PRICE"></a-input>
+      </a-form-item>
+      <!-- ok 22 -->
+      <a-form-item label="22." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.cost_expenses" placeholder="COST AND OTHER EXPENSES"></a-input>
+      </a-form-item>
+      <!-- ok  23-->
+      <a-form-item label="23." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.mortgage_assumed" placeholder="MORTGAGE ASSUMED"></a-input>
+      </a-form-item>
+      <!-- ok  24-->
+      <a-form-item label="24." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input
+          style="100%"
+          v-model="form.total_payments_initial_year"
+          placeholder=" TOTAL PAYMENTS DURING INITIAL YEAR"
+        ></a-input>
+      </a-form-item>
+      <!-- ok  25-->
+      <a-form-item label="25. " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input
+          style="100%"
+          v-model="form.amount_installment_month"
+          placeholder="AMOUNT OF INSTALLMENT THIS MONTH"
+        ></a-input>
+      </a-form-item>
+
+      <a-form-item label="26. " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input
+          style="100%"
+          v-model="form.total_contract"
+          placeholder="TOTAL INSTALLMENT IN THE CONTRACT"
+        ></a-input>
+      </a-form-item>
+
+      <a-form-item label="27. Fair Market Value (FMV) - Valuation at the time of the Contract">
+        <a-checkbox @change="onChange" v-model="form.A27">27A FMV of Land per latest Tax Declaration</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.A277" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox
+          @change="onChange"
+          v-model="form.B27"
+        >27B FMV of Improvements per latest Tax Declaration</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.B277" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox
+          @change="onChange"
+          v-model="form.C27"
+        >27C FMV of Land as determined by BIR Commissioner (zonal value)</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.C277" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox
+          @change="onChange"
+          v-model="form.D27"
+        >27D FMV of Improvements as determined by BIR Commissioner (BIR RULES)</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.D277" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label="28. Determination of Taxable Base">
+        <a-checkbox @change="onChange" v-model="form.A28">28A Gross Selling Price</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.A288" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox
+          @change="onChange"
+          v-model="form.B28"
+        >28B Fair Market Value of land and improvement</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.B288" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox @change="onChange" v-model="form.C28">28C Bid Price (for foreclosure sale)</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.C288" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox
+          @change="onChange"
+          v-model="form.D28"
+        >28D Installment Collected for Installment sale including interest</a-checkbox>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.D288" placeholder></a-input>
+      </a-form-item>
+
+      <a-form-item label>
+        <a-checkbox @change="onChange" v-model="form.E28">28E Others (Specify)</a-checkbox>
+      </a-form-item>
+
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.E288" placeholder></a-input>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.E2888" placeholder="Computation1"></a-input>
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.E28888" placeholder="Computation2"></a-input>
+      </a-form-item>
+
+      <a-form-item label="29. Is the seller habitually engaged in real estate business?">
+        <a-radio-group v-model="form.estate">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="30." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxbase" placeholder="TAXABLE BASE"></a-input>
+      </a-form-item>
+
+      <a-form-item label="31." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxrate" placeholder="TAX RATE"></a-input>
+      </a-form-item>
+
+      <a-form-item label="32. " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxreq" placeholder="TAX REQUIRED TO BE WITHHELD"> </a-input>
+      </a-form-item>
+
+      <a-form-item label="33." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.taxpaid" placeholder="LESS: TAX PAID"></a-input>
+      </a-form-item>
+      <!-- ok 34-->
+      <a-form-item label="34." :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input v-model="form.tax_due" placeholder="TAX STILL DUE"></a-input>
+      </a-form-item>
+      <!-- ok 35a -->
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.surcharge" placeholder="SURCHARGE"></a-input>
+        <!-- ok 35b -->
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.interest" placeholder="INTEREST"></a-input>
+        <!-- ok 35c -->
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.compromise" placeholder="COMPROMISE"></a-input>
+        <!-- ok 35d -->
+      </a-form-item>
+      <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
+        <a-input style="100%" v-model="form.penalties" placeholder="PENALTIES"></a-input>
+        <!-- ok 36 -->
+      </a-form-item>
+      <a-form-item label="36. Total Amount Payable">
+        <a-radio-group v-model="form.total_amount_payable">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+    </a-form>
   </div>
 </template>
 
@@ -172,7 +347,11 @@ export default {
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
       form_part3: this.$form.createForm(this),
-      image_height: 1000
+      image_height: 1000,
+      form_layout: {
+        label_col: { span: 2 },
+        wrapper_col: { span: 22 }
+      }
     };
   },
   watch: {

@@ -41,7 +41,7 @@ const model = {
         type: Number,
         default: 0
     },
-    is_avail_tax_relief: { // If availing of tax relief under Special Law or International Tax Treaty?
+    is_avail_tax_relief: { // If availing of tax relief under Spe ial Law or International Tax Treaty?
         type: Boolean,
         default: false
     },
