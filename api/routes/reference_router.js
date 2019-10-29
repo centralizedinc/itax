@@ -70,7 +70,9 @@ reference_router.route('/return_period')
         if (req.query && req.query.mode === 'update') {
             if (req.query.id) {
                 var data = req.body;
-                data.modified_by = jwt.decode(req.headers.access_token).account_id;
+                if (req.headers.access_token && jwt.decode(req.headers.access_token) && jwt.decode(req.headers.access_token).account_id) {
+                    data.modified_by = jwt.decode(req.headers.access_token).account_id;
+                } else data.modified_by = 'admin'
                 ReturnPeriodDao.modifyById(req.query.id, data)
                     .then((model) => {
                         res.json({
@@ -88,7 +90,9 @@ reference_router.route('/return_period')
             }
         } else {
             var data = req.body;
-            data.created_by = jwt.decode(req.headers.access_token).account_id;
+            if (req.headers.access_token && jwt.decode(req.headers.access_token) && jwt.decode(req.headers.access_token).account_id) {
+                data.created_by = jwt.decode(req.headers.access_token).account_id;
+            } else data.created_by = 'admin'
             var errors = null;
             ReturnPeriodDao.findOneByForm(data.form)
                 .then((existing_form) => {

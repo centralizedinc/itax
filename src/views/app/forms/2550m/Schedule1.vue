@@ -19,12 +19,7 @@
         </a-select>
       </template>
       <template slot="amount" slot-scope="text, record, index">
-        <a-input-number
-          :disabled="!record.atc"
-          @change="e => changeAmount(e, index)"
-          :value="text"
-          placeholder="text"
-        ></a-input-number>
+        <a-input-number :disabled="!record.atc" @change="e => changeAmount(e, index)" :value="text"></a-input-number>
       </template>
       <template slot="output_tax" slot-scope="text, record, index">
         <span>{{getOutputTax(record.atc, index)}}</span>

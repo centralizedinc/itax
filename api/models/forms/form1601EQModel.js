@@ -1,4 +1,11 @@
-'use strict'
+/**
+ * 
+ * @description FORM 1601EQ (JANUARY 2018)
+ * @author Venus
+ * @base_form https://www.bir.gov.ph/images/bir_files/internal_communications_2/RMCs/2018/1601-EQ%20Jan%202018%20Annex%20A.pdf
+ * @version 1.0 - 10/25/2019
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;

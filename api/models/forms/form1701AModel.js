@@ -68,72 +68,73 @@ const model_schema = {
     },
 
     //PART II Total Tax Payable
-    part2_total_tax_payable: {
-        part2_taxpayer: {
-            prev_tax_due: {
-                type: Number,
-                default: 0
-            }, //Item 20 A
-            total_tax_credit: {
-                type: Number,
-                default: 0
-            }, //Item 21 A
-            net_tax_payable: {
-                type: Number,
-                default: 0
-            }, //Item 22  A
-            portion_of_tax_payabe: {
-                type: Number,
-                default: 0
-            }, //Item 23 A
-            amount_tax_payable: {
-                type: Number,
-                default: 0
-            }, //Item 24A   
-            total_amount_payable: {
-                type: Number,
-                default: 0
-            } //Item 29 Sum of Items 24 and 28
+    taxpayer_tax_payable: {
+        prev_tax_due: { // item 20A
+            type: Number
         },
-        part2_taxpayer_spouse: {
-            prev_tax_due: {
-                type: Number,
-                default: 0
-            }, //Item 20 B
-            total_tax_credit: {
-                type: Number,
-                default: 0
-            }, //Item 21 B
-            net_tax_payable: {
-                type: Number,
-                default: 0
-            }, //Item 22 B
-            portion_of_tax_payabe: {
-                type: Number,
-                default: 0
-            }, //Item 23 B 
-            amount_tax_payable: {
-                type: Number,
-                default: 0
-            }, //Item 24B
-            total_amount_payable: {
-                type: Number,
-                default: 0
-            } //Item 29 B Sum of Items 24 and 28
+        tax_credits: { // item 21A
+            type: Number
         },
-        aggregate_amount_payable: {
-            type: Number,
-            default: 0
-        }, //Item 30 Sum of Items 29A and 29B
-        if_overpayment: {
-            type: String
-                /**
-                 * 0 - to be refunded
-                 * 1 - to be issued a tax credit certificate
-                 * 2 - to be carried over as a tax credit for next year
-                 */
+        net_tax_payable: { // item 22A
+            type: Number
+        },
+        portion_of_tax_payable: { // item 23A
+            type: Number
+        },
+        tax_due: { // item 24A
+            type: Number
+        },
+        surcharge: { // item 25A
+            type: Number
+        },
+        interest: { // item 26A
+            type: Number
+        },
+        compromise: { // item 27A
+            type: Number
+        },
+        penalties: { // item 28A
+            type: Number
+        },
+        total_amount_payable: { // item 29A
+            type: Number
         }
     },
+    spouse_tax_payable: {
+        prev_tax_due: { // item 20B
+            type: Number
+        },
+        tax_credits: { // item 21B
+            type: Number
+        },
+        net_tax_payable: { // item 22B
+            type: Number
+        },
+        portion_of_tax_payable: { // item 23B
+            type: Number
+        },
+        tax_due: { // item 24B
+            type: Number
+        },
+        surcharge: { // item 25B
+            type: Number
+        },
+        interest: { // item 26B
+            type: Number
+        },
+        compromise: { // item 27B
+            type: Number
+        },
+        penalties: { // item 28B
+            type: Number
+        },
+        total_amount_payable: { // item 29B
+            type: Number
+        }
+    },
+    // Item 30 - Aggregate Ammount Payable is total_amount_payable of commonModel
+
+
     //PART IV Computation of Income Tax
 
     //PART IV-A For Graduated Income Tax Rates

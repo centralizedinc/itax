@@ -13,18 +13,18 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    year_type: {
-        type: Date
-    },
-    year_ended_month: {
-        type: Date
-    },
-    year_ended_year: {
-        type: Date
-    },
-    short_period_return: {
-        type: Boolean
-    },
+    // year_type: { // already on taxpayer model as 'accounting_type'
+    //     type: Date
+    // },
+    // year_ended_month: { // already on taxpayer model as 'start_month'
+    //     type: Date
+    // },
+    // year_ended_year: { // already on common model as 'return_period_year'
+    //     type: Date
+    // },
+    // short_period_return: { // already on common model as 'short_period'
+    //     type: Boolean
+    // },
     atc_code: {
         type: String
             // IC055,
@@ -34,7 +34,7 @@ const model_schema = {
             // IC041,
             // IC070
     },
-    date_incorporation_organization: {
+    date_incorporation: {
         type: Date
     }, //item10
     method_deduction: {

@@ -5,48 +5,22 @@ var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
 
 var Form1601ESchema = new Schema({
-    category_of_agent: String,
+    taxpayer: {},
     taxes_withheld: Boolean,
+    category_of_agent: Boolean,
+    availing_tax_relief: Boolean,
+    availing_tax_relief_if_yes: String,
+    atc: [],
+    // 14
     total_tax_withheld_remitted: {
         type: Number,
         default: 0
     },
-    // 16
-    tax_overremittance: {
-        type: Number,
-        default: 0
-    },
-    overremittance: Boolean,
-    // 18
-    total_amount_overremittance: {
-        type: Number,
-        default: 0
-    },
-    // 14
-    amt_due_crdtb: {
-        type: Number,
-        default: 0
-    },
-    // 15
+    // 15a
     prev_tax_paid_crdtb: {
         type: Number,
         default: 0
     },
-    // 16
-    amt_paybl_crdtb: {
-        type: Number,
-        default: 0
-    },
-    // 17a
-    surcharge: {
-        type: Number,
-        default: 0
-    },
-    total_amt_paybl_crdtb: {
-        type: Number,
-        default: 0
-    },
-    refund_type: String,
     // 15b
     adv_payment: {
         type: Number,
@@ -57,6 +31,45 @@ var Form1601ESchema = new Schema({
         type: Number,
         default: 0
     },
+
+    // 16
+    tax_overremittance: {
+        type: Number,
+        default: 0
+    },
+    // 17a
+    surcharge: {
+        type: Number,
+        default: 0
+    },
+    // 17b
+    interest: {
+        type: Number,
+        default: 0
+    },
+    // 17c
+    compromise: {
+        type: Number,
+        default: 0
+    },
+    // 17d
+    penaltiesCrdtb: {
+        type: Number,
+        default: 0
+    },
+    overremittance: Boolean,
+    // 18
+    total_amount_overremittance: {
+        type: Number,
+        default: 0
+    },
+
+    total_amt_paybl_crdtb: {
+        type: Number,
+        default: 0
+    },
+    refund_type: String,
+
     if_overremittance: String,
     atc_list: [{
         nature_of_income: String,
@@ -123,8 +136,8 @@ const plugin = new autoIncrement(Form1601ESchema, '1601e_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
-        // Plugin failed to initialise
-        console.log("############### init failed: " + e);
-    });
+    // Plugin failed to initialise
+    console.log("############### init failed: " + e);
+});
 
 module.exports = mongoose.model('1601e_forms', Form1601ESchema);

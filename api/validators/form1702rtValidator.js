@@ -16,28 +16,27 @@ function validate(form_details) {
     console.log('done required fields...');
 
     // check due date if late filing
-    var {
-        error_messages,
-        form_details
-    } = commonValidator.checkDueDate(form_details, 2);
+    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 2);
     errors.push(...error_messages);
     console.log('done checking due date...');
 
-    return {
-        errors,
-        form_details
-    }
+    return { errors, form_details }
 }
 
 function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields...');
-    if (!form.months_reflected || !Array.isArray(form.months_reflected) || !form.months_reflected.length) {
-        error_messages.push({
-            page: 0,
-            field: "months_reflected",
-            error: constant_helper.MANDATORY_FIELD('Months Reflected')
-        });
+
+    if (!form.taxpayer || !form.taxpayer.date_incorporation) {
+        error_messages.push({ page: 1, field: "taxpayer.date_incorporation", error: constant_helper.MANDATORY_FIELD('Date of Incorporation') });
+    }
+
+    if (!form.taxpayer || !form.taxpayer.contact_details || !form.taxpayer.contact_details.telno) {
+        error_messages.push({ page: 1, field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Contact Number') });
+    }
+
+    if (!form.taxpayer || !form.taxpayer.contact_details || !form.taxpayer.contact_details.email) {
+        error_messages.push({ page: 1, field: "taxpayer.contact_details.email", error: constant_helper.MANDATORY_FIELD('Email Address') });
     }
 
     return error_messages;

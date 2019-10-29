@@ -1,5 +1,7 @@
 const form = require("../templates/1701q_template").template;
-
+// const form1 = require("../templates/1701q_template").template;
+// const form2 = require("../templates/1601e_template").template;
+// var form = [form1, form2]
 /**
  *
  * @param {LicenseModel} details
@@ -314,7 +316,13 @@ function getContent(forms) {
                 widths: [95, 300],
                 body: [
                     [{
-                            text: forms.birthday.month + "  " + forms.birthday.day + " " + " " + " " + forms.birthday.year ? forms.birthday.month + "  " + forms.birthday.day + " " + " " + " " + forms.birthday.year : '',
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, {
+                                month: "2-digit"
+                            }) + "  " + formatDate(forms.taxpayer.individual_details.birthDate, {
+                                day: "2-digit"
+                            }) + " " + " " + " " + formatDate(forms.taxpayer.individual_details.birthDate, {
+                                year: "numeric"
+                            }),
                             // text: '01  01  2011',
                             fontSize: 14,
                             // right,down,left,up
@@ -855,6 +863,55 @@ function getContent(forms) {
         }
     ]
 
+    //   var content2 = [{
+    //           text: 'Unordered list',
+    //           style: 'header'
+    //       },
+    //       {
+    //           ol: [
+    //               'item 1',
+    //               'item 2',
+    //               'item 3',
+    //           ]
+    //       },
+    //       {
+    //           text: '\n\nUnordered list with longer lines',
+    //           style: 'header',
+    //           pageBreak: 'before',
+    //           pageOrientation: 'landscape'
+    //       },
+    //       {
+    //           ol: [
+    //               'item 1',
+    //               'Lorem ipsum dolor sit amet, consectetur ..',
+    //               'item 3',
+    //           ]
+    //       },
+    //       {
+    //           text: '\n\nNested lists',
+    //           style: 'header',
+    //           pageBreak: 'before',
+    //           pageOrientation: 'portrait'
+    //       },
+    //       {
+    //           ol: [
+    //               'item 1',
+    //               'Lorem ipsum dolor sit amet, consectetur ..',
+    //               {
+    //                   ol: [
+    //                       'subitem 1',
+    //                       'subitem 2',
+    //                       'subitem 3 - Lorem ipsum dolor sit ame...',
+    //                       'subitem 4',
+    //                       'subitem 5',
+    //                   ]
+    //               },
+    //               'item 3\nsecond line of item3',
+    //           ]
+    //       },
+    //   ]
+    //   var content1 = [content2, content]
+    //   return content1[forms.page];
     return content;
 }
 

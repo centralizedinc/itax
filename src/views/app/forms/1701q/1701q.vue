@@ -133,7 +133,7 @@
         <a-input-number style="width: 100%" v-model="form.taxpayer.address_details.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item label="11. Date of Birth (MM/DD/YYYY)">
-        <a-date-picker style="width: 100%" v-model="form.taxpayer.birthday"></a-date-picker>
+        <a-date-picker style="width: 100%" v-model="form.taxpayer.birthDate"></a-date-picker>
       </a-form-item>
       <a-form-item label="12. Email Address">
         <a-input v-model="form.taxpayer.email_address"></a-input>

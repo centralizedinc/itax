@@ -320,6 +320,7 @@ export default {
   created() {
     console.log("show sched 1: " + this.show);
     console.log("visible created sched 1: " + this.visible);
+    this.form.page = 1;
     // this.visible = this.show;
   },
   watch: {

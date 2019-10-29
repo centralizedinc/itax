@@ -31,7 +31,7 @@
               v-for="(item, index) in rdos"
               :key="index"
               :value="item.code"
-            >{{item.code}}</a-select-option>
+            >{{item.code}} - {{item.description}}</a-select-option>
           </a-select>
         </a-form-item>
       </a-col>
@@ -128,7 +128,8 @@
             style="width:100%"
             placeholder="Date of Birth"
             v-model="details.taxpayer.individual_details.birthDate"
-          ></a-date-picker>
+            :disabledDate="disabledDate"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
@@ -251,6 +252,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: {
     details: {
@@ -304,17 +307,25 @@ export default {
       },
       invalid_tin_msg: "",
       tin_validate_status: "",
-      error_messages: []
+      error_messages: [],
+      moment
     };
   },
   methods: {
-    checkTin(validate_all) {
-      console.log("validate tin : ", validate_all === true);
+    disabledDate(current) {
+      var date = new Date();
+      date.setFullYear(date.getFullYear() - 18);
+      return new Date(current).getTime() >= date.getTime();
+    },
+    async checkTin() {
       this.tin_validate_status = "validating";
+
+      // to avoid redundancy of error in tin
       const tin_index = this.error_messages.findIndex(v => v.field === "tin");
       if (tin_index > -1) this.error_messages.splice(tin_index, 1); // to clear tin error message
+
+      // check tin
       if (this.details.taxpayer.tin.length !== 13) {
-        if (validate_all === true) this.validate();
         if (!this.details.taxpayer.tin) {
           this.error_messages.push({
             field: "tin",
@@ -326,36 +337,34 @@ export default {
             message: "TIN length must be 13"
           });
         }
+        this.tin_validate_status = "error";
       } else if (this.details.taxpayer.tin !== this.user.tin) {
-        this.$store
-          .dispatch("GET_TAXPAYER_BY_TIN", {
-            tin: this.details.taxpayer.tin,
-            ignore_user: true
-          })
-          .then(result => {
-            console.log("check tin :", result);
-            if (validate_all === true) this.validate();
-            if (result && result.taxpayer) {
-              this.error_messages.push({
-                field: "tin",
-                message:
-                  "TIN has already registered. If this is your tin, kindly contact us."
-              });
-            } else {
-              this.tin_validate_status = "success";
-            }
-            if (validate_all === true && (!this.error_messages || !this.error_messages.length)) {
-              this.next();
-            }
-          })
-          .catch(err => {
-            console.log("error in fetching tin :", err);
+        // wait the result before to proceed
+        const result = await this.$store.dispatch("GET_TAXPAYER_BY_TIN", {
+          tin: this.details.taxpayer.tin,
+          ignore_user: true
+        });
+        console.log("result :", result);
+        if (result && result.taxpayer) {
+          this.error_messages.push({
+            field: "tin",
+            message:
+              "TIN has already registered. If this is your tin, kindly contact us."
           });
+          this.tin_validate_status = "error";
+        } else {
+          this.tin_validate_status = "success";
+        }
       }
     },
-    validation() {
+    async validation() {
       console.log("this.tin_validate_status :", this.tin_validate_status);
-      this.checkTin(true);
+      this.validate();
+      await this.checkTin();
+      console.log("this.error_messages :", this.error_messages);
+      if (!this.error_messages || !this.error_messages.length) {
+        this.next();
+      }
     },
     next() {
       var page = this.show_spouse ? 2 : this.show_company ? 3 : 4;
