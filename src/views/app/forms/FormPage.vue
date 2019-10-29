@@ -177,13 +177,9 @@ export default {
     Form1600WP,
     Form1604E,
     Form1601F,
-<<<<<<< HEAD
-    Form1601FQ
-=======
     Form1606,
     Form1601FQ,
     Form1601C
->>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
   },
   computed: {
     affix_computation() {
@@ -219,9 +215,15 @@ export default {
       user_list: [],
       taxpayer: null,
       form: {
+        return_period: "",
+        return_period_month: "",
+        return_period_year: "",
         taxpayer: {
           contact_details: {},
-          address_details: {}
+          address_details: {},
+          accounting_type: "",
+          start_month: "",
+          end_month: ""
         },
         page: 0,
         spouse_details: {},
@@ -310,19 +312,7 @@ export default {
             description: "Details of Payment"
           }
         ],
-        "2551q": [
-          {
-            title: "General"
-          },
-          {
-            title: "Part I",
-            description: "Background Information"
-          },
-          {
-            title: "Part II",
-            description: "Computation"
-          }
-        ],
+
         "2000ot": [
           {
             title: "General"
@@ -370,7 +360,7 @@ export default {
             description: "Computation of Tax"
           }
         ],
-         "1606": [
+        "1606": [
           {
             title: "General"
           },
@@ -394,6 +384,19 @@ export default {
           {
             title: "Part II",
             description: "Computation of Tax"
+          }
+        ],
+        "2551q": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Total Tax Payable"
           }
         ]
       },
