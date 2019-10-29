@@ -42,13 +42,9 @@ const printers = {
   FORM2000OT: Form2000ot,
   FORM1600WP: Form1600wp,
   FORM1601F: Form1601f,
-<<<<<<< HEAD
-  FORM1601FQ: Form1601fq
-=======
   FORM1606: Form1606,
   FORM1601FQ: Form1601fq,
   FORM1601C: Form1601c
->>>>>>> c9b71385d3c9fec7d2031bc53c0fefa1169fa2ac
 };
 export default {
   props: ["form", "type"],
@@ -199,15 +195,23 @@ export default {
     open() {
       var printer = printers[this.form_type];
       this.form.whole_pdf = true;
+
       console.log("form details open: " + JSON.stringify(this.form));
+      var pdf_list = []
+      for(var x = 0; x<=1;x++){
+        this.form.pdf_page = x
       var document = printer.fillup(this.form);
       var self = this;
       pdfMake.createPdf(document).open(dataUrl => {
+        pdf_list.push(dataUrl)
         console.log("getdata: " + dataUrl);
         self.prev = dataUrl;
       });
-      console.log("open form data: " + JSON.stringify(this.form));
       this.refresh();
+      console.log("open form data: " + JSON.stringify(this.form));
+      }
+      console.log("pdf list data: " + JSON.stringify(pdf_list))
+      
     },
     upload() {
       var printer = printers[this.form_type];
