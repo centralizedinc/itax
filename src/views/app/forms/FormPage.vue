@@ -152,6 +152,7 @@ import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
 import Form1601E from "./1601e/1601e.vue";
 import Form1700 from "./1700/1700.vue";
+import Form1706 from "./1706/1706.vue";
 import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
 import Form2550Q from "./2550q/2550q.vue";
@@ -170,6 +171,7 @@ export default {
     Form2550M,
     Form1601E,
     Form1700,
+    Form1706,
     Form2551Q,
     Form1701Q,
     Form2550Q,
@@ -277,7 +279,6 @@ export default {
             description: "Computation"
           }
         ],
-
         "1700": [
           {
             title: "General"
@@ -289,6 +290,23 @@ export default {
           {
             title: "Part II",
             description: "Total Tax Payable"
+          }
+        ],
+        "1706": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part I",
+            description: "Continuation of Part 1"
+          },
+          {
+            title: "Part II",
+            description: "Computation of Tax"
           }
         ],
         "1701q": [
