@@ -72,6 +72,7 @@ const model = {
         type: Number,
         default: 0
     },
+    over_remittance: [],
     date_created: {
         type: Date,
         default: new Date()

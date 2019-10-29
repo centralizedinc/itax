@@ -22,7 +22,7 @@ class CommonValidator {
         }
 
         if (!tp || !tp.contact_details || !tp.contact_details.telno) {
-            error_messages.push({ page, field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Telephone no') });
+            error_messages.push({ page, field: "taxpayer.contact_details.telno", error: constant_helper.MANDATORY_FIELD('Contact Number/Telephone no') });
         }
         if (!tp || !tp.address) {
             error_messages.push({ page, field: "taxpayer.address", error: constant_helper.MANDATORY_FIELD('Registered Address') });
@@ -151,6 +151,24 @@ class CommonValidator {
         return { error_messages, form_details };
     }
 
+    static checkNestedDueDate(form, nested_field, page) {
+        console.log('form :', form);
+        var nested_form = {}
+        if (form[nested_field]) {
+            nested_form = form[nested_field];
+        } else form[nested_field] = {}
+        nested_form.due_date = form.due_date;
+        console.log('nested_form :', nested_form);
+        var { error_messages, form_details } = this.checkDueDate(nested_form, page);
+        form[nested_field] = form_details
+        var errors = [];
+        errors = error_messages.map(v => {
+            v.field = `${nested_field}.${v.field}`;
+            return v
+        })
+        return { error_messages: errors, form_details: form }
+    }
+
     static validateReturnPeriodByQuarter(year, quarter, page) {
         var errors = [];
         console.log('year :', year);
@@ -194,11 +212,17 @@ class CommonValidator {
         } else if (reference.period_type === 'q') {
             var errors = [];
             form.accounting_type = reference.is_calendar ? 'c' : form.accounting_type;
+            if (form.accounting_type === 'c') {
+                form.start_month = 0;
+                form.end_month = 11;
+            }
             if (!form.accounting_type) {
                 errors.push({ page: 0, field: "accounting_type", error: constant_helper.MANDATORY_FIELD('Please select if Calendar or Fiscal') });
             }
-            if (!form.return_period_year || (!form.start_month && !form.end_month)) {
+            if (!form.start_month && !form.end_month) {
                 errors.push({ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('For the year') });
+            } else if (!form.return_period_year) {
+                errors.push({ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') });
             }
             if (!form.quarter) {
                 errors.push({ page: 0, field: "quarter", error: constant_helper.MANDATORY_FIELD('Quarter') });
@@ -213,9 +237,6 @@ class CommonValidator {
                     const endMonthDate = new Date(form.return_period_year, form.start_month - 1, 1);
                     form.end_month = endMonthDate.getMonth();
                 }
-            } else {
-                form.start_month = 0;
-                form.end_month = 11;
             }
             form.return_period = new Date(form.return_period_year, form.end_month + (form.quarter * 3) + 1, 0);
         } else if (reference.period_type === 'a') {

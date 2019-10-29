@@ -13,21 +13,6 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-    quarter: {
-        type: Number
-            /**
-             * 1, 2, 3, 4
-             */
-    },
-    year_type: {
-        type: Date
-    },
-    year_ended_month: {
-        type: Date
-    },
-    year_ended_year: {
-        type: Date
-    },
     sched1_tax_due: { type: Number, default: 0 }, //item14 From Schedule 1 Item 7
     tax_withheld: { type: Number, default: 0 }, //item15
     prev_tax_paid: { type: Number, default: 0 }, //item16
@@ -115,16 +100,16 @@ const model_schema = {
     }],
 };
 
-var Form2551qSchema = new Schema({...common_model, ...model_schema });
+var Form2551qSchema = new Schema({ ...common_model, ...model_schema });
 
-Form2551qSchema.pre('save', function(callback) {
+Form2551qSchema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form2551qSchema.pre('findOneAndUpdate', function(callback) {
+Form2551qSchema.pre('findOneAndUpdate', function (callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;

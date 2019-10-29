@@ -1,34 +1,50 @@
 <template>
   <div>
-    <a-form :form="form_general" v-show="step===0">
+    <a-form v-show="step===0">
       <a-divider>
         <b>Quarterly Percentage Tax Return(2551Q)</b>
       </a-divider>
-      <a-form-item label="1. For the">
-        <a-radio-group v-model="form.yearType">
+      <a-form-item
+        :labelCol="{ span: 4 }"
+        :wrapperCol="{ span: 8 }"
+        :validate-status="error_item('accounting_type')"
+        :help="error_desc('accounting_type')"
+        label="1. For the"
+      >
+        <a-radio-group v-model="form.accounting_type">
           <a-radio :value="true">Calendar</a-radio>
           <a-radio :value="false">Fiscal</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="2. Year ended (MM/YYYY)">
-        <a-month-picker v-model="form.yearEndedYear" />
+
+      <a-form-item
+        :labelCol="{ span: 8 }"
+        :wrapperCol="{ span: 12 }"
+        label="2. Year ended (MM/YYYY)"
+      >
+        <a-month-picker
+          placeholder="Select month and year"
+          style="width: 100%"
+          @change="selectYear"
+        ></a-month-picker>
       </a-form-item>
-      <a-form-item label="3. For the month of (MM/YYYY)">
-        <a-month-picker v-model="form.yearEndedMonth" />
-      </a-form-item>
-      <a-form-item label="4. Amended Return">
-        <a-radio-group v-model="form.amended_yn">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
+
+      <a-form-item :labelCol="{ span: 4 }" :wrapperCol="{ span: 12 }" label="3. Quarter">
+        <a-radio-group v-model="form.quarter">
+          <a-radio :value="1">1st</a-radio>
+          <a-radio :value="2">2nd</a-radio>
+          <a-radio :value="3">3rd</a-radio>
+          <a-radio :value="4">4th</a-radio>
         </a-radio-group>
       </a-form-item>
+
       <a-form-item label="5. No. of Sheets Attached">
         <a-input-number v-model="form.numSheets"></a-input-number>
       </a-form-item>
     </a-form>
     <br />
     <!-- Part I -->
-    <a-form :form="form_part1" v-show="step===1">
+    <a-form v-show="step===1">
       <a-divider orientation="left">
         <b>Part I: Background Information</b>
       </a-divider>
@@ -73,7 +89,7 @@
     </a-form>
 
     <!-- Part II -->
-    <a-form :form="form_part2" v-show="step===2">
+    <a-form v-show="step===2">
       <a-divider orientation="left">
         <b>Part II: Computation of Tax</b>
       </a-divider>
@@ -173,11 +189,10 @@
           <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
     </a-form>
 
     <!-- Part III -->
-    <a-form :form="form_part3" v-show="step===3">
+    <a-form v-show="step===3">
       <a-divider orientation="left">
         <b>Part III: Details of Payment</b>
       </a-divider>
@@ -246,120 +261,72 @@
           :parser="value => value.replace(/\$\s?|(,*)/g, '')"
         ></a-input-number>
       </a-form-item>
-
-      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
-    <!-- <a-button v-show="sub==false" @click="step--">Previous</a-button>
-    <a-button v-show="sub==false" type="primary" @click="step++">Next</a-button> -->
   </div>
 </template>
 
 <script>
-// import form_2551q_image from "@/assets/forms/2551q.jpg";
-
 export default {
-  props: ["form", "step"],
+  props: ["form", "step", "errors"],
   data() {
     return {
-      sub: false,
-      // form_2551q_image,
-      form_general: this.$form.createForm(this),
-      form_part1: this.$form.createForm(this),
-      form_part2: this.$form.createForm(this),
-      form_part3: this.$form.createForm(this),
-      image_height: 1000
+      loading: false,
+      image_height: 1000,
+      date_pick: "",
+      formatter: {
+        amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      },
+      parser: {
+        amount: value => value.replace(/\₱\s?|(,*)/g, "")
+      },
+      form_layout: {
+        label_col: { span: 2 },
+        wrapper_col: { span: 22 }
+      }
     };
   },
-  // watch: {
-  //   step() {
-  //     if (this.step < 0) {
-  //       this.$router.push("/");
-  //     } else if (this.step == 2) {
-  //       this.sub = true;
-  //     }
-  //   }
-  // },
+  watch: {
+    loading(val) {
+      this.$emit("loading", val);
+    },
+    form: {
+      deep: true,
+      handler(val) {
+        console.log("form :", val);
+      }
+    }
+  },
+  created() {
+    this.form.return_period_year = "";
+    this.form.end_month = "";
+    this.$emit("updateForm", this.form);
+  },
   methods: {
-    save_draft() {},
+    selectYear(date) {
+      console.log("selectYear :", new Date(date));
+      this.form.return_period_year = this.formatDate(date, {
+        year: "numeric"
+      });
+
+      this.form.end_month = this.formatDate(date, {
+        month: "2-digit"
+      });
+    },
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
     },
+    error_item(item) {
+      return this.errors.find(x => x.field === item) ? "error" : "";
+    },
+    error_desc(item) {
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
+    },
     validate() {
       this.changeStep(this.step + 1);
-      // if(this.step === 0) this.validateGeneral();
-      // else if(this.step === 1) this.validatePartI();
-    },
-    submit() {
-      this.loading = true;
-      this.$store
-        .dispatch("VALIDATE_AND_SAVE", {
-          form_type: "2551Q",
-          form_details: this.form
-        })
-        .then(result => {
-          console.log("VALIDATE_AND_SAVE result:", result.data);
-          this.loading = false;
-          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", { message: 'Successfully submitted Form 2550m.' })
-          // window.opener.location.reload();
-          window.close();
-        })
-        .catch(err => {
-          console.log("VALIDATE_AND_SAVE", err);
-          this.loading = false;
-        });
-    },
-    // submit() {
-    //   this.form.validateFieldsAndScroll((err, values) => {
-    //     if (!err) console.log("values :", values);
-    //   });
-    // }
-  },
-  // watch: {
-  //   form: {
-  //     handler(val) {
-  //       console.log("##### update 1601e ");
-  //     },
-  //     deep: true
-  //   }
-  // },
-  created() {
-    // console.log("this.$ref.container.height :", this.$refs);
-    // console.log("test :", this.$refs.container.height);
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  destroyed() {
-    window.removeEventListener("scroll", this.handleScroll);
+    }
   }
 };
 </script>
-
-<style>
-/* .tax-form .computation-item {
-  padding-left: 50px;
-}
-
-.tax-form .computation-item .ant-input-number {
-  width: 40vh;
-} */
-</style>
-.form-button {
-  float: right;
-  margin: 0;
-  margin-top: 5vh;
-}
-
-.tax-form .computation-item {
-  padding-left: 10vh;
-}
-
-.tax-form .computation-item-2 {
-  padding-left: 20vh;
-}
-
-.tax-form .computation-item .ant-input-number,
-.tax-form .computation-item-2 .ant-input-number {
-  width: 40vh;
-}
-</style>
