@@ -33,17 +33,20 @@ function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields...');
 
+
+    if (form.taxes_withheld === null || form.taxes_withheld === undefined) {
+        error_messages.push({ page: 0, field: "any_tax_withheld", error: constant_helper.MANDATORY_FIELD('Any Taxes Withheld') });
+    } else if(form.taxes_withheld){
+        if (!form.sched1 || !form.sched1.length) {
+            error_messages.push({ page: 2, field: "sched1", error: constant_helper.MANDATORY_FIELD('Fill up part II computation if any taxes withheld set to yes') });
+        }
+    }
+    // if (!form.taxes_withheld) {
+    //     error_messages.push({ page: 1, field: "taxes_withheld", error: constant_helper.MANDATORY_FIELD('Any taxes withheld') });
+    // }
     if (!form.category_of_agent) {
         error_messages.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Agent') });
     }
-    // if (!form.months_reflected || !Array.isArray(form.months_reflected) || !form.months_reflected.length) {
-    //     error_messages.push({
-    //         page: 0,
-    //         field: "months_reflected",
-    //         error: constant_helper.MANDATORY_FIELD('Months Reflected')
-    //     });
-    // }
-
     return error_messages;
 }
 

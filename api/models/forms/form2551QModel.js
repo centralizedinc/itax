@@ -13,7 +13,6 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
-
     sched1_tax_due: { type: Number, default: 0 }, //item14 From Schedule 1 Item 7
     tax_withheld: { type: Number, default: 0 }, //item15
     prev_tax_paid: { type: Number, default: 0 }, //item16

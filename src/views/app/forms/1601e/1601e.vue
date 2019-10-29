@@ -304,12 +304,13 @@
 <script>
 // import form_1601e_image from "@/assets/forms/1601e.jpg";
 import atc from "./atc.vue";
-
+import ScheduleOne from "./Schedule1";
 export default {
   components: {
+    ScheduleOne,
     atc
   },
-  props: ["form", "step"],
+  props: ["form", "step", "errors"],
   data() {
     return {
       sched: false,

@@ -153,6 +153,7 @@ function getContent(forms) {
                 }
                 ]
             ]
+
         }
     },
 
@@ -246,6 +247,7 @@ function getContent(forms) {
                 }
                 ]
             ]
+
         }
     }, {
         text: '\n\n\n'
@@ -257,7 +259,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [220, 40, 82, 42, 115],
-                body: [
+                body:
                     [{
                         // 48 characters only
                         text: ' ',
@@ -295,7 +297,6 @@ function getContent(forms) {
                         alignment: 'center'
                     }
                     ]
-                ]
             }
         })
     }
