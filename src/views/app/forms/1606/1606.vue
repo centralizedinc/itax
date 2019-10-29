@@ -161,7 +161,7 @@
       </a-form-item>
       <!-- ok 21-->
 
-      <a-form-item label="21. " :labelCol="{span:1}" :wrapperCol="{span:12}">
+      <a-form-item label="21." :labelCol="{span:1}" :wrapperCol="{span:12}">
         <a-input style="100%" v-model="form.selling_price" placeholder="SELLING PRICE"></a-input>
       </a-form-item>
       <!-- ok 22 -->
@@ -181,7 +181,7 @@
         ></a-input>
       </a-form-item>
       <!-- ok  25-->
-      <a-form-item label="25. " :labelCol="{span:1}" :wrapperCol="{span:12}">
+      <a-form-item label="25." :labelCol="{span:1}" :wrapperCol="{span:12}">
         <a-input
           style="100%"
           v-model="form.amount_installment_month"
@@ -281,7 +281,12 @@
       <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
         <a-input style="100%" v-model="form.E28888" placeholder="Computation2"></a-input>
       </a-form-item>
-
+</a-form>
+  <!-- Part II -->
+    <a-form :form="form_part1" v-show="step===2">
+      <a-divider orientation="left">
+        <b>Part II: Computation</b>
+      </a-divider>
       <a-form-item label="29. Is the seller habitually engaged in real estate business?">
         <a-radio-group v-model="form.estate">
           <a-radio :value="true">Yes</a-radio>
