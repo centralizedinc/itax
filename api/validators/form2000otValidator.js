@@ -13,18 +13,6 @@ function validate(form_details) {
     //validation begins ...
     var errors = [];
 
-    // if (!form_details.return_period) {
-    //     errors.push({
-    //         page: 0,
-    //         field: "return_period",
-    //         error: constant_helper.MANDATORY_FIELD('Date of Transaction')
-    //     });
-    //     return { errors };
-    // }
-
-    // form_details.due_date = computeDueDate(form_details.return_period);
-    // console.log('form 2000ot due date :', form_details.due_date);
-
     // validate taxpayer
     errors.push(...commonValidator.validateTaxpayerDetails(form_details.taxpayer, 1));
     console.log('done validating taxpayer...');

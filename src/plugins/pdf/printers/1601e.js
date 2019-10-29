@@ -347,7 +347,7 @@ function getContent(forms) {
                         margin: [28, 13, 0, 0],
                         alignment: 'justify'
 
-                    },
+                },
                 ]
             ]
         }
@@ -381,7 +381,7 @@ function getContent(forms) {
                         margin: [140, 0, 0, 0],
                         alignment: 'justify'
 
-                    }
+                }
                 ]
             ]
         },
