@@ -13,65 +13,79 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="3. No. of Sheets Attached">
-        <a-input-number v-model="form.num_of_sheet"></a-input-number>
-      </a-form-item>
-      <a-form-item label="4. Any Taxes Witheld?">
+            <a-form-item label="3. Any Taxes Witheld?">
         <a-radio-group v-model="form.any_tax_withheld">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
     </a-form>
-
-    <!-- Part I -->
-    <a-form :form="form_part1" v-show="step===1">
-      <a-divider orientation="left">
-        <b>Part I: Background Information</b>
-      </a-divider>
-      <!-- buyers tin -->
-      <a-form-item label="5. BUYERS TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
+      <a-form-item label="4. No. of Sheets Attached">
+        <a-input-number v-model="form.num_of_sheet"></a-input-number>
       </a-form-item>
-      <a-form-item label="6. BUYER RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
-      </a-form-item>
-      <a-form-item label="7. SELLER TIN NUMBER">
-        <a-input v-model="form.taxpayer.tin"></a-input>
-      </a-form-item>
-      <a-form-item label="8. SELLER RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
-      </a-form-item>
-      <a-form-item label="9. Buyers Registered Name">
-        <a-input v-model="form.taxpayer.registered_name"></a-input>
-      </a-form-item>
-      <a-form-item label="10. Seller Registered Name">
-        <a-input v-model="form.taxpayer.registered_name"></a-input>
-      </a-form-item>
-      <a-form-item label="11. Buyers Registered Address">
-        <a-textarea v-model="form.address"></a-textarea>
-      </a-form-item>
-
-      <a-form-item label="12. Seller Registered Address">
-        <a-textarea v-model="form.address"></a-textarea>
-      </a-form-item>
-
-      <a-form-item label="13. ATC">
+      <a-form-item label="5. ATC">
         <a-radio-group v-model="form.atc">
           <a-radio :value="true">Individual</a-radio>
           <a-radio :value="false">Corporation</a-radio>
         </a-radio-group>
       </a-form-item>
 
-      <a-form-item label="14. Category of Withholding Agent">
-        <a-radio-group v-model="form.category_of_agent">
+    <!-- Part I -->
+    <a-form :form="form_part1" v-show="step===1">
+      <a-divider orientation="left">
+        <b>Part I: Background Information</b>
+      </a-divider>
+      <!-- Tin -->
+      <a-form-item label="6. Taxpayer Identification Number (TIN)">
+        <a-input v-model="form.taxpayer.tin"></a-input>
+      </a-form-item>
+      <a-form-item label="7. RDO Code">
+        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      </a-form-item>
+       <a-form-item label="8. Withholding Agent's Name">
+        <a-radio-group v-model="form.taxpayer.name">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
+      <a-form-item label="9. Registered Address">
+        <a-textarea v-model="forms.address"></a-textarea>
+      </a-form-item>
+      <a-form-item label="9A. ZIP Code">
+        <a-input v-model="form.taxpayer.zip_code"></a-input>
+      </a-form-item>
+      <a-form-item label="10. Contact  Number">
+        <a-input v-model="form.taxpayer.contact_details"></a-input>
+      </a-form-item>
+      <a-form-item label="11. Category of Withholding  ">
+        <a-radio-group v-model="category_of_agent">
+          <a-radio :value="true">Private</a-radio>
+          <a-radio :value="false">Goverment</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="12. Email Address">
+        <a-textarea v-model="form.email"></a-textarea>
+      </a-form-item>
+            <a-form-item label="13. Availing of Tax relief Under?">
+        <a-radio-group v-model="form.is_avail_tax_relief">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+    </a-form>
+          <a-form-item label="13A If yes, specify">
+        <a-textarea v-model="form.avail_tax_relief"></a-textarea>
+      </a-form-item>
+                         
+      
+      
+
+      
+
+      
 
       <a-form-item label="15.Classification of Property">
-        <a-radio-group v-model="form.classification_property">
+        <a-radio-group v-model="form.statutory_minimum_wage">
           <a-radio :value="'RES'">Residential</a-radio>
           <a-radio :value="'AGR'">Agriculture</a-radio>
           <a-radio :value="'COM'">Commercial</a-radio>
@@ -112,7 +126,7 @@
       <!-- <a-form-item label="If yes, specify">
         <a-input v-model="form.avail_tax_relief"></a-input>
       </a-form-item>-->
-    </a-form>
+    <!-- </a-form> -->
     <!-- Part II -->
     <!-- <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
