@@ -1,9 +1,9 @@
 /**
  * 
- * @description FORM 1603Q (JANUARY 2018)
+ * @description FORM 1604C (JANUARY 2018)
  * @author Mark
- * @base_form https://www.bir.gov.ph/images/bir_files/internal_communications_2/RMCs/2018/1603Q%20Jan%202018%20ENCS%20Annex%20D.pdf
- * @version 1.0 - 10/28/2019
+ * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1604-C%20Jan%202018%20Final.pdf
+ * @version 1.0 - 10/30/2019
  * 
  */
 
@@ -13,77 +13,63 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 var common_model = require('./commonModels');
 
 const model_schema = {
-    taxes_withheld: { // item 4
+    // Part I
+    top_withholding_agent: { // item 8A
+        type: Number
+    },
+    is_refund_released: { // item 11
         type: Boolean
     },
-    category_of_agent: { // item 11
-        type: String
-        /**
-         * government
-         * private
-         */
+    date_of_refund: { // item 11A
+        type: Date
     },
-
+    total_overremittance_amount: { // item 12
+        type: Number
+    },
+    overremittance_first_crediting_month: { // item 13
+        type: String
+    },
+    
 
     // Part II
-    total_tax_withheld: { // item 14
-        type: Number
-    },
-    prev_tax: { // item 15
-        type: Number
-    },
-    other_remittances: [{ // item 16
-        description: {
+    part2: [{
+        month: { // Month
             type: String
         },
-        amount: {
+        date_remittance: { // Date of Remittance
+            type: Date
+        },
+        drawee_bank: { // Drawee Bank/Bank Code/Agency
+            type: String
+        },
+        tra_number: { // TRA/eROR/eAR Number
+            type: String
+        },
+        taxes_withheld: { // Taxes Withheld
+            type: Number
+        },
+        adjustment: { // Adjustment
+            type: Number
+        },
+        penalties: { // Penalties
+            type: Number
+        },
+        total_amount_remitted: { // Total Amount Remitted
             type: Number
         }
-    }],
-    total_remittances: { // item 17
-        type: Number
-    },
-
-
-    // Schedule 1
-    sched1: [{
-        description: { // item A
-            type: String
-        },
-        atc_code: { // item B
-            type: String
-        },
-        fringe_benefit: { // item C
-            type: Number
-        },
-        percentage_divisor: { // item D
-            type: Number
-        },
-        tax_base: { // item E
-            type: Number
-        },
-        tax_rate: { // item F
-            type: Number
-        },
-        tax_withheld: { // item G (E x F)
-            type: Number
-        }
-    }],
-    sched1_total_tax_withheld: { // sched 1 - item 3
-        type: Number
-    }
+    }]
 };
 
-var Form1603QSchema = new Schema({ ...common_model, ...model_schema });
+var Form1604CSchema = new Schema({ ...common_model, ...model_schema });
 
-Form1603QSchema.pre('save', function (callback) {
+Form1604CSchema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1603QSchema.pre('findOneAndUpdate', function (callback) {
+Form1604CSchema.pre('findOneAndUpdate', function (callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;
@@ -100,7 +86,7 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form1603QSchema, '1603q_forms', options);
+const plugin = new autoIncrement(Form1604CSchema, '1604c_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
@@ -109,4 +95,4 @@ plugin.applyPlugin().catch(e => {
 });
 
 
-module.exports = mongoose.model('1603q_forms', Form1603QSchema);
+module.exports = mongoose.model('1604c_forms', Form1604CSchema);
