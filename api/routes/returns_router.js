@@ -76,10 +76,10 @@ returns_router.route("/validate/:form_type")
                             form_details.created_by = jwt.decode(req.headers.access_token).account_id;
                             console.log(`save form(${form_type}) :`, form_details);
                             saveForm(form_type, form_details)
-                                .then((result) => {
-                                    res.json({ success: true, model: result });
-                                }).catch((err) => {
-                                    res.status(500).json({ success: false, errors: err });
+                                .then((model) => {
+                                    res.json({ success: true, model });
+                                }).catch((errors) => {
+                                    res.status(500).json({ success: false, errors });
                                 });
                         } else {
                             // return the errors
