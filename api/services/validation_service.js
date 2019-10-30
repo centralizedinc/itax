@@ -1,5 +1,7 @@
 'use strict'
 
+require('../validators/form1706Validator')
+
 /**
  * 
  * @param {String} form_type 
