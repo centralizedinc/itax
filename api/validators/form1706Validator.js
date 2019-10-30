@@ -31,16 +31,11 @@ function validateRequired(form) {
     if (!form.atc_code) { //item 4
         error_messages.push({ page: 0, field: "atc_code", error: constant_helper.MANDATORY_FIELD("ATC") });
     }
-
-    // if (!form.category_of_agent) { //item 14
-    //     error_messages.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD("Category of Agent") });
-    // }
-
     if (!form.classification_property) { //item 15
         error_messages.push({ page: 1, field: "classification_property", error: constant_helper.MANDATORY_FIELD("Classification of Property") });
     }
-    if (!form.brief_description.tct_no) { //item 16
-        error_messages.push({ page: 1, field: "brief_description.tct_no", error: constant_helper.MANDATORY_FIELD("TCT/OCT/CCT No.") });
+    if (!form.tct_no) { //item 16
+        error_messages.push({ page: 1, field: "tct_no", error: constant_helper.MANDATORY_FIELD("TCT/OCT/CCT No.") });
     }
     return error_messages;
 }

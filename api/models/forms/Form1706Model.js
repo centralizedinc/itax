@@ -35,20 +35,20 @@ const model_schema = {
     classification_property_specify: { //Item 15
         type: String
     },
-    brief_description: { //Item 16
-        tct_no: { 
+    
+        tct_no: { //Item 16
             type: String
         },
-        area_sold: {
+        area_sold: {//Item 16
             type: String
         },
-        tax_dec_no: {
+        tax_dec_no: {//Item 16
             type: String
         },
-        others:{
+        others:{//Item 16
             type: String
-        }
-    },  
+        },
+
     sold_as_principal_property: { //Item 17
         type: Boolean,
         default: false
