@@ -496,7 +496,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.hazard_pay),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -517,7 +517,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.other_benefit),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -538,7 +538,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.minimis_benefits),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -559,7 +559,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.mandatory_contribution),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -580,7 +580,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.other_taxable_compensation),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -601,7 +601,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.non_taxable_compensation),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -622,7 +622,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.total_taxable_compensation),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -643,7 +643,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.less_taxable_compensation ),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -664,7 +664,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.net_taxable_required),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -685,7 +685,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.total_taxes_witheld),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -706,7 +706,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.adjustment),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -727,7 +727,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.tax_required_remittance),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -748,7 +748,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.tax_remitted_previously),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -769,7 +769,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.other_payments_made),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -790,7 +790,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.total_payments_made),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -811,7 +811,8 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+      // use to compute penalties
+                    text: formatAmount(form.tax_due),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -835,7 +836,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.surcharge),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -856,7 +857,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.interest),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -877,7 +878,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.compromise),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -898,7 +899,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.penalties),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -919,7 +920,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(form.statutory_minimum_wage),
+                    text: formatAmount(form.total_amount_payables),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up

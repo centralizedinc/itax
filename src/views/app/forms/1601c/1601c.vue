@@ -78,13 +78,102 @@
       </a-form-item>
                          
       
+    <!-------Part II Computation --------->
+
+<a-form-item label="14. Total Amount of Compensation">
+        <a-input v-model="form.compensation"></a-input>
+      </a-form-item>
+
+<a-form-item label="15. Statutory Minimum Wage">
+        <a-input v-model="form.statutory_minimum_wage"></a-input>
+      </a-form-item>
+
+  <a-form-item label="16. Holiday Pay">
+        <a-input v-model="form.hazard_pay"></a-input>
+      </a-form-item>
+
+      <a-form-item label="17. 13th Month pay">
+        <a-input v-model="form.other_benefits"></a-input>
+      </a-form-item>
+
+      <a-form-item label="18. De Minimis Benefits">
+        <a-input v-model="form.minimis_benefits"></a-input>
+      </a-form-item>
+
+      <a-form-item label="19. SSS">
+        <a-input v-model="form.mandatory_contribution"></a-input>
+      </a-form-item>
+
+      <a-form-item label="20. Other Non taxable">
+        <a-input v-model="form.other_taxable_compensation"></a-input>
+      </a-form-item>
+
+      <a-form-item label="21. Total Non taxable">
+        <a-input v-model="form.non_taxable_compensation"></a-input>
+      </a-form-item>
+
+      <a-form-item label="22. Total taxable com pensation">
+        <a-input v-model="form.total_taxable_compensation"></a-input>
+      </a-form-item>
+
+      <a-form-item label="23. Less taxable compensation">
+        <a-input v-model="form.less_taxable_compensation"></a-input>
+      </a-form-item>
+
+      <a-form-item label="24. Net taxable compensation">
+        <a-input v-model="form.net_taxable_required"></a-input>
+      </a-form-item>
+
+      <a-form-item label="25. Total Taxes witheld">
+        <a-input v-model="form.total_taxes_witheld"></a-input>
+      </a-form-item>
+
+      <a-form-item label="26. Add/less adjustment ">
+        <a-input v-model="form.adjustment"></a-input>
+      </a-form-item>
+
+      <a-form-item label="27. taxes witheld for remitance">
+        <a-input v-model="form.tax_required_remittance"></a-input>
+      </a-form-item>
+
+<a-form-item label="28. Less tax remitted">
+        <a-input v-model="form.tax_remitted_previously"></a-input>
+      </a-form-item>
+
+      <a-form-item label="29. other remittances">
+        <a-input v-model="form.other_payments_made"></a-input>
+      </a-form-item>
+
+      <a-form-item label="30. total tax remittance">
+        <a-input v-model="form.total_payments_made"></a-input>
+      </a-form-item>
+
+      <a-form-item label="31 tax still due">
+        <a-input v-model="form.tax_due"></a-input>
+      </a-form-item>
+
+      <a-form-item label="32. Surcharge">
+        <a-input v-model="form.surcharge"></a-input>
+      </a-form-item>
+
+      <a-form-item label="33. interest">
+        <a-input v-model="form.interest"></a-input>
+      </a-form-item>
+
+      <a-form-item label="34. Compromize">
+        <a-input v-model="form.compromise"></a-input>
+      </a-form-item>
+
+      <a-form-item label="35. Total penalties">
+        <a-input v-model="form.penalties"></a-input>
+      </a-form-item>
+
+      <a-form-item label="36. Total amount still due">
+        <a-input v-model="form.total_amount_payable"></a-input>
+      </a-form-item>
       
 
-      
-
-      
-
-      <a-form-item label="15.Classification of Property">
+      <!-- <a-form-item label="15.Classification of Property">
         <a-radio-group v-model="form.statutory_minimum_wage">
           <a-radio :value="'RES'">Residential</a-radio>
           <a-radio :value="'AGR'">Agriculture</a-radio>
@@ -110,7 +199,7 @@
         </a-form-item>
       </a-form-item>
        </a-form-item>
-       </a-form-item>
+       </a-form-item> -->
 
       <!-- <a-form-item label="10. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
