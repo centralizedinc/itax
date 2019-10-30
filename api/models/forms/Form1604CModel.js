@@ -14,6 +14,14 @@ var common_model = require('./commonModels');
 
 const model_schema = {
     // Part I
+    category_of_agent: { // item 8
+        type: String
+        /**
+         * government
+         * private
+         */
+    },
+    // if private
     top_withholding_agent: { // item 8A
         type: Number
     },

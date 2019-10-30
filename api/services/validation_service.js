@@ -22,6 +22,7 @@ const form1701aValidator = require('../validators/form1701aValidator');
 const form1601eqValidator = require('../validators/form1601eqValidator');
 const form1602qValidator = require('../validators/form1602qValidator');
 const form1603qValidator = require('../validators/form1603qValidator');
+const form1604cValidator = require('../validators/form1604cValidator');
 
 /**
  * 
@@ -73,6 +74,8 @@ function validate(form_type, form_details) {
             return form1602qValidator.validate(form_details);
         case "1603Q":
             return form1603qValidator.validate(form_details);
+        case "1604C":
+            return form1604cValidator.validate(form_details);
         default:
             return { errors: [{ error: "Invalid Form Validator" }], form_details }
     }
