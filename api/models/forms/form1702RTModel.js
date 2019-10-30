@@ -39,8 +39,8 @@ const model_schema = {
     }, //item10
     method_deduction: {
         type: String
-            // itemized_deduction,
-            // optional_standard_deduction
+            // ID,
+            // OSD
     },
 
     //Part 2 Total tax payable
