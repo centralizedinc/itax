@@ -100,16 +100,16 @@ const model_schema = {
     }],
 };
 
-var Form2551qSchema = new Schema({...common_model, ...model_schema });
+var Form2551qSchema = new Schema({ ...common_model, ...model_schema });
 
-Form2551qSchema.pre('save', function(callback) {
+Form2551qSchema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form2551qSchema.pre('findOneAndUpdate', function(callback) {
+Form2551qSchema.pre('findOneAndUpdate', function (callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;

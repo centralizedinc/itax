@@ -19,9 +19,9 @@ export default {
                 },
                 formatDate(date, type) {
                     if (!date) {
-                        return "";
+                        return " ";
                     }
-                    if(type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
+                    if (type === 'dateonly') type = { year: "numeric", month: "long", day: "2-digit" };
                     var dt = new Date(date).toLocaleString("en-US", type ? type : {
                         hour12: true,
                         year: "numeric",
