@@ -35,7 +35,7 @@ const model_schema = {
     classification_property_specify: { //Item 15
         type: String
     },
-    brief_descriptio: { //Item 16
+    brief_description: { //Item 16
         tct_no: { 
             type: String
         },
