@@ -16,7 +16,7 @@ const ReturnPeriodSchema = new mongoose.Schema({
          * a - annual
          */
     },
-    is_calendar: { // for quarterly
+    is_calendar: { // for annual and quarterly
         type: Boolean,
         default: false
     },
@@ -31,6 +31,9 @@ const ReturnPeriodSchema = new mongoose.Schema({
          * if + ? add from the start of the month which is 0
          * else if - ? substract from end of the month
          */
+    },
+    fixed_due_date: { // if this is not null, ignore month_offset and day_offset
+        type: Date
     },
     status: {
         type: String,
