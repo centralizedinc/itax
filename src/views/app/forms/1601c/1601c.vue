@@ -19,7 +19,7 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-    </a-form>
+    
       <a-form-item label="4. No. of Sheets Attached">
         <a-input-number v-model="form.num_of_sheet"></a-input-number>
       </a-form-item>
@@ -29,7 +29,7 @@
           <a-radio :value="false">Corporation</a-radio>
         </a-radio-group>
       </a-form-item>
-
+    </a-form>
     <!-- Part I -->
     <a-form :form="form_part1" v-show="step===1">
       <a-divider orientation="left">
@@ -43,28 +43,28 @@
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
        <a-form-item label="8. Withholding Agent's Name">
-        <a-radio-group v-model="form.taxpayer.name">
+        <a-radio-group v-model="form.taxpayer.registered_name">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="9. Registered Address">
-        <a-textarea v-model="forms.address"></a-textarea>
+        <a-textarea v-model="form.address"></a-textarea>
       </a-form-item>
       <a-form-item label="9A. ZIP Code">
         <a-input v-model="form.taxpayer.zip_code"></a-input>
       </a-form-item>
       <a-form-item label="10. Contact  Number">
-        <a-input v-model="form.taxpayer.contact_details"></a-input>
+        <a-input v-model="form.taxpayer.contact_details.telno"></a-input>
       </a-form-item>
       <a-form-item label="11. Category of Withholding  ">
-        <a-radio-group v-model="category_of_agent">
+        <a-radio-group v-model="form.category_of_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Goverment</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="12. Email Address">
-        <a-textarea v-model="form.email"></a-textarea>
+        <a-textarea v-model="form.taxpayer.contact_details.email"></a-textarea>
       </a-form-item>
             <a-form-item label="13. Availing of Tax relief Under?">
         <a-radio-group v-model="form.is_avail_tax_relief">
@@ -72,23 +72,23 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-    </a-form>
+    
           <a-form-item label="13A If yes, specify">
         <a-textarea v-model="form.avail_tax_relief"></a-textarea>
       </a-form-item>
-                         
+        </a-form>                 
       
     <!-------Part II Computation of tax --------->
-
-<a-form-item label="14. Total Amount of Compensation">
+<a-form :form="form_part2" v-show="step===2">
+      <a-form-item label="14. Total Amount of Compensation">
         <a-input v-model="form.compensation"></a-input>
       </a-form-item>
 
-<a-form-item label="15. Statutory Minimum Wage">
+      <a-form-item label="15. Statutory Minimum Wage">
         <a-input v-model="form.statutory_minimum_wage"></a-input>
       </a-form-item>
 
-  <a-form-item label="16. Holiday Pay">
+      <a-form-item label="16. Holiday Pay">
         <a-input v-model="form.hazard_pay"></a-input>
       </a-form-item>
 
@@ -136,7 +136,7 @@
         <a-input v-model="form.tax_required_remittance"></a-input>
       </a-form-item>
 
-<a-form-item label="28. Less tax remitted">
+      <a-form-item label="28. Less tax remitted">
         <a-input v-model="form.tax_remitted_previously"></a-input>
       </a-form-item>
 
@@ -168,102 +168,16 @@
         <a-input v-model="form.penalties"></a-input>
       </a-form-item>
 
-      <a-form-item label="36. Total amount still due">
+      <a-form-ite label="36. Total amount still due">
         <a-input v-model="form.total_amount_payable"></a-input>
-      </a-form-item>
+    </a-form-ite>
       
-
-      <!-- <a-form-item label="15.Classification of Property">
-        <a-radio-group v-model="form.statutory_minimum_wage">
-          <a-radio :value="'RES'">Residential</a-radio>
-          <a-radio :value="'AGR'">Agriculture</a-radio>
-          <a-radio :value="'COM'">Commercial</a-radio>
-          <a-radio :value="'IND'">Industrial</a-radio>
-          <a-radio :value="'CONR'">Condominum Residential</a-radio>
-          <a-radio :value="'CONC'">Condominum Commercial</a-radio>
-        </a-radio-group>
-        <a-form-item label="If yes, specify"></a-form-item>
-        <a-textarea v-model="form.plsspecify"></a-textarea>
-      </a-form-item>
-      <a-form-item label="16. location of the Property">
-        <a-input v-model="form.loc_property"></a-input>
-      </a-form-item>
-      <a-form-item label="17. Brief Description of the Property">
-        <a-input v-model="form.area_sold_sqm"></a-input>
-        <a-form-item label="Tax Doc Number">
-          <a-input v-model="form.tax_doc_no"></a-input>
-           <a-form-item label="TCT/OCT/CCT">
-          <a-input v-model="form.tct"></a-input>
-            <a-form-item label="Others">
-          <a-input v-model="form.others"></a-input>
-        </a-form-item>
-      </a-form-item>
-       </a-form-item>
-       </a-form-item> -->
-
-      <!-- <a-form-item label="10. Zip Code">
-        <a-input-number v-model="form.zipCode"></a-input-number>
-      </a-form-item>
-      <a-form-item
-        label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
-      >
-        <a-radio-group v-model="form.is_avail_tax_relief">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
-        </a-radio-group>
-      </a-form-item>-->
-      <!-- <a-form-item label="If yes, specify">
-        <a-input v-model="form.avail_tax_relief"></a-input>
-      </a-form-item>-->
-    <!-- </a-form> -->
-    <!-- Part II -->
-    <!-- <a-form :form="form_part2" v-show="step===2">
-      <a-divider orientation="left">
-        <b>Part II: Computation of Tax</b>
-      </a-divider>
-      <a-form-item label="12. Tax Required to be Withheld and Remitted">
-        <a-input-number v-model="form.tax_req_withld_remtd"></a-input-number>
-      </a-form-item>
-      <a-form-item
-        label="13. Less: Tax Remitted in Return Previously filed, if this is an amended return "
-      >
-        <a-input-number v-model="form.less_tax_remtd_retrn"></a-input-number>
-      </a-form-item>
-      <a-form-item label="14. Tax Still Due(Overremittance) ">
-        <a-input-number v-model="form.tax_due"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15A. Surcharge ">
-        <a-input-number v-model="form.surcharge"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15B. Interest ">
-        <a-input-number v-model="form.interest"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15C. Compromise ">
-        <a-input-number v-model="form.compromise"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15D. Tax Required to be withheld ">
-        <a-input-number v-model="form.penalties"></a-input-number>
-      </a-form-item>
-      <a-form-item label="16. Tax Required to be withheld ">
-        <a-input-number v-model="form.total_amount_payable"></a-input-number>
-      </a-form-item>
-      <a-form-item label="16. if overremittance">
-        <a-radio-group v-model="form.taxpayer.overremittance">
-          <a-radio :value="true">To be Refunded</a-radio>
-          <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item label="16. For the month of (MM/DD/YYYY)">
-        <a-date-picker v-model="form.start_month" />
-        <a-date-picker v-model="form.end_month" />
-      </a-form-item>
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form>-->
+</a-form>  
+      
   </div>
 </template>
 
 <script>
-// import form_1606_image from "@/assets/forms/1606.jpg";
 
 export default {
   props: ["form", "step"],
