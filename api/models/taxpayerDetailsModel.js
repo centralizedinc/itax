@@ -93,7 +93,7 @@ var taxpayerDetailsSchema = new Schema({
 });
 
 taxpayerDetailsSchema.pre('save', function (callback) {
-  this.date_created = new Date();
+  // this.date_created = new Date();
   this.date_modified = new Date();
   callback();
 });

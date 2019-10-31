@@ -10,6 +10,7 @@ var ReturnsDetailsSchema = new Schema({
         return_period: Date,
         due_date: Date,
         filing_status: String,
+        rdo_code: String, // RDO Code
         payment_status: {
                 type: String,
                 default: 'unpaid'
@@ -36,7 +37,7 @@ var ReturnsDetailsSchema = new Schema({
 
 ReturnsDetailsSchema.pre('save', function (callback) {
         var form = this;
-        form.date_created = new Date();
+        // form.date_created = new Date();
         form.date_modified = new Date();
         callback();
 });
