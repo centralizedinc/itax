@@ -376,7 +376,7 @@ export default new Router({
     children: [{
       path: '',
       name: "Dashboard",
-      component: () => import('./views/admin/Dashboard.vue')
+      component: () => import('./views/admin/dashboard/Dashboard.vue')
     }]
   }
   ]

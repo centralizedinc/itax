@@ -21,6 +21,8 @@ function save(form_type, form_details) {
                     reference_no: result.reference_no,
                     tin: result.taxpayer.tin,
                     form_type: form_type,
+                    rdo_code: result.rdo_code,
+                    taxpayer_type: result.taxpayer_type,
                     return_period: result.return_period,
                     due_date: result.due_date,
                     tax_due: result.tax_due,

@@ -1,5 +1,5 @@
 <template>
-  
+  <a-card>Taxpayers</a-card>
 </template>
 
 <script>
