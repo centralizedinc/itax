@@ -6,7 +6,21 @@ var Schema = mongoose.Schema;
 var rdoSchema = new Schema({
     code:String,
     description: String,
-    status:String,
+    coordinates: {
+        lat:{
+            type: Number
+        },
+        lng: {
+            type: Number
+        },
+        radius: {
+            type: Number
+        }
+    },
+    status:{
+        type:String,
+        default: "A"
+    }
 });
 
 

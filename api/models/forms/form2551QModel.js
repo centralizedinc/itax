@@ -13,14 +13,15 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 const common_model = require('./commonModels');
 
 const model_schema = {
+    tax_rate: {type: String}, //item 13 (GITR || ITR)
     sched1_tax_due: { type: Number, default: 0 }, //item14 From Schedule 1 Item 7
     tax_withheld: { type: Number, default: 0 }, //item15
     prev_tax_paid: { type: Number, default: 0 }, //item16
     other_tax_credits: { type: Number, default: 0 }, //item17
+    other_tax_credits_specify: {type: String}, //item 17 (specify)
     total_tax_credits: { type: Number, default: 0 }, //item18 Sum of Items 15 to 17
-    refund_type: {
-        type: String
-    },
+    tot_tax_overpayment:{ type: Number, default: 0}, //item 19
+    
     particular_cash: [{ //item25
         drawee_bank: {
             type: Number,
