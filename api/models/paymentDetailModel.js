@@ -18,6 +18,13 @@ var PaymentDetailsSchema = new Schema({
     created_by: String,
     auto_id: {
         type: Number
+    },
+    form_type: {
+        type: String
+    },
+    date_created: {
+        type: Date,
+        default: new Date
     }
 });
 
