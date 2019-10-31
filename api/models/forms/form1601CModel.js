@@ -1,6 +1,6 @@
 /**
  * 
- * @description FORM 1601C (JANUARY 2018)
+ * @description FORM 1601C (J NUARY 2018)
  * @author Venus
  * @base_form https://www.bir.gov.ph/images/bir_files/taxpayers_service_programs_and_monitoring_1/1601C%20final%20Jan%202018%20with%20DPA.pdf
  * @version 1.0 - 10/14/2019

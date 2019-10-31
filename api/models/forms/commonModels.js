@@ -8,6 +8,7 @@ const model = {
     taxpayer: {}, // taxpayer details as of filed date, fields can be found at ../taxpayerDetailsModel.js
     spouse_details: {}, // details of taxpayer's spouse as of filed date, fields can be found at ../taxpayerDetailsModel.js
     seller_details: {}, // details of taxpayer's seller as of filed date, fields can be found at ../taxpayerDetailsModel.js
+    buyer_details: {}, // details of taxpayer's buyer as of filed date, fields can be found at ../taxpayerDetailsModel.js
     employer_details: {}, // details taxpayer's employer as of filed date, fields can be found at ../taxpayerDetailsModel.js
     spouse_employer_details: {}, // details of spouse's employer as of filed date, fields can be found at ../taxpayerDetailsModel.js
     due_date: { // use to compute penalties if late filing
@@ -41,7 +42,10 @@ const model = {
         type: Number,
         default: 0
     },
-    is_avail_tax_relief: { // If availing of tax relief under Special Law or International Tax Treaty?
+    any_taxes_withheld: { // Any Taxes Withheld?
+        type: Boolean
+    },
+    is_avail_tax_relief: { // If availing of tax relief under Spe ial Law or International Tax Treaty?
         type: Boolean,
         default: false
     },
