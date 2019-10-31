@@ -78,7 +78,7 @@
       </a-form-item>
                          
       
-    <!-------Part II Computation --------->
+    <!-------Part II Computation of tax --------->
 
 <a-form-item label="14. Total Amount of Compensation">
         <a-input v-model="form.compensation"></a-input>
@@ -149,7 +149,7 @@
       </a-form-item>
 
       <a-form-item label="31 tax still due">
-        <a-input v-model="form.tax_due"></a-input>
+      <a-input v-model="form.tax_due"></a-input>
       </a-form-item>
 
       <a-form-item label="32. Surcharge">
