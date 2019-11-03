@@ -1,15 +1,23 @@
 <template>
   <a-card>
     <statistics />
+    <a-divider />
+    <collection-per-rdo />
+    <a-divider />
+    <collection-per-tax-type />
   </a-card>
 </template>
 
 <script>
-import Statistics from "./Statistics";
+import Statistics from "./statistics/Statistics";
+import CollectionPerRdo from "./statistics/CollectionPerRdo";
+import CollectionPerTaxType from "./statistics/CollectionPerTaxType";
 
 export default {
   components: {
-    Statistics
+    Statistics,
+    CollectionPerRdo,
+    CollectionPerTaxType
   },
   data() {
     return {
