@@ -1,11 +1,11 @@
 <template>
-  <a-card>
+  <div>
     <statistics />
     <a-divider />
     <collection-per-rdo />
     <a-divider />
     <collection-per-tax-type />
-  </a-card>
+  </div>
 </template>
 
 <script>
@@ -20,13 +20,10 @@ export default {
     CollectionPerTaxType
   },
   data() {
-    return {
-      
-    };
+    return {};
   }
 };
 </script>
 
 <style>
-
 </style>
