@@ -9,14 +9,14 @@ const ReturnPeriodSchema = new mongoose.Schema({
     },
     period_type: {
         type: String
-        /**
-         * o - one time
-         * m - monthly
-         * q - quarterly
-         * a - annual
-         */
+            /**
+             * o - one time
+             * m - monthly
+             * q - quarterly
+             * a - annual
+             */
     },
-    is_calendar: { // for quarterly
+    is_calendar: { // for annual and quarterly
         type: Boolean,
         default: false
     },
@@ -27,18 +27,21 @@ const ReturnPeriodSchema = new mongoose.Schema({
     },
     day_offset: {
         type: Number
-        /**
-         * if + ? add from the start of the month which is 0
-         * else if - ? substract from end of the month
-         */
+            /**
+             * if + ? add from the start of the month which is 0
+             * else if - ? substract from end of the month
+             */
+    },
+    fixed_due_date: { // if this is not null, ignore month_offset and day_offset
+        type: Date
     },
     status: {
         type: String,
         default: 'A'
-        /**
-         * A - ACTIVE
-         * I - INACTIVE
-         */
+            /**
+             * A - ACTIVE
+             * I - INACTIVE
+             */
     },
     created_by: {
         type: String
@@ -56,14 +59,14 @@ const ReturnPeriodSchema = new mongoose.Schema({
     }
 })
 
-ReturnPeriodSchema.pre('save', function (callback) {
+ReturnPeriodSchema.pre('save', function(callback) {
     this.date_created = new Date();
     this.date_modified = new Date();
     this.status = 'A';
     callback();
 });
 
-ReturnPeriodSchema.pre('findOneAndUpdate', function (callback) {
+ReturnPeriodSchema.pre('findOneAndUpdate', function(callback) {
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();

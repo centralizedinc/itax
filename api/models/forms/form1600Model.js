@@ -1,22 +1,20 @@
 /**
  * 
- * @description FORM 1603Q (JANUARY 2018)
+ * @description FORM 1600 (September 2005)
  * @author Mark
- * @base_form https://www.bir.gov.ph/images/bir_files/internal_communications_2/RMCs/2018/1603Q%20Jan%202018%20ENCS%20Annex%20D.pdf
- * @version 1.0 - 10/28/2019
+ * @base_form https://www.bir.gov.ph/images/bir_files/old_files/pdf/268811600%20final.pdf
+ * @version 1.0 - 10/30/2019
  * 
  */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIncrementID;
-var common_model = require('./commonModels');
+const common_model = require('./commonModels');
 
 const model_schema = {
-    taxes_withheld: { // item 4
-        type: Boolean
-    },
-    category_of_agent: { // item 11
+    // `any taxes withheld`. can be found at common model
+    category_of_agent: { // item 12
         type: String
         /**
          * government
@@ -25,71 +23,76 @@ const model_schema = {
     },
 
 
-    // Part II
-    total_tax_withheld: { // item 14
+    // Part II - Computation of Tax
+    prev_tax_due: {
         type: Number
     },
-    prev_tax: { // item 15
-        type: Number
-    },
-    other_remittances: [{ // item 16
-        description: {
-            type: String
-        },
-        amount: {
-            type: Number
-        }
-    }],
-    total_remittances: { // item 17
+    prev_tax_paid: {
         type: Number
     },
 
-
-    // Schedule 1
+    
     sched1: [{
-        description: { // item A
+        description: { // Nature of Income Payment
             type: String
         },
-        atc_code: { // item B
+        atc_code: { // ATC
             type: String
         },
-        fringe_benefit: { // item C
+        tax_base: { // Tax Base
             type: Number
         },
-        percentage_divisor: { // item D
+        tax_rate: { // Tax Rate
             type: Number
         },
-        tax_base: { // item E
-            type: Number
-        },
-        tax_rate: { // item F
-            type: Number
-        },
-        tax_withheld: { // item G (E x F)
+        tax_withheld: { // Tax Required to be withheld
             type: Number
         }
     }],
-    sched1_total_tax_withheld: { // sched 1 - item 3
-        type: Number
-    }
+    // Alphabetical list of payees
+    sched2: [{
+        // Payee Details
+        tin: { // TIN
+            type: String
+        },
+        registered_name: { // Individual/Corporation
+            type: String
+        },
+        // Income payment/ Tax Withheld details
+        description: { // Nature of Income Payment
+            type: String
+        },
+        atc_code: { // ATC
+            type: String
+        },
+        tax_base: { // Tax Base
+            type: Number
+        },
+        tax_rate: { // Tax Rate
+            type: Number
+        },
+        tax_withheld: { // Tax Required to be withheld
+            type: Number
+        }
+    }]
 };
 
-var Form1603QSchema = new Schema({ ...common_model, ...model_schema });
+var Form1600Schema = new Schema({ ...common_model, ...model_schema });
 
-Form1603QSchema.pre('save', function (callback) {
+Form1600Schema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1603QSchema.pre('findOneAndUpdate', function (callback) {
-    console.log('this :', this._update);
+Form1600Schema.pre('findOneAndUpdate', function (callback) {
     this.options.new = true;
     this.options.runValidators = true;
     this._update.date_modified = new Date();
     callback();
 });
+
 
 const options = {
     field: 'auto_id', // auto_id will have an auto-incrementing value
@@ -100,7 +103,7 @@ const options = {
     unique: false // Don't add a unique index
 };
 
-const plugin = new autoIncrement(Form1603QSchema, '1603q_forms', options);
+const plugin = new autoIncrement(Form1600Schema, '1600_forms', options);
 // users._nextCount()
 //     .then(count => console.log(`The next ID will be ${count}`));
 plugin.applyPlugin().catch(e => {
@@ -109,4 +112,4 @@ plugin.applyPlugin().catch(e => {
 });
 
 
-module.exports = mongoose.model('1603q_forms', Form1603QSchema);
+module.exports = mongoose.model('1600_forms', Form1600Schema);

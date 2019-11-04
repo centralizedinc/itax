@@ -30,7 +30,7 @@ export default class TaxpayersAPI {
      * @param {String} tin
      * @param {Boolean} ignore_user
      */
-    getTaxpayerByTIN(tin, ignore_user){
+    getTaxpayerByTIN(tin, ignore_user) {
         return axios.get(`/taxpayer/tin/${tin}?ignore_user=${ignore_user}`);
     }
 
@@ -39,7 +39,14 @@ export default class TaxpayersAPI {
      * @param {String} id 
      * @param {Object} data 
      */
-    update(id, data){
+    update(id, data) {
         return axios.post(`taxpayer/${id}`, data);
+    }
+
+    /**
+     * @returns {Promise}
+     */
+    getTaxpayers() {
+        return axios.get("taxpayer");
     }
 }

@@ -19,7 +19,7 @@
         :wrapperCol="form_layout.wrapper_col"
         label="2"
       >
-        <a-radio-group v-model="form.amended_yn" :defaultValue="false" style="width: 100%">
+        <a-radio-group v-model="form.amended_yn" style="width: 100%">
           <span style="margin-right: 14px">Amended Return</span>
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>

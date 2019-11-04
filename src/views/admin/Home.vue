@@ -7,18 +7,9 @@
     </a-back-top>
     <a-layout-header class="header" :style="headerStyle">
       <a-row type="flex" justify="start" :gutter="8" data-aos="fade-up">
-        <!-- <a-col :span="2">
-          <a-avatar style="cursor:pointer" @click="$router.push('/')" src="https://www.lucenacity.gov.ph/img/Lucena_Seal200.png" :size="50"></a-avatar>
-        </a-col>-->
         <a-col :span="4">
           <h2 style="color:white;">Smart Tax Admin</h2>
         </a-col>
-        <!-- <a-col :span="8">
-          <a-tabs :tabBarStyle="{color:red}">
-            <a-tab-pane key="1" tab="Home"></a-tab-pane>
-            
-          </a-tabs>
-        </a-col>-->
 
         <a-col :span="2" :push="14">
           <a-button ghost block type="link">About</a-button>

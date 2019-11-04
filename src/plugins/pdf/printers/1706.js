@@ -37,7 +37,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [500],
-                heights: [66],
+                heights: [60],
                 body: [
                     [{
                         text: ' '
@@ -50,7 +50,6 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [53, 23, 20, 54, 34, 25, 32, 35, 60, 10],
-                heights: [25],
                 body: [
                     [
                         {
@@ -62,7 +61,7 @@ function getContent(forms) {
                             bold: true,
                             characterSpacing: 4,
                             alignment: 'left',
-                            margin: [5, 0, 0, 0]
+                            margin: [5, 6, 0, 0]
                         },
                         {
                             text: formatDate(forms.return_period, { day: "2-digit" }),
@@ -70,7 +69,7 @@ function getContent(forms) {
                             fontSize: 12,
                             characterSpacing: 6,
                             alignment: 'left',
-                            margin: [0, 0, 0, 0]
+                            margin: [0, 6, 0, 0]
                         },
                         {
                             text: formatDate(forms.return_period, { year: "numeric" }),
@@ -78,21 +77,21 @@ function getContent(forms) {
                             fontSize: 12,
                             characterSpacing: 4,
                             alignment: 'left',
-                            margin: [0, 0, 0, 0]
+                            margin: [0, 6, 0, 0]
                         },
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
                             fontSize: 12,
                             bold: true,
                             alignment: 'justified',
-                            margin: [0, 3, 0, 0]
+                            margin: [0, 6, 0, 0]
                         },
                         {
                             text: forms.amended_yn == false ? 'X' : ' ',
                             fontSize: 12,
                             bold: true,
                             alignment: 'justified',
-                            margin: [0, 3, 0, 0]
+                            margin: [0, 6, 0, 0]
                         },
                         {
                             text: ' ',
@@ -103,7 +102,7 @@ function getContent(forms) {
                             characterSpacing: 6,
                             bold: true,
                             alignment: 'justified',
-                            margin: [5, 0, 0, 0]
+                            margin: [5, 6, 0, 0]
                         },
                         {
                             text: ' '
@@ -114,17 +113,17 @@ function getContent(forms) {
                                 body: [
                                     [{
                                         text: forms.atc_code == 0 ? 'X' : ' ',
-                                        fontSize: 9,
+                                        fontSize: 10,
                                         bold: true,
                                         alignment: 'left',
-                                        margin: [0, -8, 0, 0]
+                                        margin: [0, -2, 0, 0]
                                     }],
                                     [{
                                         text: forms.atc_code == 1 ? 'X' : ' ',
-                                        fontSize: 9,
+                                        fontSize: 10,
                                         bold: true,
                                         alignment: 'left',
-                                        margin: [0, -4, 0, 0]
+                                        margin: [0, -6, 0, 0]
                                     }]
                                 ]
                             },
@@ -138,7 +137,7 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [56, 32, 30, 36, 80, 50, 32, 30, 38, 80],
-                heights: [20],
+                heights: [22],
                 body: [
                     [{
                         text: mapTin(forms.taxpayer.tin, 0, 3),
@@ -146,7 +145,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [25, 0, 0, 0]
+                        margin: [25, 8, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
@@ -154,7 +153,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 8, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
@@ -162,7 +161,7 @@ function getContent(forms) {
                         bold: true,
                         characterSpacing: 3,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 8, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
@@ -170,7 +169,7 @@ function getContent(forms) {
                         bold: true,
                         characterSpacing: 4,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 8, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -178,7 +177,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [30, 0, 0, 0]
+                        margin: [30, 8, 0, 0]
                     },
                     // item 7 & 8 buyer//
                     {
@@ -187,7 +186,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [20, 0, 0, 0]
+                        margin: [20, 8, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 3, 6),
@@ -195,7 +194,7 @@ function getContent(forms) {
                         characterSpacing: 3,
                         bold: true,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 8, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 6, 9),
@@ -203,7 +202,7 @@ function getContent(forms) {
                         bold: true,
                         characterSpacing: 3,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 8, 0, 0]
                     },
                     {
                         text: mapTin(forms.taxpayer.tin, 9, 12),
@@ -211,7 +210,7 @@ function getContent(forms) {
                         bold: true,
                         characterSpacing: 4,
                         alignment: 'left',
-                        margin: [0, 0, 0, 0]
+                        margin: [0, 8, 0, 0]
                     },
                     {
                         text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
@@ -219,17 +218,17 @@ function getContent(forms) {
                         characterSpacing: 8,
                         bold: true,
                         alignment: 'left',
-                        margin: [40, 0, 0, 0]
+                        margin: [40, 8, 0, 0]
                     }]
                 ]
             }
         },
         // 9 - 14
         {
-            layout: "noBorders",
+            // layout: "noBorders",
             table: {
                 widths: [240, 280],
-                // heights: [23, 18, 0],
+                heights: [23, 18, 0],
                 body: [
                     [{
                         text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
@@ -325,34 +324,34 @@ function getContent(forms) {
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
-                                        margin: [1, -7, 0, 0],
+                                        margin: [1, -5, 0, 0],
                                     },
                                     {
                                         text: forms.real_property_class == 'I' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
-                                        margin: [0, -7, 0, 0],
+                                        margin: [0, -5, 0, 0],
                                     },
                                     {
                                         text: forms.real_property_class == 'CC' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
-                                        margin: [0, -7, 0, 0],
+                                        margin: [0, -5, 0, 0],
                                     },
                                     {
                                         text: forms.real_property_class == 'O' ? ' ' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
-                                        margin: [40, -7, 0, 0],
+                                        margin: [40, -5, 0, 0],
                                     },
                                     {
                                         text: forms.others == null ? ' ' : forms.others,
                                         fontSize: 10,
                                         alignment: 'justified',
-                                        margin: [0, -10, 0, 0],
+                                        margin: [0, -6, 0, 0],
                                     }]
                                 ]
                             },

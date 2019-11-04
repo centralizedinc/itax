@@ -240,6 +240,10 @@ class CommonValidator {
             }
             form.return_period = new Date(form.return_period_year, form.end_month + (form.quarter * 3) + 1, 0);
         } else if (reference.period_type === 'a') {
+            form.accounting_type = reference.is_calendar ? 'c' : form.accounting_type;
+            if (!form.accounting_type) {
+                return { errors: [{ page: 0, field: "accounting_type", error: constant_helper.MANDATORY_FIELD('For the year') }] };
+            }
             if (!form.return_period_year) {
                 return { errors: [{ page: 0, field: "return_period_year", error: constant_helper.MANDATORY_FIELD('For the year') }] };
             }
@@ -252,19 +256,23 @@ class CommonValidator {
 
 
         // Compute Due Date
-        var due_date = new Date(form.return_period);
-        var day_of_month = reference.day_offset;
-        // due_date.setDate(1); // to prevent adding extra month if the month that is going to be set excess the current day of the month
-        due_date.setMonth(due_date.getMonth() + reference.month_offset);
-        if (reference.day_offset <= 0) {
-            var endOfMonth = new Date(due_date.getFullYear(), due_date.getMonth() + 1, 0);
-            day_of_month = endOfMonth.getDate() + reference.day_offset;
+        if (reference.fixed_due_date) { // if there is a fixed due date
+            form.due_date = new Date(fixed_due_date)
+        } else {
+            var due_date = new Date(form.return_period);
+            var day_of_month = reference.day_offset;
+            // due_date.setDate(1); // to prevent adding extra month if the month that is going to be set excess the current day of the month
+            due_date.setMonth(due_date.getMonth() + reference.month_offset);
+            if (reference.day_offset <= 0) {
+                var endOfMonth = new Date(due_date.getFullYear(), due_date.getMonth() + 1, 0);
+                day_of_month = endOfMonth.getDate() + reference.day_offset;
+            }
+            var current_date = due_date.getDate();
+            if (reference.month_offset > 0) current_date = 0;
+            due_date.setDate(current_date + day_of_month);
+            form.due_date = due_date;
+            console.log('due_date :', due_date.toString());
         }
-        var current_date = due_date.getDate();
-        if (reference.month_offset > 0) current_date = 0;
-        due_date.setDate(current_date + day_of_month);
-        form.due_date = due_date;
-        console.log('due_date :', due_date.toString());
         return { errors: null, form }
     }
 }
