@@ -79,7 +79,9 @@
           <component :is="component_list[current_nav[0]]" />
         </a-col>
         <a-col :xs="{ span: 0 }" :sm="{ span: 6 }">
-          <summary-layout />
+          <a-affix :offsetTop="127">
+            <summary-layout />
+          </a-affix>
         </a-col>
       </a-row>
     </a-layout-content>
