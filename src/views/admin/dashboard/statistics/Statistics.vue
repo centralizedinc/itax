@@ -4,32 +4,37 @@
     <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card :bodyStyle="{ padding: 0 }">
         <span class="collection-counts">100</span>
-        <line-chart :chartdata="collection_data" :options="options" />
+        <line-chart ref="collection_line_chart" />
       </a-card>
     </a-col>
     <!-- Returns -->
     <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card :bodyStyle="{ padding: 0 }">
         <span class="collection-counts">100</span>
-        <line-chart :chartdata="returns_data" :options="options" />
+        <line-chart ref="returns_line_chart" />
       </a-card>
     </a-col>
     <!-- Taxpayers -->
     <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card :bodyStyle="{ padding: 0 }">
         <span class="collection-counts">100</span>
-        <line-chart :chartdata="taxpayers_data" :options="options" />
+        <line-chart ref="taxpayers_line_chart" />
       </a-card>
     </a-col>
   </a-row>
 </template>
 
 <script>
-import LineChart from "./charts/LineChart";
+import { Line } from "vue-chartjs";
 
 export default {
   components: {
-    LineChart
+    LineChart: Line
+  },
+  mounted() {
+    this.$refs.collection_line_chart.renderChart(this.collection_data, this.options);
+    this.$refs.returns_line_chart.renderChart(this.returns_data, this.options);
+    this.$refs.taxpayers_line_chart.renderChart(this.taxpayers_data, this.options);
   },
   data() {
     return {

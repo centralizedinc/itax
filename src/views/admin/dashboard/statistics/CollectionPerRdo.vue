@@ -5,17 +5,24 @@
         <a-col :span="15">
           <span>Collection Per RDO</span>
         </a-col>
+        <a-col :span="5">
+          <span style="margin-right: 5px;" v-if="mode!=='d'">RDO:</span>
+          <a-select
+            @change="changeRdo"
+            defaultValue="001"
+            size="small"
+            style="width: 5vw;"
+            v-if="mode!=='d'"
+          >
+            <a-select-option v-for="item in rdos" :key="item.code" :value="item.code">{{item.code}}</a-select-option>
+          </a-select>
+        </a-col>
         <a-col :span="4">
-          <a-select @change="changeMode" defaultValue="d" size="small">
+          <span style="margin-right: 5px;">Filter by:</span>
+          <a-select @change="changeMode" defaultValue="d" size="small" style="width: 6vw;">
             <a-select-option key="d" value="d">Per RDO</a-select-option>
             <a-select-option key="m" value="m">Monthly</a-select-option>
             <a-select-option key="y" value="y">Yearly</a-select-option>
-          </a-select>
-        </a-col>
-        <a-col :span="5">
-          <span style="margin-right: 1vw;">RDO:</span>
-          <a-select @change="changeRdo" defaultValue="001" size="small" style="width: 5vw;">
-            <a-select-option v-for="item in rdos" :key="item.code" :value="item.code">{{item.code}}</a-select-option>
           </a-select>
         </a-col>
       </a-row>
@@ -90,8 +97,12 @@ export default {
     };
   },
   created() {
-    this.changeRdo();
-    this.$store.dispatch("GET_RDOS");
+    this.$store
+      .dispatch("GET_RDOS")
+      .then(result => {
+        this.changeMode("d");
+      })
+      .catch(err => {});
   },
   watch: {
     datasets(datas) {
@@ -116,7 +127,6 @@ export default {
       this.mode = mode;
       if (mode === "y") {
         this.chartdata.labels = [
-          2009,
           2010,
           2011,
           2012,
@@ -128,7 +138,8 @@ export default {
           2018,
           2019
         ];
-      } else
+        this.changeRdo("001");
+      } else if (mode === "m") {
         this.chartdata.labels = [
           "JAN",
           "FEB",
@@ -143,21 +154,45 @@ export default {
           "NOV",
           "DEC"
         ];
+        this.changeRdo("001");
+      } else {
+        this.chartdata.labels = this.rdos.map(v => `RDO ${v.code}`);
+        this.getMockRdo();
+      }
       this.renderChart();
     },
     changeRdo(rdo) {
-      //   Sample data
-      var datasets = [];
-      for (let index = 0; index < 12; index++) {
-        var val = Math.floor(Math.random() * 200) + 30;
-        datasets.push(val);
-      }
-      this.datasets = datasets;
+      //   Sample data where getting collection of selected rdo from store
+      this.datasets = this.mock_datasets();
     },
     renderChart() {
       if (this.mode === "d")
         this.$refs.rdo_doughnut_chart.renderChart(this.chartdata, null);
       else this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
+    },
+    getMockRdo() {
+      this.chartdata.datasets[0].data = this.mock_datasets();
+      var backgrounds = [];
+      for (
+        let index = 0;
+        index < this.chartdata.datasets[0].data.length;
+        index++
+      ) {
+        var random_color =
+          "#" + Math.floor(Math.random() * 16777215).toString(16);
+        backgrounds.push(random_color);
+      }
+      this.chartdata.datasets[0].backgroundColor = backgrounds;
+    },
+    mock_datasets() {
+      var datasets = [],
+        range =
+          this.mode === "y" ? 10 : this.mode === "m" ? 12 : this.rdos.length;
+      for (let index = 0; index < range; index++) {
+        var val = Math.floor(Math.random() * 200) + 30;
+        datasets.push(val);
+      }
+      return datasets;
     }
   }
 };
