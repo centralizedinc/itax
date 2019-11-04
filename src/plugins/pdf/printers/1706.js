@@ -225,7 +225,7 @@ function getContent(forms) {
         },
         // 9 - 14
         {
-            // layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [240, 280],
                 heights: [23, 18, 0],
