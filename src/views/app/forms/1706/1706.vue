@@ -412,6 +412,61 @@
         />
       </a-form-item>
     </a-form>
+
+    <!-- Part 1.2 Next Page -->
+    <a-form v-show="step===3">
+      <a-divider>Continuation of Part I</a-divider>
+      <!-- 29 -->
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="29"
+      >
+        <span style="margin-right: 14px">Fair Market Value (FMV) - Valuation at the time of Contract</span>
+
+        <a-radio-group v-model="form.fair_market_value">
+          <a-radio :value="'29A'">29A</a-radio>
+          <a-tooltip>
+            <template slot="title">FMV of Land per latest Tax Declaration</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="FMV of Land per latest Tax Declaration"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'29B'">29B</a-radio>
+          <a-tooltip>
+            <template slot="title">FMV of Improvements per latest Tax Declaration</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="FMV of Improvements per latest Tax Declaration"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'29C'">29C</a-radio>
+          <a-tooltip>
+            <template slot="title">FMV of Land as determined by BIR Commissioner (zonal value)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="FMV of Land as determined by BIR Commissioner (zonal value)"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'29D'">29D</a-radio>
+          <a-tooltip>
+            <template slot="title">FMV of Improvements as determined by BIR Commissioner (BIR Rules)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="FMV of Improvements as determined by BIR Commissioner (BIR Rules)"
+            ></a-input>
+          </a-tooltip>
+        </a-radio-group>
+      </a-form-item>
+    </a-form>
   </div>
 </template>
 

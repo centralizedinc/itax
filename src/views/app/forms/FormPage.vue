@@ -301,7 +301,11 @@ export default {
             description: "Background Information"
           },
           {
-            title: "Part I",
+            title: "Part 1.1",
+            description: "Continuation of Part 1"
+          },
+          {
+            title: "Part 1.2",
             description: "Continuation of Part 1"
           },
           {
