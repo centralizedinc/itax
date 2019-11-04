@@ -27,17 +27,11 @@ function validateRequired(form) {
     var error_messages = [];
     console.log('Validating required fields ...');
    
+
     if (!form.category_of_agent) {
-        error_messages.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Agent') });
-    } else if (form.category_of_agent === 'private' && (form.top_withholding_agent === null || form.top_withholding_agent === undefined)) {
-        error_messages.push({ page: 1, field: "top_withholding_agent", error: "If private, choose Yes or No." });
+        error_messages.push({ page: 1, field: "category_of_agent", error: constant_helper.MANDATORY_FIELD('Category of Withholding Agent') });
     }
     
-    if (form.is_avail_tax_relief) {
-        
-    } else if(!form.avail_tax_relief){
-        error_messages.push({ page: 1, field: "avail_tax_relief", error: "Please specify" });
-    }
     return error_messages;
 }
 
