@@ -40,7 +40,7 @@ export default {
     Doughnut
   },
   mounted() {
-    this.renderChart();
+    this.changeMode("d");
   },
   data() {
     return {
@@ -125,9 +125,6 @@ export default {
       ]
     };
   },
-  created() {
-    this.changeMode("d");
-  },
   watch: {
     datasets(datas) {
       var backgrounds = [];
@@ -210,7 +207,12 @@ export default {
     },
     mock_datasets() {
       var datasets = [],
-        range = this.mode === "y" ? 10 : this.mode === "m" ? 12 : this.taxtypes.length;
+        range =
+          this.mode === "y"
+            ? 10
+            : this.mode === "m"
+            ? 12
+            : this.taxtypes.length;
       for (let index = 0; index < range; index++) {
         var val = Math.floor(Math.random() * 200) + 30;
         datasets.push(val);
