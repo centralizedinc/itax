@@ -1,5 +1,8 @@
 <template>
-  <a-card>Taxpayers</a-card>
+  <a-card>
+    <span slot="title">Taxpayers</span>
+    
+  </a-card>
 </template>
 
 <script>
