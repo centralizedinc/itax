@@ -433,7 +433,7 @@ function getContent(forms) {
                             text: "",
                         },
                         {
-                            text: "0.00",
+                            text: forms.act_list == null?' ':forms.act_list[0].tax_base ,
                             fontSize: 9,
                             bold: true,
                             alignment: 'right',
@@ -925,321 +925,115 @@ function getContent(forms) {
                 ]
             }
         },
-
-
-        // #5 tin
-        // {
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [50, 50, 45, 59, 60, 60, 45, 40],
-        //         body: [
-        //             [{
-        //                     text: mapTin(forms.taxpayer.tin, 0, 3),
-        //                     fontSize: 15,
-        //                     bold: true,
-        //                     characterSpacing: 3,
-        //                     alignment: 'left',
-        //                     // right,down,left,up
-        //                     margin: [15, 0, 0, 0]
-        //                 },
-        //                 {
-        //                     text: mapTin(forms.taxpayer.tin, 3, 6),
-        //                     fontSize: 15,
-        //                     bold: true,
-        //                     characterSpacing: 3,
-        //                     alignment: 'left',
-        //                     // right,down,left,up
-        //                     margin: [12, 0, 0, 0]
-        //                 },
-        //                 {
-        //                     text: mapTin(forms.taxpayer.tin, 6, 9),
-        //                     fontSize: 15,
-        //                     bold: true,
-        //                     characterSpacing: 3,
-        //                     alignment: 'left',
-        //                     // right,down,left,up
-        //                     margin: [8, 0, 0, 0]
-        //                 },
-        //                 {
-        //                     text: mapTin(forms.taxpayer.tin, 9, 12),
-        //                     fontSize: 15,
-        //                     bold: true,
-        //                     characterSpacing: 5,
-        //                     alignment: 'left',
-        //                     // right,down,left,up
-        //                     margin: [10, 0, 0, 0]
-        //                 },
-        //                 {
-        //                     text: "",
-
-        //                 },
-        //table 2 amendded
-        //   {
-        // layout: "noBorders",
-        //     table: {
-        //         widths: [100,100],
-        //         body: [
-        //             [
-        //                 {
-        //                     text: forms.amended_yn == true ? 'X' : ' ',
-        //                     fontSize: 15,
-        //                     // right,down,left,up
-        //                     alignment: 'justify',
-        //                     margin: [0, 0, 0, 0]
-        //                 },
-        //                 {
-        //                     text: forms.amended_yn == false ? 'X' : ' ',
-        //                     fontSize: 12,
-        //                     // right,down,left,up
-        //                     alignment: 'justify',
-        //                     margin: [0, 0, 0, 0]
-        //                 },
-
-
-
-
-        //             ],
-        //         ]
-        //     }
-        // },
-
-
-
-
-
-
-
-
-
-
-        // {
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [100,100,100],
-        //         body: [
-        //             [
-        //              //---> 1.> toPeriod month
-
-        //             {
-        //                 text: formatDate(forms.toPeriod, { month: "2-digit" }),
-        //                 fontSize: 14,
-        //                 characterSpacing: 3,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [-48, 85, 0, 0]
-        //             },
-        //              //---> 1.> toPeriod day                    
-
-        //             {
-        //                 text: formatDate(forms.toPeriod, { day: "2-digit" }),
-        //                 fontSize: 14,
-        //                 characterSpacing: 3,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [-80, 85, 0, 0]
-        //             },
-        //             //---> 1.> toPeriod year
-
-        //             {
-        //                 text: formatDate(forms.toPeriod, { year: "numeric" }),
-        //                 fontSize: 14,
-        //                 characterSpacing: 4,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [-40, -21, 0, 0]
-        //             },
-        //             ],
-        //         ]
-        //     }
-        // },
-
-        //-----------------------------------------------------------------------//
-
-        // {
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [50, 50],
-        //         body: [
-        //             [
-
-        // //---> 1.> fromPeriod month
-
-        //             {
-        //                     text: formatDate(forms.fromPeriod, { month: "2-digit" }), 
-        //                     fontSize: 15,
-        //                     characterSpacing: 3,
-        //                     akignment: 'justify',
-        //                     // right,down,left,up
-        //                     margin: [4,85 , 0, 0]
-        //             },
-
-        // //---> 1.> fromPeriod day     
-
-        //             {
-        //                 text: formatDate(forms.fromPeriod, { day: "2-digit" }), 
-        //                 fontSize: 15,
-        //                 characterSpacing: 3,
-        //                 akignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [-27, 85, 0, 0]
-        //             },
-
-
-        //                     ],
-
-        //                 ]
-        //             }
-        //         },
-
-
-
-
-
-        // {
-        //     //Table 3 Taxpayer
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [395, 120],
-        //         body: [
-        //             [{
-        //                 text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
-        //                 fontSize: 12,
-        //                 characterSpacing: 2.5,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [10, 15, 0, 0]
-        //             },
-        //             {
-        //                 text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
-        //                 fontSize: 11,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [40, 9, 0, 0]
-        //             },
-        //             ]
-        //         ]
-        //     }
-        // },
-        // ------------------------------------------
-        // {
-        //     //Table 4 Registered Address
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [395, 120],
-        //         body: [
-        //             [{
-        //                 text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
-        //                 fontSize: 11,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [16, 8, 0, 0]
-        //             },
-        //             {
-        //                 text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == '' ? ' ' : forms.taxpayer.address_details.zipCode,
-        //                 fontSize: 11,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [84, 7, 0, -30]
-        //             },
-        //             ]
-        //         ]
-        //     }
-        // },
-
-
-
-        // Table 2
-        // {
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [50,50],
-        //         body: [
-        //             [
-        //                 {
-        //                     text: forms.amended_yn == true ? 'X' : ' ',
-        //                     fontSize: 15,
-        //                     alignment: 'justify',
-        //                     // right,down,left,up
-        //                     margin: [258, -4, 0, 0]
-        //                 },
-        //                 {
-        //                     text: forms.amended_yn == false ? 'X' : ' ',
-        //                     fontSize: 15,
-        //                     alignment: 'justify',
-        //                     // right,down,left,up
-        //                     margin: [239, -4, 0, 0]
-        //                 },
-        //             ],
-        //         ]
-        //     }
-        // },
-        // table 3
-        // {
-        //     layout: "noBorders",
-        //     table: {
-        //         widths: [60, 30, 50, 60, 150, 236],
-        //         body: [
-        //             [{
-        //                 text: mapTin(forms.taxpayer.tin, 0, 3),
-        //                 fontSize: 14,
-        //                 characterSpacing: 3,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [14,63, 0, 0]
-        //             },
-        //             {
-        //                 text: mapTin(forms.taxpayer.tin, 3, 6),
-        //                 fontSize: 14,
-        //                 characterSpacing: 3,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [3, 63, 0, 0]
-        //             },
-        //             {
-        //                 text: mapTin(forms.taxpayer.tin, 6, 9),
-        //                 fontSize: 14,
-        //                 characterSpacing: 2.8,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [20,63, 0, 0, 0]
-        //             },
-        //             {
-        //                 text: mapTin(forms.taxpayer.tin, 9, 12),
-        //                 fontSize: 14,
-        //                 characterSpacing: 2.5,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [23, 63, 0, 0]
-        //             },
-        //             {
-        //                 text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-        //                 fontSize: 14,
-        //                 characterSpacing: 8.2,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [84, 63, 0, 0]
-        //             },
-        //             {
-        //                 text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
-        //                 fontSize: 13,
-        //                 alignment: 'justify',
-        //                 // right,down,left,up
-        //                 margin: [118, 9, 0, 0]
-        //             }
-        //             ],
-
-
-
-        //         ]
-        //     }
-        // },
-        // table 4
-
-
-
-
+        {
+            layout:"noBorders",
+            table:{
+                widths:[315],
+                heights: [70],
+                body:[
+                    [{
+                        text: " "
+                    }]
+                ]
+            }
+        }
 
     ]
+    for(var x = 0; x < 3; x++){
+        content.push({
+            layout: "noBorders",
+            table: {
+                widths:[5,62,110,30,85,85,15,85],
+                heights: [20],
+                body:[
+                    [
+                        {
+                            text: '1234',
+                            fontSize:8,
+                            margin: [-20,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: '123456789012',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: 'Godfrey Marr Salgado Rivera',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: 'WB 191',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: 'Tax on winnings or prizes paid to winners',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: '123,456,789,123,456.00',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: '10%',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        },
+                        {
+                            text: '123,456,789,123,456.00',
+                            fontSize:8,
+                            margin: [0,0,0,0],
+                            alignment: 'justify'
+
+                        }
+                    ]
+                ]
+            }
+        })
+    }
+    
+    content.push({
+        layout: "noBorders",
+        table: {
+            widths:[315,115,100],
+            body:[
+                [
+                    {
+                        text: " "
+                    },
+                    {
+                        text: "123456789",
+                        fontSize: 8,
+                        margin: [5,0,0,0],
+                        alignment: 'justify'
+                    },
+                    {
+                        text: "123456789",
+                        fontSize: 8,
+                        margin: [5,0,0,0],
+                        alignment: 'justify'
+                    }
+                ]
+            ]
+        }
+    })
     return content;
 }
 

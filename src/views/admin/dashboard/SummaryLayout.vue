@@ -1,5 +1,5 @@
 <template>
-  
+  <a-card>Summary</a-card>
 </template>
 
 <script>

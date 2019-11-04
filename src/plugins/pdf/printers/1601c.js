@@ -535,7 +535,7 @@ function getContent(forms) {
                     text: formatAmount(forms.other_benefits),
                     alignment: 'right',
                     fontSize: 9,
-                    characterSpacing: 6,
+                    characterSpacing: 6, 
                     // right,down,left,up
                     margin: [0, 0, 0, 0]
                 }
