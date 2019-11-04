@@ -2,8 +2,14 @@
   <div>
     <a-card title="Taxpayers" />
     <a-divider />
-    <a-row :gutter="20">
+    <a-row :gutter="20" type="flex" justify="center" align="middle">
+      <a-col :span="24" v-if="loading">
+        <img
+          src="https://www.diamondback.com/skin/frontend/ally/default/images/opc-ajax-loader.1569428260.gif"
+        />
+      </a-col>
       <a-col
+        v-else
         v-for="(taxpayer, index) in taxpayers"
         :key="index"
         :xs="{ span: 24 }"
