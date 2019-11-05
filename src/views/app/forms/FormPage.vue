@@ -163,6 +163,7 @@ import Form1606 from "./1606/1606.vue";
 import Form1601FQ from "./1601fq/1601fq.vue";
 import Form1601C from "./1601c/1601c.vue";
 import Form1604E from "./1604e/1604e.vue";
+import Form1604C from "./1604c/1604c.vue"
 
 export default {
   components: {
@@ -181,7 +182,8 @@ export default {
     Form1601F,
     Form1606,
     Form1601FQ,
-    Form1601C
+    Form1601C,
+    Form1604C
   },
   computed: {
     affix_computation() {
@@ -229,6 +231,9 @@ export default {
         },
         page: 0,
         spouse_details: {},
+        buyer_details: {},
+        item29: {},
+        item30: {},
         sched1: { taxpayer: {}, spouse: {} },
         sched2: { taxpayer: {}, spouse: {} },
         sched3: { taxpayer: {}, spouse: {} },
@@ -301,7 +306,11 @@ export default {
             description: "Background Information"
           },
           {
-            title: "Part I",
+            title: "Part 1.1",
+            description: "Continuation of Part 1"
+          },
+          {
+            title: "Part 1.2",
             description: "Continuation of Part 1"
           },
           {
@@ -415,6 +424,19 @@ export default {
           {
             title: "Part II",
             description: "Total Tax Payable"
+          }
+        ],
+        "1604c": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Summary of Remittances per BIR Form No. 1601-C"
           }
         ]
       },
