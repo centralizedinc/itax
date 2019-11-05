@@ -152,6 +152,7 @@ import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
 import Form1601E from "./1601e/1601e.vue";
 import Form1700 from "./1700/1700.vue";
+import Form1701A from "./1701a/1701a.vue";
 import Form1706 from "./1706/1706.vue";
 import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
@@ -171,6 +172,7 @@ export default {
     Form2550M,
     Form1601E,
     Form1700,
+    Form1701A,
     Form1706,
     Form2551Q,
     Form1701Q,
@@ -330,7 +332,31 @@ export default {
             description: "Details of Payment"
           }
         ],
-
+        "1701a":[
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information on Taxpayer/Filer"
+          },
+          {
+            title: "Part II",
+            description: "Total Tax Payable"
+          },
+          {
+            title: "Part III",
+            description: "Details of Payment"
+          },
+          {
+            title: "Part IV",
+            description: "Computation of Income Tax"
+          },
+          {
+            title: "Part V",
+            description: "Background Information on Spouse"
+          }
+        ],
         "2000ot": [
           {
             title: "General"
