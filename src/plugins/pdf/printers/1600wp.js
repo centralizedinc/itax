@@ -433,7 +433,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.act_list == null ? ' ' : forms.act_list[0].tax_base,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -795,6 +795,7 @@
              layout: "noBorders",
              table: {
                  widths: [19, 15, 35, 21, 15, 35, 50, 35, 28, 40, 140],
+                 heights: [8],
                  body: [
                      [
 
@@ -923,7 +924,113 @@
                  ]
              }
          },
+         {
+             layout: "noBorders",
+             table: {
+                 widths: [315],
+                 heights: [70],
+                 body: [
+                     [{
+                         text: " "
+                     }]
+                 ]
+             }
+         }
+
      ]
+     for (var x = 0; x < 3; x++) {
+         content.push({
+             layout: "noBorders",
+             table: {
+                 widths: [5, 62, 110, 30, 85, 85, 15, 85],
+                 heights: [20],
+                 body: [
+                     [{
+                             text: '1234',
+                             fontSize: 8,
+                             margin: [-20, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: '123456789012',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: 'Godfrey Marr Salgado Rivera',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: 'WB 191',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: 'Tax on winnings or prizes paid to winners',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: '123,456,789,123,456.00',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: '10%',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         },
+                         {
+                             text: '123,456,789,123,456.00',
+                             fontSize: 8,
+                             margin: [0, 0, 0, 0],
+                             alignment: 'justify'
+
+                         }
+                     ]
+                 ]
+             }
+         })
+     }
+
+     content.push({
+         layout: "noBorders",
+         table: {
+             widths: [315, 115, 100],
+             body: [
+                 [{
+                         text: " "
+                     },
+                     {
+                         text: "123456789",
+                         fontSize: 8,
+                         margin: [5, 0, 0, 0],
+                         alignment: 'justify'
+                     },
+                     {
+                         text: "123456789",
+                         fontSize: 8,
+                         margin: [5, 0, 0, 0],
+                         alignment: 'justify'
+                     }
+                 ]
+             ]
+         }
+     })
      return content;
  }
 

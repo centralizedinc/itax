@@ -25,6 +25,7 @@
             <a-menu-item key="1700">
               <a-icon type="form"></a-icon>Form 1700
             </a-menu-item>
+            <a-menu-item key="1701a">Form 1701A</a-menu-item>
             <a-menu-item key="1702">Form 1702</a-menu-item>
             <a-menu-item key="1702q">Form 1702Q</a-menu-item>
             <a-menu-item key="1701q">Form 1701Q</a-menu-item>
@@ -89,6 +90,7 @@
             <a-menu-item key="1606">Form 1606</a-menu-item>
             <a-menu-item key="1601fq">Form 1601FQ</a-menu-item>
             <a-menu-item key="1601c">Form 1601C</a-menu-item>
+            <a-menu-item key="1604c">Form 1604C</a-menu-item>
           </a-menu>
         </template>
       </a-popover>

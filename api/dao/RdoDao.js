@@ -1,4 +1,4 @@
-const model = require('../models/rdoModel');
+const model = require('../models/reference/rdoModel');
 
 class RdoDao {
     /**
@@ -20,8 +20,8 @@ class RdoDao {
      * @returns {Promise}
      * @param {String} reference_no 
      */
-    static findOneByReferenceNo(reference_no) {
-        return model.findOne({ references: reference_no }).lean().exec()
+    static findByRdoCode(code) {
+        return model.findAll({ code: code }).lean().exec()
     }
 
     /**

@@ -137,7 +137,7 @@
         <b>
           Part II: Computation of Tax
           <!-- <a-button type="link" @click="sched=true">(ATC)</a-button> -->
-            <a-button type="link" @click="atcSetup()">(ATC)</a-button>
+          <a-button type="link" @click="atcSetup()">(ATC)</a-button>
         </b>
       </a-divider>
 
@@ -333,19 +333,25 @@ export default {
       }
     };
   },
+
   watch: {
-    // step() {
-    //   if (this.step < 0) {
-    //     this.$router.push("/");
-    //   } else if (this.step == 2) {
-    //     this.sub = true;
-    //   }
-    // }
+    // pag next ng picture
+    step() {
+      // if (this.step < 0) {
+      //   this.$router.push("/");
+      // } else if (this.step == 2) {
+      //   this.sub = true;
+      // }
+      if (this.step == 2) {
+        this.form.pdf_page = 2;
+      } else {
+        this.form.pdf_page = 1;
+      }
+    }
   },
   methods: {
-    atcSetup(){
-      console.log("atc setup")
-      this.form.pdf_page = 1
+    atcSetup() {
+      console.log("atc setup");
     },
     validate() {
       this.changeStep(this.step + 1);
@@ -400,7 +406,7 @@ export default {
   //   }
   // },
   created() {
-    this.form.pdf_page = 0
+    this.form.pdf_page = 1;
     // console.log("this.$ref.container.height :", this.$refs);
     // console.log("test :", this.$refs.container.height);
     window.addEventListener("scroll", this.handleScroll);

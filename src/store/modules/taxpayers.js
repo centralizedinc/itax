@@ -2,7 +2,8 @@ import TaxpayersAPI from "../../api/TaxpayersAPI";
 
 function initialState() {
     return {
-        records: []
+        records: [],
+        taxpayers: []
     }
 }
 
@@ -17,6 +18,9 @@ const mutations = {
         Object.keys(state).forEach(key => {
             state[key] = initialState()[key];
         })
+    },
+    SET_TAXPAYERS(state, taxpayers) {
+        state.taxpayers = taxpayers;
     }
 }
 
@@ -61,6 +65,23 @@ const actions = {
                     else resolve(result.data.model)
                 }).catch((err) => reject(err));
         })
+    },
+    GET_TAXPAYERS(context, refresh) {
+        return new Promise((resolve, reject) => {
+            if (refresh || !context.state.taxpayers || !context.state.taxpayers.length) {
+                new TaxpayersAPI(context.rootState.account_session.token)
+                    .getTaxpayers()
+                    .then((result) => {
+                        if (result.data.model) {
+                            context.commit("SET_TAXPAYERS", result.data.model);
+                            resolve(result.data.model);
+                        } else reject(result.data.errors);
+                    }).catch((err) => {
+                        console.log('GET TAXPAYERS err :', err);
+                        reject(err);
+                    });
+            } else resolve(context.state.taxpayers);
+        });
     }
 }
 
