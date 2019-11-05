@@ -42,11 +42,8 @@
       <a-form-item label="7. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-       <a-form-item label="8. Withholding Agent's Name">
-        <a-radio-group v-model="form.taxpayer.registered_name">
-          <a-radio :value="true">Private</a-radio>
-          <a-radio :value="false">Government</a-radio>
-        </a-radio-group>
+        <a-form-item label="8. Withholding Agent's Name">
+        <a-textarea v-model="form.registered_name"></a-textarea>
       </a-form-item>
       <a-form-item label="9. Registered Address">
         <a-textarea v-model="form.address"></a-textarea>
@@ -63,7 +60,7 @@
           <a-radio :value="false">Goverment</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="12. Email Address">
+      <a-form-item label="12. Email ">
         <a-textarea v-model="form.taxpayer.contact_details.email"></a-textarea>
       </a-form-item>
             <a-form-item label="13. Availing of Tax relief Under?">

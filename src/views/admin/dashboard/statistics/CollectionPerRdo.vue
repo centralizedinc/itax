@@ -1,121 +1,127 @@
 <template>
-  <a-card :bodyStyle="{ display: 'flex', 'align-items': 'center', 'justify-content': 'center' }">
-    <div slot="title">
-      <a-row>
-        <a-col :span="15">
-          <span>Collection Per RDO</span>
-        </a-col>
-        <a-col :span="5">
-          <span style="margin-right: 5px;" v-if="mode!=='d'">RDO:</span>
-          <a-select
-            @change="changeRdo"
-            defaultValue="001"
-            size="small"
-            style="width: 5vw;"
-            v-if="mode!=='d'"
-          >
-            <a-select-option v-for="item in rdos" :key="item.code" :value="item.code">{{item.code}}</a-select-option>
-          </a-select>
-        </a-col>
-        <a-col :span="4">
-          <span style="margin-right: 5px;">Filter by:</span>
-          <a-select @change="changeMode" defaultValue="d" size="small" style="width: 6vw;">
-            <a-select-option key="d" value="d">Per RDO</a-select-option>
-            <a-select-option key="m" value="m">Monthly</a-select-option>
-            <a-select-option key="y" value="y">Yearly</a-select-option>
-          </a-select>
-        </a-col>
-      </a-row>
-    </div>
-    <doughnut v-show="mode==='d'" class="doughnut-collection-rdo" ref="rdo_doughnut_chart" />
-    <bar v-show="mode!=='d'" class="bar-collection-rdo" ref="rdo_bar_chart" />
+  <a-card
+    title="Top 10 collection per rdo as of today"
+    :bodyStyle="{ display: 'flex', 'align-items': 'center', 'justify-content': 'left', 'padding': '0 24px' }"
+  >
+    <horizontal-bar class="bar-collection-rdo" ref="rdo_bar_chart" />
   </a-card>
 </template>
 
 <script>
-import { Bar, Doughnut } from "vue-chartjs";
+import { HorizontalBar } from "vue-chartjs";
 
 export default {
   components: {
-    Bar,
-    Doughnut
+    HorizontalBar
   },
   mounted() {
-    this.renderChart();
+    this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
   },
   data() {
     return {
       mode: "d",
       chartdata: {
-        labels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC"
-        ],
+        labels: [],
         datasets: [
           {
             backgroundColor: [],
             data: []
           }
-        ]
+        ],
+        showTooltips: false,
+        onAnimationComplete: function() {
+          var ctx = this.chart.ctx;
+          ctx.font = this.scale.font;
+          ctx.fillStyle = this.scale.textColor;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "bottom";
+
+          this.datasets.forEach(function(dataset) {
+            dataset.bars.forEach(function(bar) {
+              ctx.fillText(bar.value, bar.x, bar.y - 5);
+            });
+          });
+        }
       },
       options: {
+        hover: {
+          animationDuration: 0
+        },
+        animation: {
+          duration: 0,
+          onComplete: function(animation) {
+            // console.log(this.data.datasets[0]._meta[Object.keys(this.data.datasets[0]._meta)[0]].data)
+            console.log(this);
+            var ctx = this.chart.ctx;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+
+            this.data.datasets[0]._meta[
+              Object.keys(this.data.datasets[0]._meta)[0]
+            ].data.forEach((bar, i) => {
+              ctx.fillText(
+                nFormatter(this.data.datasets[0].data[i], 1),
+                bar._model.x + 15,
+                bar._model.y + 8
+              );
+            });
+
+            function nFormatter(num, digits) {
+              var si = [
+                { value: 1, symbol: "" },
+                { value: 1e3, symbol: "k" },
+                { value: 1e6, symbol: "M" },
+                { value: 1e9, symbol: "G" },
+                { value: 1e12, symbol: "T" },
+                { value: 1e15, symbol: "P" },
+                { value: 1e18, symbol: "E" }
+              ];
+              var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+              var i;
+              for (i = si.length - 1; i > 0; i--) {
+                if (num >= si[i].value) {
+                  break;
+                }
+              }
+              return (
+                (num / si[i].value).toFixed(digits).replace(rx, "$1") +
+                si[i].symbol
+              );
+            }
+            // this.datasets.forEach(function(dataset) {
+            //   dataset.bars.forEach(function(bar) {
+            //     ctx.fillText(bar.value, bar.x, bar.y - 5);
+            //   });
+            // });
+          }
+        },
         legend: {
           display: false
         },
         scales: {
           xAxes: [
             {
-              gridLines: {
-                display: false
-              }
+              display: false
             }
           ],
           yAxes: [
             {
               gridLines: {
                 display: false
-              },
-              ticks: {
-                stepSize: 10,
-                beginAtZero: true
               }
             }
           ]
         }
-      },
-      datasets: []
+      }
     };
   },
   created() {
     this.$store
       .dispatch("GET_RDOS")
       .then(result => {
-        this.changeMode("d");
+        this.getMockRdo();
       })
       .catch(err => {});
-  },
-  watch: {
-    datasets(datas) {
-      var backgrounds = [];
-      datas.forEach(data => {
-        if (data >= 100) backgrounds.push("green");
-        else if (data >= 50) backgrounds.push("blue");
-        else backgrounds.push("red");
-      });
-      this.chartdata.datasets[0].data = datas;
-      this.chartdata.datasets[0].backgroundColor = backgrounds;
-      this.renderChart();
-    }
   },
   computed: {
     rdos() {
@@ -123,55 +129,14 @@ export default {
     }
   },
   methods: {
-    changeMode(mode) {
-      this.mode = mode;
-      if (mode === "y") {
-        this.chartdata.labels = [
-          2010,
-          2011,
-          2012,
-          2013,
-          2014,
-          2015,
-          2016,
-          2017,
-          2018,
-          2019
-        ];
-        this.changeRdo("001");
-      } else if (mode === "m") {
-        this.chartdata.labels = [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC"
-        ];
-        this.changeRdo("001");
-      } else {
-        this.chartdata.labels = this.rdos.map(v => `RDO ${v.code}`);
-        this.getMockRdo();
-      }
-      this.renderChart();
-    },
-    changeRdo(rdo) {
-      //   Sample data where getting collection of selected rdo from store
-      this.datasets = this.mock_datasets();
-    },
-    renderChart() {
-      if (this.mode === "d")
-        this.$refs.rdo_doughnut_chart.renderChart(this.chartdata, null);
-      else this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
-    },
     getMockRdo() {
-      this.chartdata.datasets[0].data = this.mock_datasets();
+      this.chartdata.labels = this.rdos.map(v => `RDO ${v.code}`);
+      var datasets = [];
+      for (let index = 0; index < this.chartdata.labels.length; index++) {
+        var val = Math.floor(Math.random() * 200) + 30;
+        datasets.push(val);
+      }
+      this.chartdata.datasets[0].data = datasets;
       var backgrounds = [];
       for (
         let index = 0;
@@ -183,16 +148,37 @@ export default {
         backgrounds.push(random_color);
       }
       this.chartdata.datasets[0].backgroundColor = backgrounds;
+      this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
     },
-    mock_datasets() {
-      var datasets = [],
-        range =
-          this.mode === "y" ? 10 : this.mode === "m" ? 12 : this.rdos.length;
-      for (let index = 0; index < range; index++) {
-        var val = Math.floor(Math.random() * 200) + 30;
-        datasets.push(val);
+    formatCounts(val, disableShortcut) {
+      if (!disableShortcut && val.toString().length > 5) {
+        return this.nFormatter(val, 1);
+      } else {
+        var parts = val.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts[0];
       }
-      return datasets;
+    },
+    nFormatter(num, digits) {
+      var si = [
+        { value: 1, symbol: "" },
+        { value: 1e3, symbol: "k" },
+        { value: 1e6, symbol: "M" },
+        { value: 1e9, symbol: "G" },
+        { value: 1e12, symbol: "T" },
+        { value: 1e15, symbol: "P" },
+        { value: 1e18, symbol: "E" }
+      ];
+      var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+      var i;
+      for (i = si.length - 1; i > 0; i--) {
+        if (num >= si[i].value) {
+          break;
+        }
+      }
+      return (
+        (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
+      );
     }
   }
 };
@@ -200,11 +186,6 @@ export default {
 
 <style>
 .bar-collection-rdo canvas {
-  height: 70vh !important;
-  width: 60vw !important;
-}
-.doughnut-collection-rdo {
-  position: relative;
-  width: 40vw;
+  width: 25vw !important;
 }
 </style>

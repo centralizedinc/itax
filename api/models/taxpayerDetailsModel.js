@@ -34,7 +34,7 @@ var taxpayerDetailsSchema = new Schema({
     // employee - em
     // nranetb - n
   },
-  address: String,
+  address: String, //registered address
   address_details: {
     number: String,
     street: String,
@@ -70,7 +70,8 @@ var taxpayerDetailsSchema = new Schema({
        * Employee || Regular Rates - regular
        * NRANETB - nranetb
        */
-    }
+    },
+    address: String //residence address
   },
   date_incorporation: {
     type: Date
