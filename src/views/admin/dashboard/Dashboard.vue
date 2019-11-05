@@ -2,15 +2,23 @@
   <div>
     <statistics />
     <a-divider />
-    <collection-per-rdo />
-    <a-divider />
-    <collection-per-tax-type />
+    <a-row type="flex" gutter="10">
+      <a-col :xs="24" :lg="12">
+        <collection-per-tax-type />
+      </a-col>
+      <a-col :xs="24" :lg="12">
+        <collection-per-rdo />
+      </a-col>
+      <!-- <a-col :xs="24" :lg="8">
+        <collection-per-rdo />
+      </a-col> -->
+    </a-row>
   </div>
 </template>
 
 <script>
 import Statistics from "./statistics/Statistics";
-import CollectionPerRdo from "./statistics/CollectionPerRdo";
+import CollectionPerRdo from "./statistics/CollectionPerRdo.vue";
 import CollectionPerTaxType from "./statistics/CollectionPerTaxType";
 
 export default {
