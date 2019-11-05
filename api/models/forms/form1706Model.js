@@ -16,7 +16,7 @@ const model_schema = {
     atc_code: { //Item 4
         type: String
     }, // WI155
-    category_of_agent: { //Item 14
+    location_of_property: { //Item 14
         type: String
     },
     //PART I
@@ -35,29 +35,29 @@ const model_schema = {
     classification_property_specify: { //Item 15
         type: String
     },
-    
-        tct_no: { //Item 16
-            type: String
-        },
-        area_sold: {//Item 16
-            type: String
-        },
-        tax_dec_no: {//Item 16
-            type: String
-        },
-        others:{//Item 16
-            type: String
-        },
+
+    tct_no: { //Item 16
+        type: String
+    },
+    area_sold: {//Item 16
+        type: String
+    },
+    tax_dec_no: {//Item 16
+        type: String
+    },
+    others: {//Item 16
+        type: String
+    },
 
     sold_as_principal_property: { //Item 17
         type: Boolean,
         default: false
     },
-    intend_construct_acquire:{ //Item 18
+    intend_construct_acquire: { //Item 18
         type: Boolean,
         default: false
     },
-    selling_price_cover:{ //Item 20
+    selling_price_cover: { //Item 20
         type: Boolean,
         default: false
     },
@@ -72,7 +72,7 @@ const model_schema = {
          * If excempt or Others please specify
          */
     },
-    description_transaction_specify:{ //Item 21 specify
+    description_transaction_specify: { //Item 21 specify
         type: String
     },
     selling_price: { type: Number, default: 0 }, //Item 22
@@ -80,46 +80,46 @@ const model_schema = {
     mortgage_assumed: { type: Number, default: 0 }, //Item 24
     total_payments_initial_year: { type: Number, default: 0 }, //Item 25
     amount_installment_month: { type: Number, default: 0 }, //Item 26
-    total_no_installment_month:{ type: Number, default: 0 }, //Item 27
-    date_of_installment:{ type: Date, default: new Date}, //Item 28
+    total_no_installment_month: { type: Number, default: 0 }, //Item 27
+    date_of_installment: { type: Date, default: new Date }, //Item 28
 
     //Item 29 Fair Market Value (FMV)
-    item29:{
+    item29: {
         tax_declaration_land: { type: Number, default: 0 }, //Item 29A
         tax_declaration_improvements: { type: Number, default: 0 },// Item 29B
         zonal_value: { type: Number, default: 0 }, //Item 29C
         commissioner: { type: Number, default: 0 }, //Item 29D
     },
     //Item 30 Determination of Taxable Base
-    item28:{
+    item30: {
         gross_selling_price: { type: Number, default: 0 }, //Item 30A
         bid_price: { type: Number, default: 0 }, //Item 30B
         fair_market_value: { type: Number, default: 0 }, //Item 30C 
         installment_collected: { type: Number, default: 0 }, //Item 30D
-        Unutilized_portion_sales:{ type: Number, default: 0 },
-        others:{ type: String }, // Item 30F
-        computation:{ type: String},
-        computation2:{ type: String}
+        unutilized_portion_sales: { type: Number, default: 0 },
+        others: { type: String }, // Item 30F
+        computation: { type: String },
+        computation2: { type: String }
     },
     //Part II
-    tax_base:{ type: Number, default: 0 }, //Item 31
-    tax_due:{ type: Number, default: 0 }, //Item 32
-    less_tax_paid:{ type: Number, default: 0 }, //Item 33
-    tax_payable_overpayment:{ type: Number, default: 0 },
-    sched1:{}
+    tax_base: { type: Number, default: 0 }, //Item 31
+    tax_due: { type: Number, default: 0 }, //Item 32
+    less_tax_paid: { type: Number, default: 0 }, //Item 33
+    tax_payable_overpayment: { type: Number, default: 0 },
+    sched1: {}
 
 };
 
-var Form1706Schema = new Schema({...common_model, ...model_schema });
+var Form1706Schema = new Schema({ ...common_model, ...model_schema });
 
-Form1706Schema.pre('save', function(callback) {
+Form1706Schema.pre('save', function (callback) {
     var form = this;
     form.date_created = new Date();
     form.date_modified = new Date();
     callback();
 });
 
-Form1706Schema.pre('findOneAndUpdate', function(callback) {
+Form1706Schema.pre('findOneAndUpdate', function (callback) {
     console.log('this :', this._update);
     this.options.new = true;
     this.options.runValidators = true;

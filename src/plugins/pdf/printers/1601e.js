@@ -1,6 +1,7 @@
+// dagdag ng picture
 const form = require("../templates/1601e_template").template;
 const form1 = require("../templates/1701q_template").template;
-var forms = [form, form1]
+var forms = ["show all", form, form1]
 /**
  *
  * @param {LicenseModel} details
@@ -30,20 +31,21 @@ function fillup(details) {
     // console.log("pdf data: " + JSON.stringify(pdf))
     return {
         background: function (page) {
-            console.log("background page: " + page)
             return [{
-                image: form[page],
+                image: "form",
                 width: 600
             }]
         },
-        content: content,
+        content: content[details.pdf_page],
         images: {
-            form: forms
-            // form: forms
+            form: forms[details.pdf_page]
+            // form: data
         },
+
         pageSize: 'LEGAL'
-    };
-}
+    }
+};
+
 /**
  * 
  * @param {Array|Object} forms 
@@ -59,59 +61,59 @@ function getContent(forms) {
             widths: [103, 50, 60, 50, 80, 60, 50],
             body: [
                 [{
-                        text: formatDate(forms.return_period, {
-                            month: "2-digit"
-                        }),
-                        fontSize: 15,
-                        characterSpacing: 3,
-                        alignment: 'justify',
-                        margin: [80, 78, 0, 0]
-                    },
-                    {
-                        text: formatDate(forms.return_period, {
-                            year: "numeric"
-                        }),
-                        fontSize: 15,
-                        characterSpacing: 3,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [0, 78, 0, 0]
-                    },
-                    {
-                        text: forms.amended_yn == true ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [40, 82, 0, 0]
-                    },
-                    {
-                        text: forms.amended_yn == false ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [13, 82, 0, 0]
-                    },
-                    {
-                        text: forms.num_of_sheet,
-                        fontSize: 10,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [34, 83, 10, 0]
-                    },
-                    {
-                        text: forms.taxes_withheld == true ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [40, 82, 0, 0]
-                    },
-                    {
-                        text: forms.taxes_withheld == false ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [25, 82, 0, 0]
-                    }
+                    text: formatDate(forms.return_period, {
+                        month: "2-digit"
+                    }),
+                    fontSize: 15,
+                    characterSpacing: 3,
+                    alignment: 'justify',
+                    margin: [80, 78, 0, 0]
+                },
+                {
+                    text: formatDate(forms.return_period, {
+                        year: "numeric"
+                    }),
+                    fontSize: 15,
+                    characterSpacing: 3,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [0, 78, 0, 0]
+                },
+                {
+                    text: forms.amended_yn == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [40, 82, 0, 0]
+                },
+                {
+                    text: forms.amended_yn == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [13, 82, 0, 0]
+                },
+                {
+                    text: forms.num_of_sheet,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [34, 83, 10, 0]
+                },
+                {
+                    text: forms.taxes_withheld == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [40, 82, 0, 0]
+                },
+                {
+                    text: forms.taxes_withheld == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [25, 82, 0, 0]
+                }
                 ],
 
             ]
@@ -123,53 +125,53 @@ function getContent(forms) {
             widths: [58, 45, 35, 50, 150, 100],
             body: [
                 [{
-                        text: mapTin(forms.taxpayer.tin, 0, 3),
-                        fontSize: 16,
-                        bold: true,
-                        characterSpacing: 3,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [15, 7, 0, 0]
-                    },
-                    {
-                        text: mapTin(forms.taxpayer.tin, 3, 6),
-                        fontSize: 16,
-                        characterSpacing: 3,
-                        bold: true,
-                        alignment: 'justified',
-                        margin: [0, 7, 0, 0]
-                    },
-                    {
-                        text: mapTin(forms.taxpayer.tin, 6, 9),
-                        fontSize: 16,
-                        bold: true,
-                        characterSpacing: 3,
-                        alignment: 'justified',
-                        margin: [0, 7, 0, 0]
-                    },
-                    {
-                        text: mapTin(forms.taxpayer.tin, 9, 12),
-                        fontSize: 16,
-                        bold: true,
-                        characterSpacing: 4,
-                        alignment: 'left',
-                        margin: [10, 7, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
-                        characterSpacing: 3,
-                        fontSize: 16,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [73, 7, 0, 0]
-                    }, {
-                        // 38 characters only
-                        text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
-                        fontSize: 16,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [50, 7, 0, 0]
-                    }
+                    text: mapTin(forms.taxpayer.tin, 0, 3),
+                    fontSize: 16,
+                    bold: true,
+                    characterSpacing: 3,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [15, 7, 0, 0]
+                },
+                {
+                    text: mapTin(forms.taxpayer.tin, 3, 6),
+                    fontSize: 16,
+                    characterSpacing: 3,
+                    bold: true,
+                    alignment: 'justified',
+                    margin: [0, 7, 0, 0]
+                },
+                {
+                    text: mapTin(forms.taxpayer.tin, 6, 9),
+                    fontSize: 16,
+                    bold: true,
+                    characterSpacing: 3,
+                    alignment: 'justified',
+                    margin: [0, 7, 0, 0]
+                },
+                {
+                    text: mapTin(forms.taxpayer.tin, 9, 12),
+                    fontSize: 16,
+                    bold: true,
+                    characterSpacing: 4,
+                    alignment: 'left',
+                    margin: [10, 7, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                    characterSpacing: 3,
+                    fontSize: 16,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [73, 7, 0, 0]
+                }, {
+                    // 38 characters only
+                    text: forms.taxpayer.line_business == null ? ' ' : forms.taxpayer.line_business,
+                    fontSize: 16,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [50, 7, 0, 0]
+                }
                 ]
             ]
         }
@@ -182,20 +184,20 @@ function getContent(forms) {
             heights: [18],
             body: [
                 [{
-                        // 72 characters 
-                        text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
-                        fontSize: 10,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [14, 5, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [25, 3, 0, 0]
-                    }
+                    // 72 characters 
+                    text: forms.taxpayer.taxpayer_name == null ? ' ' : forms.taxpayer.taxpayer_name,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [14, 5, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [25, 3, 0, 0]
+                }
                 ]
             ]
         }
@@ -205,20 +207,20 @@ function getContent(forms) {
             widths: [420, "*"],
             body: [
                 [{
-                        // 72 characters
-                        text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
-                        fontSize: 10,
-                        // right,down,left,up
-                        alignment: 'justify',
-                        margin: [12, 6, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                        fontSize: 12,
-                        // right,down,left,up
-                        alignment: 'center',
-                        margin: [50, 6, 0, 0]
-                    }
+                    // 72 characters
+                    text: forms.taxpayer.registered_address == null ? ' ' : forms.taxpayer.registered_address,
+                    fontSize: 10,
+                    // right,down,left,up
+                    alignment: 'justify',
+                    margin: [12, 6, 0, 0]
+                },
+                {
+                    text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
+                    fontSize: 12,
+                    // right,down,left,up
+                    alignment: 'center',
+                    margin: [50, 6, 0, 0]
+                }
                 ]
             ]
         }
@@ -228,41 +230,41 @@ function getContent(forms) {
             widths: [25, 30, 100, 30, 310],
             body: [
                 [{
-                        text: forms.category_of_agent == true ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [13, 6, 0, 0],
-                        alignment: 'justify'
+                    text: forms.category_of_agent == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [13, 6, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.category_of_agent == false ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [28, 6, 0, 0],
-                        alignment: 'justify'
-                    },
-                    {
-                        text: forms.availing_tax_relief == true ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [85, 6, 0, 0],
-                        alignment: 'justify'
-                    }, {
-                        text: forms.availing_tax_relief == false ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [20, 6, 0, 0],
-                        alignment: 'justify'
-                    },
-                    {
-                        // 30 characters
-                        text: forms.availing_tax_relief_if_yes,
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [105, 6, 0, 0],
-                        alignment: 'justify'
-                    }
+                },
+                {
+                    text: forms.category_of_agent == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [28, 6, 0, 0],
+                    alignment: 'justify'
+                },
+                {
+                    text: forms.availing_tax_relief == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [85, 6, 0, 0],
+                    alignment: 'justify'
+                }, {
+                    text: forms.availing_tax_relief == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [20, 6, 0, 0],
+                    alignment: 'justify'
+                },
+                {
+                    // 30 characters
+                    text: forms.availing_tax_relief_if_yes,
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [105, 6, 0, 0],
+                    alignment: 'justify'
+                }
                 ]
             ]
         }
@@ -317,35 +319,35 @@ function getContent(forms) {
             widths: [131, 122, 110, 140],
             body: [
                 [{
-                        text: forms.surcharge,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [52, 13, 0, 0],
-                        alignment: 'justify'
+                    text: forms.surcharge,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [52, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.interest,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [26, 13, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.interest,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [26, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.compromise,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [23, 13, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.compromise,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [23, 13, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.penaltiesCrdtb,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [28, 13, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.penaltiesCrdtb,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [28, 13, 0, 0],
+                    alignment: 'justify'
 
                 },
                 ]
@@ -359,34 +361,34 @@ function getContent(forms) {
             height: [500],
             body: [
                 [{
-                        text: forms.overremittance == true ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [155, 8, 0, 0],
-                        alignment: 'justify'
+                    text: forms.overremittance == true ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [155, 8, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.overremittance == false ? 'X' : ' ',
-                        fontSize: 12,
-                        // right,down,left,up
-                        margin: [95, 8, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.overremittance == false ? 'X' : ' ',
+                    fontSize: 12,
+                    // right,down,left,up
+                    margin: [95, 8, 0, 0],
+                    alignment: 'justify'
 
-                    },
-                    {
-                        text: forms.total_amount_overremittance,
-                        fontSize: 8,
-                        // right,down,left,up
-                        margin: [140, 0, 0, 0],
-                        alignment: 'justify'
+                },
+                {
+                    text: forms.total_amount_overremittance,
+                    fontSize: 8,
+                    // right,down,left,up
+                    margin: [140, 0, 0, 0],
+                    alignment: 'justify'
 
                 }
                 ]
             ]
         },
     }
-]
+    ]
     content.push(
     )
     // forms.tax_computation.forEach(element => {
@@ -397,41 +399,41 @@ function getContent(forms) {
                 widths: [220, 40, 82, 42, 115],
                 body: [
                     [{
-                            // 48 characters only
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
+                        // 48 characters only
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
 
-                        },
-                        {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        },
-                        {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        }, {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        },
-                        {
-                            text: ' ',
-                            fontSize: 8,
-                            // right,down,left,up
-                            margin: [0, 0, 0, 0],
-                            alignment: 'center'
-                        }
+                    },
+                    {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    },
+                    {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    }, {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    },
+                    {
+                        text: ' ',
+                        fontSize: 8,
+                        // right,down,left,up
+                        margin: [0, 0, 0, 0],
+                        alignment: 'center'
+                    }
                     ]
                 ]
             }
@@ -450,104 +452,106 @@ function getContent(forms) {
     //     }
     // })
 
-//     var content1 = [{
-//             text: 'Unordered list',
-//             style: 'header'
-//         },
-//         {
-//             ol: [
-//                 'item 1',
-//                 'item 2',
-//                 'item 3',
-//             ]
-//         },
-//         {
-//             text: '\n\nUnordered list with longer lines',
-//             style: 'header',
-//             pageBreak: 'before',
-//             pageOrientation: 'landscape'
-//         },
-//         {
-//             ol: [
-//                 'item 1',
-//                 'Lorem ipsum dolor sit amet, consectetur ..',
-//                 'item 3',
-//             ]
-//         },
-//         {
-//             text: '\n\nNested lists',
-//             style: 'header',
-//             pageBreak: 'before',
-//             pageOrientation: 'portrait'
-//         },
-//         {
-//             ol: [
-//                 'item 1',
-//                 'Lorem ipsum dolor sit amet, consectetur ..',
-//                 {
-//                     ol: [
-//                         'subitem 1',
-//                         'subitem 2',
-//                         'subitem 3 - Lorem ipsum dolor sit ame...',
-//                         'subitem 4',
-//                         'subitem 5',
-//                     ]
-//                 },
-//                 'item 3\nsecond line of item3',
-//             ]
-//         },
-//     ]
-// var content_holder = [content, content1]
-//     return content_holder;
+    //     var content1 = [{
+    //             text: 'Unordered list',
+    //             style: 'header'
+    //         },
+    //         {
+    //             ol: [
+    //                 'item 1',
+    //                 'item 2',
+    //                 'item 3',
+    //             ]
+    //         },
+    //         {
+    //             text: '\n\nUnordered list with longer lines',
+    //             style: 'header',
+    //             pageBreak: 'before',
+    //             pageOrientation: 'landscape'
+    //         },
+    //         {
+    //             ol: [
+    //                 'item 1',
+    //                 'Lorem ipsum dolor sit amet, consectetur ..',
+    //                 'item 3',
+    //             ]
+    //         },
+    //         {
+    //             text: '\n\nNested lists',
+    //             style: 'header',
+    //             pageBreak: 'before',
+    //             pageOrientation: 'portrait'
+    //         },
+    //         {
+    //             ol: [
+    //                 'item 1',
+    //                 'Lorem ipsum dolor sit amet, consectetur ..',
+    //                 {
+    //                     ol: [
+    //                         'subitem 1',
+    //                         'subitem 2',
+    //                         'subitem 3 - Lorem ipsum dolor sit ame...',
+    //                         'subitem 4',
+    //                         'subitem 5',
+    //                     ]
+    //                 },
+    //                 'item 3\nsecond line of item3',
+    //             ]
+    //         },
+    //     ]
+    // var content_holder = [content, content1]
+    //     return content_holder;
+    var content2 = []
+    content2.push({
+        text: 'Unordered list',
+        style: 'header',
 
-content.push({
-                text: 'Unordered list',
-                style: 'header'
-            },
-            {
-                ol: [
-                    'item 1',
-                    'item 2',
-                    'item 3',
-                ]
-            },
-            {
-                text: '\n\nUnordered list with longer lines',
-                style: 'header',
-                pageBreak: 'before',
-                pageOrientation: 'landscape'
-            },
-            {
-                ol: [
-                    'item 1',
-                    'Lorem ipsum dolor sit amet, consectetur ..',
-                    'item 3',
-                ]
-            },
-            {
-                text: '\n\nNested lists',
-                style: 'header',
-                pageBreak: 'before',
-                pageOrientation: 'portrait'
-            },
-            {
-                ol: [
-                    'item 1',
-                    'Lorem ipsum dolor sit amet, consectetur ..',
-                    {
-                        ol: [
-                            'subitem 1',
-                            'subitem 2',
-                            'subitem 3 - Lorem ipsum dolor sit ame...',
-                            'subitem 4',
-                            'subitem 5',
-                        ]
-                    },
-                    'item 3\nsecond line of item3',
-                ]
-            },
-);
-return content
+    },
+        {
+            ol: [
+                'item 1',
+                'item 2',
+                'item 3',
+            ]
+        },
+        {
+            text: '\n\nUnordered list with longer lines',
+            style: 'header',
+
+        },
+        {
+            ol: [
+                'item 1',
+                'Lorem ipsum dolor sit amet, consectetur ..',
+                'item 3',
+            ]
+        },
+        {
+            text: '\n\nNested lists',
+            style: 'header',
+            pageBreak: 'after',
+            pageOrientation: 'portrait'
+        },
+        {
+            ol: [
+                'item 1',
+                'Lorem ipsum dolor sit amet, consectetur ..',
+                {
+                    ol: [
+                        'subitem 1',
+                        'subitem 2',
+                        'subitem 3 - Lorem ipsum dolor sit ame...',
+                        'subitem 4',
+                        'subitem 5',
+                    ]
+                },
+                'item 3\nsecond line of item3',
+            ]
+        },
+    );
+    // content ng pic 1  and others
+    var contents = ["show all", content, content2]
+    return contents
 }
 
 function formatDate(date, type) {
