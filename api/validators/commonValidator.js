@@ -256,7 +256,7 @@ class CommonValidator {
 
 
         // Compute Due Date
-        if (!reference.fixed_due_date) { // if there is a fixed due date
+        if (reference.fixed_due_date) { // if there is a fixed due date
             form.due_date = new Date(fixed_due_date)
         } else {
             var due_date = new Date(form.return_period);

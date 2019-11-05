@@ -506,13 +506,13 @@ body:[
             text: " "
         },
         {
-            text: forms.over_remittance =="refunded" ?"X": " ",
+            text: forms.over_remittance =="refunded" ? "X" : " ",
             fontSize: 12,
             alignment: 'justified',
             margin: [6, -5, 0, 0] 
         },
         {
-            text: forms.over_remittance == 'certificate'?"X": ' ',
+            text: forms.over_remittance == 'certificate' ? "X" : ' ',
             fontSize: 12,
             alignment: 'justified',
             margin: [75, -5, 0, 0] 
