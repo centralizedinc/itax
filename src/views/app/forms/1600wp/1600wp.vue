@@ -243,6 +243,7 @@ export default {
     updateAtcAndClose(data) {
       this.show = 0;
       this.form.atc_list = data.atc_list;
+      console.log("update atc and close atc lise data: " + JSON.stringify(this.form.atc_list))
       this.form.tax_req_withld_remtd = data.total_amount_payable;
     },
     updateScheduleAndClose(data) {

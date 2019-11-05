@@ -34,7 +34,7 @@ function getContent(forms) {
         // ----> table #1 <---- //
         //table space
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [535],
                 heights: [55],
@@ -52,7 +52,7 @@ function getContent(forms) {
         {
             //layout: "noBorders",
             table: {
-                widths: [23, 19, 50, 54, 40, 54, 40, 80,],
+                widths: [25, 75 , 54, 40, 34, 58, 82, 104,],
                 body: [
                     [
                         //fromPeriod month
@@ -66,7 +66,7 @@ function getContent(forms) {
                             characterSpacing: 5,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [8, 6, 0, 0]
+                            margin: [7, 6, 0, 0]
                         },
                         // //fromPeriod day     
                         // {
@@ -91,56 +91,56 @@ function getContent(forms) {
                             characterSpacing: 5,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [2, 6, 0, 0]
+                            margin: [0, 6, 0, 0]
                         },
 
                         //#2 amended return?
                         // amended_yn true
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
-                            fontSize: 13,
+                            fontSize: 12,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [18.5, 7.5, 0, 0]
+                            margin: [19.5, 7.5, 0, 0]
                         },
                         // amended_yn false
                         {
                             text: forms.amended_yn == false ? 'X' : ' ',
-                            fontSize: 13,
+                            fontSize: 12,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [2.5, 7.5, 0, 0]
+                            margin: [4, 7.5, 0, 0]
                         },
                         // #3 any taxes withheld?
                         // any taxes withheld? true
                         {
                             text: forms.any_tax_withheld == true ? 'X' : ' ',
-                            fontSize: 12,
+                            fontSize: 11,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [25.5, 9, 0, 0]
+                            margin: [27, 10, 0, 0]
                         },
                         // any taxes withheld? false             
                         {
                             text: forms.any_tax_withheld == false ? 'X' : ' ',
-                            fontSize: 12,
+                            fontSize: 11,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [2, 9, 0, 0]
+                            margin: [23, 9, 0, 0]
                         },
                         //#4 no. of sheets attached
                        {
                         text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                         fontSize: 12,
                         bold: true,
-                        characterSpacing: 4,
+                        characterSpacing: 6,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [55, 7.5, 0, 0]
+                        margin: [56.5, 7.5, 0, 0]
                     
                         },
                         // space 5. ATC
@@ -176,9 +176,10 @@ function getContent(forms) {
 
         // #6 Taxpayer identification #7 Rdo Code
         {
-            layout: "noBorders",
+            //layout: "noBorders",
             table: {
-                widths: [150, 32, 30, 33, 27, 46,],
+                widths: [170, 44, 45, 51, 75, 105,],
+                heights: [10,],
                 body: [
                     [
                         //6.Tax Payers Identification Tin//
@@ -189,50 +190,50 @@ function getContent(forms) {
 
                         {
                             text: mapTin(forms.taxpayer.tin, 0, 3),
-                            fontSize: 10,
+                            fontSize: 12,
                             bold: true,
-                            characterSpacing: 2,
+                            characterSpacing: 6,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [35, 7, 0, 0]
+                            margin: [10, 10, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 3, 6),
-                            fontSize: 13,
+                            fontSize: 12,
                             bold: true,
-                            characterSpacing: 2,
+                            characterSpacing: 6,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [2, 7, 0, 0]
+                            margin: [10, 10, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 6, 9),
-                            fontSize: 13,
+                            fontSize: 12,
                             bold: true,
-                            characterSpacing: 2,
+                            characterSpacing: 6,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [1, 7, 0, 0]
+                            margin: [14, 10, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 9, 12),
-                            fontSize: 13,
+                            fontSize: 12,
                             bold: true,
-                            characterSpacing: 2,
+                            characterSpacing: 6,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [1, 7, 0, 0]
+                            margin: [13, 10, 0, 0]
                         },
                         
                         // #7 Rdo Code 
                         {
                             text: forms.taxpayer.rdo_code,
-                            fontSize: 13,
+                            fontSize: 12,
                             bold: true,
-                            characterSpacing: 2,
+                            characterSpacing: 6,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [1, 7, 0, 0]
+                            margin: [69, 10, 0, 0]
                         },
                         ////////// ----> End Table 2 <----- //////////
                     ]]
@@ -242,10 +243,10 @@ function getContent(forms) {
 ///////// #8 Witholding Agent's Name 
               
         {
-            layout: "noBorders",
+            //  layout: "noBorders",
             table: {
-                widths: [265, ],
-                heights: [7],
+                widths: [535, ],
+                heights: [8,],
                 body: [
                     [
                         // # witholding agents name
@@ -253,10 +254,10 @@ function getContent(forms) {
                             text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 3,
+                            characterSpacing: 4,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [7, 8, 0, 0]
+                            margin: [6, 8, 0, 0]
                         },
                         
                     ]
@@ -268,10 +269,10 @@ function getContent(forms) {
 ////////////////////////// ----> table #4 <---- /////////////////////////////////
 /////////////// #9 Registered Address       
 {
-    layout: "noBorders",
+    //layout: "noBorders",
     table: {
-        widths: [265,],
-        heights: [4],
+        widths: [535,],
+        heights: [17,],
         body: [
             [
                 // #9 registered address    
@@ -282,7 +283,7 @@ function getContent(forms) {
                     characterSpacing: 3,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [5, 1, 0, 0]
+                    margin: [10, 1, 0, 0]
                 },
                 
             ]
@@ -293,31 +294,35 @@ function getContent(forms) {
         /////////////////////// --> End table 4 <-- ///////////////////
         //////////////////// -----> table 5 Registered Address2 //////////////////
         {
-            layout: "noBorders",
+            //layout: "noBorders",
             table: {
-                widths: [265, 250],
-                heights: [4],
+                widths: [400, 126 ],
+                heights: [10,],
                 body: [
                     [
-                        // #11 registered address2
+                        // space
                         {
-                            text: forms.address == null ? ' ' : forms.address,
-                            fontSize: 10,
-                            bold: true,
-                            characterSpacing: 3,
-                            alignment: 'justify',
-                            // right,down,left,up
-                            margin: [5, 1, 0, 0]
+                            text: "",
                         },
+                        // #11 registered address2
+                        // {
+                        //     text: forms.address == null ? ' ' : forms.address,
+                        //     fontSize: 10,
+                        //     bold: true,
+                        //     characterSpacing: 3,
+                        //     alignment: 'justify',
+                        //     // right,down,left,up
+                        //     margin: [5, 1, 0, 0]
+                        // },
                         // #9A ZIP code
                         {
                             text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                            fontSize: 10,
+                            fontSize: 12,
                             bold: true,
-                            characterSpacing: 3,
+                            characterSpacing: 7,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [3, 1, 0, 0]
+                            margin: [75, -2, 0, 0]
                         },
                     ]
                 ]
@@ -327,10 +332,10 @@ function getContent(forms) {
 ////////////////////////////// ----> table #6 <---- /////////////////////////////////
 /////////// #10 contact number #11 category of witholding agent       
 {
-            layout: "noBorders",
+            //layout: "noBorders",
             table: {
-                widths: [120, 80, 50,50,50],
-                heights: [10],
+                widths: [52, 160, 150,50,87,],
+                heights: [7,],
                 body: [
                     [
                         //#10 contact number
@@ -341,9 +346,10 @@ function getContent(forms) {
                         {
                             text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                             fontSize: 11,
+                            characterSpacing: 6,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [140 , 9, 0, 0]
+                            margin: [20 , -1, 0, 0]
                         },
                         {
                             text: ""
@@ -351,20 +357,20 @@ function getContent(forms) {
                         //#11category witholding
                         {
                             text: forms.category_of_agent == true ? 'X' : ' ',
-                            fontSize: 13,
+                            fontSize: 10,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [93, 1, 0, 0]
+                            margin: [7, 0, 0, 0]
                         },
                         
                         {
                             text: forms.category_of_agent == false ? 'X' : ' ',
-                            fontSize: 13,
+                            fontSize: 10,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [8, 1, 0, 0]
+                            margin: [20, -1, 0, 0]
                         },
 
                     ]
@@ -375,10 +381,10 @@ function getContent(forms) {
 ///////////////////////////////////////// End of table 6 ////////////////////////////////
 //////////////////// table 7 /////////////////////////////
 {
-    layout: "noBorders",
+    //layout: "noBorders",
     table: {
-        widths: [265],
-        heights: [4],
+        widths: [535],
+        heights: [7],
         body: [
             [
                 // #12 Email Address 
@@ -389,7 +395,7 @@ function getContent(forms) {
                     characterSpacing: 3,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [5, 1, 0, 0]
+                    margin: [62, -2, 0, 0]
                 },
                 
             ]
@@ -399,9 +405,9 @@ function getContent(forms) {
 /////////////////////////// End table 7//////////////////////////
 //////////////////////// Table 8///////////////////////////////////////
 {
-    layout: "noBorders",
+    //layout: "noBorders",
     table: {
-        widths: [50, 50, 50, 50, 50 ],
+        widths: [120, 30, 37, 80, 232 ],
         heights: [4],
         body: [
             [
@@ -411,20 +417,20 @@ function getContent(forms) {
                 },
                 {
                     text: forms.is_avail_tax_relief == true ? 'X' : ' ',
-                    fontSize: 13,
+                    fontSize: 10,
                     bold: true,
                     // right,down,left,up
                     alignment: 'left',
-                    margin: [93, 1, 0, 0]
+                    margin: [2, 1, 0, 0]
                 },
                 
                 {
                     text: forms.is_avail_tax_relief == false ? 'X' : ' ',
-                    fontSize: 13,
+                    fontSize: 10,
                     bold: true,
                     // right,down,left,up
                     alignment: 'left',
-                    margin: [8, 1, 0, 0]
+                    margin: [5, 0.5, 0, 0]
                 },
                 {
                     text: ""
@@ -436,7 +442,7 @@ function getContent(forms) {
                     characterSpacing: 3,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [5, 1, 0, 0]
+                    margin: [8, 1, 0, 0]
                 },
             ]  
         ]
@@ -449,6 +455,119 @@ function getContent(forms) {
 ////////////////// Part II - Computation of Tax  
 {
     //#14 Total Amount of Compensation 
+    //layout: "noBorders",
+    table: {
+        widths: [535],
+        heights: [20,],
+        body: [
+            [
+
+                {
+                    text: formatAmount(forms.compensation),
+                    alignment: 'right',
+                    fontSize: 12,
+                    characterSpacing: 8,
+                    // right,down,left,up
+                    margin: [1, 10, 3, 0],
+                }
+            ]
+        ]
+
+    }
+},
+
+{
+    //#15 Statutory Minimum Wage 
+    //layout: "noBorders",
+    table: {
+        widths: [535],
+        heights: [18,],
+        body: [
+            [
+
+                {
+                    text: formatAmount(forms.statutory_minimum_wage),
+                    alignment: 'right',
+                    fontSize: 12,
+                    characterSpacing: 8,
+                    // right,down,left,up
+                    margin: [1, 4, 3, 0]
+                }
+            ]
+        ]
+
+    }
+},
+
+{
+    //#16 Holiday Pay, Overtime 
+    //layout: "noBorders",
+    table: {
+        widths: [535],
+        heights: [10,],
+        body: [
+            [
+
+                {
+                    text: formatAmount(forms.hazard_pay),
+                    alignment: 'right',
+                    fontSize: 10,
+                    characterSpacing: 8,
+                    // right,down,left,up
+                    margin: [0, -3, 3, 0]
+                }
+            ]
+        ]
+
+    }
+},
+
+{
+    //#17 13th Month Pay 
+    //layout: "noBorders",
+    table: {
+        widths: [535],
+        heights: [10],
+        body: [
+            [
+
+                {
+                    text: formatAmount(forms.other_benefits),
+                    alignment: 'right',
+                    fontSize: 9,
+                    characterSpacing: 6, 
+                    // right,down,left,up
+                    margin: [0, 0, 0, 0]
+                }
+            ]
+        ]
+
+    }
+},
+
+
+{
+    //#18 De Minimis Benefits 
+   layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
+
+                {
+                    text: formatAmount(forms.minimis_benefits),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
+
+    }
+},
+{
+    //#19 SSS, GSIS 
     layout: "noBorders",
     table: {
         widths: [500],
@@ -456,7 +575,7 @@ function getContent(forms) {
             [
 
                 {
-                    text: formatAmount(forms.compensation),
+                    text: formatAmount(forms.mandatory_contribution),
                     alignment: 'right',
                     fontSize: 9,
                     // right,down,left,up
@@ -468,472 +587,366 @@ function getContent(forms) {
     }
 },
 
-// {
-//     //#15 Statutory Minimum Wage 
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+{
+    //#20 Other Non Taxable Compensation
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//                 {
-//                     text: formatAmount(forms.statutory_minimum_wage),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+                {
+                    text: formatAmount(forms.other_taxable_compensation),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-//     }
-// },
+    }
+},
 
-// {
-//     //#16 Holiday Pay, Overtime 
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
 
-//                 {
-//                     text: formatAmount(forms.hazard_pay),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#21 Total non taxable compensation
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.non_taxable_compensation),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// {
-//     //#17 13th Month Pay 
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+    }
+},
 
-//                 {
-//                     text: formatAmount(forms.other_benefits),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#22 Total taxable compensation 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.total_taxable_compensation),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// {
-//     //#18 De Minimis Benefits 
-//    layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+    }
+},
 
-//                 {
-//                     text: formatAmount(forms.minimis_benefits),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#23 Less: Taxable compensation 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.less_taxable_compensation ),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// {
-//     //#19 SSS, GSIS 
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+    }
+},
 
-//                 {
-//                     text: formsatAmount(forms.mandatory_contribution),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#24 Net Taxable compensation 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.net_taxable_required),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// {
-//     //#20 Other Non Taxable Compensation
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+    }
+},
 
-//                 {
-//                     text: formsatAmount(forms.other_taxable_compensation),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#25 Total tax witheld 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.total_taxes_witheld),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// {
-//     //#21 Total non taxable compensation
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+    }
+},
 
-//                 {
-//                     text: formatAmount(forms.non_taxable_compensation),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#26 Add/(less): Adjustment of taxes 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.adjustment),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// {
-//     //#22 Total taxable compensation 
-//     layout: "noBorders",
-//     table: {
-//         widths: [500],
-//         body: [
-//             [
+    }
+},
 
-//                 {
-//                     text: formatAmount(forms.total_taxable_compensation),
-//                     alignment: 'right',
-//                     fontSize: 9,
-//                     // right,down,left,up
-//                     margin: [0, -4, 0, 0]
-//                 }
-//             ]
-//         ]
+{
+    //#27 taxes witheld remittance 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-//     }
-// },
+                {
+                    text: formatAmount(forms.tax_required_remittance),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // {
-// //     //#23 Less: Taxable compensation 
-// //     layout: "noBorders",
-// //     table: {
-// //         widths: [500],
-// //         body: [
-// //             [
+    }
+},
 
-// //                 {
-// //                     text: formatAmount(forms.less_taxable_compensation ),
-// //                     alignment: 'right',
-// //                     fontSize: 9,
-// //                     // right,down,left,up
-// //                     margin: [0, -4, 0, 0]
-// //                 }
-// //             ]
-// //         ]
+{
+    //#28 Less: tax remitted return 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// //     }
-// // },
+                {
+                    text: formatAmount(forms.tax_remitted_previously),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // {
-// //     //#24 Net Taxable compensation 
-// //     layout: "noBorders",
-// //     table: {
-// //         widths: [500],
-// //         body: [
-// //             [
+    }
+},
+{
+    //#29 Other remittance made 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// //                 {
-// //                     text: formatAmount(forms.net_taxable_required),
-// //                     alignment: 'right',
-// //                     fontSize: 9,
-// //                     // right,down,left,up
-// //                     margin: [0, -4, 0, 0]
-// //                 }
-// //             ]
-// //         ]
+                {
+                    text: formatAmount(forms.other_payments_made),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// //     }
-// // },
+    }
+},
 
-// // {
-// //     //#25 Total tax witheld 
-// //     layout: "noBorders",
-// //     table: {
-// //         widths: [500],
-// //         body: [
-// //             [
+{
+    //#30 Total tax remittance
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// //                 {
-// //                     text: formsatAmount(forms.total_taxes_witheld),
-// //                     alignment: 'right',
-// //                     fontSize: 9,
-// //                     // right,down,left,up
-// //                     margin: [0, -4, 0, 0]
-// //                 }
-// //             ]
-// //         ]
+                {
+                    text: formatAmount(forms.total_payments_made),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// //     }
-// // },
+    }
+},
 
-// // {
-// //     //#26 Add/(less): Adjustment of taxes 
-// //     layout: "noBorders",
-// //     table: {
-// //         widths: [500],
-// //         body: [
-// //             [
+{
+    //#31 Tax Still Due
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// //                 {
-// //                     text: formatAmount(forms.adjustment),
-// //                     alignment: 'right',
-// //                     fontSize: 9,
-// //                     // right,down,left,up
-// //                     margin: [0, -4, 0, 0]
-// //                 }
-// //             ]
-// //         ]
+                {
+      // use to compute penalties
+                    text: formatAmount(forms.tax_due),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// //     }
-// // },
+    }
+},
 
-// // {
-// //     //#27 taxes witheld remittance 
-// //     layout: "noBorders",
-// //     table: {
-// //         widths: [500],
-// //         body: [
-// //             [
-
-// //                 {
-// //                     text: formatAmount(forms.tax_required_remittance),
-// //                     alignment: 'right',
-// //                     fontSize: 9,
-// //                     // right,down,left,up
-// //                     margin: [0, -4, 0, 0]
-// //                 }
-// //             ]
-// //         ]
-
-// //     }
-// // },
-
-// // {
-// //     //#28 Less: tax remitted return 
-// //     layout: "noBorders",
-// //     table: {
-// //         widths: [500],
-// //         body: [
-// //             [
-
-// //                 {
-// //                     text: formatAmount(forms.tax_remitted_previously),
-// //                     alignment: 'right',
-// //                     fontSize: 9,
-// //                     // right,down,left,up
-// //                     margin: [0, -4, 0, 0]
-// //                 }
-// //             ]
-// //         ]
-
-// //     }
-// // },
-
-// // // {
-// // //     //#29 Other remittance made 
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
-
-// // //                 {
-// // //                     text: formatAmount(forms.other_payments_made),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
-
-// // //     }
-// // // },
-
-// // // {
-// // //     //#30 Total tax remittance
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
-
-// // //                 {
-// // //                     text: formatAmount(forms.total_payments_made),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
-
-// // //     }
-// // // },
-
-// // // {
-// // //     //#31 Tax Still Due
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
-
-// // //                 {
-// // //       // use to compute penalties
-// // //                     text: formatAmount(forms.tax_due),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
-
-// // //     }
-// // // },
-
-// // // //////// Addtional Penalties /////////
+//////// Addtional Penalties /////////
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 
-// // // {
-// // //     //#32 Surcharge 
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
+{
+    //#32 Surcharge 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// // //                 {
-// // //                     text: formatAmount(forms.surcharge),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
+                {
+                    text: formatAmount(forms.surcharge),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // //     }
-// // // },
+    }
+},
 
-// // // {
-// // //     //#33 Interest 
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
+{
+    //#33 Interest 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// // //                 {
-// // //                     text: formatAmount(forms.interest),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
+                {
+                    text: formatAmount(forms.interest),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // //     }
-// // // },
+    }
+},
 
-// // // {
-// // //     //#34 compromise 
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
+{
+    //#34 compromise 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// // //                 {
-// // //                     text: formatAmount(forms.compromise),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
+                {
+                    text: formatAmount(forms.compromise),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // //     }
-// // // },
+    }
+},
 
-// // // {
-// // //     //#35 Total penalties 
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
+{
+    //#35 Total penalties 
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// // //                 {
-// // //                     text: formatAmount(forms.penalties),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
+                {
+                    text: formatAmount(forms.penalties),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // //     }
-// // // },
+    }
+},
 
-// // // {
-// // //     //#36 Total Amount still due     
-// // //     layout: "noBorders",
-// // //     table: {
-// // //         widths: [500],
-// // //         body: [
-// // //             [
+{
+    //#36 Total Amount still due     
+    layout: "noBorders",
+    table: {
+        widths: [500],
+        body: [
+            [
 
-// // //                 {
-// // //                     text: formatAmount(forms.total_amount_payable),
-// // //                     alignment: 'right',
-// // //                     fontSize: 9,
-// // //                     // right,down,left,up
-// // //                     margin: [0, -4, 0, 0]
-// // //                 }
-// // //             ]
-// // //         ]
+                {
+                    text: formatAmount(forms.total_amount_payable),
+                    alignment: 'right',
+                    fontSize: 9,
+                    // right,down,left,up
+                    margin: [0, -4, 0, 0]
+                }
+            ]
+        ]
 
-// // //     }
-// // // },
-
+    }
+},
 
        
 

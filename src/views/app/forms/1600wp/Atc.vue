@@ -120,6 +120,7 @@ export default {
       return this.data_source[index].tax_required.toFixed(2);
     },
     close() {
+      console.log("closing atc: " + JSON.stringify(this.data_source))
       this.$emit("close", {
         atc_list: this.deepCopy(this.data_source),
         total_amount_payable: this.deepCopy(this.total)
