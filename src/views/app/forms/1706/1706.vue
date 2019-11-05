@@ -250,7 +250,9 @@
         label="17"
       >
         <a-radio-group v-model="form.principal_res_yn" :defaultValue="false" style="width: 100%">
-          <span>Is the property being sold your principal residence? (For Individual sellers only)</span>
+          <span
+            style="margin-right: 10px"
+          >Is the property being sold your principal residence? (For Individual sellers only)</span>
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -464,6 +466,236 @@
               placeholder="FMV of Improvements as determined by BIR Commissioner (BIR Rules)"
             ></a-input>
           </a-tooltip>
+        </a-radio-group>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="30"
+      >
+        <span style="margin-right: 14px">Determination of Taxable Base</span>
+
+        <a-radio-group v-model="form.fair_market_value">
+          <a-radio :value="'30A'">30A</a-radio>
+          <a-tooltip>
+            <template slot="title">Gross Selling Price</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="Gross Selling Price"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'30B'">30B</a-radio>
+          <a-tooltip>
+            <template slot="title">Bid Price (For Foreclosure Sale)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="Bid Price (For Foreclosure Sale)"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'30C'">30C</a-radio>
+          <a-tooltip>
+            <template
+              slot="title"
+            >Fair Market Value of Land and Improvement (Sum of 29A & 29B/29C & 29D/29A & 29D/29B & 29C, whichever is higher)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="Fair Market Value of Land and Improvement"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'30D'">30D</a-radio>
+          <a-tooltip>
+            <template
+              slot="title"
+            >Taxable Installment Collected (For Installment Sale Excluding Interest)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="Taxable Installment Collected (For Installment Sale Excluding Interest)"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'30E'">30E</a-radio>
+          <a-tooltip>
+            <template
+              slot="title"
+            >On the Unutilized Portion of Sales Proceeds (in case nos. 17 & 18 are applicable)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="On the Unutilized Portion of Sales Proceeds (in case nos. 17 & 18 are applicable)"
+            ></a-input>
+          </a-tooltip>
+          <br />
+          <a-radio :value="'30F'">30F</a-radio>
+          <a-tooltip>
+            <template slot="title">Others (specify)</template>
+            <a-input
+              style="width: 25vw; margin-left: 14px"
+              v-model="form.latest_tax_dec"
+              placeholder="Others (specify)"
+            ></a-input>
+          </a-tooltip>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item>
+        <a-row :gutter="12">
+          <a-col :span="12">
+            <a-input v-model="form.latest_tax_dec" placeholder="Computation"></a-input>
+          </a-col>
+          <a-col :span="12">
+            <a-input v-model="form.latest_tax_dec"></a-input>
+          </a-col>
+        </a-row>
+      </a-form-item>
+    </a-form>
+
+    <!-- Part II -->
+    <a-form v-show="step===4">
+      <a-divider>Part II: Computation of Tax</a-divider>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="31"
+        :validate-status="error_item('')"
+        :help="error_desc('')"
+      >
+        <a-tooltip>
+          <template
+            slot="title"
+          >Taxable Base (Item 30A or 30C, whichever is higher, for cash sale, or item 30B, or item 30D, or Item 30E, or Item 30F, whichever is applicable)</template>
+          <a-input
+            v-model="form.latest_tax_dec"
+            placeholder="Taxable Base (Item 30A or 30C, whichever is higher, for cash sale, or item 30B, or item 30D, or Item 30E, or Item 30F, whichever is applicable) "
+          ></a-input>
+        </a-tooltip>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="32"
+        :validate-status="error_item('')"
+        :help="error_desc('')"
+      >
+        <a-tooltip>
+          <template slot="title">6% Tax Due</template>
+          <a-input v-model="form.latest_tax_dec" placeholder="6% Tax Due"></a-input>
+        </a-tooltip>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="33"
+        :validate-status="error_item('')"
+        :help="error_desc('')"
+      >
+        <a-tooltip>
+          <template
+            slot="title"
+          >Less: Tax Paid in Return Previously Filed, if this is an Amended Return</template>
+          <a-input
+            v-model="form.latest_tax_dec"
+            placeholder="Less: Tax Paid in Return Previously Filed, if this is an Amended Return"
+          ></a-input>
+        </a-tooltip>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="34"
+        :validate-status="error_item('')"
+        :help="error_desc('')"
+      >
+        <div style="color: black">Add: Penalties</div>
+      </a-form-item>
+      <a-form-item>
+        <a-row :gutter="12">
+          <a-col :span="24">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="35A"
+              :validate-status="error_item('surcharge')"
+              :help="error_desc('surcharge')"
+            >
+              <a-input placeholder="Surcharge" v-model="form.surcharge"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="35B"
+              :validate-status="error_item('interest')"
+              :help="error_desc('interest')"
+            >
+              <a-input placeholder="Interest" v-model="form.interest"></a-input>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form-item>
+
+      <a-form-item>
+        <a-row :gutter="12">
+          <a-col :span="24">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="35C"
+              :validate-status="error_item('compromise')"
+              :help="error_desc('compromise')"
+            >
+              <a-input placeholder="Compromise" v-model="form.compromise"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="35D"
+            >
+              <a-input disabled placeholder="Penalties"></a-input>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form-item>
+
+      <a-form-item>
+        <a-row :gutter="12">
+          <a-col :span="24">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+              label="36"
+            >
+              <a-input
+                disabled
+                placeholder="Total Amount Payable/(Overpayment)(Sum of Items 34 & 35D)"
+              ></a-input>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form-item>
+
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="29"
+      >
+        <a-radio-group v-model="form.overpayment_yn" style="width: 100%">
+          <span style="margin-right: 14px">If Overpayment , mark one box only:</span>
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
     </a-form>
