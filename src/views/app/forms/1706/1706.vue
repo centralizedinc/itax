@@ -687,11 +687,7 @@
         </a-row>
       </a-form-item>
 
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="29"
-      >
+      <a-form-item>
         <a-radio-group v-model="form.overpayment_yn" style="width: 100%">
           <span style="margin-right: 14px">If Overpayment , mark one box only:</span>
           <a-radio :value="true">Yes</a-radio>
