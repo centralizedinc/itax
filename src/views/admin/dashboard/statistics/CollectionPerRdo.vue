@@ -27,21 +27,7 @@ export default {
             backgroundColor: [],
             data: []
           }
-        ],
-        showTooltips: false,
-        onAnimationComplete: function() {
-          var ctx = this.chart.ctx;
-          ctx.font = this.scale.font;
-          ctx.fillStyle = this.scale.textColor;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "bottom";
-
-          this.datasets.forEach(function(dataset) {
-            dataset.bars.forEach(function(bar) {
-              ctx.fillText(bar.value, bar.x, bar.y - 5);
-            });
-          });
-        }
+        ]
       },
       options: {
         hover: {
@@ -50,8 +36,6 @@ export default {
         animation: {
           duration: 0,
           onComplete: function(animation) {
-            // console.log(this.data.datasets[0]._meta[Object.keys(this.data.datasets[0]._meta)[0]].data)
-            console.log(this);
             var ctx = this.chart.ctx;
             ctx.textAlign = "center";
             ctx.textBaseline = "bottom";
@@ -88,11 +72,6 @@ export default {
                 si[i].symbol
               );
             }
-            // this.datasets.forEach(function(dataset) {
-            //   dataset.bars.forEach(function(bar) {
-            //     ctx.fillText(bar.value, bar.x, bar.y - 5);
-            //   });
-            // });
           }
         },
         legend: {
@@ -101,7 +80,10 @@ export default {
         scales: {
           xAxes: [
             {
-              display: false
+              display: false,
+              ticks: {
+                max: 250
+              }
             }
           ],
           yAxes: [
@@ -120,6 +102,7 @@ export default {
       .dispatch("GET_RDOS")
       .then(result => {
         this.getMockRdo();
+        this.setMockDataRealtime();
       })
       .catch(err => {});
   },
@@ -130,24 +113,23 @@ export default {
   },
   methods: {
     getMockRdo() {
-      this.chartdata.labels = this.rdos.map(v => `RDO ${v.code}`);
       var datasets = [];
-      for (let index = 0; index < this.chartdata.labels.length; index++) {
+      for (let index = 0; index < this.rdos.length; index++) {
         var val = Math.floor(Math.random() * 200) + 30;
-        datasets.push(val);
-      }
-      this.chartdata.datasets[0].data = datasets;
-      var backgrounds = [];
-      for (
-        let index = 0;
-        index < this.chartdata.datasets[0].data.length;
-        index++
-      ) {
         var random_color =
           "#" + Math.floor(Math.random() * 16777215).toString(16);
-        backgrounds.push(random_color);
+        datasets.push({
+          label: this.rdos[index].code,
+          value: val,
+          background: random_color
+        });
       }
-      this.chartdata.datasets[0].backgroundColor = backgrounds;
+      datasets.sort((a, b) => b.value - a.value);
+      this.chartdata.labels = datasets.map(v => `RDO ${v.label}`);
+      this.chartdata.datasets[0].data = datasets.map(v => v.value);
+      this.chartdata.datasets[0].backgroundColor = datasets.map(
+        v => v.background
+      );
       this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
     },
     formatCounts(val, disableShortcut) {
@@ -179,6 +161,30 @@ export default {
       return (
         (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
       );
+    },
+    setMockDataRealtime() {
+      setInterval(() => {
+        try {
+          var datasets = [];
+          for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
+            var random = Math.round(Math.random());
+            datasets.push({
+              label: this.chartdata.labels[i],
+              value: this.chartdata.datasets[0].data[i] + random,
+              background: this.chartdata.datasets[0].backgroundColor[i]
+            });
+          }
+          datasets.sort((a, b) => b.value - a.value);
+          this.chartdata.labels = datasets.map(v => v.label);
+          this.chartdata.datasets[0].data = datasets.map(v => v.value);
+          this.chartdata.datasets[0].backgroundColor = datasets.map(
+            v => v.background
+          );
+          this.options.scales.xAxes[0].ticks.max =
+            this.chartdata.datasets[0].data[0] + 20;
+          this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
+        } catch (error) {}
+      }, 1000);
     }
   }
 };
