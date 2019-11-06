@@ -28,7 +28,8 @@
   * @param {Array|Object} forms 
   */
  function getContent(forms) {
-     console.log("get content forms: " + JSON.stringify(forms))
+     console.log("get content forms: " + JSON.stringify(forms.sched1))
+     var x = 0
      var _forms = Array.isArray(forms) ? forms : [forms];
      console.log("get _form data: " + JSON.stringify(_forms))
      var content = [
@@ -433,7 +434,8 @@
                              text: "",
                          },
                          {
-                             text: forms.act_list == null ? ' ' : forms.act_list[0].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[0].tax_base == undefined || forms.atc_list[0].tax_base == null ? " " : forms.atc_list[0].tax_base,
+                             //  text: forms.atc_list == undefined ? "undefined" : "00",
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -445,7 +447,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[0].tax_withheld == undefined || forms.atc_list[0].tax_withheld == null ? " " : forms.atc_list[0].tax_withheld,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -469,7 +471,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[1].tax_base == undefined || forms.atc_list[1].tax_base == null ? " " : forms.atc_list[1].tax_base,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -480,7 +482,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[1].tax_withheld == undefined || forms.atc_list[1].tax_withheld == null ? " " : forms.atc_list[1].tax_withheld,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -504,7 +506,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[2].tax_base == undefined || forms.atc_list[2].tax_base == null ? " " : forms.atc_list[2].tax_base,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -515,7 +517,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[2].tax_withheld == undefined || forms.atc_list[2].tax_withheld == null ? " " : forms.atc_list[2].tax_withheld,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -538,7 +540,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[3].tax_base == undefined || forms.atc_list[3].tax_base == null ? " " : forms.atc_list[3].tax_base,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -549,7 +551,7 @@
                              text: "",
                          },
                          {
-                             text: "0.00",
+                             text: forms.atc_list == undefined || forms.atc_list[3].tax_withheld == undefined || forms.atc_list[3].tax_withheld == null ? " " : forms.atc_list[3].tax_withheld,
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -938,7 +940,7 @@
          }
 
      ]
-     for (var x = 0; x < 3; x++) {
+     for (x = 0; x < 3; x++) {
          content.push({
              layout: "noBorders",
              table: {
@@ -946,56 +948,56 @@
                  heights: [20],
                  body: [
                      [{
-                             text: '1234',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].seq_no == undefined || forms.sched1[x].seq_no == null ? " " : forms.sched1[x].seq_no,
                              fontSize: 8,
                              margin: [-20, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: '123456789012',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].tin == undefined || forms.sched1[x].tin == null ? " " : forms.sched1[x].tin,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: 'Godfrey Marr Salgado Rivera',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].name == undefined || forms.sched1[x].name == null ? " " : forms.sched1[x].name,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: 'WB 191',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].atc_code == undefined || forms.sched1[x].atc_code == null ? " " : forms.sched1[x].atc_code,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: 'Tax on winnings or prizes paid to winners',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].nature_of_payment == undefined || forms.sched1[x].nature_of_payment == null ? " " : forms.sched1[x].nature_of_payment.toFixed(20),
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: '123,456,789,123,456.00',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].amount == undefined || forms.sched1[x].amount == null ? " " : forms.sched1[x].amount,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: '10%',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_rate == undefined || forms.sched1[x].tax_rate == null ? " " : forms.sched1[x].tax_rate,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
 
                          },
                          {
-                             text: '123,456,789,123,456.00',
+                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_req_withheld == undefined || forms.sched1[x].tax_req_withheld == null ? " " : forms.sched1[x].tax_req_withheld,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
@@ -1016,13 +1018,13 @@
                          text: " "
                      },
                      {
-                         text: "123456789",
+                         text: forms.total_amount,
                          fontSize: 8,
                          margin: [5, 0, 0, 0],
                          alignment: 'justify'
                      },
                      {
-                         text: "123456789",
+                         text: forms.total_tax_req_withheld,
                          fontSize: 8,
                          margin: [5, 0, 0, 0],
                          alignment: 'justify'
