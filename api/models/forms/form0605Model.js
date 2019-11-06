@@ -53,11 +53,11 @@ const model_schema = {
         type: Number,
         default: 0
     }, //Item 21 (Sum of Items 19 & 20D)
-    payment_deficiency:{ // Since you have selected Accounts Receivable/Delinquent Account on item 17
+    payment_deficiency:{ // Since you have selected Accounts Receivable/Delinquent Account on item 17 (Testing in eFPS)
         type: String
         /**
         * Pre-approved by Investigating Office
-        * Not approved by Investigating Office 
+        * Not approved by Investigating Office
         */
     } 
 
