@@ -21,7 +21,7 @@
         ></a-input-number>
       </a-form-item>
       <a-form-item label="4. Any Taxes Witheld?">
-        <a-radio-group v-model="form.any_tax_withheld">
+        <a-radio-group v-model="form.taxes_withheld">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -79,7 +79,7 @@
       </a-form-item>
 
       <a-form-item label="14. Category of Withholding Agent">
-        <a-radio-group v-model="form.taxes_withheld">
+        <a-radio-group v-model="form.category_of_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
@@ -116,7 +116,7 @@
           placeholder="BRIEF DESCRIPTION OF THE PROPERTY"
         ></a-input>
 
-        <a-input v-model="form.tax_doc_no" placeholder="TAX DOC NUMBER"></a-input>
+        <a-input v-model="form.tax_dec_no" placeholder="TAX DOC NUMBER"></a-input>
         <!-- ok -->
 
         <a-input style="100%" v-model="form.tct_no" placeholder="TCT/OCT/CCT"></a-input>
@@ -125,7 +125,7 @@
       </a-form-item>
       <!-- ok -->
       <a-form-item label="18. Does the Selling price cover more than one property?">
-        <a-radio-group v-model="form.selling_property">
+        <a-radio-group v-model="form.selling_price_property">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -144,7 +144,7 @@
       </a-form-item>
 
       <a-form-item label="20. Description if Transaction (Mark one box only) ">
-        <a-radio-group v-model="form.transaction_payment">
+        <a-radio-group v-model="form.description_transaction">
           <a-radio :value="'CAS'">Cash</a-radio>
           <a-radio :value="'EXE'">Exempt</a-radio>
           <a-radio :value="'INS'">Installment Sale</a-radio>
@@ -154,7 +154,7 @@
         <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
           <a-textarea
             style="100%"
-            v-model="form.trans_specify"
+            v-model="form.description_transaction_specify"
             placeholder="IF EXEMPT, OR OTHERS SPECIFY"
           ></a-textarea>
         </a-form-item>
@@ -192,13 +192,13 @@
       <a-form-item label="26. " :labelCol="{span:1}" :wrapperCol="{span:12}">
         <a-input
           style="100%"
-          v-model="form.total_contract"
+          v-model="form.total_no_installment_month"
           placeholder="TOTAL INSTALLMENT IN THE CONTRACT"
         ></a-input>
       </a-form-item>
 
       <a-form-item label="27. Fair Market Value (FMV) - Valuation at the time of the Contract">
-        <a-checkbox @change="onChange" v-model="form.A27">27A FMV of Land per latest Tax Declaration</a-checkbox>
+        <a-checkbox @change="onChange" v-model="form.tax_declaration_land">27A FMV of Land per latest Tax Declaration</a-checkbox>
       </a-form-item>
       <a-form-item label=" " :labelCol="{span:1}" :wrapperCol="{span:12}">
         <a-input style="100%" v-model="form.A277" placeholder></a-input>

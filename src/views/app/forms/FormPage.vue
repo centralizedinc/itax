@@ -153,6 +153,7 @@ import Form2550M from "./2550m/2550m.vue";
 import moment from "moment";
 import Form1601E from "./1601e/1601e.vue";
 import Form1700 from "./1700/1700.vue";
+import Form1701A from "./1701a/1701a.vue";
 import Form1706 from "./1706/1706.vue";
 import Form2551Q from "./2551q/2551q.vue";
 import Form1701Q from "./1701q/1701q.vue";
@@ -165,6 +166,7 @@ import Form1601FQ from "./1601fq/1601fq.vue";
 import Form1601C from "./1601c/1601c.vue";
 import Form1604E from "./1604e/1604e.vue";
 import Form1604C from "./1604c/1604c.vue";
+import Form1702EX from "./1702ex/1702ex.vue";
 
 export default {
   components: {
@@ -173,6 +175,7 @@ export default {
     Form2550M,
     Form1601E,
     Form1700,
+    Form1701A,
     Form1706,
     Form2551Q,
     Form1701Q,
@@ -184,7 +187,8 @@ export default {
     Form1606,
     Form1601FQ,
     Form1601C,
-    Form1604C
+    Form1604C,
+    Form1702EX
   },
   computed: {
     affix_computation() {
@@ -340,7 +344,31 @@ export default {
             description: "Details of Payment"
           }
         ],
-
+        "1701a": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information on Taxpayer/Filer"
+          },
+          {
+            title: "Part II",
+            description: "Total Tax Payable"
+          },
+          {
+            title: "Part III",
+            description: "Details of Payment"
+          },
+          {
+            title: "Part IV",
+            description: "Computation of Income Tax"
+          },
+          {
+            title: "Part V",
+            description: "Background Information on Spouse"
+          }
+        ],
         "2000ot": [
           {
             title: "General"
@@ -438,6 +466,19 @@ export default {
           {
             title: "Part II",
             description: "Summary of Remittances per BIR Form No. 1601-C"
+          }
+        ],
+        "1702ex": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Summary of Remittances per BIR Form No. 1702ex"
           }
         ]
       },

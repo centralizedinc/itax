@@ -66,6 +66,97 @@ class ReturnDetailsDao {
     static create(form_details) {
         return (new model(form_details)).save();
     }
+
+    //ADMIN 
+
+    /**
+     * @returns {Promise}
+     * @param {String} conditions
+     */
+    static getCollection(conditions) {
+        return model.find({ "payment_status": 'paid' }).select('total_amount_payable').lean().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {String} conditions
+     */
+    static findReturns(conditions) {
+        return model.find({ conditions }).lean().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {String} conditions
+     */
+    static countCollected(conditions) {
+        return model.find({ "payment_status": 'paid' }).count().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions
+     * @param {String} fields 
+     */
+    static findByFields(conditions, fields) {
+        return model.find(conditions).select(fields).lean().exec();
+    }
+
+    /**
+    * @returns {Promise}
+    */
+    static getCollectionByMonth(year) {
+        var gteDate = new Date(), ltDate = new Date();
+        gteDate.setMonth(0);
+        gteDate.setDate(1);
+        gteDate.setFullYear(year);
+        ltDate.setMonth(11);
+        ltDate.setDate(31);
+        ltDate.setFullYear(year);
+        return model.find({ "payment_status": 'paid', "date_created": { $gte: gteDate, $lt: ltDate } }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions
+     * @param {String} fields 
+     */
+    static getCollectionByYear(conditions, fields) {
+
+        return model.find({ "payment_status": 'paid' }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     */
+    // static getCollectionByRdo(conditions, fields) {
+    //     return model.find({
+    //         "payment_status": 'paid'
+    //     }).select({
+    //         "rdo_code":''
+    //     }).lean().exec();
+    // }
+    static getCollectionByRdo(code) {
+        return model.find({ "rdo_code": "" }).lean().exec()
+    }
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions
+     * @param {String} fields 
+     */
+    static getCountOfTaxpayer(conditions, fields) {
+        return model.find(conditions).select(fields).count().exec();
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions
+     * @param {String} fields 
+     */
+    static getCountOfReturns(conditions, fields) {
+        return model.find(conditions).select(fields).count().exec();
+    }
+
 }
 
 module.exports = ReturnDetailsDao
