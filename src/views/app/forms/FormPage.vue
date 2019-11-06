@@ -39,6 +39,7 @@
                 :form="form"
                 :step="curr_step"
                 :errors="errors"
+                @error="setErrors"
                 @loading="v=>loading=v"
                 @updateForm="v=>form={...form, ...v}"
                 @changeStep="v=>curr_step=v"
@@ -164,8 +165,8 @@ import Form1606 from "./1606/1606.vue";
 import Form1601FQ from "./1601fq/1601fq.vue";
 import Form1601C from "./1601c/1601c.vue";
 import Form1604E from "./1604e/1604e.vue";
-import Form1604C from "./1604c/1604c.vue"
-import Form1702EX from "./1702ex/1702ex.vue"
+import Form1604C from "./1604c/1604c.vue";
+import Form1702EX from "./1702ex/1702ex.vue";
 
 export default {
   components: {
@@ -343,7 +344,7 @@ export default {
             description: "Details of Payment"
           }
         ],
-        "1701a":[
+        "1701a": [
           {
             title: "General"
           },
@@ -467,7 +468,7 @@ export default {
             description: "Summary of Remittances per BIR Form No. 1601-C"
           }
         ],
-         "1702ex": [
+        "1702ex": [
           {
             title: "General"
           },
@@ -514,6 +515,16 @@ export default {
     };
   },
   methods: {
+    setErrors(errors) {
+      this.errors = errors;
+      console.log("this.errors :", this.errors);
+      if (this.errors && this.errors.length) {
+        var errors = this.errors.sort((a, b) => a.page - b.page);
+        console.log("this.errors :", errors);
+        this.curr_step = errors[0].page;
+        this.$notification.error({ message: "Validation Error" });
+      }
+    },
     getUserByTin(tin) {
       const user = this.user_list.find(v => v.tin === tin);
       return (
@@ -597,63 +608,67 @@ export default {
     submit() {
       this.loading = true;
       this.errors = [];
+      //validate
+      this.$refs.form_component.validate(true);
+      // no errors found, proceed to next page
+      if (!this.errors.length) {
+        this.$store
+          .dispatch("VALIDATE_AND_SAVE", {
+            form_type: this.form_type,
+            form_details: this.form
+          })
+          .then(result => {
+            console.log("VALIDATE_AND_SAVE result:", result.data);
+            this.loading = false;
+            // this.$emit("updateForm", null); //to refresh pdf
+            this.form = { ...this.form, ...null };
+            if (result.data.errors && result.data.errors.length > 0) {
+              this.errors = result.data.errors;
+              console.log("this.errors :", this.errors);
+              if (this.errors && this.errors.length) {
+                var errors = this.errors.sort((a, b) => a.page - b.page);
+                console.log("this.errors :", errors);
+                this.curr_step = errors[0].page;
+              }
+              this.$notification.error({ message: "Validation Error" });
+            } else {
+              this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+              this.$store.commit("NOTIFY_MESSAGE", {
+                success: true,
+                message: `Successfully submitted Form ${this.form_type}`
+              });
+              var return_details = result.data.model;
+              return_details.registered_name = this.form.taxpayer.registered_name;
+              return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
+              this.showSuccessForm(return_details);
 
-      this.$store
-        .dispatch("VALIDATE_AND_SAVE", {
-          form_type: this.form_type,
-          form_details: this.form
-        })
-        .then(result => {
-          console.log("VALIDATE_AND_SAVE result:", result.data);
-          this.loading = false;
-          // this.$emit("updateForm", null); //to refresh pdf
-          this.form = { ...this.form, ...null };
-          if (result.data.errors && result.data.errors.length > 0) {
-            this.errors = result.data.errors;
-            console.log("this.errors :", this.errors);
-            if (this.errors && this.errors.length) {
-              var errors = this.errors.sort((a, b) => a.page - b.page);
-              console.log("this.errors :", errors);
-              this.curr_step = errors[0].page;
+              this.$refs.form_display_component.upload().getBuffer(buffer => {
+                var file = new Blob([buffer], { type: "application/pdf" });
+                // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
+                var data = new FormData();
+                data.append("tax_returns", file);
+                data.append("content-type", "application/pdf");
+
+                this.$store
+                  .dispatch("UPLOAD_TAX_RETURNS", {
+                    form: this.form_type,
+                    ref_no: return_details.reference_no,
+                    form_data: data
+                  })
+                  .then(result => {
+                    console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
+                  })
+                  .catch(err => {
+                    console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
+                  });
+              });
             }
-            this.$notification.error({ message: "Validation Error" });
-          } else {
-            this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-            this.$store.commit("NOTIFY_MESSAGE", {
-              success: true,
-              message: `Successfully submitted Form ${this.form_type}`
-            });
-            var return_details = result.data.model;
-            return_details.registered_name = this.form.taxpayer.registered_name;
-            return_details.taxpayer_type = this.form.taxpayer.taxpayer_type;
-            this.showSuccessForm(return_details);
-
-            this.$refs.form_display_component.upload().getBuffer(buffer => {
-              var file = new Blob([buffer], { type: "application/pdf" });
-              // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
-              var data = new FormData();
-              data.append("tax_returns", file);
-              data.append("content-type", "application/pdf");
-
-              this.$store
-                .dispatch("UPLOAD_TAX_RETURNS", {
-                  form: this.form_type,
-                  ref_no: return_details.reference_no,
-                  form_data: data
-                })
-                .then(result => {
-                  console.log("UPLOAD RESULT ::: ", JSON.stringify(result));
-                })
-                .catch(err => {
-                  console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
-                });
-            });
-          }
-        })
-        .catch(err => {
-          console.log("VALIDATE_AND_SAVE", err);
-          this.loading = false;
-        });
+          })
+          .catch(err => {
+            console.log("VALIDATE_AND_SAVE", err);
+            this.loading = false;
+          });
+      }
     }
   },
   watch: {

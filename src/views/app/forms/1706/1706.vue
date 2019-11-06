@@ -14,6 +14,7 @@
           style="width: 100%"
         />
       </a-form-item>
+
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -40,6 +41,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="4"
+        :validate-status="error_item('atc_code')"
+        :help="error_desc('atc_code')"
       >
         <a-radio-group v-model="form.atc_code" :defaultValue="false" style="width: 100%">
           <span style="margin-right: 14px">ATC</span>
@@ -56,48 +59,59 @@
         <b>Part I: Background Information</b>
       </a-divider>
 
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="5"
-        :validate-status="error_item('taxpayer.tin')"
-        :help="error_desc('taxpayer.tin')"
-      >
-        <a-input placeholder="TIN Seller" v-model="form.taxpayer.tin"></a-input>
-      </a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="6"
-        :validate-status="error_item('taxpayer.rdo_code')"
-        :help="error_desc('taxpayer.rdo_code')"
-      >
-        <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
-      </a-form-item>
-
-      <!-- 7-8 buyer -->
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="7"
-        :validate-status="error_item('buyer_details.tin')"
-        :help="error_desc('buyer_details.tin')"
-      >
-        <a-input placeholder="TIN Buyer" v-model="form.buyer_details.tin"></a-input>
-      </a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="8"
-        :validate-status="error_item('buyer_details.rdo_code')"
-        :help="error_desc('buyer_details.rdo_code')"
-      >
-        <a-input placeholder="RDO Code" v-model="form.buyer_details.rdo_code"></a-input>
-      </a-form-item>
-
+      <!-- 5 to 14 -->
       <a-row :gutter="4">
+        <!-- TIN SELLER -->
         <a-col :span="12">
-          <!-- 9 -->
+          <a-form-item
+            :labelCol="{span: 4}"
+            :wrapperCol="{span: 20}"
+            label="5"
+            :validate-status="error_item('taxpayer.tin')"
+            :help="error_desc('taxpayer.tin')"
+          >
+            <a-input placeholder="TIN Seller" v-model="form.taxpayer.tin"></a-input>
+          </a-form-item>
+        </a-col>
+
+        <!-- TIN Buyer -->
+        <a-col :span="12">
+          <a-form-item
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 21}"
+            label="7"
+            :validate-status="error_item('buyer_details.tin')"
+            :help="error_desc('buyer_details.tin')"
+          >
+            <a-input placeholder="TIN Buyer" v-model="form.buyer_details.tin"></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- Seller RDO -->
+        <a-col :span="12">
+          <a-form-item
+            :labelCol="{span: 4}"
+            :wrapperCol="{span: 20}"
+            label="6"
+            :validate-status="error_item('taxpayer.rdo_code')"
+            :help="error_desc('taxpayer.rdo_code')"
+          >
+            <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- buyer RDO -->
+        <a-col :span="12">
+          <a-form-item
+            :labelCol="{span: 3}"
+            :wrapperCol="{span: 21}"
+            label="8"
+            :validate-status="error_item('buyer_details.rdo_code')"
+            :help="error_desc('buyer_details.rdo_code')"
+          >
+            <a-input placeholder="RDO Code" v-model="form.buyer_details.rdo_code"></a-input>
+          </a-form-item>
+        </a-col>
+
+        <a-col :span="12">
           <a-form-item
             :labelCol="{span: 4}"
             :wrapperCol="{span: 20}"
@@ -108,6 +122,7 @@
             <a-input placeholder="Seller's Name (et al)" v-model="form.taxpayer.registered_name"></a-input>
           </a-form-item>
         </a-col>
+
         <!-- 10 -->
         <a-col :span="12">
           <a-form-item
@@ -162,13 +177,7 @@
       <a-row :gutter="4">
         <!-- 13 -->
         <a-col :span="12">
-          <a-form-item
-            :labelCol="{span: 4}"
-            :wrapperCol="{span: 20}"
-            label="13"
-            :validate-status="error_item('taxpayer.individual_details.address')"
-            :help="error_desc('taxpayer.individual_details.address')"
-          >
+          <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="13">
             <a-textarea
               autosize
               placeholder="Seller's Residence Address"
@@ -215,6 +224,7 @@
           <a-radio :value="'Others'">
             Others
             <a-input
+              v-if="form.classification_property==='Others'"
               style="width: 25vw; margin-left: 14px"
               v-model="form.classification_property_specify"
               placeholder="Please specify"
@@ -232,39 +242,53 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="16"
-        :validate-status="error_item('area_sold')"
-        :help="error_desc('area_sold')"
       >
         <span style="margin-right: 14px">Brief Description of Property</span>
-        <a-row :gutter="12">
-          <a-col :span="8">
-            <a-input placeholder="Area sold (sq.m.)" v-model="form.area_sold"></a-input>
-          </a-col>
-          <a-col :span="16">
-            <a-input placeholder="Tax Declaration No." v-model="form.tax_dec_no"></a-input>
-          </a-col>
-          <a-col :span="24">
-            <a-input placeholder="TCT/OCT/CCT No." v-model="form.tct_no"></a-input>
-          </a-col>
-          <a-col :span="24">
-            <a-input placeholder="Others" v-model="form.others"></a-input>
-          </a-col>
-        </a-row>
       </a-form-item>
+
+      <a-row :gutter="12">
+        <a-col :span="16">
+          <a-form-item :validate-status="error_item('tct_no')" :help="error_desc('tct_no')">
+            <a-input placeholder="TCT/OCT/CCT No." v-model="form.tct_no"></a-input>
+          </a-form-item>
+        </a-col>
+
+        <a-col :span="8">
+          <a-form-item>
+            <a-input placeholder="Area sold (sq.m.)" v-model="form.area_sold"></a-input>
+          </a-form-item>
+        </a-col>
+
+        <a-col :span="12">
+          <a-form-item>
+            <a-input placeholder="Tax Declaration No." v-model="form.tax_dec_no"></a-input>
+          </a-form-item>
+        </a-col>
+
+        <a-col :span="12">
+          <a-form-item>
+            <a-input placeholder="Others" v-model="form.others"></a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+
       <!-- 17 -->
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="17"
+        :validate-status="error_item('sold_as_principal_property')"
+        :help="error_desc('sold_as_principal_property')"
       >
         <a-radio-group
+          :disabled="form.atc_code === 'C'"
           v-model="form.sold_as_principal_property"
-          :defaultValue="false"
           style="width: 100%"
         >
-          <span
-            style="margin-right: 10px"
-          >Is the property being sold your principal residence? (For Individual sellers only)</span>
+          <span style="margin-right: 10px">
+            Is the property being sold your principal residence?
+            <br />(For Individual sellers only)
+          </span>
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -274,10 +298,12 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="18"
+        :validate-status="error_item('intend_construct_acquire')"
+        :help="error_desc('intend_construct_acquire')"
       >
         <a-radio-group
+          :disabled="form.atc_code === 'C'"
           v-model="form.intend_construct_acquire"
-          :defaultValue="false"
           style="width: 100%"
         >
           <span>Do you intend to construct or acquire a new principal residence within 18 months from the date of disposition/sale? (For Individuals)</span>
@@ -291,8 +317,10 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="19"
+        :validate-status="error_item('selling_price_cover')"
+        :help="error_desc('selling_price_cover')"
       >
-        <a-radio-group v-model="form.selling_price_cover" :defaultValue="false" style="width: 100%">
+        <a-radio-group v-model="form.selling_price_cover" style="width: 100%">
           <span>Does the selling price cover more than one property?</span>
           <br />
           <a-radio :value="true">Yes</a-radio>
@@ -315,12 +343,16 @@
           <br />
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
-          <a-input
+          <a-select
+            @change="changeTaxRelief()"
+            v-model="form.avail_tax_relief"
+            placeholder="If yes, specify"
             v-if="form.is_avail_tax_relief==true"
             style="width: 25vw; margin-left: 14px"
-            v-model="form.yes_avail_tax_relief"
-            placeholder="If yes, specify"
-          ></a-input>
+          >
+            <a-select-option value="International Tax Treaty">International Tax Treaty</a-select-option>
+            <a-select-option value="Special Law">Special Law</a-select-option>
+          </a-select>
         </a-radio-group>
       </a-form-item>
       <!-- 21 -->
@@ -328,10 +360,12 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="21"
+        :validate-status="error_item('description_transaction_specify')"
+        :help="error_desc('description_transaction_specify')"
       >
         <a-radio-group
+          @change="changeDescTrans"
           v-model="form.description_transaction_specify"
-          :defaultValue="false"
           style="width: 100%"
         >
           <span>Description of Transaction</span>
@@ -341,98 +375,107 @@
           <a-radio :value="'E'">Exempt</a-radio>
           <a-radio :value="'FS'">Foreclosure Sale</a-radio>
           <a-radio :value="'O'">Others</a-radio>
-          <a-input
-            v-if="form.description_transaction_specify==='E' || form.description_transaction_specify==='O'"
-            style="width: 30vw; margin-left: 14px"
-            v-model="form.is_exempt"
-            placeholder="If Exempt, or others, specify"
-          ></a-input>
+
+          <a-form-item :validate-status="error_item('is_exempt')" :help="error_desc('is_exempt')">
+            <a-input
+              v-if="form.description_transaction_specify==='E' || form.description_transaction_specify==='O'"
+              style="width: 30vw; margin-left: 14px"
+              v-model="form.is_exempt"
+              placeholder="If Exempt, or others, specify"
+            ></a-input>
+          </a-form-item>
         </a-radio-group>
       </a-form-item>
       <br />
       <!--  -->
-      <span>For Installment Sale</span>
-      <a-row :gutter="12">
-        <a-col :span="12">
-          <!-- 22 -->
-          <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="22">
-            <a-input placeholder="Selling Price" v-model="form.selling_price" style="width: 100%" />
-          </a-form-item>
-        </a-col>
-        <!-- 23 -->
-        <a-col :span="12">
-          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="23">
-            <a-input
-              placeholder="Cost and Expenses"
-              v-model="form.cost_expenses"
-              style="width: 100%"
-            />
-          </a-form-item>
-        </a-col>
-        <!-- 24 -->
-        <a-col :span="12">
-          <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="24">
-            <a-input
-              placeholder="Mortgage Assumed"
-              v-model="form.mortgage_assumed"
-              style="width: 100%"
-            />
-          </a-form-item>
-        </a-col>
-        <!-- 25 -->
-        <a-col :span="12">
-          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="25">
-            <a-tooltip>
-              <template slot="title">Total Payments (Collection) During the Initial Year</template>
+      <div v-if="form.description_transaction_specify==='IS'">
+        <span>For Installment Sale</span>
+        <a-row :gutter="12">
+          <a-col :span="12">
+            <!-- 22 -->
+            <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="22">
               <a-input
-                placeholder="Total Payments (Collection) During the Initial Year"
-                v-model="form.total_payments_initial_year"
+                placeholder="Selling Price"
+                v-model="form.selling_price"
                 style="width: 100%"
-              ></a-input>
-            </a-tooltip>
-          </a-form-item>
-        </a-col>
-        <!-- 26 -->
-        <a-col :span="12">
-          <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="26">
-            <a-tooltip>
-              <template slot="title">Amount of Periodic Payment (Collection)</template>
+              />
+            </a-form-item>
+          </a-col>
+          <!-- 23 -->
+          <a-col :span="12">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="23">
               <a-input
-                placeholder="Amount of Periodic Payment (Collection)"
-                v-model="form.amount_installment_month"
+                placeholder="Cost and Expenses"
+                v-model="form.cost_expenses"
                 style="width: 100%"
-              ></a-input>
-            </a-tooltip>
-          </a-form-item>
-        </a-col>
-        <!-- 27 -->
-        <a-col :span="12">
-          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="27">
-            <a-tooltip>
-              <template slot="title">No. of Installments in the Contract</template>
+              />
+            </a-form-item>
+          </a-col>
+          <!-- 24 -->
+          <a-col :span="12">
+            <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="24">
               <a-input
-                placeholder="No. of Installments in the Contract"
-                v-model="form.total_no_installment_month"
+                placeholder="Mortgage Assumed"
+                v-model="form.mortgage_assumed"
                 style="width: 100%"
-              ></a-input>
-            </a-tooltip>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <!-- 28 -->
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="28"
-        :validate-status="error_item('date_of_installment')"
-        :help="error_desc('date_of_installment')"
-      >
-        <a-date-picker
-          placeholder="Date of Installment (MM/DD/YYYY)"
-          v-model="form.date_of_installment"
-          style="width: 100%"
-        />
-      </a-form-item>
+              />
+            </a-form-item>
+          </a-col>
+          <!-- 25 -->
+          <a-col :span="12">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="25">
+              <a-tooltip>
+                <template slot="title">Total Payments (Collection) During the Initial Year</template>
+                <a-input
+                  placeholder="Total Payments (Collection) During the Initial Year"
+                  v-model="form.total_payments_initial_year"
+                  style="width: 100%"
+                ></a-input>
+              </a-tooltip>
+            </a-form-item>
+          </a-col>
+          <!-- 26 -->
+          <a-col :span="12">
+            <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 20}" label="26">
+              <a-tooltip>
+                <template slot="title">Amount of Periodic Payment (Collection)</template>
+                <a-input
+                  placeholder="Amount of Periodic Payment (Collection)"
+                  v-model="form.amount_installment_month"
+                  style="width: 100%"
+                ></a-input>
+              </a-tooltip>
+            </a-form-item>
+          </a-col>
+          <!-- 27 -->
+          <a-col :span="12">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="27">
+              <a-tooltip>
+                <template slot="title">No. of Installments in the Contract</template>
+                <a-input
+                  placeholder="No. of Installments in the Contract"
+                  v-model="form.total_no_installment_month"
+                  style="width: 100%"
+                ></a-input>
+              </a-tooltip>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <!-- 28 -->
+        <a-form-item
+          :labelCol="form_layout.label_col"
+          :wrapperCol="form_layout.wrapper_col"
+          label="28"
+          :validate-status="error_item('date_of_installment')"
+          :help="error_desc('date_of_installment')"
+        >
+          <a-date-picker
+            placeholder="Date of Installment (MM/DD/YYYY)"
+            v-model="form.date_of_installment"
+            style="width: 100%"
+          />
+        </a-form-item>
+      </div>
     </a-form>
 
     <!-- Part 1.2 Next Page -->
@@ -448,6 +491,7 @@
       >
         <span style="margin-right: 14px">Fair Market Value (FMV) - Valuation at the time of Contract</span>
       </a-form-item>
+
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -520,6 +564,8 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="30"
+        :validate-status="error_item('item30')"
+        :help="error_desc('item30')"
       >
         <span style="margin-right: 14px">Determination of Taxable Base</span>
       </a-form-item>
@@ -535,7 +581,7 @@
         <a-radio :value="'30A'">30A</a-radio>-->
         <a-tooltip>
           <template slot="title">Gross Selling Price</template>
-          <a-input v-model="form.item30.gross_selling_price" placeholder="30A. Gross Selling Price"></a-input>
+          <a-input v-model="form.item30.gross_selling_price" placeholder="Gross Selling Price"></a-input>
         </a-tooltip>
       </a-form-item>
       <a-form-item
@@ -548,7 +594,11 @@
         <!-- <a-radio :value="'30B'">30B</a-radio> -->
         <a-tooltip>
           <template slot="title">Bid Price (For Foreclosure Sale)</template>
-          <a-input v-model="form.item30.bid_price" placeholder="Bid Price (For Foreclosure Sale)"></a-input>
+          <a-input
+            :disabled="form.description_transaction_specify  == 'C'"
+            v-model="form.item30.bid_price"
+            placeholder="Bid Price (For Foreclosure Sale)"
+          ></a-input>
         </a-tooltip>
       </a-form-item>
       <a-form-item
@@ -582,6 +632,7 @@
             slot="title"
           >Taxable Installment Collected (For Installment Sale Excluding Interest)</template>
           <a-input
+            :disabled="form.description_transaction_specify  == 'C'"
             v-model="form.item30.installment_collected"
             placeholder="Taxable Installment Collected (For Installment Sale Excluding Interest)"
           ></a-input>
@@ -600,10 +651,12 @@
             slot="title"
           >On the Unutilized Portion of Sales Proceeds (in case nos. 17 & 18 are applicable)</template>
           <a-input
+            :disabled="form.description_transaction_specify  == 'C'"
             v-model="form.item30.unutilized_portion_sales"
             placeholder="On the Unutilized Portion of Sales Proceeds (in case nos. 17 & 18 are applicable)"
           ></a-input>
         </a-tooltip>
+        <a-button type="primary" block>Schedule 1</a-button>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -615,10 +668,33 @@
         <!-- <a-radio :value="'30F'">30F</a-radio> -->
         <a-tooltip>
           <template slot="title">Others (specify)</template>
-          <a-input v-model="form.item30.others" placeholder="30F. Others (specify)"></a-input>
+          <a-input
+            :disabled="form.description_transaction_specify  == 'C'"
+            v-model="form.item30.others"
+            placeholder="Others (specify)"
+          ></a-input>
         </a-tooltip>
         <!-- </a-radio-group> -->
       </a-form-item>
+
+      <a-row :gutter="12">
+        <a-col :span="12">
+          <a-form-item
+            :validate-status="error_item('computation')"
+            :help="error_desc('computation')"
+          >
+            <a-input v-model="form.computation" placeholder="Computation"></a-input>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item
+            :validate-status="error_item('computation2')"
+            :help="error_desc('computation2')"
+          >
+            <a-input v-model="form.computation2"></a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
 
     <!-- Part II -->
@@ -637,7 +713,8 @@
             slot="title"
           >Taxable Base (Item 30A or 30C, whichever is higher, for cash sale, or item 30B, or item 30D, or Item 30E, or Item 30F, whichever is applicable)</template>
           <a-input
-            v-model="form.tax_base"
+            disabled
+            :value="getTaxBase()"
             placeholder="Taxable Base (Item 30A or 30C, whichever is higher, for cash sale, or item 30B, or item 30D, or Item 30E, or Item 30F, whichever is applicable) "
           ></a-input>
         </a-tooltip>
@@ -652,7 +729,7 @@
       >
         <a-tooltip>
           <template slot="title">6% Tax Due</template>
-          <a-input v-model="form.tax_due" placeholder="6% Tax Due"></a-input>
+          <a-input disabled v-model="form.tax_due" placeholder="6% Tax Due"></a-input>
         </a-tooltip>
       </a-form-item>
 
@@ -683,7 +760,11 @@
       >
         <a-tooltip>
           <template slot="title">Tax Payable/(Overpayment)</template>
-          <a-input v-model="form.tax_payable_overpayment" placeholder="Tax Payable/(Overpayment)"></a-input>
+          <a-input
+            disabled
+            v-model="form.tax_payable_overpayment"
+            placeholder="Tax Payable/(Overpayment)"
+          ></a-input>
         </a-tooltip>
       </a-form-item>
 
@@ -691,8 +772,6 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="35"
-        :validate-status="error_item('')"
-        :help="error_desc('')"
       >
         <div style="color: black">Add: Penalties</div>
       </a-form-item>
@@ -742,7 +821,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="35D"
             >
-              <a-input disabled placeholder="Penalties"></a-input>
+              <a-input disabled placeholder="Penalties" v-model="form.penalties"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -757,8 +836,8 @@
               label="36"
             >
               <a-input
-                v-model="form.total_amount_payable"
                 disabled
+                v-model="form.total_amount_payable"
                 placeholder="Total Amount Payable/(Overpayment)(Sum of Items 34 & 35D)"
               ></a-input>
             </a-form-item>
@@ -808,6 +887,13 @@ export default {
     }
   },
   methods: {
+    check() {
+      this.form.validateFields(err => {
+        if (!err) {
+          console.info("success");
+        }
+      });
+    },
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
@@ -820,15 +906,209 @@ export default {
         ? this.errors.find(x => x.field === item).error
         : "";
     },
-    validate() {
-      this.changeStep(this.step + 1);
+    validate(is_validate_all) {
+      var errors = [];
+      /**
+       * {
+       * page: 1, <-- what page from 0
+       * field: "taxpayer.line_of_business", <-- field name or v-model
+       * error: "Mandatory field" <-- error message
+       * }
+       */
+      // insert validation for all or for current step
+      // Page 1
+      if (is_validate_all || this.step === 0) {
+        if (!this.form.return_period) {
+          errors.push({
+            page: 0,
+            field: "return_period",
+            error: "Date of Transaction Purchase is a mandatory field"
+          });
+        }
+        if (!this.form.atc_code) {
+          errors.push({
+            page: 0,
+            field: "atc_code",
+            error: "Please select an ATC code"
+          });
+        }
+      }
+      // Page 2
+      if (is_validate_all || this.step === 1) {
+        if (!this.form.buyer_details.tin) {
+          errors.push({
+            page: 1,
+            field: "buyer_details.tin",
+            error: "Please enter a valid Buyer TIN"
+          });
+        }
+        if (!this.form.buyer_details.rdo_code) {
+          errors.push({
+            page: 1,
+            field: "buyer_details.rdo_code",
+            error: "Please enter the RDO code"
+          });
+        }
+        if (!this.form.buyer_details.registered_name) {
+          errors.push({
+            page: 1,
+            field: "buyer_details.registered_name",
+            error: "Please enter the Buyer's name"
+          });
+        }
+        if (!this.form.buyer_details.address) {
+          errors.push({
+            page: 1,
+            field: "buyer_details.address",
+            error: "Please enter the Buyer's address"
+          });
+        }
+        if (!this.form.location_of_property) {
+          errors.push({
+            page: 1,
+            field: "location_of_property",
+            error: "Please enter the location of the property"
+          });
+        }
+        if (!this.form.classification_property) {
+          errors.push({
+            page: 1,
+            field: "classification_property",
+            error: "Please select an option for classification of property"
+          });
+        }
+      }
+      // Page 3
+      if (is_validate_all || this.step === 2) {
+        if (!this.form.tct_no) {
+          errors.push({
+            page: 2,
+            field: "tct_no",
+            error: "Please enter the TCT/OCT/CCT No."
+          });
+        }
+        if (
+          this.form.sold_as_principal_property === null ||
+          this.form.sold_as_principal_property === undefined
+        ) {
+          errors.push({
+            page: 2,
+            field: "sold_as_principal_property",
+            error: "Please select an option for item 17"
+          });
+        } else if (this.form.sold_as_principal_property) {
+          if (
+            !this.form.sold_as_principal_property ||
+            !this.form.sold_as_principal_property.length
+          ) {
+            errors.push({
+              page: 2,
+              field: "sold_as_principal_property",
+              error: "Please select an option for item 17"
+            });
+          }
+        }
+        if (
+          this.form.intend_construct_acquire === null ||
+          this.form.intend_construct_acquire === undefined
+        ) {
+          errors.push({
+            page: 2,
+            field: "intend_construct_acquire",
+            error: "Please select an option for item 18"
+          });
+        } else if (this.form.intend_construct_acquire) {
+          if (!this.form.intend_construct_acquire) {
+            errors.push({
+              page: 2,
+              field: "intend_construct_acquire",
+              error: "Please select an option for item 18"
+            });
+          }
+        }
+        if (
+          this.form.selling_price_cover === null ||
+          this.form.selling_price_cover === undefined
+        ) {
+          errors.push({
+            page: 2,
+            field: "selling_price_cover",
+            error: "Please select an option for item 19"
+          });
+        }
+        if (!this.form.description_transaction_specify) {
+          errors.push({
+            page: 2,
+            field: "description_transaction_specify",
+            error: "Please select an option for Description Transaction"
+          });
+        }
+        if (
+          this.form.description_transaction_specify === "'E'" ||
+          this.form.description_transaction_specify === "'O'"
+        ) {
+          errors.push({
+            page: 2,
+            field: "description_transaction_specify",
+            error: "Please specify a valid description of transaction"
+          });
+        } else if (this.form.description_transaction_specify) {
+          if (!this.form.is_exempt || !this.form.is_exempt.length) {
+            errors.push({
+              page: 2,
+              field: "is_exempt",
+              error: "Please specify a valid description of transaction"
+            });
+          }
+        }
+      }
+      // Page 4
+      if (is_validate_all || this.step == 3) {
+        if (this.form.description_transaction_specify === "'C'") {
+          errors.push({
+            page: 2,
+            field: "description_transaction_specify",
+            error: "Please specify a valid description of transaction"
+          });
+        } else if (this.form.description_transaction_specify) {
+          if (!this.form.item30 || !this.form.item30.length) {
+            errors.push({
+              page: 3,
+              field: "item30",
+              error:
+                "You have selected Cash Sale in item 21. Please input value in Determination of Taxable Base below"
+            });
+          }
+        }
+      }
+
+      this.$emit("error", errors);
+      if (!errors.length) {
+        // proceed to next step if no errors found
+        this.changeStep(this.step + 1);
+      }
     },
     changeTaxRelief() {
       if (this.form.is_avail_tax_relief == false) {
-        this.$emit("updateForm", {
-          yes_avail_tax_relief: " "
-        });
+        this.form.avail_tax_relief = "";
+        // this.$emit("updateForm", {
+        //   is_avail_tax_relief: " "
+        // });
       }
+    },
+    changeDescTrans() {
+      if (
+        this.form.description_transaction_specify === "E" ||
+        this.form.description_transaction_specify === "O"
+      ) {
+        this.form.is_exempt = "";
+        this.$emit("updateForm", { is_exempt: "" });
+      }
+    },
+    // INSERT COMPUTATION HERE
+    getTaxBase() {
+      // var max_value = Math.max(
+      // );
     }
   }
 };
