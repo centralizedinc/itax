@@ -478,8 +478,20 @@ export default {
           },
           {
             title: "Part II",
-            description: "Summary of Remittances per BIR Form No. 1702ex"
+            description: "Total Tax Payable"
+          },
+          {
+            title: "Part IV",
+            description: "Computation of Tax"
+          },
+          {
+            title: "Part V",
+            description: "Tax Relief Availment"
           }
+          // {
+          //   title: "Part VI",
+          //   description: "Schedules"
+          // }
         ]
       },
       default_steps: [
