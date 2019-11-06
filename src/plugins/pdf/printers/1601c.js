@@ -50,9 +50,9 @@ function getContent(forms) {
 ///////////////////////////// ---> Table 1  <--- ///////////////////////////////
         //date of transaction MM/YYYY
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
-                widths: [25, 75 , 54, 40, 34, 58, 82, 104,],
+                widths: [25, 75 , 54, 40, 34, 58, 83, 104,],
                 body: [
                     [
                         //fromPeriod month
@@ -66,7 +66,7 @@ function getContent(forms) {
                             characterSpacing: 5,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [7, 6, 0, 0]
+                            margin: [10, 6, 0, 0]
                         },
                         // //fromPeriod day     
                         // {
@@ -88,10 +88,10 @@ function getContent(forms) {
                             }),
                             fontSize: 13,
                             bold: true,
-                            characterSpacing: 5,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [0, 6, 0, 0]
+                            margin: [6, 6, 0, 0]
                         },
 
                         //#2 amended return?
@@ -102,7 +102,7 @@ function getContent(forms) {
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [19.5, 7.5, 0, 0]
+                            margin: [26, 11, 0, 0]
                         },
                         // amended_yn false
                         {
@@ -111,7 +111,7 @@ function getContent(forms) {
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [4, 7.5, 0, 0]
+                            margin: [11, 12, 0, 0]
                         },
                         // #3 any taxes withheld?
                         // any taxes withheld? true
@@ -121,7 +121,7 @@ function getContent(forms) {
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [27, 10, 0, 0]
+                            margin: [35, 13, 0, 0]
                         },
                         // any taxes withheld? false             
                         {
@@ -130,17 +130,17 @@ function getContent(forms) {
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [23, 9, 0, 0]
+                            margin: [33, 13, 0, 0]
                         },
                         //#4 no. of sheets attached
                        {
                         text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
-                        fontSize: 12,
+                        fontSize: 11,
                         bold: true,
-                        characterSpacing: 6,
+                        characterSpacing: 7,
                         // right,down,left,up
                         alignment: 'left',
-                        margin: [56.5, 7.5, 0, 0]
+                        margin: [69, 10, 0, 0]
                     
                         },
                         // space 5. ATC
@@ -176,7 +176,7 @@ function getContent(forms) {
 
         // #6 Taxpayer identification #7 Rdo Code
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [170, 44, 45, 51, 75, 105,],
                 heights: [10,],
@@ -192,37 +192,37 @@ function getContent(forms) {
                             text: mapTin(forms.taxpayer.tin, 0, 3),
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 6,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [10, 10, 0, 0]
+                            margin: [16, 10, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 3, 6),
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 6,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [10, 10, 0, 0]
+                            margin: [21, 10, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 6, 9),
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 6,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [14, 10, 0, 0]
+                            margin: [24, 10, 0, 0]
                         },
                         {
                             text: mapTin(forms.taxpayer.tin, 9, 12),
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 6,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [13, 10, 0, 0]
+                            margin: [23, 10, 0, 0]
                         },
                         
                         // #7 Rdo Code 
@@ -230,10 +230,10 @@ function getContent(forms) {
                             text: forms.taxpayer.rdo_code,
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 6,
+                            characterSpacing: 2,
                             alignment: 'left',
                             // right,down,left,up
-                            margin: [69, 10, 0, 0]
+                            margin: [79, 10, 0, 0]
                         },
                         ////////// ----> End Table 2 <----- //////////
                     ]]
@@ -243,7 +243,7 @@ function getContent(forms) {
 ///////// #8 Witholding Agent's Name 
               
         {
-            //  layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [535, ],
                 heights: [8,],
@@ -254,10 +254,10 @@ function getContent(forms) {
                             text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
                             fontSize: 12,
                             bold: true,
-                            characterSpacing: 4,
+                            characterSpacing: 2,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [6, 8, 0, 0]
+                            margin: [8, 8, 0, 0]
                         },
                         
                     ]
@@ -269,7 +269,7 @@ function getContent(forms) {
 ////////////////////////// ----> table #4 <---- /////////////////////////////////
 /////////////// #9 Registered Address       
 {
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [535,],
         heights: [17,],
@@ -280,10 +280,10 @@ function getContent(forms) {
                     text: forms.address == null ? ' ' : forms.address,
                     fontSize: 10,
                     bold: true,
-                    characterSpacing: 3,
+                    characterSpacing: 2,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [10, 1, 0, 0]
+                    margin: [2, 9, 0, 0]
                 },
                 
             ]
@@ -294,7 +294,7 @@ function getContent(forms) {
         /////////////////////// --> End table 4 <-- ///////////////////
         //////////////////// -----> table 5 Registered Address2 //////////////////
         {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [400, 126 ],
                 heights: [10,],
@@ -317,12 +317,12 @@ function getContent(forms) {
                         // #9A ZIP code
                         {
                             text: forms.taxpayer.zip_code == null ? ' ' : forms.taxpayer.zip_code,
-                            fontSize: 12,
+                            fontSize: 11,
                             bold: true,
-                            characterSpacing: 7,
+                            characterSpacing: 4,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [75, -2, 0, 0]
+                            margin: [82, -1, 0, 0]
                         },
                     ]
                 ]
@@ -332,7 +332,7 @@ function getContent(forms) {
 ////////////////////////////// ----> table #6 <---- /////////////////////////////////
 /////////// #10 contact number #11 category of witholding agent       
 {
-            //layout: "noBorders",
+            layout: "noBorders",
             table: {
                 widths: [52, 160, 150,50,87,],
                 heights: [7,],
@@ -346,10 +346,10 @@ function getContent(forms) {
                         {
                             text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                             fontSize: 11,
-                            characterSpacing: 6,
+                            characterSpacing: 2,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [20 , -1, 0, 0]
+                            margin: [20 , 0, 0, 0]
                         },
                         {
                             text: ""
@@ -358,10 +358,11 @@ function getContent(forms) {
                         {
                             text: forms.category_of_agent == true ? 'X' : ' ',
                             fontSize: 10,
+                            characterSpacing: 2,
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [7, 0, 0, 0]
+                            margin: [16, 4, 0, 0]
                         },
                         
                         {
@@ -370,7 +371,7 @@ function getContent(forms) {
                             bold: true,
                             // right,down,left,up
                             alignment: 'left',
-                            margin: [20, -1, 0, 0]
+                            margin: [28.5, 4, 0, 0]
                         },
 
                     ]
@@ -381,7 +382,7 @@ function getContent(forms) {
 ///////////////////////////////////////// End of table 6 ////////////////////////////////
 //////////////////// table 7 /////////////////////////////
 {
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [535],
         heights: [7],
@@ -392,10 +393,10 @@ function getContent(forms) {
                     text: forms.taxpayer.contact_details.email,
                     fontSize: 10,
                     bold: true,
-                    characterSpacing: 3,
+                    characterSpacing: 2,
                     alignment: 'justify',
                     // right,down,left,up
-                    margin: [62, -2, 0, 0]
+                    margin: [66, -2, 0, 0]
                 },
                 
             ]
@@ -405,7 +406,7 @@ function getContent(forms) {
 /////////////////////////// End table 7//////////////////////////
 //////////////////////// Table 8///////////////////////////////////////
 {
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [120, 30, 37, 80, 232 ],
         heights: [4],
@@ -421,7 +422,7 @@ function getContent(forms) {
                     bold: true,
                     // right,down,left,up
                     alignment: 'left',
-                    margin: [2, 1, 0, 0]
+                    margin: [7, 5, 0, 0]
                 },
                 
                 {
@@ -430,7 +431,7 @@ function getContent(forms) {
                     bold: true,
                     // right,down,left,up
                     alignment: 'left',
-                    margin: [5, 0.5, 0, 0]
+                    margin: [11.5, 5, 0, 0]
                 },
                 {
                     text: ""
@@ -452,10 +453,10 @@ function getContent(forms) {
 
 //////////////////////// End table 8 ////////////////////////
 
-////////////////// Part II - Computation of Tax  
+//////////////////////////////////////////////////////////////////////////// Part II - Computation of Tax  
 {
     //#14 Total Amount of Compensation 
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [535],
         heights: [20,],
@@ -465,10 +466,10 @@ function getContent(forms) {
                 {
                     text: formatAmount(forms.compensation),
                     alignment: 'right',
-                    fontSize: 12,
+                    fontSize: 9,
                     characterSpacing: 8,
                     // right,down,left,up
-                    margin: [1, 10, 3, 0],
+                    margin: [3, 15, 3, 0],
                 }
             ]
         ]
@@ -478,20 +479,20 @@ function getContent(forms) {
 
 {
     //#15 Statutory Minimum Wage 
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [535],
-        heights: [18,],
+        heights: [16,],
         body: [
             [
 
                 {
                     text: formatAmount(forms.statutory_minimum_wage),
                     alignment: 'right',
-                    fontSize: 12,
+                    fontSize: 9,
                     characterSpacing: 8,
                     // right,down,left,up
-                    margin: [1, 4, 3, 0]
+                    margin: [0, 10, 2, 0]
                 }
             ]
         ]
@@ -501,20 +502,20 @@ function getContent(forms) {
 
 {
     //#16 Holiday Pay, Overtime 
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [535],
-        heights: [10,],
+        heights: [9,],
         body: [
             [
 
                 {
                     text: formatAmount(forms.hazard_pay),
                     alignment: 'right',
-                    fontSize: 10,
+                    fontSize: 9,
                     characterSpacing: 8,
                     // right,down,left,up
-                    margin: [0, -3, 3, 0]
+                    margin: [0, 2, 2, 0]
                 }
             ]
         ]
@@ -524,7 +525,7 @@ function getContent(forms) {
 
 {
     //#17 13th Month Pay 
-    //layout: "noBorders",
+    layout: "noBorders",
     table: {
         widths: [535],
         heights: [10],
@@ -535,9 +536,9 @@ function getContent(forms) {
                     text: formatAmount(forms.other_benefits),
                     alignment: 'right',
                     fontSize: 9,
-                    characterSpacing: 6, 
+                    characterSpacing: 8, 
                     // right,down,left,up
-                    margin: [0, 0, 0, 0]
+                    margin: [0,2, 3, 0]
                 }
             ]
         ]
@@ -550,16 +551,18 @@ function getContent(forms) {
     //#18 De Minimis Benefits 
    layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 9,
         body: [
             [
 
                 {
                     text: formatAmount(forms.minimis_benefits),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 2, 3, 0]
                 }
             ]
         ]
@@ -570,16 +573,18 @@ function getContent(forms) {
     //#19 SSS, GSIS 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 9,
         body: [
             [
 
                 {
                     text: formatAmount(forms.mandatory_contribution),
                     alignment: 'right',
-                    fontSize: 9,
+                    characterSpacing: 8,
+                    fontSize: 9    ,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 3, 3, 0]
                 }
             ]
         ]
@@ -591,16 +596,18 @@ function getContent(forms) {
     //#20 Other Non Taxable Compensation
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 9,
         body: [
             [
 
                 {
                     text: formatAmount(forms.other_taxable_compensation),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 0, 3, 0]
                 }
             ]
         ]
@@ -613,16 +620,18 @@ function getContent(forms) {
     //#21 Total non taxable compensation
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 9,
         body: [
             [
 
                 {
                     text: formatAmount(forms.non_taxable_compensation),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 0, 3, 0]
                 }
             ]
         ]
@@ -634,16 +643,18 @@ function getContent(forms) {
     //#22 Total taxable compensation 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heigts: 12,
         body: [
             [
 
                 {
                     text: formatAmount(forms.total_taxable_compensation),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 0, 3, 0]
                 }
             ]
         ]
@@ -655,16 +666,18 @@ function getContent(forms) {
     //#23 Less: Taxable compensation 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 8,
         body: [
             [
 
                 {
                     text: formatAmount(forms.less_taxable_compensation ),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 0, 3, 0]
                 }
             ]
         ]
@@ -676,16 +689,18 @@ function getContent(forms) {
     //#24 Net Taxable compensation 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 8,
         body: [
             [
 
                 {
                     text: formatAmount(forms.net_taxable_required),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 3, 3, 0]
                 }
             ]
         ]
@@ -697,16 +712,18 @@ function getContent(forms) {
     //#25 Total tax witheld 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 8,
         body: [
             [
 
                 {
                     text: formatAmount(forms.total_taxes_witheld),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 3, 3, 0]
                 }
             ]
         ]
@@ -718,16 +735,18 @@ function getContent(forms) {
     //#26 Add/(less): Adjustment of taxes 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 8,
         body: [
             [
 
                 {
                     text: formatAmount(forms.adjustment),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 2, 0]
                 }
             ]
         ]
@@ -739,16 +758,18 @@ function getContent(forms) {
     //#27 taxes witheld remittance 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 9,
         body: [
             [
 
                 {
                     text: formatAmount(forms.tax_required_remittance),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 2, 3, 0]
                 }
             ]
         ]
@@ -760,16 +781,18 @@ function getContent(forms) {
     //#28 Less: tax remitted return 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.tax_remitted_previously),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, -1, 2, 0]
                 }
             ]
         ]
@@ -780,16 +803,18 @@ function getContent(forms) {
     //#29 Other remittance made 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.other_payments_made),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 2, 0]
                 }
             ]
         ]
@@ -801,16 +826,18 @@ function getContent(forms) {
     //#30 Total tax remittance
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.total_payments_made),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 2, 2, 0]
                 }
             ]
         ]
@@ -822,7 +849,8 @@ function getContent(forms) {
     //#31 Tax Still Due
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
@@ -830,9 +858,10 @@ function getContent(forms) {
       // use to compute penalties
                     text: formatAmount(forms.tax_due),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 2, 2, 0]
                 }
             ]
         ]
@@ -847,16 +876,18 @@ function getContent(forms) {
     //#32 Surcharge 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.surcharge),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 1, 0]
                 }
             ]
         ]
@@ -868,16 +899,18 @@ function getContent(forms) {
     //#33 Interest 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights:10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.interest),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 1, 0]
                 }
             ]
         ]
@@ -889,16 +922,18 @@ function getContent(forms) {
     //#34 compromise 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.compromise),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 1, 0]
                 }
             ]
         ]
@@ -910,16 +945,18 @@ function getContent(forms) {
     //#35 Total penalties 
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
                 {
                     text: formatAmount(forms.penalties),
                     alignment: 'right',
+                    characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 1, 0]
                 }
             ]
         ]
@@ -931,7 +968,8 @@ function getContent(forms) {
     //#36 Total Amount still due     
     layout: "noBorders",
     table: {
-        widths: [500],
+        widths: [535],
+        heights: 10,
         body: [
             [
 
@@ -939,8 +977,9 @@ function getContent(forms) {
                     text: formatAmount(forms.total_amount_payable),
                     alignment: 'right',
                     fontSize: 9,
+                    characterSpacing: 8,
                     // right,down,left,up
-                    margin: [0, -4, 0, 0]
+                    margin: [0, 1, 1, 0]
                 }
             ]
         ]
