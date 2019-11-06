@@ -487,11 +487,11 @@ export default {
           {
             title: "Part V",
             description: "Tax Relief Availment"
+          },
+          {
+            title: "Part VI",
+            description: "Schedules"
           }
-          // {
-          //   title: "Part VI",
-          //   description: "Schedules"
-          // }
         ]
       },
       default_steps: [

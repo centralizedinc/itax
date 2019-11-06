@@ -23,7 +23,7 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-       <a-form-item label="5. Any Taxes Witheld?">
+      <a-form-item label="5. Any Taxes Witheld?">
         <a-radio-group v-model="form.any_tax_withheld">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -68,23 +68,22 @@
       <a-form-item label="If yes, specify">
         <a-input v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
-       <a-form-item label="13. Zip Code">
+      <a-form-item label="13. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="14. Zip Code">
+      <a-form-item label="14. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="15. Zip Code">
+      <a-form-item label="15. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="16. Zip Code">
+      <a-form-item label="16. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="17. Zip Code">
+      <a-form-item label="17. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
     </a-form>
-
 
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
@@ -112,7 +111,6 @@
       <a-form-item label="23. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-      
     </a-form>
     <!-- Part III -->
     <!-- Part IV -->
@@ -170,7 +168,7 @@
       <a-form-item label="40. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="41. Zip Code">
+      <a-form-item label="41. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item label="42. Zip Code">
@@ -179,7 +177,7 @@
       <a-form-item label="43. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="44. Zip Code">
+      <a-form-item label="44. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item label="45. Zip Code">
@@ -188,7 +186,7 @@
       <a-form-item label="46. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
-       <a-form-item label="47. Zip Code">
+      <a-form-item label="47. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item label="48. Zip Code">
@@ -202,7 +200,7 @@
       </a-form-item>
     </a-form>
 
-<!-- Part V -->
+    <!-- Part V -->
     <a-form :form="form_part4" v-show="step===4">
       <a-divider orientation="left">
         <b>Part V: Tax Relief Availment</b>
@@ -233,13 +231,12 @@
       <a-button type="link" @click="openSchedule()">Schedule 1.1</a-button>
       
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form> -->
-    </div>
+    </a-form>-->
+  </div>
 </template>
 
 <script>
 // import form_1601e_image from "@/assets/forms/1600wp.jpg";
-
 
 export default {
   props: ["form", "step", "errors"],
@@ -255,8 +252,7 @@ export default {
       form_part3: this.$form.createForm(this),
       form_part4: this.$form.createForm(this),
       // form_part5: this.$form.createForm(this),
-      image_height: 1000,
-     
+      image_height: 1000
     };
   },
   watch: {
@@ -266,18 +262,26 @@ export default {
       );
     },
     step() {
-     if(this.step == 3){
-         this.form.pdf_page = 1
-     }else{
-         this.form.pdf_page = 0
-     }
+      if (this.step === 3) {
+        this.form.pdf_page = 1;
+      } else if (this.step === 4) {
+        this.form.pdf_page = 1;
+} else if (this.step === 5) {
+        this.form.pdf_page = 2;
+
+      } else {
+        this.form.pdf_page = 0;
+      }
     }
   },
   methods: {
     updateAtcAndClose(data) {
       this.show = 0;
       this.form.atc_list = data.atc_list;
-      console.log("update atc and close atc lise data: " + JSON.stringify(this.form.atc_list))
+      console.log(
+        "update atc and close atc lise data: " +
+          JSON.stringify(this.form.atc_list)
+      );
       this.form.tax_req_withld_remtd = data.total_amount_payable;
     },
     updateScheduleAndClose(data) {
@@ -416,10 +420,9 @@ export default {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
     }
-    
   },
   created() {
-      this.form.pdf_page = 0
+    this.form.pdf_page = 0;
     // console.log("this.$ref.container.height :", this.$refs);
     // console.log("test :", this.$refs.container.height);
     window.addEventListener("scroll", this.handleScroll);
