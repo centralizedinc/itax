@@ -84,14 +84,14 @@ function getContent(forms) {
                             fontSize: 12,
                             bold: true,
                             alignment: 'justified',
-                            margin: [0, 6, 0, 0]
+                            margin: [0, 8, 0, 0]
                         },
                         {
                             text: forms.amended_yn == false ? 'X' : ' ',
                             fontSize: 12,
                             bold: true,
                             alignment: 'justified',
-                            margin: [0, 6, 0, 0]
+                            margin: [0, 8, 0, 0]
                         },
                         {
                             text: ' ',
@@ -293,21 +293,21 @@ function getContent(forms) {
                                 widths: [90, 78, 80, 120, 100],
                                 body: [
                                     [{
-                                        text: forms.real_property_class == '1' ? 'X' : ' ',
+                                        text: forms.classification_property == '1' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
                                         margin: [1, 6, 0, 0],
                                     },
                                     {
-                                        text: forms.real_property_class == '2' ? 'X' : ' ',
+                                        text: forms.classification_property == '2' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
                                         margin: [0, 6, 0, 0],
                                     },
                                     {
-                                        text: forms.real_property_class == '3' ? 'X' : ' ',
+                                        text: forms.classification_property == '3' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
@@ -320,35 +320,35 @@ function getContent(forms) {
                                         text: ' '
                                     }],
                                     [{
-                                        text: forms.real_property_class == '4' ? 'X' : ' ',
+                                        text: forms.classification_property == '4' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
                                         margin: [1, -5, 0, 0],
                                     },
                                     {
-                                        text: forms.real_property_class == '5' ? 'X' : ' ',
+                                        text: forms.classification_property == '5' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
                                         margin: [0, -5, 0, 0],
                                     },
                                     {
-                                        text: forms.real_property_class == '6' ? 'X' : ' ',
+                                        text: forms.classification_property == '6' ? 'X' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
                                         margin: [0, -5, 0, 0],
                                     },
                                     {
-                                        text: forms.real_property_class == 'O' ? ' ' : ' ',
+                                        text: forms.classification_property == 'O' ? ' ' : ' ',
                                         fontSize: 10,
                                         bold: true,
                                         alignment: 'justified',
                                         margin: [40, -5, 0, 0],
                                     },
                                     {
-                                        text: forms.others == null ? ' ' : forms.others,
+                                        text: forms.classification_property_specify == null ? ' ' : forms.classification_property_specify,
                                         fontSize: 10,
                                         alignment: 'justified',
                                         margin: [0, -8, 0, 0],
@@ -375,7 +375,7 @@ function getContent(forms) {
                         margin: [220, -4, 0, 0],
                     },
                     {
-                        text: forms.tax_dec == null ? ' ' : forms.tax_dec,
+                        text: forms.tax_dec_no == null ? ' ' : forms.tax_dec_no,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -389,7 +389,7 @@ function getContent(forms) {
                         margin: [70, -5, 0, 0],
                     },
                     {
-                        text: forms.desc_prop_others == null ? ' ' : forms.desc_prop_others,
+                        text: forms.others == null ? ' ' : forms.others,
                         fontSize: 10,
                         bold: true,
                         alignment: 'justified',
@@ -409,14 +409,14 @@ function getContent(forms) {
                         text: ' '
                     },
                     {
-                        text: forms.principal_res_yn == true ? 'X' : ' ',
+                        text: forms.sold_as_principal_property == true ? 'X' : ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'left',
                         margin: [0, -2, 0, 0]
                     },
                     {
-                        text: forms.principal_res_yn == false ? 'X' : ' ',
+                        text: forms.sold_as_principal_property == false ? 'X' : ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'left',
@@ -436,14 +436,14 @@ function getContent(forms) {
                         text: ' '
                     },
                     {
-                        text: forms.new_principal_res == true ? 'X' : ' ',
+                        text: forms.intend_construct_acquire == true ? 'X' : ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'left',
                         margin: [0, -8, 0, 0]
                     },
                     {
-                        text: forms.new_principal_res == false ? 'X' : ' ',
+                        text: forms.intend_construct_acquire == false ? 'X' : ' ',
                         fontSize: 10,
                         bold: true,
                         alignment: 'left',
@@ -465,14 +465,14 @@ function getContent(forms) {
                             widths: [47, 40],
                             body: [
                                 [{
-                                    text: forms.more_than_one_prop == true ? 'X' : ' ',
+                                    text: forms.selling_price_cover == true ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
                                     margin: [0, -4, 0, 0]
                                 },
                                 {
-                                    text: forms.more_than_one_prop == false ? 'X' : ' ',
+                                    text: forms.selling_price_cover == false ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
@@ -484,7 +484,7 @@ function getContent(forms) {
                     {
                         layout: "noBorders",
                         table: {
-                            widths: [47, 120, 100],
+                            widths: [47, 120, 200],
                             body: [
                                 [{
                                     text: forms.is_avail_tax_relief == true ? 'X' : ' ',
@@ -501,7 +501,7 @@ function getContent(forms) {
                                     margin: [0, -4, 0, 0]
                                 },
                                 {
-                                    text: forms.yes_avail_tax_relief == null ? ' ' : forms.yes_avail_tax_relief,
+                                    text: forms.avail_tax_relief == null || forms.is_avail_tax_relief == false ? ' ' : forms.avail_tax_relief,
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
@@ -526,35 +526,35 @@ function getContent(forms) {
                             widths: [48, 80],
                             body: [
                                 [{
-                                    text: forms.description_transaction == 'CS' ? 'X' : ' ',
+                                    text: forms.description_transaction_specify == 'CS' ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
                                     margin: [1, 3, 0, 0]
                                 },
                                 {
-                                    text: forms.description_transaction == 'IS' ? 'X' : ' ',
+                                    text: forms.description_transaction_specify == 'IS' ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
                                     margin: [0, 3, 0, 0]
                                 }],
                                 [{
-                                    text: forms.description_transaction == 'E' ? 'X' : ' ',
+                                    text: forms.description_transaction_specify == 'E' ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
                                     margin: [1, -4, 0, 0]
                                 },
                                 {
-                                    text: forms.description_transaction == 'FS' ? 'X' : ' ',
+                                    text: forms.description_transaction_specify == 'FS' ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
                                     margin: [0, -4, 0, 0]
                                 }],
                                 [{
-                                    text: forms.description_transaction == 'O' ? 'X' : ' ',
+                                    text: forms.description_transaction_specify == 'O' ? 'X' : ' ',
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'left',
@@ -595,7 +595,7 @@ function getContent(forms) {
                                     text: ' '
                                 },
                                 {
-                                    text: formatAmount(forms.mortgage),
+                                    text: formatAmount(forms.mortgage_assumed),
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'right',
@@ -605,7 +605,7 @@ function getContent(forms) {
                                     text: ' '
                                 },
                                 {
-                                    text: formatAmount(forms.total_payments),
+                                    text: formatAmount(forms.total_payments_initial_year),
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'right',
@@ -615,7 +615,7 @@ function getContent(forms) {
                                     text: ' '
                                 },
                                 {
-                                    text: formatAmount(forms.amt_periodic_payment),
+                                    text: formatAmount(forms.amount_installment_month),
                                     fontSize: 10,
                                     bold: true,
                                     alignment: 'right',
@@ -651,7 +651,7 @@ function getContent(forms) {
                         margin: [16, -16, 0, 0]
                     },
                     {
-                        text: formatDate(forms.doi, { month: "2-digit" }),
+                        text: formatDate(forms.date_of_installment, { month: "2-digit" }),
                         fontSize: 12,
                         bold: true,
                         characterSpacing: 3,
@@ -659,7 +659,7 @@ function getContent(forms) {
                         margin: [30, -18, 0, 0]
                     },
                     {
-                        text: formatDate(forms.doi, { day: "2-digit" }),
+                        text: formatDate(forms.date_of_installment, { day: "2-digit" }),
                         bold: true,
                         fontSize: 12,
                         characterSpacing: 6,
@@ -667,7 +667,7 @@ function getContent(forms) {
                         margin: [0, -18, 0, 0]
                     },
                     {
-                        text: formatDate(forms.doi, { year: "numeric" }),
+                        text: formatDate(forms.date_of_installment, { year: "numeric" }),
                         bold: true,
                         fontSize: 12,
                         characterSpacing: 8,
@@ -678,55 +678,214 @@ function getContent(forms) {
             }
         },
 
-        // Others, 27, 28
+        // 29
         {
             layout: "noBorders",
             table: {
-                widths: [240, 135, 50, 20, 80],
+                widths: [250, 270],
                 body: [
                     [{
-                        text: forms.is_exempt == null ? ' ' : forms.is_exempt,
+                        text: formatAmount(forms.item29.tax_declaration_land),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'left',
-                        margin: [0, -24, 0, 0]
+                        alignment: 'right',
+                        margin: [0, 2, 0, 0]
                     },
                     {
-                        text: forms.no_of_installments == null ? ' ' : forms.no_of_installments,
+                        text: formatAmount(forms.item29.zonal_value),
                         fontSize: 10,
                         bold: true,
-                        alignment: 'left',
-                        characterSpacing: 6,
-                        margin: [16, -16, 0, 0]
+                        alignment: 'right',
+                        margin: [0, 2, 0, 0]
+                    }],
+                    [{
+                        text: formatAmount(forms.item29.tax_declaration_improvements),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 0, 0, 0]
                     },
                     {
-                        text: formatDate(forms.doi, { month: "2-digit" }),
-                        fontSize: 12,
+                        text: formatAmount(forms.item29.commissioner),
                         bold: true,
-                        characterSpacing: 3,
-                        alignment: 'left',
-                        margin: [30, -18, 0, 0]
-                    },
-                    {
-                        text: formatDate(forms.doi, { day: "2-digit" }),
-                        bold: true,
-                        fontSize: 12,
-                        characterSpacing: 6,
-                        alignment: 'left',
-                        margin: [0, -18, 0, 0]
-                    },
-                    {
-                        text: formatDate(forms.doi, { year: "numeric" }),
-                        bold: true,
-                        fontSize: 12,
-                        characterSpacing: 8,
-                        alignment: 'left',
-                        margin: [0, -18, 0, 0]
+                        fontSize: 10,
+                        alignment: 'right',
+                        margin: [0, 0, 0, 0]
                     }]
                 ]
             }
-        }
+        },
 
+        // 30
+        {
+            layout: "noBorders",
+            table: {
+                widths: [250, 270],
+                body: [
+                    [{
+                        text: formatAmount(forms.item30.gross_selling_price),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 12, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.item30.bid_price),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 14, 0, 0]
+                    }],
+                    [{
+                        text: formatAmount(forms.item30.fair_market_value),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, -2, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.item30.installment_collected),
+                        bold: true,
+                        fontSize: 10,
+                        alignment: 'right',
+                        margin: [0, -1, 0, 0]
+                    }],
+                    [{
+                        text: formatAmount(forms.item30.unutilized_portion_sales),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 3, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.item30.others),
+                        bold: true,
+                        fontSize: 10,
+                        alignment: 'right',
+                        margin: [0, 3, 0, 0]
+                    }]
+                ]
+            }
+        },
+
+        // computation
+        {
+            layout: "noBorders",
+            table: {
+                widths: [400, 120],
+                body: [
+                    [{
+                        text: formatAmount(forms.computation),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 0, 0, 0]
+                    },
+                    {
+                        text: formatAmount(forms.computation2),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 0, 0, 0]
+                    }],
+                ]
+            }
+        },
+
+        // part 2
+        {
+            layout: "noBorders",
+            table: {
+                widths: [530],
+                body: [
+                    [{
+                        text: formatAmount(forms.tax_base),
+                        fontSize: 10,
+                        bold: true,
+                        // chracterSpacing: 3,
+                        alignment: 'right',
+                        margin: [5, 10, 0, 0]
+                    }],
+                    [{
+                        text: formatAmount(forms.tax_due),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 4, 0, 0]
+                    }],
+                    [{
+                        text: formatAmount(forms.less_tax_paid),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 4, 0, 0]
+                    }],
+                    [{
+                        text: formatAmount(forms.tax_payable_overpayment),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 3, 0, 0]
+                    }],
+                ]
+            }
+        },
+
+        // 35
+        {
+            layout: "noBorders",
+            table: {
+                widths: [110, 100, 110, 180],
+                body: [
+                    [{
+                        text: formatAmount(forms.surcharge),
+                        fontSize: 10,
+                        bold: true,
+                        // chracterSpacing: 3,
+                        alignment: 'right',
+                        margin: [0, 10, -2, 0]
+                    },
+                    {
+                        text: formatAmount(forms.interest),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 10, -13, 0]
+                    },
+                    {
+                        text: formatAmount(forms.compromise),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 10, -17, 0]
+                    },
+                    {
+                        text: formatAmount(forms.penalties),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 10, -4, 0]
+                    }],
+                    [{
+                        text: ' '
+                    },
+                    {
+                        text: ' '
+                    },
+                    {
+                        text: ' '
+                    },
+                    {
+                        text: formatAmount(forms.total_amount_payable),
+                        fontSize: 10,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 5, -4, 0]
+                    },
+                    ]
+                ]
+            }
+        },
 
 
 
