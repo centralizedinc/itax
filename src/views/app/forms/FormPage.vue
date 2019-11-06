@@ -164,6 +164,7 @@ import Form1601FQ from "./1601fq/1601fq.vue";
 import Form1601C from "./1601c/1601c.vue";
 import Form1604E from "./1604e/1604e.vue";
 import Form1604C from "./1604c/1604c.vue"
+import Form1702EX from "./1702ex/1702ex.vue"
 
 export default {
   components: {
@@ -183,7 +184,8 @@ export default {
     Form1606,
     Form1601FQ,
     Form1601C,
-    Form1604C
+    Form1604C,
+    Form1702EX
   },
   computed: {
     affix_computation() {
@@ -430,6 +432,19 @@ export default {
           {
             title: "Part II",
             description: "Summary of Remittances per BIR Form No. 1601-C"
+          }
+        ],
+         "1702ex": [
+          {
+            title: "General"
+          },
+          {
+            title: "Part I",
+            description: "Background Information"
+          },
+          {
+            title: "Part II",
+            description: "Summary of Remittances per BIR Form No. 1702ex"
           }
         ]
       },
