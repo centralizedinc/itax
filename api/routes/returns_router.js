@@ -32,7 +32,6 @@ returns_router.route("/")
                 res.json({ errors });
             });
     })
-
     .post((req, res) => {
         // var form_type = req.body.form_type;
         // var form_details = req.body.form_details;

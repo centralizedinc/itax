@@ -181,7 +181,8 @@ export default {
               display: false,
               ticks: {
                 stepSize: 10,
-                beginAtZero: true
+                beginAtZero: true,
+                max: 200
               }
               // }
             }

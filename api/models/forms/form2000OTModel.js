@@ -60,7 +60,7 @@ const model_schema = {
   dstPaid: String,
   realPropertyTaxBase: Number,
   sharesStockTaxBase: Number,
-  taxRate: Number,
+  taxRate: String,
   prev_tax_due: Number,
   prev_tax_paid: Number
 }
