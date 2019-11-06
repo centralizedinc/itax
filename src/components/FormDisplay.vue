@@ -49,8 +49,8 @@ const printers = {
   FORM1601FQ: Form1601fq,
   FORM1601C: Form1601c,
   FORM1706: Form1706,
-  FORM1701A: Form1701a
-  FORM1604C: Form1604c
+  FORM1701A: Form1701a,
+  FORM1604C: Form1604c,
 };
 export default {
   props: ["form", "type"],
