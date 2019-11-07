@@ -140,7 +140,7 @@ function getContent(forms) {
                     // #4 any taxes withheld?
                     // any taxes withheld? true
                     {
-                        text: forms.any_tax_withheld == true ? 'X' : ' ',
+                        text: forms.taxes_withheld == true ? 'X' : ' ',
                         fontSize: 13,
                         bold: true,
                         // right,down,left,up
@@ -149,7 +149,7 @@ function getContent(forms) {
                     },
                     // any taxes withheld? false             
                     {
-                        text: forms.any_tax_withheld == false ? 'X' : ' ',
+                        text: forms.taxes_withheld == false ? 'X' : ' ',
                         fontSize: 13,
                         bold: true,
                         // right,down,left,up
@@ -411,7 +411,7 @@ function getContent(forms) {
                         //#13 ATC
 
                         {
-                            text: forms.atc == true ? 'X' : ' ',
+                            text: forms.atc_code == true ? 'X' : ' ',
                             fontSize: 13,
                             bold: true,
                             // right,down,left,up
@@ -421,7 +421,7 @@ function getContent(forms) {
 
 
                         {
-                            text: forms.atc == false ? 'X' : ' ',
+                            text: forms.atc_code == false ? 'X' : ' ',
                             fontSize: 13,
                             bold: true,
                             // right,down,left,up
@@ -430,12 +430,7 @@ function getContent(forms) {
                         },
 
                         {
-                            text: forms.categoryofwithholding_agent == true ? 'X' : ' ',
-                            fontSize: 13,
-                            bold: true,
-                            // right,down,left,up
-                            alignment: 'left',
-                            margin: [93, 1, 0, 0]
+                            text:""
                         },
                         //category
 
@@ -660,7 +655,7 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: forms.loc_property == null ? ' ' : forms.loc_property,
+                            text: forms.location_property == null ? ' ' : forms.location_property,
                             fontSize: 10,
                             bold: true,
                             characterSpacing: 3,
@@ -691,7 +686,7 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: forms.area_sold_sqm == null ? ' ' : forms.area_sold_sqm,
+                            text: forms.area_sold == null ? ' ' : forms.area_sold,
                             fontSize: 9,
                             bold: true,
                             characterSpacing: 3,
@@ -701,7 +696,7 @@ function getContent(forms) {
 
 
                         }, {
-                            text: forms.tax_doc_no == null ? ' ' : forms.tax_doc_no,
+                            text: forms.tax_dec_no == null ? ' ' : forms.tax_dec_no,
                             fontSize: 9,
                             bold: true,
                             characterSpacing: 3,
@@ -731,7 +726,7 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: forms.tct == null ? ' ' : forms.tct,
+                            text: forms.tct_no == null ? ' ' : forms.tct_no,
                             fontSize: 9,
                             bold: true,
                             characterSpacing: 3,
@@ -778,7 +773,7 @@ function getContent(forms) {
                         },
 
                         {
-                            text: forms.selling_property == true ? 'X' : ' ',
+                            text: forms.selling_price_property == true ? 'X' : ' ',
                             fontSize: 13,
                             bold: true,
                             // right,down,left,up
@@ -857,7 +852,7 @@ function getContent(forms) {
 
 
 
-                                        text: forms.transaction_payment == 'CAS' ? 'X' : ' ',
+                                        text: forms.description_transaction == 'CAS' ? 'X' : ' ',
                                         bold: true,
                                         fontSize: 9,
                                         alignment: 'left',
@@ -872,7 +867,7 @@ function getContent(forms) {
                                         {
 
 
-                                            text: forms.transaction_payment == 'EXE' ? 'X' : ' ',
+                                            text: forms.description_transaction == 'EXE' ? 'X' : ' ',
                                             bold: true,
                                             fontSize: 9,
                                             alignment: 'left',
@@ -900,7 +895,7 @@ function getContent(forms) {
 
 
 
-                                        text: forms.transaction_payment == 'FOR' ? 'X' : ' ',
+                                        text: forms.description_transaction == 'FOR' ? 'X' : ' ',
                                         bold: true,
                                         fontSize: 9,
                                         alignment: 'left',
@@ -915,7 +910,7 @@ function getContent(forms) {
                                         {
 
 
-                                            text: forms.transaction_payment == 'INS' ? 'X' : ' ',
+                                            text: forms.description_transaction == 'INS' ? 'X' : ' ',
                                             bold: true,
                                             fontSize: 9,
                                             alignment: 'left',
@@ -943,7 +938,7 @@ function getContent(forms) {
 
 
 
-                                        text: forms.transaction_payment == 'OTH' ? 'X' : ' ',
+                                        text: forms.description_transaction == 'OTH' ? 'X' : ' ',
                                         bold: true,
                                         fontSize: 9,
                                         alignment: 'left',
@@ -963,7 +958,7 @@ function getContent(forms) {
                                             // fontSize: 8,
                                             // alignment: 'left',
                                             // margin: [67, -2, 0, 0]
-                                            text: forms.trans_specify == null ? ' ' : forms.trans_specify,
+                                            text: forms.description_transaction_specify == null ? ' ' : forms.description_transaction_specify,
                                             fontSize: 12,
                                             bold: true,
                                             characterSpacing: 3,
@@ -1075,7 +1070,7 @@ function getContent(forms) {
 
                         {
 //#27A
-                            text: forms.A27 == true ? 'X' : ' ',
+                            text: forms.tax_declaration_land == true ? 'X' : ' ',
                             fontSize: 13,
                             bold: true,
                             // right,down,left,up

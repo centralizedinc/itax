@@ -7,6 +7,7 @@ var ReturnsDetailsSchema = new Schema({
         tin: String,
         reference_no: String,
         form_type: String,
+        tax_type: String,
         return_period: Date,
         due_date: Date,
         filing_status: String,
