@@ -96,7 +96,7 @@ export default {
             {
               display: false,
               ticks: {
-                max: 510,
+                max: 5100000,
                 beginAtZero: true
               }
             }
@@ -122,11 +122,11 @@ export default {
   methods: {
     getMockData() {
       var datasets = [];
-      var mock_targets = [500, 450, 400, 480, 420];
+      var mock_targets = [5000000, 4500000, 4000000, 4800000, 4200000];
       for (let index = 0; index < this.rdos.length; index++) {
         var target = Math.floor(Math.random() * 4);
         var collection =
-          Math.floor(Math.random() * (mock_targets[target] - 400)) + 20;
+          Math.floor(Math.random() * (mock_targets[target] - 3900000)) + 10000;
         datasets.push({
           label: this.rdos[index].code,
           target: mock_targets[target],
@@ -147,7 +147,7 @@ export default {
         try {
           var datasets = [];
           for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
-            var random = Math.round(Math.random());
+            var random = Math.round(Math.random() * 2000) +2000;
             datasets.push({
               label: this.chartdata.labels[i],
               target: this.chartdata.datasets[0].data[i],
@@ -174,6 +174,6 @@ export default {
 
 <style>
 .bar-collection-returns canvas {
-  height: 55vh !important;
+  /* height: 55vh !important; */
 }
 </style>

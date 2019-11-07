@@ -9,7 +9,6 @@
     <a-card
       v-for="(tp, index) in top_taxpayers"
       :key="index"
-      style="margin-bottom: 2vh;"
       :bodyStyle="{ padding: '10px 24px' }"
     >
       <a-card-meta :title="tp.registered_name">

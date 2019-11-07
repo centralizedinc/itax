@@ -192,6 +192,6 @@ export default {
 
 <style>
 .bar-collection-rdo canvas {
-  width: 25vw !important;
+  /* width: 25vw !important; */
 }
 </style>
