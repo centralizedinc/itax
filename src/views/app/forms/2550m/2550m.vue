@@ -933,6 +933,7 @@ export default {
     }
   },
   created() {
+    this.form.pdf_page = 1
     console.log("this.form###### :", this.form);
   },
   methods: {
@@ -1424,6 +1425,13 @@ export default {
     };
   },
   watch: {
+    step() {
+     if(this.step == 0 ){
+         this.form.pdf_page = 1
+     }else{
+         this.form.pdf_page =2
+     }
+    },
     loading(val) {
       this.$emit("loading", val);
     },
@@ -1445,7 +1453,7 @@ export default {
     "form.taxpayer.address_details.zipCode": val => {
       console.log("form.taxpayer.address_details.zipCode ", val);
     },
-    step() {}
+    
   }
 };
 </script>
