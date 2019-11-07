@@ -34,6 +34,7 @@ collections_router.route("/monthly")
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
         ReturnDetailsDao.getCollectionByMonth(new Date().getFullYear())
             .then((results) => {
+                console.log('results :', results);
                 var byMonth = [{
                     month: 0,
                     collection: 0,
@@ -101,9 +102,37 @@ collections_router.route("/yearly")
     .get((req, res) => {
         console.log('YEARLY COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByYear(req.query.results)
+        ReturnDetailsDao.getCollectionByRdo(new Date().getFullYear())
             .then((results) => {
-                res.json({ results });
+                console.log('results :', results);
+                var byYear = [
+                    {
+                        rdo_code: "001",
+                        year: new Date,
+                        collection: 0
+                    },
+                    {
+                        rdo_code: "002",
+                        year: new Date,
+                        collection: 0
+                    },
+                    {
+                        rdo_code: "003",
+                        year: new Date,
+                        collection: 0
+                    },
+                    {
+                        rdo_code: "004",
+                        year: new Date,
+                        collection: 0
+                    },
+
+                ]
+
+                results.forEach(result => {
+                    byYear[result.rdo_code[0]].collection += result.total_amount_payable
+                });
+                res.json({ byYear });
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -128,9 +157,27 @@ collections_router.route("/returns")
     .get((req, res) => {
         console.log('NUMBER OF RETURNS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCountOfReturns(req.query.results)
+        ReturnDetailsDao.getCountOfReturns(new Date().getFullYear())
             .then((results) => {
-                res.json({ results });
+                console.log('results :', results);
+                var rdoCollection = [
+                    {
+                        rdo_code: "001",
+                        collection: 0
+                    },
+                    {
+                        rdo_code: "002",
+                        collection: 0
+                    },
+
+
+                ]
+                results.forEach(result => {
+
+                    rdoCollection[result.rdo_code].collection += result_amount_payable
+
+                });
+                res.json({ rdoCollection });
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -141,9 +188,19 @@ collections_router.route("/rdo/:code")
     .get((req, res) => {
         console.log('RDO COLLECTION');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByRdo(req.query.results)
+        ReturnDetailsDao.getCollectionByRdo(new Date().getFullYear())
             .then((results) => {
-                res.json({ results });
+                console.log('results :', results);
+                var rdoCollection = [
+
+
+                ]
+                results.forEach(result => {
+                    // console.log('result :', result);
+                    rdoCollection[result.rdo_code].collection += result.total_amount_payable
+
+                });
+                res.json({ rdoCollection });
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -196,5 +253,15 @@ collections_router.route("/rdo/:code")
 //                 })
 //             });
 //     })
+
+collections_router.route('/insert/temp')
+    .post((req, res) => {
+        ReturnDetailsDao.createMany(req.body)
+            .then((result) => {
+                res.json({ result })
+            }).catch((err) => {
+                res.json({ err })
+            });
+    })
 
 module.exports = collections_router;

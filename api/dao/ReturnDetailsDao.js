@@ -74,10 +74,10 @@ class ReturnDetailsDao {
      * @param {String} conditions
      */
     static getCollection(conditions) {
-        return model.find({ "payment_status": 'paid' }).select('total_amount_payable').lean().exec();
+        return model.find({ "payment_status": 'paid' }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
     }
 
-    /**
+    /** 
      * @returns {Promise}
      * @param {String} conditions
      */
@@ -107,13 +107,20 @@ class ReturnDetailsDao {
     */
     static getCollectionByMonth(year) {
         var gteDate = new Date(), ltDate = new Date();
+        console.log('year :', year);
         gteDate.setMonth(0);
         gteDate.setDate(1);
         gteDate.setFullYear(year);
         ltDate.setMonth(11);
         ltDate.setDate(31);
         ltDate.setFullYear(year);
+        console.log('gteDate :', gteDate);
+        console.log('ltDate :', ltDate);
         return model.find({ "payment_status": 'paid', "date_created": { $gte: gteDate, $lt: ltDate } }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
+    }
+
+    static createMany(data){
+        return model.insertMany(data)
     }
 
     /**
@@ -121,23 +128,24 @@ class ReturnDetailsDao {
      * @param {Object} conditions
      * @param {String} fields 
      */
-    static getCollectionByYear(conditions, fields) {
-
-        return model.find({ "payment_status": 'paid' }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
+    static getCollectionByYear(year) {
+        var gteDate = new Date(), ltDate = new Date();
+        var code = "";
+        console.log('year :', year);
+        gteDate.setMonth(0);
+        gteDate.setDate(1);
+        gteDate.setFullYear(year);
+        ltDate.setMonth(11);
+        ltDate.setDate(31);
+        ltDate.setFullYear(year);
+        return model.find({ "payment_status": 'paid', "date_created": { $gte: gteDate, $lt: ltDate }, rdo_code: code }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
     }
 
     /**
      * @returns {Promise}
      */
-    // static getCollectionByRdo(conditions, fields) {
-    //     return model.find({
-    //         "payment_status": 'paid'
-    //     }).select({
-    //         "rdo_code":''
-    //     }).lean().exec();
-    // }
     static getCollectionByRdo(code) {
-        return model.find({ "rdo_code": "" }).lean().exec()
+        return model.find({ "payment_status": 'paid', "rdo_code": code, "date_created": new Date }).select('date_created rdo_code payment_status total_amount_payable').lean().exec()
     }
     /**
      * @returns {Promise}
