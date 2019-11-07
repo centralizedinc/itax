@@ -207,7 +207,7 @@ function getContent(forms) {
                 body: [
                     [{
                         text: forms.taxpayer.address == null || forms.taxpayer.address == ' ' ? ' ' : forms.taxpayer.address,
-                        fontSize: 16,
+                        fontSize: 14,
                         alignment: 'left',
                         // bold: true,
                         margin: [40, 3, 0, 0]

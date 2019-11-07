@@ -66,6 +66,14 @@ class ReturnDetailsDao {
     static create(form_details) {
         return (new model(form_details)).save();
     }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     */
+    static getCountsByConditions(conditions){
+        return model.count(conditions).exec();
+    }
 }
 
 module.exports = ReturnDetailsDao

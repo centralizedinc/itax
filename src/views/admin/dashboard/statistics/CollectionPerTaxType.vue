@@ -115,20 +115,16 @@ export default {
           name: "Income Tax"
         },
         {
-          code: "EDT",
-          name: "Estate and Donor's Taxes"
+          code: "WT",
+          name: "Withholding Tax"
         },
         {
-          code: "VAT",
+          code: "VT",
           name: "Value-added Tax"
         },
         {
           code: "PT",
           name: "Percentage Taxes"
-        },
-        {
-          code: "ET",
-          name: "Excise Taxes"
         },
         {
           code: "DST",

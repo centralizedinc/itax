@@ -1,5 +1,5 @@
 <template>
-  <a-card title="Collection vs Returns per RDO as of today" :bodyStyle="{ padding: '2px 0'}">
+  <a-card title="Target Collection per RDO" :bodyStyle="{ padding: '2px 0'}">
     <bar ref="bar_collection_returns" class="bar-collection-returns" />
   </a-card>
 </template>
@@ -12,6 +12,7 @@ export default {
   },
   data() {
     return {
+      interval: {},
       chartdata: {
         datasets: [
           {
@@ -142,7 +143,7 @@ export default {
       );
     },
     setMockDataRealtime() {
-      setInterval(() => {
+      this.interval = setInterval(() => {
         try {
           var datasets = [];
           for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
@@ -154,6 +155,9 @@ export default {
             });
           }
           datasets.sort((a, b) => b.collection - a.collection);
+          if(datasets[0].target <= datasets[0].collection){
+            this.options.scales.yAxes[0].ticks.max = datasets[0].collection + 10;
+          }
           this.chartdata.labels = datasets.map(v => v.label);
           this.chartdata.datasets[0].data = datasets.map(v => v.target);
           this.chartdata.datasets[1].data = datasets.map(v => v.collection);

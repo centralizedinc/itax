@@ -89,6 +89,14 @@ class TaxpayerDao {
             }
         }).lean().exec()
     }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     */
+    static getCountsByConditions(conditions){
+        return model.count(conditions).exec();
+    }
 }
 
 module.exports = TaxpayerDao;
