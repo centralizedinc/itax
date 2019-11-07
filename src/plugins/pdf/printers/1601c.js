@@ -99,7 +99,7 @@ function getContent(forms) {
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
                             fontSize: 12,
-                            bold: true,
+                            bold: true, 
                             // right,down,left,up
                             alignment: 'left',
                             margin: [26, 11, 0, 0]

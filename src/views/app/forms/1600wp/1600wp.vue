@@ -241,13 +241,24 @@ export default {
   },
   methods: {
     updateAtcAndClose(data) {
+      this.form.atc_list = [];
       this.show = 0;
       this.form.atc_list = data.atc_list;
-      console.log("update atc and close atc lise data: " + JSON.stringify(this.form.atc_list))
+      console.log(
+        "update atc and close atc lise data: " +
+          JSON.stringify(this.form.atc_list)
+      );
       this.form.tax_req_withld_remtd = data.total_amount_payable;
     },
     updateScheduleAndClose(data) {
+      this.form.sched1 = [];
       this.show = 0;
+      this.form.sched1 = data.sched1;
+      this.form.total_tax_req_withheld = data.total_tax;
+      this.form.total_amount = data.total_amount;
+      console.log(
+        "update schedule and close data: " + JSON.stringify(this.form.sched1)
+      );
     },
     openSchedule() {
       if (this.form.tax_req_withld_remtd > 0) {
