@@ -67,6 +67,13 @@ class ReturnDetailsDao {
         return (new model(form_details)).save();
     }
 
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     */
+    static getCountsByConditions(conditions){
+        return model.count(conditions).exec();
+    }
     //ADMIN 
 
     /**
