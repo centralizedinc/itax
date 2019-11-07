@@ -2,7 +2,7 @@
 // const form_page2 = require("../templates/1701a_template").page2;
 const form = require("../templates/1702ex_template");
 
-var forms = [form.page1, form.page2]
+var forms = [form.page1, form.page2, form.page3]
 /**
  *
  * @param {LicenseModel} details
