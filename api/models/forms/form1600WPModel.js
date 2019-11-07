@@ -61,16 +61,17 @@ const model_schema = {
             type: Number
         }, //(2)
         name: {
-            first: {
-                type: String
-            },
-            middle: {
-                type: String
-            }, //(3)
-            last: {
-                type: String
-            }
+            // first: {
+            type: String
+            // },
+            // middle: {
+            //     type: String
+            // }, //(3)
+            // last: {
+            //     type: String
+            // }
         },
+
         atc_code: {
             type: String
             /*

@@ -15,11 +15,11 @@
       <template slot="rate" slot-scope="text, record, index">
         <span>{{record.rate*100}}%</span>
       </template>
-      <template slot="tax_required" slot-scope="text, record, index">
-        <span>{{record.tax_required}}</span>
+      <template slot="tax_withheld" slot-scope="text, record, index">
+        <span>{{record.tax_withheld}}</span>
       </template>
     </a-table>
-    {{total}}
+    <!-- {{total}} -->
   </a-drawer>
 </template>
 <script>
@@ -56,9 +56,9 @@ export default {
         },
         {
           title: "TAX REQUIRED TO BE WITHHELD",
-          dataIndex: "tax_required",
+          dataIndex: "tax_withheld",
           width: "10%",
-          scopedSlots: { customRender: "tax_required" }
+          scopedSlots: { customRender: "tax_withheld" }
         }
       ],
       data_source: [
@@ -66,33 +66,33 @@ export default {
           atc: "WB 191",
           nature_payment:
             "Tax on winnings from double, forecast/quinella and trifecta bets on horse races paid by Government Withholding Agent",
-          tax_base: 0,
+          tax_base: null,
           rate: 0.04,
-          tax_required: 0
+          tax_withheld: null
         },
         {
           atc: "WB 192",
           nature_payment:
             "Tax on winnings or prizes paid to winners of winning horse race tickets other than double, forecast/quinella and trifecta bets; & owners of winning race horses paid by Government Withholding Agent",
-          tax_base: 0,
+          tax_base: null,
           rate: 0.1,
-          tax_required: 0
+          tax_withheld: null
         },
         {
           atc: "WB 193",
           nature_payment:
             "Tax on winnings from double, forecast/quinella and trifecta bets on horse races paid by Private Withholding Agent",
-          tax_base: 0,
+          tax_base: null,
           rate: 0.04,
-          tax_required: 0
+          tax_withheld: null
         },
         {
           atc: "WB 194",
           nature_payment:
             "Tax on winnings or prizes paid to winners of winning horse race tickets other than double, forecast/quinella and trifecta bets; and owners of winning race horses paid by Private Withholding Agent",
-          tax_base: 0,
+          tax_base: null,
           rate: 0.1,
-          tax_required: 0
+          tax_withheld: null
         }
       ]
     };
@@ -102,25 +102,25 @@ export default {
       //   this.atc_list = [];
       if (index > -1) {
         this.data_source[index].tax_base = val;
-        this.data_source[index].tax_required =
+        this.data_source[index].tax_withheld =
           this.data_source[index].tax_base * this.data_source[index].rate;
         this.total = 0;
         this.data_source.forEach(data => {
-          console.log("this is taxwithheld : " + data.tax_required);
-          this.total += data.tax_required;
+          console.log("this is taxwithheld : " + data.tax_withheld);
+          this.total += data.tax_withheld;
           //   this.atc_list.push({
           //     atc_code: data.atc,
           //     nature_of_income_payment: data.nature_payment,
           //     tax_base: data.tax_base,
           //     tax_rate: data.rate,
-          //     tax_withheld: data.tax_required
+          //     tax_withheld: data.tax_withheld
           //   });
         });
       }
-      return this.data_source[index].tax_required.toFixed(2);
+      return this.data_source[index].tax_withheld.toFixed(2);
     },
     close() {
-      console.log("closing atc: " + JSON.stringify(this.data_source))
+      console.log("closing atc: " + JSON.stringify(this.data_source));
       this.$emit("close", {
         atc_list: this.deepCopy(this.data_source),
         total_amount_payable: this.deepCopy(this.total)

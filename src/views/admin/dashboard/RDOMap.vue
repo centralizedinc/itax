@@ -1,29 +1,27 @@
 <template>
   <div>
     <a-card title="RDO" />
-    <a-card>
-      <GmapMap
-        id="map"
-        ref="map"
-        :center="center"
-        :zoom="7"
-        map-type-id="terrain"
-        draggable="true"
-        style="width: 100%; height: 150vh"
-      >
-        <!-- <GmapPolygon :paths="polygon"></GmapPolygon> -->
-        <GmapCircle
-          v-for="(item, index) in rdo_coordinates"
-          :key="index"
-          :center="item.coordinates"
-          :radius="item.radius"
-          :options="item.options"
-          @mouseover="onHover(item.rdo)"
-          @mouseout="onMouseOut(item.rdo)"
-          @click="displayInfo(item.rdo)"
-        ></GmapCircle>
-      </GmapMap>
-    </a-card>
+    <GmapMap
+      id="map"
+      ref="map"
+      :center="center"
+      :zoom="7"
+      map-type-id="terrain"
+      draggable="true"
+      style="width: 100%; height: 150vh"
+    >
+      <!-- <GmapPolygon :paths="polygon"></GmapPolygon> -->
+      <GmapCircle
+        v-for="(item, index) in rdo_coordinates"
+        :key="index"
+        :center="item.coordinates"
+        :radius="item.radius"
+        :options="item.options"
+        @mouseover="onHover(item.rdo)"
+        @mouseout="onMouseOut(item.rdo)"
+        @click="displayInfo(item.rdo)"
+      ></GmapCircle>
+    </GmapMap>
   </div>
 </template>
 

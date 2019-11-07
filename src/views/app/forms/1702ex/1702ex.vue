@@ -23,6 +23,12 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
+      <a-form-item label="5. Any Taxes Witheld?">
+        <a-radio-group v-model="form.any_tax_withheld">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
     </a-form>
 
     <!-- Part I -->
@@ -30,29 +36,29 @@
       <a-divider orientation="left">
         <b>Part I: Background Information</b>
       </a-divider>
-      <a-form-item label="5. TIN NUMBER">
+      <a-form-item label="6. TIN NUMBER">
         <a-input v-model="form.taxpayer.tin"></a-input>
       </a-form-item>
-      <a-form-item label="6. RDO Code">
+      <a-form-item label="7. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Category of Withholding Agent">
+      <a-form-item label="8. Category of Withholding Agent">
         <a-radio-group v-model="form.category_of_agent">
           <a-radio :value="true">Private</a-radio>
           <a-radio :value="false">Government</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="8. Withholding Agent's Name/Registered Name">
+      <a-form-item label="9. Withholding Agent's Name/Registered Name">
         <a-input v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
-      <a-form-item label="9. Registered Address">
+      <a-form-item label="10. Registered Address">
         <a-textarea v-model="form.address"></a-textarea>
       </a-form-item>
-      <a-form-item label="10. Zip Code">
+      <a-form-item label="11. Zip Code">
         <a-input-number v-model="form.zipCode"></a-input-number>
       </a-form-item>
       <a-form-item
-        label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
+        label="12. Are you availing of tax relief under Special Law or International Tax Treaty?"
       >
         <a-radio-group v-model="form.is_avail_tax_relief">
           <a-radio :value="true">Yes</a-radio>
@@ -62,74 +68,175 @@
       <a-form-item label="If yes, specify">
         <a-input v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
+      <a-form-item label="13. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="14. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="15. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="16. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="17. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
     </a-form>
+
     <!-- Part II -->
     <a-form :form="form_part2" v-show="step===2">
       <a-divider orientation="left">
+        <b>Part II: Total Tax Payable</b>
+      </a-divider>
+      <a-form-item label="18. TIN NUMBER">
+        <a-input v-model="form.taxpayer.tin"></a-input>
+      </a-form-item>
+      <a-form-item label="19. RDO Code">
+        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      </a-form-item>
+      <a-form-item label="20. Category of Withholding Agent">
+        <a-radio-group v-model="form.category_of_agent">
+          <a-radio :value="true">Private</a-radio>
+          <a-radio :value="false">Government</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="21. Withholding Agent's Name/Registered Name">
+        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      </a-form-item>
+      <a-form-item label="22. Registered Address">
+        <a-textarea v-model="form.address"></a-textarea>
+      </a-form-item>
+      <a-form-item label="23. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+    </a-form>
+    <!-- Part III -->
+    <!-- Part IV -->
+    <a-form :form="form_part3" v-show="step===3">
+      <a-divider orientation="left">
+        <b>Part IV: Computation of Tax</b>
+      </a-divider>
+      <a-form-item label="28. TIN NUMBER">
+        <a-input v-model="form.taxpayer.tin"></a-input>
+      </a-form-item>
+      <a-form-item label="29. RDO Code">
+        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      </a-form-item>
+      <a-form-item label="30. Category of Withholding Agent">
+        <a-radio-group v-model="form.category_of_agent">
+          <a-radio :value="true">Private</a-radio>
+          <a-radio :value="false">Government</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="31. Withholding Agent's Name/Registered Name">
+        <a-input v-model="form.taxpayer.registered_name"></a-input>
+      </a-form-item>
+      <a-form-item label="32. Registered Address">
+        <a-textarea v-model="form.address"></a-textarea>
+      </a-form-item>
+      <a-form-item label="33. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="34. Are you availing of tax relief under Special Law or International Tax Treaty?"
+      >
+        <a-radio-group v-model="form.is_avail_tax_relief">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="If yes, specify">
+        <a-input v-model="form.avail_tax_relief"></a-input>
+      </a-form-item>
+      <a-form-item label="35. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="36. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="37. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="38. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="39. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="40. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="41. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="42. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="43. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="44. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="45. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="46. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="47. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="48. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="49. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+      <a-form-item label="50. Zip Code">
+        <a-input-number v-model="form.zipCode"></a-input-number>
+      </a-form-item>
+    </a-form>
+
+    <!-- Part V -->
+    <a-form :form="form_part4" v-show="step===4">
+      <a-divider orientation="left">
+        <b>Part V: Tax Relief Availment</b>
+      </a-divider>
+      <a-form-item label="51. TIN NUMBER">
+        <a-input v-model="form.taxpayer.tin"></a-input>
+      </a-form-item>
+      <a-form-item label="52. RDO Code">
+        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+      </a-form-item>
+      <a-form-item label="53. Category of Withholding Agent">
+        <a-radio-group v-model="form.category_of_agent">
+          <a-radio :value="true">Private</a-radio>
+          <a-radio :value="false">Government</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
+    </a-form>
+
+    <!-- Part VI -->
+    <!-- <a-form :form="form_part5" v-show="step===5">
+      <a-divider orientation="left">
         <b>
-          Part II: Computation of Tax
+          Part VI: Schedules
           <a-button type="link" @click="openValidation()">(ATC)</a-button>
         </b>
       </a-divider>
       <a-button type="link" @click="openSchedule()">Schedule 1.1</a-button>
-      <!-- ------------------------------ -->
-      <!-- <a-table bordered :dataSource="data_source" :columns="columns" :pagination="false">
-        <template slot="tax_base" slot-scope="text, record, index">
-          <a-input-number :value="text" style="width:10vw" @change="e => computeAtc(e, index)"></a-input-number>
-        </template>
-
-        <template slot="rate" slot-scope="text, record, index">
-          <span>{{record.rate*100}}%</span>
-        </template>
-        <template slot="tax_required" slot-scope="text, record, index">
-          <span>{{record.tax_required}}</span>
-        </template>
-      </a-table>-->
-      <!-- ----------------------------------- -->
-      <a-form-item label="12. Tax Required to be Withheld and Remitted">
-        <a-input-number v-model="form.tax_req_withld_remtd"></a-input-number>
-      </a-form-item>
-      <a-form-item
-        label="13. Less: Tax Remitted in Return Previously filed, if this is an amended return "
-      >
-        <a-input-number v-model="form.less_tax_remtd_retrn"></a-input-number>
-      </a-form-item>
-      <a-form-item label="14. Tax Still Due(Overremittance) ">
-        <a-input-number :value="overRemittance()"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15A. Surcharge ">
-        <a-input-number v-model="form.surcharge"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15B. Interest ">
-        <a-input-number v-model="form.interest"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15C. Compromise ">
-        <a-input-number v-model="form.compromise"></a-input-number>
-      </a-form-item>
-      <a-form-item label="15D. Tax Required to be withheld ">
-        <a-input-number :value="getPenalties()"></a-input-number>
-      </a-form-item>
-      <a-form-item label="16. Tax Required to be withheld ">
-        <a-input-number :value="totalPayable()"></a-input-number>
-      </a-form-item>
-      <a-form-item label="16. if overremittance">
-        <a-radio-group v-model="form.taxpayer.overremittance">
-          <a-radio :value="true">To be Refunded</a-radio>
-          <a-radio :value="false">To be issued a Tax Credit Certificate</a-radio>
-        </a-radio-group>
-      </a-form-item>
-      <!-- <a-form-item label="16. For the month of (MM/DD/YYYY)">
-        <a-date-picker v-model="form.frommPeriod" />
-        <a-date-picker v-model="form.tooPeriod" />
-      </a-form-item>-->
+      
       <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
-    </a-form>
-    </div>
+    </a-form>-->
+  </div>
 </template>
 
 <script>
 // import form_1601e_image from "@/assets/forms/1600wp.jpg";
-
 
 export default {
   props: ["form", "step", "errors"],
@@ -143,8 +250,9 @@ export default {
       form_part1: this.$form.createForm(this),
       form_part2: this.$form.createForm(this),
       form_part3: this.$form.createForm(this),
-      image_height: 1000,
-     
+      form_part4: this.$form.createForm(this),
+      // form_part5: this.$form.createForm(this),
+      image_height: 1000
     };
   },
   watch: {
@@ -154,18 +262,26 @@ export default {
       );
     },
     step() {
-     if(this.step == 2){
-         this.form.pdf_page = 1
-     }else{
-         this.form.pdf_page =0
-     }
+      if (this.step === 3) {
+        this.form.pdf_page = 1;
+      } else if (this.step === 4) {
+        this.form.pdf_page = 1;
+} else if (this.step === 5) {
+        this.form.pdf_page = 2;
+
+      } else {
+        this.form.pdf_page = 0;
+      }
     }
   },
   methods: {
     updateAtcAndClose(data) {
       this.show = 0;
       this.form.atc_list = data.atc_list;
-      console.log("update atc and close atc lise data: " + JSON.stringify(this.form.atc_list))
+      console.log(
+        "update atc and close atc lise data: " +
+          JSON.stringify(this.form.atc_list)
+      );
       this.form.tax_req_withld_remtd = data.total_amount_payable;
     },
     updateScheduleAndClose(data) {
@@ -281,7 +397,7 @@ export default {
       this.loading = true;
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
-          form_type: "1701A",
+          form_type: "1702ex",
           form_details: this.form
         })
         .then(result => {
@@ -289,7 +405,7 @@ export default {
           this.loading = false;
           this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
           this.$store.commit("NOTIFY_MESSAGE", {
-            message: "Successfully submitted Form 2550m."
+            message: "Successfully submitted Form 1702ex."
           });
           // window.opener.location.reload();
           window.close();
@@ -304,10 +420,9 @@ export default {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
     }
-    
   },
   created() {
-      this.form.pdf_page = 0
+    this.form.pdf_page = 0;
     // console.log("this.$ref.container.height :", this.$refs);
     // console.log("test :", this.$refs.container.height);
     window.addEventListener("scroll", this.handleScroll);

@@ -1,7 +1,7 @@
 <template>
-  <a-row class="statistic-chart" type="flex" justify="space-around">
-    <!-- Collection -->
-    <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
+  <a-row class="statistic-chart" :gutter="10">
+    <!-- Collection this year -->
+    <!-- <a-col :xs="{ span: 24 }" :md="{ span: 24 }">
       <a-card :bodyStyle="{ padding: 0 }">
         <span class="collection-counts">
           <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
@@ -13,15 +13,37 @@
                 </span>
               </a-tooltip>
               <br />
-              <span>Collected last month</span>
+              <span class="counts-label">Collected this year</span>
+            </a-col>
+          </a-row>
+        </span>
+        <line-chart ref="collection_line_chart_year" />
+      </a-card>
+    </a-col>-->
+    <!-- Collection this month -->
+    <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
+      <a-card :bodyStyle="{ padding: 0 }">
+        <span class="collection-counts">
+          <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
+            <a-col :span="24">
+              <a-tooltip>
+                <span slot="title">{{formatCounts(1299990, true)}}</span>
+                <span class="counts">
+                  <a-icon type="arrow-down" style="color: red" />
+                  {{formatCounts(1299990)}}
+                </span>
+              </a-tooltip>
+              <br />
+              <span class="counts-label">Collected this month</span>
             </a-col>
           </a-row>
         </span>
         <line-chart ref="collection_line_chart" />
       </a-card>
     </a-col>
-    <!-- Returns -->
-    <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
+
+    <!-- Returns this year -->
+    <!-- <a-col :xs="{ span: 24 }" :md="{ span: 24 }">
       <a-card :bodyStyle="{ padding: 0 }">
         <span class="collection-counts">
           <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
@@ -33,15 +55,37 @@
                 </span>
               </a-tooltip>
               <br />
-              <span>Returns last month</span>
+              <span class="counts-label">Returns this year</span>
+            </a-col>
+          </a-row>
+        </span>
+        <line-chart ref="returns_line_chart_year" />
+      </a-card>
+    </a-col>-->
+    <!-- Returns this month -->
+    <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
+      <a-card :bodyStyle="{ padding: 0 }">
+        <span class="collection-counts">
+          <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
+            <a-col :span="24">
+              <a-tooltip>
+                <span slot="title">{{formatCounts(1582214, true)}}</span>
+                <span class="counts">
+                  <a-icon type="arrow-up" style="color: green" />
+                  {{formatCounts(1582214)}}
+                </span>
+              </a-tooltip>
+              <br />
+              <span class="counts-label">Returns this month</span>
             </a-col>
           </a-row>
         </span>
         <line-chart ref="returns_line_chart" />
       </a-card>
     </a-col>
-    <!-- Taxpayers -->
-    <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
+
+    <!-- Taxpayers this year -->
+    <!-- <a-col :xs="{ span: 24 }" :md="{ span: 24 }">
       <a-card :bodyStyle="{ padding: 0 }">
         <span class="collection-counts">
           <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
@@ -51,7 +95,25 @@
                 <span class="counts">{{formatCounts(52605)}}</span>
               </a-tooltip>
               <br />
-              <span>Total Taxpayers last 12 months</span>
+              <span class="counts-label">Total Taxpayers this year</span>
+            </a-col>
+          </a-row>
+        </span>
+        <line-chart ref="taxpayers_line_chart_year" />
+      </a-card>
+    </a-col>-->
+    <!-- Taxpayers this month -->
+    <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
+      <a-card :bodyStyle="{ padding: 0 }">
+        <span class="collection-counts">
+          <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
+            <a-col :span="24">
+              <a-tooltip>
+                <span slot="title">{{formatCounts(52605, true)}}</span>
+                <span class="counts">{{formatCounts(52605)}}</span>
+              </a-tooltip>
+              <br />
+              <span class="counts-label">Total Taxpayers this month</span>
             </a-col>
           </a-row>
         </span>
@@ -69,15 +131,9 @@ export default {
     LineChart: Line
   },
   mounted() {
-    this.$refs.collection_line_chart.renderChart(
-      this.collection_data,
-      this.options
-    );
-    this.$refs.returns_line_chart.renderChart(this.returns_data, this.options);
-    this.$refs.taxpayers_line_chart.renderChart(
-      this.taxpayers_data,
-      this.options
-    );
+    this.getDataReturnsYearly();
+    this.getDataCollectionYearly();
+    this.getDataTaxpayersYearly();
   },
   data() {
     return {
@@ -95,8 +151,8 @@ export default {
         datasets: [
           {
             label: "Collection",
-            radius: 5,
-            borderWidth: 2,
+            radius: 4,
+            borderWidth: 3,
             borderColor: "blue",
             backgroundColor: "#ddddff",
             data: [80, 100, 60, 80, 100, 110, 150, 75]
@@ -104,30 +160,15 @@ export default {
         ]
       },
       returns_data: {
-        labels: [
-          "October 3, 2019",
-          "October 5, 2019",
-          "October 7, 2019",
-          "October 8, 2019",
-          "October 9, 2019",
-          "October 10, 2019",
-          "October 12, 2019",
-          "October 15, 2019",
-          "October 16, 2019",
-          "October 18, 2019",
-          "October 20, 2019",
-          "October 24, 2019",
-          "October 25, 2019",
-          "October 30, 2019"
-        ],
+        labels: [],
         datasets: [
           {
             label: "Returns",
-            radius: 5,
-            borderWidth: 2,
+            radius: 4,
+            borderWidth: 3,
             borderColor: "red",
             backgroundColor: "#ffdddd",
-            data: [150, 80, 100, 70, 70, 80, 100, 110, 80, 60, 100, 70, 80,70]
+            data: []
           }
         ]
       },
@@ -149,15 +190,15 @@ export default {
         datasets: [
           {
             label: "Taxpayers",
-            radius: 5,
-            borderWidth: 2,
+            radius: 4,
+            borderWidth: 3,
             borderColor: "green",
             backgroundColor: "#ddffdd",
             data: [80, 100, 110, 150, 80, 100, 90, 100, 80, 100, 110, 80]
           }
         ]
       },
-      options: {
+      returns_options: {
         legend: {
           display: false
         },
@@ -180,14 +221,78 @@ export default {
               // gridLines: {
               display: false,
               ticks: {
-                stepSize: 10,
                 beginAtZero: true,
                 max: 200
               }
               // }
             }
           ]
-        }
+        },
+        onClick: this.getData
+      },
+      collections_options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [
+            {
+              // gridLines: {
+              //   color: "rgba(0, 0, 0, 0)"
+              // }
+              // gridLines: {
+              display: false
+              // }
+            }
+          ],
+          yAxes: [
+            {
+              // gridLines: {
+              //   color: "rgba(0, 0, 0, 0)"
+              // }
+              // gridLines: {
+              display: false,
+              ticks: {
+                beginAtZero: true,
+                max: 200
+              }
+              // }
+            }
+          ]
+        },
+        onClick: this.getData
+      },
+      taxpayers_options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [
+            {
+              // gridLines: {
+              //   color: "rgba(0, 0, 0, 0)"
+              // }
+              // gridLines: {
+              display: false
+              // }
+            }
+          ],
+          yAxes: [
+            {
+              // gridLines: {
+              //   color: "rgba(0, 0, 0, 0)"
+              // }
+              // gridLines: {
+              display: false,
+              ticks: {
+                beginAtZero: true,
+                max: 200
+              }
+              // }
+            }
+          ]
+        },
+        onClick: this.getData
       }
     };
   },
@@ -221,6 +326,99 @@ export default {
       return (
         (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
       );
+    },
+
+    // Collection
+    getDataCollectionYearly() {
+      // Last 10 years
+      var returns_data = this.deepCopy(this.returns_data.datasets[0].data);
+      var datasets = {
+        labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
+        data: []
+      };
+      for (let index = 0; index < datasets.labels.length; index++) {
+        var val = this.getRandomArbitrary(returns_data[index], returns_data[index]/4)
+        datasets.data.push(val);
+      }
+      this.collection_data.labels = this.deepCopy(datasets.labels);
+      this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
+      var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+      this.collections_options.scales.yAxes[0].ticks.max = findMax[0] + Math.floor(findMax[0]/10);
+      this.$refs.collection_line_chart.renderChart(
+        this.collection_data,
+        this.collections_options
+      );
+    },
+    getDataCollectionMonthly() {},
+
+    // Returns
+    getDataReturnsYearly() {
+      // Last 10 years
+      var datasets = {
+        labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
+        data: []
+      };
+      for (let index = 0; index < datasets.labels.length; index++) {
+        var val = this.getRandomArbitrary(2000000, 500000)
+        datasets.data.push(val);
+      }
+      this.returns_data.labels = this.deepCopy(datasets.labels);
+      this.returns_data.datasets[0].data = this.deepCopy(datasets.data);
+      var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+      this.returns_options.scales.yAxes[0].ticks.max = findMax[0] + Math.floor(findMax[0]/10);
+      this.$refs.returns_line_chart.renderChart(
+        this.returns_data,
+        this.returns_options
+      );
+    },
+    getDataReturnsMonthly() {},
+
+    // Taxpayers
+    getDataTaxpayersYearly() {
+      var datasets = this.getMockData("y", 200000);
+      console.log("taxpayers yearly datasets :", datasets);
+      this.taxpayers_data.labels = this.deepCopy(datasets.labels);
+      this.taxpayers_data.datasets[0].data = this.deepCopy(datasets.data);
+      var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+      this.taxpayers_options.scales.yAxes[0].ticks.max = findMax[0] + Math.floor(findMax[0]/10);
+      this.$refs.taxpayers_line_chart.renderChart(
+        this.taxpayers_data,
+        this.taxpayers_options
+      );
+    },
+    getDataTaxpayersMonthly() {},
+
+    // For mock data only
+    getMockData(mode, max_amount) {
+      var datasets = {
+        labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
+        data: []
+      };
+      if (mode === "m")
+        // monthly
+        datasets.labels = [
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
+        ];
+      for (let index = 0; index < datasets.labels.length; index++) {
+        var val =
+          Math.floor(Math.random() * max_amount) + Math.floor(max_amount / 4);
+        datasets.data.push(val);
+      }
+      return datasets;
+    },
+    getRandomArbitrary(max, min){
+      return Math.floor(Math.random() * (max -min) + min);
     }
   }
 };
@@ -242,6 +440,11 @@ export default {
 
 .counts {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
+  color: gray;
+}
+
+.counts-label {
+  font-size: 12px;
 }
 </style>

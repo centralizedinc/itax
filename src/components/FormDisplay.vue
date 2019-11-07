@@ -29,7 +29,7 @@ import Form1606 from "../plugins/pdf/printers/1606";
 import Form1601fq from "../plugins/pdf/printers/1601fq";
 import Form1601c from "../plugins/pdf/printers/1601c";
 import Form1706 from "../plugins/pdf/printers/1706";
-import Form1701a from "../plugins/pdf/printers/1701a"
+import Form1701a from "../plugins/pdf/printers/1701a";
 import Form1604c from "../plugins/pdf/printers/1604c";
 import Form1702ex from "../plugins/pdf/printers/1702ex";
 
@@ -205,21 +205,20 @@ export default {
       this.form.whole_pdf = true;
 
       console.log("form details open: " + JSON.stringify(this.form));
-      var pdf_list = []
-      for(var x = 0; x<=1;x++){
-        this.form.pdf_page = x
-      var document = printer.fillup(this.form);
-      var self = this;
-      pdfMake.createPdf(document).open(dataUrl => {
-        pdf_list.push(dataUrl)
-        console.log("getdata: " + dataUrl);
-        self.prev = dataUrl;
-      });
-      this.refresh();
-      console.log("open form data: " + JSON.stringify(this.form));
+      var pdf_list = [];
+      for (var x = 0; x <= 1; x++) {
+        this.form.pdf_page = x;
+        var document = printer.fillup(this.form);
+        var self = this;
+        pdfMake.createPdf(document).open(dataUrl => {
+          pdf_list.push(dataUrl);
+          console.log("getdata: " + dataUrl);
+          self.prev = dataUrl;
+        });
+        this.refresh();
+        console.log("open form data: " + JSON.stringify(this.form));
       }
-      console.log("pdf list data: " + JSON.stringify(pdf_list))
-      
+      console.log("pdf list data: " + JSON.stringify(pdf_list));
     },
     upload() {
       var printer = printers[this.form_type];
