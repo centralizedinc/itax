@@ -595,7 +595,7 @@
         <a-tooltip>
           <template slot="title">Bid Price (For Foreclosure Sale)</template>
           <a-input
-            :disabled="form.description_transaction_specify  == 'C'"
+            :disabled="form.description_transaction_specify == 'CS' || form.description_transaction_specify == 'IS'"
             v-model="form.item30.bid_price"
             placeholder="Bid Price (For Foreclosure Sale)"
           ></a-input>
@@ -614,6 +614,7 @@
             slot="title"
           >Fair Market Value of Land and Improvement (Sum of 29A & 29B/29C & 29D/29A & 29D/29B & 29C, whichever is higher)</template>
           <a-input
+            :disabled="form.description_transaction_specify == 'FS'"
             v-model="form.item30.fair_market_value"
             placeholder="Fair Market Value of Land and Improvement"
           ></a-input>
@@ -632,7 +633,7 @@
             slot="title"
           >Taxable Installment Collected (For Installment Sale Excluding Interest)</template>
           <a-input
-            :disabled="form.description_transaction_specify  == 'C'"
+            :disabled="form.description_transaction_specify  == 'CS' || form.description_transaction_specify == 'FS' || form.description_transaction_specify == 'IS'"
             v-model="form.item30.installment_collected"
             placeholder="Taxable Installment Collected (For Installment Sale Excluding Interest)"
           ></a-input>
@@ -651,7 +652,7 @@
             slot="title"
           >On the Unutilized Portion of Sales Proceeds (in case nos. 17 & 18 are applicable)</template>
           <a-input
-            :disabled="form.description_transaction_specify  == 'C'"
+            :disabled="form.description_transaction_specify  == 'CS' || form.description_transaction_specify == 'FS' || form.description_transaction_specify == 'IS'"
             v-model="form.item30.unutilized_portion_sales"
             placeholder="On the Unutilized Portion of Sales Proceeds (in case nos. 17 & 18 are applicable)"
           ></a-input>
@@ -669,7 +670,7 @@
         <a-tooltip>
           <template slot="title">Others (specify)</template>
           <a-input
-            :disabled="form.description_transaction_specify  == 'C'"
+            :disabled="form.description_transaction_specify  == 'CS' || form.description_transaction_specify == 'FS' || form.description_transaction_specify == 'IS'"
             v-model="form.item30.others"
             placeholder="Others (specify)"
           ></a-input>
@@ -989,28 +990,19 @@ export default {
         }
         if (
           this.form.sold_as_principal_property === null ||
-          this.form.sold_as_principal_property === undefined
+          (this.form.sold_as_principal_property === undefined &&
+            this.form.atc_code == "I")
         ) {
           errors.push({
             page: 2,
             field: "sold_as_principal_property",
             error: "Please select an option for item 17"
           });
-        } else if (this.form.sold_as_principal_property) {
-          if (
-            !this.form.sold_as_principal_property ||
-            !this.form.sold_as_principal_property.length
-          ) {
-            errors.push({
-              page: 2,
-              field: "sold_as_principal_property",
-              error: "Please select an option for item 17"
-            });
-          }
         }
         if (
           this.form.intend_construct_acquire === null ||
-          this.form.intend_construct_acquire === undefined
+          (this.form.intend_construct_acquire === undefined &&
+            this.form.atc_code == "'I'")
         ) {
           errors.push({
             page: 2,
@@ -1042,17 +1034,10 @@ export default {
             field: "description_transaction_specify",
             error: "Please select an option for Description Transaction"
           });
-        }
-        if (
-          this.form.description_transaction_specify === "'E'" ||
-          this.form.description_transaction_specify === "'O'"
+        } else if (
+          this.form.description_transaction_specify == "E" ||
+          this.form.description_transaction_specify == "O"
         ) {
-          errors.push({
-            page: 2,
-            field: "description_transaction_specify",
-            error: "Please specify a valid description of transaction"
-          });
-        } else if (this.form.description_transaction_specify) {
           if (!this.form.is_exempt || !this.form.is_exempt.length) {
             errors.push({
               page: 2,
@@ -1064,14 +1049,21 @@ export default {
       }
       // Page 4
       if (is_validate_all || this.step == 3) {
-        if (this.form.description_transaction_specify === "'C'") {
+        if (this.form.description_transaction_specify === "CS") {
           errors.push({
             page: 2,
             field: "description_transaction_specify",
             error: "Please specify a valid description of transaction"
           });
         } else if (this.form.description_transaction_specify) {
-          if (!this.form.item30 || !this.form.item30.length) {
+          if (
+            !this.form.item30.gross_selling_price ||
+            !this.form.item30.gross_selling_price.length ||
+            !this.form.item30.bid_price ||
+            !this.form.item30.bid_price.length ||
+            !this.form.item30.fair_market_value ||
+            this.form.item30.fair_market_value.length
+          ) {
             errors.push({
               page: 3,
               field: "item30",
@@ -1098,11 +1090,19 @@ export default {
     },
     changeDescTrans() {
       if (
-        this.form.description_transaction_specify === "E" ||
-        this.form.description_transaction_specify === "O"
+        this.form.description_transaction_specify !== "E" ||
+        this.form.description_transaction_specify !== "O" ||
+        this.form.description_transaction_specify !== "CS" ||
+        this.form.description_transaction_specify !== "FS" ||
+        this.form.description_transaction_specify !== "IS"
       ) {
         this.form.is_exempt = "";
-        this.$emit("updateForm", { is_exempt: "" });
+        this.form.item30.gross_selling_price = "";
+        this.form.item30.bid_price = "";
+        this.form.item30.fair_market_value = "";
+        this.$emit("updateForm", { is_exempt: "" }, {});
+        // this.form.item30.installment_collected = "";
+        // this.form.item30.unutilized_portion_sales = "";
       }
     },
     // INSERT COMPUTATION HERE
