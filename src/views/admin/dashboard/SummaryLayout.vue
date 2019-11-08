@@ -12,32 +12,42 @@
           <br />
           <a-tooltip>
             <span slot="title">{{formatAmount(item.amount)}}</span>
-            <a-icon :type="item.is_increased ? 'arrow-up' : 'arrow-down'" :style="`color: ${item.is_increased ? 'green' : 'red'}`" />
-            <span class="item-value">
-              {{nFormatter(item.amount, 2)}}
-            </span>
+            <a-icon
+              :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
+              :style="`color: ${item.is_increased ? 'green' : 'red'}`"
+            />
+            <span class="item-value">{{nFormatter(item.amount, 2)}}</span>
           </a-tooltip>
         </a-card>
       </a-col>
     </a-row>
 
-    <a-card title="Collection per RDO Summary" style="margin-bottom: 1vh" />
-    <a-card v-for="(item, index) in items" :key="index" :bodyStyle="{padding: '15px'}">
-      <span class="item-description">{{item.description}} ({{item.code}})</span>
-      <br />
-      <a-tooltip>
-        <span slot="title">{{formatAmount(item.collection)}}</span>
-        <a-icon :type="item.is_increased ? 'arrow-up' : 'arrow-down'" :style="`color: ${item.is_increased ? 'green' : 'red'}`" />
-        <span class="item-value">
-          {{nFormatter(item.collection, 2)}}
-        </span>
-      </a-tooltip>
-    </a-card>
+    <rdo-map v-if="login_rdo" class="rdo-map" />
+    <template v-else>
+      <a-card title="Collection per RDO Summary" style="margin-bottom: 1vh" />
+      <a-card v-for="(item, index) in items" :key="index" :bodyStyle="{ padding: '15px'}">
+        <span class="item-description">{{item.description}} ({{item.code}})</span>
+        <br />
+        <a-tooltip>
+          <span slot="title">{{formatAmount(item.collection)}}</span>
+          <a-icon
+            :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
+            :style="`color: ${item.is_increased ? 'green' : 'red'}`"
+          />
+          <span class="item-value">{{nFormatter(item.collection, 2)}}</span>
+        </a-tooltip>
+      </a-card>
+    </template>
   </div>
 </template>
 
 <script>
+import RdoMap from "./RDOMap";
+
 export default {
+  components: {
+    RdoMap
+  },
   data() {
     return {
       items: [],
@@ -48,9 +58,11 @@ export default {
     this.$store
       .dispatch("GET_RDOS")
       .then(result => {
-        this.getMockData();
+        if (!this.login_rdo) {
+          this.getMockData();
+          this.setMockDataRealtime();
+        }
         this.getStatisticsMockData();
-        this.setMockDataRealtime();
         this.setStatisticsMockDataRealtime();
       })
       .catch(err => {});
@@ -58,6 +70,9 @@ export default {
   computed: {
     rdos() {
       return this.$store.state.tax_form.rdos;
+    },
+    login_rdo() {
+      return this.$store.state.tax_form.login_rdo;
     }
   },
   methods: {
@@ -73,12 +88,42 @@ export default {
     },
     getStatisticsMockData() {
       var stats = [
-        { name: "Collections this year", is_increased: false, max: 6000000, min: 5000000 },
-        { name: "Collections this month", is_increased: true, max: 800000, min: 500000 },
-        { name: "Returns this year", is_increased: true, max: 10000000, min: 6000000 },
-        { name: "Returns this month", is_increased: true, max: 1000000, min: 800000 },
-        { name: "Taxpayers this year", is_increased: false, max: 5000000, min: 1000000 },
-        { name: "Taxpayers this month", is_increased: true, max: 500000, min: 100000 }
+        {
+          name: "Collections this year",
+          is_increased: false,
+          max: 6000000,
+          min: 5000000
+        },
+        {
+          name: "Collections this month",
+          is_increased: true,
+          max: 800000,
+          min: 500000
+        },
+        {
+          name: "Returns this year",
+          is_increased: true,
+          max: 10000000,
+          min: 6000000
+        },
+        {
+          name: "Returns this month",
+          is_increased: true,
+          max: 1000000,
+          min: 800000
+        },
+        {
+          name: "Taxpayers this year",
+          is_increased: false,
+          max: 5000000,
+          min: 1000000
+        },
+        {
+          name: "Taxpayers this month",
+          is_increased: true,
+          max: 500000,
+          min: 100000
+        }
       ];
       for (let i = 0; i < stats.length; i++) {
         this.statistics.push({
@@ -146,5 +191,9 @@ export default {
   font-weight: 300;
   font-size: 18px;
   color: blue;
+}
+
+.rdo-map .vue-map-container {
+  height: 60vh !important;
 }
 </style>
