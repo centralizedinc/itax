@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form :form="form_general" v-show="step===0">
+    <a-form v-show="step===0">
       <a-divider>
         <b>Quarterly Income Tax Return(1701Q)</b>
       </a-divider>
@@ -60,7 +60,7 @@
     </a-form>
 
     <!-- Part I -->
-    <a-form :form="form_part1" v-show="step===1">
+    <a-form v-show="step===1">
       <a-divider orientation="left">
         <b>Part I: BACKGROUND INFORMATION ON TAXPAYER/FILER</b>
       </a-divider>
@@ -71,7 +71,6 @@
           style="width:100%"
           placeholder="Tax Identification Number"
           v-model="form.taxpayer.tin"
-         
         ></a-input-number>
       </a-form-item>
 
@@ -164,19 +163,29 @@
         <a-input-number style="width: 100%" v-model="form.taxpayer.address_details.zipCode"></a-input-number>
       </a-form-item>
 
-<!-- 11 -->
+      <!-- 11 -->
       <a-form-item label="11. " :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-date-picker style="width: 100%" v-model="form.taxpayer.birthDate" placeholder="Date of Birth (MM/DD/YYYY)"></a-date-picker>
+        <a-date-picker
+          style="width: 100%"
+          v-model="form.taxpayer.birthDate"
+          placeholder="Date of Birth (MM/DD/YYYY)"
+        ></a-date-picker>
       </a-form-item>
 
       <!-- 12 -->
       <a-form-item label="12. " :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input style="width: 100%" v-model="form.taxpayer.email_address" placeholder="Email Address"></a-input>
+        <a-input
+          style="width: 100%"
+          v-model="form.taxpayer.email_address"
+          placeholder="Email Address"
+        ></a-input>
       </a-form-item>
 
       <!-- 13 -->
       <a-form-item
-        label="13. " :labelCol="{span:2}" :wrapperCol="{span:20}"
+        label="13. "
+        :labelCol="{span:2}"
+        :wrapperCol="{span:20}"
         :validate-status="error_item('taxpayer.citizenship')"
         :help="error_desc('taxpayer.citizenship')"
       >
@@ -185,12 +194,18 @@
 
       <!-- 14 -->
       <a-form-item label="14. " :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input-number style="width: 100%" v-model="form.taxpayer_foreign_tax_number" placeholder="Foreign Tax Number"></a-input-number>
+        <a-input-number
+          style="width: 100%"
+          v-model="form.taxpayer_foreign_tax_number"
+          placeholder="Foreign Tax Number"
+        ></a-input-number>
       </a-form-item>
 
       <!-- 15 -->
       <a-form-item
-        label="15. Claiming Foreign Tax Credits?" :labelCol="{span:9}" :wrapperCol="{span:12}"
+        label="15. Claiming Foreign Tax Credits?"
+        :labelCol="{span:9}"
+        :wrapperCol="{span:12}"
         :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
         :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
       >
@@ -215,7 +230,6 @@
           </p>
         </a-radio-group>
       </a-form-item>
-
 
       <a-form-item
         label="16A. Method of Deduction:"
@@ -243,13 +257,11 @@
       <!-- 17 -->
       <a-form-item label="17." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input-number
-          
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
           :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' / ')"
           style="width:100%"
           placeholder="Spouse's Tax Identification Number"
           v-model="form.spouse_details.tin"
-     
         ></a-input-number>
       </a-form-item>
 
@@ -264,7 +276,7 @@
 
       <!-- 19 -->
       <a-form-item label="19. Filer’s Spouse Type" :labelCol="{span:7}" :wrapperCol="{span:12}">
-       <a-checkbox
+        <a-checkbox
           @change="spouse_type"
           v-model="single"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
@@ -274,11 +286,13 @@
           v-model="pro"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >Professional</a-checkbox>
-        <a-col :span="15"><a-checkbox
-          @change="spouse_type"
-           v-model="pensation"
-          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-        >Compensation Earner</a-checkbox></a-col>
+        <a-col :span="15">
+          <a-checkbox
+            @change="spouse_type"
+            v-model="pensation"
+            :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          >Compensation Earner</a-checkbox>
+        </a-col>
         <!-- <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
           <a-radio :value="'SSP'">Single Proprietor</a-radio>
           <a-radio :value="'SPRO'">Professional</a-radio>
@@ -355,7 +369,11 @@
       </a-form-item>
 
       <!-- 24 -->
-      <a-form-item label="24. Claiming Foreign Tax Credits?" :labelCol="{span:9}" :wrapperCol="{span:12}">
+      <a-form-item
+        label="24. Claiming Foreign Tax Credits?"
+        :labelCol="{span:9}"
+        :wrapperCol="{span:12}"
+      >
         <a-radio-group
           v-model="form.spouse_foreign_tax_credits"
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
@@ -586,13 +604,8 @@ export default {
       spouse_type_list_holder: null,
       single: false,
       pro: false,
-      pensation: false,
+      compensation: false,
       // form_1601e_image,
-      form_general: this.$form.createForm(this),
-      form_part1: this.$form.createForm(this),
-      form_part2: this.$form.createForm(this),
-      form_part3: this.$form.createForm(this),
-      form_part4: this.$form.createForm(this),
       image_height: 1000,
       formatter: {
         amount: value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, "-")
@@ -607,15 +620,17 @@ export default {
       errors: []
     };
   },
-  // watch: {
-  //   step() {
-  //     if (this.step < 0) {
-  //       this.$router.push("/");
-  //     } else if (this.step == 2) {
-  //       this.sub = true;
-  //     }
-  //   }
-  // },
+  watch: {
+    loading(val) {
+      this.$emit("loading", val);
+    },
+    form: {
+      deep: true,
+      handler(val) {
+        console.log("form :", val);
+      }
+    }
+  },
   computed: {
     tax_due() {
       var tosum = [this.form];
@@ -756,15 +771,6 @@ export default {
     },
     item26b() {},
     save_draft() {},
-    changeStep(step, form) {
-      this.$emit("changeStep", step);
-      this.$emit("updateForm", form);
-    },
-    validate() {
-      this.changeStep(this.step + 1);
-      // if(this.step === 0) this.validateGeneral();
-      // else if(this.step === 1) this.validatePartI();
-    },
     submit() {
       this.loading = true;
       this.errors = [];
@@ -812,16 +818,19 @@ export default {
     error_item(item) {
       return this.errors.find(x => x.field === item) ? "error" : "";
     },
+    changeStep(step, form) {
+      this.$emit("changeStep", step);
+      this.$emit("updateForm", form);
+    },
     error_desc(item) {
       return this.errors.find(x => x.field === item)
         ? this.errors.find(x => x.field === item).error
         : "";
+    },
+    // insert validation
+    validate() {
+      this.changeStep(this.step + 1);
     }
-    // submit() {
-    //   this.form.validateFieldsAndScroll((err, values) => {
-    //     if (!err) console.log("values :", values);
-    //   });
-    // }
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
