@@ -6,10 +6,13 @@
           label="TIN"
           :label-col="{ span: 9 }"
           :wrapper-col="{ span: 15 }"
-          has-feedback
+          
           :validate-status="error_desc('tin') ? 'error' : tin_validate_status"
           :help="error_desc('tin')"
         >
+        <!-- has-feedback
+          :validate-status="error_desc('tin') ? 'error' : tin_validate_status"
+          :help="error_desc('tin')" -->
           <a-input
             v-model="details.taxpayer.tin"
             placeholder="TIN"

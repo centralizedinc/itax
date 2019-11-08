@@ -514,6 +514,7 @@ export default {
     return {
       sched: 0,
       show: 0,
+      connections:[],
       sub: false,
       spouse_type_list_holder: null,
       single: false,
@@ -539,15 +540,23 @@ export default {
       errors: []
     };
   },
-  // watch: {
-  //   step() {
-  //     if (this.step < 0) {
-  //       this.$router.push("/");
-  //     } else if (this.step == 2) {
-  //       this.sub = true;
-  //     }
-  //   }
-  // },
+  watch: {
+    // step() {
+    //   if (this.step < 0) {
+    //     this.$router.push("/");
+    //   } else if (this.step == 2) {
+    //     this.sub = true;
+    //   }
+    // }
+    form() {
+      console.log("watch form")
+      this.$http
+      .get(`/connections/${this.form.taxpayer.tin}`)
+      .then(results => {
+         console.log("connections tin result data: " + JSON.stringify(results))
+      })
+    }
+  },
   computed: {
     tax_due() {
       var tosum = [this.form];
@@ -756,6 +765,9 @@ export default {
     // }
   },
   created() {
+    
+    this.connections = this.$store.state.relationship.connections
+    console.log("  " + JSON.stringify(this.$store.state.relationship.connections))
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
