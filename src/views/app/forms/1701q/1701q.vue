@@ -4,51 +4,58 @@
       <a-divider>
         <b>Quarterly Income Tax Return(1701Q)</b>
       </a-divider>
-      <a-form-item label="For the Year"></a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="1."
-        :validate-status="error_item('return_period_year')"
-        :help="error_desc('return_period_year')"
-      >
-        <a-select style="width: 100%" v-model="form.return_period_year" placeholder="For the year">
-          <a-select-option key="y0" :value="new Date().getFullYear()">{{new Date().getFullYear()}}</a-select-option>
-          <a-select-option
-            v-for="item in 30"
-            :key="`y${item}`"
-            :value="new Date().getFullYear() - item"
-          >{{new Date().getFullYear() - item}}</a-select-option>
-        </a-select>
-        <!-- <a-month-picker style="width: 100%" v-model="form.return_period_year" /> -->
+
+      <!-- 1 -->
+      <a-form-item label="1. For the Year" :labelCol="{span:6}" :wrapperCol="{span:12}">
+        <a-form-item
+          :labelCol="form_layout.label_col"
+          :wrapperCol="form_layout.wrapper_col"
+          label
+          :validate-status="error_item('return_period_year')"
+          :help="error_desc('return_period_year')"
+        >
+          <a-select placeholder="For the Year" style="width: 35%" v-model="form.return_period_year">
+            <a-select-option key="y0" :value="new Date().getFullYear()">{{new Date().getFullYear()}}</a-select-option>
+            <a-select-option
+              v-for="item in 30"
+              :key="`y${item}`"
+              :value="new Date().getFullYear() - item"
+            >{{new Date().getFullYear() - item}}</a-select-option>
+          </a-select>
+          <!-- <a-month-picker style="width: 100%" v-model="form.return_period_year" /> -->
+        </a-form-item>
       </a-form-item>
-      <a-form-item label="Quarter"></a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="2."
-        :validate-status="error_item('quarter')"
-        :help="error_desc('quarter')"
-      >
-        <a-radio-group v-model="form.quarter" buttonStyle="solid">
-          <a-radio-button :value="1">First</a-radio-button>
-          <a-radio-button :value="2">Second</a-radio-button>
-          <a-radio-button :value="3">Third</a-radio-button>
-        </a-radio-group>
+
+      <!-- 2 -->
+      <a-form-item label="2. Quarter" :labelCol="{span:6}" :wrapperCol="{span:12}">
+        <a-form-item
+          :labelCol="form_layout.label_col"
+          :wrapperCol="form_layout.wrapper_col"
+          label
+          :validate-status="error_item('quarter')"
+          :help="error_desc('quarter')"
+        >
+          <a-radio-group v-model="form.quarter" buttonStyle="solid">
+            <a-radio-button :value="1">First</a-radio-button>
+            <a-radio-button :value="2">Second</a-radio-button>
+            <a-radio-button :value="3">Third</a-radio-button>
+          </a-radio-group>
+        </a-form-item>
       </a-form-item>
-      <a-form-item label="Amended Return"></a-form-item>
-      <a-form-item
-        :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
-        label="3."
-      >
-        <a-radio-group v-model="form.amended_yn">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
-        </a-radio-group>
+
+      <!-- 3 -->
+      <a-form-item label="3. Amended Return" :labelCol="{span:6}" :wrapperCol="{span:12}">
+        <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col" label>
+          <a-radio-group v-model="form.amended_yn">
+            <a-radio :value="true">Yes</a-radio>
+            <a-radio :value="false">No</a-radio>
+          </a-radio-group>
+        </a-form-item>
       </a-form-item>
-      <a-form-item label="4. Number of Sheets">
-        <a-input-number v-model="form.num_of_sheet" style="width: 100%"></a-input-number>
+
+      <!-- 4 -->
+      <a-form-item label="4. Number of Sheets" :labelCol="{span:6}" :wrapperCol="{span:12}">
+        <a-input-number v-model="form.num_of_sheet" style="width: 25%"></a-input-number>
       </a-form-item>
     </a-form>
 
@@ -57,19 +64,24 @@
       <a-divider orientation="left">
         <b>Part I: BACKGROUND INFORMATION ON TAXPAYER/FILER</b>
       </a-divider>
-      <a-form-item label="5. Taxpayer Identification Number (TIN)">
+
+      <!-- 5 -->
+      <a-form-item label="5." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input-number
           style="width:100%"
           placeholder="Tax Identification Number"
           v-model="form.taxpayer.tin"
-          :formatter="formatter.amount"
-          :parser="parser.amount"
+         
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="6. RDO Code">
-        <a-input v-model="form.taxpayer.rdo_code"></a-input>
+
+      <!-- 6 -->
+      <a-form-item label="6." :labelCol="{span:2}" :wrapperCol="{span:20}">
+        <a-input style="width:100%" v-model="form.taxpayer.rdo_code" placeholder="RDO Code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Tax Filer Type">
+
+      <!-- 7 -->
+      <a-form-item label="7. Tax Filer Type" :labelCol="{span:9}" :wrapperCol="{span:12}">
         <a-radio-group v-model="form.taxpayer.filer_type" @change="atc_code_change">
           <a-radio :value="'SP'">Single Proprietor</a-radio>
           <a-radio :value="'PRO'">Professional</a-radio>
@@ -77,7 +89,13 @@
           <a-radio :value="'TRU'">Trust</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="8. Alphanumeric Tax Code (ATC)">
+
+      <!-- 8 -->
+      <a-form-item
+        label="8. Alphanumeric Tax Code (ATC)"
+        :labelCol="{span:9}"
+        :wrapperCol="{span:12}"
+      >
         <a-radio-group v-model="form.taxpayer_atc_code">
           <a-radio
             :value="'II012'"
@@ -105,51 +123,74 @@
           >II016 Mixed Income – 8% IT Rate</a-radio>
         </a-radio-group>
       </a-form-item>
+
+      <!-- 9 -->
       <a-form-item
-        label="9. Taxpayer’s Name ( ESTATE of / TRUST FAO ):"
+        label="9."
+        :labelCol="{span:2}"
+        :wrapperCol="{span:20}"
         :validate-status="error_item('taxpayer.Taxpayer_name')"
         :help="error_desc('taxpayer.Taxpayer_name')"
       >
         <a-input
           placeholder="Last Name, First Name, Middle Name"
           v-model="form.taxpayer.registered_name"
+          style="width:100%"
         ></a-input>
       </a-form-item>
+
+      <!-- 10 -->
       <a-form-item
-        label="10. Registered Address"
+        label="10."
+        :labelCol="{span:2}"
+        :wrapperCol="{span:20}"
         :validate-status="error_item('taxpayer.registered_address')"
         :help="error_desc('taxpayer.registered_address')"
       >
         <a-textarea
           placeholder="Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905"
           v-model="form.taxpayer.address"
+          style="width:100%"
         ></a-textarea>
       </a-form-item>
+
       <a-form-item
-        label="10A. Zip Code"
+        label="10A"
+        :labelCol="{span:2}"
+        :wrapperCol="{span:20}"
         :validate-status="error_item('taxpayer.zip_code')"
         :help="error_desc('taxpayer.zip_code')"
       >
         <a-input-number style="width: 100%" v-model="form.taxpayer.address_details.zipCode"></a-input-number>
       </a-form-item>
-      <a-form-item label="11. Date of Birth (MM/DD/YYYY)">
-        <a-date-picker style="width: 100%" v-model="form.taxpayer.birthDate"></a-date-picker>
+
+<!-- 11 -->
+      <a-form-item label="11. " :labelCol="{span:2}" :wrapperCol="{span:20}">
+        <a-date-picker style="width: 100%" v-model="form.taxpayer.birthDate" placeholder="Date of Birth (MM/DD/YYYY)"></a-date-picker>
       </a-form-item>
-      <a-form-item label="12. Email Address">
-        <a-input v-model="form.taxpayer.email_address"></a-input>
+
+      <!-- 12 -->
+      <a-form-item label="12. " :labelCol="{span:2}" :wrapperCol="{span:20}">
+        <a-input style="width: 100%" v-model="form.taxpayer.email_address" placeholder="Email Address"></a-input>
       </a-form-item>
+
+      <!-- 13 -->
       <a-form-item
-        label="13. Citizenship "
+        label="13. " :labelCol="{span:2}" :wrapperCol="{span:20}"
         :validate-status="error_item('taxpayer.citizenship')"
         :help="error_desc('taxpayer.citizenship')"
       >
-        <a-input style="width: 100%" v-model="form.taxpayer.citizenship"></a-input>
+        <a-input style="width: 100%" v-model="form.taxpayer.citizenship" placeholder="Citizenship"></a-input>
       </a-form-item>
-      <a-form-item label="14. Foreign Tax Number (if applicable)">
-        <a-input-number style="width: 100%" v-model="form.taxpayer_foreign_tax_number"></a-input-number>
+
+      <!-- 14 -->
+      <a-form-item label="14. " :labelCol="{span:2}" :wrapperCol="{span:20}">
+        <a-input-number style="width: 100%" v-model="form.taxpayer_foreign_tax_number" placeholder="Foreign Tax Number"></a-input-number>
       </a-form-item>
+
+      <!-- 15 -->
       <a-form-item
-        label="15. Claiming Foreign Tax Credits?"
+        label="15. Claiming Foreign Tax Credits?" :labelCol="{span:9}" :wrapperCol="{span:12}"
         :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
         :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
       >
@@ -158,6 +199,8 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
+
+      <!-- 16 -->
       <a-form-item label="16. Tax Rate*(choose one,for income from business/profession):">
         <a-radio-group v-model="form.taxpayer_tax_rate" :value="changeATC()" disabled>
           <a-radio
@@ -172,6 +215,8 @@
           </p>
         </a-radio-group>
       </a-form-item>
+
+
       <a-form-item
         label="16A. Method of Deduction:"
         :validate-status="error_item('method_deduction')"
@@ -194,22 +239,32 @@
       <a-divider orientation="left">
         <b>Part II: BACKGROUND INFORMATION ON SPOUSE (if applicable)</b>
       </a-divider>
-      <a-form-item label="17. Spouse’s TIN">
+
+      <!-- 17 -->
+      <a-form-item label="17." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input-number
+          
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' / ')"
           style="width:100%"
-          placeholder="Tax Identification Number"
+          placeholder="Spouse's Tax Identification Number"
           v-model="form.spouse_details.tin"
+     
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="18. RDO Code">
+
+      <!-- 18 -->
+      <a-form-item label="18." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input
           v-model="form.spouse_details.rdo_code"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          placeholder="RDO Code"
         ></a-input>
       </a-form-item>
-      <a-form-item label="19. Filer’s Spouse Type">
-        <a-checkbox
+
+      <!-- 19 -->
+      <a-form-item label="19. Filer’s Spouse Type" :labelCol="{span:7}" :wrapperCol="{span:12}">
+       <a-checkbox
           @change="spouse_type"
           v-model="single"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
@@ -219,18 +274,18 @@
           v-model="pro"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         >Professional</a-checkbox>
-        <a-checkbox
+        <a-col :span="15"><a-checkbox
           @change="spouse_type"
-          v-model="pensation"
+           v-model="pensation"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-        >Compensation Earner</a-checkbox>
+        >Compensation Earner</a-checkbox></a-col>
         <!-- <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
           <a-radio :value="'SSP'">Single Proprietor</a-radio>
           <a-radio :value="'SPRO'">Professional</a-radio>
           <a-radio :value="'SCE'">Compensation Earner</a-radio>
         </a-radio-group>-->
       </a-form-item>
-      <a-form-item label="20. ATC">
+      <a-form-item label="20. ATC" :labelCol="{span:3}" :wrapperCol="{span:12}">
         <a-radio-group v-model="form.spouse_atc_code">
           <a-radio
             :value="'SII012'"
@@ -269,27 +324,38 @@
           >II011 Compensation Income</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="21. Spouse’s Name:">
+
+      <!-- 21 -->
+      <a-form-item label="21." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input
-          placeholder="Last Name, First Name, Middle Name"
+          placeholder="Spouse's Name: Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          style="width:100%"
         ></a-input>
       </a-form-item>
-      <a-form-item label="22. Citizenship ">
+
+      <!-- 22 -->
+      <a-form-item label="22." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input
+          placeholder="Spouse's Citizenship"
           v-model="form.spouse_details.citizenship"
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         ></a-input>
       </a-form-item>
-      <a-form-item label="23. Foreign Tax Number (if applicable)">
+
+      <!-- 23 -->
+      <a-form-item label="23." :labelCol="{span:2}" :wrapperCol="{span:20}">
         <a-input-number
           style="width: 100%"
+          placeholder="Foreign Tax Number (if applicable)"
           v-model="form.spouse_foreign_tax_number"
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
         ></a-input-number>
       </a-form-item>
-      <a-form-item label="24. Claiming Foreign Tax Credits?">
+
+      <!-- 24 -->
+      <a-form-item label="24. Claiming Foreign Tax Credits?" :labelCol="{span:9}" :wrapperCol="{span:12}">
         <a-radio-group
           v-model="form.spouse_foreign_tax_credits"
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
@@ -298,6 +364,8 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
+
+      <!-- 25 -->
       <a-form-item label="25. Tax Rate*(choose one,for income from business/profession):">
         <a-radio-group v-model="form.spouse_tax_rate" disabled>
           <a-radio

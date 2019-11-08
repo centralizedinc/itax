@@ -1,8 +1,10 @@
 // const form_page1 = require("../templates/1701a_template").page1;
 // const form_page2 = require("../templates/1701a_template").page2;
 const form = require("../templates/1702ex_template");
-
 var forms = [form.page1, form.page2, form.page3]
+// const form = require("../templates/1701q_template");
+// var forms = [form.page1, form.page2]
+
 /**
  *
  * @param {LicenseModel} details
@@ -133,6 +135,7 @@ function getContent(forms) {
         },
     ]
     return content;
+    
 }
 
 function formatAmount(amount) {
