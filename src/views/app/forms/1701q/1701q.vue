@@ -6,180 +6,228 @@
       </a-divider>
 
       <!-- 1 -->
-      <a-form-item label="1. For the Year" :labelCol="{span:6}" :wrapperCol="{span:12}">
-        <a-form-item
-          :labelCol="form_layout.label_col"
-          :wrapperCol="form_layout.wrapper_col"
-          label
-          :validate-status="error_item('return_period_year')"
-          :help="error_desc('return_period_year')"
-        >
-          <a-select placeholder="For the Year" style="width: 35%" v-model="form.return_period_year">
-            <a-select-option key="y0" :value="new Date().getFullYear()">{{new Date().getFullYear()}}</a-select-option>
-            <a-select-option
-              v-for="item in 30"
-              :key="`y${item}`"
-              :value="new Date().getFullYear() - item"
-            >{{new Date().getFullYear() - item}}</a-select-option>
-          </a-select>
-          <!-- <a-month-picker style="width: 100%" v-model="form.return_period_year" /> -->
-        </a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="1"
+        :validate-status="error_item('return_period_year')"
+        :help="error_desc('return_period_year')"
+      >
+        <a-select placeholder="For the Year" style="width: 100%" v-model="form.return_period_year">
+          <a-select-option key="y0" :value="new Date().getFullYear()">{{new Date().getFullYear()}}</a-select-option>
+          <a-select-option
+            v-for="item in 30"
+            :key="`y${item}`"
+            :value="new Date().getFullYear() - item"
+          >{{new Date().getFullYear() - item}}</a-select-option>
+        </a-select>
       </a-form-item>
 
       <!-- 2 -->
-      <a-form-item label="2. Quarter" :labelCol="{span:6}" :wrapperCol="{span:12}">
-        <a-form-item
-          :labelCol="form_layout.label_col"
-          :wrapperCol="form_layout.wrapper_col"
-          label
-          :validate-status="error_item('quarter')"
-          :help="error_desc('quarter')"
-        >
-          <a-radio-group v-model="form.quarter" buttonStyle="solid">
-            <a-radio-button :value="1">First</a-radio-button>
-            <a-radio-button :value="2">Second</a-radio-button>
-            <a-radio-button :value="3">Third</a-radio-button>
-          </a-radio-group>
-        </a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="2"
+        :validate-status="error_item('quarter')"
+        :help="error_desc('quarter')"
+      >
+        <a-radio-group v-model="form.quarter" buttonStyle="solid" style="width: 100%">
+          <span style="margin-right: 14px">Quarter</span>
+          <a-radio-button :value="1">First</a-radio-button>
+          <a-radio-button :value="2">Second</a-radio-button>
+          <a-radio-button :value="3">Third</a-radio-button>
+        </a-radio-group>
       </a-form-item>
 
       <!-- 3 -->
-      <a-form-item label="3. Amended Return" :labelCol="{span:6}" :wrapperCol="{span:12}">
-        <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col" label>
-          <a-radio-group v-model="form.amended_yn">
-            <a-radio :value="true">Yes</a-radio>
-            <a-radio :value="false">No</a-radio>
-          </a-radio-group>
-        </a-form-item>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="3"
+        style="width: 100%"
+      >
+        <span style="margin-right: 14px">Amended</span>
+        <a-radio-group v-model="form.amended_yn" :defaultValue="false">
+          <a-radio :value="true">Yes</a-radio>
+          <a-radio :value="false">No</a-radio>
+        </a-radio-group>
       </a-form-item>
 
       <!-- 4 -->
-      <a-form-item label="4. Number of Sheets" :labelCol="{span:6}" :wrapperCol="{span:12}">
-        <a-input-number v-model="form.num_of_sheet" style="width: 25%"></a-input-number>
+      <a-form-item
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+        label="4"
+      >
+        <a-input-number
+          placeholder="Number of Sheets"
+          v-model="form.num_of_sheet"
+          style="width: 100%"
+        ></a-input-number>
       </a-form-item>
     </a-form>
 
     <!-- Part I -->
     <a-form v-show="step===1">
-      <a-divider orientation="left">
+      <a-divider>
         <b>Part I: BACKGROUND INFORMATION ON TAXPAYER/FILER</b>
       </a-divider>
 
-      <!-- 5 -->
-      <a-form-item label="5." :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input-number
-          style="width:100%"
-          placeholder="Tax Identification Number"
-          v-model="form.taxpayer.tin"
-        ></a-input-number>
-      </a-form-item>
-
-      <!-- 6 -->
-      <a-form-item label="6." :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input style="width:100%" v-model="form.taxpayer.rdo_code" placeholder="RDO Code"></a-input>
-      </a-form-item>
-
-      <!-- 7 -->
-      <a-form-item label="7. Tax Filer Type" :labelCol="{span:9}" :wrapperCol="{span:12}">
-        <a-radio-group v-model="form.taxpayer.filer_type" @change="atc_code_change">
-          <a-radio :value="'SP'">Single Proprietor</a-radio>
-          <a-radio :value="'PRO'">Professional</a-radio>
-          <a-radio :value="'EST'">Estate</a-radio>
-          <a-radio :value="'TRU'">Trust</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-      <!-- 8 -->
-      <a-form-item
-        label="8. Alphanumeric Tax Code (ATC)"
-        :labelCol="{span:9}"
-        :wrapperCol="{span:12}"
-      >
-        <a-radio-group v-model="form.taxpayer_atc_code">
-          <a-radio
-            :value="'II012'"
-            :disabled="form.taxpayer.filer_type == 'PRO' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
-          >II012 Business Income-Graduated IT Rates</a-radio>
-          <a-radio
-            :value="'II015'"
-            :disabled="form.taxpayer.filer_type == 'PRO' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
-          >II015 Business Income - 8% IT Rate</a-radio>
-          <a-radio
-            :value="'II014'"
-            :disabled="form.taxpayer.filer_type == 'SP' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
-          >II014 Income from Profession–Graduated IT Rates</a-radio>
-          <a-radio
-            :value="'II017'"
-            :disabled="form.taxpayer.filer_type == 'SP' ||form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
-          >II017 Income from Profession – 8% IT Rate</a-radio>
-          <a-radio
-            :value="'II013'"
-            :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
-          >II013 Mixed Income–Graduated IT Rates</a-radio>
-          <a-radio
-            :value="'II016'"
-            :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
-          >II016 Mixed Income – 8% IT Rate</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-      <!-- 9 -->
-      <a-form-item
-        label="9."
-        :labelCol="{span:2}"
-        :wrapperCol="{span:20}"
-        :validate-status="error_item('taxpayer.Taxpayer_name')"
-        :help="error_desc('taxpayer.Taxpayer_name')"
-      >
-        <a-input
-          placeholder="Last Name, First Name, Middle Name"
-          v-model="form.taxpayer.registered_name"
-          style="width:100%"
-        ></a-input>
-      </a-form-item>
-
-      <!-- 10 -->
-      <a-form-item
-        label="10."
-        :labelCol="{span:2}"
-        :wrapperCol="{span:20}"
-        :validate-status="error_item('taxpayer.registered_address')"
-        :help="error_desc('taxpayer.registered_address')"
-      >
-        <a-textarea
-          placeholder="Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905"
-          v-model="form.taxpayer.address"
-          style="width:100%"
-        ></a-textarea>
-      </a-form-item>
-
-      <a-form-item
-        label="10A"
-        :labelCol="{span:2}"
-        :wrapperCol="{span:20}"
-        :validate-status="error_item('taxpayer.zip_code')"
-        :help="error_desc('taxpayer.zip_code')"
-      >
-        <a-input-number style="width: 100%" v-model="form.taxpayer.address_details.zipCode"></a-input-number>
-      </a-form-item>
-
-      <!-- 11 -->
-      <a-form-item label="11. " :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-date-picker
-          style="width: 100%"
-          v-model="form.taxpayer.birthDate"
-          placeholder="Date of Birth (MM/DD/YYYY)"
-        ></a-date-picker>
-      </a-form-item>
-
-      <!-- 12 -->
-      <a-form-item label="12. " :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input
-          style="width: 100%"
-          v-model="form.taxpayer.email_address"
-          placeholder="Email Address"
-        ></a-input>
-      </a-form-item>
+      <a-row :gutter="4">
+        <!-- 5 -->
+        <a-col :span="24">
+          <a-form-item
+            :labelCol="{span: 2}"
+            :wrapperCol="{span: 20}"
+            label="5"
+            :validate-status="error_item('taxpayer.tin')"
+            :help="error_desc('taxpayer.tin')"
+          >
+            <a-input placeholder="Taxpayer Identification Number (TIN)" v-model="form.taxpayer.tin"></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- 6 -->
+        <a-col :span="24">
+          <a-form-item :labelCol="{span: 2}" :wrapperCol="{span: 20}" label="6">
+            <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
+          <!-- 7 -->
+          <a-form-item
+            label="7"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.filer_type')"
+            :help="error_desc('taxpayer.filer_type')"
+          >
+            <span style="margin-right: 14px">Taxpayer/Filer Type</span>
+            <a-radio-group v-model="form.taxpayer.filer_type" @change="atc_code_change">
+              <a-radio :value="'SP'">Single Proprietor</a-radio>
+              <a-radio :value="'PRO'">Professional</a-radio>
+              <a-radio :value="'EST'">Estate</a-radio>
+              <a-radio :value="'TRU'">Trust</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <!-- 8 -->
+        <a-col :span="24">
+          <a-form-item
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer_atc_code')"
+            :help="error_desc('taxpayer_atc_code')"
+            label="8"
+          >
+            <span style="margin-right: 14px">Alphanumeric Tax Code (ATC)</span>
+            <a-radio-group v-model="form.taxpayer_atc_code">
+              <a-radio
+                :value="'II012'"
+                :disabled=" form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+              >II012 Business Income-Graduated IT Rates</a-radio>
+              <a-radio
+                :value="'II015'"
+                :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+              >II015 Business Income - 8% IT Rate</a-radio>
+              <a-radio
+                :value="'II014'"
+                :disabled="form.taxpayer.filer_type == 'SP' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+              >II014 Income from Profession–Graduated IT Rates</a-radio>
+              <a-radio
+                :value="'II017'"
+                :disabled="form.taxpayer.filer_type == 'SP' ||form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+              >II017 Income from Profession – 8% IT Rate</a-radio>
+              <a-radio
+                :value="'II013'"
+                :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+              >II013 Mixed Income–Graduated IT Rates</a-radio>
+              <a-radio
+                :value="'II016'"
+                :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+              >II016 Mixed Income – 8% IT Rate</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <!-- 9 -->
+        <a-col :span="24">
+          <a-form-item
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.Taxpayer_name')"
+            :help="error_desc('taxpayer.Taxpayer_name')"
+            label="9"
+          >
+            <a-input
+              placeholder="Last Name, First Name, Middle Name"
+              v-model="form.taxpayer.registered_name"
+            ></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- 10 -->
+        <a-col :span="24">
+          <a-form-item
+            label="10"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.registered_address')"
+            :help="error_desc('taxpayer.registered_address')"
+          >
+            <a-tooltip>
+              <template
+                slot="title"
+              >Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905</template>
+              <a-textarea
+                autosize
+                placeholder="Indicate complete address. If branch, indicate the branch address. If the registered address is different from the current address, go to the RDO to update registered address by using BIR Form No. 1905"
+                v-model="form.taxpayer.address"
+                style="width:100%"
+              ></a-textarea>
+            </a-tooltip>
+          </a-form-item>
+        </a-col>
+        <!-- 10 -->
+        <a-col :span="24">
+          <a-form-item
+            label="10A"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.zip_code')"
+            :help="error_desc('taxpayer.zip_code')"
+          >
+            <a-input v-model="form.taxpayer.address_details.zipCode" placeholder="Zipcode"></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- 11 -->
+        <a-col :span="24">
+          <a-form-item
+            label="11. "
+            :validate-status="error_item('taxpayer.birthDate')"
+            :help="error_desc('taxpayer.birthDate')"
+          >
+            <a-date-picker
+              style="width: 100%"
+              v-model="form.taxpayer.birthDate"
+              placeholder="Date of Birth (MM/DD/YYYY)"
+            ></a-date-picker>
+          </a-form-item>
+        </a-col>
+        <!-- 12 -->
+        <a-col :span="24">
+          <a-form-item
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.email_address')"
+            :help="error_desc('taxpayer.email_address')"
+            label="12."
+          >
+            <a-input
+              style="width: 100%"
+              v-model="form.taxpayer.email_address"
+              placeholder="Email Address"
+            ></a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
 
       <!-- 13 -->
       <a-form-item
@@ -828,8 +876,42 @@ export default {
         : "";
     },
     // insert validation
-    validate() {
-      this.changeStep(this.step + 1);
+    validate(is_validate_all) {
+      var errors = [];
+      if (is_validate_all || this.step === 0) {
+        if (!this.form.return_period_year) {
+          errors.push({
+            page: 0,
+            field: "return_period_year",
+            error: "Please enter a valid year in Item 1"
+          });
+        }
+        if (!this.form.quarter) {
+          errors.push({
+            page: 0,
+            field: "quarter",
+            error: "Please select Quarter in item 2"
+          });
+        }
+        if (!this.form.taxpayer.birthDate) {
+          errors.push({
+            page: 0,
+            field: "taxpayer.birthDate",
+            error: "Please enter your Date of Birth "
+          });
+        }
+        if (!this.form.taxpayer.filer_type) {
+          errors.push({
+            page: 0,
+            field: "taxpayer.filer_type",
+            error: "Please select an option in Filer Type "
+          });
+        }
+      }
+      this.$emit("error", errors);
+      if (!errors.length) {
+        this.changeStep(this.step + 1);
+      }
     }
   },
   created() {
