@@ -7,13 +7,17 @@ function initialState() {
     return {
         draft_forms: [],
         tax_returns: [],
-        rdos: []
+        rdos: [],
+        login_rdo: ""
     }
 }
 
 const state = initialState()
 
 const mutations = {
+    LOGIN_RDO(state, rdo) {
+        state.login_rdo = rdo;
+    },
     ADD_DRAFT_FORM(state, data) {
         state.draft_forms.push(data)
     },

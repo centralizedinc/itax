@@ -1,23 +1,26 @@
 <template>
   <div>
-    <statistics />
-    <a-divider />
-    <a-row :gutter="10" style="margin-bottom: 2vh;">
-      <a-col :xs="24" :lg="10">
-        <collection-per-rdo />
-      </a-col>
-      <a-col :xs="24" :lg="14">
-        <collection-returns />
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col :xs="24" :lg="12">
-        <collection-per-tax-type />
-      </a-col>
-      <a-col :xs="24" :lg="12">
-        <top-taxpayer />
-      </a-col>
-    </a-row>
+      <a-row :gutter="10" style="margin-bottom: 2vh;">
+        <a-col :span="24">
+          <statistics />
+        </a-col>
+      </a-row>
+      <a-row :gutter="10" style="margin-bottom: 2vh;" v-if="!login_rdo">
+        <a-col :xs="24" :lg="12">
+          <collection-per-rdo />
+        </a-col>
+        <a-col :xs="24" :lg="12">
+          <target-collection />
+        </a-col>
+      </a-row>
+      <a-row :gutter="10" style="margin-bottom: 2vh;">
+        <a-col :xs="24" :lg="12">
+          <collection-per-tax-type />
+        </a-col>
+        <a-col :xs="24" :lg="12">
+          <top-taxpayer />
+        </a-col>
+      </a-row>
   </div>
 </template>
 
@@ -25,19 +28,26 @@
 import Statistics from "./statistics/Statistics";
 import CollectionPerRdo from "./statistics/CollectionPerRdo.vue";
 import CollectionPerTaxType from "./statistics/CollectionPerTaxType";
-import CollectionReturns from "./statistics/CollectionReturns";
+import TargetCollection from "./statistics/TargetCollection";
 import TopTaxpayer from "./statistics/TopTaxpayer";
+import RdoMap from "./RDOMap";
 
 export default {
   components: {
     Statistics,
     CollectionPerRdo,
     CollectionPerTaxType,
-    CollectionReturns,
-    TopTaxpayer
+    TargetCollection,
+    TopTaxpayer,
+    RdoMap
   },
   data() {
     return {};
+  },
+  computed: {
+    login_rdo() {
+      return this.$store.state.tax_form.login_rdo;
+    }
   }
 };
 </script>

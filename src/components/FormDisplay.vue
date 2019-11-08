@@ -53,7 +53,7 @@ const printers = {
   FORM1701A: Form1701a,
   FORM1604C: Form1604c,
   FORM1702EX: Form1702ex
-};
+ };
 export default {
   props: ["form", "type"],
   components: {
@@ -206,8 +206,8 @@ export default {
 
       console.log("form details open: " + JSON.stringify(this.form));
       var pdf_list = [];
-      for (var x = 0; x <= 1; x++) {
-        this.form.pdf_page = x;
+      // for (var x = 0; x <= 1; x++) {
+      //   this.form.pdf_page = x;
         var document = printer.fillup(this.form);
         var self = this;
         pdfMake.createPdf(document).open(dataUrl => {
@@ -217,7 +217,7 @@ export default {
         });
         this.refresh();
         console.log("open form data: " + JSON.stringify(this.form));
-      }
+      // }
       console.log("pdf list data: " + JSON.stringify(pdf_list));
     },
     upload() {

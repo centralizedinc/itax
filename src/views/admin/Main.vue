@@ -26,7 +26,7 @@
                   <a-menu-item>
                     <a-icon type="lock" />Security
                   </a-menu-item>
-                  <a-menu-item>
+                  <a-menu-item @click="logout">
                     <a-icon type="logout" />Logout
                   </a-menu-item>
                 </a-menu>
@@ -79,9 +79,9 @@
           <component :is="component_list[current_nav[0]]" />
         </a-col>
         <a-col :xs="{ span: 0 }" :sm="{ span: 6 }">
-          <a-affix :offsetTop="127">
+          <!-- <a-affix :offsetTop="127"> -->
             <summary-layout />
-          </a-affix>
+          <!-- </a-affix> -->
         </a-col>
       </a-row>
     </a-layout-content>
@@ -118,6 +118,10 @@ export default {
   methods: {
     handleScroll(event) {
       this.topLocation = window.top.scrollY;
+    },
+    logout(){
+      this.$store.dispatch("LOGOUT");
+      this.$router.push("/admin");
     }
   }
 };

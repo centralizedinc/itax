@@ -5,7 +5,7 @@
         <!-- YEAR -->
       <a-form-item
         :labelCol="form_layout.label_col"
-        :wrapperCol="form_layout.wrapper_col"
+        :wrapperCol="form_layout.wrapper_col" 
         label="1"
       >
         <a-month-picker

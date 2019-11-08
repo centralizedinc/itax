@@ -99,7 +99,7 @@ function getContent(forms) {
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
                             fontSize: 12,
-                            bold: true,
+                            bold: true, 
                             // right,down,left,up
                             alignment: 'left',
                             margin: [26, 11, 0, 0]
@@ -559,8 +559,8 @@ function getContent(forms) {
                 {
                     text: formatAmount(forms.minimis_benefits),
                     alignment: 'right',
-                    characterSpacing: 8,
                     fontSize: 9,
+                    characterSpacing: 8,
                     // right,down,left,up
                     margin: [0, 2, 3, 0]
                 }
@@ -582,7 +582,7 @@ function getContent(forms) {
                     text: formatAmount(forms.mandatory_contribution),
                     alignment: 'right',
                     characterSpacing: 8,
-                    fontSize: 9    ,
+                    fontSize: 9,
                     // right,down,left,up
                     margin: [0, 3, 3, 0]
                 }
@@ -792,7 +792,7 @@ function getContent(forms) {
                     characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, -1, 2, 0]
+                    margin: [0, 0, 2, 0]
                 }
             ]
         ]
@@ -814,7 +814,7 @@ function getContent(forms) {
                     characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, 1, 2, 0]
+                    margin: [0, 0,3, 0]
                 }
             ]
         ]
@@ -887,7 +887,7 @@ function getContent(forms) {
                     characterSpacing: 8,
                     fontSize: 9,
                     // right,down,left,up
-                    margin: [0, 1, 1, 0]
+                    margin: [0, 2, 2, 0]
                 }
             ]
         ]
@@ -979,7 +979,7 @@ function getContent(forms) {
                     fontSize: 9,
                     characterSpacing: 8,
                     // right,down,left,up
-                    margin: [0, 1, 1, 0]
+                    margin: [0, 1, 1,  0]
                 }
             ]
         ]
