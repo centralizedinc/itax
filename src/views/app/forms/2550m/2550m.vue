@@ -1424,9 +1424,10 @@ export default {
       ]
     };
   },
-  watch: {
-    step() {
-     if(this.step == 0 ){
+  //----------------------------
+ watch: {
+   step() {
+     if(this.step ===   0 ){
          this.form.pdf_page = 1
      }else{
          this.form.pdf_page =2
@@ -1435,6 +1436,9 @@ export default {
     loading(val) {
       this.$emit("loading", val);
     },
+
+//--------------------------------
+
     form: {
       deep: true,
       handler() {
