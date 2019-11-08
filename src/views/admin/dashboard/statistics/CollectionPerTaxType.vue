@@ -137,11 +137,6 @@ export default {
       ]
     };
   },
-  computed: {
-    rdos() {
-      return this.$store.state.tax_form.rdos;
-    }
-  },
   methods: {
     getMockTaxtype() {
       var datasets = [];
