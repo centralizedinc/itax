@@ -1,4 +1,5 @@
-const form = require("../templates/2550m_template").template;
+const form = require("../templates/2550m_template");
+var forms = [form.page1, form.page1, form.page2]
 
 /**
  *
@@ -16,9 +17,9 @@ function fillup(details) {
                 width: 600
             }]
         },
-        content: content,
+        content: content[details.pdf_page],
         images: {
-            form: form
+            form: forms[details.pdf_page]
         },
         pageSize: 'LEGAL'
     };
@@ -31,53 +32,58 @@ function getContent(forms) {
     console.log("get content forms: " + JSON.stringify(forms))
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
-    var content = [
-        // General Info
+    // content 1
+    var content_page1 = [
+        // General Info <----------------------Table 1--------------------->
         {
             layout: "noBorders",
             table: {
                 widths: [170, 79, 49, 49, 150, 10],
                 body: [
                     [{
+                            //-------- Month
                             text: formatDate(forms.return_period, {
                                 month: "2-digit"
                             }),
-                            fontSize: 15,
-                            characterSpacing: 3,
+                            fontSize: 11,
+                            characterSpacing: 6,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [145, 34, 0, 0]
+                            margin: [147, 34, 0, 0]
                         },
                         {
+                            //--------- Year
                             text: formatDate(forms.return_period, {
                                 year: "numeric"
                             }),
-                            fontSize: 14,
-                            characterSpacing: 3,
+                            fontSize: 11,
+                            characterSpacing: 8,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [0, 34, 0, 0]
+                            margin: [-4, 34, 0, 0]
                         },
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
-                            fontSize: 9,
+                            fontSize: 8,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [35, 39, 0, 0]
+                            margin: [34, 40, 0, 0]
                         },
                         {
                             text: forms.amended_yn == false ? 'X' : ' ',
-                            fontSize: 9,
+                            fontSize: 8,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [12, 39, 0, 0]
+                            margin: [12, 40, 0, 0]
                         },
                         {
+                            //--------- Number of Sheet
                             text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
                             fontSize: 12,
+                            characterSpacing: 4,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [130, 34, 0, 0]
+                            margin: [112, 34, 0, 0]
                         },
                         {
                             text: " "
@@ -87,6 +93,8 @@ function getContent(forms) {
                 ]
             }
         },
+        //----------------------------- END OF TABLE 1 ----------------------------------------------//
+        //-------------- TABLE 2 ------------------------//
         {
             layout: "noBorders",
             table: {
@@ -1146,9 +1154,13 @@ function getContent(forms) {
             }
         }
     ]
+    // content 2
+    var content_page2 = [
+        
+    ]
 
-
-    return content;
+    var contents = [content_page1, content_page1, content_page2]
+    return contents;
 }
 
 function formatAmount(amount) {
