@@ -3,21 +3,15 @@
     <!-- Collection -->
     <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card :bodyStyle="{ padding: 0 }">
-        <span class="collection-counts">
-          <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
-            <a-col :span="24">
-              <a-tooltip>
-                <span slot="title">{{formatCounts(collections_total, true)}}</span>
-                <span class="counts">
-                  {{formatCounts(collections_total)}}
-                </span>
-              </a-tooltip>
-              <br />
-              <span
-                class="counts-label"
-              >{{collections_mode === 'y' ? 'Collections' : `Collected in year ${collections_year}`}}</span>
-            </a-col>
-          </a-row>
+        <span class="collection-counts" @mouseover="collection_on_left=!collection_on_left" :style="collection_on_left ? '' : 'right: 0.5vw;'">
+          <a-tooltip>
+            <span slot="title">{{formatCounts(collections_total, true)}}</span>
+            <span class="counts">{{formatCounts(collections_total)}}</span>
+          </a-tooltip>
+          <br />
+          <span
+            class="counts-label"
+          >{{collections_mode === 'y' ? 'Collections' : `Collected in year ${collections_year}`}}</span>
         </span>
         <line-chart ref="collection_line_chart" />
         <template v-if="collections_mode === 'm'" slot="actions">
@@ -29,21 +23,15 @@
     <!-- Returns -->
     <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card :bodyStyle="{ padding: 0 }">
-        <span class="collection-counts">
-          <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
-            <a-col :span="24">
-              <a-tooltip>
-                <span slot="title">{{formatCounts(returns_total, true)}}</span>
-                <span class="counts">
-                  {{formatCounts(returns_total)}}
-                </span>
-              </a-tooltip>
-              <br />
-              <span
-                class="counts-label"
-              >{{returns_mode === 'y' ? 'Returns' : `Returns in year ${returns_year}`}}</span>
-            </a-col>
-          </a-row>
+        <span class="collection-counts" @mouseover="returns_on_left=!returns_on_left" :style="returns_on_left ? '' : 'right: 0.5vw;'">
+          <a-tooltip>
+            <span slot="title">{{formatCounts(returns_total, true)}}</span>
+            <span class="counts">{{formatCounts(returns_total)}}</span>
+          </a-tooltip>
+          <br />
+          <span
+            class="counts-label"
+          >{{returns_mode === 'y' ? 'Returns' : `Returns in year ${returns_year}`}}</span>
         </span>
         <line-chart ref="returns_line_chart" />
         <template v-if="returns_mode === 'm'" slot="actions">
@@ -55,19 +43,15 @@
     <!-- Taxpayers -->
     <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card :bodyStyle="{ padding: 0 }">
-        <span class="collection-counts">
-          <a-row type="flex" align="middle" style="width: 100%; height: 100%;">
-            <a-col :span="24">
-              <a-tooltip>
-                <span slot="title">{{formatCounts(taxpayers_total, true)}}</span>
-                <span class="counts">{{formatCounts(taxpayers_total)}}</span>
-              </a-tooltip>
-              <br />
-              <span
-                class="counts-label"
-              >{{taxpayers_mode === 'y' ? 'Taxpayers' : `Taxpayers in year ${taxpayers_year}`}}</span>
-            </a-col>
-          </a-row>
+        <span class="collection-counts" @mouseover="taxpayers_on_left=!taxpayers_on_left" :style="taxpayers_on_left ? '' : 'right: 0.5vw;'">
+          <a-tooltip>
+            <span slot="title">{{formatCounts(taxpayers_total, true)}}</span>
+            <span class="counts">{{formatCounts(taxpayers_total)}}</span>
+          </a-tooltip>
+          <br />
+          <span
+            class="counts-label"
+          >{{taxpayers_mode === 'y' ? 'Taxpayers' : `Taxpayers in year ${taxpayers_year}`}}</span>
         </span>
         <line-chart ref="taxpayers_line_chart" />
         <template v-if="taxpayers_mode === 'm'" slot="actions">
@@ -138,9 +122,7 @@ export default {
         scales: {
           xAxes: [
             {
-              gridLines: {
-                display: false
-              }
+              display: false
             }
           ],
           yAxes: [
@@ -169,9 +151,7 @@ export default {
         scales: {
           xAxes: [
             {
-              gridLines: {
-                display: false
-              }
+              display: false
             }
           ],
           yAxes: [
@@ -201,9 +181,7 @@ export default {
         scales: {
           xAxes: [
             {
-              gridLines: {
-                display: false
-              }
+              display: false
             }
           ],
           yAxes: [
@@ -234,7 +212,10 @@ export default {
       returns_year: "",
       taxpayers_total: 0,
       taxpayers_mode: "y",
-      taxpayers_year: ""
+      taxpayers_year: "",
+      collection_on_left: true,
+      returns_on_left: true,
+      taxpayers_on_left: true
     };
   },
   methods: {
@@ -494,16 +475,13 @@ export default {
 
 <style>
 .statistic-chart canvas {
-  /* height: 25vh !important; */
+  height: 25vh !important;
 }
 
 .collection-counts {
   position: absolute;
-  color: black;
-  width: 100%;
-  text-align: end;
-  padding-right: 1vw;
-  bottom: 12vh;
+  text-align: start;
+  padding-left: 0.5vw;
 }
 
 .counts {
