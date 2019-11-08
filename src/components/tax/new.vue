@@ -75,7 +75,7 @@
             </a-col>
             <a-col :span="20">
               <h4>Withholding Tax</h4>
-              <p>Lorem ipsum dolor sit amet labore et dolore magna aliqua.</p>
+              <p>When a business withholds a portion of a payment for services or goods to a supplier and remits that portion to the government on behalf of its supplier. This is a tax compliance method utilized by governments to ensure that taxes are remitted properly by a business and on a timely basis.</p>
               <a>Learn More</a>
             </a-col>
           </a-row>
