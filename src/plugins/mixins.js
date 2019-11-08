@@ -10,12 +10,12 @@ export default {
 
                     return tin && tin.length == 13 ? `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, 13)}` : tin
                 },
-                formatAmount(amount) {
+                formatAmount(amount, show_sign) {
                     // return amount ? amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, ',') : '0.00'
                     if (!amount || isNaN(amount)) return "0.00";
                     var parts = parseFloat(amount).toFixed(2).toString().split(".");
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    return parts.join(".");
+                    return show_sign ? `₱ ${parts.join(".")}` : parts.join(".");
                 },
                 formatDate(date, type) {
                     if (!date) {

@@ -45,7 +45,7 @@ export default {
             ].data.forEach((bar, i) => {
               ctx.fillText(
                 nFormatter(this.data.datasets[0].data[i], 1),
-                bar._model.x + 15,
+                bar._model.x + 20,
                 bar._model.y + 8
               );
             });
@@ -108,14 +108,14 @@ export default {
   },
   computed: {
     rdos() {
-      return this.$store.state.tax_form.rdos;
+      return this.$store.state.tax_form.rdos.slice(0, 10);
     }
   },
   methods: {
     getMockRdo() {
       var datasets = [];
       for (let index = 0; index < this.rdos.length; index++) {
-        var val = Math.floor(Math.random() * 200) + 30;
+        var val = Math.floor(Math.random() * 100000) + 10000;
         var random_color =
           "#" + Math.floor(Math.random() * 16777215).toString(16);
         datasets.push({
@@ -130,6 +130,8 @@ export default {
       this.chartdata.datasets[0].backgroundColor = datasets.map(
         v => v.background
       );
+      this.options.scales.xAxes[0].ticks.max =
+            this.chartdata.datasets[0].data[0] + Math.floor(this.chartdata.datasets[0].data[0]/5);
       this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
     },
     formatCounts(val, disableShortcut) {
@@ -167,7 +169,7 @@ export default {
         try {
           var datasets = [];
           for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
-            var random = Math.round(Math.random());
+            var random = Math.round(Math.random() * 2000) + 2000;
             datasets.push({
               label: this.chartdata.labels[i],
               value: this.chartdata.datasets[0].data[i] + random,
@@ -181,7 +183,7 @@ export default {
             v => v.background
           );
           this.options.scales.xAxes[0].ticks.max =
-            this.chartdata.datasets[0].data[0] + 20;
+            this.chartdata.datasets[0].data[0] + Math.floor(this.chartdata.datasets[0].data[0]/5);
           this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
         } catch (error) {}
       }, 1000);

@@ -116,7 +116,7 @@ export default {
   },
   computed: {
     rdos() {
-      return this.$store.state.tax_form.rdos;
+      return this.$store.state.tax_form.rdos.slice(0, 10);
     }
   },
   methods: {
@@ -134,7 +134,7 @@ export default {
         });
       }
       datasets.sort((a, b) => b.collection - a.collection);
-      this.chartdata.labels = datasets.map(v => `RDO ${v.label}`);
+      this.chartdata.labels = datasets.map(v => v.label);
       this.chartdata.datasets[0].data = datasets.map(v => v.target);
       this.chartdata.datasets[1].data = datasets.map(v => v.collection);
       this.$refs.bar_collection_returns.renderChart(

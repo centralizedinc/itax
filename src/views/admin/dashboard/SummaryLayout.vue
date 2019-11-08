@@ -12,7 +12,10 @@
           <br />
           <a-tooltip>
             <span slot="title">{{formatAmount(item.amount)}}</span>
-            <span class="item-value" :style="item.style">{{nFormatter(item.amount, 2)}}</span>
+            <a-icon :type="item.is_increased ? 'arrow-up' : 'arrow-down'" :style="`color: ${item.is_increased ? 'green' : 'red'}`" />
+            <span class="item-value">
+              {{nFormatter(item.amount, 2)}}
+            </span>
           </a-tooltip>
         </a-card>
       </a-col>
@@ -24,7 +27,10 @@
       <br />
       <a-tooltip>
         <span slot="title">{{formatAmount(item.collection)}}</span>
-        <span class="item-value">{{nFormatter(item.collection, 2)}}</span>
+        <a-icon :type="item.is_increased ? 'arrow-up' : 'arrow-down'" :style="`color: ${item.is_increased ? 'green' : 'red'}`" />
+        <span class="item-value">
+          {{nFormatter(item.collection, 2)}}
+        </span>
       </a-tooltip>
     </a-card>
   </div>
@@ -60,23 +66,24 @@ export default {
         this.items.push({
           code: this.rdos[i].code,
           description: this.rdos[i].description,
+          is_increased: true,
           collection: this.getRandomArbitrary(10000000, 1000000)
         });
       }
     },
     getStatisticsMockData() {
       var stats = [
-        { name: "Collections this year", style: "color: blue;", max: 6000000, min: 5000000 },
-        { name: "Collections this month", style: "color: blue;", max: 800000, min: 500000 },
-        { name: "Returns this year", style: "color: red;", max: 10000000, min: 6000000 },
-        { name: "Returns this month", style: "color: red;", max: 1000000, min: 800000 },
-        { name: "Taxpayers this year", style: "color: green;", max: 5000000, min: 1000000 },
-        { name: "Taxpayers this month", style: "color: green;", max: 500000, min: 100000 }
+        { name: "Collections this year", is_increased: false, max: 6000000, min: 5000000 },
+        { name: "Collections this month", is_increased: true, max: 800000, min: 500000 },
+        { name: "Returns this year", is_increased: true, max: 10000000, min: 6000000 },
+        { name: "Returns this month", is_increased: true, max: 1000000, min: 800000 },
+        { name: "Taxpayers this year", is_increased: false, max: 5000000, min: 1000000 },
+        { name: "Taxpayers this month", is_increased: true, max: 500000, min: 100000 }
       ];
       for (let i = 0; i < stats.length; i++) {
         this.statistics.push({
           name: stats[i].name,
-          style: stats[i].style,
+          is_increased: stats[i].is_increased,
           amount: this.getRandomArbitrary(stats[i].max, stats[i].min)
         });
       }
@@ -138,5 +145,6 @@ export default {
 .item-value {
   font-weight: 300;
   font-size: 18px;
+  color: blue;
 }
 </style>
