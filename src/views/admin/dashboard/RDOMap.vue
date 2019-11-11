@@ -41,8 +41,8 @@ export default {
       .then(result => {
         this.rdo_coordinates = this.deepCopy(this.rdos).map(v => {
           v.options = {
-            strokeOpacity: 0,
-            fillOpacity: 0
+            strokeOpacity: 0.8,
+            fillOpacity: 0.3
           }
           return v;
         });
@@ -71,9 +71,9 @@ export default {
       this.rdo_coordinates[index].options.fillOpacity = 0.3;
     },
     onMouseOut(rdo) {
-      const index = this.rdo_coordinates.findIndex(v => v.code === rdo);
-      this.rdo_coordinates[index].options.strokeOpacity = 0;
-      this.rdo_coordinates[index].options.fillOpacity = 0;
+      // const index = this.rdo_coordinates.findIndex(v => v.code === rdo);
+      // this.rdo_coordinates[index].options.strokeOpacity = 0;
+      // this.rdo_coordinates[index].options.fillOpacity = 0;
     },
     displayInfo(rdo) {
       this.info_data.code = rdo;

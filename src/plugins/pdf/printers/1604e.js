@@ -311,7 +311,7 @@ function getContent(forms) {
                         margin: [0, 0, 0, 0]
                     },
                     {
-                        text: forms.sched1[x].drawee_Bank_Code == undefined ? "undefined" : forms.sched1[x].drawee_Bank_Code,
+                        text: forms.sched1 == undefined || forms.sched1[x].drawee_Bank_Code == null || forms.sched1[x].drawee_Bank_Code == undefined ? "undefined" : forms.sched1[x].drawee_Bank_Code,
                         fontSize: 10,
                         characterSpacing: 2,
                         bold: true,

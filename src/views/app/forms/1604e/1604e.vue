@@ -145,7 +145,7 @@
     <a-form v-show="step===2">
       <a-divider>Part II – Summary of Remittances</a-divider>
       <div style="color: black; font-weight: bold">
-        <span class="text-link" @click="show_sched1=true">Schedule 1</span>
+        <span class="text-link" @click="openSched1()">Schedule 1</span>
         Remittance per BIR Form No. 1601-EQ
       </div>
       <schedule-one v-if="show_sched1" :show="show_sched1" :form="form" @close="onClose" />
@@ -163,7 +163,7 @@
       </a-form-item>
       <a-divider></a-divider>
       <div style="color: black; font-weight: bold">
-        <span class="text-link" @click="show_sched2=true">Schedule 2</span>
+        <span class="text-link" @click="openSched2()">Schedule 2</span>
         Remittance per BIR Form No. 1606
       </div>
       <schedule-two v-if="show_sched2" :show="show_sched2" :form="form" @close="onClose" />
@@ -223,6 +223,12 @@ export default {
     }
   },
   methods: {
+    openSched1(){
+      this.show_sched1=true
+    },
+    openSched2(){
+      this.show_sched2=true
+    },
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);

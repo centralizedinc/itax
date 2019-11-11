@@ -29,14 +29,14 @@
             <template slot="title">
               <div style="color:#ffffff">Enter Admin Crendetials</div>
             </template>
-            <a-form :form="form">
+            <a-form>
               <a-form-item>
                 <a-input
                   @keypress.enter="login"
                   :disabled="loading"
-                  v-decorator="['email', { rules: [{ required: true, message: 'Please input your email.' }] }]"
+                  v-model="account.email"
                   size="large"
-                  placeholder="Email"
+                  placeholder="Username"
                 >
                   <a-icon slot="prefix" type="mail" />
                 </a-input>
@@ -45,7 +45,7 @@
                 <a-input
                   @keypress.enter="login"
                   :disabled="loading"
-                  v-decorator="['password', { rules: [{ required: true, message: 'Please input your password.' }] }]"
+                  v-model="account.password"
                   size="large"
                   placeholder="Password"
                   :type="reveal?'text':'password'"
@@ -59,7 +59,9 @@
                   />
                 </a-input>
               </a-form-item>
-              <a-button size="large" block ghost :loading="loading" @click="login">Login</a-button>
+              <a-form-item :help="error" :validate-status="error ? 'error' : ''">
+                <a-button size="large" block ghost :loading="loading" @click="login">Login</a-button>
+              </a-form-item>
 
               <!-- <p style="color:white">Login using facebook or google accounts</p> -->
               <!-- <a-row type="flex" gutter="16">
@@ -84,7 +86,7 @@
                     <a-icon type="google"></a-icon>Google
                   </a-button>
                 </a-col>
-              </a-row> -->
+              </a-row>-->
             </a-form>
           </a-card>
         </a-col>
@@ -191,6 +193,11 @@ export default {
     return {
       reveal: false,
       form: this.$form.createForm(this),
+      account: {
+        email: "",
+        password: ""
+      },
+      error: "",
       loading: false
     };
   },
@@ -202,6 +209,38 @@ export default {
       this.$aos.refresh();
     },
     login() {
+      this.loading = true;
+      this.error = "";
+      if (this.account.email === "admin" && this.account.password === "admin") {
+        this.$router.push("/admin/app");
+        this.loading = false;
+      } else if (
+        this.account.email.indexOf("admin_rdo") > -1 &&
+        this.account.password === "admin"
+      ) {
+        this.$store
+          .dispatch("GET_RDOS")
+          .then(result => {
+            var rdo = this.account.email.split("admin_rdo")[1];
+            console.log('rdo :', rdo);
+            if (
+              this.$store.state.tax_form.rdos.findIndex(v => v.code === rdo) > -1
+            ) {
+              this.$store.commit("LOGIN_RDO", rdo);
+              this.$router.push("/admin/app");
+            } else {
+              this.error = "Invalid Username or Password";
+            }
+            this.loading = false;
+          })
+          .catch(err => {
+            this.error = "Failed to load data.";
+            this.loading = false;
+          });
+      } else {
+        this.error = "Invalid Username or Password";
+        this.loading = false;
+      }
       //   this.loading = true;
       //   this.form.validateFieldsAndScroll((err, account) => {
       //     if (!err) {
@@ -214,7 +253,7 @@ export default {
       //             icon: <a-icon type="check" style="color: blue" />
       //           });
       //           this.loading = false;
-      this.$router.push("/admin/app");
+
       //         })
       //         .catch(err => {
       //           this.$notification.open({

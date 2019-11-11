@@ -26,7 +26,7 @@
                   <a-menu-item>
                     <a-icon type="lock" />Security
                   </a-menu-item>
-                  <a-menu-item>
+                  <a-menu-item @click="logout">
                     <a-icon type="logout" />Logout
                   </a-menu-item>
                 </a-menu>
@@ -118,6 +118,10 @@ export default {
   methods: {
     handleScroll(event) {
       this.topLocation = window.top.scrollY;
+    },
+    logout(){
+      this.$store.dispatch("LOGOUT");
+      this.$router.push("/admin");
     }
   }
 };

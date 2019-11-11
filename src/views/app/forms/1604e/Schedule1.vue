@@ -46,9 +46,11 @@ export default {
   data() {
     return {
       visible: true,
+
       data_source: [
         {
           desc: "1st Quarter",
+          quarter: 1,
           remitDate: "",
           bank: "",
           traNo: "",

@@ -648,6 +648,7 @@ export default {
     return {
       sched: 0,
       show: 0,
+      connections:[],
       sub: false,
       spouse_type_list_holder: null,
       single: false,
@@ -915,6 +916,9 @@ export default {
     }
   },
   created() {
+    
+    this.connections = this.$store.state.relationship.connections
+    console.log("  " + JSON.stringify(this.$store.state.relationship.connections))
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
