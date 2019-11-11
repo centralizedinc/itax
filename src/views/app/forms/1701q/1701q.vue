@@ -569,87 +569,86 @@
 
     <!-- Part III -->
     <a-form v-show="step===3">
-      <a-divider orientation="left">
+      <a-divider>
         <b>Part III: TOTAL TAX PAYABLE</b>
       </a-divider>
-      <a-row :gutter="16">
+      <a-row :gutter="6">
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="A) Taxpayer/Filer"></a-form-item>
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="26."
-          >
-            <a-input-number
-              disabled
-              style="width:100%"
-              :value="total_tax_payable()"
-              v-model="form.taxpayer_prev_tax_due"
-              placeholder="Tax Due"
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 20}" label="26">
+            <a-tooltip>
+              <template
+                slot="title"
+              >Tax Due (From Part V, Schedule I-Item 46 OR Schedule II-Item 54)</template>
+              <a-input-number
+                disabled
+                :value="total_tax_payable()"
+                v-model="form.taxpayer_prev_tax_due"
+                placeholder="Tax Due"
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="B) Spouse"></a-form-item>
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              style="width:100%"
-              v-model="form.spouse_prev_tax_due"
-              placeholder="Tax Due"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+            <a-input-number v-model="form.spouse_prev_tax_due" placeholder="Tax Due" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 2">Schedule II</a-button>
       </a-row>
-      <a-row :gutter="16">
+      <div style="font-size: 12px ; margin-left: 2.5vw">
+        (From Part V,
+        <span class="text-link" @click="sched = 1">Schedule I</span>-Item 46 OR (From Part V,
+        <span class="text-link" @click="sched = 2">Schedule II</span>-Item 54)
+      </div>
+      <br />
+      <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
+      <a-button style="margin-left: 15px;" type="link" @click="sched = 2">Schedule II</a-button>-->
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="27."
-          >
-            <a-input-number
-              v-model="form.taxpayer_tax_credit"
-              style="width:100%"
-              placeholder="Less: Tax Credits/Payments(From "
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="27">
+            <a-tooltip>
+              <template slot="title">Less: Tax Credits/Payments (From Part V, Schedule III-Item 62)</template>
+              <a-input-number
+                v-model="form.taxpayer_tax_credit"
+                placeholder="Less: Tax Credits/Payments "
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              v-model="form.spouse_tax_credit"
-              style="width:100%"
-              placeholder="Part V, Schedule III-Item 62)"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+            <a-input-number v-model="form.spouse_tax_credit" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 3">Schedule III</a-button>
       </a-row>
-      <a-row :gutter="16">
+      <div style="font-size: 12px ; margin-left: 2.5vw">
+        (From Part V,
+        <span class="text-link" @click="sched = 3">Schedule III</span>-Item 62)
+      </div>
+      <br />
+      <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 3">Schedule III</a-button> -->
+
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="28."
-          >
-            <a-input-number
-              style="width:100%"
-              :value="taxpayer_tax_due()"
-              v-model="form.taxpayer_tax_due"
-              placeholder="Tax Payable/(Overpayment)(Item "
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="28">
+            <a-tooltip>
+              <template
+                slot="title"
+              >Tax Payable/(Overpayment) (Item 26 Less Item 27) (From Part V, Item 63)</template>
+              <a-input-number
+                :value="taxpayer_tax_due()"
+                v-model="form.taxpayer_tax_due"
+                placeholder="Tax Payable/(Overpayment)"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
-              style="width:100%"
               :value="taxpayer_tax_due()"
               v-model="form.spouse_tax_due"
               placeholder="26 Less Item 27 From Part V,Item 63)"
@@ -658,75 +657,71 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row :gutter="16">
+      <br />
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="29."
-          >
-            <a-input-number
-              style="width:100%"
-              v-model="form.taxpayer_total_penalties"
-              placeholder="Add: Total Penalties (From Part V, "
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="29">
+            <a-tooltip>
+              <template slot="title">Add: Total Penalties (From Part V, Schedule IV-Item 67)</template>
+              <a-input-number
+                v-model="form.taxpayer_total_penalties"
+                placeholder="Total Penalties"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              style="width:100%"
-              v-model="form.spouse_total_penalties"
-              placeholder="Schedule IV-Item 67)"
-              disabled
-            ></a-input-number>
+            <a-input-number v-model="form.spouse_total_penalties" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 4">Schedule IV</a-button>
       </a-row>
-      <a-row :gutter="16">
+
+      <div style="font-size: 12px ; margin-left: 2.5vw">
+        (From Part V,
+        <span class="text-link" @click="sched = 4">Schedule IV</span>-Item 67)
+      </div>
+      <br />
+      <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 4">Schedule IV</a-button> -->
+
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="30."
-          >
-            <a-input-number
-              style="width:100%"
-              :value="taxpayer_total_amount_payable()"
-              v-model="form.taxpayer_total_amount_payable"
-              placeholder="Total Amount Payable/Overpayment"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="30">
+            <a-tooltip>
+              <template slot="title">Total Amount Payable/ (Overpayment)</template>
+              <a-input-number
+                :value="taxpayer_total_amount_payable()"
+                v-model="form.taxpayer_total_amount_payable"
+                placeholder="Total Amount Payable/Overpayment"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
+
         <a-col :span="12">
           <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
             <a-input-number
-              style="width:100%"
               :value="taxpayer_total_amount_payable()"
               v-model="form.spouse_total_amount_payable"
-              placeholder="Sum of Items 28/29 From Part V,Item 68"
               disabled
             ></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
+      <br />
       <a-row :gutter="16">
         <a-col :span="12">
-          Aggregate Amount Payable/(Overpayment)
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="31."
-          >
-            <a-input-number
-              style="width:100%"
-              v-model="form.taxpayer_aggregate_amount_payable"
-              placeholder="Aggregate Amount Payable/(Overpayment)"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="31">
+            <a-tooltip>
+              <template slot="title">Aggregate Amount Payable/(Overpayment)</template>
+              <a-input-number
+                v-model="form.taxpayer_aggregate_amount_payable"
+                placeholder="Aggregate Amount Payable/(Overpayment)"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
       </a-row>
@@ -807,8 +802,8 @@ export default {
   methods: {
     changeTaxNo() {
       if (
-        this.form.taxpayer_foreign_tax_credits == false ||
-        this.form.spouse_foreign_tax_credits == false
+        (this.form.taxpayer_foreign_tax_credits == false,
+        this.form.spouse_foreign_tax_credits == false)
       ) {
         this.form.taxpayer_foreign_tax_number = "";
         this.form.spouse_foreign_tax_credits = "";
