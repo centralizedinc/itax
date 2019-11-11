@@ -71,7 +71,7 @@ const model_schema = {
     spouse_tax_rate: {
         type: String
         // graduated_rates ,
-        //  non_operating_income
+        // non_operating_income
     },
     taxpayer_prev_tax_due: {
         type: Number,

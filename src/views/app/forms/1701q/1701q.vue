@@ -207,12 +207,12 @@
             label="11"
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
-            :validate-status="error_item('taxpayer.birthDate')"
-            :help="error_desc('taxpayer.birthDate')"
+            :validate-status="error_item('taxpayer.individual_details.birthDate')"
+            :help="error_desc('taxpayer.individual_details.birthDate')"
           >
             <a-date-picker
               style="width: 100%"
-              v-model="form.taxpayer.birthDate"
+              v-model="form.taxpayer.individual_details.birthDate"
               placeholder="Date of Birth (MM/DD/YYYY)"
             ></a-date-picker>
           </a-form-item>
@@ -222,13 +222,13 @@
           <a-form-item
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
-            :validate-status="error_item('taxpayer.email_address')"
-            :help="error_desc('taxpayer.email_address')"
+            :validate-status="error_item('taxpayer.contact_details.email')"
+            :help="error_desc('taxpayer.contact_details.email')"
             label="12"
           >
             <a-input
               style="width: 100%"
-              v-model="form.taxpayer.email_address"
+              v-model="form.taxpayer.contact_details.email"
               placeholder="Email Address"
             ></a-input>
           </a-form-item>
@@ -420,31 +420,35 @@
             @change="form.spouse_tax_rate ='SGR'"
             :disabled="form.spouse_details.filer_type !=='SP'"
           >II012 Business Income-Graduated IT Rates</a-radio>
+          <br />
           <a-radio
             :value="'SII015'"
             @change="form.spouse_tax_rate ='SOGS'"
             :disabled="form.spouse_details.filer_type !=='SP'"
           >II015 Business Income - 8% IT Rate</a-radio>
+          <br />
           <a-radio
             :value="'SII014'"
             @change="form.spouse_tax_rate ='SGR'"
             :disabled="form.spouse_details.filer_type !=='P'"
           >II014 Income from Profession–Graduated IT Rates</a-radio>
+          <br />
           <a-radio
             :value="'SII017'"
             @change="form.spouse_tax_rate ='SOGS'"
             :disabled="form.spouse_details.filer_type !=='P'"
           >II017 Income from Profession – 8% IT Rate</a-radio>
+          <br />
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type !=='PCE' || form.taxpayer.spouse_tax_filter_type !=='SPCE' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
-          >II013 Mixed Income–Graduated IT Rates</a-radio>
+            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
+          >II013 Mixed Income–Graduated IT Rates form.taxpayer.spouse_tax_filter_type !=='SPCE'</a-radio>
+          <br />
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type !=='PCE' || form.taxpayer.spouse_tax_filter_type !=='SPCE' ||
-            form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
+            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
           >II016 Mixed Income – 8% IT Rate</a-radio>
           <br />
           <a-radio
@@ -456,21 +460,28 @@
       </a-form-item>
 
       <!-- 21 -->
-      <a-form-item label="21." :labelCol="{span:2}" :wrapperCol="{span:20}">
+      <a-form-item
+        label="21"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input
           placeholder="Spouse's Name: Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
           :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-          style="width:100%"
         ></a-input>
       </a-form-item>
 
       <!-- 22 -->
-      <a-form-item label="22." :labelCol="{span:2}" :wrapperCol="{span:20}">
+      <a-form-item
+        label="22"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input
           placeholder="Spouse's Citizenship"
           v-model="form.spouse_details.citizenship"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         ></a-input>
       </a-form-item>
 
@@ -484,7 +495,7 @@
           @change="changeTaxNo"
           placeholder="Foreign Tax Number (if applicable)"
           v-model="form.spouse_foreign_tax_number"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU' && form.spouse_foreign_tax_credits == false"
+          :disabled="form.spouse_foreign_tax_credits == false || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         ></a-input>
       </a-form-item>
 
@@ -498,7 +509,7 @@
         <a-radio-group
           :defaultValue="false"
           v-model="form.spouse_foreign_tax_credits"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         >
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -541,7 +552,7 @@
             <span style="margin-right: 14px">Method of Deduction:</span>
             <a-radio-group
               v-model="form.spouse_method_deduction"
-              :disabled="form.spouse_tax_rate ='SGR' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+              :disabled="form.taxpayer.filer_type == 'e' || form.spouse_rate == 'SGR'|| form.taxpayer.filer_type == 't'"
             >
               <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
               <a-tooltip>
@@ -795,11 +806,11 @@ export default {
   methods: {
     changeTaxNo() {
       if (
-        this.form.taxpayer_foreign_tax_credits == false
-        // this.form.spouse_foreign_tax_credits == false
+        this.form.taxpayer_foreign_tax_credits == false ||
+        this.form.spouse_foreign_tax_credits == false
       ) {
         this.form.taxpayer_foreign_tax_number = "";
-        // this.form.spouse_foreign_tax_credits = "";
+        this.form.spouse_foreign_tax_credits = "";
       }
     },
     spouse_type() {
@@ -833,6 +844,7 @@ export default {
       }
       console.log("holder :", holder);
       this.spouse_type_list_holder = this.P;
+      this.form.spouse_atc_code = "";
       this.form.spouse_details.filer_type = holder;
       console.log(
         "spouse_tax_filter_type data: " + this.form.spouse_details.filer_type
@@ -960,6 +972,7 @@ export default {
         ? this.errors.find(x => x.field === item).error
         : "";
     },
+
     // insert validation
     validate(is_validate_all) {
       var errors = [];
@@ -998,17 +1011,17 @@ export default {
             error: "Please select an option in ATC Code "
           });
         }
-        if (!this.form.taxpayer.email_address) {
+        if (!this.form.taxpayer.contact_details.email) {
           errors.push({
             page: 1,
-            field: "taxpayer.email_address",
+            field: "taxpayer.contact_details.email",
             error: "Please enter a valid Email Address"
           });
         }
-        if (!this.form.taxpayer.birthDate) {
+        if (!this.form.taxpayer.individual_details.birthDate) {
           errors.push({
             page: 1,
-            field: "taxpayer.birthDate",
+            field: "taxpayer.individual_details.birthDate",
             error: "Please enter your Date of Birth "
           });
         }

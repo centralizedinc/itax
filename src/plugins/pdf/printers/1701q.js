@@ -298,28 +298,54 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [100, 300],
+                widths: [27, 20, 40, 300],
                 body: [
-                    [{
-                        text: formatDate(forms.taxpayer.individual_details.birthDate, {
-                            month: "2-digit"
-                        }) + "  " + formatDate(forms.taxpayer.individual_details.birthDate, {
-                            day: "2-digit"
-                        }) + " " + " " + " " + formatDate(forms.taxpayer.individual_details.birthDate, {
-                            year: "numeric"
-                        }),
-                        fontSize: 12,
-                        characterSpacing: 2,
-                        alignment: 'justify',
-                        margin: [4, -12, 0, 0]
-                    },
-                    {
-                        text: forms.taxpayer.email_address,
-                        fontSize: 12,
-                        characterSpacing: 2,
-                        alignment: 'justify',
-                        margin: [0, -12, 0, 0]
-                    }
+                    [
+                        //     {
+                        //     text: formatDate(forms.taxpayer.individual_details.birthDate, {
+                        //         month: "2-digit"
+                        //     }) + "  " + formatDate(forms.taxpayer.individual_details.birthDate, {
+                        //         day: "2-digit"
+                        //     }) + " " + " " + " " + formatDate(forms.taxpayer.individual_details.birthDate, {
+                        //         year: "numeric"
+                        //     }),
+                        //     fontSize: 12,
+                        //     characterSpacing: 2,
+                        //     alignment: 'justify',
+                        //     margin: [4, -12, 0, 0]
+                        // },
+                        {
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, { month: "2-digit" }),
+                            bold: true,
+                            characterSpacing: 5,
+                            fontSize: 12,
+                            alignment: 'justified',
+                            margin: [3, -12, 0, 0]
+                        },
+                        {
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, { day: "2-digit" }),
+                            bold: true,
+                            fontSize: 12,
+                            characterSpacing: 5,
+                            alignment: 'left',
+                            margin: [-8, -12, 0, 0]
+                        },
+                        {
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, { year: "numeric" }),
+                            bold: true,
+                            characterSpacing: 5,
+                            fontSize: 12,
+                            alignment: 'justified',
+                            margin: [-10, -12, 0, 0]
+                        },
+                        {
+                            text: forms.taxpayer.contact_details.email,
+                            fontSize: 12,
+                            // characterSpacing: 2,
+                            bold: true,
+                            alignment: 'justify',
+                            margin: [0, -12, 0, 0]
+                        }
                     ]
                 ]
             }
@@ -504,27 +530,27 @@ function getContent(forms) {
                         text: forms.spouse_atc_code == 'SII012' ? 'X' : ' ',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [33, -4, 0, 0]
+                        margin: [34, -2, 0, 0]
                     },
                     {
                         text: forms.spouse_atc_code == 'SII014' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [8, -4, 0, 0]
+                        margin: [7, -2, 0, 0]
                     },
                     {
                         text: forms.spouse_atc_code == 'SII013' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [10, -4, 0, 0]
+                        margin: [9, -2, 0, 0]
                     }, {
                         text: forms.spouse_atc_code == 'SII011' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [8, -4, 0, 0]
+                        margin: [8, -2, 0, 0]
                     }
 
                     ],
@@ -533,21 +559,21 @@ function getContent(forms) {
                         text: forms.spouse_atc_code == 'SII015' ? 'X' : ' ',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [35, -5, 0, 0]
+                        margin: [34, -5, 0, 0]
                     },
                     {
                         text: forms.spouse_atc_code == 'SII017' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [6, -5, 0, 0]
+                        margin: [7, -5, 0, 0]
                     },
                     {
                         text: forms.spouse_atc_code == 'SII016' ? 'X' : ' ',
                         // text: 'X',
                         fontSize: 10,
                         alignment: 'left',
-                        margin: [10, -5, 0, 0]
+                        margin: [9, -5, 0, 0]
                     }, {
                         text: '',
                         fontSize: 10,
