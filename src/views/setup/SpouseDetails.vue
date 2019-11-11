@@ -6,10 +6,12 @@
           label="TIN"
           :label-col="{ span: 9 }"
           :wrapper-col="{ span: 15 }"
-          has-feedback
           :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
           :help="error_desc('tin')"
         >
+        <!-- has-feedback
+          :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
+          :help="error_desc('tin')" -->
           <a-input v-model="details.spouse_details.tin" placeholder="TIN" @blur="checkTin" />
         </a-form-item>
       </a-col>
@@ -562,6 +564,7 @@ export default {
     //   }
     // },
     next() {
+      console.log("spouse details data: " + JSON.stringify(this.details))
       var page = this.show_company ? 3 : 4;
       this.$emit("next", page);
     },

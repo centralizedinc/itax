@@ -155,12 +155,13 @@ function getContent(forms) {
             }
         },
         {
-            //Table 3 Taxpayer
-            layout: "noBorders",
+            //---------------------------Table 3 Taxpayer
+               layout: "noBorders",
             table: {
                 widths: [395, 120],
                 body: [
                     [{
+                             // --------------- Tax Payer's Name ----------------
                             text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
                             fontSize: 11,
                             alignment: 'justify',
@@ -168,8 +169,10 @@ function getContent(forms) {
                             margin: [18, 9, 0, 0]
                         },
                         {
+                            // ---------------------------  Telephone Number ------------------
                             text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
                             fontSize: 11,
+                            characterSpacing: 1,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [40, 9, 0, 0]

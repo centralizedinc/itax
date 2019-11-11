@@ -66,6 +66,7 @@ router.route('/remove')
             });
     })
 
+
 router.route('/:tin')
     .get((req, res) => {
         RelationshipDao.find({ from: req.params.tin, status: 'A' })
