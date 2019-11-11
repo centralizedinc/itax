@@ -755,7 +755,7 @@ export default {
     return {
       sched: 0,
       show: 0,
-      connections:[],
+      connections: [],
       sub: false,
       spouse_type_list_holder: null,
       SP: false,
@@ -783,7 +783,7 @@ export default {
     form: {
       deep: true,
       handler(val) {
-        console.log("form :", val);
+        console.log("form :", JSON.stringify(val));
       }
     }
   },
@@ -1060,9 +1060,14 @@ export default {
     }
   },
   created() {
-    
-    this.connections = this.$store.state.relationship.connections
-    console.log("  " + JSON.stringify(this.$store.state.relationship.connections))
+    console.log(
+      "taxpayer.individual_details.birthDate, :",
+      JSON.stringify(this.form.taxpayer.individual_details)
+    );
+    this.connections = this.$store.state.relationship.connections;
+    console.log(
+      "  " + JSON.stringify(this.$store.state.relationship.connections)
+    );
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
