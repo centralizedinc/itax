@@ -4,3 +4,6 @@ package-lock.json
 sample.json
 rdos.json
 
+/src
+/public
+
