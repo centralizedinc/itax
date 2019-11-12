@@ -301,7 +301,8 @@ export default {
       this.visible = true;
     },
     onClose() {
-      this.visible = false;
+      // this.visible = false;
+      this.$emit("close");
     },
     handleOk(e) {
       console.log(e);

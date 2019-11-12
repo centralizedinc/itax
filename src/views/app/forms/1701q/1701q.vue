@@ -604,7 +604,7 @@
       </a-row>
       <div style="font-size: 12px ; margin-left: 2.5vw">
         (From Part V,
-        <span class="text-link" @click="sched = 1">Schedule I</span>-Item 46 OR (From Part V,
+        <span class="text-link" @click="openSched1()">Schedule I</span>-Item 46 OR (From Part V,
         <span class="text-link" @click="sched = 2">Schedule II</span>-Item 54)
       </div>
       <br />
@@ -739,7 +739,7 @@
         </a-col>
       </a-row>
     </a-form>
-    <sched1 v-if="sched == 1" :show="show" :form="form" @close="show = 0"></sched1>
+    <sched1 v-if="sched == 1" :show="show" :form="form" @close="closeSched()"></sched1>
     <sched2 v-if="sched == 2" :show="show" :form="form" @close="show = 0"></sched2>
     <sched3 v-if="sched == 3" :show="show" :form="form" @close="show = 0"></sched3>
     <sched4 v-if="sched == 4" :show="show" :form="form" @close="show = 0"></sched4>
@@ -785,6 +785,20 @@ export default {
     };
   },
   watch: {
+    step() {
+     if(this.step === 0){
+         this.form.pdf_page = 1
+     }
+     else if(this.step === 1){
+       this.form.pdf_page = 1
+     }
+      else if(this.step === 2){
+       this.form.pdf_page = 1
+     }
+     else{
+         this.form.pdf_page =2
+     }
+    },
     loading(val) {
       this.$emit("loading", val);
     },
@@ -813,6 +827,16 @@ export default {
     }
   },
   methods: {
+    openSched1(){
+      this.sched = 1
+      this.show = 1
+      this.form.pdf_page = 2
+    },
+    closeSched(){
+      this.form.pdf_page = 1
+      this.sched = 0
+      this.show = 0
+    },
     changeTaxNo() {
       if (
         (this.form.taxpayer_foreign_tax_credits == false,
@@ -1080,6 +1104,7 @@ export default {
     // }
   },
   created() {
+    this.form.pdf_page = 1
     console.log(
       "taxpayer.individual_details.birthDate, :",
       JSON.stringify(this.form.taxpayer.individual_details)
