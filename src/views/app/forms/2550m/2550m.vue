@@ -283,13 +283,19 @@
         <div style="color: black">
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
           <span
-            class="text-link"
+            class="text-link" @click="show_sched2=true" 
           >Schedule 2</span>)
+          <schedule-two
+        v-if="show_sched2"
+        :show="show_sched2"
+        :form="form"
+        @close="updateSchedAndClose"
+      />
           <!-- @click="show_sched2=true" -->
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer2">Schedule 2</a-button> -->
-      <a-drawer
+      <!-- <a-drawer
         title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
         placement="right"
         :closable="false"
@@ -331,7 +337,7 @@
             >18A: {{form.purCapGoodsNotExceed}} 18B: {{form.outputCapGoodsNotExceed}}</p>
           </template>
         </a-table>
-      </a-drawer>
+      </a-drawer> -->
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -355,11 +361,17 @@
       <a-form-item class="computation-item" label>
         <div style="color: black">
           18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
-          <span class="text-link">Schedule 3A</span>)
+          <span class="text-link" @click="show_sched3A=true">Schedule 3A</span>)
+          <schedule-threea
+        v-if="show_sched3A"
+        :show="show_sched3A"
+        :form="form"
+        @close="updateSchedAndClose"
+      />
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer3A">Schedule 3 A</a-button> -->
-      <a-drawer
+      <!-- <a-drawer
         title="Schedule 3 Purchases/Importation This Period"
         placement="right"
         :closable="false"
@@ -368,7 +380,7 @@
         width="1500"
       >
         <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A"></a-table>
-      </a-drawer>
+      </a-drawer> -->
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -911,10 +923,14 @@
 
 <script>
 import ScheduleOne from "./Schedule1";
+import ScheduleTwo from "./Schedule2";
+import ScheduleThreea from "./Schedule3A";
 
 export default {
   components: {
-    ScheduleOne
+    ScheduleOne,
+    ScheduleTwo,
+    ScheduleThreea
   },
   props: {
     form: {
@@ -1069,9 +1085,13 @@ export default {
       //   this.form[key] = data[key];
       // })
       this.form.sched1 = data.sched1;
+      this.form.sched2 = data.sched2;
+      this.form.sched3A = data.sched3A;
       this.form.totalAtcAmount = data.totalAtcAmount;
       this.form.totalAtcOutput = data.totalAtcOutput;
       this.show_sched1 = false;
+      this.show_sched2 = false;
+      this.show_sched3A = false;
     },
     sched2Save() {},
     delete_sched2(index) {
@@ -1130,9 +1150,6 @@ export default {
     onClose_sched2() {
       this.sched2_drawer = false;
     },
-    onClose_sched2() {
-      this.sched2_drawer = false;
-    },
     showDrawer2() {
       console.log("data source show drawer; " + this.dataSource);
       this.sched2_drawer = true;
@@ -1172,8 +1189,8 @@ export default {
   data() {
     return {
       show_sched1: false,
-      sched2_drawer: false,
-      sched3A_drawer: false,
+      show_sched2: false,
+      show_sched3A: false,
       sched3B_drawer: false,
       sched4_drawer: false,
       sched5_drawer: false,

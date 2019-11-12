@@ -1,13 +1,13 @@
 <template>
   <div>
-    <a-row :gutter="10" style="margin-bottom: 2vh;">
+    <a-row :gutter="10" style="margin-bottom: 1vh;">
       <a-col
         :span="12"
         v-for="(item, index) in statistics"
         :key="`a${index}`"
-        style="margin-bottom: 1vh;"
+        style="margin-bottom: 1.3vh;"
       >
-        <a-card :bodyStyle="{ padding: '5px', 'text-align': 'center' }">
+        <a-card :bodyStyle="{ padding: '2px', 'text-align': 'center' }">
           <span class="item-description">{{item.name}}</span>
           <br />
           <a-tooltip>
@@ -22,22 +22,28 @@
       </a-col>
     </a-row>
 
-    <template v-if="!login_rdo">
-      <a-card title="Collection per RDO Summary" style="margin-bottom: 1vh" />
-      <a-card v-for="(item, index) in items" :key="index" :bodyStyle="{ padding: '15px'}" style="margin-bottom: 2vh;">
-        <span class="item-description">{{item.description}} ({{item.code}})</span>
-        <br />
-        <a-tooltip>
-          <span slot="title">{{formatAmount(item.collection)}}</span>
-          <a-icon
-            :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
-            :style="`color: ${item.is_increased ? 'green' : 'red'}`"
-          />
-          <span class="item-value">{{nFormatter(item.collection, 2)}}</span>
-        </a-tooltip>
+    <div v-if="!login_rdo" style="margin-bottom: 2vh;">
+      <a-card title="Collection per RDO Summary" style="margin-bottom: 0.6vh" />
+      <a-card
+        v-for="(item, index) in items"
+        :key="index"
+        :bodyStyle="{ padding: 0 }"
+        style="margin-bottom: 0.75vh;"
+      >
+        <a-card-grid style="width: 100%; padding: 1vh 15px">
+          <span class="item-description">{{item.description}} ({{item.code}})</span>
+          <a-tooltip style="float: right;">
+            <span slot="title">{{formatAmount(item.collection)}}</span>
+            <a-icon
+              :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
+              :style="`color: ${item.is_increased ? 'green' : 'red'};`"
+            />
+            <span class="item-value">{{nFormatter(item.collection, 2)}}</span>
+          </a-tooltip>
+        </a-card-grid>
       </a-card>
-    </template>
-    
+    </div>
+
     <rdo-map class="rdo-map" />
   </div>
 </template>
@@ -78,7 +84,7 @@ export default {
   },
   methods: {
     getMockData() {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 9; i++) {
         this.items.push({
           code: this.rdos[i].code,
           description: this.rdos[i].description,
@@ -186,6 +192,7 @@ export default {
 .item-description {
   font-weight: bold;
   font-size: 10px;
+  line-height: 2.7;
 }
 
 .item-value {

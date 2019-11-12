@@ -445,8 +445,8 @@
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
-          >II013 Mixed Income–Graduated IT Rates form.taxpayer.spouse_tax_filter_type !=='SPCE'</a-radio>
+            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE' ||form.taxpayer.spouse_tax_filter_type !=='SPCE'"
+          >II013 Mixed Income–Graduated IT Rates</a-radio>
           <br />
           <a-radio
             :value="'SII016'"
@@ -556,7 +556,7 @@
             <span style="margin-right: 14px">Method of Deduction:</span>
             <a-radio-group
               v-model="form.spouse_method_deduction"
-              :disabled="form.taxpayer.filer_type == 'e' || form.spouse_rate == 'SGR'||  form.spouse_atc_code !== 'SII013' ||
+              :disabled="form.taxpayer.filer_type == 'e' || form.spouse_rate == 'SGR'||  form.spouse_atc_code == 'SII015' || form.spouse_atc_code == 'SII017' ||form.spouse_atc_code == 'SII016' || form.spouse_atc_code == 'SII011' ||  
               form.taxpayer.filer_type == 't'"
             >
               <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
@@ -791,18 +791,15 @@ export default {
   },
   watch: {
     step() {
-     if(this.step === 0){
-         this.form.pdf_page = 1
-     }
-     else if(this.step === 1){
-       this.form.pdf_page = 1
-     }
-      else if(this.step === 2){
-       this.form.pdf_page = 1
-     }
-     else{
-         this.form.pdf_page =2
-     }
+      if (this.step === 0) {
+        this.form.pdf_page = 1;
+      } else if (this.step === 1) {
+        this.form.pdf_page = 1;
+      } else if (this.step === 2) {
+        this.form.pdf_page = 1;
+      } else {
+        this.form.pdf_page = 2;
+      }
     },
     loading(val) {
       this.$emit("loading", val);
@@ -832,11 +829,12 @@ export default {
     }
   },
   methods: {
-    openSched1(){
-      this.sched = 1
-      this.show = 1
-      this.form.pdf_page = 2
+    openSched1() {
+      this.sched = 1;
+      this.show = 1;
+      this.form.pdf_page = 2;
     },
+<<<<<<< HEAD
     openSched2(){
       this.sched = 2
       this.show = 2
@@ -856,6 +854,12 @@ export default {
       this.form.pdf_page = 1
       this.sched = 0
       this.show = 0
+=======
+    closeSched() {
+      this.form.pdf_page = 1;
+      this.sched = 0;
+      this.show = 0;
+>>>>>>> 09e7614e7f504f56d0bb5fbfacbc0e2dc521a223
     },
     changeTaxNo() {
       if (this.form.taxpayer_foreign_tax_credits == false) {
@@ -1116,14 +1120,14 @@ export default {
           });
         }
       }
-      // this.$emit("error", errors);
-      // if (!errors.length) {
-      this.changeStep(this.step + 1);
+      this.$emit("error", errors);
+      if (!errors.length) {
+        this.changeStep(this.step + 1);
+      }
     }
-    // }
   },
   created() {
-    this.form.pdf_page = 1
+    this.form.pdf_page = 1;
     console.log(
       "taxpayer.individual_details.birthDate, :",
       JSON.stringify(this.form.taxpayer.individual_details)
