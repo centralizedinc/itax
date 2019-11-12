@@ -19,23 +19,31 @@ collections_router.route("/")
     .get((req, res) => {
         console.log('TOTAL COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollection(new Date().getFullYear())
+        ReturnDetailsDao.getCollection(req.params.year)
             .then((results) => {
-                res.json({ results });
+                console.log('results :', results);
+                // var year = []
+                //        if (results.date_created.getFullYear() === 2019) year.push(results.date_created.getFullYear())
+                      
+                    
+                    //    byYear.year[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable)
+
+                res.json({ results});   
             })
             .catch((errors) => {
                 res.json({ errors });
             });
     })
 //COLLECTIONS MONTHLY ALL
-collections_router.route("/monthly")
+collections_router.route("/monthly/:year")
     .get((req, res) => {
         console.log('MONTHLY COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByMonth(new Date().getFullYear())
+        ReturnDetailsDao.getCollectionByMonth(req.params.year)
             .then((results) => {
                 console.log('results :', results);
-                var byMonth = [{
+                var byMonth = [
+                {
                     month: 0,
                     collection: 0,
                 },
@@ -85,7 +93,7 @@ collections_router.route("/monthly")
                 }
                 ]
                 results.forEach(result => {
-                    byMonth[result.date_created.getMonth()].collection += result.total_amount_payable
+                    byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable)
                     // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
                 });
                 console.log('MONTH :', byMonth);
@@ -96,20 +104,23 @@ collections_router.route("/monthly")
             });
     })
 //COLLECTIONS YEARLY ALL
-    collections_router.route("/yearly")
+    collections_router.route("/yearly/:year")
     .get((req, res) => {
         console.log('YEARLY COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByMonth(new Date().getFullYear())
+        ReturnDetailsDao.getRdoCollectionByYear(req.params.year)
             .then((results) => {
                 console.log('results :', results);
-                var byYear = []
-                results.forEach(result => {
-                    byYear[result.date_created.getFullYear()].collection += result.total_amount_payable
+
+                var collection_Year = results.reduce(function (accumulator, result) {
+                    return accumulator + parseFloat(result.total_amount_payable);
+                  }, 0);
+                var return_year = results.reduce(function (accumulator, result) {
+                    return accumulator + 1;
+                  }, 0);
+                    // byYear[result.date_created.getFullYear()].collection += result.total_amount_payable
                     // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
-                });
-                console.log('YEAR :', byYear);
-                res.json({ byYear });
+                res.json({ collection_Year, return_year});
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -134,58 +145,74 @@ collections_router.route("/monthly/returns")
         ReturnDetailsDao.getCollectionByMonth(new Date().getFullYear())
             .then((results) => {
                 console.log('results :', results);
-                var byMonth = [{
+                var byMonth = [
+                {
                     month: 0,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 1,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 2,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 3,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 4,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 5,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 6,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 7,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 8,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 9,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 10,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 },
                 {
                     month: 11,
-                    count: 0,
+                    collection: 0,
+                    count: 0
                 }
                 ]
-                results.forEach(result => {
-                    byMonth[result.date_created.getMonth()].count += result.total_amount_payable
-                    // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
+                results.forEach(result => { 
+                    //SUM
+                    byMonth[result.date_created.getMonth()].count += 1;
+                    //COUNT
+                    byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
+
                 });
                 console.log('MONTH :', byMonth);
                 res.json({ byMonth });
@@ -199,61 +226,74 @@ collections_router.route("/monthly/taxpayers")
     .get((req, res) => {
         console.log('RDO COLLECTION');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByRdo(req.params.code)
+        ReturnDetailsDao.getCollectionByRdo(new Date().getFullYear())
             .then((results) => {
                 console.log('resultssssss :', results);
 
                 var byMonth = [{
                     month: 0,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 1,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 2,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 3,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 4,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 5,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 6,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 7,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 8,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 9,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 10,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 11,
                     collection: 0,
+                    count: 0
                 }
                 ]
                 results.forEach(result => {
-                    byMonth[result.date_created.getMonth()].collection += result.total_amount_payable
+                    byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
+                    byMonth[result.date_created.getMonth()].count += 1;
                     // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
                 });
                 // ACCUMULATED
@@ -275,57 +315,71 @@ collections_router.route("/monthly/rdo/:code")
             .then((results) => {
                 console.log('resultssssss :', results);
 
-                var byMonth = [{
+                var byMonth = [
+                {
                     month: 0,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 1,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 2,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 3,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 4,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 5,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 6,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 7,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 8,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 9,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 10,
                     collection: 0,
+                    count: 0
                 },
                 {
                     month: 11,
                     collection: 0,
+                    count: 0
                 }
                 ]
                 results.forEach(result => {
-                    byMonth[result.date_created.getMonth()].collection += result.total_amount_payable
+                    byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
+                    byMonth[result.date_created.getMonth()].count += 1;
                     // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
                 });
                 // ACCUMULATED
