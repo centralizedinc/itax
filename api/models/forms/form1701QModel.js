@@ -227,6 +227,11 @@ const model_schema = {
                 default: 0
                 // 43
             },
+            total_operation_income_others: {
+                type: String,
+                default: 0
+                // 43
+            },
             amount_recieved_share: {
                 type: Number,
                 default: 0
