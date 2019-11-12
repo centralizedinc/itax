@@ -230,6 +230,7 @@ export default {
         taxpayer: {
           contact_details: {},
           address_details: {},
+          // individual_details: {},
           accounting_type: "",
           start_month: "",
           end_month: ""
