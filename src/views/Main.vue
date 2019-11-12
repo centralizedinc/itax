@@ -183,14 +183,14 @@
 </template>
 
 
-<script>
-import VueTrend from "vuetrend";
-import TrendChart from "vue-trend-chart";
+// <script>
+// import VueTrend from "vuetrend";
+// import TrendChart from "vue-trend-chart";
 export default {
-  components: {
-    VueTrend,
-    TrendChart
-  },
+  // components: {
+  //   VueTrend,
+  //   TrendChart
+  // },
   data() {
     return {
       // active_menu:['/app'],

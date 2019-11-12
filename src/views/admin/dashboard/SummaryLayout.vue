@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-row :gutter="10">
+    <a-row :gutter="10" style="margin-bottom: 2vh;">
       <a-col
         :span="12"
         v-for="(item, index) in statistics"
@@ -22,10 +22,9 @@
       </a-col>
     </a-row>
 
-    <rdo-map v-if="login_rdo" class="rdo-map" />
-    <template v-else>
+    <template v-if="!login_rdo">
       <a-card title="Collection per RDO Summary" style="margin-bottom: 1vh" />
-      <a-card v-for="(item, index) in items" :key="index" :bodyStyle="{ padding: '15px'}">
+      <a-card v-for="(item, index) in items" :key="index" :bodyStyle="{ padding: '15px'}" style="margin-bottom: 2vh;">
         <span class="item-description">{{item.description}} ({{item.code}})</span>
         <br />
         <a-tooltip>
@@ -38,6 +37,8 @@
         </a-tooltip>
       </a-card>
     </template>
+    
+    <rdo-map class="rdo-map" />
   </div>
 </template>
 

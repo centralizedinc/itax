@@ -102,11 +102,15 @@
             :help="error_desc('taxpayer.filer_type')"
           >
             <span style="margin-right: 14px">Taxpayer/Filer Type</span>
-            <a-radio-group v-model="form.taxpayer.filer_type" @change="atc_code_change">
-              <a-radio :value="'SP'">Single Proprietor</a-radio>
-              <a-radio :value="'PRO'">Professional</a-radio>
-              <a-radio :value="'EST'">Estate</a-radio>
-              <a-radio :value="'TRU'">Trust</a-radio>
+            <a-radio-group
+              v-model="form.taxpayer.filer_type"
+              @change="atc_code_change"
+              :defaultValue="this.form.taxpayer.filer_type"
+            >
+              <a-radio :value="'s'">Single Proprietor</a-radio>
+              <a-radio :value="'p'">Professional</a-radio>
+              <a-radio :value="'e'">Estate</a-radio>
+              <a-radio :value="'t'">Trust</a-radio>
             </a-radio-group>
           </a-form-item>
         </a-col>
@@ -123,27 +127,27 @@
             <a-radio-group v-model="form.taxpayer_atc_code">
               <a-radio
                 :value="'II012'"
-                :disabled=" form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+                :disabled="form.taxpayer.filer_type == 'p'|| form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II012 Business Income-Graduated IT Rates</a-radio>
               <a-radio
                 :value="'II015'"
-                :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+                :disabled="form.taxpayer.filer_type == 'p'||form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II015 Business Income - 8% IT Rate</a-radio>
               <a-radio
                 :value="'II014'"
-                :disabled="form.taxpayer.filer_type == 'SP' || form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+                :disabled="form.taxpayer.filer_type == 's' || form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II014 Income from Profession–Graduated IT Rates</a-radio>
               <a-radio
                 :value="'II017'"
-                :disabled="form.taxpayer.filer_type == 'SP' ||form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+                :disabled="form.taxpayer.filer_type == 's' ||form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II017 Income from Profession – 8% IT Rate</a-radio>
               <a-radio
                 :value="'II013'"
-                :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+                :disabled="form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II013 Mixed Income–Graduated IT Rates</a-radio>
               <a-radio
                 :value="'II016'"
-                :disabled="form.taxpayer.filer_type == 'TRU' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
+                :disabled="form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II016 Mixed Income – 8% IT Rate</a-radio>
             </a-radio-group>
           </a-form-item>
@@ -200,13 +204,15 @@
         <!-- 11 -->
         <a-col :span="24">
           <a-form-item
-            label="11. "
-            :validate-status="error_item('taxpayer.birthDate')"
-            :help="error_desc('taxpayer.birthDate')"
+            label="11"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.individual_details.birthDate')"
+            :help="error_desc('taxpayer.individual_details.birthDate')"
           >
             <a-date-picker
               style="width: 100%"
-              v-model="form.taxpayer.birthDate"
+              v-model="form.taxpayer.individual_details.birthDate"
               placeholder="Date of Birth (MM/DD/YYYY)"
             ></a-date-picker>
           </a-form-item>
@@ -216,215 +222,298 @@
           <a-form-item
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
-            :validate-status="error_item('taxpayer.email_address')"
-            :help="error_desc('taxpayer.email_address')"
-            label="12."
+            :validate-status="error_item('taxpayer.contact_details.email')"
+            :help="error_desc('taxpayer.contact_details.email')"
+            label="12"
           >
             <a-input
               style="width: 100%"
-              v-model="form.taxpayer.email_address"
+              v-model="form.taxpayer.contact_details.email"
               placeholder="Email Address"
             ></a-input>
           </a-form-item>
         </a-col>
+        <!-- 13 -->
+        <a-col :span="24">
+          <a-form-item
+            label="13"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer.citizenship')"
+            :help="error_desc('taxpayer.citizenship')"
+          >
+            <a-input
+              style="width: 100%"
+              v-model="form.taxpayer.citizenship"
+              placeholder="Citizenship"
+            ></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- 14 -->
+        <a-col :span="24">
+          <a-form-item
+            label="14"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            :validate-status="error_item('taxpayer_foreign_tax_credits')"
+            :help="error_desc('taxpayer_foreign_tax_credits')"
+          >
+            <a-input
+              :disabled="form.taxpayer_foreign_tax_credits == false"
+              v-model="form.taxpayer_foreign_tax_number"
+              placeholder="Foreign Tax Number"
+            ></a-input>
+          </a-form-item>
+        </a-col>
+        <!-- 15 -->
+        <a-col :span="24">
+          <a-form-item
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            label="15"
+            :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
+            :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
+          >
+            <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
+            <a-radio-group
+              :defaultValue="true"
+              v-model="form.taxpayer_foreign_tax_credits"
+              @change="changeTaxNo"
+            >
+              <a-radio :value="true">Yes</a-radio>
+              <a-radio :value="false">No</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <!-- 16 -->
+        <a-col :span="24">
+          <a-form-item
+            label="16"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+          >
+            <span
+              style="margin-right: 14px"
+            >Tax Rate* (choose one, for income from business/profession)</span>
+            <a-radio-group v-model="form.taxpayer_tax_rate" :value="changeATC()" disabled>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</template>
+                <a-radio :value="'GR'">Graduated Rates per Tax Table- page 2</a-radio>
+              </a-tooltip>
+              <a-tooltip>
+                <template slot="title">
+                  8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates under Sec. 24(A)(2)(a) & Percentage Tax
+                  under Sec. 116 of the NIRC, as amended [available if gross sales/receipts and other non-operating income do not exceed Three million pesos (P3M)]
+                </template>
+                <a-radio :value="'GS'">8% on gross sales/receipts & other non-operating income</a-radio>
+              </a-tooltip>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <!-- 16A -->
+        <a-col :span="24">
+          <a-form-item
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+            label="16A"
+            :validate-status="error_item('taxpayer_method_deduction')"
+            :help="error_desc('taxpayer_method_deduction')"
+          >
+            <span style="margin-right: 14px">Method of Deduction:</span>
+            <a-radio-group
+              v-model="form.taxpayer_method_deduction"
+              :disabled="form.taxpayer_tax_rate !== 'GR'"
+            >
+              <a-radio :value="'ID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees[Sec. 34(L), NIRC]</template>
+                <a-radio :value="'OSD'">Optional Standard Deduction (OSD)</a-radio>
+              </a-tooltip>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
       </a-row>
-
-      <!-- 13 -->
-      <a-form-item
-        label="13. "
-        :labelCol="{span:2}"
-        :wrapperCol="{span:20}"
-        :validate-status="error_item('taxpayer.citizenship')"
-        :help="error_desc('taxpayer.citizenship')"
-      >
-        <a-input style="width: 100%" v-model="form.taxpayer.citizenship" placeholder="Citizenship"></a-input>
-      </a-form-item>
-
-      <!-- 14 -->
-      <a-form-item label="14. " :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input-number
-          style="width: 100%"
-          v-model="form.taxpayer_foreign_tax_number"
-          placeholder="Foreign Tax Number"
-        ></a-input-number>
-      </a-form-item>
-
-      <!-- 15 -->
-      <a-form-item
-        label="15. Claiming Foreign Tax Credits?"
-        :labelCol="{span:9}"
-        :wrapperCol="{span:12}"
-        :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
-        :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
-      >
-        <a-radio-group v-model="form.taxpayer_foreign_tax_credits">
-          <a-radio :value="true">Yes</a-radio>
-          <a-radio :value="false">No</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-      <!-- 16 -->
-      <a-form-item label="16. Tax Rate*(choose one,for income from business/profession):">
-        <a-radio-group v-model="form.taxpayer_tax_rate" :value="changeATC()" disabled>
-          <a-radio
-            :value="'GR'"
-          >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
-          <a-radio
-            :value="'GS'"
-          >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates</a-radio>
-          <p>
-            under Sec. 24(A)(2)(a) & Percentage Tax
-            under Sec. 116 of the NIRC, as amended [available if gross sales/receipts and other non-operating income do not exceed Three million pesos (P3M)]
-          </p>
-        </a-radio-group>
-      </a-form-item>
-
-      <a-form-item
-        label="16A. Method of Deduction:"
-        :validate-status="error_item('method_deduction')"
-        :help="error_desc('method_deduction')"
-      >
-        <a-radio-group
-          v-model="form.taxpayer_method_deduction"
-          :disabled="form.taxpayer_tax_rate !== 'GR'"
-        >
-          <a-radio :value="'ID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
-          <a-radio
-            :value="'OSD'"
-          >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees[Sec. 34(L), NIRC]</a-radio>
-        </a-radio-group>
-      </a-form-item>
     </a-form>
 
     <!-- Part II -->
-    <a-form :form="form_part2" v-show="step===2">
-      <a-divider orientation="left">
-        <b>Part II: BACKGROUND INFORMATION ON SPOUSE (if applicable)</b>
+    <a-form v-show="step===2">
+      <a-divider>
+        <b>
+          Part II: BACKGROUND INFORMATION ON SPOUSE
+          <br />(if applicable)
+        </b>
       </a-divider>
 
       <!-- 17 -->
-      <a-form-item label="17." :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input-number
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+      <a-form-item
+        label="17"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
           :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' / ')"
-          style="width:100%"
           placeholder="Spouse's Tax Identification Number"
           v-model="form.spouse_details.tin"
-        ></a-input-number>
+        ></a-input>
       </a-form-item>
 
       <!-- 18 -->
-      <a-form-item label="18." :labelCol="{span:2}" :wrapperCol="{span:20}">
+      <a-form-item
+        label="18"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input
           v-model="form.spouse_details.rdo_code"
-          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
           placeholder="RDO Code"
         ></a-input>
       </a-form-item>
 
       <!-- 19 -->
-      <a-form-item label="19. Filer’s Spouse Type" :labelCol="{span:7}" :wrapperCol="{span:12}">
-        <a-checkbox
-          @change="spouse_type"
-          v-model="single"
-          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-        >Single Proprietor</a-checkbox>
-        <a-checkbox
-          @change="spouse_type"
-          v-model="pro"
-          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-        >Professional</a-checkbox>
-        <a-col :span="15">
-          <a-checkbox
-            @change="spouse_type"
-            v-model="pensation"
-            :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-          >Compensation Earner</a-checkbox>
-        </a-col>
-        <!-- <a-radio-group v-model="form.taxpayer.spouse_tax_filer_type">
-          <a-radio :value="'SSP'">Single Proprietor</a-radio>
-          <a-radio :value="'SPRO'">Professional</a-radio>
-          <a-radio :value="'SCE'">Compensation Earner</a-radio>
-        </a-radio-group>-->
+      <a-form-item
+        label="19"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <span style="margin-right: 14px">Filer's Spouse Type</span>
       </a-form-item>
-      <a-form-item label="20. ATC" :labelCol="{span:3}" :wrapperCol="{span:12}">
+      <a-form-item>
+        <a-row :gutter="8">
+          <a-col :span="8">
+            <a-checkbox
+              style="width: 100%"
+              @change="spouse_type"
+              v-model="SP"
+              :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
+            >Single Proprietor</a-checkbox>
+          </a-col>
+          <a-col :span="6">
+            <a-checkbox
+              @change="spouse_type"
+              v-model="P"
+              :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
+            >Professional</a-checkbox>
+          </a-col>
+          <a-col :span="10">
+            <a-checkbox
+              @change="spouse_type"
+              v-model="CE"
+              :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
+            >Compensation Earner</a-checkbox>
+          </a-col>
+        </a-row>
+      </a-form-item>
+
+      <a-form-item
+        label="20"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-radio-group v-model="form.spouse_atc_code">
+          <span style="margin-right: 14px">ATC (Alphanumeric Tax Code)</span>
+          <br />
           <a-radio
             :value="'SII012'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type !=='SSP'"
+            :disabled="form.spouse_details.filer_type !=='SP'"
           >II012 Business Income-Graduated IT Rates</a-radio>
+          <br />
           <a-radio
             :value="'SII015'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type !=='SSP'"
+            :disabled="form.spouse_details.filer_type !=='SP'"
           >II015 Business Income - 8% IT Rate</a-radio>
+          <br />
           <a-radio
             :value="'SII014'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type !=='SPRO'"
+            :disabled="form.spouse_details.filer_type !=='P'"
           >II014 Income from Profession–Graduated IT Rates</a-radio>
+          <br />
           <a-radio
             :value="'SII017'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type !=='SPRO'"
+            :disabled="form.spouse_details.filer_type !=='P'"
           >II017 Income from Profession – 8% IT Rate</a-radio>
+          <br />
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type =='SPRO' || form.taxpayer.spouse_tax_filter_type =='SSP' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
-          >II013 Mixed Income–Graduated IT Rates</a-radio>
+            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
+          >II013 Mixed Income–Graduated IT Rates form.taxpayer.spouse_tax_filter_type !=='SPCE'</a-radio>
+          <br />
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type =='SPRO' || form.taxpayer.spouse_tax_filter_type =='SSP' || form.taxpayer.spouse_tax_filter_type == '' || form.taxpayer.spouse_tax_filter_type == null"
+            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
           >II016 Mixed Income – 8% IT Rate</a-radio>
+          <br />
           <a-radio
             :value="'SII011'"
             @change="form.spouse_tax_rate =''"
-            :disabled="form.spouse_details.filer_type !=='SCE'"
+            :disabled="form.spouse_details.filer_type !=='CE'"
           >II011 Compensation Income</a-radio>
         </a-radio-group>
       </a-form-item>
 
       <!-- 21 -->
-      <a-form-item label="21." :labelCol="{span:2}" :wrapperCol="{span:20}">
+      <a-form-item
+        label="21"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input
           placeholder="Spouse's Name: Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-          style="width:100%"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         ></a-input>
       </a-form-item>
 
       <!-- 22 -->
-      <a-form-item label="22." :labelCol="{span:2}" :wrapperCol="{span:20}">
+      <a-form-item
+        label="22"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
         <a-input
           placeholder="Spouse's Citizenship"
           v-model="form.spouse_details.citizenship"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         ></a-input>
       </a-form-item>
 
       <!-- 23 -->
-      <a-form-item label="23." :labelCol="{span:2}" :wrapperCol="{span:20}">
-        <a-input-number
-          style="width: 100%"
+      <a-form-item
+        label="23"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
+      >
+        <a-input
+          @change="changeTaxNo"
           placeholder="Foreign Tax Number (if applicable)"
           v-model="form.spouse_foreign_tax_number"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-        ></a-input-number>
+          :disabled="form.spouse_foreign_tax_credits == false || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
+        ></a-input>
       </a-form-item>
 
       <!-- 24 -->
       <a-form-item
-        label="24. Claiming Foreign Tax Credits?"
-        :labelCol="{span:9}"
-        :wrapperCol="{span:12}"
+        label="24"
+        :labelCol="form_layout.label_col"
+        :wrapperCol="form_layout.wrapper_col"
       >
+        <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
         <a-radio-group
+          @change="changeSpouseTaxNo"
+          :defaultValue="true"
           v-model="form.spouse_foreign_tax_credits"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         >
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -432,117 +521,148 @@
       </a-form-item>
 
       <!-- 25 -->
-      <a-form-item label="25. Tax Rate*(choose one,for income from business/profession):">
-        <a-radio-group v-model="form.spouse_tax_rate" disabled>
-          <a-radio
-            :value="'SGR'"
-          >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 16A)</a-radio>
-          <a-radio
-            :value="'SOGS'"
-          >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates</a-radio>
-          <p>
-            under Sec. 24(A)(2)(a) & Percentage Tax
-            under Sec. 116 of the NIRC, as amended [available if gross sales/receipts and other non-operating income do not exceed Three million pesos (P3M)]
-          </p>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item label="25A. Method of Deduction:">
-        <a-radio-group
-          v-model="form.spouse_method_deduction"
-          :disabled="form.spouse_tax_rate ='SGR' || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
-        >
-          <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
-          <a-radio
-            :value="'SOSD'"
-          >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees</a-radio>
-          <p>[Sec. 34(L), NIRC]</p>
-        </a-radio-group>
-      </a-form-item>
+      <a-row :gutter="4">
+        <a-col :span="24">
+          <a-form-item
+            label="25"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+          >
+            <span
+              style="margin-right: 14px"
+            >Tax Rate* (choose one, for income from business/profession):</span>
+            <a-radio-group v-model="form.spouse_tax_rate" :value="changeSpouseATC()" disabled>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Graduated Rates per Tax Table- page 2 (Choose Method of Deduction in Item 25A)</template>
+                <a-radio :value="'SGR'">Graduated Rates per Tax Table- page 2</a-radio>
+              </a-tooltip>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >8% on gross sales/receipts & other non-operating income in lieu of Graduated Rates under Sec. 24(A)(2)(a) & Percentage Tax under Sec. 116 of the NIRC, as amended [available if gross sales/receipts and other non-operating income do not exceed Three million pesos (P3M)]</template>
+                <a-radio :value="'SOGS'">8% on gross sales/receipts & other non-operating income</a-radio>
+              </a-tooltip>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
+          <a-form-item
+            label="25A"
+            :labelCol="form_layout.label_col"
+            :wrapperCol="form_layout.wrapper_col"
+          >
+            <span style="margin-right: 14px">Method of Deduction:</span>
+            <a-radio-group
+              v-model="form.spouse_method_deduction"
+              :disabled="form.taxpayer.filer_type == 'e' || form.spouse_rate == 'SGR'||  form.spouse_atc_code == 'SII015' || form.spouse_atc_code == 'SII017' ||form.spouse_atc_code == 'SII016' || form.spouse_atc_code == 'SII011' ||  
+              form.taxpayer.filer_type == 't'"
+            >
+              <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Optional Standard Deduction (OSD) [40% of Gross Sales/Receipts/Revenues/Fees[Sec. 34(L), NIRC]</template>
+                <a-radio :value="'SOSD'">Optional Standard Deduction (OSD)</a-radio>
+              </a-tooltip>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
 
     <!-- Part III -->
-    <a-form :form="form_part3" v-show="step===3">
-      <a-divider orientation="left">
+    <a-form v-show="step===3">
+      <a-divider>
         <b>Part III: TOTAL TAX PAYABLE</b>
       </a-divider>
-      <a-row :gutter="16">
+      <a-row :gutter="12">
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="A) Taxpayer/Filer"></a-form-item>
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="26."
-          >
-            <a-input-number
-              disabled
-              style="width:100%"
-              :value="total_tax_payable()"
-              v-model="form.taxpayer_prev_tax_due"
-              placeholder="Tax Due"
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="26">
+            <a-tooltip>
+              <template
+                slot="title"
+              >Tax Due (From Part V, Schedule I-Item 46 OR Schedule II-Item 54)</template>
+              <a-input-number
+                style="width: 100%"
+                disabled
+                :value="total_tax_payable()"
+                v-model="form.taxpayer_prev_tax_due"
+                placeholder="Tax Due"
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="B) Spouse"></a-form-item>
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
-              style="width:100%"
+              style="width: 100%"
               v-model="form.spouse_prev_tax_due"
               placeholder="Tax Due"
               disabled
             ></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 2">Schedule II</a-button>
       </a-row>
-      <a-row :gutter="16">
+      <div style="font-size: 14px ; margin-left: 2.5vw">
+        (From Part V,
+        <span class="text-link" @click="openSched1()">Schedule I</span>-Item 46 OR (From Part V,
+        <span class="text-link" @click="sched = 2">Schedule II</span>-Item 54)
+      </div>
+      <br />
+      <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
+      <a-button style="margin-left: 15px;" type="link" @click="sched = 2">Schedule II</a-button>-->
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="27."
-          >
-            <a-input-number
-              v-model="form.taxpayer_tax_credit"
-              style="width:100%"
-              placeholder="Less: Tax Credits/Payments(From "
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="27">
+            <a-tooltip>
+              <template slot="title">Less: Tax Credits/Payments (From Part V, Schedule III-Item 62)</template>
+              <a-input-number
+                style="width: 100%"
+                v-model="form.taxpayer_tax_credit"
+                placeholder="Less: Tax Credits/Payments "
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              v-model="form.spouse_tax_credit"
-              style="width:100%"
-              placeholder="Part V, Schedule III-Item 62)"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+            <a-input-number style="width: 100%" v-model="form.spouse_tax_credit" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 3">Schedule III</a-button>
       </a-row>
-      <a-row :gutter="16">
+      <div style="font-size: 14px ; margin-left: 2.5vw">
+        (From Part V,
+        <span class="text-link" @click="sched = 3">Schedule III</span>-Item 62)
+      </div>
+      <br />
+      <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 3">Schedule III</a-button> -->
+
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="28."
-          >
-            <a-input-number
-              style="width:100%"
-              :value="taxpayer_tax_due()"
-              v-model="form.taxpayer_tax_due"
-              placeholder="Tax Payable/(Overpayment)(Item "
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="28">
+            <a-tooltip>
+              <template
+                slot="title"
+              >Tax Payable/(Overpayment) (Item 26 Less Item 27) (From Part V, Item 63)</template>
+              <a-input-number
+                style="width: 100%"
+                :value="taxpayer_tax_due()"
+                v-model="form.taxpayer_tax_due"
+                placeholder="Tax Payable/(Overpayment)"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
-              style="width:100%"
+              style="width: 100%"
               :value="taxpayer_tax_due()"
               v-model="form.spouse_tax_due"
               placeholder="26 Less Item 27 From Part V,Item 63)"
@@ -551,80 +671,80 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row :gutter="16">
+      <br />
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="29."
-          >
-            <a-input-number
-              style="width:100%"
-              v-model="form.taxpayer_total_penalties"
-              placeholder="Add: Total Penalties (From Part V, "
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="29">
+            <a-tooltip>
+              <template slot="title">Add: Total Penalties (From Part V, Schedule IV-Item 67)</template>
+              <a-input-number
+                style="width: 100%"
+                v-model="form.taxpayer_total_penalties"
+                placeholder="Total Penalties"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number
-              style="width:100%"
-              v-model="form.spouse_total_penalties"
-              placeholder="Schedule IV-Item 67)"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+            <a-input-number style="width: 100%" v-model="form.spouse_total_penalties" disabled></a-input-number>
           </a-form-item>
         </a-col>
-        <a-button style="margin-left: 15px;" type="link" @click="sched = 4">Schedule IV</a-button>
       </a-row>
-      <a-row :gutter="16">
+
+      <div style="font-size: 14px ; margin-left: 2.5vw">
+        (From Part V,
+        <span class="text-link" @click="sched = 4">Schedule IV</span>-Item 67)
+      </div>
+      <br />
+      <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 4">Schedule IV</a-button> -->
+
+      <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="30."
-          >
-            <a-input-number
-              style="width:100%"
-              :value="taxpayer_total_amount_payable()"
-              v-model="form.taxpayer_total_amount_payable"
-              placeholder="Total Amount Payable/Overpayment"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="30">
+            <a-tooltip>
+              <template slot="title">Total Amount Payable/ (Overpayment)</template>
+              <a-input-number
+                style="width: 100%"
+                :value="taxpayer_total_amount_payable()"
+                v-model="form.taxpayer_total_amount_payable"
+                placeholder="Total Amount Payable/Overpayment"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
+
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
-              style="width:100%"
+              style="width: 100%"
               :value="taxpayer_total_amount_payable()"
               v-model="form.spouse_total_amount_payable"
-              placeholder="Sum of Items 28/29 From Part V,Item 68"
               disabled
             ></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
+      <br />
       <a-row :gutter="16">
         <a-col :span="12">
-          Aggregate Amount Payable/(Overpayment)
-          <a-form-item
-            :labelCol="form_layout.label_col"
-            :wrapperCol="form_layout.wrapper_col"
-            label="31."
-          >
-            <a-input-number
-              style="width:100%"
-              v-model="form.taxpayer_aggregate_amount_payable"
-              placeholder="Aggregate Amount Payable/(Overpayment)"
-              disabled
-            ></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="31">
+            <a-tooltip>
+              <template slot="title">Aggregate Amount Payable/(Overpayment)</template>
+              <a-input-number
+                style="width: 100%"
+                v-model="form.taxpayer_aggregate_amount_payable"
+                placeholder="Aggregate Amount Payable/(Overpayment)"
+                disabled
+              ></a-input-number>
+            </a-tooltip>
           </a-form-item>
         </a-col>
       </a-row>
     </a-form>
-    <sched1 v-if="sched == 1" :show="show" :form="form" @close="show = 0"></sched1>
+    <sched1 v-if="sched == 1" :show="show" :form="form" @close="closeSched()"></sched1>
     <sched2 v-if="sched == 2" :show="show" :form="form" @close="show = 0"></sched2>
     <sched3 v-if="sched == 3" :show="show" :form="form" @close="show = 0"></sched3>
     <sched4 v-if="sched == 4" :show="show" :form="form" @close="show = 0"></sched4>
@@ -648,12 +768,12 @@ export default {
     return {
       sched: 0,
       show: 0,
-      connections:[],
+      connections: [],
       sub: false,
       spouse_type_list_holder: null,
-      single: false,
-      pro: false,
-      compensation: false,
+      SP: false,
+      P: false,
+      CE: false,
       // form_1601e_image,
       image_height: 1000,
       formatter: {
@@ -670,13 +790,24 @@ export default {
     };
   },
   watch: {
+    step() {
+      if (this.step === 0) {
+        this.form.pdf_page = 1;
+      } else if (this.step === 1) {
+        this.form.pdf_page = 1;
+      } else if (this.step === 2) {
+        this.form.pdf_page = 1;
+      } else {
+        this.form.pdf_page = 2;
+      }
+    },
     loading(val) {
       this.$emit("loading", val);
     },
     form: {
       deep: true,
       handler(val) {
-        console.log("form :", val);
+        console.log("form :", JSON.stringify(val));
       }
     }
   },
@@ -698,55 +829,58 @@ export default {
     }
   },
   methods: {
+    openSched1() {
+      this.sched = 1;
+      this.show = 1;
+      this.form.pdf_page = 2;
+    },
+    closeSched() {
+      this.form.pdf_page = 1;
+      this.sched = 0;
+      this.show = 0;
+    },
+    changeTaxNo() {
+      if (this.form.taxpayer_foreign_tax_credits == false) {
+        this.form.taxpayer_foreign_tax_number = "";
+      }
+    },
+    changeSpouseTaxNo() {
+      if (this.form.spouse_foreign_tax_credits == false) {
+        this.form.spouse_foreign_tax_number = "";
+      }
+    },
     spouse_type() {
+      console.log("this.SP :", this.SP);
       var holder = "";
-      if (this.single == true && this.pro == true) {
+      if (this.SP == true && this.P == true) {
         if (this.spouse_type_list_holder == true) {
-          this.single = true;
-          this.pro = false;
+          this.SP = true;
+          this.P = false;
         }
       }
-      if (this.single == true && this.pro == false) {
-        this.pro = false;
-        holder = "SSP";
+      if (this.SP == true && this.P == false) {
+        this.P = false;
+        holder = "SP";
 
-        if (
-          this.single == true &&
-          this.pro == false &&
-          this.pensation == true
-        ) {
-          holder = "SSPSCE";
-        } else if (
-          this.pro == true &&
-          this.single == false &&
-          this.pensation == true
-        ) {
-          holder = "SPROSCE";
+        if (this.SP == true && this.P == false && this.CE == true) {
+          holder = "SPCE";
+        } else if (this.P == true && this.SP == false && this.CE == true) {
+          holder = "PCE";
         }
-      } else if (this.pro == true) {
-        this.single = false;
-        holder = "SPRO";
-        if (
-          this.single == true &&
-          this.pro == false &&
-          this.pensation == true
-        ) {
-          holder = "SSPSCE";
-        } else if (
-          this.pro == true &&
-          this.single == false &&
-          this.pensation == true
-        ) {
-          holder = "SPROSCE";
+      } else if (this.P == true) {
+        this.SP = false;
+        holder = "P";
+        if (this.SP == true && this.P == false && this.CE == true) {
+          holder = "SPCE";
+        } else if (this.P == true && this.SP == false && this.CE == true) {
+          holder = "PCE";
         }
-      } else if (
-        this.single == false &&
-        this.pro == false &&
-        this.pensation == true
-      ) {
-        holder = "SCE";
+      } else if (this.SP == false && this.P == false && this.CE == true) {
+        holder = "CE";
       }
-      this.spouse_type_list_holder = this.pro;
+      console.log("holder :", holder);
+      this.spouse_type_list_holder = this.P;
+      this.form.spouse_atc_code = "";
       this.form.spouse_details.filer_type = holder;
       console.log(
         "spouse_tax_filter_type data: " + this.form.spouse_details.filer_type
@@ -754,24 +888,22 @@ export default {
     },
     spouse_type_filter() {},
     professional(data) {
-      if (data == "SSP") {
-        if (this.single == true) {
-          this.single = false;
+      if (data == "SP") {
+        if (this.SP == true) {
+          this.SP = false;
         } else {
-          this.single = true;
+          this.SP = true;
         }
-      } else if (data == "SPRO") {
-        if (this.pro == true) {
-          this.pro = false;
+      } else if (data == "P") {
+        if (this.P == true) {
+          this.P = false;
         } else {
-          this.pro = true;
+          this.P = true;
         }
       }
     },
-    compensation() {
-      this.pensation == false
-        ? (this.pensation = true)
-        : (this.pensation = false);
+    CE() {
+      this.CE == false ? (this.CE = true) : (this.CE = false);
     },
     total_tax_payable() {
       if (this.form.sched1.taxpayer.total_tax_due > 0) {
@@ -864,6 +996,16 @@ export default {
         ? "GS"
         : "";
     },
+    changeSpouseATC(e) {
+      const value = this.form.spouse_atc_code;
+      const for_sgr = ["SII012", "SII014", "SII013"];
+      const for_sogs = ["SII015", "SII017", "SII016"];
+      this.form.spouse_tax_rate = for_sgr.includes(value)
+        ? "SGR"
+        : for_sogs.includes(value)
+        ? "SOGS"
+        : "";
+    },
     error_item(item) {
       return this.errors.find(x => x.field === item) ? "error" : "";
     },
@@ -876,6 +1018,7 @@ export default {
         ? this.errors.find(x => x.field === item).error
         : "";
     },
+
     // insert validation
     validate(is_validate_all) {
       var errors = [];
@@ -884,7 +1027,7 @@ export default {
           errors.push({
             page: 0,
             field: "return_period_year",
-            error: "Please enter a valid year in Item 1"
+            error: "Please enter a valid year"
           });
         }
         if (!this.form.quarter) {
@@ -894,18 +1037,64 @@ export default {
             error: "Please select Quarter in item 2"
           });
         }
-        if (!this.form.taxpayer.birthDate) {
+      }
+      if (is_validate_all || this.step === 1) {
+        console.log(
+          "this.form.taxpayer.filer_type) :",
+          this.form.taxpayer.filer_type
+        );
+        if (!this.form.taxpayer.filer_type) {
           errors.push({
-            page: 0,
-            field: "taxpayer.birthDate",
+            page: 1,
+            field: "taxpayer.filer_type",
+            error: "Please select an option in Filer Type "
+          });
+        }
+        if (!this.form.taxpayer_atc_code) {
+          errors.push({
+            page: 1,
+            field: "taxpayer_atc_code",
+            error: "Please select an option in ATC Code "
+          });
+        }
+        if (!this.form.taxpayer.contact_details.email) {
+          errors.push({
+            page: 1,
+            field: "taxpayer.contact_details.email",
+            error: "Please enter a valid Email Address"
+          });
+        }
+        if (!this.form.taxpayer.individual_details.birthDate) {
+          errors.push({
+            page: 1,
+            field: "taxpayer.individual_details.birthDate",
             error: "Please enter your Date of Birth "
           });
         }
-        if (!this.form.taxpayer.filer_type) {
+        if (!this.form.taxpayer.citizenship) {
           errors.push({
-            page: 0,
-            field: "taxpayer.filer_type",
-            error: "Please select an option in Filer Type "
+            page: 1,
+            field: "taxpayer.citizenship",
+            error: "Please enter Citizenship  "
+          });
+        }
+        if (
+          this.form.taxpayer_foreign_tax_credits === null ||
+          (this.form.taxpayer_foreign_tax_credits === undefined &&
+            this.form.taxpayer.taxpayer_foreign_tax_credits == false)
+        ) {
+          errors.push({
+            page: 1,
+            field: "taxpayer_foreign_tax_credits",
+            error:
+              "You selected Yes in item 15, please input Foreign Tax Number  "
+          });
+        }
+        if (!this.form.taxpayer_method_deduction) {
+          errors.push({
+            page: 1,
+            field: "taxpayer_method_deduction",
+            error: "Please select an option for Method of Deduction"
           });
         }
       }
@@ -916,9 +1105,15 @@ export default {
     }
   },
   created() {
-    
-    this.connections = this.$store.state.relationship.connections
-    console.log("  " + JSON.stringify(this.$store.state.relationship.connections))
+    this.form.pdf_page = 1;
+    console.log(
+      "taxpayer.individual_details.birthDate, :",
+      JSON.stringify(this.form.taxpayer.individual_details)
+    );
+    this.connections = this.$store.state.relationship.connections;
+    console.log(
+      "  " + JSON.stringify(this.$store.state.relationship.connections)
+    );
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {

@@ -230,6 +230,7 @@ export default {
         taxpayer: {
           contact_details: {},
           address_details: {},
+          // individual_details: {},
           accounting_type: "",
           start_month: "",
           end_month: ""
@@ -338,10 +339,6 @@ export default {
           {
             title: "Part III",
             description: "Total Tax Payable"
-          },
-          {
-            title: "Part IV",
-            description: "Details of Payment"
           }
         ],
         "1701a": [
