@@ -834,7 +834,6 @@ export default {
       this.show = 1;
       this.form.pdf_page = 2;
     },
-<<<<<<< HEAD
     openSched2(){
       this.sched = 2
       this.show = 2
@@ -854,12 +853,6 @@ export default {
       this.form.pdf_page = 1
       this.sched = 0
       this.show = 0
-=======
-    closeSched() {
-      this.form.pdf_page = 1;
-      this.sched = 0;
-      this.show = 0;
->>>>>>> 09e7614e7f504f56d0bb5fbfacbc0e2dc521a223
     },
     changeTaxNo() {
       if (this.form.taxpayer_foreign_tax_credits == false) {
