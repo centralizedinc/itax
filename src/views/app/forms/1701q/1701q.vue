@@ -259,8 +259,7 @@
             :help="error_desc('taxpayer_foreign_tax_credits')"
           >
             <a-input
-              @change="changeTaxNo"
-              :disabled="form.taxpayer_foreign_tax_credits== false"
+              :disabled="form.taxpayer_foreign_tax_credits == false"
               v-model="form.taxpayer_foreign_tax_number"
               placeholder="Foreign Tax Number"
             ></a-input>
@@ -276,7 +275,11 @@
             :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
           >
             <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
-            <a-radio-group :defaultValue="false" v-model="form.taxpayer_foreign_tax_credits">
+            <a-radio-group
+              :defaultValue="true"
+              v-model="form.taxpayer_foreign_tax_credits"
+              @change="changeTaxNo"
+            >
               <a-radio :value="true">Yes</a-radio>
               <a-radio :value="false">No</a-radio>
             </a-radio-group>
@@ -507,7 +510,8 @@
       >
         <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
         <a-radio-group
-          :defaultValue="false"
+          @change="changeSpouseTaxNo"
+          :defaultValue="true"
           v-model="form.spouse_foreign_tax_credits"
           :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         >
@@ -552,7 +556,8 @@
             <span style="margin-right: 14px">Method of Deduction:</span>
             <a-radio-group
               v-model="form.spouse_method_deduction"
-              :disabled="form.taxpayer.filer_type == 'e' || form.spouse_rate == 'SGR'|| form.taxpayer.filer_type == 't'"
+              :disabled="form.taxpayer.filer_type == 'e' || form.spouse_rate == 'SGR'||  form.spouse_atc_code !== 'SII013' ||
+              form.taxpayer.filer_type == 't'"
             >
               <a-radio :value="'SID'">Itemized Deduction [Sec. 34(A-J), NIRC]</a-radio>
               <a-tooltip>
@@ -602,9 +607,9 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <div style="font-size: 12px ; margin-left: 2.5vw">
+      <div style="font-size: 14px ; margin-left: 2.5vw">
         (From Part V,
-        <span class="text-link" @click="sched = 1">Schedule I</span>-Item 46 OR (From Part V,
+        <span class="text-link" @click="openSched1()">Schedule I</span>-Item 46 OR (From Part V,
         <span class="text-link" @click="sched = 2">Schedule II</span>-Item 54)
       </div>
       <br />
@@ -630,7 +635,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <div style="font-size: 12px ; margin-left: 2.5vw">
+      <div style="font-size: 14px ; margin-left: 2.5vw">
         (From Part V,
         <span class="text-link" @click="sched = 3">Schedule III</span>-Item 62)
       </div>
@@ -688,7 +693,7 @@
         </a-col>
       </a-row>
 
-      <div style="font-size: 12px ; margin-left: 2.5vw">
+      <div style="font-size: 14px ; margin-left: 2.5vw">
         (From Part V,
         <span class="text-link" @click="sched = 4">Schedule IV</span>-Item 67)
       </div>
@@ -739,7 +744,7 @@
         </a-col>
       </a-row>
     </a-form>
-    <sched1 v-if="sched == 1" :show="show" :form="form" @close="show = 0"></sched1>
+    <sched1 v-if="sched == 1" :show="show" :form="form" @close="closeSched()"></sched1>
     <sched2 v-if="sched == 2" :show="show" :form="form" @close="show = 0"></sched2>
     <sched3 v-if="sched == 3" :show="show" :form="form" @close="show = 0"></sched3>
     <sched4 v-if="sched == 4" :show="show" :form="form" @close="show = 0"></sched4>
@@ -785,6 +790,20 @@ export default {
     };
   },
   watch: {
+    step() {
+     if(this.step === 0){
+         this.form.pdf_page = 1
+     }
+     else if(this.step === 1){
+       this.form.pdf_page = 1
+     }
+      else if(this.step === 2){
+       this.form.pdf_page = 1
+     }
+     else{
+         this.form.pdf_page =2
+     }
+    },
     loading(val) {
       this.$emit("loading", val);
     },
@@ -813,13 +832,24 @@ export default {
     }
   },
   methods: {
+    openSched1(){
+      this.sched = 1
+      this.show = 1
+      this.form.pdf_page = 2
+    },
+    closeSched(){
+      this.form.pdf_page = 1
+      this.sched = 0
+      this.show = 0
+    },
     changeTaxNo() {
-      if (
-        (this.form.taxpayer_foreign_tax_credits == false,
-        this.form.spouse_foreign_tax_credits == false)
-      ) {
+      if (this.form.taxpayer_foreign_tax_credits == false) {
         this.form.taxpayer_foreign_tax_number = "";
-        this.form.spouse_foreign_tax_credits = "";
+      }
+    },
+    changeSpouseTaxNo() {
+      if (this.form.spouse_foreign_tax_credits == false) {
+        this.form.spouse_foreign_tax_number = "";
       }
     },
     spouse_type() {
@@ -960,11 +990,9 @@ export default {
     },
     changeATC(e) {
       const value = this.form.taxpayer_atc_code;
-
       console.log("change ATC value :", value);
       const for_gr = ["II012", "II014", "II013"];
       const for_gs = ["II015", "II017", "II016"];
-
       this.form.taxpayer_tax_rate = for_gr.includes(value)
         ? "GR"
         : for_gs.includes(value)
@@ -1080,6 +1108,7 @@ export default {
     // }
   },
   created() {
+    this.form.pdf_page = 1
     console.log(
       "taxpayer.individual_details.birthDate, :",
       JSON.stringify(this.form.taxpayer.individual_details)

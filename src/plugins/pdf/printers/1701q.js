@@ -1,4 +1,5 @@
-const form = require("../templates/1701q_template").template;
+const form = require("../templates/1701q_template");
+var forms = [form.page1, form.page1, form.page2]
 // const form1 = require("../templates/1701q_template").template;
 // const form2 = require("../templates/1601e_template").template;
 // var forms = [form.page1, form.page2]
@@ -21,12 +22,11 @@ function fillup(details) {
                 margin: [25, 0, 0, 0]
             }]
         },
-        content: content,
+        content: content[details.pdf_page],
         images: {
-            form: form
+            form: forms[details.pdf_page]
         },
-        pageSize: 'LEGAL',
-        pages: 4
+        pageSize: 'LEGAL'
     };
 }
 /**
@@ -37,7 +37,7 @@ function getContent(forms) {
     console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
-    var content = [
+    var content_page1 = [
         // 1-4
         {
             layout: "noBorders",
@@ -609,23 +609,20 @@ function getContent(forms) {
                 body: [
                     [{
                         text: forms.spouse_details.citizenship == null ? ' ' : forms.spouse_details.citizenship,
-                        // text: 'FILIPINO',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [9, 5, 0, 0]
                     },
                     {
-                        text: forms.spouse_foreign_tax_number,
-                        // text: '1234-5678-9000',
+                        text: forms.spouse_foreign_tax_number == null ? ' ' : forms.spouse_foreign_tax_number,
                         fontSize: 12,
-                        // right,down,left,up
+                        characterSpacing: 6,
                         alignment: 'left',
                         margin: [3, 5, 0, 0]
                     },
                     {
                         text: forms.spouse_foreign_tax_credits == true ? 'X' : ' ',
-                        // text: 'Y',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
@@ -655,7 +652,7 @@ function getContent(forms) {
                         text: forms.spouse_tax_rate == 'SGR' ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'justified',
-                        margin: [43, 6, 0, 0]
+                        margin: [42, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SID' ? 'X' : ' ',
@@ -938,7 +935,13 @@ function getContent(forms) {
     //   ]
     //   var content1 = [content2, content]
     //   return content1[forms.page];
-    return content;
+  // content 2
+  var content_page2 = [
+        
+]
+
+var contents = [content_page1, content_page1, content_page2]
+return contents;
 }
 
 function formatDate(date, type) {
