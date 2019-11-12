@@ -30,7 +30,7 @@ export default {
         else icon = <a-icon type="check" style="color: blue" />;
       }
 
-      this.$notification.open({ message, icon });
+      // this.$notification.open({ message, icon });
       // this.$store.commit("NOTIFY_MESSAGE", {});
     }
   }

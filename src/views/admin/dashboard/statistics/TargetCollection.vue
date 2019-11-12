@@ -18,12 +18,12 @@ export default {
           {
             label: "Target",
             data: [],
-            backgroundColor: "red"
+            backgroundColor: "#ff7777"
           },
           {
             label: "Collection",
             data: [15, 5],
-            backgroundColor: "blue"
+            backgroundColor: "#8888ff"
           }
         ],
         labels: []
@@ -116,7 +116,7 @@ export default {
   },
   computed: {
     rdos() {
-      return this.$store.state.tax_form.rdos.slice(0, 10);
+      return this.$store.state.tax_form.rdos.slice(0, 5);
     }
   },
   methods: {
@@ -126,7 +126,7 @@ export default {
       for (let index = 0; index < this.rdos.length; index++) {
         var target = Math.floor(Math.random() * 4);
         var collection =
-          Math.floor(Math.random() * (mock_targets[target] - 3900000)) + 10000;
+          Math.floor(Math.random() * (mock_targets[target] - 3900000)) + 3500000;
         datasets.push({
           label: this.rdos[index].code,
           target: mock_targets[target],
@@ -134,6 +134,7 @@ export default {
         });
       }
       datasets.sort((a, b) => b.collection - a.collection);
+      this.options.scales.yAxes[0].ticks.max = datasets[0].target + Math.floor(datasets[0].target/10);
       this.chartdata.labels = datasets.map(v => v.label);
       this.chartdata.datasets[0].data = datasets.map(v => v.target);
       this.chartdata.datasets[1].data = datasets.map(v => v.collection);
@@ -156,7 +157,7 @@ export default {
           }
           datasets.sort((a, b) => b.collection - a.collection);
           if(datasets[0].target <= datasets[0].collection){
-            this.options.scales.yAxes[0].ticks.max = datasets[0].collection + 10;
+            this.options.scales.yAxes[0].ticks.max = datasets[0].collection + Math.floor(datasets[0].collection/5);
           }
           this.chartdata.labels = datasets.map(v => v.label);
           this.chartdata.datasets[0].data = datasets.map(v => v.target);
@@ -174,6 +175,6 @@ export default {
 
 <style>
 .bar-collection-returns canvas {
-  /* height: 55vh !important; */
+  height: 62vh !important;
 }
 </style>
