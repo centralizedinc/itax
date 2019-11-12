@@ -609,23 +609,20 @@ function getContent(forms) {
                 body: [
                     [{
                         text: forms.spouse_details.citizenship == null ? ' ' : forms.spouse_details.citizenship,
-                        // text: 'FILIPINO',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [9, 5, 0, 0]
                     },
                     {
-                        text: forms.spouse_foreign_tax_number,
-                        // text: '1234-5678-9000',
+                        text: forms.spouse_foreign_tax_number == null ? ' ' : forms.spouse_foreign_tax_number,
                         fontSize: 12,
-                        // right,down,left,up
+                        characterSpacing: 6,
                         alignment: 'left',
                         margin: [3, 5, 0, 0]
                     },
                     {
                         text: forms.spouse_foreign_tax_credits == true ? 'X' : ' ',
-                        // text: 'Y',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
@@ -655,7 +652,7 @@ function getContent(forms) {
                         text: forms.spouse_tax_rate == 'SGR' ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'justified',
-                        margin: [43, 6, 0, 0]
+                        margin: [42, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SID' ? 'X' : ' ',
