@@ -20,11 +20,11 @@
         <a-row type="flex" justify="end">
           <a-col :span="8">
             <a-button type="primary" block @click="showMultiple()">
-              <a-icon type="credit-card" />Mutliple Payments ({{selectedRowKeys.length}})
+              <a-icon type="credit-card" />
+              Mutliple Payments ({{selectedRowKeys.length}})
             </a-button>
           </a-col>
         </a-row>
-        
       </template>
     </a-table>
     <a-drawer :closable="false" :width="850" @close="show_payment=false" :visible="show_payment">
@@ -48,13 +48,13 @@
                 </a-tooltip>
               </template>
             </a-tab-pane>
-            <a-tab-pane key="2">
+            <!-- <a-tab-pane key="2">
               <template slot="tab">
                 <a-tooltip title="Over the Counter">
                   <a-icon type="shop" style="font-size: 24px"></a-icon>
                 </a-tooltip>
               </template>
-            </a-tab-pane>
+            </a-tab-pane>-->
           </a-tabs>
         </a-col>
         <a-col :span="14">
@@ -62,7 +62,7 @@
             <component :is="current_option" @mounted="init_card" :details="payment_details" />
           </a-card>
         </a-col>
-        <a-col :span="10" v-if="payment_mode==='multiple'" >
+        <a-col :span="10" v-if="payment_mode==='multiple'">
           <a-card
             style="background: linear-gradient(to bottom, #000046, #1cb5e0)"
             :bodyStyle="{ 'padding-bottom': '5px'}"
@@ -72,7 +72,7 @@
             <a-row>
               <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Details:</p>
-              </a-col> -->
+              </a-col>-->
               <a-col :span="12">
                 <p style="color: #FFFFFF;">Reference No:</p>
                 <p style="color: #FFFFFF;">Tax Return:</p>
@@ -86,7 +86,7 @@
               <a-divider></a-divider>
               <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Payments:</p>
-              </a-col> -->
+              </a-col>-->
               <a-col :span="12">
                 <p style="color: #FFFFFF">Tax Due:</p>
                 <p style="color: #FFFFFF">Penalties:</p>
@@ -147,7 +147,14 @@
               </a-col>
             </a-row>
           </a-card>
-          <a-button block type="primary" size="large" style="margin-top: 5vh" :loading="loading_payments" @click="submit">Submit</a-button>
+          <a-button
+            block
+            type="primary"
+            size="large"
+            style="margin-top: 5vh"
+            :loading="loading_payments"
+            @click="submit"
+          >Submit</a-button>
         </a-col>
         <a-col :span="10" v-else>
           <a-card style="background: linear-gradient(to bottom, #000046, #1cb5e0)">
@@ -156,7 +163,7 @@
             <a-row>
               <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Details:</p>
-              </a-col> -->
+              </a-col>-->
               <a-col :span="12">
                 <p style="color: #FFFFFF;">Form Type:</p>
                 <p style="color: #FFFFFF">TIN:</p>
@@ -168,7 +175,7 @@
               <a-divider></a-divider>
               <!-- <a-col :span="24">
                 <p style="color: #FFFFFF">Payments:</p>
-              </a-col> -->
+              </a-col>-->
               <a-col :span="12">
                 <p style="color: #FFFFFF">Tax Due:</p>
                 <p style="color: #FFFFFF">Penalties:</p>
@@ -191,7 +198,14 @@
               </a-col>
             </a-row>
           </a-card>
-          <a-button block type="primary" size="large" style="margin-top: 5vh" :loading="loading_payments" @click="submit">Submit</a-button>
+          <a-button
+            block
+            type="primary"
+            size="large"
+            style="margin-top: 5vh"
+            :loading="loading_payments"
+            @click="submit"
+          >Submit</a-button>
         </a-col>
       </a-row>
     </a-drawer>
@@ -199,10 +213,9 @@
 </template>
 
 <script>
-
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import printer from "@/plugins/pdf/printers/ereceipt"
+import printer from "@/plugins/pdf/printers/ereceipt";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import Payment from "@/components/pay/payment";
@@ -341,12 +354,12 @@ export default {
         .dispatch(action, payments)
         .then(result => {
           console.log("result.data.model :", result.data.model);
-          this.printReceipt(result.data.model)
+          this.printReceipt(result.data.model);
           this.loading_payments = false;
-          this.init()
-          this.$notification.success({            
+          this.init();
+          this.$notification.success({
             message: "Successfully paid.",
-            description:""
+            description: ""
           });
           this.reset();
         })
@@ -355,9 +368,9 @@ export default {
           this.loading_payments = false;
         });
     },
-    printReceipt(details){
-      console.log('PRINTING RECEIPT :::: ', JSON.stringify(details))
-      var document = printer.fillup({})
+    printReceipt(details) {
+      console.log("PRINTING RECEIPT :::: ", JSON.stringify(details));
+      var document = printer.fillup({});
       pdfMake.createPdf(document).getBuffer(buffer => {
         var file = new Blob([buffer], { type: "application/pdf" });
 
@@ -367,7 +380,7 @@ export default {
 
         this.$store
           .dispatch("UPLOAD_TAX_RETURNS", {
-            form: 'e-receipt',
+            form: "e-receipt",
             ref_no: details.payments.payment_conf_no,
             form_data: data
           })
@@ -377,10 +390,9 @@ export default {
           .catch(err => {
             console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
           });
-
-      })
+      });
     },
-    reset(){
+    reset() {
       this.record = {};
       this.records = [];
       this.current_option = "CreditCard";
@@ -407,13 +419,12 @@ export default {
     },
     multiple_payments_total() {
       var total = 0;
-      console.log('this.records :', this.records);
+      console.log("this.records :", this.records);
       if (this.records) {
         total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
       }
       return total;
-    },
-    
+    }
   }
 };
 </script>

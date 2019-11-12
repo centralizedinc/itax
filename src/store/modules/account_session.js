@@ -111,6 +111,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             const { details, form_data } = data;
             var result = {};
+            // Upload avatar if modify
             new UploadAPI(context.rootState.account_session.token)
                 .uploadAvatar({
                     account_id: context.rootState.account_session.account.account_id,
@@ -121,6 +122,7 @@ const actions = {
                         console.log('res :', res.data);
                         details.user.avatar = res.data.model;
                     }
+                    // Update user details
                     return new UserAPI(context.rootState.account_session.token).updateByAccountID(details.user)
                 })
                 .then((user) => {
@@ -131,15 +133,18 @@ const actions = {
                     // }
                     // else {
                     console.log('creating taxpayer ...');
+                    // Create Taxpayer
                     return context.dispatch("CREATE_TAXPAYER", details.taxpayer, { root: true });
                     // }
                 })
                 .then((taxpayer) => {
                     result.taxpayer = taxpayer;
+                    // Create spouse if married
                     if (details.taxpayer.individual_details.civil_status === "M" && !details.spouse_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.spouse_details, { root: true });
                 })
                 .then((spouse) => {
                     result.spouse = spouse;
+                    // Connect spouse if married
                     if (details.taxpayer.individual_details.civil_status === "M") {
                         const connection = {
                             relationship: 'spouse',
@@ -150,14 +155,16 @@ const actions = {
                     }
                 })
                 .then((spouse_connection) => {
+                    // Create company if Sole proprietor, proffessional, employed
                     if (["sp", "p", "em"].includes(details.taxpayer.filer_type) && !details.company_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
                 })
                 .then((company) => {
                     result.company = company;
-                    if (details.taxpayer.individual_details.civil_status === "M") {
+                    // connect company
+                    if (["sp", "p", "em"].includes(details.taxpayer.filer_type)) {
                         const connection = {
-                            relationship: 'spouse',
-                            to: result.spouse.tin,
+                            relationship: 'employer',
+                            to: result.company.tin,
                             from: result.taxpayer.tin
                         }
                         return context.dispatch("CONNECT", connection, { root: true });
