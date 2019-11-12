@@ -1,5 +1,5 @@
 <template>
-  <a-layout>
+  <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
     <a-back-top>
       <a-avatar>
         <a-icon type="up" :size="42"></a-icon>
@@ -8,15 +8,16 @@
     <a-affix :offsetTop="0">
       <a-layout-header style="background: linear-gradient(to left, #000046, #1cb5e0);">
         <a-row type="flex" justify="start" data-aos="fade-up">
-          <a-col :span="23">
+          <a-col :span="21">
             <h2 style="color:white;">Smart Tax Admin</h2>
           </a-col>
-          <a-col :span="1">
-            <a-popover title="User" trigger="click" placement="bottomRight">
+          <a-col :span="3">
+            <a-popover :title="admin_user" trigger="click" placement="bottomRight">
+              <span style="color: white; font-size: 14px; font-weight: bold; margin-right: 1.5vh;">{{admin_user}}</span>
               <a-avatar
                 :size="35"
-                src="https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg"
-                style="cursor:pointer"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBv-cKu1_1zauuxCU7oaieOQw7LSLgfi3OgjwGXA-gQrIjmRzUtw&s"
+                style="cursor:pointer; color: white;"
               />
               <template slot="content">
                 <a-menu>
@@ -34,12 +35,11 @@
             </a-popover>
           </a-col>
         </a-row>
-        <a-divider style="margin-top: -2vh" v-if="topLocation<=50"></a-divider>
       </a-layout-header>
     </a-affix>
     <a-layout-content>
       <a-affix :offsetTop="64">
-        <a-row>
+        <a-row style="margin-top: 0.5vh;">
           <a-col :xs="{ span: 24 }" :sm="{ span: 0 }">
             <a-button type="primary" @click="collapsed=!collapsed" style="margin-bottom: 2px">
               <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
@@ -114,6 +114,11 @@ export default {
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
+  },
+  computed: {
+    admin_user(){
+      return this.$store.state.account_session.admin_user;
+    }
   },
   methods: {
     handleScroll(event) {

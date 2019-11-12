@@ -10,7 +10,8 @@ function initialState() {
         user: {},
         token: "",
         is_authenticated: false,
-        mode: ''
+        mode: '',
+        admin_user: ""
     }
 }
 
@@ -24,6 +25,9 @@ const mutations = {
         state.is_authenticated = true;
         state.mode = data.account.status === 0 ? 'INACTIVE' :
             data.account.status === 1 ? 'SETUP' : 'ACTIVE';
+    },
+    LOGIN_ADMIN(state, username){
+        state.admin_user = username;
     },
     UPDATE_ACCOUNT(state, data) {
         state.account = data;
