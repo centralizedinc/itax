@@ -42,16 +42,21 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="37">
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched1.taxpayer.total_sales_services"
-                placeholder="Less: Cost of Sales/Services"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Less: Cost of Sales/Services</template>
+                <a-input-number
+                  :disabled="form.taxpayer_method_deduction !=='ID'"
+                  style="width:100%"
+                  v-model="form.sched1.taxpayer.total_sales_services"
+                  placeholder="Less: Cost of Sales/Services"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_method_deduction !=='SID'"
                 style="width:100%"
                 v-model="form.sched1.spouse.total_sales_services"
                 placeholder="Less: Cost of Sales/Services"
@@ -62,18 +67,21 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="38">
-              <a-input-number
-                disabled
-                style="width:100%"
-                :value="gross_income()"
-                placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Gross Income/(Loss) from Operation (Item 36 Less Item 37)</template>
+                <a-input-number
+                  disabled
+                  style="width:100%"
+                  :value="gross_income()"
+                  placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                disabled
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 style="width:100%"
                 :value="spouse_gross_income()"
                 placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
@@ -84,17 +92,22 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="39">
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched1.taxpayer.total_allowable_itemized_deductions"
-                placeholder="Total Allowable Itemized Deductions "
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Gross Income/(Loss) from Operation (Item 36 Less Item 37)</template>
+                <a-input-number
+                  :disabled="form.taxpayer_method_deduction !=='ID'"
+                  style="width:100%"
+                  v-model="form.sched1.taxpayer.total_allowable_itemized_deductions"
+                  placeholder="Total Allowable Itemized Deductions "
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
+                :disabled="form.spouse_method_deduction !=='SID'"
                 v-model="form.sched1.spouse.total_allowable_itemized_deductions"
                 placeholder="Total Allowable Itemized Deductions "
               ></a-input-number>
@@ -104,16 +117,21 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="40">
-              <a-input-number
-                style="width:100%"
-                :value="total_standard_deductions()"
-                placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Optional Standard Deduction (OSD) (40% of Item 36)</template>
+                <a-input-number
+                  disabled
+                  style="width:100%"
+                  :value="total_standard_deductions()"
+                  placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 style="width:100%"
                 :value="spouse_total_standard_deductions()"
                 placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
@@ -124,16 +142,23 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="41">
-              <a-input-number
-                :value="total_net_income()"
-                style="width:100%"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  :value="total_net_income()"
+                  style="width:100%"
+                  placeholder="Net Income/(Loss)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 :value="spouse_total_net_income()"
                 style="width:100%"
                 placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
@@ -144,16 +169,21 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="42">
-              <a-input-number
-                v-model="form.sched1.taxpayer.total_taxable_income"
-                style="width:100%"
-                placeholder="Taxable Income/(Loss) Previous Quarter/s"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Taxable Income/(Loss) Previous Quarter/s</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  v-model="form.sched1.taxpayer.total_taxable_income"
+                  style="width:100%"
+                  placeholder="Taxable Income/(Loss)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 v-model="form.sched1.spouse.total_taxable_income"
                 style="width:100%"
                 placeholder="Taxable Income/(Loss) Previous Quarter/s"
@@ -164,16 +194,21 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="43">
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched1.taxpayer.total_operation_income"
-                placeholder="Non-Operating Income (specify) "
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Non-Operating Income (specify)</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  style="width:100%"
+                  v-model="form.sched1.taxpayer.total_operation_income"
+                  placeholder="Non-Operating Income"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 style="width:100%"
                 v-model="form.sched1.spouse.total_operation_income"
                 placeholder="Non-Operating Income (specify) "
@@ -184,17 +219,24 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="44.">
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched1.taxpayer.amount_recieved_share"
-                placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  style="width:100%"
+                  v-model="form.sched1.taxpayer.amount_recieved_share"
+                  placeholder="Amount Received/Share"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 v-model="form.sched1.spouse.amount_recieved_share"
                 placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
               ></a-input-number>
@@ -204,17 +246,22 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="45">
-              <a-input-number
-                style="width:100%"
-                :value="total_taxable_income_date()"
-                v-model="form.taxpayer_prev_tax_due"
-                placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)</template>
+                <a-input-number
+                  style="width:100%"
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  :value="total_taxable_income_date()"
+                  v-model="form.taxpayer_prev_tax_due"
+                  placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 style="width:100%"
                 :value="spouse_total_taxable_income_date()"
                 v-model="form.spouse_prev_tax_due"
@@ -226,16 +273,23 @@
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="46.">
-              <a-input-number
-                v-model="form.sched1.taxpayer.total_tax_due"
-                style="width:100%"
-                placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                >TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)</template>
+                <a-input-number
+                  v-model="form.sched1.taxpayer.total_tax_due"
+                  style="width:100%"
+                  placeholder="Tax Due"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 v-model="form.sched1.spouse.total_tax_due"
                 style="width:100%"
                 placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
