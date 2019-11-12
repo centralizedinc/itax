@@ -296,20 +296,28 @@ export default {
       date.setFullYear(date.getFullYear() - 18);
       return new Date(current).getTime() >= date.getTime();
     },
+    // -----------------
     async checkTin() {
       this.invalid_tin_status = "validating";
 
-      // to avoid redundancy of error in tin
-      const tin_index = this.error_messages.findIndex(v => v.field === "tin");
-      if (tin_index > -1) this.error_messages.splice(tin_index, 1); // to clear tin error message
+      // // to avoid redundancy of error in tin
+      // const tin_index = this.error_messages.findIndex(v => v.field === "tin");
+      // if (tin_index > -1) this.error_messages.splice(tin_index, 1); // to clear tin error message
 
       // check tin
-      if (!this.details.spouse_details.tin) {
+      // console.log("this.user.tin: " + JSON.stringify(this.user.tin))
+      console.log("async check tin start conditions: " + JSON.stringify(this.details.spouse_details.tin))
+      console.log("this.details.taxpayer.tin: " + JSON.stringify(this.details.taxpayer.tin))
+      console.log("this.details.company_details.tin: " + JSON.stringify(this.details.company_details.tin))
+      
+      if (!this.details.spouse_details.tin) { 
+        console.log("!this.details.spouse_details.tin")
         this.error_messages.push({
           field: "tin",
           message: "TIN is a required field"
         });
       } else if (this.details.spouse_details.tin.length !== 13) {
+        console.log("this.details.spouse_details.tin.length !== 13")
         this.error_messages.push({
           field: "tin",
           message: "TIN length must be 13"
@@ -317,6 +325,7 @@ export default {
       } else if (
         this.details.spouse_details.tin === this.details.taxpayer.tin
       ) {
+        console.log("this.details.spouse_details.tin === this.details.taxpayer.tin")
         this.error_messages.push({
           field: "tin",
           message: "You input your own TIN"
@@ -324,74 +333,86 @@ export default {
       } else if (
         this.details.spouse_details.tin === this.details.company_details.tin
       ) {
+        console.log("this.details.spouse_details.tin === this.details.company_details.tin")
         this.error_messages.push({
           field: "tin",
           message: "You input your company TIN"
         });
-      } else if (this.details.spouse_details.tin !== this.user.tin) {
-        // wait the result before to proceed
-        const result = await this.$store.dispatch("GET_TAXPAYER_BY_TIN", {
-          tin: this.details.spouse_details.tin,
-          ignore_user: true
-        });
-        console.log("result :", result);
-        if (!result || !result.taxpayer) {
-          // taxpayer not exist on db
-          this.details.spouse_details = {
-            is_exist: false,
-            tin: this.details.spouse_details.tin,
-            taxpayer_type: "I",
-            filer_type: "",
-            rdo_code: "",
-            registered_name: "",
-            line_of_business: "",
-            accounting_type: "c",
-            start_month: 0,
-            end_month: 11,
-            individual_details: {
-              firstName: "",
-              middleName: "",
-              lastName: "",
-              gender: "",
-              civil_status: "",
-              spouse_tin: ""
-            },
-            address: "",
-            birthDate: "",
-            contact_details: {
-              email: ""
-            },
-            address_details: {
-              zipCode: ""
-            }
-          };
-          this.invalid_tin_status = "success";
-        } else if (result.taxpayer.taxpayer_type !== "I") {
-          this.error_messages.push({
-            field: "tin",
-            message:
-              "TIN is a corporate taxpayer. If there is any concern, please contact us"
-          });
-        } else if (
-          result.taxpayer.individual_details.spouseTin ===
-          this.details.taxpayer.tin
-        ) {
-          this.details.spouse_details = result.taxpayer;
-          this.details.spouse_details.is_exist = true;
-          this.invalid_tin_status = "success";
-        } else {
-          this.error_messages.push({
-            field: "tin",
-            message:
-              "This taxpayer has a different spouse. If there is any concern, please contact us"
-          });
-        }
-      }
+      } 
+      // else if (this.details.spouse_details.tin !== this.user.tin) {
+      //   console.log("this.details.spouse_details.tin !== this.user.tin")
+      //   // wait the result before to proceed
+      //   const result = await this.$store.dispatch("GET_TAXPAYER_BY_TIN", {
+      //     tin: this.details.spouse_details.tin,
+      //     ignore_user: true
+      //   });
+      //   console.log("result :", result);
+      //   if (!result || !result.taxpayer) {
+      //     console.log("!result || !result.taxpayer")
+      //     // taxpayer not exist on db
+      //     this.details.spouse_details = {
+      //       is_exist: false,
+      //       tin: this.details.spouse_details.tin,
+      //       taxpayer_type: "I",
+      //       filer_type: "",
+      //       rdo_code: "",
+      //       registered_name: "",
+      //       line_of_business: "",
+      //       accounting_type: "c",
+      //       start_month: 0,
+      //       end_month: 11,
+      //       individual_details: {
+      //         firstName: "",
+      //         middleName: "",
+      //         lastName: "",
+      //         gender: "",
+      //         civil_status: "",
+      //         spouse_tin: ""
+      //       },
+      //       address: "",
+      //       birthDate: "",
+      //       contact_details: {
+      //         email: ""
+      //       },
+      //       address_details: {
+      //         zipCode: ""
+      //       }
+      //     };
+      //     this.invalid_tin_status = "success";
+      //   }
+      //   //  else if (result.taxpayer.taxpayer_type !== "I") {
+      //   //   console.log("result.taxpayer.taxpayer_type !== I")
+      //   //   this.error_messages.push({
+      //   //     field: "tin",
+      //   //     message:
+      //   //       "TIN is a corporate taxpayer. If there is any concern, please contact us"
+      //   //   });
+      //   // } 
+      //   // else if (
+      //   //   result.taxpayer.individual_details.spouseTin ===
+      //   //   this.details.taxpayer.tin
+      //   // ) {
+      //   //   console.log("result.taxpayer.individual_details.spouseTin === this.details.taxpayer.tin");
+      //   //   this.details.spouse_details = result.taxpayer;
+      //   //   this.details.spouse_details.is_exist = true;
+      //   //   this.invalid_tin_status = "success";
+      //   // }
+      //    else {
+      //     console.log("This taxpayer has a different spouse. If there is any concern, please contact us")
+      //     this.error_messages.push({
+      //       field: "tin",
+      //       message:
+      //         "This taxpayer has a different spouse. If there is any concern, please contact us"
+      //     });
+      //   }
+      // }
     },
+    // ----------------
     async validation() {
+      console.log("this.details.spouse_details data: " + JSON.stringify(this.details.spouse_details))
       this.validate();
       await this.checkTin();
-      console.log("this.error_messages :", this.error_messages);
+      console.log("this.error_messages :", JSON.stringify(this.error_messages));
       if (!this.error_messages || !this.error_messages.length) {
         this.next();
       }
@@ -467,12 +488,12 @@ export default {
           message: "Registered Address is a required field"
         });
       }
-      if (!this.details.spouse_details.individual_details.civil_status) {
-        this.error_messages.push({
-          field: "civil_status",
-          message: "Civil Status is a required field"
-        });
-      }
+      // if (!this.details.spouse_details.individual_details.civil_status) {
+      //   this.error_messages.push({
+      //     field: "civil_status",
+      //     message: "Civil Status is a required field"
+      //   });
+      // }
       if (!this.details.spouse_details.address_details.zipCode) {
         this.error_messages.push({
           field: "zipCode",
