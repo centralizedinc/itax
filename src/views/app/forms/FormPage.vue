@@ -339,10 +339,6 @@ export default {
           {
             title: "Part III",
             description: "Total Tax Payable"
-          },
-          {
-            title: "Part IV",
-            description: "Details of Payment"
           }
         ],
         "1701a": [

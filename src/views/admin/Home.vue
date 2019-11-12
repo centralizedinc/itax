@@ -7,14 +7,14 @@
     </a-back-top>
     <a-layout-header class="header" :style="headerStyle">
       <a-row type="flex" justify="start" :gutter="8" data-aos="fade-up">
-        <a-col :span="4">
-          <h2 style="color:white;">Smart Tax Admin</h2>
+        <a-col :xs="{ span: 24 }" :md="{ span: 20 }">
+          <h2 style="color:white;font-weight:bold;">Smart Tax Admin</h2>
         </a-col>
 
-        <a-col :span="2" :push="14">
+        <a-col :xs="{ span: 0 }" :md="{ span: 2 }">
           <a-button ghost block type="link">About</a-button>
         </a-col>
-        <a-col :span="2" :push="14">
+        <a-col :xs="{ span: 0 }" :md="{ span: 2 }">
           <a-button ghost block type="link">Contact Us</a-button>
         </a-col>
       </a-row>
@@ -29,7 +29,6 @@
       <a-row>
         <a-col :span="24">
           <h1 style="color:#ffffff">Get in touch</h1>
-          <!-- <a-divider></a-divider> -->
           <p>
             <a-icon type="phone"></a-icon>Hotline: 123-3456
           </p>
@@ -37,8 +36,8 @@
             <a-icon type="facebook"></a-icon>Facebook:
             <a
               style="color:#ffffff"
-              href="https://www.facebook.com/RoderickDondonAlcala/"
-            >itax.ph</a>
+              href="#"
+            >smartTax.ph</a>
           </p>
           <a-divider></a-divider>
         </a-col>
