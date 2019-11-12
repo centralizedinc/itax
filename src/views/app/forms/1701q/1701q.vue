@@ -445,8 +445,8 @@
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
-          >II013 Mixed Income–Graduated IT Rates form.taxpayer.spouse_tax_filter_type !=='SPCE'</a-radio>
+            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE' ||form.taxpayer.spouse_tax_filter_type !=='SPCE'"
+          >II013 Mixed Income–Graduated IT Rates</a-radio>
           <br />
           <a-radio
             :value="'SII016'"
