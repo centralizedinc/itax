@@ -255,7 +255,8 @@ export default {
   },
   methods: {
     onClose() {
-      this.visible = false;
+      // this.visible = false;
+      this.$emit("close");
     },
     total_income_quarter() {
       var total = this.computeSum([

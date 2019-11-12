@@ -610,7 +610,7 @@
       <div style="font-size: 14px ; margin-left: 2.5vw">
         (From Part V,
         <span class="text-link" @click="openSched1()">Schedule I</span>-Item 46 OR (From Part V,
-        <span class="text-link" @click="sched = 2">Schedule II</span>-Item 54)
+        <span class="text-link" @click="openSched2()">Schedule II</span>-Item 54)
       </div>
       <br />
       <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 1">Schedule I</a-button>
@@ -637,7 +637,7 @@
       </a-row>
       <div style="font-size: 14px ; margin-left: 2.5vw">
         (From Part V,
-        <span class="text-link" @click="sched = 3">Schedule III</span>-Item 62)
+        <span class="text-link" @click="openSched3()">Schedule III</span>-Item 62)
       </div>
       <br />
       <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 3">Schedule III</a-button> -->
@@ -695,7 +695,7 @@
 
       <div style="font-size: 14px ; margin-left: 2.5vw">
         (From Part V,
-        <span class="text-link" @click="sched = 4">Schedule IV</span>-Item 67)
+        <span class="text-link" @click="openSched4()">Schedule IV</span>-Item 67)
       </div>
       <br />
       <!-- <a-button style="margin-left: 15px;" type="link" @click="sched = 4">Schedule IV</a-button> -->
@@ -745,9 +745,9 @@
       </a-row>
     </a-form>
     <sched1 v-if="sched == 1" :show="show" :form="form" @close="closeSched()"></sched1>
-    <sched2 v-if="sched == 2" :show="show" :form="form" @close="show = 0"></sched2>
-    <sched3 v-if="sched == 3" :show="show" :form="form" @close="show = 0"></sched3>
-    <sched4 v-if="sched == 4" :show="show" :form="form" @close="show = 0"></sched4>
+    <sched2 v-if="sched == 2" :show="show" :form="form" @close="closeSched()"></sched2>
+    <sched3 v-if="sched == 3" :show="show" :form="form" @close="closeSched()"></sched3>
+    <sched4 v-if="sched == 4" :show="show" :form="form" @close="closeSched()"></sched4>
   </div>
 </template>
 
@@ -835,6 +835,21 @@ export default {
     openSched1(){
       this.sched = 1
       this.show = 1
+      this.form.pdf_page = 2
+    },
+    openSched2(){
+      this.sched = 2
+      this.show = 2
+      this.form.pdf_page = 2
+    },
+     openSched3(){
+      this.sched = 3
+      this.show = 3
+      this.form.pdf_page = 2
+    },
+     openSched4(){
+      this.sched = 4
+      this.show = 4
       this.form.pdf_page = 2
     },
     closeSched(){
