@@ -115,19 +115,29 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item v-if="form.is_avail_tax_relief">
+
+       <a-form-item label="If yes, specify">
+        <a-textarea v-model="form.avail_tax_relief"></a-textarea>
+      </a-form-item>
+        </a-form>  
+
+      <!-- <a-form-item v-if="form.is_avail_tax_relief">
         <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
-    </a-form>
+    </a-form> -->
 
-    <!-- Part II -->
+    <!--------------------------------------------------- Part II ------------------------------------------>
     <a-form v-show="step===2">
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')">
         <div style="color: black">
+
+
+
+
           12. Vatable Sales/Receipt-Private (
           <span
             class="text-link"
-            @click="show_sched1=true"
+            @click="openPage2()"
           >Schedule 1</span>)
         </div>
       </a-form-item>
@@ -135,7 +145,7 @@
         v-if="show_sched1"
         :show="show_sched1"
         :form="form"
-        @close="updateSchedAndClose"
+        @close="closePage2()"
       />
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -284,6 +294,7 @@
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
           <span
             class="text-link"
+            @click="openPage2sched2()"
           >Schedule 2</span>)
           <!-- @click="show_sched2=true" -->
         </div>
@@ -295,7 +306,7 @@
         :closable="false"
         @close="sched2_drawer=false"
         :visible="sched2_drawer"
-        width="1000"
+        width="500"
       >
         <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
           <template slot="date_purchased" slot-scope="text, record,index">
@@ -937,6 +948,20 @@ export default {
     console.log("this.form###### :", this.form);
   },
   methods: {
+openPage2(){
+      this.show_sched1=true
+      this.form.pdf_page = 2    
+    },
+    openPage2sched2(){
+      this.show_sched1=true
+      this.form.pdf_page = 2
+    },
+    closePage2(){
+      this.form.pdf_page = 1
+      this.show_sched1 = false;
+      this.show_sched2 = false;
+      this.updateSchedAndClose()
+    },
     // 16A
     getTotalSales() {
       console.log("this.form.totalAtcAmount :", this.form.totalAtcAmount);
@@ -1426,13 +1451,13 @@ export default {
   },
   //----------------------------
  watch: {
-   step() {
-     if(this.step ===   0 ){
-         this.form.pdf_page = 1
-     }else{
-         this.form.pdf_page =2
-     }
-    },
+  //  step() {
+  //    if(this.step ===   0 ){
+  //        this.form.pdf_page = 1
+  //    }else{
+  //        this.form.pdf_page =2
+  //    }
+  //   },
     loading(val) {
       this.$emit("loading", val);
     },

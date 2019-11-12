@@ -219,14 +219,14 @@ function getContent(forms) {
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [210, 3, 0, 0]
+                            margin: [210, 5, 0, 0]
                         },
                         {
                             text: forms.is_avail_tax_relief == false ? 'X' : ' ',
                             fontSize: 10,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [23, 3, 0, 0]
+                            margin: [23, 5, 0, 0]
                         },
                         {
                             text: forms.avail_tax_relief == null || forms.avail_tax_relief == '' ? ' ' : forms.avail_tax_relief,
@@ -1158,7 +1158,199 @@ function getContent(forms) {
         }
     ]
     // content 2
+    //--------------------------------------------> SCHEDULE PAGE 2
     var content_page2 = [
+       //----Schedule 1 -- > Table1 
+        {
+              //  layout: "noBorders",
+                table: {
+                    widths: [530],
+                    heights: [29,],
+                    body: [
+                        [{
+                            text: "",
+                        }             
+                                   
+                                    
+                      
+                        ],
+    
+                    ]
+                }
+            },
+
+            //--------Schedule 1 --- > Table2
+            {
+            //layout: "noBorders",        
+            table: {
+                widths: [196, 72, 108, 128,],
+                // heights: [7,],
+                body: [
+                    [{
+                          text:"test",
+                          fontSize: 5,
+                          alignment: 'justify',
+                          // right,down,left,up
+                          margin: [3, 2, 0, 0]
+                        },
+                      {
+                        text:"test",
+                        fontSize: 5,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [3, 2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, 2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, 2, 0, 0]
+                        },
+                        
+                       
+                    ],
+
+                ]
+            }
+        },
+
+        //--------Schedule 1 --- > Table3
+        {
+            //layout: "noBorders",        
+            table: {
+                widths: [196, 72, 108, 128,],
+                // heights: [7,],
+                body: [
+                    [{
+                          text:"test",
+                          fontSize: 5,
+                          alignment: 'justify',
+                          // right,down,left,up
+                          margin: [3, -2, 0, 0]
+                        },
+                      {
+                        text:"test",
+                        fontSize: 5,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [3, -2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, -2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, -2, 0, 0]
+                        },
+                        
+                       
+                    ],
+
+                ]
+            }
+        },
+
+        //--------Schedule 1 --- > Table4
+        {
+            //layout: "noBorders",        
+            table: {
+                widths: [196, 72, 108, 128,],
+                // heights: [5,],
+                body: [
+                    [{
+                          text:"test",
+                          fontSize: 5,
+                          alignment: 'justify',
+                          // right,down,left,up
+                          margin: [3, -2, 0, 0]
+                        },
+                      {
+                        text:"test",
+                        fontSize: 5,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [3, -2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, -2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, -2, 0, 0]
+                        },
+                      
+                       
+                    ],
+
+                ]
+            }
+        },
+
+
+        //--------Schedule 1 --- > Table5
+        {
+            //layout: "noBorders",        
+            table: {
+                widths: [196, 72, 108, 128,],
+                // heights: [6,],
+                body: [
+                    [{
+                          text:"test",
+                          fontSize: 5,
+                          alignment: 'justify',
+                          // right,down,left,up
+                          margin: [3, -2, 0, 0]
+                        },
+                      {
+                        text:"test",
+                        fontSize: 5,
+                        alignment: 'justify',
+                        // right,down,left,up
+                        margin: [3, -2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 5,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, -2, 0, 0]
+                        },
+                        {
+                            text: "test",
+                            fontSize: 75,
+                            alignment: 'justify',
+                            // right,down,left,up
+                            margin: [3, -2, 0, 0]
+                        },
+                                        
+                    ],
+
+                ]
+            }
+        }, 
+
         
     ]
 
@@ -1172,6 +1364,7 @@ function formatAmount(amount) {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 }
+
 
 function mapTin(tin, from, to) {
     if (!tin || from === null || to === null) return " ";
