@@ -32,7 +32,7 @@
               </a-tooltip>
               <a-input-number
                 style="width: 100%"
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 v-model="form.sched1.spouse.total_sales_revenue"
                 placeholder="Sales/Revenues/Receipts/Fees"
               ></a-input-number>
@@ -81,7 +81,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 style="width:100%"
                 :value="spouse_gross_income()"
                 placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
@@ -107,7 +107,7 @@
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
-                :disabled="form.spouse_method_deduction !=='SID'"
+                :disabled="form.spouse_method_deduction !=='SID'|| form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 v-model="form.sched1.spouse.total_allowable_itemized_deductions"
                 placeholder="Total Allowable Itemized Deductions "
               ></a-input-number>
@@ -131,7 +131,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 style="width:100%"
                 :value="spouse_total_standard_deductions()"
                 placeholder="Optional Standard Deduction (OSD) (40% of Item 36)"
@@ -147,7 +147,7 @@
                   slot="title"
                 >Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)</template>
                 <a-input-number
-                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  disabled
                   :value="total_net_income()"
                   style="width:100%"
                   placeholder="Net Income/(Loss)"
@@ -157,12 +157,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-              <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
-                :value="spouse_total_net_income()"
-                style="width:100%"
-                placeholder="Net Income/(Loss) This Quarter (If Itemized: Item 38 Less Item 39; If OSD: Item 38 Less Item 40)"
-              ></a-input-number>
+              <a-input-number disabled style="width:100%" placeholder="Net Income/(Loss)"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -183,7 +178,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 v-model="form.sched1.spouse.total_taxable_income"
                 style="width:100%"
                 placeholder="Taxable Income/(Loss) Previous Quarter/s"
@@ -191,6 +186,7 @@
             </a-form-item>
           </a-col>
         </a-row>
+
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="43">
@@ -208,7 +204,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 style="width:100%"
                 v-model="form.sched1.spouse.total_operation_income"
                 placeholder="Non-Operating Income (specify) "
@@ -216,6 +212,7 @@
             </a-form-item>
           </a-col>
         </a-row>
+
         <a-row :gutter="4">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="44.">
@@ -236,7 +233,7 @@
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 v-model="form.sched1.spouse.amount_recieved_share"
                 placeholder="Amount Received/Share in Income by a Partner from General Professional Partnership (GPP)"
               ></a-input-number>
@@ -250,9 +247,8 @@
                 <template slot="title">Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)</template>
                 <a-input-number
                   style="width:100%"
-                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  disabled
                   :value="total_taxable_income_date()"
-                  v-model="form.taxpayer_prev_tax_due"
                   placeholder="Total Taxable Income/(Loss) To Date (Sum of Items 41 to 44)"
                 ></a-input-number>
               </a-tooltip>
@@ -261,7 +257,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 style="width:100%"
                 :value="spouse_total_taxable_income_date()"
                 v-model="form.spouse_prev_tax_due"
@@ -276,9 +272,9 @@
               <a-tooltip>
                 <template
                   slot="title"
-                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
                 >TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)</template>
                 <a-input-number
+                  disabled
                   v-model="form.sched1.taxpayer.total_tax_due"
                   style="width:100%"
                   placeholder="Tax Due"
@@ -289,7 +285,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
-                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
+                :disabled="form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
                 v-model="form.sched1.spouse.total_tax_due"
                 style="width:100%"
                 placeholder="TAX DUE (Item 45 x Applicable Tax Rate based on Tax Table below) (To Part III, Item 26)"
@@ -382,10 +378,21 @@ export default {
       return total;
     },
     total_standard_deductions() {
-      var total = (this.form.sched1.taxpayer.total_sales_revenue || 0) * 0.4;
-      this.form.sched1.taxpayer.total_standard_deductions = total;
+      var total = 0;
+      console.log(
+        "this.form.taxpayer_method_deduction :",
+        this.form.taxpayer_method_deduction
+      );
+      if (this.form.taxpayer_method_deduction !== "OSD") {
+        this.form.sched1.taxpayer.total_standard_deductions = total;
+      } else {
+        total = (this.form.sched1.taxpayer.total_sales_revenue || 0) * 0.4;
+        this.form.sched1.taxpayer.total_standard_deductions = total;
+      }
+      console.log("total :", total);
       return total;
     },
+
     spouse_total_standard_deductions() {
       var total = (this.form.sched1.spouse.total_sales_revenue || 0) * 0.4;
       this.form.sched1.spouse.total_standard_deductions = total;
@@ -411,9 +418,9 @@ export default {
           this.form.sched1.taxpayer.gross_income -
           this.form.sched1.taxpayer.total_allowable_itemized_deductions;
       } else {
-        this.form.sched1.taxpayer.gross_income = 0;
-        this.form.sched1.taxpayer.total_allowable_itemized_deductions = 0;
-        this.form.sched1.taxpayer.total_standard_deductions = 0;
+        // this.form.sched1.taxpayer.gross_income = 0;
+        // this.form.sched1.taxpayer.total_allowable_itemized_deductions = 0;
+        // this.form.sched1.taxpayer.total_standard_deductions = 0;
       }
       this.form.sched1.taxpayer.total_net_income = total;
       return total;
@@ -453,6 +460,7 @@ export default {
         this.form.sched1.taxpayer.amount_recieved_share
       ]);
       this.form.sched1.taxpayer.total_taxable_income_date = total;
+
       var total46 = this.tax_rate(
         this.form.sched1.taxpayer.total_taxable_income_date
       );
