@@ -1,4 +1,5 @@
-const form = require("../templates/1701q_template").template;
+const form = require("../templates/1701q_template");
+var forms = [form.page1, form.page1, form.page2]
 // const form1 = require("../templates/1701q_template").template;
 // const form2 = require("../templates/1601e_template").template;
 // var forms = [form.page1, form.page2]
@@ -21,12 +22,11 @@ function fillup(details) {
                 margin: [25, 0, 0, 0]
             }]
         },
-        content: content,
+        content: content[details.pdf_page],
         images: {
-            form: form
+            form: forms[details.pdf_page]
         },
-        pageSize: 'LEGAL',
-        pages: 4
+        pageSize: 'LEGAL'
     };
 }
 /**
@@ -37,7 +37,7 @@ function getContent(forms) {
     console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
-    var content = [
+    var content_page1 = [
         // 1-4
         {
             layout: "noBorders",
@@ -935,7 +935,13 @@ function getContent(forms) {
     //   ]
     //   var content1 = [content2, content]
     //   return content1[forms.page];
-    return content;
+  // content 2
+  var content_page2 = [
+        
+]
+
+var contents = [content_page1, content_page1, content_page2]
+return contents;
 }
 
 function formatDate(date, type) {
