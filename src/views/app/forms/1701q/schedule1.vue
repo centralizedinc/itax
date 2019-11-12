@@ -5,43 +5,43 @@
       :visible="visible"
       :closable="false"
       @close="onClose"
-      :width="720"
+      :width="700"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
       <a-form :form="form" layout="vertical" hideRequiredMark>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="36."
-            >
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched1.taxpayer.total_sales_revenue"
-                placeholder="Sales/Revenues/Receipts/Fees"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="36">
+              <a-tooltip>
+                <template slot="title">Sales/Revenues/Receipts/Fees</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II015' || form.taxpayer_atc_code =='II017' || form.taxpayer_atc_code =='II016'"
+                  style="width:100%"
+                  v-model="form.sched1.taxpayer.total_sales_revenue"
+                  placeholder="Sales/Revenues/Receipts/Fees"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+              <a-tooltip>
+                <template slot="title">Sales/Revenues/Receipts/Fees</template>
+              </a-tooltip>
               <a-input-number
-                style="width:100%"
+                style="width: 100%"
+                :disabled="form.spouse_atc_code =='SII015' || form.spouse_atc_code =='SII017' || form.spouse_atc_code =='SII016' "
                 v-model="form.sched1.spouse.total_sales_revenue"
                 placeholder="Sales/Revenues/Receipts/Fees"
               ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="37."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="37">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.taxpayer.total_sales_services"
@@ -50,7 +50,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.spouse.total_sales_services"
@@ -59,13 +59,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="38."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="38">
               <a-input-number
                 disabled
                 style="width:100%"
@@ -75,7 +71,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 disabled
                 style="width:100%"
@@ -85,13 +81,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="39."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="39">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.taxpayer.total_allowable_itemized_deductions"
@@ -100,7 +92,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.spouse.total_allowable_itemized_deductions"
@@ -109,13 +101,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="40."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="40">
               <a-input-number
                 style="width:100%"
                 :value="total_standard_deductions()"
@@ -124,7 +112,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
                 :value="spouse_total_standard_deductions()"
@@ -133,13 +121,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="41."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="41">
               <a-input-number
                 :value="total_net_income()"
                 style="width:100%"
@@ -148,7 +132,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 :value="spouse_total_net_income()"
                 style="width:100%"
@@ -157,13 +141,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="42."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="42">
               <a-input-number
                 v-model="form.sched1.taxpayer.total_taxable_income"
                 style="width:100%"
@@ -172,7 +152,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 v-model="form.sched1.spouse.total_taxable_income"
                 style="width:100%"
@@ -181,13 +161,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="43."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="43">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.taxpayer.total_operation_income"
@@ -196,7 +172,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.spouse.total_operation_income"
@@ -205,13 +181,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="44."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="44.">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.taxpayer.amount_recieved_share"
@@ -220,7 +192,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
                 v-model="form.sched1.spouse.amount_recieved_share"
@@ -229,13 +201,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="45."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="45">
               <a-input-number
                 style="width:100%"
                 :value="total_taxable_income_date()"
@@ -245,7 +213,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 style="width:100%"
                 :value="spouse_total_taxable_income_date()"
@@ -255,13 +223,9 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="4">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="46."
-            >
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="46.">
               <a-input-number
                 v-model="form.sched1.taxpayer.total_tax_due"
                 style="width:100%"
@@ -270,7 +234,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
               <a-input-number
                 v-model="form.sched1.spouse.total_tax_due"
                 style="width:100%"
