@@ -247,7 +247,8 @@ export default {
   },
   methods: {
     onClose() {
-      this.visible = false;
+      // this.visible = false;
+      this.$emit("close");
     },
     total_tax_credit() {
       var total = this.computeSum([

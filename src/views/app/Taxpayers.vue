@@ -58,7 +58,7 @@
                             <a slot="actions">view</a>
                         <a-list-item-meta>
                             
-                            <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
+                            <p slot="title">{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:`${item.registered_name}`}}</p>
                             <template slot="description" >
                                 <p><b>{{formatTIN(item.tin)}}</b></p>
                                 <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
@@ -127,11 +127,12 @@ export default {
                 return this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
             })
             .then(results=>{
-                console.log('result2 ::: ', JSON.stringify(results.data))
+                console.log('result2 :: connections: ', JSON.stringify(results.data))
                 var tins = []
                 results.data.model.forEach(tin=>{
                     tins.push(tin.to)
                 })
+                
                 return this.$http.post('/taxpayer/details/',tins)
             })
             .then(results =>{
@@ -139,6 +140,7 @@ export default {
                 this.loading = false;
                 this.users.push(...results.data.model.users);
                 this.taxpayers.push(...results.data.model.taxpayers)
+                console.log("taxpayers data: " + JSON.stringify(this.taxpayers))
             })
             .catch(err=>{
                 console.log(`err ::: `, err)
