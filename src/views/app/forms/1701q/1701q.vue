@@ -352,7 +352,7 @@
         :wrapperCol="form_layout.wrapper_col"
       >
         <a-input
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
           :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' / ')"
           placeholder="Spouse's Tax Identification Number"
           v-model="form.spouse_details.tin"
@@ -367,7 +367,7 @@
       >
         <a-input
           v-model="form.spouse_details.rdo_code"
-          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
           placeholder="RDO Code"
         ></a-input>
       </a-form-item>
@@ -468,7 +468,7 @@
         <a-input
           placeholder="Spouse's Name: Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
-          :disabled="form.taxpayer.filer_type == 'EST' || form.taxpayer.filer_type == 'TRU'"
+          :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         ></a-input>
       </a-form-item>
 
@@ -527,7 +527,7 @@
             <span
               style="margin-right: 14px"
             >Tax Rate* (choose one, for income from business/profession):</span>
-            <a-radio-group v-model="form.spouse_tax_rate" disabled>
+            <a-radio-group v-model="form.spouse_tax_rate" :value="changeSpouseATC()" disabled>
               <a-tooltip>
                 <template
                   slot="title"
@@ -572,15 +572,16 @@
       <a-divider>
         <b>Part III: TOTAL TAX PAYABLE</b>
       </a-divider>
-      <a-row :gutter="6">
+      <a-row :gutter="12">
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="A) Taxpayer/Filer"></a-form-item>
-          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 20}" label="26">
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="26">
             <a-tooltip>
               <template
                 slot="title"
               >Tax Due (From Part V, Schedule I-Item 46 OR Schedule II-Item 54)</template>
               <a-input-number
+                style="width: 100%"
                 disabled
                 :value="total_tax_payable()"
                 v-model="form.taxpayer_prev_tax_due"
@@ -592,7 +593,12 @@
         <a-col :span="12">
           <a-form-item style="margin-left: 75px;" label="B) Spouse"></a-form-item>
           <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-            <a-input-number v-model="form.spouse_prev_tax_due" placeholder="Tax Due" disabled></a-input-number>
+            <a-input-number
+              style="width: 100%"
+              v-model="form.spouse_prev_tax_due"
+              placeholder="Tax Due"
+              disabled
+            ></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
@@ -610,6 +616,7 @@
             <a-tooltip>
               <template slot="title">Less: Tax Credits/Payments (From Part V, Schedule III-Item 62)</template>
               <a-input-number
+                style="width: 100%"
                 v-model="form.taxpayer_tax_credit"
                 placeholder="Less: Tax Credits/Payments "
                 disabled
@@ -619,7 +626,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-            <a-input-number v-model="form.spouse_tax_credit" disabled></a-input-number>
+            <a-input-number style="width: 100%" v-model="form.spouse_tax_credit" disabled></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
@@ -638,6 +645,7 @@
                 slot="title"
               >Tax Payable/(Overpayment) (Item 26 Less Item 27) (From Part V, Item 63)</template>
               <a-input-number
+                style="width: 100%"
                 :value="taxpayer_tax_due()"
                 v-model="form.taxpayer_tax_due"
                 placeholder="Tax Payable/(Overpayment)"
@@ -649,6 +657,7 @@
         <a-col :span="12">
           <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
+              style="width: 100%"
               :value="taxpayer_tax_due()"
               v-model="form.spouse_tax_due"
               placeholder="26 Less Item 27 From Part V,Item 63)"
@@ -664,6 +673,7 @@
             <a-tooltip>
               <template slot="title">Add: Total Penalties (From Part V, Schedule IV-Item 67)</template>
               <a-input-number
+                style="width: 100%"
                 v-model="form.taxpayer_total_penalties"
                 placeholder="Total Penalties"
                 disabled
@@ -672,8 +682,8 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-            <a-input-number v-model="form.spouse_total_penalties" disabled></a-input-number>
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+            <a-input-number style="width: 100%" v-model="form.spouse_total_penalties" disabled></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
@@ -691,6 +701,7 @@
             <a-tooltip>
               <template slot="title">Total Amount Payable/ (Overpayment)</template>
               <a-input-number
+                style="width: 100%"
                 :value="taxpayer_total_amount_payable()"
                 v-model="form.taxpayer_total_amount_payable"
                 placeholder="Total Amount Payable/Overpayment"
@@ -701,8 +712,9 @@
         </a-col>
 
         <a-col :span="12">
-          <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
+              style="width: 100%"
               :value="taxpayer_total_amount_payable()"
               v-model="form.spouse_total_amount_payable"
               disabled
@@ -717,6 +729,7 @@
             <a-tooltip>
               <template slot="title">Aggregate Amount Payable/(Overpayment)</template>
               <a-input-number
+                style="width: 100%"
                 v-model="form.taxpayer_aggregate_amount_payable"
                 placeholder="Aggregate Amount Payable/(Overpayment)"
                 disabled
@@ -947,13 +960,25 @@ export default {
     },
     changeATC(e) {
       const value = this.form.taxpayer_atc_code;
+
       console.log("change ATC value :", value);
       const for_gr = ["II012", "II014", "II013"];
       const for_gs = ["II015", "II017", "II016"];
+
       this.form.taxpayer_tax_rate = for_gr.includes(value)
         ? "GR"
         : for_gs.includes(value)
         ? "GS"
+        : "";
+    },
+    changeSpouseATC(e) {
+      const value = this.form.spouse_atc_code;
+      const for_sgr = ["SII012", "SII014", "SII013"];
+      const for_sogs = ["SII015", "SII017", "SII016"];
+      this.form.spouse_tax_rate = for_sgr.includes(value)
+        ? "SGR"
+        : for_sogs.includes(value)
+        ? "SOGS"
         : "";
     },
     error_item(item) {
@@ -1048,11 +1073,11 @@ export default {
           });
         }
       }
-      this.$emit("error", errors);
-      if (!errors.length) {
-        this.changeStep(this.step + 1);
-      }
+      // this.$emit("error", errors);
+      // if (!errors.length) {
+      this.changeStep(this.step + 1);
     }
+    // }
   },
   created() {
     console.log(
