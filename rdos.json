@@ -1,0 +1,123 @@
+{"_id":{"$oid":"5dc3e61b55e56a12481a47ef"},"code":"001","description":"Laoag,Ilocos Norte","coordinates":{"lat":"18.22491","lng":"120.607","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f0"},"code":"002","description":"Vigan,Ilocos sur","coordinates":{"lat":"         17.555250","lng":"120.381439","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f1"},"code":"003","description":"San Fernando, La Union","coordinates":{"lat":"16.602921","lng":"120.362862","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f2"},"code":"004","description":"Calasiao, West Pangasinan","coordinates":{"lat":"16.01363","lng":"120.35573","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f3"},"code":"005","description":"Alaminos, West Pangasinan","coordinates":{"lat":"16.15032","lng":"119.99413","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f4"},"code":"006","description":"Urdaneta, East Pangasinan","coordinates":{"lat":"15.95932","lng":"120.55682","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f5"},"code":"007","description":"Bangued,Abra","coordinates":{"lat":"17.59703","lng":"120.61893","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f6"},"code":"008","description":"Baguio City","coordinates":{"lat":"16.402332","lng":"120.596008","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f7"},"code":"009","description":"La Trinidad, Benguet","coordinates":{"lat":"16.458679","lng":"120.581238","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f8"},"code":"010","description":"Bontoc, Mt. Province","coordinates":{"lat":"16.8664","lng":"120.87531","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47f9"},"code":"011","description":"Tabuk City, Kalinga","coordinates":{"lat":"17.473669","lng":"121.465988","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47fa"},"code":"012","description":"Lagawe, Ifugao","coordinates":{"lat":"16.80197","lng":"121.118378","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47fb"},"code":"013","description":"Tuguegarao, Cagayan","coordinates":{"lat":"17.61824","lng":"121.723961","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47fc"},"code":"014","description":"Bayombong, Nueva Vizcaya","coordinates":{"lat":"16.4945","lng":"121.16526","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47fd"},"code":"015","description":"Naguilan, Isabela","coordinates":{"lat":"17.022141","lng":"121.835281","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47fe"},"code":"016","description":"Cabarroguis, Quirino","coordinates":{"lat":"16.51919","lng":"121.5487","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a47ff"},"code":"017","description":"Tarlac, Tarlac City","coordinates":{"lat":"15.48532","lng":"120.636551","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4800"},"code":"018","description":"Paniqui, Tarlac","coordinates":{"lat":"15.66862","lng":"120.578331","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4801"},"code":"019","description":"Olongapo City","coordinates":{"lat":"        14.838630 ","lng":"120.284203","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4802"},"code":"020","description":"Subic Bay Freeport Zone","coordinates":{"lat":"14.44753","lng":"121.035782","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4803"},"code":"021","description":"Balanga, Bataan","coordinates":{"lat":"14.69177","lng":"120.538582","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4804"},"code":"21A","description":"North Pampanga","coordinates":{"lat":"15.14056","lng":"120.58745","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4805"},"code":"21A","description":"South Pampanga","coordinates":{"lat":"15.18226","lng":"120.57238","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4806"},"code":"21A","description":"Baler, Aurora","coordinates":{"lat":"15.76153","lng":"121.560188","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4807"},"code":"21A","description":"North Nueva Ecija","coordinates":{"lat":"15.88159","lng":"120.89846","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4808"},"code":"21A","description":"South Nueva Ecija","coordinates":{"lat":"15.45345","lng":"121.33936","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4809"},"code":"21A","description":"Valenzuela City","coordinates":{"lat":"14.69857","lng":"120.9776","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a480a"},"code":"21A","description":"Plaridel, Bulacan","coordinates":{"lat":"14.88657","lng":"120.859932","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a480b"},"code":"21A","description":"Sta.Maria,Bulacan","coordinates":{"lat":"14.8204996","lng":"120.9606151","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a480c"},"code":"21A","description":"Malabon, Navotas","coordinates":{"lat":"14.6552","lng":"120.95","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a480d"},"code":"21A","description":"Caloocan City","coordinates":{"lat":"14.6384829","lng":"120.978491","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a480e"},"code":"21A","description":"Novaliches","coordinates":{"lat":"14.7215","lng":"121.038","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a480f"},"code":"029","description":"Tondo - San Nicolas","coordinates":{"lat":"14.6137662","lng":"120.9781915","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4810"},"code":"030","description":"Binondo","coordinates":{"lat":"14.6008992","lng":"120.9747067","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4811"},"code":"031","description":"Sta. Cruz","coordinates":{"lat":"6.7867148","lng":"125.3950574","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4812"},"code":"032","description":"Quiapo-Sampaloc-Sta. Mesa-San Miguel","coordinates":{"lat":"14.6024","lng":"120.986","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4813"},"code":"033","description":"Intramuros-Ermita-Malate","coordinates":{"lat":"14.568964","lng":"120.991529","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4814"},"code":"034","description":"Paco-Pandacan-Sta. Ana-San Andres","coordinates":{"lat":"5.98889","lng":"121.16583","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4815"},"code":"035","description":"Romblon","coordinates":{"lat":"12.5","lng":"122.25","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4816"},"code":"036","description":"Puerto Princesa","coordinates":{"lat":"9.9586172","lng":"118.8083553","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4817"},"code":"037","description":"San Jose, Occidental Mindoro","coordinates":{"lat":"12.3529756","lng":"121.0663052","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4818"},"code":"038","description":"North Quezon City","coordinates":{"lat":"14.6509905","lng":"121.0486155","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4819"},"code":"039","description":"South Quezon City","coordinates":{"lat":"14.650991","lng":"121.048616","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a481a"},"code":"040","description":"Cubao","coordinates":{"lat":"14.6208116","lng":"121.0523535","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a481b"},"code":"041","description":"Mandaluyong City","coordinates":{"lat":"14.5777807","lng":"121.0332295","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a481c"},"code":"042","description":"San Juan","coordinates":{"lat":"14.6047","lng":"121.03","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a481d"},"code":"043","description":"Pasig","coordinates":{"lat":"14.5605151","lng":"121.0767129","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a481e"},"code":"044","description":"Taguig-Pateros","coordinates":{"lat":"14.5434042","lng":"121.0749874","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a481f"},"code":"045","description":"Marikina","coordinates":{"lat":"14.6331084","lng":"121.0993541","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4820"},"code":"046","description":"Cainta/Taytay","coordinates":{"lat":"14.5608707","lng":"121.1462871","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4821"},"code":"047","description":"East Makati","coordinates":{"lat":"14.5545947","lng":"121.0214079","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4822"},"code":"048","description":"West Makati","coordinates":{"lat":"14.554595","lng":"121.021408","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4823"},"code":"049","description":"North Makati","coordinates":{"lat":"32.41817","lng":"111.00918","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4824"},"code":"050","description":"South Makati","coordinates":{"lat":"61.55196","lng":"149.81535","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4825"},"code":"051","description":"Pasay City","coordinates":{"lat":"14.5436995","lng":"120.9946503","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4826"},"code":"052","description":"Paranaque","coordinates":{"lat":"14.5007016","lng":"120.9915488","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4827"},"code":"053","description":"Las Pinas City","coordinates":{"lat":"14.4806089","lng":"120.9819099","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4828"},"code":"054","description":"Muntinlupa City","coordinates":{"lat":"14.3940614","lng":"121.0410436","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4829"},"code":"055","description":"Trece Martirez City, East Cavite","coordinates":{"lat":"14.3575979","lng":"120.5771725","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a482a"},"code":"056","description":"Kawit, West Cavite","coordinates":{"lat":"14.4438212","lng":"120.8981271","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a482b"},"code":"057","description":"San Pablo City","coordinates":{"lat":"14.0701","lng":"121.326","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a482c"},"code":"058","description":"Calamba, Laguna","coordinates":{"lat":"14.2143059","lng":"121.1675675","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a482d"},"code":"059","description":"Binan, Laguna","coordinates":{"lat":"14.3385061","lng":"121.0835962","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a482e"},"code":"060","description":"Batangas City","coordinates":{"lat":"13.6597904","lng":"121.0826379","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a482f"},"code":"061","description":"Lipa City","coordinates":{"lat":"13.9408386","lng":"121.1376644","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4830"},"code":"062","description":"Lucena City","coordinates":{"lat":"13.9692166","lng":"121.6301905","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4831"},"code":"063","description":"Gumaca, Quezon","coordinates":{"lat":"13.9215088","lng":"122.1015591","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4832"},"code":"064","description":"Boac, Marinduque","coordinates":{"lat":"13.4280225","lng":"121.818784","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4833"},"code":"065","description":"Calapan, Oriental Mindoro","coordinates":{"lat":"13.4070484","lng":"121.1778479","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4834"},"code":"066","description":"Talisay, Camarines Norte","coordinates":{"lat":"14.1349581","lng":"122.9237258","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4835"},"code":"067","description":"Naga City","coordinates":{"lat":"13.6403192","lng":"123.240651","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4836"},"code":"068","description":"Iriga City","coordinates":{"lat":"56.9493977","lng":"24.1051846","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4837"},"code":"069","description":"Legazpi City, Albay","coordinates":{"lat":"13.1516322","lng":"123.7520096","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4838"},"code":"070","description":"Sorsogon, Sorsogon","coordinates":{"lat":"12.9707848","lng":"124.0052543","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4839"},"code":"071","description":"Virac, Catanduanes","coordinates":{"lat":"13.5808157","lng":"124.2310553","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a483a"},"code":"072","description":"Masbate, Masbate","coordinates":{"lat":"12.3710899","lng":"123.6239223","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a483b"},"code":"073","description":"Kalibo, Aklan","coordinates":{"lat":"11.7935471","lng":"122.4412561","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a483c"},"code":"074","description":"Roxas City","coordinates":{"lat":"11.6249388","lng":"122.7395209","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a483d"},"code":"075","description":"San Jose, Antique","coordinates":{"lat":"10.7433533","lng":"121.9438784","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a483e"},"code":"076","description":"Iloilo City","coordinates":{"lat":"10.7026718","lng":"122.5686136","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a483f"},"code":"077","description":"Zarraga, Iloilo City","coordinates":{"lat":"10.9534597","lng":"122.5756326","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4840"},"code":"078","description":"Victorias City, Negros Occidental","coordinates":{"lat":"10.9013412","lng":"123.0714943","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4841"},"code":"079","description":"Bacolod City","coordinates":{"lat":"10.6762836","lng":"122.9513786","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4842"},"code":"080","description":"Binalbagan, Negros Occidental","coordinates":{"lat":"10.19742","lng":"122.86573","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4843"},"code":"081","description":"Dumaguete City","coordinates":{"lat":"9.30684","lng":"123.30545","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4844"},"code":"082","description":"Mandaue City","coordinates":{"lat":"10.32797","lng":"123.941109","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4845"},"code":"083","description":"Cebu City North","coordinates":{"lat":"10.31599","lng":"123.89024","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4846"},"code":"084","description":"Cebu City South","coordinates":{"lat":"10.31948","lng":"123.88254","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4847"},"code":"085","description":"Talisay, Cebu","coordinates":{"lat":"10.26339","lng":"123.83899","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4848"},"code":"086","description":"Tagbilaran City","coordinates":{"lat":"9.67543","lng":"123.878151","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4849"},"code":"087","description":"Catarman, Northern Samar","coordinates":{"lat":"12.50187","lng":"124.627098","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a484a"},"code":"088","description":"Borongan, Eastern Samar","coordinates":{"lat":"11.6895","lng":"125.464981","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a484b"},"code":"089","description":"Calbayog, Samar","coordinates":{"lat":"12.06941","lng":"124.59303","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a484c"},"code":"090","description":"Tacloban City","coordinates":{"lat":"11.2430274","lng":"125.0081402","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a484d"},"code":"091","description":"Ormoc City","coordinates":{"lat":"11.0094099","lng":"124.6075767","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a484e"},"code":"092","description":"Maasin, Southern Leyte","coordinates":{"lat":"10.1325317","lng":"124.8384641","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a484f"},"code":"093","description":"Dipolog City","coordinates":{"lat":"8.5864062","lng":"123.3449371","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4850"},"code":"094","description":"Pagadian City, Zamboanga del Sur","coordinates":{"lat":"7.8249717","lng":"123.4365816","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4851"},"code":"095","description":"Zamboanga City, Zamboanga del Sur","coordinates":{"lat":"7.9043","lng":"123.3194","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4852"},"code":"096","description":"Zamboanga Sibugay","coordinates":{"lat":"7.7877097","lng":"122.5744217","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4853"},"code":"097","description":"Isabela, Basilan","coordinates":{"lat":"6.7055236","lng":"121.9726402","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4854"},"code":"098","description":"Jolo, Sulu","coordinates":{"lat":"6.0536561","lng":"121.0002644","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4855"},"code":"099","description":"Bongao, Tawi-Tawi","coordinates":{"lat":"5.1047395","lng":"119.7401685","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4856"},"code":"100","description":"Gingoog City","coordinates":{"lat":"8.8242682","lng":"125.1041806","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4857"},"code":"101","description":"Cagayan de Oro City","coordinates":{"lat":"8.4404821","lng":"124.6855768","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4858"},"code":"102","description":"Malaybalay, Bukidnon","coordinates":{"lat":"8.1550421","lng":"125.1305726","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4859"},"code":"103","description":"Ozamis City","coordinates":{"lat":"14.4333816","lng":"121.0329839","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a485a"},"code":"104","description":"Iligan City","coordinates":{"lat":"8.2281556","lng":"124.2411508","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a485b"},"code":"105","description":"Marawi City","coordinates":{"lat":"13.2687204","lng":"33.9301963","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a485c"},"code":"106","description":"Butuan City","coordinates":{"lat":"8.9478297","lng":"125.527228","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a485d"},"code":"107","description":"Bayugan, Agusan del Sur","coordinates":{"lat":"8.786873","lng":"125.7456784","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a485e"},"code":"108","description":"Surigao City","coordinates":{"lat":"9.7916433","lng":"125.4929273","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a485f"},"code":"109","description":"Tandag, Surigao del Sur","coordinates":{"lat":"9.0799833","lng":"126.1974606","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4860"},"code":"110","description":"Cotabato City","coordinates":{"lat":"7.1970344","lng":"124.2351714","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4861"},"code":"111","description":"Kidapawan, North Cotabato","coordinates":{"lat":"7.0085914","lng":"125.0904889","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4862"},"code":"112","description":"Tacurong, Sultan Kudarat","coordinates":{"lat":"6.6884368","lng":"124.6786576","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4863"},"code":"113","description":"General Santos City","coordinates":{"lat":"6.112331","lng":"125.1717145","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4864"},"code":"114","description":"Koronadal, South Cotabato","coordinates":{"lat":"6.5004067","lng":"124.8435427","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4865"},"code":"115","description":"Tagum, Davao del Norte","coordinates":{"lat":"7.4470234","lng":"125.8111811","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4866"},"code":"116","description":"West Davao City","coordinates":{"lat":"7.0644576","lng":"125.6083647","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4867"},"code":"117","description":"East Davao City","coordinates":{"lat":"7.0644576","lng":"125.6083647","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4868"},"code":"118","description":"Mati, Davao Oriental","coordinates":{"lat":"6.9513743","lng":"126.216777","radius":"10000"}}
+{"_id":{"$oid":"5dc3e61b55e56a12481a4869"},"code":"119","description":"Digos, Davao del Sur","coordinates":{"lat":"6.7443797","lng":"125.3556265","radius":"10000"}}
