@@ -393,6 +393,11 @@ export default new Router({
   {
     path: '/admin',
     name: 'Admin',
+    beforeEnter(to, from, next) {
+      if(store.state.account_session.admin_user){
+        next('/admin/app');
+      } else next()
+    },
     component: () => import('./views/admin/Home.vue'),
     children: [{
       path: '',
@@ -403,6 +408,11 @@ export default new Router({
   {
     path: '/admin/app',
     name: 'Admin',
+    beforeEnter(to, from, next) {
+      if(!store.state.account_session.admin_user){
+        next('/admin');
+      } else next()
+    },
     component: () => import('./views/admin/Main.vue'),
     children: [{
       path: '',
