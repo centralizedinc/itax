@@ -16,12 +16,12 @@
             </a-tooltip>
           </a-input-search>
         </a-col>
-        <a-col :span="1" style="text-align: right; color: blue">
+        <!-- <a-col :span="1" style="text-align: right; color: blue">
           <a-tooltip>
             <span slot="title">Filter</span>
             <a-icon type="filter" style="cursor: pointer; font-size: 16px;" />
           </a-tooltip>
-        </a-col>
+        </a-col> -->
       </a-row>
     </a-card>
     <a-row v-if="!loading && !search_mode" :gutter="7" type="flex" justify="center" align="middle">
@@ -34,10 +34,7 @@
         :xl="{ span: 8 }"
         style="margin-bottom: 1vh;"
       >
-        <a-card>
-          <!-- <template class="ant-card-actions" slot="actions">
-            <span @click="moreDetails(taxpayer)">More Details...</span>
-          </template>-->
+        <a-card style="cursor: pointer;" @click="moreDetails(taxpayer)">
           <a-card-grid style="width: 100%; padding: 2vh;">
             <a-card-meta :title="taxpayer.registered_name || 'User'">
               <a-avatar
@@ -60,10 +57,7 @@
         :xl="{ span: 8 }"
         style="margin-bottom: 1vh;"
       >
-        <a-card>
-          <!-- <template class="ant-card-actions" slot="actions">
-            <span @click="moreDetails(taxpayer)">More Details...</span>
-          </template>-->
+        <a-card style="cursor: pointer;" @click="moreDetails(taxpayer)">
           <a-card-grid style="width: 100%; padding: 2vh;">
             <a-card-meta :title="taxpayer.registered_name || 'User'">
               <a-avatar
@@ -94,7 +88,7 @@
         :xl="{ span: 8 }"
         style="margin-bottom: 1vh;"
       >
-        <a-card>
+        <a-card style="cursor: pointer;" @click="moreDetails(taxpayer)">
           <a-card-grid style="width: 100%; padding: 2vh;">
             <a-card-meta :title="taxpayer.registered_name || 'User'">
               <a-avatar
