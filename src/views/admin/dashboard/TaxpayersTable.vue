@@ -27,7 +27,7 @@
     <a-row v-if="!loading && !search_mode" :gutter="7" type="flex" justify="center" align="middle">
       <a-divider>Top Taxpayers</a-divider>
       <a-col
-        v-for="(taxpayer, index) in top_taxpayers"
+        v-for="(taxpayer, index) in top_taxpayers(true)"
         :key="`top${index}`"
         :xs="{ span: 24 }"
         :md="{ span: 12 }"
@@ -35,9 +35,6 @@
         style="margin-bottom: 1vh;"
       >
         <a-card>
-          <!-- <template class="ant-card-actions" slot="actions">
-            <span @click="moreDetails(taxpayer)">More Details...</span>
-          </template>-->
           <a-card-grid style="width: 100%; padding: 2vh;">
             <a-card-meta :title="taxpayer.registered_name || 'User'">
               <a-avatar
@@ -52,31 +49,46 @@
         </a-card>
       </a-col>
       <a-divider>Other Taxpayers</a-divider>
-      <a-col
-        v-for="(taxpayer, index) in other_taxpayers"
-        :key="`other${index}`"
-        :xs="{ span: 24 }"
-        :md="{ span: 12 }"
-        :xl="{ span: 8 }"
-        style="margin-bottom: 1vh;"
+      <template
+        v-infinite-scroll="handleInfiniteOnLoad"
+        :infinite-scroll-disabled="busy"
+        :infinite-scroll-distance="10"
       >
-        <a-card>
-          <!-- <template class="ant-card-actions" slot="actions">
-            <span @click="moreDetails(taxpayer)">More Details...</span>
-          </template>-->
-          <a-card-grid style="width: 100%; padding: 2vh;">
-            <a-card-meta :title="taxpayer.registered_name || 'User'">
-              <a-avatar
-                slot="avatar"
-                shape="square"
-                :size="60"
-                :src="taxpayer.avatar || 'https://www.mediaupdate.co.za/img/avatar.png'"
-              />
-              <div slot="description" v-html="getDescription(taxpayer)"></div>
-            </a-card-meta>
-          </a-card-grid>
-        </a-card>
-      </a-col>
+        <a-col
+          v-for="(taxpayer, index) in other_taxpayers"
+          :key="`other${index}`"
+          :xs="{ span: 24 }"
+          :md="{ span: 12 }"
+          :xl="{ span: 8 }"
+          style="margin-bottom: 1vh;"
+        >
+          <a-card>
+            <a-card-grid style="width: 100%; padding: 2vh;">
+              <a-card-meta :title="taxpayer.registered_name || 'User'">
+                <a-avatar
+                  slot="avatar"
+                  shape="square"
+                  :size="60"
+                  :src="taxpayer.avatar || 'https://www.mediaupdate.co.za/img/avatar.png'"
+                />
+                <div slot="description" v-html="getDescription(taxpayer)"></div>
+              </a-card-meta>
+            </a-card-grid>
+          </a-card>
+        </a-col>
+        <a-col
+          v-if="fetching_taxpayers"
+          :xs="{ span: 24 }"
+          :md="{ span: 12 }"
+          :xl="{ span: 8 }"
+          style="margin-bottom: 1vh;"
+        >
+          <a-card :loading="true" />
+        </a-col>
+        <a-col :span="24" v-else>
+          <span>Done loading</span>
+        </a-col>
+      </template>
     </a-row>
     <a-row
       v-else-if="!loading && search_mode"
@@ -119,11 +131,13 @@ export default {
       loading: false,
       search_mode: false,
       search: "",
-      filtered_taxpayers: []
+      filtered_taxpayers: [],
+      busy: false,
+      show_length: 9,
+      fetching_taxpayers: false
     };
   },
   created() {
-    console.log('test');
     this.loading = true;
     this.$store
       .dispatch("GET_TAXPAYERS")
@@ -137,7 +151,7 @@ export default {
   computed: {
     taxpayers() {
       var taxpayers = this.deepCopy(this.$store.state.taxpayers.taxpayers);
-      console.log('this.login_rdo :', this.login_rdo);
+      console.log("this.login_rdo :", this.login_rdo);
       if (this.login_rdo) {
         taxpayers = taxpayers.filter(
           v => v.rdo_code && v.rdo_code === this.login_rdo
@@ -145,20 +159,20 @@ export default {
       }
       return taxpayers;
     },
-    top_taxpayers() {
-      return this.taxpayers.slice(0, 10);
-    },
     other_taxpayers() {
-      return this.taxpayers.slice(
-        10,
-        this.taxpayers.length
-      );
+      const other_taxpayers = this.top_taxpayers(false);
+      return other_taxpayers.slice(0, this.show_length);
     },
     login_rdo() {
       return this.$store.state.tax_form.login_rdo;
     }
   },
   methods: {
+    top_taxpayers(bool) {
+      const top_length = 10;
+      if (bool) return this.taxpayers.slice(0, top_length);
+      else return this.taxpayers.slice(top_length, this.taxpayers.length);
+    },
     getDescription(tp) {
       var test = <span></span>;
       return `TIN: <b>${this.formatTIN(tp.tin)}</b><br/>RDO: <b>${
@@ -183,6 +197,15 @@ export default {
           );
         });
       } else this.search_mode = false;
+    },
+    handleInfiniteOnLoad() {
+      this.fetching_taxpayers = true;
+      setTimeout(() => {
+        const other_taxpayers = this.top_taxpayers(false);
+        if (this.show_length >= other_taxpayers.length) this.busy = true;
+        else this.show_length += 9;
+        this.fetching_taxpayers = false;
+      }, 1000);
     }
   }
 };

@@ -514,8 +514,13 @@ export default {
 </script>
 
 <style>
-.statistic-chart canvas {
+/* .statistic-chart canvas {
   height: 28vh !important;
+} */
+
+.statistic-chart {
+  position: relative;
+  height: 30vh !important;
 }
 
 .collection-counts {
