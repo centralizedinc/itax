@@ -13,6 +13,7 @@
           <a-input
             v-model="details.company_details.tin"
             placeholder="TIN"
+            maxlength="13"
             @blur="searchTin"
             @keypress.enter="searchTin"
             maxlength="13"
@@ -27,6 +28,7 @@
           <a-input
             v-model="details.company_details.tin"
             placeholder="TIN"
+            maxlength="13"
             @blur="searchTin"
             @keypress.enter="searchTin"
           />
@@ -61,7 +63,7 @@
             <a-radio-button value="t">Trust</a-radio-button>
           </a-radio-group>
         </a-col>
-      </a-row> -->
+      </a-row>-->
 
       <a-row type="flex" align="middle" :gutter="5" class="row-fields">
         <a-col :xs="{ span: 12 }" :md="{ span: 4 }" class="text-right">Acounting Type:</a-col>
@@ -136,6 +138,7 @@
         <a-col :xs="{ span: 12 }" :md="{ span: 4 }" class="text-right">Zip Code:</a-col>
         <a-col :xs="{ span: 12 }" :md="{ span: 4 }">
           <a-input
+            maxlength="4"
             v-model="details.company_details.address_details.zipCode"
             placeholder="Zip Code"
           />
@@ -222,7 +225,9 @@ export default {
         if (this.details.company_details.tin === this.details.taxpayer.tin) {
           this.invalid_tin_status = "error";
           this.invalid_tin_msg = "You input your own TIN";
-        } else if (this.details.company_details.tin === this.details.spouse_details.tin) {
+        } else if (
+          this.details.company_details.tin === this.details.spouse_details.tin
+        ) {
           this.invalid_tin_status = "error";
           this.invalid_tin_msg = "You input your spouse TIN";
         } else {

@@ -424,6 +424,11 @@ const model_schema = {
                 default: 0
                 // 62
             }, //Sum of Items 55 to 61/To Part III, Item 27
+
+            overpayment: {
+                type: Number,
+                default: 0
+            },
         },
         spouse: {
             year_excess_credits: {
@@ -458,6 +463,11 @@ const model_schema = {
                 type: Number,
                 default: 0
             }, //Sum of Items 55 to 61/To Part III, Item 27
+
+            overpayment: {
+                type: Number,
+                default: 0
+            },
         }
     },
     // Part V Penalties
