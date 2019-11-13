@@ -1036,6 +1036,14 @@ export default {
     },
     atc_code_change() {
       this.form.taxpayer_atc_code = "";
+      if (
+        this.form.taxpayer.filer_type !== "sp" ||
+        this.form.taxpayer.filer_type !== "p" ||
+        this.form.taxpayer.filer_type !== "e" ||
+        this.form.taxpayer.filer_type !== "t"
+      ) {
+      }
+      this.form.taxpayer_method_deduction = "";
     },
     // clear radio
     changeATC(e) {
@@ -1143,6 +1151,7 @@ export default {
               "You selected Yes in item 15, please input Foreign Tax Number  "
           });
         }
+
         if (!this.form.taxpayer_method_deduction) {
           errors.push({
             page: 1,

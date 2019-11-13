@@ -409,7 +409,7 @@ function getContent(forms) {
                         text: forms.taxpayer_tax_rate == 'GR' ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'left',
-                        margin: [40, 4, 0, 0]
+                        margin: [42, 6, 0, 0]
                     },
                     {
                         text: forms.taxpayer_method_deduction == 'ID' ? 'X' : ' ',
@@ -429,9 +429,9 @@ function getContent(forms) {
                     [{
                         // text: 'X',
                         text: forms.taxpayer_tax_rate == 'GS' ? 'X' : ' ',
-                        fontSize: 14,
+                        fontSize: 12,
                         alignment: 'left',
-                        margin: [40, 0, 0, 0]
+                        margin: [42, 2, 0, 0]
                     },
                     {
                         // text: forms.filerType == 2 ? 'X' : ' ',
@@ -2239,7 +2239,7 @@ function getContent(forms) {
 
 function formatDate(date, type) {
     if (!date) {
-        return "";
+        return " ";
     }
     if (type === 'dateonly') type = {
         year: "numeric",
@@ -2264,7 +2264,7 @@ function formatAmount(amount) {
 }
 
 function mapTin(tin, from, to) {
-    if (!tin || from === null || to === null) return "";
+    if (!tin || from === null || to === null) return " ";
     return tin.substring(from, to);
 }
 
