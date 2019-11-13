@@ -468,7 +468,7 @@
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
+            :disabled="form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='CE' || form.taxpayer.spouse_tax_filter_type !=='SPCE'"
           >II016 Mixed Income – 8% IT Rate</a-radio>
           <br />
           <a-radio
@@ -1002,7 +1002,7 @@ export default {
         this.form.spouse_total_amount_payable
       ]);
     },
-    item26b() {},
+    // item26b() {},
     save_draft() {},
     submit() {
       this.loading = true;
@@ -1037,6 +1037,7 @@ export default {
     atc_code_change() {
       this.form.taxpayer_atc_code = "";
     },
+    // clear radio
     changeATC(e) {
       const value = this.form.taxpayer_atc_code;
       console.log("change ATC value :", value);
