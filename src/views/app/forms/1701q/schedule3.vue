@@ -265,6 +265,19 @@ export default {
       return total;
     },
     spouse_total_tax_credit() {
+      // var total = this.computeSum([
+      //   this.form.sched3.spouse.year_excess_credits,
+      //   this.form.sched3.spouse.payment_previous_quarter,
+      //   this.form.sched3.spouse.creditable_tax_withheld,
+      //   this.form.sched3.spouse.creditable_tax_withheld_per_bir,
+      //   this.form.sched3.spouse.tax_paid_return,
+      //   this.form.sched3.spouse.foriegn_tax_credits,
+      //   this.form.sched3.spouse.other_tax_credit
+      // ]);
+      // this.form.sched3.spouse.total_tax_credit = total;
+      // this.form.spouse_tax_due = this.form.sched3.spouse.total_tax_credit;
+      // return total;
+
       var total = this.computeSum([
         this.form.sched3.spouse.year_excess_credits,
         this.form.sched3.spouse.payment_previous_quarter,

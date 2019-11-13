@@ -406,28 +406,29 @@ export default {
     total_net_income() {
       var total = 0;
       if (
-        this.form.sched1.spouse.total_allowable_itemized_deductions ==
+        this.form.sched1.taxpayer.total_allowable_itemized_deductions ==
           undefined ||
-        this.form.sched1.spouse.total_allowable_itemized_deductions == 0 ||
-        this.form.sched1.spouse.total_allowable_itemized_deductions == null
+        this.form.sched1.taxpayer.total_allowable_itemized_deductions == 0 ||
+        this.form.sched1.taxpayer.total_allowable_itemized_deductions == null
       ) {
         total =
-          (this.form.sched1.spouse.gross_income || 0) -
-          (this.form.sched1.spouse.total_standard_deductions || 0);
+          (this.form.sched1.taxpayer.gross_income || 0) -
+          (this.form.sched1.taxpayer.total_standard_deductions || 0);
+        console.log("@@TOTAL :", total);
       } else if (
-        this.form.sched1.spouse.total_standard_deductions == undefined ||
-        this.form.sched1.spouse.total_standard_deductions == 0 ||
-        this.form.sched1.spouse.total_standard_deductions == null
+        this.form.sched1.taxpayer.total_standard_deductions == undefined ||
+        this.form.sched1.taxpayer.total_standard_deductions == 0 ||
+        this.form.sched1.taxpayer.total_standard_deductions == null
       ) {
         total =
-          (this.form.sched1.spouse.gross_income || 0) -
-          (this.form.sched1.spouse.total_allowable_itemized_deductions || 0);
+          (this.form.sched1.taxpayer.gross_income || 0) -
+          (this.form.sched1.taxpayer.total_allowable_itemized_deductions || 0);
       } else {
         // this.form.sched1.taxpayer.gross_income = 0;
         // this.form.sched1.taxpayer.total_allowable_itemized_deductions = 0;
         // this.form.sched1.taxpayer.total_standard_deductions = 0;
       }
-      this.form.sched1.spouse.total_net_income = total;
+      this.form.sched1.taxpayer.total_net_income = total;
       return total;
     },
 

@@ -129,22 +129,31 @@
                 :value="'II012'"
                 :disabled="form.taxpayer.filer_type == 'p'|| form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II012 Business Income-Graduated IT Rates</a-radio>
+              <br />
               <a-radio
                 :value="'II015'"
                 :disabled="form.taxpayer.filer_type == 'p'||form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II015 Business Income - 8% IT Rate</a-radio>
+              <br />
+
               <a-radio
                 :value="'II014'"
                 :disabled="form.taxpayer.filer_type == 's' || form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II014 Income from Profession–Graduated IT Rates</a-radio>
+              <br />
+
               <a-radio
                 :value="'II017'"
                 :disabled="form.taxpayer.filer_type == 's' ||form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II017 Income from Profession – 8% IT Rate</a-radio>
+              <br />
+
               <a-radio
                 :value="'II013'"
                 :disabled="form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II013 Mixed Income–Graduated IT Rates</a-radio>
+              <br />
+
               <a-radio
                 :value="'II016'"
                 :disabled="form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
@@ -834,25 +843,25 @@ export default {
       this.show = 1;
       this.form.pdf_page = 2;
     },
-    openSched2(){
-      this.sched = 2
-      this.show = 2
-      this.form.pdf_page = 2
+    openSched2() {
+      this.sched = 2;
+      this.show = 2;
+      this.form.pdf_page = 2;
     },
-     openSched3(){
-      this.sched = 3
-      this.show = 3
-      this.form.pdf_page = 2
+    openSched3() {
+      this.sched = 3;
+      this.show = 3;
+      this.form.pdf_page = 2;
     },
-     openSched4(){
-      this.sched = 4
-      this.show = 4
-      this.form.pdf_page = 2
+    openSched4() {
+      this.sched = 4;
+      this.show = 4;
+      this.form.pdf_page = 2;
     },
-    closeSched(){
-      this.form.pdf_page = 1
-      this.sched = 0
-      this.show = 0
+    closeSched() {
+      this.form.pdf_page = 1;
+      this.sched = 0;
+      this.show = 0;
     },
     changeTaxNo() {
       if (this.form.taxpayer_foreign_tax_credits == false) {

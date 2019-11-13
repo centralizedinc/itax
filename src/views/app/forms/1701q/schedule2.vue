@@ -223,7 +223,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="54">
               <a-tooltip>
-                <template slot="title">Taxable Income/(Loss) To Date (Item 51 Less Item 52)</template>
+                <template slot="title">Tax Due (Item 53 × 8% Tax Rate)</template>
                 <a-input-number
                   disabled
                   v-model="form.sched2.taxpayer.total_tax_due"
@@ -236,7 +236,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-tooltip>
-                <template slot="title">Taxable Income/(Loss) To Date (Item 51 Less Item 52)</template>
+                <template slot="title">Tax Due (Item 53 × 8% Tax Rate)</template>
                 <a-input-number
                   disabled
                   v-model="form.sched2.spouse.total_tax_due"
@@ -350,10 +350,16 @@ export default {
         (this.form.sched2.spouse.total_cumulative_income || 0) -
         (this.form.sched2.spouse.less_allowable_reduction || 0);
       this.form.sched2.spouse.total_taxable_income_date = total;
+      // computation for item 54
       this.form.sched2.spouse.total_tax_due = total * 0.08;
+      if (this.form.sched2.spouse.total_tax_due < 1) {
+        this.form.sched2.spouse.total_tax_due = 0;
+      }
+      // display in item 26
       this.form.spouse_prev_tax_due = this.form.sched2.spouse.total_tax_due;
       return total;
     },
+
     showModal() {
       this.visible = true;
     },
