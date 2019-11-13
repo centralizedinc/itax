@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-row :gutter="10" style="margin-bottom: 1vh;">
+    <a-row :gutter="10" style="margin-bottom: 2vh; height: 33vh;">
       <a-col
         :span="12"
         v-for="(item, index) in statistics"
