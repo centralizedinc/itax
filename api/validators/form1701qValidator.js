@@ -65,17 +65,17 @@ function validateRequired(field) {
 
     // Validate Spouse
 
-    if (!field.spouse_details || !field.spouse_details.tin) { //item 17
-        error_messages.push({ page: 2, field: "spouse_details.tin", error: constant_helper.MANDATORY_FIELD("Spouse's TIN") });
-    }
+    // if (!field.spouse_details || !field.spouse_details.tin) { //item 17
+    //     error_messages.push({ page: 2, field: "spouse_details.tin", error: constant_helper.MANDATORY_FIELD("Spouse's TIN") });
+    // }
 
-    if (!field.spouse_details || !field.spouse_details.rdo_code) { // item 18
-        error_messages.push({ page: 2, field: "spouse_details.rdo_code", error: constant_helper.MANDATORY_FIELD("Spouse's RDO Code") });
-    }
+    // if (!field.spouse_details || !field.spouse_details.rdo_code) { // item 18
+    //     error_messages.push({ page: 2, field: "spouse_details.rdo_code", error: constant_helper.MANDATORY_FIELD("Spouse's RDO Code") });
+    // }
 
-    if (!field.spouse_details || !field.spouse_details.registered_name) { // item 21
-        error_messages.push({ page: 2, field: "spouse_details.registered_name", error: constant_helper.MANDATORY_FIELD("Spouse's Name") });
-    }
+    // if (!field.spouse_details || !field.spouse_details.registered_name) { // item 21
+    //     error_messages.push({ page: 2, field: "spouse_details.registered_name", error: constant_helper.MANDATORY_FIELD("Spouse's Name") });
+    // }
 
     return error_messages;
 }
