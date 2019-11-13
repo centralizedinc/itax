@@ -60,6 +60,7 @@
         label="4"
       >
         <a-input-number
+          maxlength="2"
           placeholder="Number of Sheets"
           v-model="form.num_of_sheet"
           style="width: 100%"
