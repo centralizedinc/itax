@@ -871,10 +871,10 @@ export default {
       this.show = 1;
       this.form.pdf_page = 2;
     },
-    openSched2() {
-      this.sched = 2;
-      this.show = 2;
-      this.form.pdf_page = 2;
+    openSched2(){
+      this.sched = 2
+      this.show = 2
+      this.form.pdf_page = 2
     },
     openSched3() {
       this.sched = 3;
