@@ -1036,19 +1036,21 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.taxpayer.total_sales_revenue),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, 2, 0, 0]
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.spouse.total_sales_revenue),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, 2, 0, 0]
 
                         }
@@ -1070,19 +1072,21 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.taxpayer.total_sales_services),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, -3, 0, 0]
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.spouse.total_sales_services),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1104,19 +1108,21 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.taxpayer.gross_income),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, -4, 0, 0]
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.spouse.gross_income),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1138,19 +1144,21 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.taxpayer.total_allowable_itemized_deductions),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, 6, 0, 0]
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.spouse.total_allowable_itemized_deductions),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, 6, 0, 0]
 
                         }
@@ -1174,19 +1182,21 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.taxpayer.total_standard_deductions),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, 5, 0, 0]
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.spouse.total_standard_deductions),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, 5, 0, 0]
 
                         }
@@ -1208,19 +1218,21 @@ function getContent(forms) {
                                 text: ""
                             },
                             {
-                                text: "000",
+                                // text: "000",
+                                text:formatAmount(forms.sched1.taxpayer.total_net_income),
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'right',
-                                characterSpacing: 7,
+                                characterSpacing: 6,
                                 margin: [1, -3, 0, 0]
                             },
                             {
-                                text: "000",
+                                // text: "000",
+                                text:formatAmount(forms.sched1.spouse.total_net_income),
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'right',
-                                characterSpacing: 7,
+                                characterSpacing: 6,
                                 margin: [1, -3, 0, 0]
     
                             }
@@ -1242,19 +1254,21 @@ function getContent(forms) {
                                 text: ""
                             },
                             {
-                                text: "000",
+                                // text: "000",
+                                text:formatAmount(forms.sched1.taxpayer.total_taxable_income),
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'right',
-                                characterSpacing: 7,
+                                characterSpacing: 6,
                                 margin: [1, -3, 0, 0]
                             },
                             {
-                                text: "000",
+                                // text: "000",
+                                text:formatAmount(forms.sched1.spouse.total_taxable_income),
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'right',
-                                characterSpacing: 7,
+                                characterSpacing: 6,
                                 margin: [1, -3, 0, 0]
     
                             }
@@ -1273,7 +1287,7 @@ function getContent(forms) {
                         [
     
                             {
-                                text: "text",
+                                text: forms.taxpayer.total_operation_income_others,
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'left',
@@ -1281,19 +1295,21 @@ function getContent(forms) {
                                 margin: [154, -7, 0, 0]
                             },
                             {
-                                text: "000",
+                                // text: "000",
+                                text:formatAmount(forms.sched1.taxpayer.total_operation_income),
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'right',
-                                characterSpacing: 7,
+                                characterSpacing: 6,
                                 margin: [1, -3, 0, 0]
                             },
                             {
-                                text: "000",
+                                // text: "000",
+                                text:formatAmount(forms.sched1.spouse.total_operation_income),
                                 fontSize: 12,
                                 bold: true,
                                 alignment: 'right',
-                                characterSpacing: 7,
+                                characterSpacing: 6,
                                 margin: [1, -3, 0, 0]
     
                             }
@@ -1315,19 +1331,22 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        
+                                        text:formatAmount(forms.sched1.taxpayer.amount_recieved_share),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -2, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.amount_recieved_share),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -2, 0, 0]
             
                                     }
@@ -1349,19 +1368,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.total_taxable_income_date),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -5, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_taxable_income_date),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -5, 0, 0]
             
                                     }
@@ -1383,19 +1404,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.ttotal_tax_due),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -5, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_tax_due),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -5, 0, 0]
             
                                     }
@@ -1417,7 +1440,9 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        
+                                        text:formatAmount(forms.sched1.taxpayer.total_sales_revenue),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
@@ -1425,7 +1450,8 @@ function getContent(forms) {
                                         margin: [1, 10, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_sales_revenue),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
@@ -1456,19 +1482,21 @@ function getContent(forms) {
                                         margin: [145, -7, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.total_operation_income),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -2, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_operation_income),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -2, 0, 0]
             
                                     }
@@ -1490,19 +1518,21 @@ function getContent(forms) {
                                             text: ""
                                         },
                                         {
-                                            text: "000",
+                                            // text: "000",
+                                            text:formatAmount(forms.sched1.taxpayer.total_income_quarter),
                                             fontSize: 12,
                                             bold: true,
                                             alignment: 'right',
-                                            characterSpacing: 7,
+                                            characterSpacing: 6,
                                             margin: [1, -4, 0, 0]
                                         },
                                         {
-                                            text: "000",
+                                            // text: "000",
+                                            text:formatAmount(forms.sched1.spouse.total_income_quarter),
                                             fontSize: 12,
                                             bold: true,
                                             alignment: 'right',
-                                            characterSpacing: 7,
+                                            characterSpacing: 6,
                                             margin: [1, -4, 0, 0]
                 
                                         }
@@ -1524,19 +1554,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.previous_quarter_taxable_income),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -4, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.previous_quarter_taxable_income),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -4, 0, 0]
             
                                     }
@@ -1558,19 +1590,21 @@ function getContent(forms) {
                             text: ""
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.taxpayer.total_cumulative_income),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, -4, 0, 0]
                         },
                         {
-                            text: "000",
+                            // text: "000",
+                            text:formatAmount(forms.sched1.spouse.total_cumulative_income),
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 7,
+                            characterSpacing: 6,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1592,19 +1626,21 @@ function getContent(forms) {
                                     text: ""
                                 },
                                 {
-                                    text: "000",
+                                    // text: "000",
+                                    text:formatAmount(forms.sched1.taxpayer.less_allowable_reduction),
                                     fontSize: 12,
                                     bold: true,
                                     alignment: 'right',
-                                    characterSpacing: 7,
+                                    characterSpacing: 6,
                                     margin: [1, -4, 0, 0]
                                 },
                                 {
-                                    text: "000",
+                                    // text: "000",
+                                    text:formatAmount(forms.sched1.spouse.less_allowable_reduction),
                                     fontSize: 12,
                                     bold: true,
                                     alignment: 'right',
-                                    characterSpacing: 7,
+                                    characterSpacing: 6,
                                     margin: [1, -4, 0, 0]
         
                                 }
@@ -1626,19 +1662,21 @@ function getContent(forms) {
                                             text: ""
                                         },
                                         {
-                                            text: "000",
+                                            // text: "000",
+                                            text:formatAmount(forms.sched1.taxpayer.total_taxable_income_date),
                                             fontSize: 12,
                                             bold: true,
                                             alignment: 'right',
-                                            characterSpacing: 7,
+                                            characterSpacing: 6,
                                             margin: [1, -3, 0, 0]
                                         },
                                         {
-                                            text: "000",
+                                            // text: "000",
+                                            text:formatAmount(forms.sched1.spouse.total_taxable_income_date),
                                             fontSize: 12,
                                             bold: true,
                                             alignment: 'right',
-                                            characterSpacing: 7,
+                                            characterSpacing: 6,
                                             margin: [1, -3, 0, 0]
                 
                                         }
@@ -1660,19 +1698,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.total_tax_due),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_tax_due),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
             
                                     }
@@ -1694,19 +1734,21 @@ function getContent(forms) {
                                                 text: ""
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.taxpayer.year_excess_credits),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, 9, 0, 0]
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.spouse.year_excess_credits),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, 9, 0, 0]
                     
                                             }
@@ -1728,19 +1770,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.payment_previous_quarter),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.payment_previous_quarter),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
             
                                     }
@@ -1762,19 +1806,21 @@ function getContent(forms) {
                                                 text: ""
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.taxpayer.creditable_tax_withheld),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -4, 0, 0]
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.spouse.creditable_tax_withheld),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -4, 0, 0]
                     
                                             }
@@ -1796,19 +1842,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.creditable_tax_withheld_per_bir),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -4, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.creditable_tax_withheld_per_bir),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -4, 0, 0]
             
                                     }
@@ -1830,19 +1878,21 @@ function getContent(forms) {
                                                 text: ""
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.taxpayer.tax_paid_return),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -2, 0, 0]
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.spouse.tax_paid_return),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -2, 0, 0]
                     
                                             }
@@ -1864,19 +1914,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.foriegn_tax_credits),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.foriegn_tax_credits),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
             
                                     }
@@ -1895,7 +1947,7 @@ function getContent(forms) {
                                         [
                     
                                             {
-                                                text: "text",
+                                                text: "",
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'left',
@@ -1903,19 +1955,21 @@ function getContent(forms) {
                                                 margin: [145, -8, 0, 0]
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.taxpayer.other_tax_credit),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -4, 0, 0]
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.spouse.other_tax_credit),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -4, 0, 0]
                     
                                             }
@@ -1937,19 +1991,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.total_tax_credit),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -4, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_tax_credit),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -4, 0, 0]
             
                                     }
@@ -1971,19 +2027,21 @@ function getContent(forms) {
                                                 text: ""
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.taxpayer.overpayment),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -2, 0, 0]
                                             },
                                             {
-                                                text: "000",
+                                                // text: "000",
+                                                text:formatAmount(forms.sched1.spouse.overpayment),
                                                 fontSize: 12,
                                                 bold: true,
                                                 alignment: 'right',
-                                                characterSpacing: 7,
+                                                characterSpacing: 6,
                                                 margin: [1, -2, 0, 0]
                     
                                             }
@@ -2005,19 +2063,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.surcharge),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, 10, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.surcharge),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, 10, 0, 0]
             
                                     }
@@ -2039,19 +2099,21 @@ function getContent(forms) {
                                                         text: ""
                                                     },
                                                     {
-                                                        text: "000",
+                                                        // text: "000",
+                                                        text:formatAmount(forms.sched1.taxpayer.interest),
                                                         fontSize: 12,
                                                         bold: true,
                                                         alignment: 'right',
-                                                        characterSpacing: 7,
+                                                        characterSpacing: 6,
                                                         margin: [1, -1, 0, 0]
                                                     },
                                                     {
-                                                        text: "000",
+                                                        // text: "000",
+                                                        text:formatAmount(forms.sched1.spouse.interest),
                                                         fontSize: 12,
                                                         bold: true,
                                                         alignment: 'right',
-                                                        characterSpacing: 7,
+                                                        characterSpacing: 6,
                                                         margin: [1, -1, 0, 0]
                             
                                                     }
@@ -2073,19 +2135,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.compromise),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -2, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.compromise),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -2, 0, 0]
             
                                     }
@@ -2107,19 +2171,21 @@ function getContent(forms) {
                                                         text: ""
                                                     },
                                                     {
-                                                        text: "000",
+                                                        // text: "000",
+                                                        text:formatAmount(forms.sched1.taxpayer.penalties),
                                                         fontSize: 12,
                                                         bold: true,
                                                         alignment: 'right',
-                                                        characterSpacing: 7,
+                                                        characterSpacing: 6,
                                                         margin: [1, -4, 0, 0]
                                                     },
                                                     {
-                                                        text: "000",
+                                                        // text: "000",
+                                                        text:formatAmount(forms.sched1.spouse.penalties),
                                                         fontSize: 12,
                                                         bold: true,
                                                         alignment: 'right',
-                                                        characterSpacing: 7,
+                                                        characterSpacing: 6,
                                                         margin: [1, -4, 0, 0]
                             
                                                     }
@@ -2141,19 +2207,21 @@ function getContent(forms) {
                                         text: ""
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.taxpayer.total_amount_payable),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
                                     },
                                     {
-                                        text: "000",
+                                        // text: "000",
+                                        text:formatAmount(forms.sched1.spouse.total_amount_payable),
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'right',
-                                        characterSpacing: 7,
+                                        characterSpacing: 6,
                                         margin: [1, -3, 0, 0]
             
                                     }
@@ -2187,6 +2255,12 @@ function formatDate(date, type) {
         minute: "2-digit"
     });
     return dt;
+}
+function formatAmount(amount) {
+    if (!amount || isNaN(amount)) return "0";
+    var parts = parseFloat(amount).toFixed(2).toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
 }
 
 function mapTin(tin, from, to) {
