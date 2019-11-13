@@ -473,7 +473,7 @@
           <br />
           <a-radio
             :value="'SII011'"
-            @change="form.spouse_tax_rate =''"
+            @change="form.spouse_tax_rate ='CE'"
             :disabled="form.spouse_details.filer_type !=='CE'"
           >II011 Compensation Income</a-radio>
         </a-radio-group>
