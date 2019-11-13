@@ -179,7 +179,8 @@ export default {
   },
   methods: {
     onClose() {
-      this.visible = false;
+      // this.visible = false;
+      this.$emit("close");
     },
     penalties() {
       var total = this.computeSum([

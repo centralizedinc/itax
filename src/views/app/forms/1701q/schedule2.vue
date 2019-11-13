@@ -5,201 +5,245 @@
       :visible="visible"
       :closable="false"
       @close="onClose"
-      :width="720"
+      :width="700"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
       <a-form :form="form" layout="vertical" hideRequiredMark>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="47."
-            >
-              <a-input-number
-                v-model="form.sched2.taxpayer.total_sales_revenue"
-                style="width:100%"
-                placeholder="Sales/Revenues/Receipts/Fees"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="47">
+              <a-tooltip>
+                <template slot="title">Sales/Revenues/Receipts/Fees</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II012' || form.taxpayer_atc_code =='II014' || form.taxpayer_atc_code =='II013'"
+                  v-model="form.sched2.taxpayer.total_sales_revenue"
+                  style="width:100%"
+                  placeholder="Sales/Revenues/Receipts/Fees"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                v-model="form.sched2.spouse.total_sales_revenue"
-                style="width:100%"
-                placeholder="Sales/Revenues/Receipts/Fees"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Sales/Revenues/Receipts/Fees</template>
+                <a-input-number
+                  :disabled="form.spouse_atc_code =='SII012' || form.spouse_atc_code =='SII014' || form.spouse_atc_code =='SII013' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
+                  v-model="form.sched2.spouse.total_sales_revenue"
+                  style="width:100%"
+                  placeholder="Sales/Revenues/Receipts/Fees"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="48."
-            >
-              <a-input-number
-                v-model="form.sched2.taxpayer.total_operation_income"
-                style="width:100%"
-                placeholder="Add: Non-Operating Income (specify)"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="48">
+              <a-tooltip>
+                <template slot="title">Add: Non-Operating Income (specify)</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II012' || form.taxpayer_atc_code =='II014' || form.taxpayer_atc_code =='II013'"
+                  v-model="form.sched2.taxpayer.total_operation_income"
+                  style="width:100%"
+                  placeholder="Add: Non-Operating Income (specify)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                v-model="form.sched2.spouse.total_operation_income"
-                style="width:100%"
-                placeholder="Add: Non-Operating Income (specify)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Add: Non-Operating Income (specify)</template>
+                <a-input-number
+                  :disabled="form.spouse_atc_code =='SII012' || form.spouse_atc_code =='SII014' || form.spouse_atc_code =='SII013' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
+                  v-model="form.sched2.spouse.total_operation_income"
+                  style="width:100%"
+                  placeholder="Add: Non-Operating Income (specify)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="49."
-            >
-              <a-input-number
-                :value="total_income_quarter()"
-                style="width:100%"
-                placeholder="Total Income for the quarter (Sums of Items 47 and 48)"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="49">
+              <a-tooltip>
+                <template slot="title">Total Income for the quarter (Sums of Items 47 and 48)</template>
+                <a-input-number
+                  disabled
+                  :value="total_income_quarter()"
+                  style="width:100%"
+                  placeholder="Total Income for the quarter"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                style="width:100%"
-                :value="spouse_total_income_quarter()"
-                placeholder="Total Income for the quarter (Sums of Items 47 and 48)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Total Income for the quarter (Sums of Items 47 and 48)</template>
+                <a-input-number
+                  disabled
+                  style="width:100%"
+                  :value="spouse_total_income_quarter()"
+                  placeholder="Total Income for the quarter"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="50."
-            >
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched2.taxpayer.previous_quarter_taxable_income"
-                placeholder="Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="50">
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II012' || form.taxpayer_atc_code =='II014' || form.taxpayer_atc_code =='II013'"
+                  style="width:100%"
+                  v-model="form.sched2.taxpayer.previous_quarter_taxable_income"
+                  placeholder="Total Taxable Income/(Loss)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                style="width:100%"
-                v-model="form.sched2.spouse.previous_quarter_taxable_income"
-                placeholder="Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Add: Total Taxable Income/(Loss) Previous Quarter (Item 51 of previous quarter)</template>
+                <a-input-number
+                  :disabled="form.spouse_atc_code =='SII012' || form.spouse_atc_code =='SII014' || form.spouse_atc_code =='SII013' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
+                  style="width:100%"
+                  v-model="form.sched2.spouse.previous_quarter_taxable_income"
+                  placeholder="Total Taxable Income/(Loss) "
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="51."
-            >
-              <a-input-number
-                style="width:100%"
-                :value="total_cumulative_income()"
-                placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="51">
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)</template>
+                <a-input-number
+                  disabled
+                  style="width:100%"
+                  :value="total_cumulative_income()"
+                  placeholder="Cumulative Taxable Income/(Loss) as of This Quarter"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                :value="spouse_total_cumulative_income()"
-                style="width:100%"
-                placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)</template>
+                <a-input-number
+                  disabled
+                  :value="spouse_total_cumulative_income()"
+                  style="width:100%"
+                  placeholder="Cumulative Taxable Income/(Loss) as of This Quarter (Sum of Items 49 and 50)"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="52."
-            >
-              <a-input-number
-                v-model="form.sched2.taxpayer.less_allowable_reduction"
-                style="width:100%"
-                placeholder="Less: Allowable reduction from gross sales/reciepts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="52">
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Less: Allowable reduction from gross sales/receipts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00</template>
+                <a-input-number
+                  :disabled="form.taxpayer_atc_code =='II012' || form.taxpayer_atc_code =='II014' || form.taxpayer_atc_code =='II013'"
+                  v-model="form.sched2.taxpayer.less_allowable_reduction"
+                  style="width:100%"
+                  placeholder="Allowable reduction"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                v-model="form.sched2.spouse.less_allowable_reduction"
-                style="width:100%"
-                placeholder="Less: Allowable reduction from gross sales/reciepts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Less: Allowable reduction from gross sales/receipts and other non-operating income of purely self-employed individuals and/or professionals in the amount of ₱250,00</template>
+                <a-input-number
+                  :disabled="form.spouse_atc_code =='SII012' || form.spouse_atc_code =='SII014' || form.spouse_atc_code =='SII013' || form.spouse_atc_code == ' ' || form.spouse_atc_code == null || form.spouse_atc_code == undefined"
+                  v-model="form.sched2.spouse.less_allowable_reduction"
+                  style="width:100%"
+                  placeholder="Allowable reduction"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="53."
-            >
-              <a-input-number
-                :value="total_taxable_income_date()"
-                style="width:100%"
-                placeholder="Taxable Income/(Loss) To Date (Item 51 Less Item 52)"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="53">
+              <a-tooltip>
+                <template slot="title">Taxable Income/(Loss) To Date (Item 51 Less Item 52)</template>
+                <a-input-number
+                  disabled
+                  :value="total_taxable_income_date()"
+                  style="width:100%"
+                  placeholder="Taxable Income/(Loss) To Date"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                :value="spouse_total_taxable_income_date()"
-                style="width:100%"
-                placeholder="Taxable Income/(Loss) To Date (Item 51 Less Item 52)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Taxable Income/(Loss) To Date (Item 51 Less Item 52)</template>
+                <a-input-number
+                  disabled
+                  :value="spouse_total_taxable_income_date()"
+                  style="width:100%"
+                  placeholder="Taxable Income/(Loss) To Date"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="54."
-            >
-              <a-input-number
-                v-model="form.sched2.taxpayer.total_tax_due"
-                style="width:100%"
-                placeholder="TAX DUE (Item 53 x 8% Tax Rate) (To Part III, Item 26)"
-              ></a-input-number>
+            <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="54">
+              <a-tooltip>
+                <template slot="title">Tax Due (Item 53 × 8% Tax Rate)</template>
+                <a-input-number
+                  disabled
+                  v-model="form.sched2.taxpayer.total_tax_due"
+                  style="width:100%"
+                  placeholder="Tax Due"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                v-model="form.sched2.spouse.total_tax_due"
-                style="width:100%"
-                placeholder="TAX DUE (Item 53 x 8% Tax Rate) (To Part III, Item 26)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">Tax Due (Item 53 × 8% Tax Rate)</template>
+                <a-input-number
+                  disabled
+                  v-model="form.sched2.spouse.total_tax_due"
+                  style="width:100%"
+                  placeholder="Tax Due"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
@@ -216,8 +260,8 @@
           textAlign: 'right',
         }"
       >
-        <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
-        <a-button @click="handleOk" type="primary">Submit</a-button>
+        <!-- <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
+        <a-button @click="handleOk" type="primary">Submit</a-button>-->
       </div>
     </a-drawer>
   </div>
@@ -255,7 +299,8 @@ export default {
   },
   methods: {
     onClose() {
-      this.visible = false;
+      // this.visible = false;
+      this.$emit("close");
     },
     total_income_quarter() {
       var total = this.computeSum([
@@ -305,10 +350,16 @@ export default {
         (this.form.sched2.spouse.total_cumulative_income || 0) -
         (this.form.sched2.spouse.less_allowable_reduction || 0);
       this.form.sched2.spouse.total_taxable_income_date = total;
+      // computation for item 54
       this.form.sched2.spouse.total_tax_due = total * 0.08;
+      if (this.form.sched2.spouse.total_tax_due < 1) {
+        this.form.sched2.spouse.total_tax_due = 0;
+      }
+      // display in item 26
       this.form.spouse_prev_tax_due = this.form.sched2.spouse.total_tax_due;
       return total;
     },
+
     showModal() {
       this.visible = true;
     },

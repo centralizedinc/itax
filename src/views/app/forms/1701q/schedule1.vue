@@ -288,7 +288,12 @@
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-              <a-input-number disabled style="width:100%" placeholder="TAX DUE "></a-input-number>
+              <a-input-number
+                disabled
+                v-model="form.sched1.spouse.total_tax_due"
+                style="width:100%"
+                placeholder="Tax Due "
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -406,49 +411,23 @@ export default {
     total_net_income() {
       var total = 0;
       if (
-        this.form.sched1.spouse.total_allowable_itemized_deductions ==
-          undefined ||
-        this.form.sched1.spouse.total_allowable_itemized_deductions == 0 ||
-        this.form.sched1.spouse.total_allowable_itemized_deductions == null
-      ) {
-        total =
-          this.form.sched1.spouse.gross_income -
-          this.form.sched1.spouse.total_standard_deductions;
-      } else if (
-        this.form.sched1.spouse.total_standard_deductions == undefined ||
-        this.form.sched1.spouse.total_standard_deductions == 0 ||
-        this.form.sched1.spouse.total_standard_deductions == null
-      ) {
-        total =
-          this.form.sched1.spouse.gross_income -
-          this.form.sched1.spouse.total_allowable_itemized_deductions;
-      } else {
-        // this.form.sched1.taxpayer.gross_income = 0;
-        // this.form.sched1.taxpayer.total_allowable_itemized_deductions = 0;
-        // this.form.sched1.taxpayer.total_standard_deductions = 0;
-      }
-      this.form.sched1.spouse.total_net_income = total;
-      return total;
-    },
-    spouse_total_net_income() {
-      var total = 0;
-      if (
         this.form.sched1.taxpayer.total_allowable_itemized_deductions ==
           undefined ||
         this.form.sched1.taxpayer.total_allowable_itemized_deductions == 0 ||
         this.form.sched1.taxpayer.total_allowable_itemized_deductions == null
       ) {
         total =
-          this.form.sched1.taxpayer.gross_income -
-          this.form.sched1.taxpayer.total_standard_deductions;
+          (this.form.sched1.taxpayer.gross_income || 0) -
+          (this.form.sched1.taxpayer.total_standard_deductions || 0);
+        console.log("@@TOTAL :", total);
       } else if (
         this.form.sched1.taxpayer.total_standard_deductions == undefined ||
         this.form.sched1.taxpayer.total_standard_deductions == 0 ||
         this.form.sched1.taxpayer.total_standard_deductions == null
       ) {
         total =
-          this.form.sched1.taxpayer.gross_income -
-          this.form.sched1.taxpayer.total_allowable_itemized_deductions;
+          (this.form.sched1.taxpayer.gross_income || 0) -
+          (this.form.sched1.taxpayer.total_allowable_itemized_deductions || 0);
       } else {
         // this.form.sched1.taxpayer.gross_income = 0;
         // this.form.sched1.taxpayer.total_allowable_itemized_deductions = 0;
@@ -467,16 +446,16 @@ export default {
         this.form.sched1.spouse.total_allowable_itemized_deductions == null
       ) {
         total =
-          this.form.sched1.spouse.gross_income -
-          this.form.sched1.spouse.total_standard_deductions;
+          (this.form.sched1.spouse.gross_income || 0) -
+          (this.form.sched1.spouse.total_standard_deductions || 0);
       } else if (
         this.form.sched1.spouse.total_standard_deductions == undefined ||
         this.form.sched1.spouse.total_standard_deductions == 0 ||
         this.form.sched1.spouse.total_standard_deductions == null
       ) {
         total =
-          this.form.sched1.spouse.gross_income -
-          this.form.sched1.spouse.total_allowable_itemized_deductions;
+          (this.form.sched1.spouse.gross_income || 0) -
+          (this.form.sched1.spouse.total_allowable_itemized_deductions || 0);
       } else {
         this.form.sched1.spouse.gross_income = 0;
         this.form.sched1.spouse.total_allowable_itemized_deductions = 0;

@@ -1,10 +1,10 @@
 <template>
   <a-row class="statistic-chart" :gutter="10">
     <!-- Collection -->
-    <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
-        :bodyStyle="{ padding: 0 }"
-        :class="collections_mode === 'y' ? 'select-yearly' : 'select-monthly'"
+        :bodyStyle="{ padding: 0, height: '100%' }"
+        :class="`${collections_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
       >
         <span class="collection-counts">
           <h5
@@ -15,7 +15,7 @@
             <span class="counts">{{formatCounts(collections_total)}}</span>
           </a-tooltip>
         </span>
-        <line-chart ref="collection_line_chart" />
+        <line-chart ref="collection_line_chart" class="max-height" />
         <template slot="actions">
           <div @click="getDataCollectionYearly()">
             <span>Yearly</span>
@@ -28,10 +28,10 @@
     </a-col>
 
     <!-- Returns -->
-    <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
-        :bodyStyle="{ padding: 0 }"
-        :class="returns_mode === 'y' ? 'select-yearly' : 'select-monthly'"
+        :bodyStyle="{ padding: 0, height: '100%' }"
+        :class="`${returns_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
       >
         <span class="collection-counts">
           <h5
@@ -42,7 +42,7 @@
             <span class="counts">{{formatCounts(returns_total)}}</span>
           </a-tooltip>
         </span>
-        <line-chart ref="returns_line_chart" />
+        <line-chart ref="returns_line_chart" class="max-height" />
         <template slot="actions">
           <div @click="getDataReturnsYearly()">
             <span>Yearly</span>
@@ -55,10 +55,10 @@
     </a-col>
 
     <!-- Taxpayers -->
-    <a-col :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
-        :bodyStyle="{ padding: 0 }"
-        :class="taxpayers_mode === 'y' ? 'select-yearly' : 'select-monthly'"
+        :bodyStyle="{ padding: 0, height: '100%' }"
+        :class="`${taxpayers_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
       >
         <span class="collection-counts">
           <h5
@@ -69,7 +69,7 @@
             <span class="counts">{{formatCounts(taxpayers_total)}}</span>
           </a-tooltip>
         </span>
-        <line-chart ref="taxpayers_line_chart" />
+        <line-chart ref="taxpayers_line_chart" class="max-height" />
         <template slot="actions">
           <span @click="getDataTaxpayersYearly()">Yearly</span>
           <span @click="getDataTaxpayersMonthly()">Monthly</span>
@@ -514,13 +514,16 @@ export default {
 </script>
 
 <style>
-/* .statistic-chart canvas {
-  height: 28vh !important;
-} */
-
 .statistic-chart {
-  position: relative;
-  height: 30vh !important;
+  height: 33vh !important;
+}
+
+.statistic-chart canvas {
+  height: 100% !important;
+}
+
+.statistic-chart .ant-card-actions {
+  height: 5vh !important;
 }
 
 .collection-counts {
@@ -548,6 +551,7 @@ export default {
 .select-monthly .ant-card-actions li {
   margin: 0;
   padding: 2px 0;
+  height: 100%;
 }
 
 /* Custom selected option */
@@ -577,5 +581,9 @@ export default {
 .select-monthly .ant-card-actions li:nth-child(1) span:hover {
   color: #1167a0;
   font-weight: bold;
+}
+
+.max-height {
+  height: 100% !important;
 }
 </style>
