@@ -26,7 +26,7 @@
             <a-button
               slot="tabBarExtraContent"
               type="primary"
-              v-if="currentView===2"
+              v-if="addButton"
               @click="showAddTP=true"
             >Add Taxpayer</a-button>
           </a-tabs>
@@ -173,6 +173,7 @@ export default {
         }
       },
       currentView: 0,
+      addButton: false,
       view_components: [
         "PersonalDetails",
         "TaxpayerInformation",
@@ -237,7 +238,14 @@ export default {
           },
           confirmLoading: _self.loading
         });
-      } else this.currentView = i;
+      } else{
+       this.currentView = i;
+       if(this.details.taxpayer.individual_details.civil_status == "S" && currentView == 2){
+         this.addButton = true
+       } else if(this.details.taxpayer.individual_details.civil_status == "M" && currentView == 4){
+         this.addButton = true
+       }
+      }
     },
     changeView(key) {
       this.currentView = key;
