@@ -1474,7 +1474,7 @@ function getContent(forms) {
                                 [
             
                                     {
-                                        text: "text",
+                                        text: "",
                                         fontSize: 12,
                                         bold: true,
                                         alignment: 'left',
