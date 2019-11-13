@@ -6,16 +6,16 @@
           label="TIN"
           :label-col="{ span: 9 }"
           :wrapper-col="{ span: 15 }"
-          
           :validate-status="error_desc('tin') ? 'error' : tin_validate_status"
           :help="error_desc('tin')"
         >
-        <!-- has-feedback
+          <!-- has-feedback
           :validate-status="error_desc('tin') ? 'error' : tin_validate_status"
-          :help="error_desc('tin')" -->
+          :help="error_desc('tin')"-->
           <a-input
             v-model="details.taxpayer.tin"
             placeholder="TIN"
+            maxlength="13"
             :disabled="this.user.tin"
             @blur="checkTin"
           />
@@ -243,7 +243,11 @@
           :validate-status="error_desc('zipCode') ? 'error' : ''"
           :help="error_desc('zipCode')"
         >
-          <a-input v-model="details.taxpayer.address_details.zipCode" placeholder="Zip Code" />
+          <a-input
+            maxlength="4"
+            v-model="details.taxpayer.address_details.zipCode"
+            placeholder="Zip Code"
+          />
         </a-form-item>
       </a-col>
     </a-row>

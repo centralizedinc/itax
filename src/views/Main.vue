@@ -206,7 +206,7 @@ export default {
     init() {
       this.user = this.$store.state.account_session.user;
       this.$store.dispatch("GET_RDOS");
-      console.log("test");
+      console.log("user :", this.user);
     },
     nav(e) {
       if (e.key === "logout") {

@@ -78,12 +78,10 @@ class ReturnDetailsDao {
 
     /**
      * @returns {Promise}
-     * @param {Date} year
+     * @param {Object} conditions 
      */
-    static getCollection(year) {
-        var gteDate = new Date(year, 0, 1), ltDate = new Date(year, 12, 0);
-    console.log('year :', year);
-    return model.find({ "payment_status": 'paid', "date_created": { $gte: gteDate, $lt: ltDate } }).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
+    static getCollection(condition) {
+    return model.find({ "payment_status": 'paid'}).select('date_created rdo_code payment_status total_amount_payable').lean().exec();
 }
     
 
