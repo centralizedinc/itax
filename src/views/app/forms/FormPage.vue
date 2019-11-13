@@ -230,7 +230,7 @@ export default {
         taxpayer: {
           contact_details: {},
           address_details: {},
-          // individual_details: {},
+          individual_details: {},
           accounting_type: "",
           start_month: "",
           end_month: ""
@@ -547,11 +547,22 @@ export default {
     },
     fillup() {
       this.form.taxpayer = this.taxpayer;
+      console.log(
+        "this.form.taxpayer.individual_details :",
+        this.form.taxpayer.individual_details
+      );
       if (!this.form.taxpayer.address_details) {
         this.form.taxpayer.address_details = {};
       }
       if (!this.form.taxpayer.contact_details) {
         this.form.taxpayer.contact_details = {};
+      }
+      if (!this.form.taxpayer.individual_details) {
+        this.form.taxpayer.individual_details = {};
+      } else {
+        this.form.taxpayer.individual_details.birthDate = moment(
+          this.form.taxpayer.individual_details.birthDate
+        );
       }
       if (!this.form.taxpayer.registered_name) {
         this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;

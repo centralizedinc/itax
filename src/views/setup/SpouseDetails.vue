@@ -9,10 +9,15 @@
           :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
           :help="error_desc('tin')"
         >
-        <!-- has-feedback
+          <!-- has-feedback
           :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
-          :help="error_desc('tin')" -->
-          <a-input v-model="details.spouse_details.tin" placeholder="TIN" @blur="checkTin" />
+          :help="error_desc('tin')"-->
+          <a-input
+            maxlength="13"
+            v-model="details.spouse_details.tin"
+            placeholder="TIN"
+            @blur="checkTin"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 5 }">
@@ -226,6 +231,7 @@
       <a-col :span="24" style="margin-left: -0.8vw">
         <a-form-item
           label="Zip Code"
+          maxlength="4"
           :label-col="{ span: 4 }"
           :wrapper-col="{ span: 3 }"
           :validate-status="error_desc('zipCode') ? 'error' : ''"
@@ -306,18 +312,27 @@ export default {
 
       // check tin
       // console.log("this.user.tin: " + JSON.stringify(this.user.tin))
-      console.log("async check tin start conditions: " + JSON.stringify(this.details.spouse_details.tin))
-      console.log("this.details.taxpayer.tin: " + JSON.stringify(this.details.taxpayer.tin))
-      console.log("this.details.company_details.tin: " + JSON.stringify(this.details.company_details.tin))
-      
-      if (!this.details.spouse_details.tin) { 
-        console.log("!this.details.spouse_details.tin")
+      console.log(
+        "async check tin start conditions: " +
+          JSON.stringify(this.details.spouse_details.tin)
+      );
+      console.log(
+        "this.details.taxpayer.tin: " +
+          JSON.stringify(this.details.taxpayer.tin)
+      );
+      console.log(
+        "this.details.company_details.tin: " +
+          JSON.stringify(this.details.company_details.tin)
+      );
+
+      if (!this.details.spouse_details.tin) {
+        console.log("!this.details.spouse_details.tin");
         this.error_messages.push({
           field: "tin",
           message: "TIN is a required field"
         });
       } else if (this.details.spouse_details.tin.length !== 13) {
-        console.log("this.details.spouse_details.tin.length !== 13")
+        console.log("this.details.spouse_details.tin.length !== 13");
         this.error_messages.push({
           field: "tin",
           message: "TIN length must be 13"
@@ -325,7 +340,9 @@ export default {
       } else if (
         this.details.spouse_details.tin === this.details.taxpayer.tin
       ) {
-        console.log("this.details.spouse_details.tin === this.details.taxpayer.tin")
+        console.log(
+          "this.details.spouse_details.tin === this.details.taxpayer.tin"
+        );
         this.error_messages.push({
           field: "tin",
           message: "You input your own TIN"
@@ -333,12 +350,14 @@ export default {
       } else if (
         this.details.spouse_details.tin === this.details.company_details.tin
       ) {
-        console.log("this.details.spouse_details.tin === this.details.company_details.tin")
+        console.log(
+          "this.details.spouse_details.tin === this.details.company_details.tin"
+        );
         this.error_messages.push({
           field: "tin",
           message: "You input your company TIN"
         });
-      } 
+      }
       // else if (this.details.spouse_details.tin !== this.user.tin) {
       //   console.log("this.details.spouse_details.tin !== this.user.tin")
       //   // wait the result before to proceed
@@ -387,7 +406,7 @@ export default {
       //   //     message:
       //   //       "TIN is a corporate taxpayer. If there is any concern, please contact us"
       //   //   });
-      //   // } 
+      //   // }
       //   // else if (
       //   //   result.taxpayer.individual_details.spouseTin ===
       //   //   this.details.taxpayer.tin
@@ -409,7 +428,10 @@ export default {
     },
     // ----------------
     async validation() {
-      console.log("this.details.spouse_details data: " + JSON.stringify(this.details.spouse_details))
+      console.log(
+        "this.details.spouse_details data: " +
+          JSON.stringify(this.details.spouse_details)
+      );
       this.validate();
       await this.checkTin();
       console.log("this.error_messages :", JSON.stringify(this.error_messages));
@@ -585,7 +607,7 @@ export default {
     //   }
     // },
     next() {
-      console.log("spouse details data: " + JSON.stringify(this.details))
+      console.log("spouse details data: " + JSON.stringify(this.details));
       var page = this.show_company ? 3 : 4;
       this.$emit("next", page);
     },

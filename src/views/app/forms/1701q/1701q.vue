@@ -47,7 +47,7 @@
         style="width: 100%"
       >
         <span style="margin-right: 14px">Amended</span>
-        <a-radio-group v-model="form.amended_yn" :defaultValue="false">
+        <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -124,6 +124,7 @@
             label="8"
           >
             <span style="margin-right: 14px">Alphanumeric Tax Code (ATC)</span>
+            <br />
             <a-radio-group v-model="form.taxpayer_atc_code">
               <a-radio
                 :value="'II012'"
@@ -207,7 +208,11 @@
             :validate-status="error_item('taxpayer.zip_code')"
             :help="error_desc('taxpayer.zip_code')"
           >
-            <a-input v-model="form.taxpayer.address_details.zipCode" placeholder="Zipcode"></a-input>
+            <a-input
+              v-model="form.taxpayer.address_details.zipCode"
+              placeholder="Zipcode"
+              maxlength="4"
+            ></a-input>
           </a-form-item>
         </a-col>
         <!-- 11 -->
@@ -284,11 +289,7 @@
             :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
           >
             <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
-            <a-radio-group
-              :defaultValue="true"
-              v-model="form.taxpayer_foreign_tax_credits"
-              @change="changeTaxNo"
-            >
+            <a-radio-group v-model="form.taxpayer_foreign_tax_credits" @change="changeTaxNo">
               <a-radio :value="true">Yes</a-radio>
               <a-radio :value="false">No</a-radio>
             </a-radio-group>
@@ -520,7 +521,6 @@
         <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
         <a-radio-group
           @change="changeSpouseTaxNo"
-          :defaultValue="true"
           v-model="form.spouse_foreign_tax_credits"
           :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         >
@@ -1130,10 +1130,6 @@ export default {
   },
   created() {
     this.form.pdf_page = 1;
-    console.log(
-      "taxpayer.individual_details.birthDate, :",
-      JSON.stringify(this.form.taxpayer.individual_details)
-    );
     this.connections = this.$store.state.relationship.connections;
     console.log(
       "  " + JSON.stringify(this.$store.state.relationship.connections)
