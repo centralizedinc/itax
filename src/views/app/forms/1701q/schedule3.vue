@@ -107,7 +107,7 @@
               <a-input-number
                 :disabled="form.amended_yn !== true"
                 style="width:100%"
-                v-model="form.item59b"
+                v-model="form.sched3.spouse.tax_paid_return"
                 placeholder="Tax Paid in Return Previously Filed, if this is an Amended Return"
               ></a-input-number>
             </a-form-item>
@@ -126,7 +126,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
-                v-model="form.item60b"
+                v-model="form.sched3.spouse.foriegn_tax_credits"
                 style="width:100%"
                 placeholder="Foreign Tax Credits, if applicable"
               ></a-input-number>
@@ -146,7 +146,7 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
-                v-model="form.item61b"
+                v-model="form.sched3.spouse.other_tax_credit"
                 style="width:100%"
                 placeholder="Other Tax Credits/Payments (specify)"
               ></a-input-number>
@@ -262,22 +262,10 @@ export default {
       ]);
       this.form.sched3.taxpayer.total_tax_credit = total;
       this.form.taxpayer_tax_due = this.form.sched3.taxpayer.total_tax_credit;
+      this.form.taxpayer_tax_credit = this.form.sched3.taxpayer.total_tax_credit;
       return total;
     },
     spouse_total_tax_credit() {
-      // var total = this.computeSum([
-      //   this.form.sched3.spouse.year_excess_credits,
-      //   this.form.sched3.spouse.payment_previous_quarter,
-      //   this.form.sched3.spouse.creditable_tax_withheld,
-      //   this.form.sched3.spouse.creditable_tax_withheld_per_bir,
-      //   this.form.sched3.spouse.tax_paid_return,
-      //   this.form.sched3.spouse.foriegn_tax_credits,
-      //   this.form.sched3.spouse.other_tax_credit
-      // ]);
-      // this.form.sched3.spouse.total_tax_credit = total;
-      // this.form.spouse_tax_due = this.form.sched3.spouse.total_tax_credit;
-      // return total;
-
       var total = this.computeSum([
         this.form.sched3.spouse.year_excess_credits,
         this.form.sched3.spouse.payment_previous_quarter,
@@ -289,6 +277,9 @@ export default {
       ]);
       this.form.sched3.spouse.total_tax_credit = total;
       this.form.spouse_tax_due = this.form.sched3.spouse.total_tax_credit;
+
+      this.form.spouse_tax_credit = this.form.sched3.spouse.total_tax_credit;
+
       return total;
     },
     showModal() {

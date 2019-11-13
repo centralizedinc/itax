@@ -288,7 +288,12 @@
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-              <a-input-number disabled style="width:100%" placeholder="Tax Due "></a-input-number>
+              <a-input-number
+                disabled
+                v-model="form.sched1.spouse.total_tax_due"
+                style="width:100%"
+                placeholder="Tax Due "
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
