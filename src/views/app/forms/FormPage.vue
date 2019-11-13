@@ -235,8 +235,16 @@ export default {
           start_month: "",
           end_month: ""
         },
+        spouse_details: {
+          contact_details: {},
+          address_details: {},
+          individual_details: {},
+          accounting_type: "",
+          start_month: "",
+          end_month: ""
+        },
         page: 0,
-        spouse_details: {},
+        // spouse_details: {},
         buyer_details: {},
         item29: {},
         item30: {},

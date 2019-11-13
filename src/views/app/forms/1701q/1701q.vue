@@ -84,13 +84,17 @@
             :validate-status="error_item('taxpayer.tin')"
             :help="error_desc('taxpayer.tin')"
           >
-            <a-input placeholder="Taxpayer Identification Number (TIN)" v-model="form.taxpayer.tin"></a-input>
+            <a-input
+              maxlength="13"
+              placeholder="Taxpayer Identification Number (TIN)"
+              v-model="form.taxpayer.tin"
+            ></a-input>
           </a-form-item>
         </a-col>
         <!-- 6 -->
         <a-col :span="24">
           <a-form-item :labelCol="{span: 2}" :wrapperCol="{span: 20}" label="6">
-            <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
+            <a-input maxlength="3" placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
           </a-form-item>
         </a-col>
         <a-col :span="24">
@@ -370,6 +374,7 @@
           :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' / ')"
           placeholder="Spouse's Tax Identification Number"
           v-model="form.spouse_details.tin"
+          maxlength="13"
         ></a-input>
       </a-form-item>
 
@@ -383,6 +388,7 @@
           v-model="form.spouse_details.rdo_code"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
           placeholder="RDO Code"
+          maxlength="3"
         ></a-input>
       </a-form-item>
 
@@ -479,11 +485,32 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input
+        <a-row :gutter="5">
+          <a-col :span="8">
+            <a-input
+              v-model="form.spouse_details.individual_details.lastName"
+              placeholder="Last Name"
+            />
+          </a-col>
+          <a-col :span="8">
+            <a-input
+              v-model="form.spouse_details.individual_details.firstName"
+              placeholder="First Name"
+            />
+          </a-col>
+          <a-col :span="8">
+            <a-input
+              v-model="form.spouse_details.individual_details.middleName"
+              placeholder="Middle Name"
+            />
+          </a-col>
+        </a-row>
+
+        <!-- <a-input
           placeholder="Spouse's Name: Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
           :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
-        ></a-input>
+        ></a-input>-->
       </a-form-item>
 
       <!-- 22 -->
