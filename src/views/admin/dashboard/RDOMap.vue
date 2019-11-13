@@ -6,7 +6,7 @@
       ref="map"
       :center="center"
       :zoom="login_rdo ? 11 : 7"
-      map-type-id="terrain"
+      :options="{ mapTypeControl: false, scaleControl: false, streetViewControl: false, rotateControl: false }"
       draggable="true"
       style="width: 100%; height: 150vh"
     >

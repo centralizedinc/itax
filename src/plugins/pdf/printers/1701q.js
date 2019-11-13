@@ -409,7 +409,7 @@ function getContent(forms) {
                         text: forms.taxpayer_tax_rate == 'GR' ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'left',
-                        margin: [42, 6, 0, 0]
+                        margin: [40, 4, 0, 0]
                     },
                     {
                         text: forms.taxpayer_method_deduction == 'ID' ? 'X' : ' ',
@@ -429,9 +429,9 @@ function getContent(forms) {
                     [{
                         // text: 'X',
                         text: forms.taxpayer_tax_rate == 'GS' ? 'X' : ' ',
-                        fontSize: 12,
+                        fontSize: 14,
                         alignment: 'left',
-                        margin: [42, 2, 0, 0]
+                        margin: [40, 0, 0, 0]
                     },
                     {
                         // text: forms.filerType == 2 ? 'X' : ' ',

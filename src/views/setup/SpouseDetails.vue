@@ -11,13 +11,8 @@
         >
           <!-- has-feedback
           :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
-          :help="error_desc('tin')"-->
-          <a-input
-            maxlength="13"
-            v-model="details.spouse_details.tin"
-            placeholder="TIN"
-            @blur="checkTin"
-          />
+          :help="error_desc('tin')" -->
+          <a-input maxlength="13" v-model="details.spouse_details.tin" placeholder="TIN" @blur="checkTin" @keypress.enter="checkTin"/>
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 5 }">
@@ -27,6 +22,7 @@
           :wrapper-col="{ span: 15 }"
           :validate-status="error_desc('rdo_code') ? 'error' : ''"
           :help="error_desc('rdo_code')"
+          v-if="tinGood"
         >
           <a-select style="width: 100%" v-model="details.spouse_details.rdo_code">
             <a-select-option
@@ -44,6 +40,7 @@
           :wrapper-col="{ span: 15 }"
           :validate-status="error_desc('line_of_business') ? 'error' : ''"
           :help="error_desc('line_of_business')"
+          v-if="tinGood"
         >
           <a-input
             v-model="details.spouse_details.line_of_business"
@@ -53,7 +50,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle">
+    <a-row type="flex" align="middle" v-if="tinGood">
       <a-col :span="24" style="margin-left: -0.8vw">
         <a-form-item
           label="Filer Type"
@@ -73,7 +70,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle">
+    <a-row type="flex" align="middle" v-if="tinGood">
       <a-col :span="24" style="margin-left: -0.8vw">
         <a-form-item
           label="Spouse's Name"
@@ -106,7 +103,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle">
+    <a-row type="flex" align="middle" v-if="tinGood">
       <a-col :span="24" style="margin-left: -0.8vw">
         <a-form-item
           label="Registered Name"
@@ -120,7 +117,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle" :gutter="5">
+    <a-row type="flex" align="middle" :gutter="5" v-if="tinGood">
       <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
         <a-form-item
           label="Date of Birth"
@@ -170,7 +167,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle" :gutter="5">
+    <a-row type="flex" align="middle" :gutter="5" v-if="tinGood">
       <a-col :xs="{ span: 24 }" :md="{ span: 10 }">
         <a-form-item
           label="Email"
@@ -209,7 +206,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle">
+    <a-row type="flex" align="middle" v-if="tinGood">
       <a-col :span="24" style="margin-left: -0.8vw">
         <a-form-item
           label="Registered Address"
@@ -227,7 +224,7 @@
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="middle">
+    <a-row type="flex" align="middle" v-if="tinGood">
       <a-col :span="24" style="margin-left: -0.8vw">
         <a-form-item
           label="Zip Code"
@@ -290,7 +287,8 @@ export default {
       invalid_tin_msg: "",
       invalid_tin_status: "",
       show_details: false,
-      error_messages: []
+      error_messages: [],
+          tinGood: false
     };
   },
   created() {
@@ -304,6 +302,7 @@ export default {
     },
     // -----------------
     async checkTin() {
+      this.error_messages = []
       this.invalid_tin_status = "validating";
 
       // // to avoid redundancy of error in tin
@@ -312,21 +311,12 @@ export default {
 
       // check tin
       // console.log("this.user.tin: " + JSON.stringify(this.user.tin))
-      console.log(
-        "async check tin start conditions: " +
-          JSON.stringify(this.details.spouse_details.tin)
-      );
-      console.log(
-        "this.details.taxpayer.tin: " +
-          JSON.stringify(this.details.taxpayer.tin)
-      );
-      console.log(
-        "this.details.company_details.tin: " +
-          JSON.stringify(this.details.company_details.tin)
-      );
-
-      if (!this.details.spouse_details.tin) {
-        console.log("!this.details.spouse_details.tin");
+      console.log("async check tin start conditions: " + JSON.stringify(this.details.spouse_details.tin))
+      console.log("this.details.taxpayer.tin: " + JSON.stringify(this.details.taxpayer.tin))
+      console.log("this.details.company_details.tin: " + JSON.stringify(this.details.company_details.tin))
+      
+      if (!this.details.spouse_details.tin || this.details.spouse_details.tin == null || this.details.spouse_details.tin == "" || this.details.spouse_details.tin == undefined) { 
+        console.log("!this.details.spouse_details.tin")
         this.error_messages.push({
           field: "tin",
           message: "TIN is a required field"
@@ -357,74 +347,100 @@ export default {
           field: "tin",
           message: "You input your company TIN"
         });
+      } 
+      // if (this.details.spouse_details.tin !== this.user.tin)
+      else  {
+        var result
+        console.log("this.details.spouse_details.tin !== this.user.tin")
+        // wait the result before to proceed
+        // const result = await 
+        this.$store.dispatch("GET_TAXPAYER_BY_TIN", {
+          tin: this.details.spouse_details.tin,
+          ignore_user: true
+        })
+        .then(result1 => {
+          result = result1
+          return this.$http.get(`/connections/${this.details.spouse_details.tin}`)
+        }).then(result2 =>{
+          console.log("this is result 2: " + JSON.stringify(result2))
+        console.log("result :", JSON.stringify(result));
+        var currentSpouse = {}
+        result2.data.model.forEach(data =>{
+          if(data.relationship == "spouse"){
+            currentSpouse = data
+          }
+        })
+        console.log("currentSpouse dettecttedd: " + JSON.stringify(currentSpouse))
+        if (!result || !result.taxpayer)
+         {
+          console.log("!result || !result.taxpayer: " + JSON.stringify(this.error_messages))
+          // taxpayer not exist on db
+          this.details.spouse_details = {
+            is_exist: false,
+            tin: this.details.spouse_details.tin,
+            taxpayer_type: "I",
+            filer_type: "",
+            rdo_code: "",
+            registered_name: "",
+            line_of_business: "",
+            accounting_type: "c",
+            start_month: 0,
+            end_month: 11,
+            individual_details: {
+              firstName: "",
+              middleName: "",
+              lastName: "",
+              gender: "",
+              civil_status: "",
+              spouse_tin: ""
+            },
+            address: "",
+            birthDate: "",
+            contact_details: {
+              email: ""
+            },
+            address_details: {
+              zipCode: ""
+            }
+          };
+          this.invalid_tin_status = "success";
+          this.error_messages.push({
+            field: "tin",
+            message:""
+            });
+            this.tinGood = true
+        }
+         else if (result.taxpayer.taxpayer_type !== "I") {
+          console.log("result.taxpayer.taxpayer_type !== I")
+          this.error_messages.push({
+            field: "tin",
+            message:
+              "TIN is a corporate taxpayer. If there is any concern, please contact us"
+          });
+        } 
+        else if (
+          result.taxpayer.individual_details.spouseTin ===
+          this.details.taxpayer.tin
+        ) {
+          console.log("result.taxpayer.individual_details.spouseTin === this.details.taxpayer.tin");
+          this.details.spouse_details = result.taxpayer;
+          this.details.spouse_details.is_exist = true;
+          this.invalid_tin_status = "success";
+        }
+         else if(currentSpouse){
+          //  if(currentSpouse){
+          //    console.log("walang laman")
+          //  }
+           console.log("current spouse: " + JSON.stringify(currentSpouse))
+          console.log("This taxpayer has a different spouse. If there is any concern, please contact us")
+          this.error_messages.push({
+            field: "tin",
+            message:
+              "This taxpayer has a different spouse. If there is any concern, please contact us"
+          });
+        }
+        })
       }
-      // else if (this.details.spouse_details.tin !== this.user.tin) {
-      //   console.log("this.details.spouse_details.tin !== this.user.tin")
-      //   // wait the result before to proceed
-      //   const result = await this.$store.dispatch("GET_TAXPAYER_BY_TIN", {
-      //     tin: this.details.spouse_details.tin,
-      //     ignore_user: true
-      //   });
-      //   console.log("result :", result);
-      //   if (!result || !result.taxpayer) {
-      //     console.log("!result || !result.taxpayer")
-      //     // taxpayer not exist on db
-      //     this.details.spouse_details = {
-      //       is_exist: false,
-      //       tin: this.details.spouse_details.tin,
-      //       taxpayer_type: "I",
-      //       filer_type: "",
-      //       rdo_code: "",
-      //       registered_name: "",
-      //       line_of_business: "",
-      //       accounting_type: "c",
-      //       start_month: 0,
-      //       end_month: 11,
-      //       individual_details: {
-      //         firstName: "",
-      //         middleName: "",
-      //         lastName: "",
-      //         gender: "",
-      //         civil_status: "",
-      //         spouse_tin: ""
-      //       },
-      //       address: "",
-      //       birthDate: "",
-      //       contact_details: {
-      //         email: ""
-      //       },
-      //       address_details: {
-      //         zipCode: ""
-      //       }
-      //     };
-      //     this.invalid_tin_status = "success";
-      //   }
-      //   //  else if (result.taxpayer.taxpayer_type !== "I") {
-      //   //   console.log("result.taxpayer.taxpayer_type !== I")
-      //   //   this.error_messages.push({
-      //   //     field: "tin",
-      //   //     message:
-      //   //       "TIN is a corporate taxpayer. If there is any concern, please contact us"
-      //   //   });
-      //   // }
-      //   // else if (
-      //   //   result.taxpayer.individual_details.spouseTin ===
-      //   //   this.details.taxpayer.tin
-      //   // ) {
-      //   //   console.log("result.taxpayer.individual_details.spouseTin === this.details.taxpayer.tin");
-      //   //   this.details.spouse_details = result.taxpayer;
-      //   //   this.details.spouse_details.is_exist = true;
-      //   //   this.invalid_tin_status = "success";
-      //   // }
-      //    else {
-      //     console.log("This taxpayer has a different spouse. If there is any concern, please contact us")
-      //     this.error_messages.push({
-      //       field: "tin",
-      //       message:
-      //         "This taxpayer has a different spouse. If there is any concern, please contact us"
-      //     });
-      //   }
-      // }
     },
     // ----------------
     async validation() {
