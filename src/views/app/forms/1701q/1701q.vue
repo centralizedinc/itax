@@ -47,7 +47,7 @@
         style="width: 100%"
       >
         <span style="margin-right: 14px">Amended</span>
-        <a-radio-group v-model="form.amended_yn" :defaultValue="false">
+        <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
@@ -60,6 +60,7 @@
         label="4"
       >
         <a-input-number
+          maxlength="2"
           placeholder="Number of Sheets"
           v-model="form.num_of_sheet"
           style="width: 100%"
@@ -83,13 +84,17 @@
             :validate-status="error_item('taxpayer.tin')"
             :help="error_desc('taxpayer.tin')"
           >
-            <a-input placeholder="Taxpayer Identification Number (TIN)" v-model="form.taxpayer.tin"></a-input>
+            <a-input
+              maxlength="13"
+              placeholder="Taxpayer Identification Number (TIN)"
+              v-model="form.taxpayer.tin"
+            ></a-input>
           </a-form-item>
         </a-col>
         <!-- 6 -->
         <a-col :span="24">
           <a-form-item :labelCol="{span: 2}" :wrapperCol="{span: 20}" label="6">
-            <a-input placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
+            <a-input maxlength="3" placeholder="RDO Code" v-model="form.taxpayer.rdo_code"></a-input>
           </a-form-item>
         </a-col>
         <a-col :span="24">
@@ -124,27 +129,37 @@
             label="8"
           >
             <span style="margin-right: 14px">Alphanumeric Tax Code (ATC)</span>
+            <br />
             <a-radio-group v-model="form.taxpayer_atc_code">
               <a-radio
                 :value="'II012'"
                 :disabled="form.taxpayer.filer_type == 'p'|| form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II012 Business Income-Graduated IT Rates</a-radio>
+              <br />
               <a-radio
                 :value="'II015'"
                 :disabled="form.taxpayer.filer_type == 'p'||form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II015 Business Income - 8% IT Rate</a-radio>
+              <br />
+
               <a-radio
                 :value="'II014'"
                 :disabled="form.taxpayer.filer_type == 's' || form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II014 Income from Profession–Graduated IT Rates</a-radio>
+              <br />
+
               <a-radio
                 :value="'II017'"
                 :disabled="form.taxpayer.filer_type == 's' ||form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II017 Income from Profession – 8% IT Rate</a-radio>
+              <br />
+
               <a-radio
                 :value="'II013'"
                 :disabled="form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
               >II013 Mixed Income–Graduated IT Rates</a-radio>
+              <br />
+
               <a-radio
                 :value="'II016'"
                 :disabled="form.taxpayer.filer_type == 't' || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
@@ -198,7 +213,11 @@
             :validate-status="error_item('taxpayer.zip_code')"
             :help="error_desc('taxpayer.zip_code')"
           >
-            <a-input v-model="form.taxpayer.address_details.zipCode" placeholder="Zipcode"></a-input>
+            <a-input
+              v-model="form.taxpayer.address_details.zipCode"
+              placeholder="Zipcode"
+              maxlength="4"
+            ></a-input>
           </a-form-item>
         </a-col>
         <!-- 11 -->
@@ -275,11 +294,7 @@
             :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
           >
             <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
-            <a-radio-group
-              :defaultValue="true"
-              v-model="form.taxpayer_foreign_tax_credits"
-              @change="changeTaxNo"
-            >
+            <a-radio-group v-model="form.taxpayer_foreign_tax_credits" @change="changeTaxNo">
               <a-radio :value="true">Yes</a-radio>
               <a-radio :value="false">No</a-radio>
             </a-radio-group>
@@ -359,6 +374,7 @@
           :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' / ')"
           placeholder="Spouse's Tax Identification Number"
           v-model="form.spouse_details.tin"
+          maxlength="13"
         ></a-input>
       </a-form-item>
 
@@ -372,6 +388,7 @@
           v-model="form.spouse_details.rdo_code"
           :disabled="form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null || form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
           placeholder="RDO Code"
+          maxlength="3"
         ></a-input>
       </a-form-item>
 
@@ -451,12 +468,12 @@
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE'"
+            :disabled="form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='CE' || form.taxpayer.spouse_tax_filter_type !=='SPCE'"
           >II016 Mixed Income – 8% IT Rate</a-radio>
           <br />
           <a-radio
             :value="'SII011'"
-            @change="form.spouse_tax_rate =''"
+            @change="form.spouse_tax_rate ='CE'"
             :disabled="form.spouse_details.filer_type !=='CE'"
           >II011 Compensation Income</a-radio>
         </a-radio-group>
@@ -468,11 +485,32 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
       >
-        <a-input
+        <a-row :gutter="5">
+          <a-col :span="8">
+            <a-input
+              v-model="form.spouse_details.individual_details.lastName"
+              placeholder="Last Name"
+            />
+          </a-col>
+          <a-col :span="8">
+            <a-input
+              v-model="form.spouse_details.individual_details.firstName"
+              placeholder="First Name"
+            />
+          </a-col>
+          <a-col :span="8">
+            <a-input
+              v-model="form.spouse_details.individual_details.middleName"
+              placeholder="Middle Name"
+            />
+          </a-col>
+        </a-row>
+
+        <!-- <a-input
           placeholder="Spouse's Name: Last Name, First Name, Middle Name"
           v-model="form.spouse_details.registered_name"
           :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
-        ></a-input>
+        ></a-input>-->
       </a-form-item>
 
       <!-- 22 -->
@@ -511,7 +549,6 @@
         <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
         <a-radio-group
           @change="changeSpouseTaxNo"
-          :defaultValue="true"
           v-model="form.spouse_foreign_tax_credits"
           :disabled="form.taxpayer.filer_type == 'e' || form.taxpayer.filer_type == 't'"
         >
@@ -834,25 +871,25 @@ export default {
       this.show = 1;
       this.form.pdf_page = 2;
     },
-    openSched2(){
+    openSched2() {
       this.sched = 2;
       this.show = 2;
-      this.form.pdf_page = 2
+      this.form.pdf_page = 2;
     },
-     openSched3(){
+    openSched3() {
       this.sched = 3;
       this.show = 3;
-      this.form.pdf_page = 2
+      this.form.pdf_page = 2;
     },
-     openSched4(){
+    openSched4() {
       this.sched = 4;
       this.show = 4;
-      this.form.pdf_page = 2
+      this.form.pdf_page = 2;
     },
-    closeSched(){
-      this.form.pdf_page = 1
-      this.sched = 0
-      this.show = 0
+    closeSched() {
+      this.form.pdf_page = 1;
+      this.sched = 0;
+      this.show = 0;
     },
     changeTaxNo() {
       if (this.form.taxpayer_foreign_tax_credits == false) {
@@ -965,7 +1002,7 @@ export default {
         this.form.spouse_total_amount_payable
       ]);
     },
-    item26b() {},
+    // item26b() {},
     save_draft() {},
     submit() {
       this.loading = true;
@@ -999,7 +1036,16 @@ export default {
     },
     atc_code_change() {
       this.form.taxpayer_atc_code = "";
+      if (
+        this.form.taxpayer.filer_type !== "sp" ||
+        this.form.taxpayer.filer_type !== "p" ||
+        this.form.taxpayer.filer_type !== "e" ||
+        this.form.taxpayer.filer_type !== "t"
+      ) {
+      }
+      this.form.taxpayer_method_deduction = "";
     },
+    // clear radio
     changeATC(e) {
       const value = this.form.taxpayer_atc_code;
       console.log("change ATC value :", value);
@@ -1105,6 +1151,7 @@ export default {
               "You selected Yes in item 15, please input Foreign Tax Number  "
           });
         }
+
         if (!this.form.taxpayer_method_deduction) {
           errors.push({
             page: 1,
@@ -1121,10 +1168,6 @@ export default {
   },
   created() {
     this.form.pdf_page = 1;
-    console.log(
-      "taxpayer.individual_details.birthDate, :",
-      JSON.stringify(this.form.taxpayer.individual_details)
-    );
     this.connections = this.$store.state.relationship.connections;
     console.log(
       "  " + JSON.stringify(this.$store.state.relationship.connections)

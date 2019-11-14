@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-row :gutter="10" style="margin-bottom: 1vh;">
+    <a-row :gutter="10" style="margin-bottom: 2vh; height: 33vh;">
       <a-col
         :span="12"
         v-for="(item, index) in statistics"
@@ -92,6 +92,7 @@ export default {
           collection: this.getRandomArbitrary(10000000, 1000000)
         });
       }
+      this.items.sort((a, b) => b.collection - a.collection);
     },
     getStatisticsMockData() {
       var stats = [
@@ -172,6 +173,7 @@ export default {
           return item;
         });
         this.items = items;
+        this.items.sort((a, b) => b.collection - a.collection);
       }, 1000);
     },
     setStatisticsMockDataRealtime() {

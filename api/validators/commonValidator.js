@@ -93,7 +93,8 @@ class CommonValidator {
     }
 
     static computeCompromise() {
-        return 0;
+        // Mock amount
+        return 1000;
     }
 
     static validateMandatory(value, message) {
@@ -111,6 +112,12 @@ class CommonValidator {
         var error_messages = [];
         console.log(`Checking due date if late filing at page ${page}`);
         if (this.isLateFiling(form_details.due_date)) {
+            console.log("Late filing...")
+            error_messages.push({
+                page,
+                field: 'latefiling',
+                error: 'Late Filing'
+            })
             // Compute Surcharge
             const surcharge = this.computeSurcharges(form_details.tax_due);
             form_details.surcharge = form_details.surcharge ? form_details.surcharge.toFixed(2) : "0.00";

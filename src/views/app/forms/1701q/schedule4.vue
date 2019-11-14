@@ -140,8 +140,8 @@
           textAlign: 'right',
         }"
       >
-        <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
-        <a-button @click="handleOk" type="primary">Submit</a-button>
+        <!-- <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
+        <a-button @click="handleOk" type="primary">Submit</a-button>-->
       </div>
     </a-drawer>
   </div>
