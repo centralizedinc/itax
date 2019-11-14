@@ -175,6 +175,6 @@ export default {
 
 <style>
 .bar-collection-returns canvas {
-  height: 62vh !important;
+  height: 66.5vh !important;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <a-layout style="background: rgba(0, 34, 50, 0.15);">
+  <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
     <a-back-top>
       <a-avatar>
         <a-icon type="up" :size="42"></a-icon>
