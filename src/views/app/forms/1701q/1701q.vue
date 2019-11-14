@@ -462,13 +462,13 @@
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE' ||form.taxpayer.spouse_tax_filter_type !=='SPCE'"
+            :disabled="form.spouse_details.filer_type !=='PCE' && form.spouse_details.filer_type !=='SPCE'"
           >II013 Mixed Income–Graduated IT Rates</a-radio>
           <br />
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='CE' || form.taxpayer.spouse_tax_filter_type !=='SPCE'"
+            :disabled="form.spouse_details.filer_type !=='PCE' && form.spouse_details.filer_type !=='SPCE'"
           >II016 Mixed Income – 8% IT Rate</a-radio>
           <br />
           <a-radio
@@ -936,6 +936,7 @@ export default {
       console.log(
         "spouse_tax_filter_type data: " + this.form.spouse_details.filer_type
       );
+      this.$emit("updateForm", { spouse_atc_code: "" });
     },
     spouse_type_filter() {},
     professional(data) {
