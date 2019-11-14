@@ -432,7 +432,7 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
       >
-        <a-radio-group v-model="form.spouse_atc_code">
+        <a-radio-group v-model="form.spouse_atc_code" @change="updateSpouseMethodDeduction">
           <span style="margin-right: 14px">ATC (Alphanumeric Tax Code)</span>
           <br />
           <a-radio
@@ -584,11 +584,12 @@
             </a-radio-group>
           </a-form-item>
         </a-col>
+
         <a-col :span="24">
           <a-form-item
-            label="25A"
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
+            label="25A"
           >
             <span style="margin-right: 14px">Method of Deduction:</span>
             <a-radio-group
@@ -1030,6 +1031,9 @@ export default {
           console.log("VALIDATE_AND_SAVE", err);
           this.loading = false;
         });
+    },
+    updateSpouseMethodDeduction() {
+      this.$emit("updateForm", { spouse_method_deduction: "" });
     },
     // clear
     atc_code_change() {

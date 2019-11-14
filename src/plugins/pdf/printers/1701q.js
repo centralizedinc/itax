@@ -11,6 +11,7 @@ var forms = [form.page1, form.page1, form.page2]
  * @returns {Object} document
  */
 function fillup(details) {
+    console.log('details.sched1.taxpayer.gross_income :', details.sched1.taxpayer.gross_income);
     console.log("fillup details: " + JSON.stringify(details))
     var content = getContent(details);
     console.log('get content ###### :', content);
