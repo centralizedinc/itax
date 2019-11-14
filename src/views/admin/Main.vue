@@ -8,12 +8,14 @@
     <a-affix :offsetTop="0">
       <a-layout-header style="background: linear-gradient(to left, #000046, #1cb5e0);">
         <a-row type="flex" justify="start" data-aos="fade-up">
-          <a-col :span="21">
+          <a-col :span="20">
             <h2 style="color:white;">Smart Tax Admin</h2>
           </a-col>
           <a-col :span="3">
             <a-popover :title="admin_user" trigger="click" placement="bottomRight">
-              <span style="color: white; font-size: 14px; font-weight: bold; margin-right: 1.5vh;">{{admin_user}}</span>
+              <span
+                style="color: white; font-size: 14px; font-weight: bold; margin-right: 1.5vh;"
+              >{{admin_user}}</span>
               <a-avatar
                 :size="35"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBv-cKu1_1zauuxCU7oaieOQw7LSLgfi3OgjwGXA-gQrIjmRzUtw&s"
@@ -33,6 +35,9 @@
                 </a-menu>
               </template>
             </a-popover>
+          </a-col>
+          <a-col :span="1">
+            <a-button type="default" @click="logout">Logout</a-button>
           </a-col>
         </a-row>
       </a-layout-header>
@@ -80,7 +85,7 @@
         </a-col>
         <a-col :xs="{ span: 0 }" :sm="{ span: 6 }">
           <!-- <a-affix :offsetTop="127"> -->
-            <summary-layout />
+          <summary-layout />
           <!-- </a-affix> -->
         </a-col>
       </a-row>
@@ -106,17 +111,19 @@ export default {
       collapsed: true,
       current_nav: [0],
       component_list: ["Dashboard", "TaxpayersTable", "RDOMap"],
-      topLocation: 0
+      topLocation: 0,
+      rdo_interval: {}
     };
   },
   created() {
+    this.createMockRDO();
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   computed: {
-    admin_user(){
+    admin_user() {
       return this.$store.state.account_session.admin_user;
     }
   },
@@ -124,9 +131,39 @@ export default {
     handleScroll(event) {
       this.topLocation = window.top.scrollY;
     },
-    logout(){
+    logout() {
+      clearInterval(this.rdo_interval);
       this.$store.dispatch("LOGOUT");
       this.$router.push("/admin");
+    },
+    createMockRDO() {
+      // Create mock data
+      var rdos = this.deepCopy(this.$store.state.tax_form.rdos);
+      function getRandomArbitrary(max, min) {
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+      rdos.forEach(rdo => {
+        rdo.collections = getRandomArbitrary(3000000, 1000000);
+        rdo.is_increased = true;
+      });
+      this.$store.commit("SET_RDOS", rdos);
+      // Mock interval
+      this.rdo_interval = setInterval(() => {
+        console.log("add rdo collection...");
+        var mock_rdos = this.deepCopy(this.$store.state.tax_form.rdos);
+        if (this.$store.state.tax_form.login_rdo) {
+          const index = mock_rdos.findIndex(v => v.code === this.$store.state.tax_form.login_rdo);
+          var random = Math.floor(Math.random() * 5000);
+          mock_rdos[index].collections += random;
+        } else {
+          mock_rdos.forEach(rdo => {
+            var random = Math.floor(Math.random() * 5000);
+            rdo.collections += random;
+          });
+        }
+        mock_rdos.sort((a, b) => b.collections - a.collections);
+        this.$store.commit("SET_RDOS", mock_rdos);
+      }, 1000);
     }
   }
 };

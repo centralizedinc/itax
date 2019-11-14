@@ -16,7 +16,6 @@
             maxlength="13"
             @blur="searchTin"
             @keypress.enter="searchTin"
-            maxlength="13"
           />
         </a-form-item>
       </a-col>
