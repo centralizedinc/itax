@@ -1034,16 +1034,12 @@ export default {
           this.loading = false;
         });
     },
+    // clear
     atc_code_change() {
-      this.form.taxpayer_atc_code = "";
-      if (
-        this.form.taxpayer.filer_type !== "sp" ||
-        this.form.taxpayer.filer_type !== "p" ||
-        this.form.taxpayer.filer_type !== "e" ||
-        this.form.taxpayer.filer_type !== "t"
-      ) {
-      }
-      this.form.taxpayer_method_deduction = "";
+      this.$emit("updateForm", {
+        taxpayer_atc_code: "",
+        taxpayer_method_deduction: ""
+      });
     },
     // clear radio
     changeATC(e) {
@@ -1152,7 +1148,12 @@ export default {
           });
         }
 
-        if (!this.form.taxpayer_method_deduction) {
+        if (
+          (!this.form.taxpayer_method_deduction &&
+            this.form.taxpayer.filer_type == "II015") ||
+          this.form.taxpayer.filer_type == "II017" ||
+          this.form.taxpayer.filer_type == "II016"
+        ) {
           errors.push({
             page: 1,
             field: "taxpayer_method_deduction",
