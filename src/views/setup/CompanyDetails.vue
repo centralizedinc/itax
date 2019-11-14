@@ -268,7 +268,10 @@ export default {
                 this.details.company_details = result.taxpayer;
                 this.details.company_details.is_exist = true;
                 this.invalid_tin_status = "success";
-                console.log("company details: " + JSON.stringify(this.details.company_details))
+                console.log(
+                  "company details: " +
+                    JSON.stringify(this.details.company_details)
+                );
               }
             })
             .catch(err => {});
