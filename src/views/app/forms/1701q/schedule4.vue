@@ -5,11 +5,11 @@
       :visible="visible"
       :closable="false"
       @close="onClose"
-      :width="720"
+      :width="700"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
       <a-form :form="form" layout="vertical" hideRequiredMark>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
             <a-form-item
@@ -35,7 +35,7 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
@@ -59,7 +59,7 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
@@ -83,31 +83,41 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="67."
             >
-              <a-input-number
-                style="width:100%"
-                :value="penalties()"
-                placeholder="Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)</template>
+                <a-input-number
+                  style="width:100%"
+                  :value="penalties()"
+                  placeholder="Total Penalties"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                style="width:100%"
-                :value="spouse_penalties()"
-                placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
-              ></a-input-number>
+              <a-tooltip>
+                <template
+                  slot="title"
+                >Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)</template>
+                <a-input-number
+                  style="width:100%"
+                  :value="spouse_penalties()"
+                  placeholder="Total Penalties"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <!-- <a-row :gutter="16">
+        <!-- <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"

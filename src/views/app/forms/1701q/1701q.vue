@@ -130,7 +130,7 @@
           >
             <span style="margin-right: 14px">Alphanumeric Tax Code (ATC)</span>
             <br />
-            <a-radio-group v-model="form.taxpayer_atc_code">
+            <a-radio-group v-model="form.taxpayer_atc_code" @change="updateMethodDeduction">
               <a-radio
                 :value="'II012'"
                 :disabled="form.taxpayer.filer_type == 'p'|| form.taxpayer.filer_type == '' || form.taxpayer.filer_type == null"
@@ -432,7 +432,7 @@
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
       >
-        <a-radio-group v-model="form.spouse_atc_code">
+        <a-radio-group v-model="form.spouse_atc_code" @change="updateSpouseMethodDeduction">
           <span style="margin-right: 14px">ATC (Alphanumeric Tax Code)</span>
           <br />
           <a-radio
@@ -462,13 +462,13 @@
           <a-radio
             :value="'SII013'"
             @change="form.spouse_tax_rate ='SGR'"
-            :disabled="form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='CE' ||form.taxpayer.spouse_tax_filter_type !=='SPCE'"
+            :disabled="form.spouse_details.filer_type !=='PCE' && form.spouse_details.filer_type !=='SPCE'"
           >II013 Mixed Income–Graduated IT Rates</a-radio>
           <br />
           <a-radio
             :value="'SII016'"
             @change="form.spouse_tax_rate ='SOGS'"
-            :disabled="form.spouse_details.filer_type =='SP' || form.spouse_details.filer_type =='P' || form.spouse_details.filer_type =='CE' || form.taxpayer.spouse_tax_filter_type !=='SPCE'"
+            :disabled="form.spouse_details.filer_type !=='PCE' && form.spouse_details.filer_type !=='SPCE'"
           >II016 Mixed Income – 8% IT Rate</a-radio>
           <br />
           <a-radio
@@ -584,11 +584,12 @@
             </a-radio-group>
           </a-form-item>
         </a-col>
+
         <a-col :span="24">
           <a-form-item
-            label="25A"
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
+            label="25A"
           >
             <span style="margin-right: 14px">Method of Deduction:</span>
             <a-radio-group
@@ -913,7 +914,6 @@ export default {
       if (this.SP == true && this.P == false) {
         this.P = false;
         holder = "SP";
-
         if (this.SP == true && this.P == false && this.CE == true) {
           holder = "SPCE";
         } else if (this.P == true && this.SP == false && this.CE == true) {
@@ -937,6 +937,7 @@ export default {
       console.log(
         "spouse_tax_filter_type data: " + this.form.spouse_details.filer_type
       );
+      this.$emit("updateForm", { spouse_atc_code: "" });
     },
     spouse_type_filter() {},
     professional(data) {
@@ -965,7 +966,6 @@ export default {
         this.form.taxpayer_prev_tax_due = this.form.sched2.taxpayer.total_tax_due;
         this.form.spouse_prev_tax_due = this.form.sched2.spouse.total_tax_due;
       }
-
       // this.form.item27a = this.form.item62a;
       // this.form.item27b = this.form.item62b;
       // this.form.item28a = this.form.item26a - this.form.item27a;
@@ -991,12 +991,10 @@ export default {
         this.form.taxpayer_tax_due,
         this.form.taxpayer_total_penalties
       ]);
-
       this.form.spouse_total_amount_payable = this.computeSum([
         this.form.spouse_tax_due,
         this.form.spouse_total_penalties
       ]);
-
       this.form.taxpayer_aggregate_amount_payable = this.computeSum([
         this.form.taxpayer_total_amount_payable,
         this.form.spouse_total_amount_payable
@@ -1034,16 +1032,18 @@ export default {
           this.loading = false;
         });
     },
+    updateSpouseMethodDeduction() {
+      this.$emit("updateForm", { spouse_method_deduction: "" });
+    },
+    // clear
     atc_code_change() {
-      this.form.taxpayer_atc_code = "";
-      if (
-        this.form.taxpayer.filer_type !== "sp" ||
-        this.form.taxpayer.filer_type !== "p" ||
-        this.form.taxpayer.filer_type !== "e" ||
-        this.form.taxpayer.filer_type !== "t"
-      ) {
-      }
-      this.form.taxpayer_method_deduction = "";
+      this.$emit("updateForm", {
+        taxpayer_atc_code: "",
+        taxpayer_method_deduction: ""
+      });
+    },
+    updateMethodDeduction() {
+      this.$emit("updateForm", { taxpayer_method_deduction: "" });
     },
     // clear radio
     changeATC(e) {
@@ -1079,7 +1079,6 @@ export default {
         ? this.errors.find(x => x.field === item).error
         : "";
     },
-
     // insert validation
     validate(is_validate_all) {
       var errors = [];
@@ -1151,8 +1150,12 @@ export default {
               "You selected Yes in item 15, please input Foreign Tax Number  "
           });
         }
-
-        if (!this.form.taxpayer_method_deduction) {
+        if (
+          (!this.form.taxpayer_method_deduction &&
+            this.form.taxpayer.filer_type == "II015") ||
+          this.form.taxpayer.filer_type == "II017" ||
+          this.form.taxpayer.filer_type == "II016"
+        ) {
           errors.push({
             page: 1,
             field: "taxpayer_method_deduction",
@@ -1189,7 +1192,6 @@ p {
 /* .tax-form .computation-item {
   padding-left: 50px;
 }
-
 .tax-form .computation-item .ant-input-number {
   width: 40vh;
 } */

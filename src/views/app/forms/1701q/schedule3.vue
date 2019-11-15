@@ -235,7 +235,7 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="6">
+        <!-- <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="63">
               <a-tooltip>
@@ -264,7 +264,7 @@
               </a-tooltip>
             </a-form-item>
           </a-col>
-        </a-row>
+        </a-row>-->
       </a-form>
       <div
         :style="{

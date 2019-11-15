@@ -20,6 +20,18 @@ const mutations = {
         })
     },
     SET_TAXPAYERS(state, taxpayers) {
+        function getRandomArbitrary(max, min) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+        taxpayers = taxpayers.map(v => {
+            v.collections = getRandomArbitrary(10000000, 200000);
+            return v;
+          })
+          .sort((a, b) => b.collections - a.collections)
+          .map((v, i) => {
+            v.top = i + 1;
+            return v;
+          });
         state.taxpayers = taxpayers;
     }
 }
