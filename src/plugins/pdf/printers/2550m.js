@@ -49,7 +49,7 @@ function getContent(forms) {
                             characterSpacing: 6,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [147, 34, 0, 0]
+                            margin: [147, 36, 0, 0]
                         },
                         {
                             //--------- Year
@@ -60,21 +60,21 @@ function getContent(forms) {
                             characterSpacing: 8,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [-4, 34, 0, 0]
+                            margin: [-4, 36, 0, 0]
                         },
                         {
                             text: forms.amended_yn == true ? 'X' : ' ',
-                            fontSize: 8,
+                            fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [34, 40, 0, 0]
+                            margin: [34, 39, 0, 0]
                         },
                         {
                             text: forms.amended_yn == false ? 'X' : ' ',
-                            fontSize: 8,
+                            fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
-                            margin: [12, 40, 0, 0]
+                            margin: [12, 39, 0, 0]
                         },
                         {
                             //--------- Number of Sheet
@@ -254,14 +254,14 @@ function getContent(forms) {
                             fontSize: 9,
                             alignment: 'right',
                             // right,down,left,up
-                            margin: [270, 23, 0, 0]
+                            margin: [270, 22, 0, 0]
                         },
                         {
                             text: formatAmount(forms.totalAtcOutput),
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [17, 23, 0, 0]
+                            margin: [17, 22, 0, 0]
                         },
 
 
@@ -776,7 +776,7 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [410, -5, 0, 0]
+                            margin: [410, -4, 0, 0]
                         },
                     ]
                 ]
@@ -1106,14 +1106,14 @@ function getContent(forms) {
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [83, 5, 0, 0]
+                            margin: [83, 6, 0, 0]
                         },
                         {
                             text: forms.interest == null ? '0.00' : forms.interest % 1 == 0 ? forms.interest + '.00' : forms.interest,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
-                            margin: [23, 6, 0, 0]
+                            margin: [23, 6, 2, 0]
                         },
                         {
                             text: forms.compromise == null ? '0.00' : forms.compromise % 1 == 0 ? forms.compromise + '.00' : forms.compromise,
@@ -1158,22 +1158,20 @@ function getContent(forms) {
         }
     ]
     // content 2
-    //--------------------------------------------> SCHEDULE PAGE 
+    //--------------------------------------------------------------------------> SCHEDULE PAGE 2 <--------------------------------------------------------------------
     
     //--------------------------------->>>>> Schedule 1 <<<<<-------------------------////
     var content_page2 = [
-       //----Schedule 1 -- > Table1 
+   ///////////------------ Schedule 1 -- > Table1 
         {
               layout: "noBorders",
-                table: {
+              table: {
                     widths: [530],
                     heights: [30,],
                     body: [
                         [{
                             text: "",
-                        }             
-                                   
-                                    
+                        }                                               
                       
                         ],
     
@@ -1181,26 +1179,26 @@ function getContent(forms) {
                 }
             },
 
-            //--------Schedule 1 --- > Table2
-            {
+    //////////////--------Schedule 1 --- > Table2
+       {
             layout: "noBorders",        
             table: {
                 widths: [196, 72, 108, 128,],
                 heights: [7,],
                 body: [
                     [{
-                          text:"test",
+                          text: "TEXT",
                           fontSize: 9,
                           alignment: 'justify',
                           // right,down,left,up
-                          margin: [-10, 4, 0, 0]
+                          margin: [-10, 5, 0, 0]
                         },
                       {
-                        text:"test",
+                        text: 'TEXT',                    
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [3, 4, 0, 0]
+                        margin: [3, 5, 0, 0]
                         },
                         {
                             text: "test",
@@ -1216,15 +1214,14 @@ function getContent(forms) {
                             // right,down,left,up
                             margin: [3, 4, 0, 0]
                         },
-                        
-                       
+                                               
                     ],
 
                 ]
             }
         },
 
-        //--------Schedule 1 --- > Table3
+        /////////////--------Schedule 1 --- > Table3
         {
             layout: "noBorders",        
             table: {
@@ -3178,35 +3175,35 @@ body: [
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
-                margin: [-10, 7, 0, 0]
+                margin: [-10, 8, 0, 0]
               },
             {
               text:"test",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
-              margin: [3, 7, 0, 0]
+              margin: [3, 8, 0, 0]
               },
               {
                   text: "test",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
-                  margin: [3, 7, 0, 0]
+                  margin: [3, 8, 0, 0]
               },
               {
                   text: "test",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
-                  margin: [7, 7, 0, 0]
+                  margin: [7, 8, 0, 0]
               },
               {
                 text: "test",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
-                margin: [7 , 7, 0, 0]
+                margin: [7 , 8  , 0, 0]
             },
               
              
@@ -3228,14 +3225,14 @@ body: [
                    fontSize: 9,
                    alignment: 'justify',
                    // right,down,left,up
-                   margin: [-10, -4, 0, 0]
+                   margin: [-10, -5, 0, 0]
                  },
                {
                  text:"test",
                  fontSize: 9,
                  alignment: 'justify',
                  // right,down,left,up
-                 margin: [3, -5, 0, 0]
+                 margin: [3, -4, 0, 0]
                  },
                  {
                      text: "test",
