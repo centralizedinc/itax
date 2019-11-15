@@ -227,6 +227,8 @@ export default {
     },
     next(i) {
       this.details.taxpayer.individual_details.middleName = this.details.user.name.middle
+      this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`
+      
       console.log("i :", i);
       if (i === 4) {
         console.log("i = 4 na this")
