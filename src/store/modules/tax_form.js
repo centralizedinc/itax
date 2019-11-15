@@ -80,9 +80,9 @@ const actions = {
             if (refresh || !context.state.rdos || !context.state.rdos.length) {
                 new ReferenceAPI(context.rootState.account_session.token).getRdos()
                     .then((result) => {
-                        console.log('result.data :', result.data);
-                        context.commit("SET_RDOS", result.data);
-                        resolve(result.data);
+                        var rdos = result.data;
+                        context.commit("SET_RDOS", rdos);
+                        resolve(rdos);
                     }).catch((err) => {
                         reject(err)
                     });

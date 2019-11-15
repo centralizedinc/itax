@@ -115,19 +115,29 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item v-if="form.is_avail_tax_relief">
+
+       <a-form-item label="If yes, specify">
+        <a-textarea v-model="form.avail_tax_relief"></a-textarea>
+      </a-form-item>
+        </a-form>  
+
+      <!-- <a-form-item v-if="form.is_avail_tax_relief">
         <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
-    </a-form>
+    </a-form> -->
 
-    <!-- Part II -->
+    <!--------------------------------------------------- Part II ------------------------------------------>
     <a-form v-show="step===2">
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')">
         <div style="color: black">
+
+
+
+
           12. Vatable Sales/Receipt-Private (
           <span
             class="text-link"
-            @click="show_sched1=true"
+            @click="openPage2()"
           >Schedule 1</span>)
         </div>
       </a-form-item>
@@ -135,7 +145,7 @@
         v-if="show_sched1"
         :show="show_sched1"
         :form="form"
-        @close="updateSchedAndClose"
+        @close="closePage2()"
       />
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -283,7 +293,12 @@
         <div style="color: black">
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
           <span
+<<<<<<< HEAD
+            class="text-link"
+            @click="openPage2sched2()"
+=======
             class="text-link" @click="show_sched2=true" 
+>>>>>>> 6d8a3d96933e7a24c41489fb74696c35b33936f7
           >Schedule 2</span>)
           <schedule-two
         v-if="show_sched2"
@@ -295,6 +310,52 @@
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer2">Schedule 2</a-button> -->
+<<<<<<< HEAD
+      <!-- <a-drawer
+        title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
+        placement="right"
+        :closable="false"
+        @close="sched2_drawer=false"
+        :visible="sched2_drawer"
+        width="500"
+      >
+        <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
+          <template slot="date_purchased" slot-scope="text, record,index">
+            <a-date-picker
+              v-model="sched2_data[index].date_purchased"
+              @change="check_sched2"
+              style="width: 100%"
+            />
+          </template>
+          <template slot="description" slot-scope="text, record,index">
+            <a-input v-model="sched2_data[index].description"></a-input>
+          </template>
+          <template slot="vat" slot-scope="text, record,index">
+            <a-input-number v-model="sched2_data[index].vat" @change="sched2Compute"></a-input-number>
+          </template>
+          <template slot="tax" slot-scope="text, record,index">
+            <a-input-number disabled v-model="sched2_data[index].tax"></a-input-number>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-popconfirm
+              v-if="sched2_data.length"
+              title="Sure to delete?"
+              @confirm="() => delete_sched2(index)"
+            >
+              <a href="javascript:;">Delete</a>
+            </a-popconfirm>
+          </template>
+          <template slot="footer">
+            <a-button @click="addSched2">Add</a-button>
+            <a-button>Save</a-button>
+            <p
+              align="right"
+            >18A: {{form.purCapGoodsNotExceed}} 18B: {{form.outputCapGoodsNotExceed}}</p>
+          </template>
+        </a-table>
+      </a-drawer> -->
+=======
+>>>>>>> 1eb9429dcc05d5c263ed582a2814829460756ae9
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -759,10 +820,24 @@ export default {
     }
   },
   created() {
-    this.form.pdf_page = 1
+    this.form.pdf_page = 2
     console.log("this.form###### :", this.form);
   },
   methods: {
+openPage2(){
+      this.show_sched1=true
+      this.form.pdf_page = 2    
+    },
+    openPage2sched2(){
+      this.show_sched1=true
+      this.form.pdf_page = 2
+    },
+    closePage2(){
+      this.form.pdf_page = 1
+      this.show_sched1 = false;
+      this.show_sched2 = false;
+      this.updateSchedAndClose()
+    },
     // 16A
     getTotalSales() {
       console.log("this.form.totalAtcAmount :", this.form.totalAtcAmount);
@@ -1265,13 +1340,13 @@ export default {
   },
   //----------------------------
  watch: {
-   step() {
-     if(this.step ===   0 ){
-         this.form.pdf_page = 1
-     }else{
-         this.form.pdf_page =2
-     }
-    },
+  //  step() {
+  //    if(this.step ===   0 ){
+  //        this.form.pdf_page = 1
+  //    }else{
+  //        this.form.pdf_page =2
+  //    }
+  //   },
     loading(val) {
       this.$emit("loading", val);
     },

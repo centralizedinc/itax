@@ -12,7 +12,7 @@
       :bodyStyle="{ padding: '10px 24px' }"
       style="margin-bottom: 1vh"
     >
-      <a-card-meta :title="tp.registered_name">
+      <a-card-meta :title="tp.registered_name || 'User'">
         <a-avatar
           slot="avatar"
           shape="square"
@@ -64,7 +64,7 @@ export default {
       var test = <span></span>;
       return `TIN: <b>${this.formatTIN(tp.tin)}</b><br/>RDO: <b>${
         tp.rdo_code
-      }</b><br/>Tax Returns: <b>${this.formatAmount(1000)}</b>`;
+      }</b><br/>Tax Returns: <b>${this.formatAmount(tp.collections)}</b>`;
     }
   }
 };

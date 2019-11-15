@@ -216,22 +216,22 @@ export default {
     taxpayers() {
       var taxpayers = this.deepCopy(this.$store.state.taxpayers.taxpayers);
       // Mock collections
-      taxpayers = taxpayers
-        .map(v => {
-          v.collections = this.getRandomArbitrary(10000000, 200000);
-          return v;
-        })
-        .sort((a, b) => b.collections - a.collections)
-        .map((v, i) => {
-          v.top = i + 1;
-          return v;
-        });
-      console.log("this.login_rdo :", this.login_rdo);
-      if (this.login_rdo) {
-        taxpayers = taxpayers.filter(
-          v => v.rdo_code && v.rdo_code === this.login_rdo
-        );
-      }
+      // taxpayers = taxpayers
+      //   .map(v => {
+      //     v.collections = this.getRandomArbitrary(10000000, 200000);
+      //     return v;
+      //   })
+      //   .sort((a, b) => b.collections - a.collections)
+      //   .map((v, i) => {
+      //     v.top = i + 1;
+      //     return v;
+      //   });
+      // console.log("this.login_rdo :", this.login_rdo);
+      // if (this.login_rdo) {
+      //   taxpayers = taxpayers.filter(
+      //     v => v.rdo_code && v.rdo_code === this.login_rdo
+      //   );
+      // }
       return taxpayers;
     },
     other_taxpayers() {
@@ -268,7 +268,6 @@ export default {
       if (this.search) {
         this.search_mode = true;
         this.filtered_taxpayers = this.taxpayers.filter(v => {
-          console.log(v);
           return (
             v &&
             ((v.registered_name &&

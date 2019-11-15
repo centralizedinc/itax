@@ -72,6 +72,7 @@
                 <a-input-number
                   disabled
                   style="width:100%"
+                  v-model="form.sched1.taxpayer.gross_income"
                   :value="gross_income()"
                   placeholder="Gross Income/(Loss) from Operation (Item 36 Less Item 37)"
                 ></a-input-number>
@@ -373,7 +374,7 @@ export default {
         (this.form.sched1.taxpayer.total_sales_revenue || 0) -
         (this.form.sched1.taxpayer.total_sales_services || 0);
       this.form.sched1.taxpayer.gross_income = total;
-      return total;
+      return this.form.sched1.taxpayer.gross_income;
     },
     spouse_gross_income() {
       var total =
