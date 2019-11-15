@@ -6,19 +6,30 @@
       ref="map"
       :center="center"
       :zoom="login_rdo ? 11 : 7"
-      map-type-id="terrain"
+      :options="{ mapTypeControl: false, scaleControl: false, streetViewControl: false, rotateControl: false }"
       draggable="true"
       style="width: 100%; height: 150vh"
     >
-      <GmapCircle
+      <GmapMarker
         v-for="(item, index) in rdo_coordinates"
         :key="`m${index}`"
+        :position="item.coordinates"
+        :animation="item.highlight ? 1 : 4"
+        :icon="{ scaledSize: item.highlight ? { height: 36, width: 36 } : { height: 20, width: 20 }, url: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png' }"
+        @mouseover="onHover(index)"
+        @mouseout="onMouseOut(index)"
+        @click="displayInfo(index)"
+      ></GmapMarker>
+
+      <GmapCircle
+        v-for="(item, index) in rdo_coordinates"
+        :key="`c${index}`"
         :center="item.coordinates"
         :radius="item.coordinates.radius"
         :options="item.options"
-        @mouseover="!login_rdo ? onHover(item.code) : null"
-        @mouseout="!login_rdo ? onMouseOut(item.code) : null"
-        @click="!login_rdo ? displayInfo(item) : null"
+        @mouseover="onHover(index)"
+        @mouseout="onMouseOut(index)"
+        @click="displayInfo(index)"
       ></GmapCircle>
 
       <GmapInfoWindow
@@ -28,7 +39,7 @@
       >
         <h3 style="color: blue">RDO {{item.code}}</h3>
         <h4 style="color: gray">{{item.description}}</h4>
-        <h4>{{nFormatter(1500000, 2)}}</h4>
+        <h4>{{formatAmount(item.collections, true)}}</h4>
       </GmapInfoWindow>
     </GmapMap>
   </div>
@@ -55,6 +66,17 @@ export default {
       return this.$store.state.tax_form.login_rdo;
     }
   },
+  watch: {
+    rdos: {
+      handler() {
+        this.info_data.forEach(v => {
+          const index = this.rdos.findIndex(a => a.code === v.code);
+          v.collections = this.rdos[index].collections;
+        });
+      },
+      deep: true
+    }
+  },
   methods: {
     init() {
       this.$store
@@ -66,8 +88,13 @@ export default {
             );
             rdo.options = {
               strokeOpacity: 0.8,
-              fillOpacity: 0.3
+              fillOpacity: 0.3,
+              strokeColor: "#0000FF",
+              strokeWeight: 2,
+              fillColor: "#0000FF",
+              geodesic: true
             };
+            rdo.highlight = false;
             rdo.coordinates.radius = 20000;
             this.info_data = [rdo];
             this.rdo_coordinates = [rdo];
@@ -77,35 +104,42 @@ export default {
               v.coordinates.radius = 20000;
               v.options = {
                 strokeOpacity: 0,
-                fillOpacity: 0
+                fillOpacity: 0,
+                strokeColor: "#0000FF",
+                strokeWeight: 2,
+                fillColor: "#0000FF",
+                geodesic: true
               };
+              v.highlight = false;
               return v;
             });
             this.center = { lat: 12.917797021533946, lng: 122.05196587070316 };
           }
         })
         .catch(err => {
-          console.log('err :', err);
+          console.log("err :", err);
         });
     },
-    onHover(rdo) {
+    onHover(index) {
       if (!this.login_rdo) {
-        const index = this.rdo_coordinates.findIndex(v => v.code === rdo);
+        this.rdo_coordinates[index].highlight = true;
         this.rdo_coordinates[index].options.strokeOpacity = 0.8;
         this.rdo_coordinates[index].options.fillOpacity = 0.3;
       }
     },
-    onMouseOut(rdo) {
+    onMouseOut(index) {
       if (!this.login_rdo) {
-        const index = this.rdo_coordinates.findIndex(v => v.code === rdo);
+        this.rdo_coordinates[index].highlight = false;
         this.rdo_coordinates[index].options.strokeOpacity = 0;
         this.rdo_coordinates[index].options.fillOpacity = 0;
       }
     },
-    displayInfo(rdo) {
-      this.info_data.push(rdo);
-      this.center = rdo.coordinates;
-      console.log("data :", this.info_data);
+    displayInfo(index) {
+      if (!this.login_rdo) {
+        this.info_data.push(this.rdo_coordinates[index]);
+        this.center = this.rdo_coordinates[index].coordinates;
+        console.log("data :", this.info_data);
+      }
     },
     nFormatter(num, digits) {
       var si = [

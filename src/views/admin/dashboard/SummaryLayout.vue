@@ -25,7 +25,7 @@
     <div v-if="!login_rdo" style="margin-bottom: 2vh;">
       <a-card title="Collection per RDO Summary" style="margin-bottom: 0.6vh" />
       <a-card
-        v-for="(item, index) in items"
+        v-for="(item, index) in top_rdos"
         :key="index"
         :bodyStyle="{ padding: 0 }"
         style="margin-bottom: 0.75vh;"
@@ -33,12 +33,12 @@
         <a-card-grid style="width: 100%; padding: 1vh 15px">
           <span class="item-description">{{item.description}} ({{item.code}})</span>
           <a-tooltip style="float: right;">
-            <span slot="title">{{formatAmount(item.collection)}}</span>
+            <span slot="title">{{formatAmount(item.collections)}}</span>
             <a-icon
               :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
               :style="`color: ${item.is_increased ? 'green' : 'red'};`"
             />
-            <span class="item-value">{{nFormatter(item.collection, 2)}}</span>
+            <span class="item-value">{{nFormatter(item.collections, 2)}}</span>
           </a-tooltip>
         </a-card-grid>
       </a-card>
@@ -65,16 +65,19 @@ export default {
     this.$store
       .dispatch("GET_RDOS")
       .then(result => {
-        if (!this.login_rdo) {
-          this.getMockData();
-          this.setMockDataRealtime();
-        }
+        // if (!this.login_rdo) {
+        //   this.getMockData();
+        //   this.setMockDataRealtime();
+        // }
         this.getStatisticsMockData();
         this.setStatisticsMockDataRealtime();
       })
       .catch(err => {});
   },
   computed: {
+    top_rdos(){
+      return this.deepCopy(this.rdos).slice(0, 9);
+    },
     rdos() {
       return this.$store.state.tax_form.rdos;
     },
@@ -92,12 +95,13 @@ export default {
           collection: this.getRandomArbitrary(10000000, 1000000)
         });
       }
+      this.items.sort((a, b) => b.collection - a.collection);
     },
     getStatisticsMockData() {
       var stats = [
         {
           name: "Collections this year",
-          is_increased: false,
+          is_increased: true,
           max: 6000000,
           min: 5000000
         },
@@ -164,16 +168,17 @@ export default {
         (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
       );
     },
-    setMockDataRealtime() {
-      setInterval(() => {
-        var items = this.items.map(item => {
-          var random = Math.floor(Math.random() * 10000);
-          item.collection += random;
-          return item;
-        });
-        this.items = items;
-      }, 1000);
-    },
+    // setMockDataRealtime() {
+    //   setInterval(() => {
+    //     var items = this.items.map(item => {
+    //       var random = Math.floor(Math.random() * 10000);
+    //       item.collection += random;
+    //       return item;
+    //     });
+    //     this.items = items;
+    //     this.items.sort((a, b) => b.collection - a.collection);
+    //   }, 1000);
+    // },
     setStatisticsMockDataRealtime() {
       setInterval(() => {
         var items = this.statistics.map(item => {

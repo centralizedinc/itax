@@ -394,6 +394,7 @@ export default new Router({
     path: '/admin',
     name: 'Admin',
     beforeEnter(to, from, next) {
+      console.log(store.state.account_session.admin_user)
       if(store.state.account_session.admin_user){
         next('/admin/app');
       } else next()
