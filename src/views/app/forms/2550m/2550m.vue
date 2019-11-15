@@ -130,10 +130,6 @@
     <a-form v-show="step===2">
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')">
         <div style="color: black">
-
-
-
-
           12. Vatable Sales/Receipt-Private (
           <span
             class="text-link"
@@ -292,14 +288,7 @@
       <a-form-item class="computation-item">
         <div style="color: black">
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
-          <span
-<<<<<<< HEAD
-            class="text-link"
-            @click="openPage2sched2()"
-=======
-            class="text-link" @click="show_sched2=true" 
->>>>>>> 6d8a3d96933e7a24c41489fb74696c35b33936f7
-          >Schedule 2</span>)
+          <span class="text-link" @click="show_sched2=true">Schedule 2</span>)
           <schedule-two
         v-if="show_sched2"
         :show="show_sched2"
@@ -310,7 +299,6 @@
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer2">Schedule 2</a-button> -->
-<<<<<<< HEAD
       <!-- <a-drawer
         title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
         placement="right"
@@ -354,8 +342,6 @@
           </template>
         </a-table>
       </a-drawer> -->
-=======
->>>>>>> 1eb9429dcc05d5c263ed582a2814829460756ae9
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
