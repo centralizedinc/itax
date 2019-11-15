@@ -3228,7 +3228,7 @@ body: [
                    fontSize: 9,
                    alignment: 'justify',
                    // right,down,left,up
-                   margin: [-10, -5, 0, 0]
+                   margin: [-10, -4, 0, 0]
                  },
                {
                  text:"test",
