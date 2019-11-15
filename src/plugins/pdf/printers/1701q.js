@@ -728,14 +728,14 @@ function getContent(forms) {
                     },
 
                     {
-                        text: forms.taxpayer_prev_tax_due == null ? '0.00' : forms.taxpayer_prev_tax_due % 1 == 0 ? forms.taxpayer_prev_tax_due + '.00' : forms.taxpayer_prev_tax_due,
+                        text: forms.taxpayer_prev_tax_due == null ? '0' : forms.taxpayer_prev_tax_due % 1 == 0 ? forms.taxpayer_prev_tax_due + ' ' : forms.taxpayer_prev_tax_due,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, 1, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_prev_tax_due == null ? '0.00' : forms.spouse_prev_tax_due % 1 == 0 ? forms.spouse_prev_tax_due + '.00' : forms.spouse_prev_tax_due,
+                        text: forms.spouse_prev_tax_due == null ? '0' : forms.spouse_prev_tax_due % 1 == 0 ? forms.spouse_prev_tax_due + ' ' : forms.spouse_prev_tax_due,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, 1, 0, 0],
@@ -759,14 +759,14 @@ function getContent(forms) {
                     },
 
                     {
-                        text: forms.taxpayer_tax_credit == null ? '0.00' : forms.taxpayer_tax_credit % 1 == 0 ? forms.taxpayer_tax_credit + '.00' : forms.taxpayer_tax_credit,
+                        text: forms.taxpayer_tax_credit == null ? '0' : forms.taxpayer_tax_credit % 1 == 0 ? forms.taxpayer_tax_credit + ' ' : forms.taxpayer_tax_credit,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, -2, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_tax_credit == null ? '0.00' : forms.spouse_tax_credit % 1 == 0 ? forms.spouse_tax_credit + '.00' : forms.spouse_tax_credit,
+                        text: forms.spouse_tax_credit == null ? '0' : forms.spouse_tax_credit % 1 == 0 ? forms.spouse_tax_credit + ' ' : forms.spouse_tax_credit,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, -2, 0, 0],
@@ -789,14 +789,14 @@ function getContent(forms) {
                     },
 
                     {
-                        text: forms.taxpayer_tax_due == null ? '0.00' : forms.taxpayer_tax_due % 1 == 0 ? forms.taxpayer_tax_due + '.00' : forms.taxpayer_tax_due,
+                        text: forms.taxpayer_tax_due == null ? '0' : forms.taxpayer_tax_due % 1 == 0 ? forms.taxpayer_tax_due + ' ' : forms.taxpayer_tax_due,
                         fontSize: 12,
                         margin: [0, -4, 0, 0],
                         characterSpacing: 1,
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_tax_due == null ? '0.00' : forms.spouse_tax_due % 1 == 0 ? forms.spouse_tax_due + '.00' : forms.spouse_tax_due,
+                        text: forms.spouse_tax_due == null ? '0' : forms.spouse_tax_due % 1 == 0 ? forms.spouse_tax_due + ' ' : forms.spouse_tax_due,
                         fontSize: 12,
                         margin: [0, -4, 0, 0],
                         characterSpacing: 1,
@@ -819,14 +819,14 @@ function getContent(forms) {
                     },
 
                     {
-                        text: forms.taxpayer_total_penalties == null ? '0.00' : forms.taxpayer_total_penalties % 1 == 0 ? forms.taxpayer_total_penalties + '.00' : forms.taxpayer_total_penalties,
+                        text: forms.taxpayer_total_penalties == null ? '0' : forms.taxpayer_total_penalties % 1 == 0 ? forms.taxpayer_total_penalties + ' ' : forms.taxpayer_total_penalties,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, -8, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_total_penalties == null ? '0.00' : forms.spouse_total_penalties % 1 == 0 ? forms.spouse_total_penalties + '.00' : forms.spouse_total_penalties,
+                        text: forms.spouse_total_penalties == null ? '0' : forms.spouse_total_penalties % 1 == 0 ? forms.spouse_total_penalties + ' ' : forms.spouse_total_penalties,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, -8, 0, 0],
@@ -849,14 +849,14 @@ function getContent(forms) {
                     },
 
                     {
-                        text: forms.taxpayer_total_amount_payable == null ? '0.00' : forms.taxpayer_total_amount_payable % 1 == 0 ? forms.taxpayer_total_amount_payable + '.00' : forms.taxpayer_total_amount_payable,
+                        text: forms.taxpayer_total_amount_payable == null ? '0' : forms.taxpayer_total_amount_payable % 1 == 0 ? forms.taxpayer_total_amount_payable + ' ' : forms.taxpayer_total_amount_payable,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, -13, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_total_amount_payable == null ? '0.00' : forms.spouse_total_amount_payable % 1 == 0 ? forms.spouse_total_amount_payable + '.00' : forms.spouse_total_amount_payable,
+                        text: forms.spouse_total_amount_payable == null ? '0' : forms.spouse_total_amount_payable % 1 == 0 ? forms.spouse_total_amount_payable + ' ' : forms.spouse_total_amount_payable,
                         fontSize: 12,
                         characterSpacing: 1,
                         margin: [0, -13, 0, 0],
@@ -879,7 +879,7 @@ function getContent(forms) {
                     },
 
                     {
-                        text: forms.taxpayer_aggregate_amount_payable == null ? '0.00' : forms.taxpayer_aggregate_amount_payable % 1 == 0 ? forms.taxpayer_aggregate_amount_payable + '.00' : forms.taxpayer_aggregate_amount_payable,
+                        text: forms.taxpayer_aggregate_amount_payable == null ? '0' : forms.taxpayer_aggregate_amount_payable % 1 == 0 ? forms.taxpayer_aggregate_amount_payable + ' ' : forms.taxpayer_aggregate_amount_payable,
                         fontSize: 12,
                         margin: [0, -17, 0, 0],
                         characterSpacing: 1,
@@ -1038,16 +1038,18 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_sales_revenue),
+                            text: forms.sched1.taxpayer.total_sales_revenue ? forms.sched1.taxpayer.total_sales_revenue : '0' ,
+                            // text: forms.mor_assumed ? forms.mor_assumed : '0.00',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 2, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_sales_revenue),
+                            // text: formatAmount(forms.sched1.spouse.total_sales_revenue),
+                            text: forms.sched1.spouse.total_sales_revenue ? forms.sched1.spouse.total_sales_revenue : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1074,20 +1076,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_sales_services),
+                            // text: formatAmount(forms.sched1.taxpayer.total_sales_services),
+                            text: forms.sched1.taxpayer.total_sales_services ? forms.sched1.taxpayer.total_sales_services : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_sales_services),
+                            // text: formatAmount(forms.sched1.spouse.total_sales_services),
+                            text: forms.sched1.spouse.total_sales_services ? forms.sched1.spouse.total_sales_services : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1110,20 +1114,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.gross_income),
+                            // text: formatAmount(forms.sched1.taxpayer.gross_income),
+                            text: forms.sched1.taxpayer.gross_income ? forms.sched1.taxpayer.gross_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.gross_income),
+                            // text: formatAmount(forms.sched1.spouse.gross_income),
+                            text: forms.sched1.spouse.gross_income ? forms.sched1.spouse.gross_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1146,20 +1152,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_allowable_itemized_deductions),
+                            // text: formatAmount(forms.sched1.taxpayer.total_allowable_itemized_deductions),
+                            text: forms.sched1.taxpayer.total_allowable_itemized_deductions ? forms.sched1.taxpayer.total_allowable_itemized_deductions : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 6, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_allowable_itemized_deductions),
+                            // text: formatAmount(forms.sched1.spouse.total_allowable_itemized_deductions),
+                            text: forms.sched1.spouse.total_allowable_itemized_deductions ? forms.sched1.spouse.total_allowable_itemized_deductions : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 6, 0, 0]
 
                         }
@@ -1184,20 +1192,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_standard_deductions),
+                            // text: formatAmount(forms.sched1.taxpayer.total_standard_deductions),
+                            text: forms.sched1.taxpayer.total_standard_deductions ? forms.sched1.taxpayer.total_standard_deductions : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 5, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_standard_deductions),
+                            // text: formatAmount(forms.sched1.spouse.total_standard_deductions),
+                            text: forms.sched1.spouse.total_standard_deductions ? forms.sched1.spouse.total_standard_deductions : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 5, 0, 0]
 
                         }
@@ -1220,20 +1230,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_net_income),
+                            // text: formatAmount(forms.sched1.taxpayer.total_net_income),
+                            text: forms.sched1.taxpayer.total_net_income ? forms.sched1.taxpayer.total_net_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_net_income),
+                            // text: formatAmount(forms.sched1.spouse.total_net_income),
+                            text: forms.sched1.spouse.total_net_income ? forms.sched1.spouse.total_net_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1256,20 +1268,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_taxable_income),
+                            // text: formatAmount(forms.sched1.taxpayer.total_taxable_income),
+                            text: forms.sched1.taxpayer.total_taxable_income ? forms.sched1.taxpayer.total_taxable_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_taxable_income),
+                            // text: formatAmount(forms.sched1.spouse.total_taxable_income),
+                            text: forms.sched1.spouse.total_taxable_income ? forms.sched1.spouse.total_taxable_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1288,7 +1302,9 @@ function getContent(forms) {
                     [
 
                         {
-                            text: forms.taxpayer.total_operation_income_others,
+                            // text: forms.taxpayer.total_operation_income_others,
+                            // text: forms.taxpayer.total_operation_income_others ? forms.taxpayer.total_operation_income_others : '0' ,
+                            text:"",
                             fontSize: 12,
                             bold: true,
                             alignment: 'left',
@@ -1297,20 +1313,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_operation_income),
+                            // text: formatAmount(forms.sched1.taxpayer.total_operation_income),
+                            text: forms.sched1.taxpayer.total_operation_income ? forms.sched1.taxpayer.total_operation_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_operation_income),
+                            // text: formatAmount(forms.sched1.spouse.total_operation_income),
+                            text: forms.sched1.spouse.total_operation_income ? forms.sched1.spouse.total_operation_income : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1334,20 +1352,22 @@ function getContent(forms) {
                         {
                             // text: "000",
 
-                            text: formatAmount(forms.sched1.taxpayer.amount_recieved_share),
+                            // text: formatAmount(forms.sched1.taxpayer.amount_recieved_share),
+                            text: forms.sched1.taxpayer.amount_recieved_share ? forms.sched1.taxpayer.amount_recieved_share : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.amount_recieved_share),
+                            // text: formatAmount(forms.sched1.spouse.amount_recieved_share),
+                            text: forms.sched1.spouse.amount_recieved_share ? forms.sched1.spouse.amount_recieved_share : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
 
                         }
@@ -1370,20 +1390,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.total_taxable_income_date),
+                            // text: formatAmount(forms.sched1.taxpayer.total_taxable_income_date),
+                            text: forms.sched1.taxpayer.total_taxable_income_date ? forms.sched1.taxpayer.total_taxable_income_date : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -5, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_taxable_income_date),
+                            // text: formatAmount(forms.sched1.spouse.total_taxable_income_date),
+                            text: forms.sched1.spouse.total_taxable_income_date ? forms.sched1.spouse.total_taxable_income_date : '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -5, 0, 0]
 
                         }
@@ -1406,20 +1428,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.taxpayer.ttotal_tax_due),
+                            // text: formatAmount(forms.sched1.taxpayer.ttotal_tax_due),
+                            text: forms.sched1.taxpayer.ttotal_tax_due ? forms.sched1.taxpayer.ttotal_tax_due: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -5, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched1.spouse.total_tax_due),
+                            // text: formatAmount(forms.sched1.spouse.total_tax_due),
+                            text: forms.sched1.spouse.total_tax_due ? forms.sched1.spouse.total_tax_due: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -5, 0, 0]
 
                         }
@@ -1443,7 +1467,8 @@ function getContent(forms) {
                         {
                             // text: "000",
 
-                            text: formatAmount(forms.sched2.taxpayer.total_sales_revenue),
+                            // text: formatAmount(forms.sched2.taxpayer.total_sales_revenue),
+                            text: forms.sched2.taxpayer.total_sales_revenue ? forms.sched2.taxpayer.total_sales_revenue: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1452,7 +1477,8 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.total_sales_revenue),
+                            // text: formatAmount(forms.sched2.spouse.total_sales_revenue),
+                            text: forms.sched2.spouse.total_sales_revenue ? forms.sched2.spouse.total_sales_revenue: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1484,20 +1510,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.total_operation_income),
+                            // text: formatAmount(forms.sched2.taxpayer.total_operation_income),
+                            text: forms.sched2.taxpayer.total_operation_income ? forms.sched2.taxpayer.total_operation_income: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.total_operation_income),
+                            // text: formatAmount(forms.sched2.spouse.total_operation_income),
+                            text: forms.sched2.spouse.total_operation_income ? forms.sched2.spouse.total_operation_income: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
 
                         }
@@ -1520,20 +1548,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.total_income_quarter),
+                            // text: formatAmount(forms.sched2.taxpayer.total_income_quarter),
+                            text: forms.sched2.taxpayer.total_income_quarter ? forms.sched2.taxpayer.total_income_quarter: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.total_income_quarter),
+                            // text: formatAmount(forms.sched2.spouse.total_income_quarter),
+                            text: forms.sched2.spouse.total_income_quarter ? forms.sched2.spouse.total_income_quarter: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1556,20 +1586,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.previous_quarter_taxable_income),
+                            // text: formatAmount(forms.sched2.taxpayer.previous_quarter_taxable_income),
+                            text: forms.sched2.taxpayer.previous_quarter_taxable_income ? forms.sched2.taxpayer.previous_quarter_taxable_income: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.previous_quarter_taxable_income),
+                            // text: formatAmount(forms.sched2.spouse.previous_quarter_taxable_income),
+                            text: forms.sched2.spouse.previous_quarter_taxable_income ? forms.sched2.spouse.previous_quarter_taxable_income: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1592,20 +1624,23 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.total_cumulative_income),
+                            // text: formatAmount(forms.sched2.taxpayer.total_cumulative_income),
+                            text: forms.sched2.taxpayer.total_cumulative_income ? forms.sched2.taxpayer.total_cumulative_income: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.total_cumulative_income),
+                            // text: formatAmount(forms.sched2.spouse.total_cumulative_income),
+                            text: forms.sched2.spouse.total_cumulative_income ? forms.sched2.spouse.total_cumulative_income: '0' ,
+
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1628,20 +1663,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.less_allowable_reduction),
+                            // text: formatAmount(forms.sched2.taxpayer.less_allowable_reduction),
+                            text: forms.sched2.taxpayer.less_allowable_reduction ? forms.sched2.taxpayer.less_allowable_reduction: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.less_allowable_reduction),
+                            // text: formatAmount(forms.sched2.spouse.less_allowable_reduction),
+                            text: forms.sched2.taxpayer.less_allowable_reduction ? forms.sched2.taxpayer.less_allowable_reduction: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1664,20 +1701,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.total_taxable_income_date),
+                            // text: formatAmount(forms.sched2.taxpayer.total_taxable_income_date),
+                            text: forms.sched2.taxpayer.total_taxable_income_date ? forms.sched2.taxpayer.total_taxable_income_date: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.total_taxable_income_date),
+                            // text: formatAmount(forms.sched2.spouse.total_taxable_income_date),
+                            text: forms.sched2.spouse.total_taxable_income_date ? forms.sched2.spouse.total_taxable_income_date: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1700,20 +1739,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.taxpayer.total_tax_due),
+                            // text: formatAmount(forms.sched2.taxpayer.total_tax_due),
+                            text: forms.sched2.taxpayer.total_tax_due ? forms.sched2.taxpayer.total_tax_due: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched2.spouse.total_tax_due),
+                            // text: formatAmount(forms.sched2.spouse.total_tax_due),
+                            text: forms.sched2.spouse.total_tax_due ? forms.sched2.spouse.total_tax_due: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1736,20 +1777,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.year_excess_credits),
+                            // text: formatAmount(forms.sched3.taxpayer.year_excess_credits),
+                            text: forms.sched3.taxpayer.year_excess_credits ? forms.sched3.taxpayer.year_excess_credits: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 9, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.year_excess_credits),
+                            // text: formatAmount(forms.sched3.spouse.year_excess_credits),
+                            text: forms.sched3.spouse.year_excess_credits ? forms.sched3.spouse.year_excess_credits: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 9, 0, 0]
 
                         }
@@ -1772,20 +1815,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.payment_previous_quarter),
+                            // text: formatAmount(forms.sched3.taxpayer.payment_previous_quarter),
+                            text: forms.sched3.taxpayer.payment_previous_quarter ? forms.sched3.taxpayer.payment_previous_quarter: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.payment_previous_quarter),
+                            // text: formatAmount(forms.sched3.spouse.payment_previous_quarter),
+                            text: forms.sched3.spouse.payment_previous_quarter ? forms.sched3.spouse.payment_previous_quarter: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1808,20 +1853,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.creditable_tax_withheld),
+                            // text: formatAmount(forms.sched3.taxpayer.creditable_tax_withheld),
+                            text: forms.sched3.taxpayer.creditable_tax_withheld ? forms.sched3.taxpayer.creditable_tax_withheld: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.creditable_tax_withheld),
+                            // text: formatAmount(forms.sched3.spouse.creditable_tax_withheld),
+                            text: forms.sched3.spouse.creditable_tax_withheld ? forms.sched3.spouse.creditable_tax_withheld: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1844,20 +1891,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.creditable_tax_withheld_per_bir),
+                            // text: formatAmount(forms.sched3.taxpayer.creditable_tax_withheld_per_bir),
+                            text: forms.sched3.taxpayer.creditable_tax_withheld_per_bir ? forms.sched3.taxpayer.creditable_tax_withheld_per_bir: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.creditable_tax_withheld_per_bir),
+                            // text: formatAmount(forms.sched3.spouse.creditable_tax_withheld_per_bir),
+                            text: forms.sched3.spouse.creditable_tax_withheld_per_bir ? forms.sched3.spouse.creditable_tax_withheld_per_bir: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1880,20 +1929,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.tax_paid_return),
+                            // text: formatAmount(forms.sched3.taxpayer.tax_paid_return),
+                            text: forms.sched3.taxpayer.tax_paid_return ? forms.sched3.taxpayer.tax_paid_return: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.tax_paid_return),
+                            // text: formatAmount(forms.sched3.spouse.tax_paid_return),
+                            text: forms.sched3.spouse.tax_paid_return ? forms.sched3.spouse.tax_paid_return: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
 
                         }
@@ -1916,20 +1967,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.foriegn_tax_credits),
+                            // text: formatAmount(forms.sched3.taxpayer.foriegn_tax_credits),
+                            text: forms.sched3.taxpayer.foriegn_tax_credits ? forms.sched3.taxpayer.foriegn_tax_credits: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.foriegn_tax_credits),
+                            // text: formatAmount(forms.sched3.spouse.foriegn_tax_credits),
+                            text: forms.sched3.spouse.foriegn_tax_credits ? forms.sched3.spouse.foriegn_tax_credits: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
@@ -1957,20 +2010,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.other_tax_credit),
+                            // text: formatAmount(forms.sched3.taxpayer.other_tax_credit),
+                            text: forms.sched3.taxpayer.other_tax_credit ? forms.sched3.taxpayer.other_tax_credit: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.other_tax_credit),
+                            // text: formatAmount(forms.sched3.spouse.other_tax_credit),
+                            text: forms.sched3.spouse.other_tax_credit ? forms.sched3.spouse.other_tax_credit: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -1993,20 +2048,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.total_tax_credit),
+                            // text: formatAmount(forms.sched3.taxpayer.total_tax_credit),
+                            text: forms.sched3.taxpayer.total_tax_credit ? forms.sched3.taxpayer.total_tax_credit: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.total_tax_credit),
+                            // text: formatAmount(forms.sched3.spouse.total_tax_credit),
+                            text: forms.sched3.spouse.total_tax_credit ? forms.sched3.spouse.total_tax_credit: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -2029,20 +2086,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.taxpayer.overpayment),
+                            // text: formatAmount(forms.sched3.taxpayer.overpayment),
+                            text: forms.sched3.taxpayer.overpayment ? forms.sched3.taxpayer.overpayment: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched3.spouse.overpayment),
+                            // text: formatAmount(forms.sched3.spouse.overpayment),
+                            text: forms.sched3.spouse.overpayment ? forms.sched3.spouse.overpayment: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
 
                         }
@@ -2065,20 +2124,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.taxpayer.surcharge),
+                            // text: formatAmount(forms.sched4.taxpayer.surcharge),
+                            text: forms.sched4.taxpayer.surcharge ? forms.sched4.taxpayer.surcharge: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 10, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.spouse.surcharge),
+                            // text: formatAmount(forms.sched4.spouse.surcharge),
+                            text: forms.sched4.spouse.surcharge ? forms.sched4.spouse.surcharge: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, 10, 0, 0]
 
                         }
@@ -2101,20 +2162,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.taxpayer.interest),
+                            // text: formatAmount(forms.sched4.taxpayer.interest),
+                            text: forms.sched4.taxpayer.interest ? forms.sched4.taxpayer.interest: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -1, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.spouse.interest),
+                            // text: formatAmount(forms.sched4.spouse.interest),
+                            text: forms.sched4.spouse.interest ? forms.sched4.spouse.interest: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -1, 0, 0]
 
                         }
@@ -2137,20 +2200,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.taxpayer.compromise),
+                            // text: formatAmount(forms.sched4.taxpayer.compromise),
+                            text: forms.sched4.taxpayer.compromise ? forms.sched4.taxpayer.compromise: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.spouse.compromise),
+                            // text: formatAmount(forms.sched4.spouse.compromise),
+                            text: forms.sched4.spouse.compromise ? forms.sched4.spouse.compromise: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -2, 0, 0]
 
                         }
@@ -2173,20 +2238,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.taxpayer.penalties),
+                            // text: formatAmount(forms.sched4.taxpayer.penalties),
+                            text: forms.sched4.taxpayer.penalties ? forms.sched4.taxpayer.penalties: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.spouse.penalties),
+                            // text: formatAmount(forms.sched4.spouse.penalties),
+                            text: forms.sched4.spouse.penalties ? forms.sched4.spouse.penalties: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -4, 0, 0]
 
                         }
@@ -2209,20 +2276,22 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.taxpayer.total_amount_payable),
+                            // text: formatAmount(forms.sched4.taxpayer.total_amount_payable),
+                            text: forms.sched4.taxpayer.total_amount_payable ? forms.sched4.taxpayer.total_amount_payable: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
                         },
                         {
                             // text: "000",
-                            text: formatAmount(forms.sched4.spouse.total_amount_payable),
+                            // text: formatAmount(forms.sched4.spouse.total_amount_payable),
+                            text: forms.sched4.spouse.total_amount_payable ? forms.sched4.spouse.total_amount_payable: '0' ,
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
-                            characterSpacing: 6,
+                            characterSpacing: 7,
                             margin: [1, -3, 0, 0]
 
                         }
