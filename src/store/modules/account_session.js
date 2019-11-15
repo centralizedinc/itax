@@ -138,11 +138,13 @@ const actions = {
                     // }
                 })
                 .then((taxpayer) => {
+                    console.log("created spouse if married")
                     result.taxpayer = taxpayer;
                     // Create spouse if married
                     if (details.taxpayer.individual_details.civil_status === "M" && !details.spouse_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.spouse_details, { root: true });
                 })
                 .then((spouse) => {
+                    console.log("connect spouse if married")
                     result.spouse = spouse;
                     // Connect spouse if married
                     if (details.taxpayer.individual_details.civil_status === "M") {
@@ -156,11 +158,19 @@ const actions = {
                 })
                 .then((spouse_connection) => {
                     // Create company if Sole proprietor, proffessional, employed
-                    if (["sp", "p", "em"].includes(details.taxpayer.filer_type) && !details.company_details.is_exist) return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
-                })
+                    console.log("compay is ready")
+                    if (["sp", "p", "em"].includes(details.taxpayer.filer_type) && !details.company_details.is_exist){
+                        console.log("company details is new")
+                     return context.dispatch("CREATE_TAXPAYER", details.company_details, { root: true });
+                }else{
+                    console.log("company is existing" + JSON.stringify())
+                    return details.company_details
+                }
+                    })
                 .then((company) => {
                     result.company = company;
                     // connect company
+                    console.log("connecting company")
                     if (["sp", "p", "em"].includes(details.taxpayer.filer_type)) {
                         const connection = {
                             relationship: 'employer',

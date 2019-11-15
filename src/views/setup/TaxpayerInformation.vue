@@ -299,6 +299,7 @@ export default {
   },
   watch: {
     registered_name(val) {
+      console.log("watch registered name: " + val)
       this.details.taxpayer.registered_name = val;
     }
   },

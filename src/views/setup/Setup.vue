@@ -26,7 +26,7 @@
             <a-button
               slot="tabBarExtraContent"
               type="primary"
-              v-if="addButton"
+              v-if="currentView===4"
               @click="showAddTP=true"
             >Add Taxpayer</a-button>
           </a-tabs>
@@ -226,8 +226,12 @@ export default {
       }
     },
     next(i) {
+      this.details.taxpayer.individual_details.middleName = this.details.user.name.middle
+      this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`
+      
       console.log("i :", i);
       if (i === 4) {
+        console.log("i = 4 na this")
         var _self = this;
         this.$confirm({
           title: "Do you want to save the information?",
@@ -252,10 +256,12 @@ export default {
       window.scrollTo(0, 0);
     },
     submitTaxpayer() {
+      console.log("@@@ano this")
       this.loading = true;
       this.details.user.tin = this.details.taxpayer.tin;
       // if (!this.avatar.form_data)
       //   this.details.user.avatar = this.user.avatar;
+      console.log("submit taxpayer data: " + JSON.stringify(this.details))
       this.$store
         .dispatch("ACCOUNT_SETUP", {
           details: this.details,

@@ -12,13 +12,18 @@
           <!-- has-feedback
           :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
           :help="error_desc('tin')"-->
+          <a-row :gutter="12">
+            <a-col :span="20">
           <a-input
             maxlength="13"
             v-model="details.spouse_details.tin"
             placeholder="TIN"
             @blur="checkTin"
             @keypress.enter="checkTin"
-          />
+          /></a-col>
+          <a-col :span='4'>
+          <a-button icon="search" shape="circle" @click="checkTin"/></a-col>
+          </a-row>
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 5 }">
@@ -247,7 +252,8 @@
 
     <a-button-group style="float: right">
       <a-button @click="$emit('previous', 0)" :disabled="loading">Previous</a-button>
-      <a-button type="primary" @click="validation" :loading="loading">Next</a-button>
+      <a-button type="primary" @click="validation" :loading="loading" v-if="later">Skip</a-button>
+      <a-button type="primary" @click="validation" :loading="loading" v-else>Next</a-button>
     </a-button-group>
   </div>
 </template>
@@ -294,7 +300,8 @@ export default {
       invalid_tin_status: "",
       show_details: false,
       error_messages: [],
-      tinGood: false
+      tinGood: false,
+      later: true
     };
   },
   created() {
@@ -308,6 +315,7 @@ export default {
     },
     // -----------------
     async checkTin() {
+      this.later = false
       this.error_messages = [];
       this.invalid_tin_status = "validating";
 
@@ -455,9 +463,6 @@ export default {
               this.details.spouse_details.is_exist = true;
               this.invalid_tin_status = "success";
             } else if (currentSpouse) {
-              //  if(currentSpouse){
-              //    console.log("walang laman")
-              //  }
               console.log("current spouse: " + JSON.stringify(currentSpouse));
               console.log(
                 "This taxpayer has a different spouse. If there is any concern, please contact us"
@@ -467,6 +472,9 @@ export default {
                 message:
                   "This taxpayer has a different spouse. If there is any concern, please contact us"
               });
+            } else{
+              console.log("may record")
+              this.later = true
             }
           });
       }

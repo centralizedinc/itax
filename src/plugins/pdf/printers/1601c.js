@@ -134,7 +134,7 @@ function getContent(forms) {
                         },
                         //#4 no. of sheets attached
                        {
-                        text: forms.num_of_sheet == null ? ' ' : forms.num_of_sheet,
+                        text: forms.num_of_sheeforms.t == null ? ' ' : forms.num_of_sheet,
                         fontSize: 11,
                         bold: true,
                         characterSpacing: 7,

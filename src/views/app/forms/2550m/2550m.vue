@@ -130,10 +130,6 @@
     <a-form v-show="step===2">
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')">
         <div style="color: black">
-
-
-
-
           12. Vatable Sales/Receipt-Private (
           <span
             class="text-link"
