@@ -887,17 +887,10 @@ export default {
       this.show = 4;
       this.form.pdf_page = 2;
     },
-<<<<<<< HEAD
     closeSched(){
       this.form.pdf_page = 1
       this.sched = 0
       this.show = 0
-=======
-    closeSched() {
-      this.form.pdf_page = 1;
-      this.sched = 0;
-      this.show = 0;
->>>>>>> b3d45365e66bd14d5b3253ce5c7338178cde728a
     },
     changeTaxNo() {
       if (this.form.taxpayer_foreign_tax_credits == false) {
