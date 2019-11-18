@@ -1194,7 +1194,7 @@ function getContent(forms) {
                           margin: [-10, 5, 0, 0]
                         },
                       {
-                        text: 'TEXT',                    
+                        text: form.totalAtcAmount,                    
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up

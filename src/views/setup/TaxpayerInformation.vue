@@ -280,6 +280,7 @@ export default {
       default: false
     }
   },
+  
   computed: {
     user() {
       return this.deepCopy(this.$store.state.account_session.user);

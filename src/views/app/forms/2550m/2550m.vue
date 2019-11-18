@@ -809,7 +809,7 @@ export default {
     }
   },
   created() {
-    this.form.pdf_page = 1
+    this.form.pdf_page = 2
     console.log("this.form###### :", this.form);
   },
   methods: {
