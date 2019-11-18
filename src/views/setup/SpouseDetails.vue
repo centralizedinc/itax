@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <a-row type="flex" align="middle" :gutter="5">
       <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
         <a-form-item
@@ -316,12 +317,12 @@ export default {
     // -----------------
     async checkTin() {
       this.later = false
-      this.error_messages = [];
+      // this.error_messages = [];
       this.invalid_tin_status = "validating";
 
-      // // to avoid redundancy of error in tin
-      // const tin_index = this.error_messages.findIndex(v => v.field === "tin");
-      // if (tin_index > -1) this.error_messages.splice(tin_index, 1); // to clear tin error message
+      // to avoid redundancy of error in tin
+      const tin_index = this.error_messages.findIndex(v => v.field === "tin");
+      if (tin_index > -1) this.error_messages.splice(tin_index, 1); // to clear tin error message
 
       // check tin
       // console.log("this.user.tin: " + JSON.stringify(this.user.tin))
@@ -345,10 +346,11 @@ export default {
         this.details.spouse_details.tin == undefined
       ) {
         console.log("!this.details.spouse_details.tin");
-        this.error_messages.push({
-          field: "tin",
-          message: "TIN is a required field"
-        });
+        this.tinGood = false
+        // this.error_messages.push({
+        //   field: "tin",
+        //   message: "TIN is a required field"
+        // });
       } else if (this.details.spouse_details.tin.length !== 13) {
         console.log("this.details.spouse_details.tin.length !== 13");
         this.error_messages.push({
@@ -485,7 +487,10 @@ export default {
         "this.details.spouse_details data: " +
           JSON.stringify(this.details.spouse_details)
       );
-      this.validate();
+      if(this.tinGood == true){
+        this.validate();
+      }
+       
       await this.checkTin();
       console.log("this.error_messages :", JSON.stringify(this.error_messages));
       if (!this.error_messages || !this.error_messages.length) {
@@ -494,7 +499,9 @@ export default {
     },
     validate() {
       this.error_messages = [];
+      console.log("validate")
       if (!this.details.spouse_details.rdo_code) {
+        console.log("validate rdo")
         this.error_messages.push({
           field: "rdo_code",
           message: "RDO is a required field"
@@ -575,8 +582,8 @@ export default {
           message: "Zip Code is a required field"
         });
       }
-      if (this.error_messages && this.error_messages.length) return false;
-      else return true;
+      // if (this.error_messages && this.error_messages.length) return false;
+      // else return true;
     },
     // searchTin() {
     //   this.show_details = false;
