@@ -948,7 +948,7 @@ function getContent(forms) {
                     [
 
                         {
-                            text: forms.advPaySugarFlourInd == null ? '0.00' : forms.advPaySugarFlourInd % 1 == 0 ? forms.advPaySugarFlourInd + '.00' : forms.advPaySugarFlourInd,
+                            text: forms.advPaySugarFlourInd == null ? '0.00' : forms.advPaySugarFlourInd % 1 == 0 ? forms.advPaySugarFlourInd + '.0  0' : forms.advPaySugarFlourInd,
                             alignment: 'right',
                             fontSize: 9,
                             // right,down,left,up
@@ -1187,7 +1187,7 @@ function getContent(forms) {
                 heights: [7,],
                 body: [
                     [{
-                          text: "TEXT",
+                          text: " ",
                           fontSize: 9,
                           alignment: 'justify',
                           // right,down,left,up
@@ -1201,14 +1201,14 @@ function getContent(forms) {
                         margin: [3, 5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [3, 4, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -1229,28 +1229,28 @@ function getContent(forms) {
                 heights: [7,],
                 body: [
                     [{
-                          text:"test",
+                          text:" ",
                           fontSize: 9,
                           alignment: 'justify',
                           // right,down,left,up
                           margin: [-10, -5, 0, 0]
                         },
                       {
-                        text:"test",
+                        text:" ",
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [3, -5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [3, -5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -1272,28 +1272,28 @@ function getContent(forms) {
                 // heights: [7,],
                 body: [
                     [{
-                          text:"test",
+                          text:" ",
                           fontSize: 9,
                           alignment: 'justify',
                           // right,down,left,up
                           margin: [-10, -5, 0, 0]
                         },
                       {
-                        text:"test",
+                        text:" ",
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [3, -5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [3, -5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -1316,28 +1316,28 @@ function getContent(forms) {
                 // heights: [7,],
                 body: [
                     [{
-                          text:"test",
+                          text:" ",
                           fontSize: 9,
                           alignment: 'justify',
                           // right,down,left,up
                           margin: [-10, -5, 0, 0]
                         },
                       {
-                        text:"test",
+                        text:" ",
                         fontSize: 9,
                         alignment: 'justify',
                         // right,down,left,up
                         margin: [3, -5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
                             margin: [3, -5, 0, 0]
                         },
                         {
-                            text: "test",
+                            text: " ",
                             fontSize: 9,
                             alignment: 'justify',
                             // right,down,left,up
@@ -1360,14 +1360,14 @@ function getContent(forms) {
         // heights: [7,],
         body: [
             [{
-                  text:"test",
+                  text:" ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [287, -5.5, 0, 0]
                 },
               {
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
@@ -1411,28 +1411,28 @@ function getContent(forms) {
       heights: [7,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [-10, 6, 0, 0]
               },
             {
-              text:"test",
+              text:" ",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
               margin: [3, 6, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [5, 6, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
@@ -1454,28 +1454,28 @@ function getContent(forms) {
       heights: [7,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [-10, -4, 0, 0]
               },
             {
-              text:"test",
+              text: " ",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
               margin: [3, -4, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [5, -4, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
@@ -1497,28 +1497,28 @@ function getContent(forms) {
       // heights: [5,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [-10, -5, 0, 0]
               },
             {
-              text:"test",
+              text:" ",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
               margin: [3, -5, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [5, -5, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
@@ -1541,28 +1541,28 @@ function getContent(forms) {
       // heights: [7,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [-10, -5, 0, 0]
               },
             {
-              text:"test",
+              text:" ",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
               margin: [3, -5, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [5, -5, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
@@ -1584,14 +1584,14 @@ function getContent(forms) {
         // heights: [20,],
         body: [
             [{
-                  text:"test",
+                  text:" ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [248, -5.5, 0, 0]
                 },
               {
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
@@ -1634,56 +1634,56 @@ function getContent(forms) {
       heights: [7,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [-10, 6, 0, 0]
               },
             {
-              text:"test",
+              text:" ",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
               margin: [3, 6, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [3, 6, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [7, 6, 0, 0]
               },
               {
-                text: "test",
+                text: "  ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [6, 6, 0, 0]
             },
             {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [7, 6, 0, 0]
             },
             {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [10, 6, 0, 0]
             },
             {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
@@ -1704,56 +1704,56 @@ function getContent(forms) {
       heights: [7,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [-10, -4, 0, 0]
               },
             {
-              text:"test",
+              text:" ",
               fontSize: 9,
               alignment: 'justify',
               // right,down,left,up
               margin: [3, -4, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [3, -4, 0, 0]
               },
               {
-                  text: "test",
+                  text: " ",
                   fontSize: 9,
                   alignment: 'justify',
                   // right,down,left,up
                   margin: [7, -4, 0, 0]
               },
               {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [6, -4, 0, 0]
             },
             {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [7, -4, 0, 0]
             },
             {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
                 margin: [10, -4  , 0, 0]
             },
             {
-                text: "test",
+                text: " ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
@@ -1774,7 +1774,7 @@ function getContent(forms) {
       heights: [7,],
       body: [
           [{
-                text:"test",
+                text:" ",
                 fontSize: 9,
                 alignment: 'justify',
                 // right,down,left,up
