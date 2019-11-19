@@ -26,7 +26,7 @@
       </template>
       <template slot="tax_rate" slot-scope="text, record, index">
         <a-input-number
-          v-model="sched3A_data[index].tax_rate"
+          v-model="sched3A_data[index].tax_rate" @change="sched3ACompute"
         ></a-input-number>
       </template>
       <template slot="est_life" slot-scope="text, record, index">
@@ -63,7 +63,7 @@
         <a-button>Save</a-button>
         <p align="right">
           18C: {{ form.purCapGoodsExceed }} 18D:
-          {{ form.outputCapGoodsNotExceed }}
+          {{ form.outputPurCapGoodsExceed }}
         </p>
       </template>
     </a-table>
@@ -210,12 +210,12 @@ export default {
     },
     sched3ACompute(value) {
       var index = this.sched3A_data.length - 1;
-      this.form.purCapGoodsNotExceed = 0;
-      this.form.outputCapGoodsNotExceed = 0;
+      this.form.purCapGoodsExceed = 0;
+      this.form.outputPurCapGoodsExceed = 0;
       this.sched3A_data[index].tax = value * 0.12;
       this.sched3A_data.forEach(data => {
-        this.form.purCapGoodsNotExceed += data.vat;
-        this.form.outputCapGoodsNotExceed += data.tax_rate;
+        this.form.purCapGoodsExceed += data.vat;
+        this.form.outputPurCapGoodsExceed += data.tax_rate;
       });
     },
     showDrawer3A() {

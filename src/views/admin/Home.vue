@@ -34,10 +34,7 @@
           </p>
           <p>
             <a-icon type="facebook"></a-icon>Facebook:
-            <a
-              style="color:#ffffff"
-              href="#"
-            >smartTax.ph</a>
+            <a style="color:#ffffff" href="#">smartTax.ph</a>
           </p>
           <a-divider></a-divider>
         </a-col>
@@ -104,7 +101,6 @@ export default {
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
-
   computed: {
     headerStyle() {
       console.log("refresh#######");
@@ -114,6 +110,12 @@ export default {
       } else {
         return "background: linear-gradient(to left, #000046, #1cb5e0);";
       }
+    }
+  },
+  watch: {
+    rdo_interval() {
+      if (!this.$store.state.account_session.is_authenticated)
+        clearInterval(this.rdo_interval);
     }
   }
 };

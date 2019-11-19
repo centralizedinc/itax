@@ -2,6 +2,11 @@ export default {
 
     install(Vue) {
         Vue.mixin({
+            data() {
+                return {
+                    rdo_interval: {}
+                }
+            },
             methods: {
                 deepCopy(obj) {
                     return JSON.parse(JSON.stringify(obj));

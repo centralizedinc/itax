@@ -95,6 +95,7 @@ export default {
           rate: 0.25
         }
       ],
+      sched1_data: [],
       data_source: []
     };
   },

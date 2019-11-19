@@ -180,7 +180,7 @@ export default {
       this.sched7_data[index].tax = value * 0.12;
       this.sched7_data.forEach(data => {
         // this.form.advPaySugarFlourInd += data.receipt_num;
-        this.form.advPaySugarFlourInd += data.amount_paid;
+        this.form.advPaySugarFlourInd += data.receipt_num;
       });
     },
     showDrawer7() {

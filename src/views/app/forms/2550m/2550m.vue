@@ -133,7 +133,7 @@
           12. Vatable Sales/Receipt-Private (
           <span
             class="text-link"
-            @click="openPage2()"
+            @click="show_sched1=true"
           >Schedule 1</span>)
         </div>
       </a-form-item>
@@ -141,7 +141,7 @@
         v-if="show_sched1"
         :show="show_sched1"
         :form="form"
-        @close="closePage2()"
+        @close="updateSchedAndClose"
       />
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -290,7 +290,7 @@
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
           <span
             class="text-link"
-            @click="openPage2sched2()"
+            @click="show_sched2=true"
           >Schedule 2</span>)
           <schedule-two
         v-if="show_sched2"
@@ -809,7 +809,7 @@ export default {
     }
   },
   created() {
-    this.form.pdf_page = 2
+    this.form.pdf_page = 1
     console.log("this.form###### :", this.form);
   },
   methods: {
