@@ -377,7 +377,7 @@ collections_router.route("/monthly/:year")
                     // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
                 });
                 console.log('MONTH :', byMonth);
-                res.json({ byMonth });
+                res.json(byMonth);
             })
             .catch((errors) => {
                 res.json({ errors });

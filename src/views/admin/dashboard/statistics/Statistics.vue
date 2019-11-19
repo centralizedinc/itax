@@ -189,8 +189,7 @@ export default {
           console.log("a :", a);
           if (a && a[0] && this.collections_mode === "y") {
             this.getDataCollectionMonthly(
-              this.collection_data.labels[a[0]._index],
-              this.collection_data.datasets[0].data[a[0]._index]
+              this.collection_data.labels[a[0]._index]
             );
           }
         }
@@ -373,42 +372,68 @@ export default {
         this.loading_collection = false;
       }
     },
-    getDataCollectionMonthly(year, amount) {
+    async getDataCollectionMonthly(year) {
       if (this.collections_mode !== "m") {
         // to prevent reloading monthly for mock data
-        if (
-          year === null ||
-          year === undefined ||
-          amount === null ||
-          amount === undefined
-        ) {
-          year = new Date().getFullYear();
-          const index = this.collection_data.labels.findIndex(v => v === year);
-          amount = this.collection_data.datasets[0].data[index] || 0;
-        }
-        this.collections_year = year;
+        // if (
+        //   year === null ||
+        //   year === undefined ||
+        //   amount === null ||
+        //   amount === undefined
+        // ) {
+        //   year = new Date().getFullYear();
+        //   const index = this.collection_data.labels.findIndex(v => v === year);
+        //   amount = this.collection_data.datasets[0].data[index] || 0;
+        // }
+        // this.collections_year = year;
+        // this.collections_mode = "m";
+        // this.collections_total = amount;
+        // var datasets = {
+        //   labels: [],
+        //   data: []
+        // };
+        // this.months.forEach(m => {
+        //   datasets.labels.push(`${m} ${year}`);
+        // });
+        // var mock_data = this.divideTotal(amount, 12, Math.floor(amount / 20));
+        // mock_data.forEach(data => {
+        //   datasets.data.push(data);
+        // });
+        // this.collection_data.labels = this.deepCopy(datasets.labels);
+        // this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
+        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        // this.collections_options.scales.yAxes[0].ticks.max =
+        //   findMax[0] + Math.floor(findMax[0] / 2);
+        // // this.$refs.collection_line_chart.renderChart(
+        // //   this.collection_data,
+        // //   this.collections_options
+        // // );
+        if(!year) year = new Date().getFullYear();
         this.collections_mode = "m";
-        this.collections_total = amount;
-        var datasets = {
-          labels: [],
-          data: []
-        };
-        this.months.forEach(m => {
-          datasets.labels.push(`${m} ${year}`);
-        });
-        var mock_data = this.divideTotal(amount, 12, Math.floor(amount / 20));
-        mock_data.forEach(data => {
-          datasets.data.push(data);
-        });
-        this.collection_data.labels = this.deepCopy(datasets.labels);
-        this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
-        var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        this.loading_collection = true;
+        var result = await axios.get(
+          `${process.env.VUE_APP_BASE_API_URI}collections/monthly/${year}`
+        );
+        var results = result.data;
+        results.sort((a, b) => a.year - b.year);
+
+        this.collection_data.labels = results.map(v => this.months[v.month]);
+        this.collection_data.datasets[0].data = results.map(v => v.collection);
+        var collections = results.map(v => v.collection).sort((a, b) => b - a);
         this.collections_options.scales.yAxes[0].ticks.max =
-          findMax[0] + Math.floor(findMax[0] / 2);
-        // this.$refs.collection_line_chart.renderChart(
-        //   this.collection_data,
-        //   this.collections_options
-        // );
+          collections[0] + Math.floor(collections[0] / 2);
+        var gradient = this.$refs.collections_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, "rgba(0, 0, 255, 1)");
+        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.5)");
+        gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
+        this.collection_data.datasets[0].backgroundColor = gradient;
+        this.$refs.collections_line_chart.renderChart(
+          this.collection_data,
+          this.collections_options
+        );
+
+        this.collections_total = collections.reduce((t, c) => t + c);
+        this.loading_collection = false;
       }
     },
 
