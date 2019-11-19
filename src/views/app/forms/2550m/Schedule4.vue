@@ -40,7 +40,13 @@
         </a-col>
         <a-col :span="4">Amount of Input Tax not directly attributable</a-col>
         <a-col :span="5">
-          <a-input-number></a-input-number>
+           <!-- <template slot="inputTaxSaleToGovt" slot-scope="text, record, index">
+        <a-input-number
+          v-model="sched4_data[index].inputTaxSaleToGovt"
+          @change="sched4Compute"
+        ></a-input-number>
+      </template> -->
+      <a-input-number v-model="form.inputTaxSaleToGovt"></a-input-number>
         </a-col>
         <a-col :span="6">
           <a-input-number disabled></a-input-number>
@@ -102,6 +108,15 @@ export default {
     }
   },
   methods: {
+    sched4Compute(value) {
+      var index = this.sched3B_data.length - 1;
+      this.form.inputTaxSaleToGovt = 0;
+      this.sched3B_data[index].tax = value * 0.12;
+      this.sched3B_data.forEach(data => {
+        this.form.inputTaxSaleToGovt += data.vat;
+        // this.form.inputTaxPurchaseCapGoods += data.tax_rate;
+      });
+    },
     showDrawer4() {
         console.log("data source show drawer; " + this.dataSource);
       this.show_sched4 = true;
