@@ -88,6 +88,9 @@ export default {
         }
       ]
     };
+  },
+  created(){
+    console.log("form success details data: " + JSON.stringify(this.details))
   }
 };
 </script>
