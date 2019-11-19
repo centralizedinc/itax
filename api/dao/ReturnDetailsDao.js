@@ -106,7 +106,7 @@ class ReturnDetailsDao {
      * @param {String} conditions
      */
     static countReturns(conditions) {
-        return model.find({}).count().exec();
+        return model.find({}).exec();
     }
 
     /**

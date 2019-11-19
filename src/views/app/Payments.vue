@@ -18,7 +18,7 @@
     <!-- </a-affix> -->
 
     <div style="margin-top: 1vh">
-        <component v-bind:is="currentView"></component>
+        <component v-bind:is="tabView[view]"></component>
     </div>
 </div>
 
@@ -36,10 +36,17 @@ export default {
     },
     data(){
         return{
+            view: 0,
             currentView:'new',
             tabView:['new', 'paid']
         }
     },
+    methods: {
+        changeView(key){
+            console.log("change view key: " + key)
+            this.view = key
+        }
+    }
     
 
 }

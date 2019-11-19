@@ -15,7 +15,8 @@
             <span class="counts">{{formatCounts(collections_total)}}</span>
           </a-tooltip>
         </span>
-        <line-chart ref="collection_line_chart" class="max-height" />
+        <a-spin class="loading-spin" v-if="loading_collection" />
+        <line-chart ref="collections_line_chart" class="max-height" />
         <template slot="actions">
           <div @click="getDataCollectionYearly()">
             <span>Yearly</span>
@@ -42,6 +43,7 @@
             <span class="counts">{{formatCounts(returns_total)}}</span>
           </a-tooltip>
         </span>
+        <a-spin class="loading-spin" v-if="loading_returns" />
         <line-chart ref="returns_line_chart" class="max-height" />
         <template slot="actions">
           <div @click="getDataReturnsYearly()">
@@ -69,6 +71,7 @@
             <span class="counts">{{formatCounts(taxpayers_total)}}</span>
           </a-tooltip>
         </span>
+        <a-spin class="loading-spin" v-if="loading_taxpayers" />
         <line-chart ref="taxpayers_line_chart" class="max-height" />
         <template slot="actions">
           <span @click="getDataTaxpayersYearly()">Yearly</span>
@@ -81,15 +84,15 @@
 
 <script>
 import { Line } from "vue-chartjs";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   components: {
     LineChart: Line
   },
   mounted() {
-    this.getDataReturnsYearly();
     this.getDataCollectionYearly();
+    this.getDataReturnsYearly();
     this.getDataTaxpayersYearly();
   },
   data() {
@@ -99,10 +102,10 @@ export default {
         datasets: [
           {
             label: "Collection",
-            radius: 4,
-            borderWidth: 3,
-            borderColor: "blue",
-            backgroundColor: "#ddddff",
+            radius: 1,
+            hoverRadius: 15,
+            borderWidth: 0,
+            borderColor: "#ffffff",
             data: []
           }
         ]
@@ -112,10 +115,10 @@ export default {
         datasets: [
           {
             label: "Returns",
-            radius: 4,
-            borderWidth: 3,
-            borderColor: "red",
-            backgroundColor: "#ffdddd",
+            radius: 1,
+            hoverRadius: 15,
+            borderWidth: 0,
+            borderColor: "#ffffff",
             data: []
           }
         ]
@@ -125,10 +128,10 @@ export default {
         datasets: [
           {
             label: "Taxpayers",
-            radius: 4,
-            borderWidth: 3,
-            borderColor: "green",
-            backgroundColor: "#ddffdd",
+            radius: 1,
+            hoverRadius: 15,
+            borderWidth: 0,
+            borderColor: "#ffffff",
             data: []
           }
         ]
@@ -247,7 +250,11 @@ export default {
         "OCT",
         "NOV",
         "DEC"
-      ]
+      ],
+
+      loading_collection: false,
+      loading_returns: false,
+      loading_taxpayers: false
     };
   },
   methods: {
@@ -283,38 +290,23 @@ export default {
     },
 
     // Collection
-    getDataCollectionYearly() {
+    async getDataCollectionYearly() {
       // Last 10 years
       if (this.collections_mode !== "y") {
         // to prevent reloading yearly for mock data
 
-        var returns_data = this.deepCopy(this.returns_data.datasets[0].data);
-        var datasets = {
-          labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
-          data: []
-        };
-        for (let index = 0; index < datasets.labels.length; index++) {
-          var val = this.getRandomArbitrary(
-            returns_data[index],
-            returns_data[index] / 4
-          );
-          datasets.data.push(val);
-        }
-        this.collection_data.labels = this.deepCopy(datasets.labels);
-        this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
-        var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
-        this.collections_options.scales.yAxes[0].ticks.max =
-          findMax[0] + Math.floor(findMax[0] / 2);
-        this.$refs.collection_line_chart.renderChart(
-          this.collection_data,
-          this.collections_options
-        );
-
-        this.collections_total = datasets.data.reduce((t, c) => t + c);
-        this.collections_mode = "y";
-        
-        // var results = await axios.get(``)
-
+        // var returns_data = this.deepCopy(this.returns_data.datasets[0].data);
+        // var datasets = {
+        //   labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
+        //   data: []
+        // };
+        // for (let index = 0; index < datasets.labels.length; index++) {
+        //   var val = this.getRandomArbitrary(
+        //     returns_data[index],
+        //     returns_data[index] / 4
+        //   );
+        //   datasets.data.push(val);
+        // }
         // this.collection_data.labels = this.deepCopy(datasets.labels);
         // this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
         // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
@@ -326,6 +318,59 @@ export default {
         // );
 
         // this.collections_total = datasets.data.reduce((t, c) => t + c);
+        // console.log("this.$refs :", this.$refs);
+        // this.$refs.collections_line_chart.renderChart(
+        //   this.collection_data,
+        //   this.collections_options
+        // );
+        // this.collections_mode = "y";
+        // this.loading_collection = true;
+        // var collection_chart = this.$refs.collections_line_chart;
+        // var result = await axios.get(
+        //   `${process.env.VUE_APP_BASE_API_URI}collections/yearly`
+        // );
+        // var results = result.data;
+        // console.log("results :", results);
+        // results.sort((a, b) => a.year - b.year);
+
+        // this.collection_data.labels = results.map(v => v.year);
+        // this.collection_data.datasets[0].data = results.map(v => v.collection);
+        // var collections = results.map(v => v.collection).sort((a, b) => b - a);
+        // this.collections_options.scales.yAxes[0].ticks.max =
+        //   collections[0] + Math.floor(collections[0] / 2);
+        // console.log("this.$refs :", this.$refs);
+        // collection_chart.renderChart(
+        //   this.collection_data,
+        //   this.collections_options
+        // );
+
+        // this.collections_total = collections.reduce((t, c) => t + c);
+        // this.loading_collection = false;
+        this.collections_mode = "y";
+        this.loading_collection = true;
+        var result = await axios.get(
+          `${process.env.VUE_APP_BASE_API_URI}collections/yearly`
+        );
+        var results = result.data;
+        results.sort((a, b) => a.year - b.year);
+
+        this.collection_data.labels = results.map(v => v.year);
+        this.collection_data.datasets[0].data = results.map(v => v.collection);
+        var collections = results.map(v => v.collection).sort((a, b) => b - a);
+        this.collections_options.scales.yAxes[0].ticks.max =
+          collections[0] + Math.floor(collections[0] / 2);
+        var gradient = this.$refs.collections_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, "rgba(0, 0, 255, 1)");
+        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.5)");
+        gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
+        this.collection_data.datasets[0].backgroundColor = gradient;
+        this.$refs.collections_line_chart.renderChart(
+          this.collection_data,
+          this.collections_options
+        );
+
+        this.collections_total = collections.reduce((t, c) => t + c);
+        this.loading_collection = false;
       }
     },
     getDataCollectionMonthly(year, amount) {
@@ -360,40 +405,66 @@ export default {
         var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
         this.collections_options.scales.yAxes[0].ticks.max =
           findMax[0] + Math.floor(findMax[0] / 2);
-        this.$refs.collection_line_chart.renderChart(
-          this.collection_data,
-          this.collections_options
-        );
+        // this.$refs.collection_line_chart.renderChart(
+        //   this.collection_data,
+        //   this.collections_options
+        // );
       }
     },
 
     // Returns
-    getDataReturnsYearly() {
+    async getDataReturnsYearly() {
       // Last 10 years
       if (this.returns_mode !== "y") {
         // to prevent reloading yearly for mock data
-        var datasets = {
-          labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
-          data: []
-        };
-        for (let index = 0; index < datasets.labels.length; index++) {
-          var val = this.getRandomArbitrary(2000000, 500000);
-          datasets.data.push(val);
-        }
-        this.returns_data.labels = this.deepCopy(datasets.labels);
-        this.returns_data.datasets[0].data = this.deepCopy(datasets.data);
-        var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        // var datasets = {
+        //   labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
+        //   data: []
+        // };
+        // for (let index = 0; index < datasets.labels.length; index++) {
+        //   var val = this.getRandomArbitrary(2000000, 500000);
+        //   datasets.data.push(val);
+        // }
+        // this.returns_data.labels = this.deepCopy(datasets.labels);
+        // this.returns_data.datasets[0].data = this.deepCopy(datasets.data);
+        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        // this.returns_options.scales.yAxes[0].ticks.max =
+        //   findMax[0] + Math.floor(findMax[0] / 2);
+        // // this.collection_data.datasets[0].borderColor = "red";
+        // // this.collection_data.datasets[0].backgroundColor = "#ffcccc";
+        // this.$refs.returns_line_chart.renderChart(
+        //   this.returns_data,
+        //   this.returns_options
+        // );
+
+        // this.returns_total = datasets.data.reduce((t, c) => t + c);
+        // this.returns_mode = "y";
+
+        this.returns_mode = "y";
+        this.loading_returns = true;
+        var result = await axios.get(
+          `${process.env.VUE_APP_BASE_API_URI}collections/yearly/returns`
+        );
+        var results = result.data;
+        results.sort((a, b) => a.year - b.year);
+
+        this.returns_data.labels = results.map(v => v.year);
+        this.returns_data.datasets[0].data = results.map(v => v.returns);
+        var returns = results.map(v => v.returns).sort((a, b) => b - a);
         this.returns_options.scales.yAxes[0].ticks.max =
-          findMax[0] + Math.floor(findMax[0] / 2);
-        // this.collection_data.datasets[0].borderColor = "red";
-        // this.collection_data.datasets[0].backgroundColor = "#ffcccc";
+          returns[0] + Math.floor(returns[0] / 2);
+        var gradient = this.$refs.returns_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, "rgba(255, 0, 0, 1)");
+        gradient.addColorStop(0.5, "rgba(255, 0, 0, 0.5)");
+        gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+        this.returns_data.datasets[0].backgroundColor = gradient;
         this.$refs.returns_line_chart.renderChart(
           this.returns_data,
           this.returns_options
         );
 
-        this.returns_total = datasets.data.reduce((t, c) => t + c);
-        this.returns_mode = "y";
+        this.returns_total = returns.reduce((t, c) => t + c);
+        this.loading_returns = false;
       }
     },
     getDataReturnsMonthly(year, amount) {
@@ -436,29 +507,54 @@ export default {
     },
 
     // Taxpayers
-    getDataTaxpayersYearly() {
+    async getDataTaxpayersYearly() {
       if (this.taxpayers_mode !== "y") {
         // to prevent reloading yearly for mock data
-        var datasets = {
-          labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
-          data: []
-        };
-        for (let index = 0; index < datasets.labels.length; index++) {
-          var val = this.getRandomArbitrary(250000, 150000);
-          datasets.data.push(val);
-        }
-        this.taxpayers_data.labels = this.deepCopy(datasets.labels);
-        this.taxpayers_data.datasets[0].data = this.deepCopy(datasets.data);
-        var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        // var datasets = {
+        //   labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
+        //   data: []
+        // };
+        // for (let index = 0; index < datasets.labels.length; index++) {
+        //   var val = this.getRandomArbitrary(250000, 150000);
+        //   datasets.data.push(val);
+        // }
+        // this.taxpayers_data.labels = this.deepCopy(datasets.labels);
+        // this.taxpayers_data.datasets[0].data = this.deepCopy(datasets.data);
+        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        // this.taxpayers_options.scales.yAxes[0].ticks.max =
+        //   findMax[0] + Math.floor(findMax[0] / 2);
+        // this.$refs.taxpayers_line_chart.renderChart(
+        //   this.taxpayers_data,
+        //   this.taxpayers_options
+        // );
+
+        // this.taxpayers_total = datasets.data.reduce((t, c) => t + c);
+        // this.taxpayers_mode = "y";
+        this.taxpayers_mode = "y";
+        this.loading_taxpayers = true;
+        var result = await axios.get(
+          `${process.env.VUE_APP_BASE_API_URI}collections/yearly`
+        );
+        var results = result.data;
+        results.sort((a, b) => a.year - b.year);
+
+        this.taxpayers_data.labels = results.map(v => v.year);
+        this.taxpayers_data.datasets[0].data = results.map(v => v.collection);
+        var taxpayers = results.map(v => v.collection).sort((a, b) => b - a);
         this.taxpayers_options.scales.yAxes[0].ticks.max =
-          findMax[0] + Math.floor(findMax[0] / 2);
+          taxpayers[0] + Math.floor(taxpayers[0] / 2);
+        var gradient = this.$refs.taxpayers_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, "rgba(0, 255, 0, 1)");
+        gradient.addColorStop(0.5, "rgba(0, 255, 0, 0.5)");
+        gradient.addColorStop(1, "rgba(0, 255, 0, 0)");
+        this.taxpayers_data.datasets[0].backgroundColor = gradient;
         this.$refs.taxpayers_line_chart.renderChart(
           this.taxpayers_data,
           this.taxpayers_options
         );
 
-        this.taxpayers_total = datasets.data.reduce((t, c) => t + c);
-        this.taxpayers_mode = "y";
+        this.taxpayers_total = taxpayers.reduce((t, c) => t + c);
+        this.loading_taxpayers = false;
       }
     },
     getDataTaxpayersMonthly(year, amount) {
@@ -600,5 +696,14 @@ export default {
 
 .max-height {
   height: 100% !important;
+}
+
+.loading-spin {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
