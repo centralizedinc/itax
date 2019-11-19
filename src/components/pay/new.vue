@@ -283,6 +283,7 @@ export default {
       this.$store
         .dispatch("GET_TAX_RETURNS")
         .then(result => {
+          console.log("get tax returns new payment data: " + JSON.stringify(result))
           this.loading = false;
         })
         .catch(err => {

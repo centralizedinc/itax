@@ -622,6 +622,8 @@ export default {
         details.total_penalties
       )}`;
       this.return_details = details;
+      console.log("show success form data: " + JSON.stringify(this.form))
+      console.log("form page return details data: " + JSON.stringify(this.return_details))
       this.show_form_success = true;
     },
     closeForm() {
@@ -639,6 +641,12 @@ export default {
       this.loading = true;
       this.errors = [];
       //validate
+      this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due
+      // this.form.surcharge
+      // this.form.interest
+      // this.form.compromise
+      // this.form.penalties
+      this.form.total_amount_payable = this.form.taxpayer_aggregate_amount_payable
       this.$refs.form_component.validate(true);
       // no errors found, proceed to next page
       if (!this.errors.length) {
