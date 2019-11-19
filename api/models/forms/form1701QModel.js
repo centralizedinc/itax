@@ -524,6 +524,10 @@ const model_schema = {
             },
         }
     },
+    aggregate_amount_payable: {
+        type: Number,
+        default: 0
+    }
     // Part V Penalties
     // sched4: {
     //     taxpayer: {
