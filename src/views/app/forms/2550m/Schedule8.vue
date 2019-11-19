@@ -26,7 +26,7 @@
       </template>
       <template slot="total_withheld" slot-scope="text, record, index">
         <a-input-number
-          v-model="sched8_data[index].total_withheld"
+          v-model="sched8_data[index].total_withheld" @change="sched8Compute"
         ></a-input-number>
       </template>
       <template slot="applied_current" slot-scope="text, record, index">
@@ -166,10 +166,11 @@ export default {
     sched8Compute(value) {
       var index = this.sched8_data.length - 1;
       this.form.taxWthld = 0;
+      this.form.prevTaxPaid = 0;
       this.sched8_data[index].tax = value * 0.12;
       this.sched8_data.forEach(data => {
-        this.form.taxWthld += data.total_withheld;
-        this.form.taxWthld += data.total_withheld;
+        this.form.taxWthld += data.income_payment;
+        this.form.prevTaxPaid += data.total_withheld;
       });
     },
     showDrawer8() {
