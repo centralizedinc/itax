@@ -81,6 +81,7 @@
 
 <script>
 import { Line } from "vue-chartjs";
+import axios from 'axios';
 
 export default {
   components: {
@@ -311,6 +312,20 @@ export default {
 
         this.collections_total = datasets.data.reduce((t, c) => t + c);
         this.collections_mode = "y";
+        
+        // var results = await axios.get(``)
+
+        // this.collection_data.labels = this.deepCopy(datasets.labels);
+        // this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
+        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        // this.collections_options.scales.yAxes[0].ticks.max =
+        //   findMax[0] + Math.floor(findMax[0] / 2);
+        // this.$refs.collection_line_chart.renderChart(
+        //   this.collection_data,
+        //   this.collections_options
+        // );
+
+        // this.collections_total = datasets.data.reduce((t, c) => t + c);
       }
     },
     getDataCollectionMonthly(year, amount) {

@@ -112,7 +112,6 @@ export default {
       current_nav: [0],
       component_list: ["Dashboard", "TaxpayersTable", "RDOMap"],
       topLocation: 0,
-      rdo_interval: {}
     };
   },
   created() {
@@ -138,21 +137,25 @@ export default {
     },
     createMockRDO() {
       // Create mock data
+      clearInterval(this.rdo_interval);
       var rdos = this.deepCopy(this.$store.state.tax_form.rdos);
       function getRandomArbitrary(max, min) {
         return Math.floor(Math.random() * (max - min) + min);
       }
       rdos.forEach(rdo => {
-        rdo.collections = getRandomArbitrary(3000000, 1000000);
+        rdo.collections = Math.floor(Math.random() * 5000000 + 1000000);
         rdo.is_increased = true;
       });
+      // console.table(rdos);
       this.$store.commit("SET_RDOS", rdos);
       // Mock interval
       this.rdo_interval = setInterval(() => {
         console.log("add rdo collection...");
         var mock_rdos = this.deepCopy(this.$store.state.tax_form.rdos);
         if (this.$store.state.tax_form.login_rdo) {
-          const index = mock_rdos.findIndex(v => v.code === this.$store.state.tax_form.login_rdo);
+          const index = mock_rdos.findIndex(
+            v => v.code === this.$store.state.tax_form.login_rdo
+          );
           var random = Math.floor(Math.random() * 5000);
           mock_rdos[index].collections += random;
         } else {
