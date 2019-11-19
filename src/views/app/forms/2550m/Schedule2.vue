@@ -27,7 +27,7 @@
       <template slot="tax" slot-scope="text, record, index">
         <a-input-number
           disabled
-          v-model="sched2_data[index].tax"
+          v-model="sched2_data[index].tax"  @change="sched2Compute"
         ></a-input-number>
       </template>
       <template slot="operation" slot-scope="text, record, index">
