@@ -73,50 +73,104 @@ const model_schema = {
         // graduated_rates ,
         //  non_operating_income
     },
-    taxpayer_prev_tax_due: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26a
-    spouse_prev_tax_due: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26b
-    taxpayer_tax_credit: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule III-Item 62) 27a
-    spouse_tax_credit: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule III-Item 62) 27b
-    taxpayer_tax_due: {
-        type: Number,
-        default: 0
-    }, //(Item 26 Less Item 27) (From Part V, Item 63) 28a
-    spouse_tax_due: {
-        type: Number,
-        default: 0
-    }, //(Item 26 Less Item 27) (From Part V, Item 63) 28b
-    taxpayer_total_penalties: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule IV-Item 67) 29a
-    spouse_total_penalties: {
-        type: Number,
-        default: 0
-    }, //(From Part V, Schedule IV-Item 67) 29b
-    taxpayer_total_amount_payable: {
-        type: Number,
-        default: 0
-    }, // (Sum of Items 28 and 29) (From Part V, Item 68) 30a
-    spouse_total_amount_payable: {
-        type: Number,
-        default: 0
-    }, // (Sum of Items 28 and 29) (From Part V, Item 68) 30b
-    taxpayer_aggregate_amount_payable: {
-        type: Number,
-        default: 0
-    }, //Sum of Items 30A and 30B (31)
+
+    taxpayer_tax_payable: {
+        prev_tax_due: { // item 26A
+            type: Number
+        },
+        tax_credits: { // item 27A
+            type: Number
+        },
+        tax_due: { // item 28A
+            type: Number
+        },
+        surcharge: { // sched4 - item 64A
+            type: Number
+        },
+        interest: { // sched4 - item 65A
+            type: Number
+        },
+        compromise: { // sched4 - item 66A
+            type: Number
+        },
+        penalties: { // item 29A || sched4 - item 67A
+            type: Number
+        },
+        total_amount_payable: { // item 30A || sched4 - item 678A
+            type: Number
+        }
+    },
+    spouse_tax_payable: {
+        prev_tax_due: { // item 26B
+            type: Number
+        },
+        tax_credits: { // item 27B
+            type: Number
+        },
+        tax_due: { // item 28B
+            type: Number
+        },
+        surcharge: { // sched4 - item 64B
+            type: Number
+        },
+        interest: { // sched4 - item 65B
+            type: Number
+        },
+        compromise: { // sched4 - item 66B
+            type: Number
+        },
+        penalties: { // item 29B || sched4 - item 67B
+            type: Number
+        },
+        total_amount_payable: { // item 30B || sched4 - item 68B
+            type: Number
+        }
+    },
+
+    // taxpayer_prev_tax_due: {
+    //     type: Number,
+    //     default: 0
+    // }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26a
+    // spouse_prev_tax_due: {
+    //     type: Number,
+    //     default: 0
+    // }, //(From Part V, Schedule I-Item 46 OR Schedule II-Item 54) 26b
+    // taxpayer_tax_credit: {
+    //     type: Number,
+    //     default: 0
+    // }, //(From Part V, Schedule III-Item 62) 27a
+    // spouse_tax_credit: {
+    //     type: Number,
+    //     default: 0
+    // }, //(From Part V, Schedule III-Item 62) 27b
+    // taxpayer_tax_due: {
+    //     type: Number,
+    //     default: 0
+    // }, //(Item 26 Less Item 27) (From Part V, Item 63) 28a
+    // spouse_tax_due: {
+    //     type: Number,
+    //     default: 0
+    // }, //(Item 26 Less Item 27) (From Part V, Item 63) 28b
+    // taxpayer_total_penalties: {
+    //     type: Number,
+    //     default: 0
+    // }, //(From Part V, Schedule IV-Item 67) 29a
+    // spouse_total_penalties: {
+    //     type: Number,
+    //     default: 0
+    // }, //(From Part V, Schedule IV-Item 67) 29b
+    // taxpayer_total_amount_payable: {
+    //     type: Number,
+    //     default: 0
+    // }, // (Sum of Items 28 and 29) (From Part V, Item 68) 30a
+    // spouse_total_amount_payable: {
+    //     type: Number,
+    //     default: 0
+    // }, // (Sum of Items 28 and 29) (From Part V, Item 68) 30b
+    // taxpayer_aggregate_amount_payable: {
+    //     type: Number,
+    //     default: 0
+    // }, //Sum of Items 30A and 30B (31)
     particular_cash: [{
         drawee_bank: {
             type: Number,
@@ -471,57 +525,57 @@ const model_schema = {
         }
     },
     // Part V Penalties
-    sched4: {
-        taxpayer: {
-            surcharge: {
-                type: Number,
-                default: 0
-                // 64
-            },
-            interest: {
-                type: Number,
-                default: 0
-                // 65
-            },
-            compromise: {
-                type: Number,
-                default: 0
-                // 66
-            },
-            penalties: {
-                type: Number,
-                default: 0
-                // 67
-            }, //(Sum of Items 64 to 66) (To Part III, Item 29)
-            total_amount_payable: {
-                type: Number,
-                default: 0
-                // 68
-            }, //(Sum of Items 63 and 67) (To Part III, Item 30)
-        },
-        spouse: {
-            surcharge: {
-                type: Number,
-                default: 0
-            },
-            interest: {
-                type: Number,
-                default: 0
-            },
-            compromise: {
-                type: Number,
-                default: 0
-            },
-            penalties: {
-                type: Number,
-                default: 0
-            }, //(Sum of Items 64 to 66) (To Part III, Item 29)
-            total_amount_payable: {
-                type: Number,
-                default: 0
-            }, //(Sum of Items 63 and 67) (To Part III, Item 30)
-        }
-    }
+    // sched4: {
+    //     taxpayer: {
+    //         surcharge: {
+    //             type: Number,
+    //             default: 0
+    //             // 64
+    //         },
+    //         interest: {
+    //             type: Number,
+    //             default: 0
+    //             // 65
+    //         },
+    //         compromise: {
+    //             type: Number,
+    //             default: 0
+    //             // 66
+    //         },
+    //         penalties: {
+    //             type: Number,
+    //             default: 0
+    //             // 67
+    //         }, //(Sum of Items 64 to 66) (To Part III, Item 29)
+    //         total_amount_payable: {
+    //             type: Number,
+    //             default: 0
+    //             // 68
+    //         }, //(Sum of Items 63 and 67) (To Part III, Item 30)
+    //     },
+    //     spouse: {
+    //         surcharge: {
+    //             type: Number,
+    //             default: 0
+    //         },
+    //         interest: {
+    //             type: Number,
+    //             default: 0
+    //         },
+    //         compromise: {
+    //             type: Number,
+    //             default: 0
+    //         },
+    //         penalties: {
+    //             type: Number,
+    //             default: 0
+    //         }, //(Sum of Items 64 to 66) (To Part III, Item 29)
+    //         total_amount_payable: {
+    //             type: Number,
+    //             default: 0
+    //         }, //(Sum of Items 63 and 67) (To Part III, Item 30)
+    //     }
+    // }
 };
 
 var Form1701QSchema = new Schema({

@@ -20,8 +20,10 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
     console.log('done validating required fields');
 
-    // check due date if late filing
-    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
+    // checking due date if late filing
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "taxpayer_tax_payable", 2);
+    errors.push(...error_messages);
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "spouse_tax_payable", 2);
     errors.push(...error_messages);
     console.log('done checking due date');
 
