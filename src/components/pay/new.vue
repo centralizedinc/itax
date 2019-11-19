@@ -283,6 +283,7 @@ export default {
       this.$store
         .dispatch("GET_TAX_RETURNS")
         .then(result => {
+          console.log("get tax returns new payment data: " + JSON.stringify(result))
           this.loading = false;
         })
         .catch(err => {
@@ -340,7 +341,8 @@ export default {
         amount_paid: this.record.total,
         payment_date: new Date(),
         payment_method: this.current_option,
-        payment_details: this.payment_details
+        payment_details: this.payment_details,
+        payment_mode: "single"
       };
       var action = "SINGLE_PAYMENT";
       if (this.payment_mode === "multiple") {

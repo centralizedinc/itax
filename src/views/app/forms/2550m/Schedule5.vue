@@ -40,7 +40,7 @@
         </a-col>
         <a-col :span="4">Amount of Input Tax not directly attributable</a-col>
         <a-col :span="5">
-          <a-input-number></a-input-number>
+          <a-input-number v-model="form.inputTaxAllocableToExempt"></a-input-number>
         </a-col>
         <a-col :span="6">
           <a-input-number disabled></a-input-number>

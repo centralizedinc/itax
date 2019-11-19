@@ -16,144 +16,144 @@ var collections_router = express.Router();
 
 //COLLECTIONS
 collections_router.route("/yearly")
-.get((req, res) => {
-    console.log('TOTAL COLLECTIONS');
-    // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-    ReturnDetailsDao.getCollection(new Date().getFullYear())
-        .then((results) => {
-            console.log('results :', results);
-            //2019
-            var year2019 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2019;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2018
-            var year2018 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2018;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2017
-            var year2017 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2017;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2016
-            var year2016 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2016;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2015
-            var year2015 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2015;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2014
-            var year2014 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2014;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2013
-            var year2013 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2013;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2012
-            var year2012 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2012;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
-            //2011
-            var year2011 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2011;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);  
-            //2010
-            var year2010 = results.filter(function (result) {
-                return result.date_created.getFullYear() === 2010;
-            }).map(function (collections) {
-                return collections.total_amount_payable;
-            }).reduce(function (acc, collection) {
-                return acc + parseFloat(collection);
-            }, 0);
+    .get((req, res) => {
+        console.log('TOTAL COLLECTIONS');
+        // ReturnDetailsDao.findAll(req.query.total_amount_payable)
+        ReturnDetailsDao.getCollection(new Date().getFullYear())
+            .then((results) => {
+                console.log('results :', results);
+                //2019
+                var year2019 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2019;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2018
+                var year2018 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2018;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2017
+                var year2017 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2017;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2016
+                var year2016 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2016;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2015
+                var year2015 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2015;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2014
+                var year2014 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2014;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2013
+                var year2013 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2013;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2012
+                var year2012 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2012;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2011
+                var year2011 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2011;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
+                //2010
+                var year2010 = results.filter(function (result) {
+                    return result.date_created.getFullYear() === 2010;
+                }).map(function (collections) {
+                    return collections.total_amount_payable;
+                }).reduce(function (acc, collection) {
+                    return acc + parseFloat(collection);
+                }, 0);
 
-            // res.json([results])
-            res.json([
-                {
-                    "year": 2019,
-                    "collection": year2019
-                },
-                {
-                    "year": 2018,
-                    "collection": year2018
+                // res.json([results])
+                res.json([
+                    {
+                        "year": 2019,
+                        "collection": year2019
+                    },
+                    {
+                        "year": 2018,
+                        "collection": year2018
 
-                },
-                {
-                    "year": 2017,
-                    "collection": year2017
-                },
-                {
-                    "year": 2016,
-                    "collection": year2016
-                },
-                {
-                    "year": 2015,
-                    "collection": year2015
-                },
-                {
-                    "year": 2014,
-                    "collection": year2014
-                },
-                {
-                    "year": 2013,
-                    "collection": year2013
-                },
-                {
-                    "year": 2012,
-                    "collection": year2012
-                },
-                {
-                    "year": 2011,
-                    "collection": year2011
-                },
-                {
-                    "year": 2010,
-                    "collection": year2010
-                }
-            ]);
+                    },
+                    {
+                        "year": 2017,
+                        "collection": year2017
+                    },
+                    {
+                        "year": 2016,
+                        "collection": year2016
+                    },
+                    {
+                        "year": 2015,
+                        "collection": year2015
+                    },
+                    {
+                        "year": 2014,
+                        "collection": year2014
+                    },
+                    {
+                        "year": 2013,
+                        "collection": year2013
+                    },
+                    {
+                        "year": 2012,
+                        "collection": year2012
+                    },
+                    {
+                        "year": 2011,
+                        "collection": year2011
+                    },
+                    {
+                        "year": 2010,
+                        "collection": year2010
+                    }
+                ]);
 
 
-        })
-        .catch((errors) => {
-            res.json({ errors });
-        });
-})
+            })
+            .catch((errors) => {
+                res.json({ errors });
+            });
+    })
 collections_router.route("/yearly/returns")
     .get((req, res) => {
         console.log('TOTAL COLLECTIONS');
@@ -241,7 +241,7 @@ collections_router.route("/yearly/returns")
                 }).reduce(function (acc, collection) {
                     return acc + 1;
                 }, 0);
-
+                console.log('count2019 :', count2019);
                 // res.json([results])
                 res.json([
                     {
@@ -286,8 +286,6 @@ collections_router.route("/yearly/returns")
                         "returns": count2010
                     }
                 ]);
-
-
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -379,7 +377,7 @@ collections_router.route("/monthly/:year")
                     // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
                 });
                 console.log('MONTH :', byMonth);
-                res.json({ byMonth });
+                res.json(byMonth);
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -387,89 +385,89 @@ collections_router.route("/monthly/:year")
     })
 //COLLECTIONS || RETURNS BY MONTHLY PER YEAR ALL PAID || UNPAID
 collections_router.route("/monthly/returns/:year")
-.get((req, res) => {
-    console.log('RETURN COLLECTION');
-    // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-    ReturnDetailsDao.getCollectionByMonth(req.params.year)
-        .then((results) => {
-            console.log('resultssssss :', results);
-            var byMonth = [
-                {
-                    month: 0,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 1,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 2,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 3,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 4,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 5,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 6,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 7,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 8,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 9,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 10,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 11,
-                    collection: 0,
-                    count: 0
-                }
-            ]
-            results.forEach(result => {
-                byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
-                byMonth[result.date_created.getMonth()].count += 1;
-                // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
+    .get((req, res) => {
+        console.log('RETURN COLLECTION');
+        // ReturnDetailsDao.findAll(req.query.total_amount_payable)
+        ReturnDetailsDao.getCollectionByMonth(req.params.year)
+            .then((results) => {
+                console.log('resultssssss :', results);
+                var byMonth = [
+                    {
+                        month: 0,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 1,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 2,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 3,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 4,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 5,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 6,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 7,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 8,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 9,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 10,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 11,
+                        collection: 0,
+                        count: 0
+                    }
+                ]
+                results.forEach(result => {
+                    byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
+                    byMonth[result.date_created.getMonth()].count += 1;
+                    // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
+                });
+                // ACCUMULATED
+                // var rdoCollection = results.reduce(function (accumulator, results) {
+                //     return accumulator + results.total_amount_payable;
+                // }, 0);
+                res.json({ byMonth });
+            })
+            .catch((errors) => {
+                res.json({ errors });
             });
-            // ACCUMULATED
-            // var rdoCollection = results.reduce(function (accumulator, results) {
-            //     return accumulator + results.total_amount_payable;
-            // }, 0);
-            res.json({ byMonth });
-        })
-        .catch((errors) => {
-            res.json({ errors });
-        });
-})
+    })
 //COLLECTIONS BY MONTHLY PER RDO
 collections_router.route("/monthly/rdo/:code")
     .get((req, res) => {
@@ -640,89 +638,89 @@ collections_router.route("/monthly/rdo/:year")
     })
 //COLLECTIONS || RETURNS BY MONTHLY PER YEAR PAID
 collections_router.route("/monthly/returns/:year")
-.get((req, res) => {
-    console.log('RETURN COLLECTION');
-    // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-    ReturnDetailsDao.getCollectionByMonthPaid(req.params.year)
-        .then((results) => {
-            console.log('resultssssss :', results);
-            var byMonth = [
-                {
-                    month: 0,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 1,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 2,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 3,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 4,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 5,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 6,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 7,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 8,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 9,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 10,
-                    collection: 0,
-                    count: 0
-                },
-                {
-                    month: 11,
-                    collection: 0,
-                    count: 0
-                }
-            ]
-            results.forEach(result => {
-                byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
-                byMonth[result.date_created.getMonth()].count += 1;
-                // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
+    .get((req, res) => {
+        console.log('RETURN COLLECTION');
+        // ReturnDetailsDao.findAll(req.query.total_amount_payable)
+        ReturnDetailsDao.getCollectionByMonthPaid(req.params.year)
+            .then((results) => {
+                console.log('resultssssss :', results);
+                var byMonth = [
+                    {
+                        month: 0,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 1,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 2,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 3,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 4,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 5,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 6,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 7,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 8,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 9,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 10,
+                        collection: 0,
+                        count: 0
+                    },
+                    {
+                        month: 11,
+                        collection: 0,
+                        count: 0
+                    }
+                ]
+                results.forEach(result => {
+                    byMonth[result.date_created.getMonth()].collection += parseFloat(result.total_amount_payable);
+                    byMonth[result.date_created.getMonth()].count += 1;
+                    // console.log('result.total_amount_payable :', result.total_amount_payable.toString());
+                });
+                // ACCUMULATED
+                // var rdoCollection = results.reduce(function (accumulator, results) {
+                //     return accumulator + results.total_amount_payable;
+                // }, 0);
+                res.json({ byMonth });
+            })
+            .catch((errors) => {
+                res.json({ errors });
             });
-            // ACCUMULATED
-            // var rdoCollection = results.reduce(function (accumulator, results) {
-            //     return accumulator + results.total_amount_payable;
-            // }, 0);
-            res.json({ byMonth });
-        })
-        .catch((errors) => {
-            res.json({ errors });
-        });
-})
+    })
 collections_router.route('/insert/temp')
     .post((req, res) => {
         ReturnDetailsDao.createMany(req.body)
