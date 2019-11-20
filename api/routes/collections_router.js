@@ -462,7 +462,7 @@ collections_router.route("/monthly/returns/:year")
                 // var rdoCollection = results.reduce(function (accumulator, results) {
                 //     return accumulator + results.total_amount_payable;
                 // }, 0);
-                res.json({ byMonth });
+                res.json(byMonth);
             })
             .catch((errors) => {
                 res.json({ errors });
