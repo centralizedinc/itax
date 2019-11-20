@@ -5,11 +5,20 @@
       <router-view></router-view>
       <!-- </transition> -->
     </transition>
+    <cookie-law 
+      v-if="!$store.state.account_session.accept_cookie"
+      class="cookie-law-content" 
+      theme="dark-lime"
+      @accept="$store.commit('ACCEPT_COOKIE')" />
   </div>
 </template>
 
 <script>
+import CookieLaw from 'vue-cookie-law';
 export default {
+  components: {
+    CookieLaw
+  },
   name: "app",
   computed: {
     notify_message() {
@@ -38,4 +47,26 @@ export default {
 </script>
 
 <style>
+.cookie-law-content {
+  background: linear-gradient(to right, #000046, #1cb5e0) !important;
+  color: white !important;
+  font-weight: bold !important;
+  height: 10vh !important;
+  padding: 25px !important;
+}
+
+.Cookie__button {
+  color: white !important;
+  background: none !important;
+  padding: 0.5vh 2vw !important;
+  border: 1.5px solid white !important;
+  border-radius: 5px !important;
+  font-weight: bold !important;
+}
+
+.Cookie__button:hover {
+  border-color: #3333ff !important;
+  color: #3333ff !important;
+}
+
 </style>
