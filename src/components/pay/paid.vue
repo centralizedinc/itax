@@ -16,6 +16,7 @@ export default {
   data(){
     return{
       loading: false,
+      paid_list: [],
       cols:[
         {
           title: 'PRN',
@@ -55,6 +56,7 @@ export default {
         .then(result => {
           console.log("get tax returns paid payment data: " + JSON.stringify(result))
           this.loading = false;
+          this.paid_list = this.deepCopy(result.data.model)
           return result.data.model
         })
         .catch(err => {
@@ -91,7 +93,7 @@ export default {
         "RETURNS :::",
         JSON.stringify(this.init())
       );
-      const returns = this.deepCopy(this.init());
+      const returns = this.paid_list;
       const unpaid_returns = returns.filter(v => v.payment_status !== "unpaid");
       return unpaid_returns;
     },
