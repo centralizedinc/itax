@@ -6,12 +6,38 @@
       </a-avatar>
     </a-back-top>
     <a-affix :offsetTop="0">
-      <a-layout-header style="background: linear-gradient(to left, #000046, #1cb5e0);">
-        <a-row type="flex" justify="start" data-aos="fade-up">
-          <a-col :span="20">
+      <a-layout-header
+        style="background: linear-gradient(to left, #000046, #1cb5e0);padding: 0 20px;"
+      >
+        <a-row type="flex" align="top" justify="start" data-aos="fade-up">
+          <a-col :xs="{ span: 4 }" :sm="{ span: 0 }">
+            <a-popover title="Menu" placement="bottomLeft">
+              <a-button type="ghost" @click="collapsed=!collapsed">
+                <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
+              </a-button>
+              <template slot="content">
+                <a-menu v-model="current_nav" mode="inline">
+                  <a-menu-item :key="0">
+                    <a-icon type="area-chart" />Summary
+                  </a-menu-item>
+                  <a-menu-item :key="1">
+                    <a-icon type="team" />Taxpayers
+                  </a-menu-item>
+                  <a-menu-item :key="2">
+                    <a-icon type="environment" />RDO Map
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-popover>
+          </a-col>
+          <a-col :xs="{ span: 12 }" :sm="{ span: 19 }">
             <h2 style="color:white;">Smart Tax Admin</h2>
           </a-col>
-          <a-col :span="3">
+          <a-col
+            :xs="{ span: 0 }"
+            :sm="{ span: 3 }"
+            style="text-align: right;"
+          >
             <a-popover :title="admin_user" trigger="click" placement="bottomRight">
               <span
                 style="color: white; font-size: 14px; font-weight: bold; margin-right: 1.5vh;"
@@ -36,7 +62,29 @@
               </template>
             </a-popover>
           </a-col>
-          <a-col :span="1">
+          <a-col :xs="{ span: 8 }" :sm="{ span: 0 }" style="text-align: right;">
+            <a-popover :title="admin_user" trigger="click" placement="bottomRight">
+              <a-avatar
+                :size="35"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBv-cKu1_1zauuxCU7oaieOQw7LSLgfi3OgjwGXA-gQrIjmRzUtw&s"
+                style="cursor:pointer; color: white;"
+              />
+              <template slot="content">
+                <a-menu>
+                  <a-menu-item>
+                    <a-icon type="idcard" />Account
+                  </a-menu-item>
+                  <a-menu-item>
+                    <a-icon type="lock" />Security
+                  </a-menu-item>
+                  <a-menu-item @click="logout">
+                    <a-icon type="logout" />Logout
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-popover>
+          </a-col>
+          <a-col :xs="{ span: 0 }" :sm="{ span: 2 }" style="text-align: center;">
             <a-button type="default" @click="logout">Logout</a-button>
           </a-col>
         </a-row>
@@ -44,8 +92,21 @@
     </a-affix>
     <a-layout-content>
       <a-affix :offsetTop="64">
-        <a-row style="margin-top: 0.5vh;">
-          <a-col :xs="{ span: 24 }" :sm="{ span: 0 }">
+        <a-row>
+          <a-col :xs="{ span: 0 }" :sm="{ span: 24 }">
+            <a-menu v-model="current_nav" mode="horizontal">
+              <a-menu-item :key="0">
+                <a-icon type="area-chart" />Summary
+              </a-menu-item>
+              <a-menu-item :key="1">
+                <a-icon type="team" />Taxpayers
+              </a-menu-item>
+              <a-menu-item :key="2">
+                <a-icon type="environment" />RDO Map
+              </a-menu-item>
+            </a-menu>
+          </a-col>
+          <!-- <a-col :xs="{ span: 24 }" :sm="{ span: 0 }">
             <a-button type="primary" @click="collapsed=!collapsed" style="margin-bottom: 2px">
               <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
             </a-button>
@@ -63,24 +124,11 @@
                 <span>RDO</span>
               </a-menu-item>
             </a-menu>
-          </a-col>
-          <a-col :xs="{ span: 0 }" :sm="{ span: 24 }">
-            <a-menu v-model="current_nav" mode="horizontal">
-              <a-menu-item :key="0">
-                <a-icon type="area-chart" />Summary
-              </a-menu-item>
-              <a-menu-item :key="1">
-                <a-icon type="team" />Taxpayers
-              </a-menu-item>
-              <a-menu-item :key="2">
-                <a-icon type="environment" />RDO
-              </a-menu-item>
-            </a-menu>
-          </a-col>
+          </a-col> -->
         </a-row>
       </a-affix>
-      <a-row :gutter="20" style="margin: 15px;">
-        <a-col :xs="{ span: 24 }" :sm="{ span: 18 }">
+      <a-row type="flex" justify="space-around" style="margin: 15px 0;">
+        <a-col :xs="{ span: 24 }" :sm="{ span: 17 }">
           <component :is="component_list[current_nav[0]]" />
         </a-col>
         <a-col :xs="{ span: 0 }" :sm="{ span: 6 }">
@@ -111,7 +159,7 @@ export default {
       collapsed: true,
       current_nav: [0],
       component_list: ["Dashboard", "TaxpayersTable", "RDOMap"],
-      topLocation: 0,
+      topLocation: 0
     };
   },
   created() {

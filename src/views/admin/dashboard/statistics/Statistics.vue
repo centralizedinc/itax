@@ -1,7 +1,7 @@
 <template>
   <a-row class="statistic-chart" :gutter="10">
     <!-- Collection -->
-    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh; margin-bottom: 7vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
         :bodyStyle="{ padding: 0, height: '100%' }"
         :class="`${collections_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
@@ -29,7 +29,7 @@
     </a-col>
 
     <!-- Returns -->
-    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh; margin-bottom: 7vh;;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
         :bodyStyle="{ padding: 0, height: '100%' }"
         :class="`${returns_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
@@ -57,7 +57,7 @@
     </a-col>
 
     <!-- Taxpayers -->
-    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh; margin-bottom: 7vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
         :bodyStyle="{ padding: 0, height: '100%' }"
         :class="`${taxpayers_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
