@@ -11,10 +11,10 @@
       theme="dark-lime"
       @accept="$store.commit('ACCEPT_COOKIE')">
       <a-row slot-scope="props" style="width: 100%;" type="flex" align="middle">
-        <a-col :xs="{ span: 20 }" :md="{ span: 20 }">
+        <a-col :span="20">
           Smart Tax uses cookies to ensure you get the best experience on our website.
         </a-col>
-        <a-col :xs="{ span: 4 }" :md="{ span: 4 }" style="text-align: right;">
+        <a-col :span="4" style="text-align: right;">
           <a-button @click="props.accept">Got It!</a-button>
         </a-col>
       </a-row>
