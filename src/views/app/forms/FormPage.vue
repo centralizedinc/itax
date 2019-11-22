@@ -111,7 +111,7 @@
                 <a-list-item-meta>
                   <p
                     slot="title"
-                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`:'item.corporate_details.registeredName'}}</p>
+                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`:'item.company_details.registered_name'}}</p>
                   <template slot="description">
                     <p>
                       <b>{{formatTIN(item.tin)}}</b>

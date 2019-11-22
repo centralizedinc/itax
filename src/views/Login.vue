@@ -27,7 +27,7 @@
         <a-col :push="2" :span="8" style="margin-top:20vh;">
           <a-card style="background: rgba(59, 79, 99, 0.62)">
             <template slot="title">
-              <div style="color:#ffffff">Enter Crendetials</div>
+              <div style="color:#ffffff">Enter Credentials</div>
             </template>
             <a-form :form="form">
               <a-form-item>

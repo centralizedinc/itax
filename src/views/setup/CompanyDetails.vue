@@ -12,7 +12,7 @@
         >
           <a-input
             v-model="details.company_details.tin"
-            placeholder="TIN"
+            placeholder="13-digit TIN"
             maxlength="13"
             @blur="searchTin"
             @keypress.enter="searchTin"

@@ -6,29 +6,42 @@
       :closable="false"
       @close="onClose"
       :width="700"
-      :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
+      :wrapStyle="{
+        height: 'calc(100% - 108px)',
+        overflow: 'auto',
+        paddingBottom: '108px'
+      }"
     >
       <a-form :form="form" layout="vertical" hideRequiredMark>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
+            <a-form-item
+              style="margin-left: 103px;"
+              label="A) Taxpayer/Filer"
+            ></a-form-item>
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="64."
             >
               <a-input-number
-                v-model="form.sched4.taxpayer.surcharge"
+                v-model="form.taxpayer_tax_payable.surcharge"
                 style="width:100%"
                 placeholder="Surcharge"
               ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item
+              style="margin-left: 103px;"
+              label="B) Spouse"
+            ></a-form-item>
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+            >
               <a-input-number
-                v-model="form.sched4.spouse.surcharge"
+                v-model="form.spouse_tax_payable.surcharge"
                 style="width:100%"
                 placeholder="Surcharge"
               ></a-input-number>
@@ -43,16 +56,19 @@
               label="65."
             >
               <a-input-number
-                v-model="form.sched4.taxpayer.interest"
+                v-model="form.taxpayer_tax_payable.interest"
                 style="width:100%"
                 placeholder="Interest"
               ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+            >
               <a-input-number
-                v-model="form.sched4.spouse.interest"
+                v-model="form.spouse_tax_payable.interest"
                 placeholder="Interest"
                 style="width:100%"
               ></a-input-number>
@@ -67,17 +83,20 @@
               label="66."
             >
               <a-input-number
-                v-model="form.sched4.taxpayer.compromise"
+                v-model="form.taxpayer_tax_payable.compromise"
                 style="width:100%"
                 placeholder="Compromise"
               ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+            >
               <a-input-number
                 style="width:100%"
-                v-model="form.sched4.spouse.compromise"
+                v-model="form.spouse_tax_payablecompromise"
                 placeholder="Compromise"
               ></a-input-number>
             </a-form-item>
@@ -91,9 +110,10 @@
               label="67."
             >
               <a-tooltip>
-                <template
-                  slot="title"
-                >Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)</template>
+                <template slot="title"
+                  >Total Penalties (Sum of Items 64 to 66) (To Part III, Item
+                  29)</template
+                >
                 <a-input-number
                   style="width:100%"
                   :value="penalties()"
@@ -103,11 +123,15 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
+            <a-form-item
+              :labelCol="form_layout.label_col"
+              :wrapperCol="form_layout.wrapper_col"
+            >
               <a-tooltip>
-                <template
-                  slot="title"
-                >Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)</template>
+                <template slot="title"
+                  >Total Penalties (Sum of Items 64 to 66) (To Part III, Item
+                  29)</template
+                >
                 <a-input-number
                   style="width:100%"
                   :value="spouse_penalties()"
@@ -147,7 +171,7 @@
           borderTop: '1px solid #e9e9e9',
           padding: '10px 16px',
           background: '#fff',
-          textAlign: 'right',
+          textAlign: 'right'
         }"
       >
         <!-- <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>

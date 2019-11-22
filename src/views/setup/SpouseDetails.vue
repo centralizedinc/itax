@@ -1,12 +1,11 @@
 <template>
   <div>
-    
     <a-row type="flex" align="middle" :gutter="5">
-      <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
+      <a-col :span="24">
         <a-form-item
-          label="TIN"
-          :label-col="{ span: 9 }"
-          :wrapper-col="{ span: 15 }"
+          label="Spouse TIN"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 14 }"
           :validate-status="error_desc('tin') ? 'error' : invalid_tin_status"
           :help="error_desc('tin')"
         >
@@ -15,15 +14,18 @@
           :help="error_desc('tin')"-->
           <a-row :gutter="12">
             <a-col :span="20">
-          <a-input
-            maxlength="13"
-            v-model="details.spouse_details.tin"
-            placeholder="TIN"
-            @blur="checkTin"
-            @keypress.enter="checkTin"
-          /></a-col>
-          <a-col :span='4'>
-          <a-button icon="search" shape="circle" @click="checkTin"/></a-col>
+              <a-tooltip>
+                <template slot="title">Input TIN then press ENTER </template>
+                <a-input
+                  maxlength="13"
+                  v-model="details.spouse_details.tin"
+                  placeholder="13-digit TIN"
+                  @blur="checkTin"
+                  @keypress.enter="checkTin"
+              /></a-tooltip>
+            </a-col>
+            <!-- <a-col :span='4'>
+          <a-button icon="search" shape="circle" @click="checkTin"/></a-col> -->
           </a-row>
         </a-form-item>
       </a-col>
@@ -36,12 +38,16 @@
           :help="error_desc('rdo_code')"
           v-if="tinGood"
         >
-          <a-select style="width: 100%" v-model="details.spouse_details.rdo_code">
+          <a-select
+            style="width: 100%"
+            v-model="details.spouse_details.rdo_code"
+          >
             <a-select-option
               v-for="(item, index) in rdos"
               :key="index"
               :value="item.code"
-            >{{item.code}} - {{item.description}}</a-select-option>
+              >{{ item.code }} - {{ item.description }}</a-select-option
+            >
           </a-select>
         </a-form-item>
       </a-col>
@@ -71,7 +77,10 @@
           :validate-status="error_desc('filer_type') ? 'error' : ''"
           :help="error_desc('filer_type')"
         >
-          <a-radio-group buttonStyle="solid" v-model="details.spouse_details.filer_type">
+          <a-radio-group
+            buttonStyle="solid"
+            v-model="details.spouse_details.filer_type"
+          >
             <a-radio-button value="sp">Single Proprietor</a-radio-button>
             <a-radio-button value="p">Professional</a-radio-button>
             <a-radio-button value="em">Employee</a-radio-button>
@@ -124,13 +133,16 @@
           :validate-status="error_desc('registered_name') ? 'error' : ''"
           :help="error_desc('registered_name')"
         >
-          <a-input v-model="details.spouse_details.registered_name" placeholder="Registered Name" />
+          <a-input
+            v-model="details.spouse_details.registered_name"
+            placeholder="Registered Name"
+          />
         </a-form-item>
       </a-col>
     </a-row>
 
     <a-row type="flex" align="middle" :gutter="5" v-if="tinGood">
-      <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
+      <a-col :xs="{ span: 24 }" :md="{ span: 10 }">
         <a-form-item
           label="Date of Birth"
           :label-col="{ span: 9 }"
@@ -188,7 +200,10 @@
           :validate-status="error_desc('email') ? 'error' : ''"
           :help="error_desc('email')"
         >
-          <a-input v-model="details.spouse_details.contact_details.email" placeholder="Email" />
+          <a-input
+            v-model="details.spouse_details.contact_details.email"
+            placeholder="Email"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
@@ -199,7 +214,10 @@
           :validate-status="error_desc('telno') ? 'error' : ''"
           :help="error_desc('telno')"
         >
-          <a-input v-model="details.spouse_details.contact_details.telno" placeholder="Tel No" />
+          <a-input
+            v-model="details.spouse_details.contact_details.telno"
+            placeholder="Tel No"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
@@ -246,15 +264,28 @@
           :validate-status="error_desc('zipCode') ? 'error' : ''"
           :help="error_desc('zipCode')"
         >
-          <a-input v-model="details.spouse_details.address_details.zipCode" placeholder="Zip Code" />
+          <a-input
+            v-model="details.spouse_details.address_details.zipCode"
+            placeholder="Zip Code"
+          />
         </a-form-item>
       </a-col>
     </a-row>
 
     <a-button-group style="float: right">
-      <a-button @click="$emit('previous', 0)" :disabled="loading">Previous</a-button>
-      <a-button type="primary" @click="validation" :loading="loading" v-if="later">Skip</a-button>
-      <a-button type="primary" @click="validation" :loading="loading" v-else>Next</a-button>
+      <a-button @click="$emit('previous', 0)" :disabled="loading"
+        >Previous</a-button
+      >
+      <a-button
+        type="primary"
+        @click="validation"
+        :loading="loading"
+        v-if="later"
+        >Skip</a-button
+      >
+      <a-button type="primary" @click="validation" :loading="loading" v-else
+        >Next</a-button
+      >
     </a-button-group>
   </div>
 </template>
@@ -316,7 +347,7 @@ export default {
     },
     // -----------------
     async checkTin() {
-      this.later = false
+      this.later = false;
       // this.error_messages = [];
       this.invalid_tin_status = "validating";
 
@@ -346,7 +377,7 @@ export default {
         this.details.spouse_details.tin == undefined
       ) {
         console.log("!this.details.spouse_details.tin");
-        this.tinGood = false
+        this.tinGood = false;
         // this.error_messages.push({
         //   field: "tin",
         //   message: "TIN is a required field"
@@ -474,9 +505,9 @@ export default {
                 message:
                   "This taxpayer has a different spouse. If there is any concern, please contact us"
               });
-            } else{
-              console.log("may record")
-              this.later = true
+            } else {
+              console.log("may record");
+              this.later = true;
             }
           });
       }
@@ -487,10 +518,10 @@ export default {
         "this.details.spouse_details data: " +
           JSON.stringify(this.details.spouse_details)
       );
-      if(this.tinGood == true){
+      if (this.tinGood == true) {
         this.validate();
       }
-       
+
       await this.checkTin();
       console.log("this.error_messages :", JSON.stringify(this.error_messages));
       if (!this.error_messages || !this.error_messages.length) {
@@ -499,9 +530,9 @@ export default {
     },
     validate() {
       this.error_messages = [];
-      console.log("validate")
+      console.log("validate");
       if (!this.details.spouse_details.rdo_code) {
-        console.log("validate rdo")
+        console.log("validate rdo");
         this.error_messages.push({
           field: "rdo_code",
           message: "RDO is a required field"
@@ -679,5 +710,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
