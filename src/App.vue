@@ -15,7 +15,7 @@
           Smart Tax uses cookies to ensure you get the best experience on our website.
         </a-col>
         <a-col :span="4" style="text-align: right;">
-          <a-button @click="props.accept">Got It!</a-button>
+          <a-button @click="props.accept" class="Cookie__button">Got It!</a-button>
         </a-col>
       </a-row>
     </cookie-law>
