@@ -1,17 +1,37 @@
 <template>
   <a-layout style="background: linear-gradient(to top, #8e9eab, #eef2f3);">
+    <!-- Scroll in top -->
     <a-back-top>
       <a-avatar>
         <a-icon type="up" :size="42"></a-icon>
       </a-avatar>
     </a-back-top>
+
+    <!-- Main Menu -->
     <a-affix :offsetTop="0">
       <a-layout-header
         style="background: linear-gradient(to left, #000046, #1cb5e0);padding: 0 20px;"
       >
         <a-row type="flex" align="top" justify="start" data-aos="fade-up">
+          <!-- Main menu for mobile layout -->
           <a-col :xs="{ span: 4 }" :sm="{ span: 0 }">
-            <a-popover title="Menu" placement="bottomLeft">
+            <a-button type="ghost" @click="collapsed=!collapsed">
+              <a-icon :type="collapsed ? 'menu-fold' : 'menu-unfold'" />
+            </a-button>
+            <a-drawer title="Menu" placement="left" :visible="collapsed" @close="collapsed=false">
+              <a-menu v-model="current_nav" mode="inline">
+                <a-menu-item :key="0">
+                  <a-icon type="area-chart" />Summary
+                </a-menu-item>
+                <a-menu-item :key="1">
+                  <a-icon type="team" />Taxpayers
+                </a-menu-item>
+                <a-menu-item :key="2">
+                  <a-icon type="environment" />RDO Map
+                </a-menu-item>
+              </a-menu>
+            </a-drawer>
+            <!-- <a-popover title="Menu" placement="bottomLeft">
               <a-button type="ghost" @click="collapsed=!collapsed">
                 <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
               </a-button>
@@ -28,11 +48,15 @@
                   </a-menu-item>
                 </a-menu>
               </template>
-            </a-popover>
+            </a-popover> -->
           </a-col>
+
+          <!-- Title -->
           <a-col :xs="{ span: 12 }" :sm="{ span: 19 }">
             <h2 style="color:white;">Smart Tax Admin</h2>
           </a-col>
+
+          <!-- Account Settings -->
           <a-col
             :xs="{ span: 0 }"
             :sm="{ span: 3 }"
@@ -62,6 +86,8 @@
               </template>
             </a-popover>
           </a-col>
+
+          <!-- Account Settings for mobile layout -->
           <a-col :xs="{ span: 8 }" :sm="{ span: 0 }" style="text-align: right;">
             <a-popover :title="admin_user" trigger="click" placement="bottomRight">
               <a-avatar
@@ -90,7 +116,9 @@
         </a-row>
       </a-layout-header>
     </a-affix>
+
     <a-layout-content>
+      <!-- Main Menu -->
       <a-affix :offsetTop="64">
         <a-row>
           <a-col :xs="{ span: 0 }" :sm="{ span: 24 }">
@@ -106,27 +134,10 @@
               </a-menu-item>
             </a-menu>
           </a-col>
-          <!-- <a-col :xs="{ span: 24 }" :sm="{ span: 0 }">
-            <a-button type="primary" @click="collapsed=!collapsed" style="margin-bottom: 2px">
-              <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
-            </a-button>
-            <a-menu v-model="current_nav" mode="inline" :inlineCollapsed="collapsed">
-              <a-menu-item :key="0">
-                <a-icon type="area-chart" />
-                <span>Summary</span>
-              </a-menu-item>
-              <a-menu-item :key="1">
-                <a-icon type="team" />
-                <span>Taxpayers</span>
-              </a-menu-item>
-              <a-menu-item :key="2">
-                <a-icon type="environment" />
-                <span>RDO</span>
-              </a-menu-item>
-            </a-menu>
-          </a-col> -->
         </a-row>
       </a-affix>
+
+      <!-- Content -->
       <a-row type="flex" justify="space-around" style="margin: 15px 0;">
         <a-col :xs="{ span: 24 }" :sm="{ span: 17 }">
           <component :is="component_list[current_nav[0]]" />
@@ -156,7 +167,7 @@ export default {
   },
   data() {
     return {
-      collapsed: true,
+      collapsed: false,
       current_nav: [0],
       component_list: ["Dashboard", "TaxpayersTable", "RDOMap"],
       topLocation: 0

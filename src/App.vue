@@ -9,7 +9,16 @@
       v-if="!$store.state.account_session.accept_cookie"
       class="cookie-law-content" 
       theme="dark-lime"
-      @accept="$store.commit('ACCEPT_COOKIE')" />
+      @accept="$store.commit('ACCEPT_COOKIE')">
+      <a-row slot-scope="props" style="width: 100%;" type="flex" align="middle">
+        <a-col :xs="{ span: 20 }" :md="{ span: 20 }">
+          Smart Tax uses cookies to ensure you get the best experience on our website.
+        </a-col>
+        <a-col :xs="{ span: 4 }" :md="{ span: 4 }" style="text-align: right;">
+          <a-button @click="props.accept">Got It!</a-button>
+        </a-col>
+      </a-row>
+    </cookie-law>
   </div>
 </template>
 
@@ -52,7 +61,7 @@ export default {
   color: white !important;
   font-weight: bold !important;
   height: 10vh !important;
-  padding: 25px !important;
+  padding: 0 10px !important;
 }
 
 .Cookie__button {
