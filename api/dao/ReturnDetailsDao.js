@@ -72,8 +72,18 @@ class ReturnDetailsDao {
      * @param {Object} conditions 
      */
     static getCountsByConditions(conditions){
-        return model.count(conditions).exec();
+        return model.countDocuments(conditions);
     }
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     * @param {String} select
+     */
+    static selectByConditions(conditions, select){
+        return model.find(conditions).select(select).exec();
+    }
+
     //ADMIN 
 
     /**
@@ -98,7 +108,7 @@ class ReturnDetailsDao {
      * @param {String} conditions
      */
     static countCollected(conditions) {
-        return model.find({ "payment_status": 'paid' }).count().exec();
+        return model.countDocuments({ "payment_status": 'paid' });
     }
 
         /**
@@ -205,7 +215,8 @@ class ReturnDetailsDao {
      * @param {String} fields 
      */
     static getCountOfTaxpayer(conditions, fields) {
-        return model.find(conditions).select(fields).count().exec();
+        // return model.find(conditions).select(fields).count().exec();
+        return model.countDocuments(conditions);
     }
 
     /**
@@ -214,7 +225,8 @@ class ReturnDetailsDao {
      * @param {String} fields 
      */
     static getCountOfReturns(conditions, fields) {
-        return model.find(conditions).select(fields).count().exec();
+        // return model.find(conditions).select(fields).count().exec();
+        return model.countDocuments(conditions);
     }
 
 }
