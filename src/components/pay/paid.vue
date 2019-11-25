@@ -87,13 +87,13 @@ export default {
   computed: {
     tax_returns() {
       console.log("RETURNS tax returns::: ", JSON.stringify(this.paid_list));
+      const paid_returns = [];
       const returns = this.deepCopy(this.$store.state.tax_form.tax_returns);
       const unpaid_returns = returns.filter(v => v.payment_status !== "unpaid");
       console.log(
         "upaid returns of paid data: " + JSON.stringify(unpaid_returns)
       );
 
-      const paid_returns = [];
       // this.paid_list.filter(
       //   v => v.created_by == unpaid_returns.created_by
       // );

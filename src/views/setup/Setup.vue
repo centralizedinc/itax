@@ -185,6 +185,11 @@ export default {
         }
       },
       currentView: 0,
+      spouse_data: {
+        individual_details: {},
+        contact_details: {},
+        address_details: {}
+      },
       addButton: false,
       view_components: [
         "PersonalDetails",
@@ -238,6 +243,10 @@ export default {
       }
     },
     next(i) {
+      // this.details.spouse_details = this.spouse_data;
+      console.log(
+        "setup spouse details: " + JSON.stringify(this.details.spouse_details)
+      );
       this.details.taxpayer.individual_details.middleName =
         this.details.user.name.middle == undefined ||
         this.details.user.name.middle == null ||
@@ -251,6 +260,12 @@ export default {
       if (i === 4) {
         console.log("i = 4 na this");
         var _self = this;
+        if (
+          this.details.taxpayer.individual_details.civil_status == "M" &&
+          this.currentView == 4
+        ) {
+          this.addButton = true;
+        }
         this.$confirm({
           title: "Do you want to save the information?",
           okText: "Yes",
@@ -266,14 +281,17 @@ export default {
         this.currentView = i;
         if (
           this.details.taxpayer.individual_details.civil_status == "S" &&
-          currentView == 2
+          this.currentView == 2
         ) {
           this.addButton = true;
         } else if (
-          this.details.taxpayer.individual_details.civil_status == "M" &&
-          currentView == 4
+          this.details.taxpayer.individual_details.civil_status == "M"
         ) {
-          this.addButton = true;
+          console.log(
+            "if married spouse details: " +
+              JSON.stringify(this.details.spouse_details)
+          );
+          this.spouse_data = this.details.spouse_details;
         }
       }
     },
