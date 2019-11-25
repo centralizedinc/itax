@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-card :loading="loading">
+    <a-card>
       <a-row type="flex" align="middle">
         <a-col :span="16">
           <span class="taxpayer-title">Taxpayers</span>
@@ -24,14 +24,51 @@
         </a-col>-->
       </a-row>
     </a-card>
+    
+    <!-- <scroll-loader v-if="search_mode" :loader-method="loadSearchMore" :loader-enable="load_search_more"> -->
+      <a-row
+        v-if="search_mode"
+        :gutter="7"
+        type="flex"
+        justify="center"
+        align="middle"
+        style="margin-top: 2vh;"
+      >
+        <a-col
+          v-for="(taxpayer, index) in search_filtered_taxpayers"
+          :key="`tp${index}`"
+          :xs="{ span: 24 }"
+          :md="{ span: 12 }"
+          :xl="{ span: 8 }"
+          style="margin-bottom: 1vh;"
+        >
+          <a-card style="cursor: pointer;" @click="moreDetails(taxpayer)">
+            <a-card-grid style="width: 100%; padding: 2vh;">
+              <a-card-meta :title="taxpayer.registered_name || 'User'">
+                <a-avatar
+                  slot="avatar"
+                  shape="square"
+                  :size="60"
+                  :src="taxpayer.avatar || 'https://www.mediaupdate.co.za/img/avatar.png'"
+                />
+                <div slot="description" v-html="getDescription(taxpayer)"></div>
+              </a-card-meta>
+            </a-card-grid>
+          </a-card>
+          <span class="top-star" v-if="taxpayer.top <= 10">
+            <a-icon type="trophy" />
+            <span>{{taxpayer.top}}</span>
+          </span>
+        </a-col>
+        <a-col :span="24" style="text-align: center">
+          <a-spin v-if="loading" />
+          <span v-else-if="!load_search_more">Done Loading...</span>
+        </a-col>
+      </a-row>
+    <!-- </scroll-loader> -->
 
-    <!-- <div
-      v-infinite-scroll="handleInfiniteOnLoad"
-      :infinite-scroll-disabled="busy"
-      :infinite-scroll-distance="10"
-      v-if="!loading && !search_mode"
-    > -->
-      <a-row :gutter="7" v-if="!loading && !search_mode" type="flex" justify="center" align="middle">
+    <!-- <scroll-loader v-else :loader-method="loadMore" :loader-enable="load_more"> -->
+      <a-row v-else :gutter="7" type="flex" justify="center" align="middle">
         <a-divider style="margin: 5px 0">Top Taxpayers</a-divider>
         <a-col
           v-for="(taxpayer, index) in top_taxpayers(true)"
@@ -41,11 +78,7 @@
           :xl="{ span: 8 }"
           style="margin-bottom: 1vh;"
         >
-          <a-card
-            style="cursor: pointer;"
-            :bodyStyle="{ padding: 0 }"
-            @click="moreDetails(taxpayer)"
-          >
+          <a-card style="cursor: pointer;" :bodyStyle="{ padding: 0 }" @click="moreDetails(taxpayer)">
             <!-- <a-badge style="width: 100%; height: 100%; line-height: 1.5; display: block;" :count="taxpayer.top <= 10 ? taxpayer.top : 0"> -->
             <a-card-grid style="width: 100%; height: 100%; padding: 15px;">
               <a-card-meta :title="taxpayer.registered_name || 'User'">
@@ -89,55 +122,12 @@
             </a-card-grid>
           </a-card>
         </a-col>
-        <a-col
-          v-if="fetching_taxpayers"
-          :xs="{ span: 24 }"
-          :md="{ span: 12 }"
-          :xl="{ span: 8 }"
-          style="margin-bottom: 1vh;"
-        >
-          <a-card :loading="true" />
-        </a-col>
-        <a-col :span="24" v-else-if="!fetching_taxpayers && busy">
-          <span>Done loading</span>
+        <a-col :span="24" style="text-align: center">
+          <a-spin v-if="loading" />
+          <span v-else-if="!load_more">Done Loading...</span>
         </a-col>
       </a-row>
-    <!-- </div> -->
-    <a-row
-      v-else-if="!loading && search_mode"
-      :gutter="7"
-      type="flex"
-      justify="center"
-      align="middle"
-      style="margin-top: 2vh;"
-    >
-      <a-col
-        v-for="(taxpayer, index) in filtered_taxpayers"
-        :key="`tp${index}`"
-        :xs="{ span: 24 }"
-        :md="{ span: 12 }"
-        :xl="{ span: 8 }"
-        style="margin-bottom: 1vh;"
-      >
-        <a-card style="cursor: pointer;" @click="moreDetails(taxpayer)">
-          <a-card-grid style="width: 100%; padding: 2vh;">
-            <a-card-meta :title="taxpayer.registered_name || 'User'">
-              <a-avatar
-                slot="avatar"
-                shape="square"
-                :size="60"
-                :src="taxpayer.avatar || 'https://www.mediaupdate.co.za/img/avatar.png'"
-              />
-              <div slot="description" v-html="getDescription(taxpayer)"></div>
-            </a-card-meta>
-          </a-card-grid>
-        </a-card>
-        <span class="top-star" v-if="taxpayer.top <= 10">
-          <a-icon type="trophy" theme="filled" />
-          <span>{{taxpayer.top}}</span>
-        </span>
-      </a-col>
-    </a-row>
+    <!-- </scroll-loader> -->
 
     <!-- More Details -->
     <a-modal
@@ -184,21 +174,20 @@
 </template>
 
 <script>
-import infiniteScroll from "vue-infinite-scroll";
-
 export default {
-  directives: { infiniteScroll },
   data() {
     return {
       loading: false,
       search_mode: false,
       search: "",
       filtered_taxpayers: [],
-      busy: false,
-      show_length: 9,
       fetching_taxpayers: false,
       show_details: false,
-      selected_taxpayer: {}
+      selected_taxpayer: {},
+      load_more: true,
+      load_search_more: true,
+      load_size: 0,
+      load_search_size: 0
     };
   },
   created() {
@@ -206,6 +195,7 @@ export default {
     this.$store
       .dispatch("GET_TAXPAYERS")
       .then(result => {
+        this.load_size = 9;
         this.loading = false;
       })
       .catch(err => {
@@ -236,8 +226,11 @@ export default {
     },
     other_taxpayers() {
       const other_taxpayers = this.top_taxpayers(false);
-      // return other_taxpayers.slice(0, this.show_length);
-      return other_taxpayers;
+      return other_taxpayers.slice(0, this.load_size);
+      // return other_taxpayers;
+    },
+    search_filtered_taxpayers(){
+      return this.filtered_taxpayers.slice(0, this.load_search_size);
     },
     login_rdo() {
       return this.$store.state.tax_form.login_rdo;
@@ -267,6 +260,7 @@ export default {
       console.log("search :", this.search);
       if (this.search) {
         this.search_mode = true;
+        this.load_search_size = 9;
         this.filtered_taxpayers = this.taxpayers.filter(v => {
           return (
             v &&
@@ -278,19 +272,28 @@ export default {
         });
       } else this.search_mode = false;
     },
-    handleInfiniteOnLoad() {
-      console.log("loading...")
-      this.fetching_taxpayers = true;
-      setTimeout(() => {
-        const other_taxpayers = this.top_taxpayers(false);
-        if (this.show_length >= other_taxpayers.length) this.busy = true;
-        else this.show_length += 9;
-        this.fetching_taxpayers = false;
-      }, 1000);
-    },
     clearSearch() {
       this.search = "";
       this.search_mode = false;
+    },
+    loadMore(){
+      console.log('enter loading more...');
+      this.loading = true;
+      setTimeout(() => {
+        this.load_size += 9;
+        console.log(`enter timeout ${this.top_taxpayers(false).length}:${this.load_size} = ${this.top_taxpayers(false).length <= this.load_size}`);
+        if(this.top_taxpayers(false).length <= this.load_size) this.load_more = false;
+        console.log(this.load_more);
+        this.loading = false;
+      }, 3000);
+    },
+    loadSearchMore(){
+      this.loading = true;
+      setTimeout(() => {
+        this.load_search_size += 9;
+        if(this.taxpayers.length <= this.load_search_size) this.load_search_more = false;
+        this.loading = false;
+      }, 1000);
     }
   }
 };

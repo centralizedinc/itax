@@ -17,6 +17,9 @@ var rdoSchema = new Schema({
             type: Number
         }
     },
+    target_collections: {
+        type: Number
+    },
     status:{
         type:String,
         default: "A"
