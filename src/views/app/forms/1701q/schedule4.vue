@@ -15,15 +15,8 @@
       <a-form :form="form" layout="vertical" hideRequiredMark>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              style="margin-left: 103px;"
-              label="A) Taxpayer/Filer"
-            ></a-form-item>
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="64."
-            >
+            <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
+            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="64">
               <a-input-number
                 v-model="form.taxpayer_tax_payable.surcharge"
                 style="width:100%"
@@ -32,14 +25,8 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item
-              style="margin-left: 103px;"
-              label="B) Spouse"
-            ></a-form-item>
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-            >
+            <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 v-model="form.spouse_tax_payable.surcharge"
                 style="width:100%"
@@ -50,11 +37,7 @@
         </a-row>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="65."
-            >
+            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="65">
               <a-input-number
                 v-model="form.taxpayer_tax_payable.interest"
                 style="width:100%"
@@ -63,10 +46,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-            >
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 v-model="form.spouse_tax_payable.interest"
                 placeholder="Interest"
@@ -77,11 +57,7 @@
         </a-row>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="66."
-            >
+            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="66">
               <a-input-number
                 v-model="form.taxpayer_tax_payable.compromise"
                 style="width:100%"
@@ -90,13 +66,10 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-            >
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 style="width:100%"
-                v-model="form.spouse_tax_payablecompromise"
+                v-model="form.spouse_tax_payable.compromise"
                 placeholder="Compromise"
               ></a-input-number>
             </a-form-item>
@@ -104,17 +77,14 @@
         </a-row>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="67."
-            >
+            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="67">
               <a-tooltip>
-                <template slot="title"
-                  >Total Penalties (Sum of Items 64 to 66) (To Part III, Item
-                  29)</template
-                >
+                <template slot="title">
+                  Total Penalties (Sum of Items 64 to 66) (To Part III, Item
+                  29)
+                </template>
                 <a-input-number
+                  disabled
                   style="width:100%"
                   :value="penalties()"
                   placeholder="Total Penalties"
@@ -123,16 +93,14 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-            >
+            <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-tooltip>
-                <template slot="title"
-                  >Total Penalties (Sum of Items 64 to 66) (To Part III, Item
-                  29)</template
-                >
+                <template slot="title">
+                  Total Penalties (Sum of Items 64 to 66) (To Part III, Item
+                  29)
+                </template>
                 <a-input-number
+                  disabled
                   style="width:100%"
                   :value="spouse_penalties()"
                   placeholder="Total Penalties"
@@ -180,6 +148,7 @@
     </a-drawer>
   </div>
 </template>
+
 <script>
 export default {
   props: ["form", "show"],
@@ -218,21 +187,21 @@ export default {
     },
     penalties() {
       var total = this.computeSum([
-        this.form.sched4.taxpayer.surcharge,
-        this.form.sched4.taxpayer.interest,
-        this.form.sched4.taxpayer.compromise
+        this.form.taxpayer_tax_payable.surcharge,
+        this.form.taxpayer_tax_payable.interest,
+        this.form.taxpayer_tax_payable.compromise
       ]);
-      this.form.sched4.taxpayer.penalties = total;
+      this.form.taxpayer_tax_payable.penalties = total;
       this.form.taxpayer_total_penalties = total;
       return total;
     },
     spouse_penalties() {
       var total = this.computeSum([
-        this.form.sched4.spouse.surcharge,
-        this.form.sched4.spouse.interest,
-        this.form.sched4.spouse.compromise
+        this.form.spouse_tax_payable.surcharge,
+        this.form.spouse_tax_payable.interest,
+        this.form.spouse_tax_payable.compromise
       ]);
-      this.form.sched4.spouse.penalties = total;
+      this.form.spouse_tax_payable.penalties = total;
       this.form.spouse_total_penalties = total;
       return total;
     },

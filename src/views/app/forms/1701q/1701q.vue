@@ -746,7 +746,7 @@
               <a-input-number
                 style="width: 100%"
                 :value="taxpayer_total_amount_payable()"
-                v-model="form.taxpayer_total_amount_payable"
+                v-model="form.taxpayer_tax_payable.total_amount_payable"
                 placeholder="Total Amount Payable/Overpayment"
                 disabled
               ></a-input-number>
@@ -759,7 +759,7 @@
             <a-input-number
               style="width: 100%"
               :value="taxpayer_total_amount_payable()"
-              v-model="form.spouse_total_amount_payable"
+              v-model="form.spouse_tax_payable.total_amount_payable"
               disabled
             ></a-input-number>
           </a-form-item>
@@ -987,17 +987,17 @@ export default {
     },
     taxpayer_total_amount_payable() {
       // Sum of Items 28 and 29
-      this.form.taxpayer_total_amount_payable = this.computeSum([
+      this.form.taxpayer_tax_payable.total_amount_payable = this.computeSum([
         this.form.taxpayer_tax_due,
         this.form.taxpayer_total_penalties
       ]);
-      this.form.spouse_total_amount_payable = this.computeSum([
+      this.form.spouse_tax_payable.total_amount_payable = this.computeSum([
         this.form.spouse_tax_due,
         this.form.spouse_total_penalties
       ]);
       this.form.taxpayer_aggregate_amount_payable = this.computeSum([
-        this.form.taxpayer_total_amount_payable,
-        this.form.spouse_total_amount_payable
+        this.form.taxpayer_tax_payable.total_amount_payable,
+        this.form.spouse_tax_payable.total_amount_payable
       ]);
     },
     // item26b() {},

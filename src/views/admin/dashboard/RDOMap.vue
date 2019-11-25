@@ -1,6 +1,6 @@
 <template>
   <div :class="login_rdo ? 'hide-close' : ''">
-    <a-card title="RDO" />
+    <!-- <a-card title="RDO" /> -->
     <GmapMap
       id="map"
       ref="map"

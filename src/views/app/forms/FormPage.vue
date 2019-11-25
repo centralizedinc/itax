@@ -110,8 +110,8 @@
               <a-col :span="22">
                 <a-list-item-meta>
                   <p
-                    slot="title"
-                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`:'item.company_details.registered_name'}}</p>
+                    slot="title">
+                  {{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`: `${item.registered_name}`}}</p>
                   <template slot="description">
                     <p>
                       <b>{{formatTIN(item.tin)}}</b>
@@ -235,6 +235,8 @@ export default {
           start_month: "",
           end_month: ""
         },
+        taxpayer_tax_payable:{},
+        spouse_tax_payable: {},
         spouse_details: {
           contact_details: {},
           address_details: {},

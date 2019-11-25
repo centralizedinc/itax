@@ -7,15 +7,15 @@
       </a-row>
       <a-row :gutter="10" style="margin-bottom: 2vh;" v-if="!login_rdo">
         <a-col :xs="24" :lg="12">
-          <collection-per-rdo />
+          <collection-per-rdo style="margin-bottom: 2vh" />
         </a-col>
         <a-col :xs="24" :lg="12">
-          <target-collection />
+          <target-collection style="margin-bottom: 2vh" />
         </a-col>
       </a-row>
       <a-row :gutter="10" style="margin-bottom: 2vh;">
         <a-col :xs="24" :lg="12">
-          <collection-per-tax-type />
+          <collection-per-tax-type style="margin-bottom: 2vh" />
         </a-col>
         <a-col :xs="24" :lg="12">
           <top-taxpayer />
