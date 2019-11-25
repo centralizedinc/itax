@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <a-row type="flex" align="middle" :gutter="5">
       <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
         <a-form-item
@@ -15,15 +14,17 @@
           :help="error_desc('tin')"-->
           <a-row :gutter="12">
             <a-col :span="20">
-          <a-input
-            maxlength="13"
-            v-model="details.spouse_details.tin"
-            placeholder="TIN"
-            @blur="checkTin"
-            @keypress.enter="checkTin"
-          /></a-col>
-          <a-col :span='4'>
-          <a-button icon="search" shape="circle" @click="checkTin"/></a-col>
+              <a-input
+                maxlength="13"
+                v-model="details.spouse_details.tin"
+                placeholder="TIN"
+                @blur="checkTin"
+                @keypress.enter="checkTin"
+              />
+            </a-col>
+            <a-col :span="4">
+              <a-button icon="search" shape="circle" @click="checkTin" />
+            </a-col>
           </a-row>
         </a-form-item>
       </a-col>
@@ -316,7 +317,7 @@ export default {
     },
     // -----------------
     async checkTin() {
-      this.later = false
+      this.later = false;
       // this.error_messages = [];
       this.invalid_tin_status = "validating";
 
@@ -338,6 +339,9 @@ export default {
         "this.details.company_details.tin: " +
           JSON.stringify(this.details.company_details.tin)
       );
+      if (this.details.spouse_details.tin.length == 13) {
+        this.tinGood = true;
+      }
 
       if (
         !this.details.spouse_details.tin ||
@@ -346,7 +350,7 @@ export default {
         this.details.spouse_details.tin == undefined
       ) {
         console.log("!this.details.spouse_details.tin");
-        this.tinGood = false
+        this.tinGood = false;
         // this.error_messages.push({
         //   field: "tin",
         //   message: "TIN is a required field"
@@ -407,6 +411,13 @@ export default {
             console.log(
               "currentSpouse dettecttedd: " + JSON.stringify(currentSpouse)
             );
+            console.log(
+              "details spouse: " + JSON.stringify(this.details.spouse_details)
+            );
+            // && !this.details.spouse_details.tin) ||
+            //   this.details.spouse_details.tin == null ||
+            //   this.details.spouse_details.tin == "" ||
+            //   this.details.spouse_details.tin == undefined
             if (!result || !result.taxpayer) {
               console.log(
                 "!result || !result.taxpayer: " +
@@ -474,9 +485,9 @@ export default {
                 message:
                   "This taxpayer has a different spouse. If there is any concern, please contact us"
               });
-            } else{
-              console.log("may record")
-              this.later = true
+            } else {
+              console.log("may record");
+              this.later = true;
             }
           });
       }
@@ -487,10 +498,10 @@ export default {
         "this.details.spouse_details data: " +
           JSON.stringify(this.details.spouse_details)
       );
-      if(this.tinGood == true){
+      if (this.tinGood == true) {
         this.validate();
       }
-       
+
       await this.checkTin();
       console.log("this.error_messages :", JSON.stringify(this.error_messages));
       if (!this.error_messages || !this.error_messages.length) {
@@ -499,9 +510,9 @@ export default {
     },
     validate() {
       this.error_messages = [];
-      console.log("validate")
+      console.log("validate");
       if (!this.details.spouse_details.rdo_code) {
-        console.log("validate rdo")
+        console.log("validate rdo");
         this.error_messages.push({
           field: "rdo_code",
           message: "RDO is a required field"

@@ -49,10 +49,22 @@
       <a-affix :offsetTop="100">
         <a-card>
           <a-steps direction="vertical" :current="currentView">
-            <a-step title="Account Details" description="Your account details in Smart Tax portal." />
-            <a-step title="Taxpayer Information" description="Details that will be using in filing tax form" />
-            <a-step title="Spouse Details" description="Spouse details that will be using in filing tax form." />
-            <a-step title="Company Details" description="Company details that will be using in filing tax form." />
+            <a-step
+              title="Account Details"
+              description="Your account details in Smart Tax portal."
+            />
+            <a-step
+              title="Taxpayer Information"
+              description="Details that will be using in filing tax form"
+            />
+            <a-step
+              title="Spouse Details"
+              description="Spouse details that will be using in filing tax form."
+            />
+            <a-step
+              title="Company Details"
+              description="Company details that will be using in filing tax form."
+            />
             <a-step title="Connections" description="Taxpayers that will be link to your account." />
           </a-steps>
         </a-card>
@@ -226,13 +238,18 @@ export default {
       }
     },
     next(i) {
-      this.details.taxpayer.individual_details.middleName = this.details.user.name.middle == undefined || this.details.user.name.middle == null || this.details.user.name.middle == "" ?  "" : this.details.user.name.middle
-      this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`
+      this.details.taxpayer.individual_details.middleName =
+        this.details.user.name.middle == undefined ||
+        this.details.user.name.middle == null ||
+        this.details.user.name.middle == ""
+          ? ""
+          : this.details.user.name.middle;
+      this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`;
       this.loading = true;
       window.scrollTo(0, 0);
       console.log("i :", i);
       if (i === 4) {
-        console.log("i = 4 na this")
+        console.log("i = 4 na this");
         var _self = this;
         this.$confirm({
           title: "Do you want to save the information?",
@@ -243,15 +260,21 @@ export default {
           },
           confirmLoading: _self.loading
         });
-      } else{
-        console.log("loading : " + this.loading)
+      } else {
+        console.log("loading : " + this.loading);
         this.loading = false;
-       this.currentView = i;
-       if(this.details.taxpayer.individual_details.civil_status == "S" && currentView == 2){
-         this.addButton = true
-       } else if(this.details.taxpayer.individual_details.civil_status == "M" && currentView == 4){
-         this.addButton = true
-       }
+        this.currentView = i;
+        if (
+          this.details.taxpayer.individual_details.civil_status == "S" &&
+          currentView == 2
+        ) {
+          this.addButton = true;
+        } else if (
+          this.details.taxpayer.individual_details.civil_status == "M" &&
+          currentView == 4
+        ) {
+          this.addButton = true;
+        }
       }
     },
     changeView(key) {
@@ -259,26 +282,26 @@ export default {
       window.scrollTo(0, 0);
     },
     submitTaxpayer() {
-      console.log("@@@ano this")
+      console.log("@@@ano this");
       this.loading = true;
       this.details.user.tin = this.details.taxpayer.tin;
       // if (!this.avatar.form_data)
       //   this.details.user.avatar = this.user.avatar;
-      console.log("submit taxpayer data: " + JSON.stringify(this.details))
-      this.$store
-        .dispatch("ACCOUNT_SETUP", {
-          details: this.details,
-          form_data: this.avatar.form_data
-        })
-        .then(result => {
-          console.log("submitTaxpayer :", result);
-          this.currentView = 4;
-          this.loading = false;
-        })
-        .catch(err => {
-          console.log("submitTaxpayer err :", err);
-          this.loading = false;
-        });
+      console.log("submit taxpayer data: " + JSON.stringify(this.details));
+      // this.$store
+      //   .dispatch("ACCOUNT_SETUP", {
+      //     details: this.details,
+      //     form_data: this.avatar.form_data
+      //   })
+      //   .then(result => {
+      //     console.log("submitTaxpayer :", result);
+      //     this.currentView = 4;
+      //     this.loading = false;
+      //   })
+      //   .catch(err => {
+      //     console.log("submitTaxpayer err :", err);
+      //     this.loading = false;
+      //   });
     }
   },
   created() {
