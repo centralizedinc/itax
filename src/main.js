@@ -10,7 +10,9 @@ import aos from 'aos'
 import 'aos/dist/aos.css';
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeolocation from 'vue-browser-geolocation';
+import ScrollLoader from 'vue-scroll-loader'
 
+Vue.use(ScrollLoader)
 Vue.config.productionTip = false
 Vue.use(mixins);
 

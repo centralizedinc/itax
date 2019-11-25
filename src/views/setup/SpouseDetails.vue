@@ -291,6 +291,7 @@
 </template>
 
 <script>
+import { stringify } from "querystring";
 export default {
   props: {
     details: {
@@ -337,6 +338,17 @@ export default {
     };
   },
   created() {
+    console.log(
+      "created spouse details: " + JSON.stringify(this.details.spouse_details)
+    );
+    if (this.details.spouse_details.tin.length == 13) {
+      this.later = false;
+      this.tinGood = true;
+      console.log(
+        "details spouse details data pag complete tin: " +
+          JSON.stringify(this.details.spouse_details)
+      );
+    }
     // this.searchTin();
   },
   methods: {
@@ -438,7 +450,18 @@ export default {
             console.log(
               "currentSpouse dettecttedd: " + JSON.stringify(currentSpouse)
             );
-            if (!result || !result.taxpayer) {
+            console.log(
+              "details spouse: " + JSON.stringify(this.details.spouse_details)
+            );
+            // && !this.details.spouse_details.tin) ||
+            //   this.details.spouse_details.tin == null ||
+            //   this.details.spouse_details.tin == "" ||
+            //   this.details.spouse_details.tin == undefined
+            if (
+              !result ||
+              (!result.taxpayer &&
+                !this.details.spouse_details.tin.length == 13)
+            ) {
               console.log(
                 "!result || !result.taxpayer: " +
                   JSON.stringify(this.error_messages)
@@ -525,7 +548,7 @@ export default {
       await this.checkTin();
       console.log("this.error_messages :", JSON.stringify(this.error_messages));
       if (!this.error_messages || !this.error_messages.length) {
-        this.next();
+        this.$emit("next", 3);
       }
     },
     validate() {

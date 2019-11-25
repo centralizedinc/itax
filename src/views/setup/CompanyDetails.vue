@@ -217,6 +217,9 @@ export default {
       this.invalid_tin_msg = "";
       this.invalid_tin_status = "validating";
       console.log("search tin :", this.details.company_details.tin);
+      console.log(
+        "company details  = details data: " + JSON.stringify(this.details)
+      );
       if (
         this.details.company_details.tin &&
         this.details.company_details.tin.length === 13
