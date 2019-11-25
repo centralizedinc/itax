@@ -16,7 +16,13 @@
         <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
-            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="64">
+            <a-form-item
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="64"
+              :validate-status="error_item('taxpayer_tax_payable.surcharge')"
+              :help="error_desc('taxpayer_tax_payable.surcharge')"
+            >
               <a-input-number
                 v-model="form.taxpayer_tax_payable.surcharge"
                 style="width:100%"
@@ -37,7 +43,13 @@
         </a-row>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="65">
+            <a-form-item
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="65"
+              :validate-status="error_item('taxpayer_tax_payable.interest')"
+              :help="error_desc('taxpayer_tax_payable.interest')"
+            >
               <a-input-number
                 v-model="form.taxpayer_tax_payable.interest"
                 style="width:100%"
@@ -57,7 +69,13 @@
         </a-row>
         <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="66">
+            <a-form-item
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="66"
+              :validate-status="error_item('taxpayer_tax_payable.compromise')"
+              :help="error_desc('taxpayer_tax_payable.compromise')"
+            >
               <a-input-number
                 v-model="form.taxpayer_tax_payable.compromise"
                 style="width:100%"
@@ -151,7 +169,7 @@
 
 <script>
 export default {
-  props: ["form", "show"],
+  props: ["form", "show", "errors"],
   data() {
     return {
       visible: true,
@@ -168,7 +186,7 @@ export default {
     };
   },
   created() {
-    console.log("show sched 4: " + this.show);
+    console.log("####errors: " + JSON.stringify(this.errors));
     // this.visible = this.show;
   },
   watch: {
@@ -181,6 +199,48 @@ export default {
     }
   },
   methods: {
+    // insert validation
+    validate(is_validate_all) {
+      var errors = [];
+      if (is_validate_all || this.step === 3) {
+        if (!this.form.taxpayer_tax_payable.surcharge) {
+          error.push({
+            field: "taxpayer_tax_payable.surcharge",
+            error: "Please input Surcharge"
+          });
+        }
+        if (!this.form.taxpayer_tax_payable.interest) {
+          errors.push({
+            page: 3,
+            field: "taxpayer_tax_payable.interest",
+            error: "Please input Interest amount"
+          });
+        }
+        if (!this.form.taxpayer_tax_payable.compromise) {
+          errors.push({
+            page: 3,
+            field: "taxpayer_tax_payable.compromise",
+            error: "Please input Compromise amount"
+          });
+        }
+      }
+
+      this.$emit("error", errors);
+      if (!errors.length) {
+        this.changeStep(this.step + 1);
+      }
+    },
+
+    error_item(item) {
+      console.log("##erroritem :", item);
+      return this.errors.find(x => x.field === item) ? "error" : "";
+    },
+    error_desc(item) {
+      console.log("##errorDesc :", item);
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
+    },
     onClose() {
       // this.visible = false;
       this.$emit("close");

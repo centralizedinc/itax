@@ -627,7 +627,7 @@
                 style="width: 100%"
                 disabled
                 :value="total_tax_payable()"
-                v-model="form.taxpayer_tax_payable.prev_tax_due"
+                v-model="form.taxpayer_prev_tax_due"
                 placeholder="Tax Due"
               ></a-input-number>
             </a-tooltip>
@@ -638,7 +638,7 @@
           <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
             <a-input-number
               style="width: 100%"
-              v-model="form.spouse_tax_payable.prev_tax_due"
+              v-model="form.spouse_prev_tax_due"
               placeholder="Tax Due"
               disabled
             ></a-input-number>
@@ -660,7 +660,7 @@
               <template slot="title">Less: Tax Credits/Payments (From Part V, Schedule III-Item 62)</template>
               <a-input-number
                 style="width: 100%"
-                v-model="form.taxpayer_tax_payable.tax_credits"
+                v-model="form.taxpayer_tax_credit"
                 placeholder="Less: Tax Credits/Payments "
                 disabled
               ></a-input-number>
@@ -669,11 +669,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-            <a-input-number
-              style="width: 100%"
-              v-model="form.spouse_tax_payable.tax_credits"
-              disabled
-            ></a-input-number>
+            <a-input-number style="width: 100%" v-model="form.spouse_tax_credit" disabled></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
@@ -694,7 +690,7 @@
               <a-input-number
                 style="width: 100%"
                 :value="taxpayer_tax_due()"
-                v-model="form.taxpayer_tax_payable.tax_due"
+                v-model="form.taxpayer_tax_due"
                 placeholder="Tax Payable/(Overpayment)"
                 disabled
               ></a-input-number>
@@ -706,7 +702,7 @@
             <a-input-number
               style="width: 100%"
               :value="taxpayer_tax_due()"
-              v-model="form.spouse_tax_payable.tax_due"
+              v-model="form.spouse_tax_due"
               placeholder="26 Less Item 27 From Part V,Item 63)"
               disabled
             ></a-input-number>
@@ -716,18 +712,12 @@
       <br />
       <a-row :gutter="6">
         <a-col :span="12">
-          <a-form-item
-            :labelCol="{span: 3}"
-            :wrapperCol="{span: 21}"
-            label="29"
-            :validate-status="error_item('taxpayer_tax_payable.penalties')"
-            :help="error_desc('taxpayer_tax_payable.penalties')"
-          >
+          <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}" label="29">
             <a-tooltip>
               <template slot="title">Add: Total Penalties (From Part V, Schedule IV-Item 67)</template>
               <a-input-number
                 style="width: 100%"
-                v-model="form.taxpayer_tax_payable.penalties"
+                v-model="form.taxpayer_total_penalties"
                 placeholder="Total Penalties"
                 disabled
               ></a-input-number>
@@ -736,11 +726,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item :labelCol="{span: 3}" :wrapperCol="{span: 21}">
-            <a-input-number
-              style="width: 100%"
-              v-model="form.spouse_tax_payable.penalties"
-              disabled
-            ></a-input-number>
+            <a-input-number style="width: 100%" v-model="form.spouse_total_penalties" disabled></a-input-number>
           </a-form-item>
         </a-col>
       </a-row>
@@ -799,7 +785,7 @@
     <sched1 v-if="sched == 1" :show="show" :form="form" @close="closeSched()"></sched1>
     <sched2 v-if="sched == 2" :show="show" :form="form" @close="closeSched()"></sched2>
     <sched3 v-if="sched == 3" :show="show" :form="form" @close="closeSched()"></sched3>
-    <sched4 v-if="sched == 4" :show="show" :form="form" :errors="errors" @close="closeSched()"></sched4>
+    <sched4 v-if="sched == 4" :show="show" :form="form" @close="closeSched()"></sched4>
   </div>
 </template>
 
@@ -974,11 +960,11 @@ export default {
     },
     total_tax_payable() {
       if (this.form.sched1.taxpayer.total_tax_due > 0) {
-        this.form.taxpayer_tax_payable.prev_tax_due = this.form.sched1.taxpayer.total_tax_due;
-        this.form.spouse_tax_payable.prev_tax_due = this.form.sched1.spouse.total_tax_due;
+        this.form.taxpayer_prev_tax_due = this.form.sched1.taxpayer.total_tax_due;
+        this.form.spouse_prev_tax_due = this.form.sched1.spouse.total_tax_due;
       } else if (this.form.sched2.taxpayer.total_tax_due > 0) {
-        this.form.taxpayer_tax_payable.prev_tax_due = this.form.sched2.taxpayer.total_tax_due;
-        this.form.spouse_tax_payable.prev_tax_due = this.form.sched2.spouse.total_tax_due;
+        this.form.taxpayer_prev_tax_due = this.form.sched2.taxpayer.total_tax_due;
+        this.form.spouse_prev_tax_due = this.form.sched2.spouse.total_tax_due;
       }
       // this.form.item27a = this.form.item62a;
       // this.form.item27b = this.form.item62b;
@@ -992,22 +978,22 @@ export default {
     },
     taxpayer_tax_due() {
       // Item 26 Less Item 27
-      this.form.taxpayer_tax_payable.tax_due =
-        (this.form.taxpayer_tax_payable.prev_tax_due || 0) -
-        (this.form.taxpayer_tax_payable.tax_credits || 0);
-      this.form.spouse_tax_payable.tax_due =
-        (this.form.spouse_tax_payable.prev_tax_due || 0) -
-        (this.form.spouse_tax_payable.tax_credits || 0);
+      this.form.taxpayer_tax_due =
+        (this.form.taxpayer_prev_tax_due || 0) -
+        (this.form.taxpayer_tax_credit || 0);
+      this.form.spouse_tax_due =
+        (this.form.spouse_prev_tax_due || 0) -
+        (this.form.spouse_tax_credit || 0);
     },
     taxpayer_total_amount_payable() {
       // Sum of Items 28 and 29
       this.form.taxpayer_tax_payable.total_amount_payable = this.computeSum([
-        this.form.taxpayer_tax_payable.tax_due,
-        this.form.taxpayer_tax_payable.penalties
+        this.form.taxpayer_tax_due,
+        this.form.taxpayer_total_penalties
       ]);
       this.form.spouse_tax_payable.total_amount_payable = this.computeSum([
-        this.form.spouse_tax_payable.tax_due,
-        this.form.spouse_tax_payable.penalties
+        this.form.spouse_tax_due,
+        this.form.spouse_total_penalties
       ]);
       this.form.taxpayer_aggregate_amount_payable = this.computeSum([
         this.form.taxpayer_tax_payable.total_amount_payable,
@@ -1082,7 +1068,6 @@ export default {
         : "";
     },
     error_item(item) {
-      console.log("##item :", JSON.stringify(item));
       return this.errors.find(x => x.field === item) ? "error" : "";
     },
     changeStep(step, form) {
@@ -1090,7 +1075,6 @@ export default {
       this.$emit("updateForm", form);
     },
     error_desc(item) {
-      console.log("##desc :", JSON.stringify(item));
       return this.errors.find(x => x.field === item)
         ? this.errors.find(x => x.field === item).error
         : "";
@@ -1168,49 +1152,14 @@ export default {
         }
         if (
           (!this.form.taxpayer_method_deduction &&
-            this.form.taxpayer_atc_code == "II012") ||
-          (!this.form.taxpayer_method_deduction &&
-            this.form.taxpayer_atc_code == "II014") ||
-          (!this.form.taxpayer_method_deduction &&
-            this.form.taxpayer_atc_code == "II013")
+            this.form.taxpayer.filer_type == "II015") ||
+          this.form.taxpayer.filer_type == "II017" ||
+          this.form.taxpayer.filer_type == "II016"
         ) {
           errors.push({
             page: 1,
             field: "taxpayer_method_deduction",
             error: "Please select an option for Method of Deduction"
-          });
-        }
-      }
-      if (is_validate_all || this.step === 3) {
-        if (!this.form.taxpayer_tax_payable.penalties) {
-          this.$notification.error({
-            message: "Late Filing"
-          });
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.penalties",
-            error: "Please input fields in Schedule 4"
-          });
-        }
-        if (!this.form.taxpayer_tax_payable.surcharge) {
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.surcharge",
-            error: "Please input at least ₱1 Surcharge amount"
-          });
-        }
-        if (!this.form.taxpayer_tax_payable.interest) {
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.interest",
-            error: "Please input least ₱1 Interest amount"
-          });
-        }
-        if (!this.form.taxpayer_tax_payable.compromise) {
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.compromise",
-            error: "Please input least ₱1 Compromise amount"
           });
         }
       }

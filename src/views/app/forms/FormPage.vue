@@ -110,8 +110,8 @@
               <a-col :span="22">
                 <a-list-item-meta>
                   <p
-                    slot="title">
-                  {{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`: `${item.registered_name}`}}</p>
+                    slot="title"
+                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`: `${item.registered_name}`}}</p>
                   <template slot="description">
                     <p>
                       <b>{{formatTIN(item.tin)}}</b>
@@ -235,7 +235,7 @@ export default {
           start_month: "",
           end_month: ""
         },
-        taxpayer_tax_payable:{},
+        taxpayer_tax_payable: {},
         spouse_tax_payable: {},
         spouse_details: {
           contact_details: {},
@@ -557,7 +557,7 @@ export default {
     },
     fillup() {
       this.form.taxpayer = this.taxpayer;
-      console.log("taxpayer data: " + JSON.stringify(this.form.taxpayer))
+      console.log("taxpayer data: " + JSON.stringify(this.form.taxpayer));
       console.log(
         "this.form.taxpayer.individual_details :",
         JSON.stringify(this.form.taxpayer.individual_details)
@@ -624,8 +624,10 @@ export default {
         details.total_penalties
       )}`;
       this.return_details = details;
-      console.log("show success form data: " + JSON.stringify(this.form))
-      console.log("form page return details data: " + JSON.stringify(this.return_details))
+      console.log("show success form data: " + JSON.stringify(this.form));
+      console.log(
+        "form page return details data: " + JSON.stringify(this.return_details)
+      );
       this.show_form_success = true;
     },
     closeForm() {
@@ -641,15 +643,16 @@ export default {
     },
     submit() {
       this.loading = true;
-      this.errors = [];
+      // this.errors = [];
       //validate
-      this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due
+      this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due;
       // this.form.surcharge
       // this.form.interest
       // this.form.compromise
       // this.form.penalties
-      this.form.total_amount_payable = this.form.taxpayer_aggregate_amount_payable
+      this.form.total_amount_payable = this.form.taxpayer_aggregate_amount_payable;
       this.$refs.form_component.validate(true);
+      console.log("errors: " + JSON.stringify(this.errors));
       // no errors found, proceed to next page
       if (!this.errors.length) {
         this.$store
@@ -708,6 +711,8 @@ export default {
             console.log("VALIDATE_AND_SAVE", err);
             this.loading = false;
           });
+      } else {
+        this.loading = false;
       }
     }
   },

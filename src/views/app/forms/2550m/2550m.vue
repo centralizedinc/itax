@@ -116,15 +116,15 @@
         </a-radio-group>
       </a-form-item>
 
-       <a-form-item label="If yes, specify">
+      <a-form-item label="If yes, specify">
         <a-textarea v-model="form.avail_tax_relief"></a-textarea>
       </a-form-item>
-        </a-form>  
+    </a-form>
 
-      <!-- <a-form-item v-if="form.is_avail_tax_relief">
+    <!-- <a-form-item v-if="form.is_avail_tax_relief">
         <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
       </a-form-item>
-    </a-form> -->
+    </a-form>-->
 
     <!--------------------------------------------------- Part II ------------------------------------------>
     <a-form v-show="step===2">
@@ -293,11 +293,11 @@
             @click="show_sched2=true"
           >Schedule 2</span>)
           <schedule-two
-        v-if="show_sched2"
-        :show="show_sched2"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched2"
+            :show="show_sched2"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
           <!-- @click="show_sched2=true" -->
         </div>
       </a-form-item>
@@ -344,7 +344,7 @@
             >18A: {{form.purCapGoodsNotExceed}} 18B: {{form.outputCapGoodsNotExceed}}</p>
           </template>
         </a-table>
-      </a-drawer> -->
+      </a-drawer>-->
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -368,13 +368,16 @@
       <a-form-item class="computation-item" label>
         <div style="color: black">
           18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
-          <span class="text-link" @click="show_sched3A=true">Schedule 3A</span>)
+          <span
+            class="text-link"
+            @click="show_sched3A=true"
+          >Schedule 3A</span>)
           <schedule-threea
-        v-if="show_sched3A"
-        :show="show_sched3A"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched3A"
+            :show="show_sched3A"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer3A">Schedule 3 A</a-button> -->
@@ -526,11 +529,11 @@
           20A (
           <span class="text-link" @click="show_sched3B=true">Schedule 3B</span>)
           <schedule-threeb
-        v-if="show_sched3B"
-        :show="show_sched3B"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched3B"
+            :show="show_sched3B"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="primary" @click="sched3B_drawer = true">Schedule 3B</a-button> -->
         <a-input-number
@@ -543,11 +546,11 @@
           20B (
           <span class="text-link" @click="show_sched4=true">Schedule 4</span>)
           <schedule-four
-        v-if="show_sched4"
-        :show="show_sched4"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched4"
+            :show="show_sched4"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched4_drawer = true">Schedule 4</a-button> -->
         <a-input-number
@@ -560,11 +563,11 @@
           20C (
           <span class="text-link" @click="show_sched5=true">Schedule 5</span>)
           <schedule-five
-        v-if="show_sched5"
-        :show="show_sched5"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched5"
+            :show="show_sched5"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched5_drawer = true">Schedule 5</a-button> -->
         <a-input-number
@@ -620,11 +623,11 @@
           23A (
           <span class="text-link" @click="show_sched6=true">Schedule 6</span>)
           <schedule-six
-        v-if="show_sched6"
-        :show="show_sched6"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched6"
+            :show="show_sched6"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched6_drawer = true">Schedule 6</a-button> -->
         <a-input-number
@@ -638,11 +641,11 @@
           23B (
           <span class="text-link" @click="show_sched7=true">Schedule 7</span>)
           <schedule-seven
-        v-if="show_sched7"
-        :show="show_sched7"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched7"
+            :show="show_sched7"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched7_drawer = true">Schedule 7</a-button> -->
         <a-input-number
@@ -656,11 +659,11 @@
           23C (
           <span class="text-link" @click="show_sched8=true">Schedule 8</span>)
           <schedule-eight
-        v-if="show_sched8"
-        :show="show_sched8"
-        :form="form"
-        @close="updateSchedAndClose"
-      />
+            v-if="show_sched8"
+            :show="show_sched8"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched8_drawer = true">Schedule 8</a-button> -->
         <a-input-number
@@ -809,23 +812,23 @@ export default {
     }
   },
   created() {
-    this.form.pdf_page = 1
+    this.form.pdf_page = 1;
     console.log("this.form###### :", this.form);
   },
   methods: {
-openPage2(){
-      this.show_sched1=true
-      this.form.pdf_page = 2    
+    openPage2() {
+      this.show_sched1 = true;
+      this.form.pdf_page = 2;
     },
-    openPage2sched2(){
-      this.show_sched1=true
-      this.form.pdf_page = 2
+    openPage2sched2() {
+      this.show_sched1 = true;
+      this.form.pdf_page = 2;
     },
-    closePage2(){
-      this.form.pdf_page = 1
+    closePage2() {
+      this.form.pdf_page = 1;
       this.show_sched1 = false;
       this.show_sched2 = false;
-      this.updateSchedAndClose()
+      this.updateSchedAndClose();
     },
     // 16A
     getTotalSales() {
@@ -1328,19 +1331,19 @@ openPage2(){
     };
   },
   //----------------------------
- watch: {
-  //  step() {
-  //    if(this.step ===   0 ){
-  //        this.form.pdf_page = 1
-  //    }else{
-  //        this.form.pdf_page =2
-  //    }
-  //   },
+  watch: {
+    //  step() {
+    //    if(this.step ===   0 ){
+    //        this.form.pdf_page = 1
+    //    }else{
+    //        this.form.pdf_page =2
+    //    }
+    //   },
     loading(val) {
       this.$emit("loading", val);
     },
 
-//--------------------------------
+    //--------------------------------
 
     form: {
       deep: true,
@@ -1359,8 +1362,7 @@ openPage2(){
     },
     "form.taxpayer.address_details.zipCode": val => {
       console.log("form.taxpayer.address_details.zipCode ", val);
-    },
-    
+    }
   }
 };
 </script>

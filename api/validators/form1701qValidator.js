@@ -21,10 +21,15 @@ function validate(form_details) {
     console.log('done validating required fields');
 
     // checking due date if late filing
-    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "taxpayer_tax_payable", 2);
+
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "taxpayer_tax_payable", 3);
     errors.push(...error_messages);
-    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "spouse_tax_payable", 2);
-    errors.push(...error_messages);
+
+    if (!form_details.spouse_tax_payable) {
+        var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "spouse_tax_payable", 3);
+        errors.push(...error_messages);
+    }
+
     console.log('done checking due date');
 
     if (!errors || !errors.length) {
@@ -64,7 +69,14 @@ function validateRequired(field) {
         error_messages.push({ page: 1, field: "taxpayer_foreign_tax_credits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
     }
 
-    if (!field.taxpayer_method_deduction) { // item 16A
+    if (
+        (!field.taxpayer_method_deduction &&
+            field.taxpayer_atc_code == "II012") ||
+        (!field.taxpayer_method_deduction &&
+            field.taxpayer_atc_code == "II014") ||
+        (!field.taxpayer_method_deduction &&
+            field.taxpayer_atc_code == "II013")
+    ) { // item 16A
         error_messages.push({ page: 1, field: "taxpayer_method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
     }
 
