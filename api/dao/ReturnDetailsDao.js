@@ -80,7 +80,9 @@ class ReturnDetailsDao {
      * @param {Object} conditions 
      * @param {String} select
      */
-    static selectByConditions(conditions, select) {
+    static getCollectionsByConditions(conditions, select) {
+        if(conditions) conditions.payment_status = 'paid';
+        else conditions = { payment_status: 'paid' };
         return model.find(conditions).select(select).exec();
     }
 
@@ -231,6 +233,14 @@ class ReturnDetailsDao {
     static getCountOfReturns(conditions, fields) {
         // return model.find(conditions).select(fields).count().exec();
         return model.countDocuments(conditions);
+    }
+
+    /**
+     * @returns {Promise}
+     * @param {Array} tins 
+     */
+    static getCollectionsByTins(tins){
+        return model.find({ payment_status: 'paid', tin: { $in: tins } }).select('total_amount_payable date_created tin').exec();
     }
 
 }
