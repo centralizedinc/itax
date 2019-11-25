@@ -19,7 +19,7 @@ collections_router.route("/yearly")
     .get((req, res) => {
         console.log('TOTAL COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollection(new Date().getFullYear())
+        ReturnDetailsDao.getCollection(req.query.rdo)
             .then((results) => {
                 console.log('results :', results);
                 //2019
@@ -158,7 +158,7 @@ collections_router.route("/yearly/returns")
     .get((req, res) => {
         console.log('TOTAL COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.countReturns(new Date().getFullYear())
+        ReturnDetailsDao.countReturns(req.query.rdo)
             .then((results) => {
                 console.log('results :', results);
                 //2019
@@ -291,6 +291,7 @@ collections_router.route("/yearly/returns")
                 res.json({ errors });
             });
     })
+
 //COLLECTIONS YEARLY ALL
 collections_router.route("/yearly/:year")
     .get((req, res) => {
@@ -314,12 +315,13 @@ collections_router.route("/yearly/:year")
                 res.json({ errors });
             });
     })
+
 //COLLECTIONS MONTHLY ALL PER YEAR
 collections_router.route("/monthly/:year")
     .get((req, res) => {
         console.log('MONTHLY COLLECTIONS');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByMonth(req.params.year)
+        ReturnDetailsDao.getCollectionByMonth(req.params.year, req.query.rdo)
             .then((results) => {
                 console.log('results :', results);
                 var byMonth = [
@@ -383,12 +385,13 @@ collections_router.route("/monthly/:year")
                 res.json({ errors });
             });
     })
+
 //COLLECTIONS || RETURNS BY MONTHLY PER YEAR ALL PAID || UNPAID
 collections_router.route("/monthly/returns/:year")
     .get((req, res) => {
         console.log('RETURN COLLECTION');
         // ReturnDetailsDao.findAll(req.query.total_amount_payable)
-        ReturnDetailsDao.getCollectionByMonth(req.params.year)
+        ReturnDetailsDao.getReturnsByMonth(req.params.year, req.query.rdo)
             .then((results) => {
                 console.log('resultssssss :', results);
                 var byMonth = [
@@ -468,6 +471,7 @@ collections_router.route("/monthly/returns/:year")
                 res.json({ errors });
             });
     })
+    
 //COLLECTIONS BY MONTHLY PER RDO
 collections_router.route("/monthly/rdo/:code")
     .get((req, res) => {
@@ -554,6 +558,7 @@ collections_router.route("/monthly/rdo/:code")
                 res.json({ errors });
             });
     })
+    
 //COLLECTIONS BY MONTHLY PER RDO PER YEAR
 collections_router.route("/monthly/rdo/:year")
     .get((req, res) => {
@@ -636,6 +641,7 @@ collections_router.route("/monthly/rdo/:year")
                 res.json({ errors });
             });
     })
+
 //COLLECTIONS || RETURNS BY MONTHLY PER YEAR PAID
 collections_router.route("/monthly/returns/:year")
     .get((req, res) => {
