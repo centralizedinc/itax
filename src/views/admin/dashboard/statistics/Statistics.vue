@@ -1,7 +1,7 @@
 <template>
   <a-row class="statistic-chart" :gutter="10">
     <!-- Collection -->
-    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh; margin-bottom: 7vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
         :bodyStyle="{ padding: 0, height: '100%' }"
         :class="`${collections_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
@@ -29,7 +29,7 @@
     </a-col>
 
     <!-- Returns -->
-    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh; margin-bottom: 7vh;;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
         :bodyStyle="{ padding: 0, height: '100%' }"
         :class="`${returns_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
@@ -57,7 +57,7 @@
     </a-col>
 
     <!-- Taxpayers -->
-    <a-col style="height: 28vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
+    <a-col style="height: 28vh; margin-bottom: 7vh;" :xs="{ span: 24 }" :md="{ span: 8 }">
       <a-card
         :bodyStyle="{ padding: 0, height: '100%' }"
         :class="`${taxpayers_mode === 'y' ? 'select-yearly' : 'select-monthly'} max-height`"
@@ -359,7 +359,7 @@ export default {
           collections[0] + Math.floor(collections[0] / 2);
         var gradient = this.$refs.collections_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, "rgba(0, 0, 255, 1)");
-        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.5)");
+        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.75)");
         gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
         this.collection_data.datasets[0].backgroundColor = gradient;
         this.$refs.collections_line_chart.renderChart(
@@ -423,7 +423,7 @@ export default {
           collections[0] + Math.floor(collections[0] / 2);
         var gradient = this.$refs.collections_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, "rgba(0, 0, 255, 1)");
-        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.5)");
+        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.75)");
         gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
         this.collection_data.datasets[0].backgroundColor = gradient;
         this.$refs.collections_line_chart.renderChart(
@@ -479,7 +479,7 @@ export default {
           returns[0] + Math.floor(returns[0] / 2);
         var gradient = this.$refs.returns_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, "rgba(255, 0, 0, 1)");
-        gradient.addColorStop(0.5, "rgba(255, 0, 0, 0.5)");
+        gradient.addColorStop(0.5, "rgba(255, 0, 0, 0.75)");
         gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
         this.returns_data.datasets[0].backgroundColor = gradient;
         this.$refs.returns_line_chart.renderChart(
@@ -538,14 +538,14 @@ export default {
         results.sort((a, b) => a.year - b.year);
         
         this.returns_data.labels = results.map(v => this.months[v.month]);
-        this.returns_data.datasets[0].data = results.map(v => v.returns);
-        var returns = results.map(v => v.collection).sort((a, b) => b - a);
+        this.returns_data.datasets[0].data = results.map(v => v.count);
+        var returns = results.map(v => v.count).sort((a, b) => b - a);
         this.returns_options.scales.yAxes[0].ticks.max =
           returns[0] + Math.floor(returns[0] / 2);
         var gradient = this.$refs.returns_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, "rgba(0, 0, 255, 1)");
-        gradient.addColorStop(0.5, "rgba(0, 0, 255, 0.5)");
-        gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
+        gradient.addColorStop(0, "rgba(255, 0, 0, 1)");
+        gradient.addColorStop(0.5, "rgba(255, 0, 0, 0.75)");
+        gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
         this.returns_data.datasets[0].backgroundColor = gradient;
         this.$refs.returns_line_chart.renderChart(
           this.returns_data,
@@ -596,7 +596,7 @@ export default {
           taxpayers[0] + Math.floor(taxpayers[0] / 2);
         var gradient = this.$refs.taxpayers_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, "rgba(0, 255, 0, 1)");
-        gradient.addColorStop(0.5, "rgba(0, 255, 0, 0.5)");
+        gradient.addColorStop(0.5, "rgba(0, 255, 0, 0.75)");
         gradient.addColorStop(1, "rgba(0, 255, 0, 0)");
         this.taxpayers_data.datasets[0].backgroundColor = gradient;
         this.$refs.taxpayers_line_chart.renderChart(
@@ -725,10 +725,15 @@ export default {
 
 /* Maximize span size */
 .select-yearly .ant-card-actions li span,
-.select-monthly .ant-card-actions li span {
+.select-yearly .ant-card-actions li span div,
+.select-monthly .ant-card-actions li span,
+.select-monthly .ant-card-actions li span div {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Custom on hover if selected */

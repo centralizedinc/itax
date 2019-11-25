@@ -64,6 +64,7 @@ app.use('/upload', require('./api/routes/upload_router'));
 app.use('/payment', require('./api/routes/payment_router'));
 app.use('/activities', require('./api/routes/activity_router'));
 app.use('/collections', require('./api/routes/collections_router'));
+app.use('/analytics', require('./api/routes/analytics_router'));
 
 // START SERVER
 //#############################################################################

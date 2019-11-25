@@ -11,7 +11,8 @@ function initialState() {
         token: "",
         is_authenticated: false,
         mode: '',
-        admin_user: ""
+        admin_user: "",
+        accept_cookie: false
     }
 }
 
@@ -38,6 +39,9 @@ const mutations = {
     UPDATE_SESSION_MODE(state) {
         state.mode = state.account.status === 0 ? 'INACTIVE' :
             state.account.status === 1 ? 'SETUP' : 'ACTIVE';
+    },
+    ACCEPT_COOKIE(state){
+        state.accept_cookie = true;
     },
     RESET(state) {
         Object.keys(state).forEach(key => {

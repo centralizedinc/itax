@@ -721,6 +721,7 @@ collections_router.route("/monthly/returns/:year")
                 res.json({ errors });
             });
     })
+    
 collections_router.route('/insert/temp')
     .post((req, res) => {
         ReturnDetailsDao.createMany(req.body)
@@ -730,8 +731,6 @@ collections_router.route('/insert/temp')
                 res.json({ err })
             });
     })
-
-
 
 
 

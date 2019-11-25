@@ -95,7 +95,9 @@ class TaxpayerDao {
      * @param {Object} conditions 
      */
     static getCountsByConditions(conditions){
-        return model.count(conditions).exec();
+        return model.countDocuments(conditions);
+        // return model.find(conditions).exec()
+        // return model.find(conditions).select('date_created').exec()
     }
 }
 
