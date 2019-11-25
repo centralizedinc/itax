@@ -243,6 +243,9 @@ class ReturnDetailsDao {
         return model.find({ payment_status: 'paid', tin: { $in: tins } }).select('total_amount_payable date_created tin').exec();
     }
 
+    static getReturnsAnalytics(conditions, select){
+        return model.find(conditions).select(select).exec();
+    }
 }
 
 module.exports = ReturnDetailsDao

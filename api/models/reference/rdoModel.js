@@ -23,6 +23,10 @@ var rdoSchema = new Schema({
     status:{
         type:String,
         default: "A"
+    },
+    date_created: {
+        type: Date,
+        default: new Date()
     }
 });
 

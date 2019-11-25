@@ -99,6 +99,16 @@ class TaxpayerDao {
         // return model.find(conditions).exec()
         // return model.find(conditions).select('date_created').exec()
     }
+
+
+    /**
+     * @returns {Promise}
+     * @param {Object} conditions 
+     * @param {String} select 
+     */
+    static getTaxpayersAnalytics(conditions, select){
+        return model.find(conditions).select(select).exec();
+    }
 }
 
 module.exports = TaxpayerDao;

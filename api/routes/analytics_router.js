@@ -42,6 +42,53 @@ router.route('/taxpayers')
         })
     })
 
+router.route('/taxpayers/yearly')
+    .get((req, res) => {
+        var years = 10, conditions = {
+            date_created: {
+                $gte: new Date(new Date().getFullYear() - years, 0, 1),
+                $lt: new Date()
+            }
+        }
+        if(req.query.rdo) conditions.rdo_code = req.query.rdo;
+        TaxpayerDao.getTaxpayersAnalytics(conditions, 'date_created')
+            .then((result) => {
+                var results = [];
+                for (let i = 0; i < years; i++) {
+                    var year = new Date().getFullYear() - i,
+                        counts = result && result.length ? result.filter(v => new Date(v.date_created).getFullYear() === year).length : 0
+                    results.push({ year, counts })
+                }
+                res.json(results);
+            }).catch((errors) => {
+                console.log('errors :', errors);
+                res.json({ errors });
+            });
+    })
+
+router.route('/taxpayers/monthly/:year')
+    .get((req, res) => {
+        var months = 12, conditions = {
+            date_created: {
+                $gte: new Date(req.params.year || new Date().getFullYear(), 0, 1),
+                $lt: new Date(req.params.year || new Date().getFullYear(), 12, 0)
+            }
+        }
+        if(req.query.rdo) conditions.rdo_code = req.query.rdo;
+        TaxpayerDao.getTaxpayersAnalytics(conditions, 'date_created')
+            .then((result) => {
+                var results = [];
+                for (let month = 0; month < months; month++) {
+                    var counts = result && result.length ? result.filter(v => new Date(v.date_created).getMonth() === month).length : 0
+                    results.push({ month, counts })
+                }
+                res.json(results);
+            }).catch((errors) => {
+                console.log('errors :', errors);
+                res.json({ errors });
+            });
+    })
+
 router.route('/taxpayers/collections')
     .get((req, res) => {
         var taxpayers = [];
@@ -113,6 +160,57 @@ router.route('/collections')
             }).catch(errors => {
                 res.json({ errors });
             })
+    })
+
+router.route('/collections/yearly')
+    .get((req, res) => {
+        var years = 10, conditions = {
+            payment_status: 'paid',
+            date_created: {
+                $gte: new Date(new Date().getFullYear() - years, 0, 1),
+                $lt: new Date()
+            }
+        }
+        if(req.query.rdo) conditions.rdo_code = req.query.rdo;
+        ReturnDetailsDao.getReturnsAnalytics(conditions, 'date_created total_amount_payable')
+            .then((result) => {
+                var results = [];
+                for (let i = 0; i < years; i++) {
+                    var year = new Date().getFullYear() - i,
+                        filtered_result = result && result.length ? result.filter(v => new Date(v.date_created).getFullYear() === year) : null,
+                        collections = filtered_result && filtered_result.length ? filtered_result.map(v => v.total_amount_payable).reduce((t, c) => t + c) : 0;
+                    results.push({ year, collections })
+                }
+                res.json(results);
+            }).catch((errors) => {
+                console.log('errors :', errors);
+                res.json({ errors });
+            });
+    })
+
+router.route('/collections/monthly/:year')
+    .get((req, res) => {
+        var months = 12, conditions = {
+            payment_status: 'paid',
+            date_created: {
+                $gte: new Date(req.params.year || new Date().getFullYear(), 0, 1),
+                $lt: new Date(req.params.year || new Date().getFullYear(), 12, 0)
+            }
+        }
+        if(req.query.rdo) conditions.rdo_code = req.query.rdo;
+        ReturnDetailsDao.getReturnsAnalytics(conditions, 'date_created total_amount_payable')
+            .then((result) => {
+                var results = [];
+                for (let month = 0; month < months; month++) {
+                    var filtered_result = result && result.length ? result.filter(v => new Date(v.date_created).getMonth() === month) : null,
+                        collections = filtered_result && filtered_result.length ? filtered_result.map(v => v.total_amount_payable).reduce((t, c) => t + c) : 0;
+                    results.push({ month, collections })
+                }
+                res.json(results);
+            }).catch((errors) => {
+                console.log('errors :', errors);
+                res.json({ errors });
+            });
     })
 
 router.route('/collections/taxtype')
@@ -201,6 +299,53 @@ router.route('/returns')
         }).catch(errors => {
             res.json({ errors });
         })
+    })
+
+router.route('/returns/yearly')
+    .get((req, res) => {
+        var years = 10, conditions = {
+            date_created: {
+                $gte: new Date(new Date().getFullYear() - years, 0, 1),
+                $lt: new Date()
+            }
+        }
+        if(req.query.rdo) conditions.rdo_code = req.query.rdo;
+        ReturnDetailsDao.getReturnsAnalytics(conditions, 'date_created')
+            .then((result) => {
+                var results = [];
+                for (let i = 0; i < years; i++) {
+                    var year = new Date().getFullYear() - i,
+                        counts = result && result.length ? result.filter(v => new Date(v.date_created).getFullYear() === year).length : 0
+                    results.push({ year, counts })
+                }
+                res.json(results);
+            }).catch((errors) => {
+                console.log('errors :', errors);
+                res.json({ errors });
+            });
+    })
+
+router.route('/returns/monthly/:year')
+    .get((req, res) => {
+        var months = 12, conditions = {
+            date_created: {
+                $gte: new Date(req.params.year || new Date().getFullYear(), 0, 1),
+                $lt: new Date(req.params.year || new Date().getFullYear(), 12, 0)
+            }
+        }
+        if(req.query.rdo) conditions.rdo_code = req.query.rdo;
+        ReturnDetailsDao.getReturnsAnalytics(conditions, 'date_created')
+            .then((result) => {
+                var results = [];
+                for (let month = 0; month < months; month++) {
+                    var counts = result && result.length ? result.filter(v => new Date(v.date_created).getMonth() === month).length : 0
+                    results.push({ month, counts })
+                }
+                res.json(results);
+            }).catch((errors) => {
+                console.log('errors :', errors);
+                res.json({ errors });
+            });
     })
 
 module.exports = router;
