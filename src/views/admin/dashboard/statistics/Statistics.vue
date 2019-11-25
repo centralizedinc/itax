@@ -294,14 +294,14 @@ export default {
         this.collections_mode = "y";
         this.loading_collection = true;
         var result = await axios.get(
-          `${process.env.VUE_APP_BASE_API_URI}collections/yearly`
+          `${process.env.VUE_APP_BASE_API_URI}analytics/collections/yearly?rdo=${this.login_rdo}`
         );
         var results = result.data;
         results.sort((a, b) => a.year - b.year);
 
         this.collection_data.labels = results.map(v => v.year);
-        this.collection_data.datasets[0].data = results.map(v => v.collection);
-        var collections = results.map(v => v.collection).sort((a, b) => b - a);
+        this.collection_data.datasets[0].data = results.map(v => v.collections);
+        var collections = results.map(v => v.collections).sort((a, b) => b - a);
         this.collections_options.scales.yAxes[0].ticks.max =
           collections[0] + Math.floor(collections[0] / 2);
         var gradient = this.$refs.collections_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
@@ -322,16 +322,17 @@ export default {
       if (this.collections_mode !== "m") {
         if(!year) year = new Date().getFullYear();
         this.collections_mode = "m";
+        this.collections_year = year;
         this.loading_collection = true;
         var result = await axios.get(
-          `${process.env.VUE_APP_BASE_API_URI}collections/monthly/${year}`
+          `${process.env.VUE_APP_BASE_API_URI}analytics/collections/monthly/${year}?rdo=${this.login_rdo}`
         );
         var results = result.data;
-        results.sort((a, b) => a.year - b.year);
+        results.sort((a, b) => a.month - b.month);
 
         this.collection_data.labels = results.map(v => this.months[v.month]);
-        this.collection_data.datasets[0].data = results.map(v => v.collection);
-        var collections = results.map(v => v.collection).sort((a, b) => b - a);
+        this.collection_data.datasets[0].data = results.map(v => v.collections);
+        var collections = results.map(v => v.collections).sort((a, b) => b - a);
         this.collections_options.scales.yAxes[0].ticks.max =
           collections[0] + Math.floor(collections[0] / 2);
         var gradient = this.$refs.collections_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
@@ -356,14 +357,14 @@ export default {
         this.returns_mode = "y";
         this.loading_returns = true;
         var result = await axios.get(
-          `${process.env.VUE_APP_BASE_API_URI}collections/yearly/returns`
+          `${process.env.VUE_APP_BASE_API_URI}analytics/returns/yearly?rdo=${this.login_rdo}`
         );
         var results = result.data;
         results.sort((a, b) => a.year - b.year);
 
         this.returns_data.labels = results.map(v => v.year);
-        this.returns_data.datasets[0].data = results.map(v => v.returns);
-        var returns = results.map(v => v.returns).sort((a, b) => b - a);
+        this.returns_data.datasets[0].data = results.map(v => v.counts);
+        var returns = results.map(v => v.counts).sort((a, b) => b - a);
         this.returns_options.scales.yAxes[0].ticks.max =
           returns[0] + Math.floor(returns[0] / 2);
         var gradient = this.$refs.returns_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
@@ -384,17 +385,17 @@ export default {
       if (this.returns_mode !== "m") {
         if(!year) year = new Date().getFullYear();
         this.returns_mode = "m";
+        this.returns_year = year;
         this.loading_returns = true;
         var result = await axios.get(
-          `${process.env.VUE_APP_BASE_API_URI}collections/monthly/returns/${year}`
+          `${process.env.VUE_APP_BASE_API_URI}analytics/returns/monthly/${year}?rdo=${this.login_rdo}`
         );
-        console.log('result.data :', result.data);
         var results = result.data;
-        results.sort((a, b) => a.year - b.year);
+        results.sort((a, b) => a.month - b.month);
         
         this.returns_data.labels = results.map(v => this.months[v.month]);
-        this.returns_data.datasets[0].data = results.map(v => v.count);
-        var returns = results.map(v => v.count).sort((a, b) => b - a);
+        this.returns_data.datasets[0].data = results.map(v => v.counts);
+        var returns = results.map(v => v.counts).sort((a, b) => b - a);
         this.returns_options.scales.yAxes[0].ticks.max =
           returns[0] + Math.floor(returns[0] / 2);
         var gradient = this.$refs.returns_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
@@ -415,38 +416,17 @@ export default {
     // Taxpayers
     async getDataTaxpayersYearly() {
       if (this.taxpayers_mode !== "y") {
-        // to prevent reloading yearly for mock data
-        // var datasets = {
-        //   labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
-        //   data: []
-        // };
-        // for (let index = 0; index < datasets.labels.length; index++) {
-        //   var val = this.getRandomArbitrary(250000, 150000);
-        //   datasets.data.push(val);
-        // }
-        // this.taxpayers_data.labels = this.deepCopy(datasets.labels);
-        // this.taxpayers_data.datasets[0].data = this.deepCopy(datasets.data);
-        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
-        // this.taxpayers_options.scales.yAxes[0].ticks.max =
-        //   findMax[0] + Math.floor(findMax[0] / 2);
-        // this.$refs.taxpayers_line_chart.renderChart(
-        //   this.taxpayers_data,
-        //   this.taxpayers_options
-        // );
-
-        // this.taxpayers_total = datasets.data.reduce((t, c) => t + c);
-        // this.taxpayers_mode = "y";
         this.taxpayers_mode = "y";
         this.loading_taxpayers = true;
         var result = await axios.get(
-          `${process.env.VUE_APP_BASE_API_URI}collections/yearly`
+          `${process.env.VUE_APP_BASE_API_URI}analytics/taxpayers/yearly?rdo=${this.login_rdo}`
         );
         var results = result.data;
         results.sort((a, b) => a.year - b.year);
 
         this.taxpayers_data.labels = results.map(v => v.year);
-        this.taxpayers_data.datasets[0].data = results.map(v => v.collection);
-        var taxpayers = results.map(v => v.collection).sort((a, b) => b - a);
+        this.taxpayers_data.datasets[0].data = results.map(v => v.counts);
+        var taxpayers = results.map(v => v.counts).sort((a, b) => b - a);
         this.taxpayers_options.scales.yAxes[0].ticks.max =
           taxpayers[0] + Math.floor(taxpayers[0] / 2);
         var gradient = this.$refs.taxpayers_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
@@ -463,42 +443,35 @@ export default {
         this.loading_taxpayers = false;
       }
     },
-    getDataTaxpayersMonthly(year, amount) {
+    async getDataTaxpayersMonthly(year) {
       if (this.taxpayers_mode !== "m") {
-        //to prevent reloading month for mock data
-        if (
-          year === null ||
-          year === undefined ||
-          amount === null ||
-          amount === undefined
-        ) {
-          year = new Date().getFullYear();
-          const index = this.taxpayers_data.labels.findIndex(v => v === year);
-          amount = this.taxpayers_data.datasets[0].data[index] || 0;
-        }
-        this.taxpayers_year = year;
+        if(!year) year = new Date().getFullYear();
         this.taxpayers_mode = "m";
-        this.taxpayers_total = amount;
-        var datasets = {
-          labels: [],
-          data: []
-        };
-        this.months.forEach(m => {
-          datasets.labels.push(`${m} ${year}`);
-        });
-        var mock_data = this.divideTotal(amount, 12, Math.floor(amount / 20));
-        mock_data.forEach(data => {
-          datasets.data.push(data);
-        });
-        this.taxpayers_data.labels = this.deepCopy(datasets.labels);
-        this.taxpayers_data.datasets[0].data = this.deepCopy(datasets.data);
-        var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
+        this.taxpayers_year = year;
+        this.loading_taxpayers = true;
+        var result = await axios.get(
+          `${process.env.VUE_APP_BASE_API_URI}analytics/taxpayers/monthly/${year}?rdo=${this.login_rdo}`
+        );
+        var results = result.data;
+        results.sort((a, b) => a.month - b.month);
+        
+        this.taxpayers_data.labels = results.map(v => this.months[v.month]);
+        this.taxpayers_data.datasets[0].data = results.map(v => v.counts);
+        var taxpayers = results.map(v => v.counts).sort((a, b) => b - a);
         this.taxpayers_options.scales.yAxes[0].ticks.max =
-          findMax[0] + Math.floor(findMax[0] / 2);
+          taxpayers[0] + Math.floor(taxpayers[0] / 2);
+        var gradient = this.$refs.taxpayers_line_chart.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, "rgba(0, 255, 0, 1)");
+        gradient.addColorStop(0.5, "rgba(0, 255, 0, 0.75)");
+        gradient.addColorStop(1, "rgba(0, 255, 0, 0)");
+        this.taxpayers_data.datasets[0].backgroundColor = gradient;
         this.$refs.taxpayers_line_chart.renderChart(
           this.taxpayers_data,
           this.taxpayers_options
         );
+
+        this.taxpayers_total = taxpayers.reduce((t, c) => t + c);
+        this.loading_taxpayers = false;
       }
     },
 
@@ -526,7 +499,12 @@ export default {
       result[result.length - 1] += excess;
       return result;
     }
-  }
+  },
+  computed: {
+    login_rdo() {
+      return this.$store.state.tax_form.login_rdo;
+    }
+  },
 };
 </script>
 
