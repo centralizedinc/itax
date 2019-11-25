@@ -1,48 +1,43 @@
 <template>
   <a-card>
     <!-- <a-button type="primary" @click="canSelect">{{can_select? 'DESELECT' : 'SELECT'}}</a-button> -->
-    <a-table
-      :loading="loading"
-      :dataSource="tax_returns"
-      :columns="cols"
-    >
-      
-    </a-table>
+    <a-table :loading="loading" :dataSource="tax_returns" :columns="cols"></a-table>
   </a-card>
 </template>
 
 <script>
 export default {
-  data(){
-    return{
+  data() {
+    return {
       loading: false,
-      cols:[
+      paid_list: [],
+      cols: [
         {
-          title: 'PRN',
-          dataIndex: 'reference_no',
+          title: "PRN",
+          dataIndex: "payment_conf_no"
         },
         {
-          title: 'Amount Due',
-          dataIndex: 'total_amount_payable',
+          title: "Amount Due",
+          dataIndex: "amount_payable"
         },
         {
-          title: 'Amount Paid',
-          dataIndex: 'total_amount_payable',
+          title: "Amount Paid",
+          dataIndex: "amount_paid"
         },
         {
-          title: 'Payment Date',
-          dataIndex: 'date_modified',
+          title: "Payment Date",
+          dataIndex: "date_filed"
         },
         {
-          title: 'Status',
-          dataIndex: 'payment_status',
+          title: "Status",
+          dataIndex: "payment_status"
         },
         {
-          title: 'Channel',
-          dataIndex: 'created_date',
-        },
+          title: "Channel",
+          dataIndex: "payment_method"
+        }
       ]
-    }
+    };
   },
   created() {
     this.init();
@@ -51,11 +46,15 @@ export default {
     init() {
       this.loading = true;
       console.log("GET_TAX_RETURNS");
-      this.$http.get("/payment")
+      this.$http
+        .get("/payment")
         .then(result => {
-          console.log("get tax returns paid payment data: " + JSON.stringify(result))
+          console.log(
+            "get tax returns paid payment data: " + JSON.stringify(result)
+          );
           this.loading = false;
-          return result.data.model
+          this.paid_list = this.deepCopy(result.data.model);
+          // return result.data.model
         })
         .catch(err => {
           this.loading = false;
@@ -87,15 +86,30 @@ export default {
   },
   computed: {
     tax_returns() {
-      console.log(
-        "RETURNS :::",
-        JSON.stringify(this.init())
-      );
-      const returns = this.deepCopy(this.init());
+      console.log("RETURNS tax returns::: ", JSON.stringify(this.paid_list));
+      const returns = this.deepCopy(this.$store.state.tax_form.tax_returns);
       const unpaid_returns = returns.filter(v => v.payment_status !== "unpaid");
-      return unpaid_returns;
-    },
-  }
+      console.log(
+        "upaid returns of paid data: " + JSON.stringify(unpaid_returns)
+      );
 
-}
+      const paid_returns = [];
+      // this.paid_list.filter(
+      //   v => v.created_by == unpaid_returns.created_by
+      // );
+      unpaid_returns.forEach(unpaid => {
+        this.paid_list.forEach(paid => {
+          if (unpaid.created_by == paid.created_by) {
+            paid.payment_status = unpaid.payment_status;
+            paid.date_filed = unpaid.date_filed;
+            paid_returns.push(paid);
+          }
+        });
+      });
+
+      console.log("paid_returns data: " + JSON.stringify(paid_returns));
+      return paid_returns;
+    }
+  }
+};
 </script>

@@ -5,7 +5,7 @@
     :closable="true"
     @close="close"
     :visible="show"
-    width="1000"
+    width="900"
   >
     <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
     <template slot="date_purchased" slot-scope="text, record, index">

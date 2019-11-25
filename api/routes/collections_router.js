@@ -462,7 +462,7 @@ collections_router.route("/monthly/returns/:year")
                 // var rdoCollection = results.reduce(function (accumulator, results) {
                 //     return accumulator + results.total_amount_payable;
                 // }, 0);
-                res.json({ byMonth });
+                res.json(byMonth);
             })
             .catch((errors) => {
                 res.json({ errors });
@@ -721,6 +721,7 @@ collections_router.route("/monthly/returns/:year")
                 res.json({ errors });
             });
     })
+    
 collections_router.route('/insert/temp')
     .post((req, res) => {
         ReturnDetailsDao.createMany(req.body)
@@ -730,8 +731,6 @@ collections_router.route('/insert/temp')
                 res.json({ err })
             });
     })
-
-
 
 
 
