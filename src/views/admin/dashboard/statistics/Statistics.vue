@@ -291,59 +291,6 @@ export default {
     async getDataCollectionYearly() {
       // Last 10 years
       if (this.collections_mode !== "y") {
-        // to prevent reloading yearly for mock data
-
-        // var returns_data = this.deepCopy(this.returns_data.datasets[0].data);
-        // var datasets = {
-        //   labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
-        //   data: []
-        // };
-        // for (let index = 0; index < datasets.labels.length; index++) {
-        //   var val = this.getRandomArbitrary(
-        //     returns_data[index],
-        //     returns_data[index] / 4
-        //   );
-        //   datasets.data.push(val);
-        // }
-        // this.collection_data.labels = this.deepCopy(datasets.labels);
-        // this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
-        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
-        // this.collections_options.scales.yAxes[0].ticks.max =
-        //   findMax[0] + Math.floor(findMax[0] / 2);
-        // this.$refs.collection_line_chart.renderChart(
-        //   this.collection_data,
-        //   this.collections_options
-        // );
-
-        // this.collections_total = datasets.data.reduce((t, c) => t + c);
-        // console.log("this.$refs :", this.$refs);
-        // this.$refs.collections_line_chart.renderChart(
-        //   this.collection_data,
-        //   this.collections_options
-        // );
-        // this.collections_mode = "y";
-        // this.loading_collection = true;
-        // var collection_chart = this.$refs.collections_line_chart;
-        // var result = await axios.get(
-        //   `${process.env.VUE_APP_BASE_API_URI}collections/yearly`
-        // );
-        // var results = result.data;
-        // console.log("results :", results);
-        // results.sort((a, b) => a.year - b.year);
-
-        // this.collection_data.labels = results.map(v => v.year);
-        // this.collection_data.datasets[0].data = results.map(v => v.collection);
-        // var collections = results.map(v => v.collection).sort((a, b) => b - a);
-        // this.collections_options.scales.yAxes[0].ticks.max =
-        //   collections[0] + Math.floor(collections[0] / 2);
-        // console.log("this.$refs :", this.$refs);
-        // collection_chart.renderChart(
-        //   this.collection_data,
-        //   this.collections_options
-        // );
-
-        // this.collections_total = collections.reduce((t, c) => t + c);
-        // this.loading_collection = false;
         this.collections_mode = "y";
         this.loading_collection = true;
         var result = await axios.get(
@@ -373,40 +320,6 @@ export default {
     },
     async getDataCollectionMonthly(year) {
       if (this.collections_mode !== "m") {
-        // to prevent reloading monthly for mock data
-        // if (
-        //   year === null ||
-        //   year === undefined ||
-        //   amount === null ||
-        //   amount === undefined
-        // ) {
-        //   year = new Date().getFullYear();
-        //   const index = this.collection_data.labels.findIndex(v => v === year);
-        //   amount = this.collection_data.datasets[0].data[index] || 0;
-        // }
-        // this.collections_year = year;
-        // this.collections_mode = "m";
-        // this.collections_total = amount;
-        // var datasets = {
-        //   labels: [],
-        //   data: []
-        // };
-        // this.months.forEach(m => {
-        //   datasets.labels.push(`${m} ${year}`);
-        // });
-        // var mock_data = this.divideTotal(amount, 12, Math.floor(amount / 20));
-        // mock_data.forEach(data => {
-        //   datasets.data.push(data);
-        // });
-        // this.collection_data.labels = this.deepCopy(datasets.labels);
-        // this.collection_data.datasets[0].data = this.deepCopy(datasets.data);
-        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
-        // this.collections_options.scales.yAxes[0].ticks.max =
-        //   findMax[0] + Math.floor(findMax[0] / 2);
-        // // this.$refs.collection_line_chart.renderChart(
-        // //   this.collection_data,
-        // //   this.collections_options
-        // // );
         if(!year) year = new Date().getFullYear();
         this.collections_mode = "m";
         this.loading_collection = true;
@@ -440,30 +353,6 @@ export default {
     async getDataReturnsYearly() {
       // Last 10 years
       if (this.returns_mode !== "y") {
-        // to prevent reloading yearly for mock data
-        // var datasets = {
-        //   labels: [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010],
-        //   data: []
-        // };
-        // for (let index = 0; index < datasets.labels.length; index++) {
-        //   var val = this.getRandomArbitrary(2000000, 500000);
-        //   datasets.data.push(val);
-        // }
-        // this.returns_data.labels = this.deepCopy(datasets.labels);
-        // this.returns_data.datasets[0].data = this.deepCopy(datasets.data);
-        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
-        // this.returns_options.scales.yAxes[0].ticks.max =
-        //   findMax[0] + Math.floor(findMax[0] / 2);
-        // // this.collection_data.datasets[0].borderColor = "red";
-        // // this.collection_data.datasets[0].backgroundColor = "#ffcccc";
-        // this.$refs.returns_line_chart.renderChart(
-        //   this.returns_data,
-        //   this.returns_options
-        // );
-
-        // this.returns_total = datasets.data.reduce((t, c) => t + c);
-        // this.returns_mode = "y";
-
         this.returns_mode = "y";
         this.loading_returns = true;
         var result = await axios.get(
@@ -493,40 +382,6 @@ export default {
     },
     async getDataReturnsMonthly(year) {
       if (this.returns_mode !== "m") {
-        // to prevent reloading monthly for mock data
-        // if (
-        //   year === null ||
-        //   year === undefined ||
-        //   amount === null ||
-        //   amount === undefined
-        // ) {
-        //   year = new Date().getFullYear();
-        //   const index = this.returns_data.labels.findIndex(v => v === year);
-        //   amount = this.returns_data.datasets[0].data[index] || 0;
-        // }
-        // this.returns_year = year;
-        // this.returns_mode = "m";
-        // this.returns_total = amount;
-        // var datasets = {
-        //   labels: [],
-        //   data: []
-        // };
-        // this.months.forEach(m => {
-        //   datasets.labels.push(`${m} ${year}`);
-        // });
-        // var mock_data = this.divideTotal(amount, 12, Math.floor(amount / 20));
-        // mock_data.forEach(data => {
-        //   datasets.data.push(data);
-        // });
-        // this.returns_data.labels = this.deepCopy(datasets.labels);
-        // this.returns_data.datasets[0].data = this.deepCopy(datasets.data);
-        // var findMax = this.deepCopy(datasets.data).sort((a, b) => b - a);
-        // this.returns_options.scales.yAxes[0].ticks.max =
-        //   findMax[0] + Math.floor(findMax[0] / 2);
-        // this.$refs.returns_line_chart.renderChart(
-        //   this.returns_data,
-        //   this.returns_options
-        // );
         if(!year) year = new Date().getFullYear();
         this.returns_mode = "m";
         this.loading_returns = true;
