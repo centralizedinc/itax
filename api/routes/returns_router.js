@@ -79,6 +79,7 @@ returns_router.route("/validate/:form_type")
                         // check the errors
                         if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object) || onlyLatefiling) {
                             // save if there is no error
+                            form_details.tax_type = reference.form_type;
                             form_details.created_by = jwt.decode(req.headers.access_token).account_id;
                             console.log(`save form(${form_type}) :`, form_details);
                             saveForm(form_type, form_details)
