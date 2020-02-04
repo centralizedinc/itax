@@ -12,10 +12,12 @@ export default {
                     return JSON.parse(JSON.stringify(obj));
                 },
                 formatTIN(tin) {
-                    tin = tin.replace(/-/g,'')
-                    console.log('TIN:::',tin.length)
-                    if(tin && tin.length > 3 && tin.length <7){
+                    
+                    if(tin){
                         
+                        tin = tin.toString().replace(/-/g,'')
+                    }
+                    if(tin && tin.length > 3 && tin.length <7){                        
                        return `${tin.substring(0, 3)}-${tin.substring(3, tin.length)}`
                     }else if(tin && tin.length > 6 && tin.length < 10){
                         return `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, tin.length)}`

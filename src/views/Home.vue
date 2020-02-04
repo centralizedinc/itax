@@ -183,7 +183,7 @@
               :help="validation.password.message"
               style="margin-top:-30px"
             >
-            <a-tooltip>
+            <a-tooltip trigger="focus">
               <template slot="title">                
                 <div><a-badge dot :status="pass_upper"></a-badge> Atleast one (1) capital letter</div>
                 <div><a-badge dot :status="pass_number"></a-badge> Atleast one (1) numeric character</div>
@@ -221,8 +221,8 @@
           <a-form>
             <a-form-item label="Taxpayer Type">
               <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.type">
-                <a-radio-button value="I">Individual</a-radio-button>
                 <a-radio-button value="C">Corporate</a-radio-button>
+                <a-radio-button value="I">Individual</a-radio-button>                
               </a-radio-group>
             </a-form-item>
             <a-form-item label="Tax Identification Number"
@@ -242,7 +242,7 @@
               label="RDO"
               style="margin-top:-30px"
             >
-              <a-select style="width: 100%" placeholder="Select Regional District Office" >
+              <a-select style="width: 100%" placeholder="Select Revenue District Office" >
                 <a-select-option
                 v-model="form.taxpayer.rdo_code"
                   v-for="(item, index) in rdos"
@@ -259,7 +259,7 @@
               </a-form-item>
 
             
-            <span v-if="form.type == 'C'">
+            <span v-if="form.taxpayer.type == 'C'">
             <a-form-item label="Taxpayer Name" 
               :validate-status="validation.name.last.status"
               :help="validation.name.last.message"
@@ -272,19 +272,20 @@
                 placeholder="Registered Business Name"
               ></a-input>
             </a-form-item>
-            <a-form-item label="Date of Incorporation">
+            <a-form-item label="Date of Incorporation" style="margin-top:-30px">
               <a-date-picker
             style="width:100%"
             placeholder="Date Incorporation"
+            
           ></a-date-picker>
             </a-form-item>
-            <a-form-item label="Accounting Type">
+            <a-form-item label="Accounting Type" style="margin-top:-30px">
               <a-radio-group buttonStyle="solid" v-model="form.taxpayer.accounting_type">
                 <a-radio-button value="c">Calendar</a-radio-button>
                 <a-radio-button value="f">Fiscal</a-radio-button>
               </a-radio-group>
             </a-form-item>
-            <a-form-item label="Start Month">
+            <a-form-item label="Start Month" style="margin-top:-30px">
               <a-select
             style="width: 100%"
             @change="selectStartMonth"
@@ -317,7 +318,7 @@
                 placeholder="Last Name"
               ></a-input>
                </a-form-item>
-              <a-form-item
+              <a-form-item style="margin-top:-30px"
               label="Select Filer Type"
             >
               <a-radio-group v-model="form.taxpayer.filer_type">
@@ -328,10 +329,10 @@
                 <a-radio value="t">Trust</a-radio>
               </a-radio-group>
             </a-form-item>
-            <a-form-item label="Date of Birth" >
+            <a-form-item label="Date of Birth" style="margin-top:-30px">
               <a-date-picker style="width:100%" placeholder="Date of Birth" v-model="form.taxpayer.birth_date"/>
             </a-form-item>
-            <a-form-item
+            <a-form-item style="margin-top:-30px"
                 label="Gender"
               >
                 <a-radio-group buttonStyle="solid" v-model="form.taxpayer.gender">
@@ -371,30 +372,18 @@
               <span>{{form.email}}</span>
             </a-col>
             <a-col :span="24" >
-                <a-divider orientation="left">Taxpayer Details</a-divider>
-              </a-col>
-              <a-col :span="12">
-              <span>Taxpayer Identification Number</span>
-            </a-col>
-            <a-col :span="12" align="right">
-              <span>{{form.email}}</span>
+              <a-divider orientation="left">Taxpayer Details</a-divider>
             </a-col>
             <a-col :span="12">
-              <span>Registered Name</span>
+              <div>TIN</div>
+              <div>Registered Name</div>
+              <div>RDO</div>
             </a-col>
             <a-col :span="12" align="right">
-              <span>{{form.email}}</span>
+              <div>{{formatTIN(form.taxpayer.tin)}}</div>
+              <div>{{form.taxpayer.registered_name}}</div>
+              <div>{{form.taxpayer.rdo}}</div>
             </a-col>
-            <a-col :span="12">
-              <span>Regional District Office</span>
-            </a-col>
-            <a-col :span="12" align="right">
-              <span>{{form.email}}</span>
-            </a-col>
-            <a-col :span="24" align="center">
-             
-            </a-col>
-            
           </a-row>
         </a-card>
 
@@ -423,7 +412,9 @@ export default {
       reveal: false,
       form: {
         name: {},
-        taxpayer:{}
+        taxpayer:{
+          type:'C'
+        }
       },
       loading: false,
       validation: {
