@@ -121,9 +121,11 @@
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
                     slot="avatar"
-                    :src="getUserByTin(item.tin).avatar.location"
+                    :src="getUserByTin(item.tin) && getUserByTin(item.tin).avatar ? getUserByTin(item.tin).avatar.location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
                     :size="64"
-                  />
+                  >
+                  {{}}
+                  </a-avatar>
                 </a-list-item-meta>
               </a-col>
               <a-col :span="2">
@@ -578,18 +580,21 @@ export default {
       if (!this.form.taxpayer.registered_name) {
         this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
       }
-      if(this.form.taxpayer.individual_details.civil_status == 'M'){
-        this.$http.get(`/connections/${this.form.taxpayer.tin}`)
-        .then(result=>{
-          console.log("spouse data fillup: " + JSON.stringify(result))
-          result.data.model.forEach(data =>{
-          if(data.relationship == "spouse"){
-            console.log("spouse data na this: " + JSON.stringify(data))
-            console.log("taxpayer details: " + JSON.stringify(this.form.taxpayer))
-            this.form.spouse_details = data
-          }
-          })
-        })
+      if (this.form.taxpayer.individual_details.civil_status == "M") {
+        this.$http
+          .get(`/connections/${this.form.taxpayer.tin}`)
+          .then(result => {
+            console.log("spouse data fillup: " + JSON.stringify(result));
+            result.data.model.forEach(data => {
+              if (data.relationship == "spouse") {
+                console.log("spouse data na this: " + JSON.stringify(data));
+                console.log(
+                  "taxpayer details: " + JSON.stringify(this.form.taxpayer)
+                );
+                this.form.spouse_details = data;
+              }
+            });
+          });
       }
       console.log(`form::::`, this.form.taxpayer);
       this.view_select = false;

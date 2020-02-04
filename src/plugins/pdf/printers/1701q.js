@@ -11,44 +11,48 @@ var forms = [form.page1, form.page1, form.page2]
  * @returns {Object} document
  */
 function fillup(details) {
-    console.log('details.sched1.taxpayer.gross_income :', details.sched1.taxpayer.gross_income);
-    console.log("fillup details: " + JSON.stringify(details))
-    var content = getContent(details);
-    console.log('get content ###### :', content);
-    var form_images = []
-    getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page1.jpg")
-        .then((result) => {
-            form_images.push(result);
-            return getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page2.jpg")
-        })
-        .then((result) => {
-            form_images.push(result);
-            resolve({
-                background: function (page) {
-                    return [{
-                        image: "form",
-                        width: 600
-                    }]
-                },
-                content: content[details.pdf_page || 0],
-                images: {
-                    form: form_images[details.pdf_page || 0]
-                },
-                pageSize: 'legal'
+    return new Promise((resolve, reject) => {
+        console.log('details.sched1.taxpayer.gross_income :', details.sched1.taxpayer.gross_income);
+        console.log("fillup details: " + JSON.stringify(details))
+        var content = getContent(details);
+        console.log('get content ###### :', content);
+        var form_images = []
+        getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page1.jpg")
+            .then((result) => {
+                form_images.push(result);
+                return getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page2.jpg")
+            })
+            .then((result) => {
+                form_images.push(result);
+                console.log('form_images :', form_images);
+                console.log('details.pdf_page :', details.pdf_page);
+                resolve({
+                    background: function (page) {
+                        return [{
+                            image: "form",
+                            width: 600
+                        }]
+                    },
+                    content: content[details.pdf_page || 0],
+                    images: {
+                        form: form_images[details.pdf_page || 0]
+                    },
+                    pageSize: 'LEGAL'
+                });
+            }).catch((err) => {
+                console.error(err)
+                reject({
+                    background: function (page) {
+                        return [{
+                            image: "form",
+                            width: 600
+                        }]
+                    },
+                    content: content[details.pdf_page || 0],
+                    pageSize: 'legal'
+                });
             });
-        }).catch((err) => {
-            console.error(err)
-            reject({
-                background: function (page) {
-                    return [{
-                        image: "form",
-                        width: 600
-                    }]
-                },
-                content: content[details.pdf_page || 0],
-                pageSize: 'legal'
-            });
-        });
+    })
 }
 /**
  * 
@@ -2389,13 +2393,14 @@ function getBase64ImageFromURL(url) {
     return new Promise((resolve, reject) => {
         var img = new Image();
         img.setAttribute("crossOrigin", "anonymous");
+        console.log('url :', url);
         img.onload = () => {
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
             canvas.height = img.height;
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0);
-            var dataURL = canvas.toDataURL("image/png");
+            var dataURL = canvas.toDataURL("image/jpeg");
             resolve(dataURL);
         };
         img.onerror = error => {
