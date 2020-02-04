@@ -108,19 +108,19 @@ export default {
       atc_list: [
         {
           description: "PROFL TALENT FEE PD TO JURIDICL (GROSS INC <= 720,000)",
-          atc: "WC010",
+          atc: "W010",
           rate: 0.1
         },
         {
-          description: "PROFL TALENT FEE PD TO JURIDICL (GROSS INC > 720,000)",
-          atc: "WC011",
-          rate: 0.15
+          description: "RENTALS (CORP.)",
+          atc: "W100",
+          rate: 0.05
         },
         {
-          description: "RENTALS (CORP.)",
-          atc: "WC100",
+          description: "PROFL TALENT FEE PD TO JURIDICL (GROSS INC > 720,000)",
+          atc: "W110",
           rate: 0.05
-        }
+        },
       ],
     };
   },
@@ -139,9 +139,11 @@ export default {
         rate: 0
       };
       this.data_source = [...this.data_source, new_sched1];
-    
+      
     },
     pickAtc(val, index) {
+      console.log("pisk atc data source details: ", JSON.stringify(this.data_source))
+    
       if (index > -1) this.data_source[index].atc = val;
     },
     getDescription(val) {

@@ -17,9 +17,9 @@ function fillup(details) {
                 width: 600
             }]
         },
-        content: content[details.pdf_page],
+        content: content[details.pdf_page || 0],
         images: {
-            form: forms[details.pdf_page]
+            form: forms[details.pdf_page || 0]
         },
         pageSize: 'LEGAL'
     };

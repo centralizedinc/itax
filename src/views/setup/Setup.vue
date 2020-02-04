@@ -306,7 +306,6 @@ export default {
       // if (!this.avatar.form_data)
       //   this.details.user.avatar = this.user.avatar;
       console.log("submit taxpayer data: " + JSON.stringify(this.details));
-      // comment?
       this.$store
         .dispatch("ACCOUNT_SETUP", {
           details: this.details,
