@@ -1,13 +1,13 @@
 <template>
   <div>
-    <a-row :gutter="10">
+    <a-row :gutter="10" style="margin-bottom: 2vh; height: 33vh;">
       <a-col
         :span="12"
         v-for="(item, index) in statistics"
         :key="`a${index}`"
-        style="margin-bottom: 1vh;"
+        style="margin-bottom: 1.3vh;"
       >
-        <a-card :bodyStyle="{ padding: '5px', 'text-align': 'center' }">
+        <a-card :bodyStyle="{ padding: '2px', 'text-align': 'center' }">
           <span class="item-description">{{item.name}}</span>
           <br />
           <a-tooltip>
@@ -22,22 +22,29 @@
       </a-col>
     </a-row>
 
-    <rdo-map v-if="login_rdo" class="rdo-map" />
-    <template v-else>
-      <a-card title="Collection per RDO Summary" style="margin-bottom: 1vh" />
-      <a-card v-for="(item, index) in items" :key="index" :bodyStyle="{ padding: '15px'}">
-        <span class="item-description">{{item.description}} ({{item.code}})</span>
-        <br />
-        <a-tooltip>
-          <span slot="title">{{formatAmount(item.collection)}}</span>
-          <a-icon
-            :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
-            :style="`color: ${item.is_increased ? 'green' : 'red'}`"
-          />
-          <span class="item-value">{{nFormatter(item.collection, 2)}}</span>
-        </a-tooltip>
+    <div v-if="!login_rdo" style="margin-bottom: 2vh;">
+      <a-card title="Collection per RDO Summary" style="margin-bottom: 0.6vh" />
+      <a-card
+        v-for="(item, index) in top_rdos"
+        :key="index"
+        :bodyStyle="{ padding: 0 }"
+        style="margin-bottom: 0.75vh;"
+      >
+        <a-card-grid style="width: 100%; padding: 1vh 15px">
+          <span class="item-description">{{item.description}} ({{item.code}})</span>
+          <a-tooltip style="float: right;">
+            <span slot="title">{{formatAmount(item.collections)}}</span>
+            <a-icon
+              :type="item.is_increased ? 'arrow-up' : 'arrow-down'"
+              :style="`color: ${item.is_increased ? 'green' : 'red'};`"
+            />
+            <span class="item-value">{{nFormatter(item.collections, 2)}}</span>
+          </a-tooltip>
+        </a-card-grid>
       </a-card>
-    </template>
+    </div>
+
+    <rdo-map class="rdo-map" />
   </div>
 </template>
 
@@ -58,16 +65,19 @@ export default {
     this.$store
       .dispatch("GET_RDOS")
       .then(result => {
-        if (!this.login_rdo) {
-          this.getMockData();
-          this.setMockDataRealtime();
-        }
+        // if (!this.login_rdo) {
+        //   this.getMockData();
+        //   this.setMockDataRealtime();
+        // }
         this.getStatisticsMockData();
         this.setStatisticsMockDataRealtime();
       })
       .catch(err => {});
   },
   computed: {
+    top_rdos(){
+      return this.deepCopy(this.rdos).slice(0, 9);
+    },
     rdos() {
       return this.$store.state.tax_form.rdos;
     },
@@ -77,7 +87,7 @@ export default {
   },
   methods: {
     getMockData() {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 9; i++) {
         this.items.push({
           code: this.rdos[i].code,
           description: this.rdos[i].description,
@@ -85,12 +95,13 @@ export default {
           collection: this.getRandomArbitrary(10000000, 1000000)
         });
       }
+      this.items.sort((a, b) => b.collection - a.collection);
     },
     getStatisticsMockData() {
       var stats = [
         {
           name: "Collections this year",
-          is_increased: false,
+          is_increased: true,
           max: 6000000,
           min: 5000000
         },
@@ -157,16 +168,17 @@ export default {
         (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
       );
     },
-    setMockDataRealtime() {
-      setInterval(() => {
-        var items = this.items.map(item => {
-          var random = Math.floor(Math.random() * 10000);
-          item.collection += random;
-          return item;
-        });
-        this.items = items;
-      }, 1000);
-    },
+    // setMockDataRealtime() {
+    //   setInterval(() => {
+    //     var items = this.items.map(item => {
+    //       var random = Math.floor(Math.random() * 10000);
+    //       item.collection += random;
+    //       return item;
+    //     });
+    //     this.items = items;
+    //     this.items.sort((a, b) => b.collection - a.collection);
+    //   }, 1000);
+    // },
     setStatisticsMockDataRealtime() {
       setInterval(() => {
         var items = this.statistics.map(item => {
@@ -185,6 +197,7 @@ export default {
 .item-description {
   font-weight: bold;
   font-size: 10px;
+  line-height: 2.7;
 }
 
 .item-value {

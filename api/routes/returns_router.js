@@ -69,14 +69,23 @@ returns_router.route("/validate/:form_type")
                         var { errors, form_details } = validateForm(form_type, data.form);
                         console.log(`Form ${form_type} errors :`, errors);
 
+                        // check if the error is only late filing
+                        var onlyLatefiling = false;
+                        if(errors && errors.length){
+                            onlyLatefiling = errors.findIndex(v => v.field.indexOf('latefiling') === -1) === -1
+                            console.log('onlyLatefiling :', onlyLatefiling);
+                        }
+
                         // check the errors
-                        if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object)) {
+                        if (!errors || !errors.length || (Object.keys(errors).length === 0 && errors.constructor === Object) || onlyLatefiling) {
                             // save if there is no error
+                            form_details.tax_type = reference.form_type;
                             form_details.created_by = jwt.decode(req.headers.access_token).account_id;
                             console.log(`save form(${form_type}) :`, form_details);
                             saveForm(form_type, form_details)
                                 .then((model) => {
-                                    res.json({ success: true, model });
+                                    // include errors for latefiling status
+                                    res.json({ success: true, model, errors });
                                 }).catch((errors) => {
                                     res.status(500).json({ success: false, errors });
                                 });

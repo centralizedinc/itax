@@ -20,10 +20,21 @@ function validate(form_details) {
     errors.push(...validateRequired(form_details));
     console.log('done validating required fields');
 
-    // check due date if late filing
-    var { error_messages, form_details } = commonValidator.checkDueDate(form_details, 3);
+    // checking due date if late filing
+
+    var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "taxpayer_tax_payable", 3);
     errors.push(...error_messages);
+
+    if (!form_details.spouse_tax_payable) {
+        var { error_messages, form_details } = commonValidator.checkNestedDueDate(form_details, "spouse_tax_payable", 3);
+        errors.push(...error_messages);
+    }
+
     console.log('done checking due date');
+
+    if (!errors || !errors.length) {
+        form_details = computePayable(form_details);
+    }
 
     return { errors, form_details }
 }
@@ -58,26 +69,45 @@ function validateRequired(field) {
         error_messages.push({ page: 1, field: "taxpayer_foreign_tax_credits", error: constant_helper.MANDATORY_FIELD("Claiming Foreign Tax Credits") });
     }
 
-    if (!field.taxpayer_method_deduction) { // item 16A
+    if (
+        (!field.taxpayer_method_deduction &&
+            field.taxpayer_atc_code == "II012") ||
+        (!field.taxpayer_method_deduction &&
+            field.taxpayer_atc_code == "II014") ||
+        (!field.taxpayer_method_deduction &&
+            field.taxpayer_atc_code == "II013")
+    ) { // item 16A
         error_messages.push({ page: 1, field: "taxpayer_method_deduction", error: constant_helper.MANDATORY_FIELD("Method of deduction") });
     }
 
 
     // Validate Spouse
 
-    if (!field.spouse_details || !field.spouse_details.tin) { //item 17
-        error_messages.push({ page: 2, field: "spouse_details.tin", error: constant_helper.MANDATORY_FIELD("Spouse's TIN") });
-    }
+    // if (!field.spouse_details || !field.spouse_details.tin) { //item 17
+    //     error_messages.push({ page: 2, field: "spouse_details.tin", error: constant_helper.MANDATORY_FIELD("Spouse's TIN") });
+    // }
 
-    if (!field.spouse_details || !field.spouse_details.rdo_code) { // item 18
-        error_messages.push({ page: 2, field: "spouse_details.rdo_code", error: constant_helper.MANDATORY_FIELD("Spouse's RDO Code") });
-    }
+    // if (!field.spouse_details || !field.spouse_details.rdo_code) { // item 18
+    //     error_messages.push({ page: 2, field: "spouse_details.rdo_code", error: constant_helper.MANDATORY_FIELD("Spouse's RDO Code") });
+    // }
 
-    if (!field.spouse_details || !field.spouse_details.registered_name) { // item 21
-        error_messages.push({ page: 2, field: "spouse_details.registered_name", error: constant_helper.MANDATORY_FIELD("Spouse's Name") });
-    }
+    // if (!field.spouse_details || !field.spouse_details.registered_name) { // item 21
+    //     error_messages.push({ page: 2, field: "spouse_details.registered_name", error: constant_helper.MANDATORY_FIELD("Spouse's Name") });
+    // }
 
     return error_messages;
+}
+
+function computePayable(form) {
+    if (form.taxpayer_tax_payable && form.spouse_tax_payable) {
+        form.tax_due = parseFloat(form.taxpayer_tax_payable.tax_due || 0) + parseFloat(form.spouse_tax_payable.tax_due || 0);
+        form.surcharge = parseFloat(form.taxpayer_tax_payable.surcharge || 0) + parseFloat(form.spouse_tax_payable.surcharge || 0);
+        form.interest = parseFloat(form.taxpayer_tax_payable.interest || 0) + parseFloat(form.spouse_tax_payable.interest || 0);
+        form.compromise = parseFloat(form.taxpayer_tax_payable.compromise || 0) + parseFloat(form.spouse_tax_payable.compromise || 0);
+        form.penalties = parseFloat(form.taxpayer_tax_payable.penalties || 0) + parseFloat(form.spouse_tax_payable.penalties || 0);
+        form.total_amount_payable = parseFloat(form.taxpayer_tax_payable.total_amount_payable || 0) + parseFloat(form.spouse_tax_payable.total_amount_payable || 0);
+    }
+    return form;
 }
 
 module.exports = {

@@ -44,11 +44,10 @@ reference_router.route("/rdos")
     })
 
     .post((req, res) => {
-        var rdo = new RDOModel(req.body);
-        rdo.save((err) => {
-            res.json(rdo);
-        });
-
+        var datas = req.body;
+        RDOModel.insertMany(datas, (err, rdos) => {
+            res.json(rdos);
+        })
     });
 
 reference_router.route('/return_period')

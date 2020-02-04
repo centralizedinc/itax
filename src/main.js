@@ -10,10 +10,9 @@ import aos from 'aos'
 import 'aos/dist/aos.css';
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeolocation from 'vue-browser-geolocation';
+import ScrollLoader from 'vue-scroll-loader'
 
-// import { VueReCaptcha } from "vue-recaptcha-v3";
-
-// Vue.use(VueReCaptcha, { siteKey: "6LeSh9UUAAAAAK22et0fYuD9IsilyzTyMPC4yH7I" });
+Vue.use(ScrollLoader)
 Vue.config.productionTip = false
 Vue.use(mixins);
 

@@ -1,4 +1,5 @@
-const form = require("../templates/1701q_template").template;
+const form = require("../templates/1701q_template");
+var forms = [form.page1, form.page1, form.page2]
 // const form1 = require("../templates/1701q_template").template;
 // const form2 = require("../templates/1601e_template").template;
 // var forms = [form.page1, form.page2]
@@ -10,24 +11,48 @@ const form = require("../templates/1701q_template").template;
  * @returns {Object} document
  */
 function fillup(details) {
-    console.log("fillup details: " + JSON.stringify(details))
-    var content = getContent(details);
-    console.log('get content ###### :', content);
-    return {
-        background: function (page) {
-            return [{
-                image: "form",
-                width: 550,
-                margin: [25, 0, 0, 0]
-            }]
-        },
-        content: content,
-        images: {
-            form: form
-        },
-        pageSize: 'LEGAL',
-        pages: 4
-    };
+    return new Promise((resolve, reject) => {
+        console.log('details.sched1.taxpayer.gross_income :', details.sched1.taxpayer.gross_income);
+        console.log("fillup details: " + JSON.stringify(details))
+        var content = getContent(details);
+        console.log('get content ###### :', content);
+        var form_images = []
+        getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page1.jpg")
+            .then((result) => {
+                form_images.push(result);
+                return getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page2.jpg")
+            })
+            .then((result) => {
+                form_images.push(result);
+                console.log('form_images :', form_images);
+                console.log('details.pdf_page :', details.pdf_page);
+                resolve({
+                    background: function (page) {
+                        return [{
+                            image: "form",
+                            width: 600
+                        }]
+                    },
+                    content: content[details.pdf_page || 0],
+                    images: {
+                        form: form_images[details.pdf_page || 0]
+                    },
+                    pageSize: 'LEGAL'
+                });
+            }).catch((err) => {
+                console.error(err)
+                reject({
+                    background: function (page) {
+                        return [{
+                            image: "form",
+                            width: 600
+                        }]
+                    },
+                    content: content[details.pdf_page || 0],
+                    pageSize: 'legal'
+                });
+            });
+    })
 }
 /**
  * 
@@ -37,7 +62,7 @@ function getContent(forms) {
     console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
-    var content = [
+    var content_page1 = [
         // 1-4
         {
             layout: "noBorders",
@@ -315,7 +340,9 @@ function getContent(forms) {
                         //     margin: [4, -12, 0, 0]
                         // },
                         {
-                            text: formatDate(forms.taxpayer.individual_details.birthDate, { month: "2-digit" }),
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, {
+                                month: "2-digit"
+                            }),
                             bold: true,
                             characterSpacing: 5,
                             fontSize: 12,
@@ -323,7 +350,9 @@ function getContent(forms) {
                             margin: [3, -12, 0, 0]
                         },
                         {
-                            text: formatDate(forms.taxpayer.individual_details.birthDate, { day: "2-digit" }),
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, {
+                                day: "2-digit"
+                            }),
                             bold: true,
                             fontSize: 12,
                             characterSpacing: 5,
@@ -331,7 +360,9 @@ function getContent(forms) {
                             margin: [-8, -12, 0, 0]
                         },
                         {
-                            text: formatDate(forms.taxpayer.individual_details.birthDate, { year: "numeric" }),
+                            text: formatDate(forms.taxpayer.individual_details.birthDate, {
+                                year: "numeric"
+                            }),
                             bold: true,
                             characterSpacing: 5,
                             fontSize: 12,
@@ -357,7 +388,7 @@ function getContent(forms) {
                 widths: [195, 200, 46, 46],
                 body: [
                     [{
-                        text: forms.taxpayer.citizenship,
+                        text: forms.taxpayer.individual_details.citizenship,
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
@@ -449,41 +480,40 @@ function getContent(forms) {
                 widths: [210, 45, 45, 190,],
                 // widths: [90, 90, 90, 100],
                 body: [
-                    [
-                        {
-                            text: mapTin(forms.spouse_details.tin, 0, 3),
-                            fontSize: 12,
-                            characterSpacing: 4,
-                            bold: true,
-                            alignment: 'justified',
-                            margin: [168, 18, 0, 0]
-                        },
+                    [{
+                        text: mapTin(forms.spouse_details.tin, 0, 3),
+                        fontSize: 12,
+                        characterSpacing: 4,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [168, 18, 0, 0]
+                    },
 
-                        {
-                            text: mapTin(forms.spouse_details.tin, 3, 6),
-                            fontSize: 12,
-                            characterSpacing: 4,
-                            bold: true,
-                            alignment: 'justified',
-                            margin: [2, 18, 0, 0]
-                        },
-                        {
-                            text: mapTin(forms.spouse_details.tin, 6, 9),
-                            fontSize: 12,
-                            bold: true,
-                            characterSpacing: 4,
-                            alignment: 'justified',
-                            margin: [0, 18, 0, 0]
-                        },
-                        {
-                            text: forms.spouse_details.rdo_code == null ? ' ' : forms.spouse_details.rdo_code,
-                            // text: '0 0 0',
-                            fontSize: 12,
-                            characterSpacing: 6,
-                            bold: true,
-                            alignment: 'justify',
-                            margin: [145, 18, 0, 0]
-                        }
+                    {
+                        text: mapTin(forms.spouse_details.tin, 3, 6),
+                        fontSize: 12,
+                        characterSpacing: 4,
+                        bold: true,
+                        alignment: 'justified',
+                        margin: [2, 18, 0, 0]
+                    },
+                    {
+                        text: mapTin(forms.spouse_details.tin, 6, 9),
+                        fontSize: 12,
+                        bold: true,
+                        characterSpacing: 4,
+                        alignment: 'justified',
+                        margin: [0, 18, 0, 0]
+                    },
+                    {
+                        text: forms.spouse_details.rdo_code == null ? ' ' : forms.spouse_details.rdo_code,
+                        // text: '0 0 0',
+                        fontSize: 12,
+                        characterSpacing: 6,
+                        bold: true,
+                        alignment: 'justify',
+                        margin: [145, 18, 0, 0]
+                    }
                     ]
                 ]
             }
@@ -591,11 +621,11 @@ function getContent(forms) {
                 widths: [500],
                 body: [
                     [{
-                        text: forms.spouse_details.registered_name == null ? ' ' : forms.spouse_details.registered_name,
+                        text: checkName(forms.spouse_details.individual_details.lastName, forms.spouse_details.individual_details.firstName, forms.spouse_details.individual_details.middleName),
                         // text: 'SPOUSE NAME,
                         fontSize: 13,
                         // right,down,left,up
-                        alignment: 'left',
+                        alignment: 'justified',
                         margin: [9, 10, 0, 0]
                     }],
                 ]
@@ -609,23 +639,20 @@ function getContent(forms) {
                 body: [
                     [{
                         text: forms.spouse_details.citizenship == null ? ' ' : forms.spouse_details.citizenship,
-                        // text: 'FILIPINO',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'justify',
                         margin: [9, 5, 0, 0]
                     },
                     {
-                        text: forms.spouse_foreign_tax_number,
-                        // text: '1234-5678-9000',
+                        text: forms.spouse_foreign_tax_number == null ? ' ' : forms.spouse_foreign_tax_number,
                         fontSize: 12,
-                        // right,down,left,up
+                        characterSpacing: 6,
                         alignment: 'left',
                         margin: [3, 5, 0, 0]
                     },
                     {
                         text: forms.spouse_foreign_tax_credits == true ? 'X' : ' ',
-                        // text: 'Y',
                         fontSize: 12,
                         // right,down,left,up
                         alignment: 'left',
@@ -655,7 +682,7 @@ function getContent(forms) {
                         text: forms.spouse_tax_rate == 'SGR' ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'justified',
-                        margin: [43, 6, 0, 0]
+                        margin: [42, 6, 0, 0]
                     },
                     {
                         text: forms.spouse_method_deduction == 'SID' ? 'X' : ' ',
@@ -678,7 +705,7 @@ function getContent(forms) {
                         text: forms.spouse_tax_rate == 'SOGS' ? 'X' : ' ',
                         fontSize: 12,
                         alignment: 'left',
-                        margin: [43, 4, 0, 0]
+                        margin: [43, 2, 0, 0]
                     },
                     {
                         // text: forms.filerType == 2 ? 'X' : ' ',
@@ -716,26 +743,26 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [300, 96, 96],
+                widths: [305, 98, 98],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 13,
-                        margin: [0, 0, 0, 0],
-                        alignment: 'right'
+                        text: ' ',
+
 
                     },
 
                     {
-                        text: forms.taxpayer_prev_tax_due == null ? '0.00' : forms.taxpayer_prev_tax_due % 1 == 0 ? forms.taxpayer_prev_tax_due + '.00' : forms.taxpayer_prev_tax_due,
-                        fontSize: 13,
-                        margin: [0, 0, 0, 0],
+                        text: forms.taxpayer_tax_payable.prev_tax_due == null ? '0' : forms.taxpayer_tax_payable.prev_tax_due % 1 == 0 ? forms.taxpayer_tax_payable.prev_tax_due + ' ' : forms.taxpayer_tax_payable.prev_tax_due,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, 1, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_prev_tax_due == null ? '0.00' : forms.spouse_prev_tax_due % 1 == 0 ? forms.spouse_prev_tax_due + '.00' : forms.spouse_prev_tax_due,
-                        fontSize: 13,
-                        margin: [0, 0, 0, 0],
+                        text: forms.spouse_tax_payable.tax_due == null ? '0' : forms.spouse_tax_payable.tax_due % 1 == 0 ? forms.spouse_tax_payable.tax_due + ' ' : forms.spouse_tax_payable.tax_due,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, 1, 0, 0],
                         alignment: 'right'
                     }
                     ]
@@ -747,26 +774,26 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [300, 96, 96],
+                widths: [305, 98, 98],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
-                        alignment: 'right'
+                        text: ' ',
+
 
                     },
 
                     {
-                        text: forms.taxpayer_tax_credit == null ? '0.00' : forms.taxpayer_tax_credit % 1 == 0 ? forms.taxpayer_tax_credit + '.00' : forms.taxpayer_tax_credit,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.taxpayer_tax_credit == null ? '0' : forms.taxpayer_tax_credit % 1 == 0 ? forms.taxpayer_tax_credit + ' ' : forms.taxpayer_tax_credit,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, -2, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_tax_credit == null ? '0.00' : forms.spouse_tax_credit % 1 == 0 ? forms.spouse_tax_credit + '.00' : forms.spouse_tax_credit,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.spouse_tax_credit == null ? '0' : forms.spouse_tax_credit % 1 == 0 ? forms.spouse_tax_credit + ' ' : forms.spouse_tax_credit,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, -2, 0, 0],
                         alignment: 'right'
                     }
                     ]
@@ -777,26 +804,26 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [300, 96, 96],
+                widths: [305, 98, 98],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
-                        alignment: 'right'
+                        text: ' ',
+
 
                     },
 
                     {
-                        text: forms.taxpayer_tax_due == null ? '0.00' : forms.taxpayer_tax_due % 1 == 0 ? forms.taxpayer_tax_due + '.00' : forms.taxpayer_tax_due,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.taxpayer_tax_payable.tax_due == null ? '0' : forms.taxpayer_tax_payable.tax_due % 1 == 0 ? forms.taxpayer_tax_payable.tax_due + ' ' : forms.taxpayer_tax_payable.tax_due,
+                        fontSize: 12,
+                        margin: [0, -4, 0, 0],
+                        characterSpacing: 1,
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_tax_due == null ? '0.00' : forms.spouse_tax_due % 1 == 0 ? forms.spouse_tax_due + '.00' : forms.spouse_tax_due,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.spouse_tax_due == null ? '0' : forms.spouse_tax_due % 1 == 0 ? forms.spouse_tax_due + ' ' : forms.spouse_tax_due,
+                        fontSize: 12,
+                        margin: [0, -4, 0, 0],
+                        characterSpacing: 1,
                         alignment: 'right'
                     }
                     ]
@@ -807,26 +834,26 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [300, 96, 96],
+                widths: [305, 98, 98],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
-                        alignment: 'right'
+                        text: ' ',
+
 
                     },
 
                     {
-                        text: forms.taxpayer_total_penalties == null ? '0.00' : forms.taxpayer_total_penalties % 1 == 0 ? forms.taxpayer_total_penalties + '.00' : forms.taxpayer_total_penalties,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.taxpayer_tax_payable.penalties == null ? '0' : forms.taxpayer_tax_payable.penalties % 1 == 0 ? forms.taxpayer_tax_payable.penalties + ' ' : forms.taxpayer_tax_payable.penalties,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, -8, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_total_penalties == null ? '0.00' : forms.spouse_total_penalties % 1 == 0 ? forms.spouse_total_penalties + '.00' : forms.spouse_total_penalties,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.spouse_tax_payable.penalties == null ? '0' : forms.spouse_tax_payable.penalties % 1 == 0 ? forms.spouse_tax_payable.penalties + ' ' : forms.spouse_tax_payable.penalties,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, -8, 0, 0],
                         alignment: 'right'
                     }
                     ]
@@ -837,26 +864,26 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [300, 96, 96],
+                widths: [305, 98, 98],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
-                        alignment: 'right'
+                        text: ' ',
+
 
                     },
 
                     {
-                        text: forms.taxpayer_total_amount_payable == null ? '0.00' : forms.taxpayer_total_amount_payable % 1 == 0 ? forms.taxpayer_total_amount_payable + '.00' : forms.taxpayer_total_amount_payable,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.taxpayer_tax_payable.total_amount_payable == null ? '0' : forms.taxpayer_tax_payable.total_amount_payable % 1 == 0 ? forms.taxpayer_tax_payable.total_amount_payable + ' ' : forms.taxpayer_tax_payable.total_amount_payable,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, -13, 0, 0],
                         alignment: 'right'
                     },
                     {
-                        text: forms.spouse_total_amount_payable == null ? '0.00' : forms.spouse_total_amount_payable % 1 == 0 ? forms.spouse_total_amount_payable + '.00' : forms.spouse_total_amount_payable,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.spouse_tax_payable.total_amount_payable == null ? '0' : forms.spouse_tax_payable.total_amount_payable % 1 == 0 ? forms.spouse_tax_payable.total_amount_payable + ' ' : forms.spouse_tax_payable.total_amount_payable,
+                        fontSize: 12,
+                        characterSpacing: 1,
+                        margin: [0, -13, 0, 0],
                         alignment: 'right'
                     }
                     ]
@@ -867,20 +894,19 @@ function getContent(forms) {
         {
             layout: "noBorders",
             table: {
-                widths: [300, 160],
+                widths: [298, 160],
                 body: [
                     [{
-                        text: '',
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
-                        alignment: 'right'
+                        text: ' ',
+
 
                     },
 
                     {
-                        text: forms.taxpayer_aggregate_amount_payable == null ? '0.00' : forms.taxpayer_aggregate_amount_payable % 1 == 0 ? forms.taxpayer_aggregate_amount_payable + '.00' : forms.taxpayer_aggregate_amount_payable,
-                        fontSize: 13,
-                        margin: [0, -5, 0, 0],
+                        text: forms.taxpayer_aggregate_amount_payable == null ? '0' : forms.taxpayer_aggregate_amount_payable % 1 == 0 ? forms.taxpayer_aggregate_amount_payable + ' ' : forms.taxpayer_aggregate_amount_payable,
+                        fontSize: 12,
+                        margin: [0, -17, 0, 0],
+                        characterSpacing: 1,
                         alignment: 'right'
                     }
                     ]
@@ -938,12 +964,1376 @@ function getContent(forms) {
     //   ]
     //   var content1 = [content2, content]
     //   return content1[forms.page];
-    return content;
+    // content 2
+    var content_page2 = [
+
+        {
+            layout: "noBorders",
+            table: {
+                widths: [515],
+                heights: [55],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //schedule table taxpayer and tin
+        {
+            layout: "noBorders",
+            table: {
+                widths: [35, 26, 27, 400],
+                // heights: 18,
+                body: [
+                    [
+
+                        {
+                            text: mapTin(forms.taxpayer.tin, 0, 3),
+                            fontSize: 12,
+                            characterSpacing: 5,
+                            bold: true,
+                            alignment: 'justified',
+                            margin: [1, 0, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 3, 6),
+                            fontSize: 12,
+                            characterSpacing: 4,
+                            bold: true,
+                            alignment: 'justified',
+                            margin: [-5, 0, 0, 0]
+                        },
+                        {
+                            text: mapTin(forms.taxpayer.tin, 6, 9),
+                            fontSize: 12,
+                            bold: true,
+                            characterSpacing: 4,
+                            alignment: 'justified',
+                            margin: [-5, 0, 0, 0]
+                        },
+                        {
+                            text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'left',
+                            layout: "noBorders",
+                            characterSpacing: 5,
+                            margin: [90, 0, 0, 0]
+                        }
+                    ]
+                ]
+            }
+        },
+        //space
+        {
+            layout: "noBorders",
+            table: {
+                widths: [515],
+                heights: [33],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        }
+
+
+                    ]
+                ]
+            }
+        },
+        //36
+        //36
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            text: forms.sched1.taxpayer.total_sales_revenue ? forms.sched1.taxpayer.total_sales_revenue : '0',
+                            // text: forms.mor_assumed ? forms.mor_assumed : '0.00',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 2, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_sales_revenue),
+                            text: forms.sched1.spouse.total_sales_revenue ? forms.sched1.spouse.total_sales_revenue : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 6,
+                            margin: [1, 2, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //37
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_sales_services),
+                            text: forms.sched1.taxpayer.total_sales_services ? forms.sched1.taxpayer.total_sales_services : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_sales_services),
+                            text: forms.sched1.spouse.total_sales_services ? forms.sched1.spouse.total_sales_services : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //38
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.gross_income),
+                            text: forms.sched1.taxpayer.gross_income ? forms.sched1.taxpayer.gross_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.gross_income),
+                            text: forms.sched1.spouse.gross_income ? forms.sched1.spouse.gross_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //39
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_allowable_itemized_deductions),
+                            text: forms.sched1.taxpayer.total_allowable_itemized_deductions ? forms.sched1.taxpayer.total_allowable_itemized_deductions : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 6, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_allowable_itemized_deductions),
+                            text: forms.sched1.spouse.total_allowable_itemized_deductions ? forms.sched1.spouse.total_allowable_itemized_deductions : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 6, 0, 0]
+
+                        }
+
+
+
+                    ]
+                ]
+            }
+        },
+        //40
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_standard_deductions),
+                            text: forms.sched1.taxpayer.total_standard_deductions ? forms.sched1.taxpayer.total_standard_deductions : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 5, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_standard_deductions),
+                            text: forms.sched1.spouse.total_standard_deductions ? forms.sched1.spouse.total_standard_deductions : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 5, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //41
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_net_income),
+                            text: forms.sched1.taxpayer.total_net_income ? forms.sched1.taxpayer.total_net_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_net_income),
+                            text: forms.sched1.spouse.total_net_income ? forms.sched1.spouse.total_net_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //  42
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_taxable_income),
+                            text: forms.sched1.taxpayer.total_taxable_income ? forms.sched1.taxpayer.total_taxable_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_taxable_income),
+                            text: forms.sched1.spouse.total_taxable_income ? forms.sched1.spouse.total_taxable_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //43
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            // text: forms.taxpayer.total_operation_income_others,
+                            // text: forms.taxpayer.total_operation_income_others ? forms.taxpayer.total_operation_income_others : '0' ,
+                            text: "",
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'left',
+                            characterSpacing: 2,
+                            margin: [154, -7, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_operation_income),
+                            text: forms.sched1.taxpayer.total_operation_income ? forms.sched1.taxpayer.total_operation_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_operation_income),
+                            text: forms.sched1.spouse.total_operation_income ? forms.sched1.spouse.total_operation_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //         //44
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+
+                            // text: formatAmount(forms.sched1.taxpayer.amount_recieved_share),
+                            text: forms.sched1.taxpayer.amount_recieved_share ? forms.sched1.taxpayer.amount_recieved_share : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.amount_recieved_share),
+                            text: forms.sched1.spouse.amount_recieved_share ? forms.sched1.spouse.amount_recieved_share : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //            //45
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.total_taxable_income_date),
+                            text: forms.sched1.taxpayer.total_taxable_income_date ? forms.sched1.taxpayer.total_taxable_income_date : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -5, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_taxable_income_date),
+                            text: forms.sched1.spouse.total_taxable_income_date ? forms.sched1.spouse.total_taxable_income_date : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -5, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //            //46
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.taxpayer.ttotal_tax_due),
+                            text: forms.sched1.taxpayer.ttotal_tax_due ? forms.sched1.taxpayer.ttotal_tax_due : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -5, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched1.spouse.total_tax_due),
+                            text: forms.sched1.spouse.total_tax_due ? forms.sched1.spouse.total_tax_due : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -5, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //47
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+
+                            // text: formatAmount(forms.sched2.taxpayer.total_sales_revenue),
+                            text: forms.sched2.taxpayer.total_sales_revenue ? forms.sched2.taxpayer.total_sales_revenue : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 10, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.total_sales_revenue),
+                            text: forms.sched2.spouse.total_sales_revenue ? forms.sched2.spouse.total_sales_revenue : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 10, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //48
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: "",
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'left',
+                            characterSpacing: 2,
+                            margin: [145, -7, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.total_operation_income),
+                            text: forms.sched2.taxpayer.total_operation_income ? forms.sched2.taxpayer.total_operation_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.total_operation_income),
+                            text: forms.sched2.spouse.total_operation_income ? forms.sched2.spouse.total_operation_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //49
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.total_income_quarter),
+                            text: forms.sched2.taxpayer.total_income_quarter ? forms.sched2.taxpayer.total_income_quarter : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.total_income_quarter),
+                            text: forms.sched2.spouse.total_income_quarter ? forms.sched2.spouse.total_income_quarter : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //50
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.previous_quarter_taxable_income),
+                            text: forms.sched2.taxpayer.previous_quarter_taxable_income ? forms.sched2.taxpayer.previous_quarter_taxable_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.previous_quarter_taxable_income),
+                            text: forms.sched2.spouse.previous_quarter_taxable_income ? forms.sched2.spouse.previous_quarter_taxable_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //51
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.total_cumulative_income),
+                            text: forms.sched2.taxpayer.total_cumulative_income ? forms.sched2.taxpayer.total_cumulative_income : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.total_cumulative_income),
+                            text: forms.sched2.spouse.total_cumulative_income ? forms.sched2.spouse.total_cumulative_income : '0',
+
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //52
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.less_allowable_reduction),
+                            text: forms.sched2.taxpayer.less_allowable_reduction ? forms.sched2.taxpayer.less_allowable_reduction : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.less_allowable_reduction),
+                            text: forms.sched2.taxpayer.less_allowable_reduction ? forms.sched2.taxpayer.less_allowable_reduction : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //53
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.total_taxable_income_date),
+                            text: forms.sched2.taxpayer.total_taxable_income_date ? forms.sched2.taxpayer.total_taxable_income_date : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.total_taxable_income_date),
+                            text: forms.sched2.spouse.total_taxable_income_date ? forms.sched2.spouse.total_taxable_income_date : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //54
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.taxpayer.total_tax_due),
+                            text: forms.sched2.taxpayer.total_tax_due ? forms.sched2.taxpayer.total_tax_due : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched2.spouse.total_tax_due),
+                            text: forms.sched2.spouse.total_tax_due ? forms.sched2.spouse.total_tax_due : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //55
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.year_excess_credits),
+                            text: forms.sched3.taxpayer.year_excess_credits ? forms.sched3.taxpayer.year_excess_credits : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 9, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.year_excess_credits),
+                            text: forms.sched3.spouse.year_excess_credits ? forms.sched3.spouse.year_excess_credits : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 9, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //56
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.payment_previous_quarter),
+                            text: forms.sched3.taxpayer.payment_previous_quarter ? forms.sched3.taxpayer.payment_previous_quarter : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.payment_previous_quarter),
+                            text: forms.sched3.spouse.payment_previous_quarter ? forms.sched3.spouse.payment_previous_quarter : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //57
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.creditable_tax_withheld),
+                            text: forms.sched3.taxpayer.creditable_tax_withheld ? forms.sched3.taxpayer.creditable_tax_withheld : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.creditable_tax_withheld),
+                            text: forms.sched3.spouse.creditable_tax_withheld ? forms.sched3.spouse.creditable_tax_withheld : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //58
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.creditable_tax_withheld_per_bir),
+                            text: forms.sched3.taxpayer.creditable_tax_withheld_per_bir ? forms.sched3.taxpayer.creditable_tax_withheld_per_bir : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.creditable_tax_withheld_per_bir),
+                            text: forms.sched3.spouse.creditable_tax_withheld_per_bir ? forms.sched3.spouse.creditable_tax_withheld_per_bir : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //59
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.tax_paid_return),
+                            text: forms.sched3.taxpayer.tax_paid_return ? forms.sched3.taxpayer.tax_paid_return : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.tax_paid_return),
+                            text: forms.sched3.spouse.tax_paid_return ? forms.sched3.spouse.tax_paid_return : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //60
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.taxpayer_tax_payable.tax_credits),
+                            text: forms.taxpayer_tax_payable.tax_credits ? forms.taxpayer_tax_payable.tax_credits : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.spouse_tax_payable.tax_credits),
+                            text: forms.spouse_tax_payable.tax_credits ? forms.spouse_tax_payable.tax_credits : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //61
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: "",
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'left',
+                            characterSpacing: 2,
+                            margin: [145, -8, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.other_tax_credit),
+                            text: forms.sched3.taxpayer.other_tax_credit ? forms.sched3.taxpayer.other_tax_credit : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.other_tax_credit),
+                            text: forms.sched3.spouse.other_tax_credit ? forms.sched3.spouse.other_tax_credit : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //62
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.total_tax_credit),
+                            text: forms.sched3.taxpayer.total_tax_credit ? forms.sched3.taxpayer.total_tax_credit : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.total_tax_credit),
+                            text: forms.sched3.spouse.total_tax_credit ? forms.sched3.spouse.total_tax_credit : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //63
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [18],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.taxpayer.overpayment),
+                            text: forms.sched3.taxpayer.overpayment ? forms.sched3.taxpayer.overpayment : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched3.spouse.overpayment),
+                            text: forms.sched3.spouse.overpayment ? forms.sched3.spouse.overpayment : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //64
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                heights: [19],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.taxpayer_tax_payable.surcharge),
+                            text: forms.taxpayer_tax_payable.surcharge ? forms.taxpayer_tax_payable.surcharge : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 10, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.spouse_tax_payable.surcharge),
+                            text: forms.spouse_tax_payable.surcharge ? forms.spouse_tax_payable.surcharge : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, 10, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //65
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [19],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.taxpayer_tax_payable.interest),
+                            text: forms.taxpayer_tax_payable.interest ? forms.taxpayer_tax_payable.interest : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -1, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.spouse_tax_payable.interest),
+                            text: forms.spouse_tax_payable.interest ? forms.spouse_tax_payable.interest : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -1, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //66
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [19],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.taxpayer_tax_payable.compromise),
+                            text: forms.taxpayer_tax_payable.compromise ? forms.taxpayer_tax_payable.compromise : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.spouse_tax_payable.compromise),
+                            text: forms.spouse_tax_payable.compromise ? forms.spouse_tax_payable.compromise : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -2, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //67
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                // heights: [19],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.taxpayer_tax_payable.penalties),
+                            text: forms.taxpayer_tax_payable.penalties ? forms.taxpayer_tax_payable.penalties : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.spouse_tax_payable.penalties),
+                            text: forms.spouse_tax_payable.penalties ? forms.spouse_tax_payable.penalties : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -4, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+        //68
+        {
+            layout: "noBorders",
+            table: {
+                widths: [275, 127, 102],
+                heights: [19],
+                body: [
+                    [
+
+                        {
+                            text: ""
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched4.taxpayer.total_amount_payable),
+                            text: forms.sched4.taxpayer.total_amount_payable ? forms.sched4.taxpayer.total_amount_payable : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+                        },
+                        {
+                            // text: "000",
+                            // text: formatAmount(forms.sched4.spouse.total_amount_payable),
+                            text: forms.sched4.spouse.total_amount_payable ? forms.sched4.spouse.total_amount_payable : '0',
+                            fontSize: 12,
+                            bold: true,
+                            alignment: 'right',
+                            characterSpacing: 7,
+                            margin: [1, -3, 0, 0]
+
+                        }
+
+                    ]
+                ]
+            }
+        },
+
+    ]
+
+    var contents = [content_page1, content_page1, content_page2]
+    return contents;
 }
 
 function formatDate(date, type) {
     if (!date) {
-        return "";
+        return " ";
     }
     if (type === 'dateonly') type = {
         year: "numeric",
@@ -960,15 +2350,64 @@ function formatDate(date, type) {
     });
     return dt;
 }
+function formatAmount(amount) {
+    if (!amount || isNaN(amount)) return "0";
+    var parts = parseFloat(amount).toFixed(2).toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
 
 function mapTin(tin, from, to) {
-    if (!tin || from === null || to === null) return "";
+    if (!tin || from === null || to === null) return " ";
     return tin.substring(from, to);
+}
+
+function checkName(lastName, firstName, middleName) {
+    console.log('!!!lastName :', lastName);
+    console.log('!!!firstName :', firstName);
+    console.log('!!!middleName :', middleName);
+    var last = ""
+    var first = ""
+    var mid = ""
+    if (lastName) {
+        // forms.spouse_details.individual_details.lastName + "," + " " + forms.spouse_details.individual_details.firstName + " " + forms.spouse_details.individual_details.middleName == null ? ' ' : forms.spouse_details.individual_details.lastName + "," + " " + forms.spouse_details.individual_details.firstName + " " + forms.spouse_details.individual_details.middleName
+        last = lastName
+    }
+    if (firstName) {
+        first = firstName
+    }
+    if (middleName) {
+        mid = middleName
+    }
+    var full = (last + ", " + first + " " + mid)
+    console.log("checkName: " + full)
+    return full
 }
 
 function checkField(field) {
     if (!field) return " ";
     else return field;
+}
+
+function getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+        var img = new Image();
+        img.setAttribute("crossOrigin", "anonymous");
+        console.log('url :', url);
+        img.onload = () => {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            var dataURL = canvas.toDataURL("image/jpeg");
+            resolve(dataURL);
+        };
+        img.onerror = error => {
+            reject(error);
+        };
+        img.src = url;
+    });
 }
 
 export default {

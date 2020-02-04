@@ -5,6 +5,9 @@ const model = {
     reference_no: { // use as reference in every filed form
         type: String
     },
+    tax_type: { // Taxtype of form
+        type: String
+    },
     taxpayer: {}, // taxpayer details as of filed date, fields can be found at ../taxpayerDetailsModel.js
     spouse_details: {}, // details of taxpayer's spouse as of filed date, fields can be found at ../taxpayerDetailsModel.js
     seller_details: {}, // details of taxpayer's seller as of filed date, fields can be found at ../taxpayerDetailsModel.js

@@ -77,6 +77,7 @@ var taxpayerDetailsSchema = new Schema({
     type: Date
   },
   registered_name: String,
+  avatar: String,
   created_by: {
     type: String
   },

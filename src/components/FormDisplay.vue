@@ -53,7 +53,7 @@ const printers = {
   FORM1701A: Form1701a,
   FORM1604C: Form1604c,
   FORM1702EX: Form1702ex
- };
+};
 export default {
   props: ["form", "type"],
   components: {
@@ -71,18 +71,18 @@ export default {
     preview() {
       console.log("computed preview form data: " + JSON.stringify(this.form));
       var printer = printers[this.form_type];
-      var document = printer.fillup(this.form);
-
-      const pdfDocGenerator = pdfMake.createPdf(document);
-      var self = this;
-      pdfDocGenerator.getBuffer(function(buffer) {
-        var file = new Blob([buffer], {
-          type: "application/pdf"
+      printer.fillup(this.form).then(document => {
+        const pdfDocGenerator = pdfMake.createPdf(document);
+        var self = this;
+        pdfDocGenerator.getBuffer(function(buffer) {
+          var file = new Blob([buffer], {
+            type: "application/pdf"
+          });
+          var dataUrl = URL.createObjectURL(file);
+          console.log(dataUrl);
+          self.prev = dataUrl;
+          return dataUrl;
         });
-        var dataUrl = URL.createObjectURL(file);
-        console.log(dataUrl);
-        self.prev = dataUrl;
-        return dataUrl;
       });
       // var printer = printers[this.type];
       // var document = printer.fillup(this.data);
@@ -173,31 +173,33 @@ export default {
 
       console.log("this.form##### : ", form);
       var printer = printers[this.form_type];
-      var document = printer.fillup(form);
-      var self = this;
-      const pdfDocGenerator = pdfMake.createPdf(document);
-      pdfDocGenerator.getBuffer(function(buffer) {
-        var file = new Blob([buffer], {
-          type: "application/pdf"
+      printer.fillup(form).then(document => {
+        var self = this;
+        const pdfDocGenerator = pdfMake.createPdf(document);
+        pdfDocGenerator.getBuffer(function(buffer) {
+          var file = new Blob([buffer], {
+            type: "application/pdf"
+          });
+          var dataUrl = URL.createObjectURL(file);
+          console.log("dataurl: " + dataUrl);
+          self.prev = dataUrl;
+          self.loading = false;
         });
-        var dataUrl = URL.createObjectURL(file);
-        console.log("dataurl: " + dataUrl);
-        self.prev = dataUrl;
-        self.loading = false;
       });
     },
     download() {
       var filename = this.form_type;
       var printer = printers[this.form_type];
-      var document = printer.fillup(this.form);
-      var self = this;
-      pdfMake.createPdf(document).download(filename, err => {
-        if (err) {
-          console.log("err: " + err);
-        } else {
-          self.prev = filename;
-          this.refresh();
-        }
+      printer.fillup(this.form).then(document => {
+        var self = this;
+        pdfMake.createPdf(document).download(filename, err => {
+          if (err) {
+            console.log("err: " + err);
+          } else {
+            self.prev = filename;
+            this.refresh();
+          }
+        });
       });
     },
     open() {
@@ -208,7 +210,7 @@ export default {
       var pdf_list = [];
       // for (var x = 0; x <= 1; x++) {
       //   this.form.pdf_page = x;
-        var document = printer.fillup(this.form);
+      printer.fillup(this.form).then(document => {
         var self = this;
         pdfMake.createPdf(document).open(dataUrl => {
           pdf_list.push(dataUrl);
@@ -217,15 +219,16 @@ export default {
         });
         this.refresh();
         console.log("open form data: " + JSON.stringify(this.form));
-      // }
-      console.log("pdf list data: " + JSON.stringify(pdf_list));
+        // }
+        console.log("pdf list data: " + JSON.stringify(pdf_list));
+      });
     },
-    upload() {
-      var printer = printers[this.form_type];
-      var document = printer.fillup(this.form);
-      var self = this;
-      return pdfMake.createPdf(document);
-    }
+    // upload() {
+    //   var printer = printers[this.form_type];
+    //   var document = printer.fillup(this.form);
+    //   var self = this;
+    //   return pdfMake.createPdf(document);
+    // }
   }
 };
 </script>

@@ -5,20 +5,26 @@
       :visible="visible"
       :closable="false"
       @close="onClose"
-      :width="720"
-      :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
+      :width="700"
+      :wrapStyle="{
+        height: 'calc(100% - 108px)',
+        overflow: 'auto',
+        paddingBottom: '108px'
+      }"
     >
       <a-form :form="form" layout="vertical" hideRequiredMark>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item style="margin-left: 103px;" label="A) Taxpayer/Filer"></a-form-item>
             <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="64."
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="64"
+              :validate-status="error_item('taxpayer_tax_payable.surcharge')"
+              :help="error_desc('taxpayer_tax_payable.surcharge')"
             >
               <a-input-number
-                v-model="form.sched4.taxpayer.surcharge"
+                v-model="form.taxpayer_tax_payable.surcharge"
                 style="width:100%"
                 placeholder="Surcharge"
               ></a-input-number>
@@ -28,22 +34,24 @@
             <a-form-item style="margin-left: 103px;" label="B) Spouse"></a-form-item>
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
-                v-model="form.sched4.spouse.surcharge"
+                v-model="form.spouse_tax_payable.surcharge"
                 style="width:100%"
                 placeholder="Surcharge"
               ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="65."
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="65"
+              :validate-status="error_item('taxpayer_tax_payable.interest')"
+              :help="error_desc('taxpayer_tax_payable.interest')"
             >
               <a-input-number
-                v-model="form.sched4.taxpayer.interest"
+                v-model="form.taxpayer_tax_payable.interest"
                 style="width:100%"
                 placeholder="Interest"
               ></a-input-number>
@@ -52,22 +60,24 @@
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
-                v-model="form.sched4.spouse.interest"
+                v-model="form.spouse_tax_payable.interest"
                 placeholder="Interest"
                 style="width:100%"
               ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="66."
+              :labelCol="{ span: 3 }"
+              :wrapperCol="{ span: 21 }"
+              label="66"
+              :validate-status="error_item('taxpayer_tax_payable.compromise')"
+              :help="error_desc('taxpayer_tax_payable.compromise')"
             >
               <a-input-number
-                v-model="form.sched4.taxpayer.compromise"
+                v-model="form.taxpayer_tax_payable.compromise"
                 style="width:100%"
                 placeholder="Compromise"
               ></a-input-number>
@@ -77,37 +87,47 @@
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
               <a-input-number
                 style="width:100%"
-                v-model="form.sched4.spouse.compromise"
+                v-model="form.spouse_tax_payable.compromise"
                 placeholder="Compromise"
               ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="16">
+        <a-row :gutter="6">
           <a-col :span="12">
-            <a-form-item
-              :labelCol="form_layout.label_col"
-              :wrapperCol="form_layout.wrapper_col"
-              label="67."
-            >
-              <a-input-number
-                style="width:100%"
-                :value="penalties()"
-                placeholder="Total Penalties (Sum of Items 64 to 66) (To Part III, Item 29)"
-              ></a-input-number>
+            <a-form-item :labelCol="{ span: 3 }" :wrapperCol="{ span: 21 }" label="67">
+              <a-tooltip>
+                <template slot="title">
+                  Total Penalties (Sum of Items 64 to 66) (To Part III, Item
+                  29)
+                </template>
+                <a-input-number
+                  disabled
+                  style="width:100%"
+                  :value="penalties()"
+                  placeholder="Total Penalties"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
-              <a-input-number
-                style="width:100%"
-                :value="spouse_penalties()"
-                placeholder="Total Penalties (Sum of Items 64 to 67) (To Part III, Item 30)"
-              ></a-input-number>
+              <a-tooltip>
+                <template slot="title">
+                  Total Penalties (Sum of Items 64 to 66) (To Part III, Item
+                  29)
+                </template>
+                <a-input-number
+                  disabled
+                  style="width:100%"
+                  :value="spouse_penalties()"
+                  placeholder="Total Penalties"
+                ></a-input-number>
+              </a-tooltip>
             </a-form-item>
           </a-col>
         </a-row>
-        <!-- <a-row :gutter="16">
+        <!-- <a-row :gutter="6">
           <a-col :span="12">
             <a-form-item
               :labelCol="form_layout.label_col"
@@ -137,18 +157,19 @@
           borderTop: '1px solid #e9e9e9',
           padding: '10px 16px',
           background: '#fff',
-          textAlign: 'right',
+          textAlign: 'right'
         }"
       >
-        <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
-        <a-button @click="handleOk" type="primary">Submit</a-button>
+        <!-- <a-button :style="{marginRight: '8px'}" @click="handleOk">Cancel</a-button>
+        <a-button @click="handleOk" type="primary">Submit</a-button>-->
       </div>
     </a-drawer>
   </div>
 </template>
+
 <script>
 export default {
-  props: ["form", "show"],
+  props: ["form", "show", "errors"],
   data() {
     return {
       visible: true,
@@ -165,7 +186,7 @@ export default {
     };
   },
   created() {
-    console.log("show sched 4: " + this.show);
+    console.log("####errors: " + JSON.stringify(this.errors));
     // this.visible = this.show;
   },
   watch: {
@@ -178,26 +199,69 @@ export default {
     }
   },
   methods: {
+    // insert validation
+    validate(is_validate_all) {
+      var errors = [];
+      if (is_validate_all || this.step === 3) {
+        if (!this.form.taxpayer_tax_payable.surcharge) {
+          error.push({
+            field: "taxpayer_tax_payable.surcharge",
+            error: "Please input Surcharge"
+          });
+        }
+        if (!this.form.taxpayer_tax_payable.interest) {
+          errors.push({
+            page: 3,
+            field: "taxpayer_tax_payable.interest",
+            error: "Please input Interest amount"
+          });
+        }
+        if (!this.form.taxpayer_tax_payable.compromise) {
+          errors.push({
+            page: 3,
+            field: "taxpayer_tax_payable.compromise",
+            error: "Please input Compromise amount"
+          });
+        }
+      }
+
+      this.$emit("error", errors);
+      if (!errors.length) {
+        this.changeStep(this.step + 1);
+      }
+    },
+
+    error_item(item) {
+      console.log("##erroritem :", item);
+      return this.errors.find(x => x.field === item) ? "error" : "";
+    },
+    error_desc(item) {
+      console.log("##errorDesc :", item);
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
+    },
     onClose() {
-      this.visible = false;
+      // this.visible = false;
+      this.$emit("close");
     },
     penalties() {
       var total = this.computeSum([
-        this.form.sched4.taxpayer.surcharge,
-        this.form.sched4.taxpayer.interest,
-        this.form.sched4.taxpayer.compromise
+        this.form.taxpayer_tax_payable.surcharge,
+        this.form.taxpayer_tax_payable.interest,
+        this.form.taxpayer_tax_payable.compromise
       ]);
-      this.form.sched4.taxpayer.penalties = total;
+      this.form.taxpayer_tax_payable.penalties = total;
       this.form.taxpayer_total_penalties = total;
       return total;
     },
     spouse_penalties() {
       var total = this.computeSum([
-        this.form.sched4.spouse.surcharge,
-        this.form.sched4.spouse.interest,
-        this.form.sched4.spouse.compromise
+        this.form.spouse_tax_payable.surcharge,
+        this.form.spouse_tax_payable.interest,
+        this.form.spouse_tax_payable.compromise
       ]);
-      this.form.sched4.spouse.penalties = total;
+      this.form.spouse_tax_payable.penalties = total;
       this.form.spouse_total_penalties = total;
       return total;
     },

@@ -111,7 +111,7 @@
                 <a-list-item-meta>
                   <p
                     slot="title"
-                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`:'item.corporate_details.registeredName'}}</p>
+                  >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`: `${item.registered_name}`}}</p>
                   <template slot="description">
                     <p>
                       <b>{{formatTIN(item.tin)}}</b>
@@ -121,9 +121,11 @@
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
                     slot="avatar"
-                    :src="getUserByTin(item.tin).avatar.location"
+                    :src="getUserByTin(item.tin) && getUserByTin(item.tin).avatar ? getUserByTin(item.tin).avatar.location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
                     :size="64"
-                  />
+                  >
+                  {{}}
+                  </a-avatar>
                 </a-list-item-meta>
               </a-col>
               <a-col :span="2">
@@ -230,13 +232,23 @@ export default {
         taxpayer: {
           contact_details: {},
           address_details: {},
-          // individual_details: {},
+          individual_details: {},
+          accounting_type: "",
+          start_month: "",
+          end_month: ""
+        },
+        taxpayer_tax_payable: {},
+        spouse_tax_payable: {},
+        spouse_details: {
+          contact_details: {},
+          address_details: {},
+          individual_details: {},
           accounting_type: "",
           start_month: "",
           end_month: ""
         },
         page: 0,
-        spouse_details: {},
+        // spouse_details: {},
         buyer_details: {},
         item29: {},
         item30: {},
@@ -339,10 +351,6 @@ export default {
           {
             title: "Part III",
             description: "Total Tax Payable"
-          },
-          {
-            title: "Part IV",
-            description: "Details of Payment"
           }
         ],
         "1701a": [
@@ -551,14 +559,42 @@ export default {
     },
     fillup() {
       this.form.taxpayer = this.taxpayer;
+      console.log("taxpayer data: " + JSON.stringify(this.form.taxpayer));
+      console.log(
+        "this.form.taxpayer.individual_details :",
+        JSON.stringify(this.form.taxpayer.individual_details)
+      );
       if (!this.form.taxpayer.address_details) {
         this.form.taxpayer.address_details = {};
       }
       if (!this.form.taxpayer.contact_details) {
         this.form.taxpayer.contact_details = {};
       }
+      if (!this.form.taxpayer.individual_details) {
+        this.form.taxpayer.individual_details = {};
+      } else {
+        this.form.taxpayer.individual_details.birthDate = moment(
+          this.form.taxpayer.individual_details.birthDate
+        );
+      }
       if (!this.form.taxpayer.registered_name) {
         this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.lastName}`;
+      }
+      if (this.form.taxpayer.individual_details.civil_status == "M") {
+        this.$http
+          .get(`/connections/${this.form.taxpayer.tin}`)
+          .then(result => {
+            console.log("spouse data fillup: " + JSON.stringify(result));
+            result.data.model.forEach(data => {
+              if (data.relationship == "spouse") {
+                console.log("spouse data na this: " + JSON.stringify(data));
+                console.log(
+                  "taxpayer details: " + JSON.stringify(this.form.taxpayer)
+                );
+                this.form.spouse_details = data;
+              }
+            });
+          });
       }
       console.log(`form::::`, this.form.taxpayer);
       this.view_select = false;
@@ -593,6 +629,10 @@ export default {
         details.total_penalties
       )}`;
       this.return_details = details;
+      console.log("show success form data: " + JSON.stringify(this.form));
+      console.log(
+        "form page return details data: " + JSON.stringify(this.return_details)
+      );
       this.show_form_success = true;
     },
     closeForm() {
@@ -608,9 +648,16 @@ export default {
     },
     submit() {
       this.loading = true;
-      this.errors = [];
+      // this.errors = [];
       //validate
+      this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due;
+      // this.form.surcharge
+      // this.form.interest
+      // this.form.compromise
+      // this.form.penalties
+      this.form.total_amount_payable = this.form.taxpayer_aggregate_amount_payable;
       this.$refs.form_component.validate(true);
+      console.log("errors: " + JSON.stringify(this.errors));
       // no errors found, proceed to next page
       if (!this.errors.length) {
         this.$store
@@ -669,6 +716,8 @@ export default {
             console.log("VALIDATE_AND_SAVE", err);
             this.loading = false;
           });
+      } else {
+        this.loading = false;
       }
     }
   },

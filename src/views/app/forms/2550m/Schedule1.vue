@@ -5,7 +5,7 @@
     :closable="true"
     @close="close"
     :visible="show"
-    width="1000"
+    width="500"
   >
     <a-button type="primary" @click="addAtc">ADD</a-button>
     <a-table bordered :dataSource="data_source" :columns="columns">
@@ -95,6 +95,7 @@ export default {
           rate: 0.25
         }
       ],
+      sched1_data: [],
       data_source: []
     };
   },

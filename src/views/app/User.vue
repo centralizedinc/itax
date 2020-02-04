@@ -19,15 +19,15 @@
           <a-icon type="share-alt"></a-icon>
           <span>Connections</span>
         </template>
-
       </a-tab-pane>
 
       <a-button
         slot="tabBarExtraContent"
         type="primary"
-        v-if="curr_tab==3"
-        @click="showAddTP=true"
-      >Add Taxpayer</a-button>
+        v-if="curr_tab == 3"
+        @click="showAddTP = true"
+        >Add Taxpayer</a-button
+      >
     </a-tabs>
     <a-card style="margin-top: 5vh">
       <!-- <transition-group name="fade" mode="out-in"> -->
@@ -41,27 +41,66 @@
             </a-card>
           </a-col> -->
           <a-col :span="4" style="margin-top:2vh; margin-bottom: 5vh">
-            <a-avatar class="profile_pic" :size="150" shape="square" :src="user && user.avatar && user.avatar.location ? user.avatar.location : null">
-                {{user && user.name && user.name.first ? user.name.first[0] : '?' }}
+            <a-avatar
+              class="profile_pic"
+              :size="150"
+              shape="square"
+              :src="
+                user && user.avatar && user.avatar.location
+                  ? user.avatar.location
+                  : null
+              "
+            >
+              {{
+                user && user.name && user.name.first ? user.name.first[0] : "?"
+              }}
             </a-avatar>
           </a-col>
         </a-row>
         <a-form>
-          <a-form-item label="Email" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-input placeholder="Enter your email" v-model="user.email"></a-input>
+          <a-form-item
+            label="Email"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-input
+              placeholder="Enter your email"
+              v-model="user.email"
+            ></a-input>
           </a-form-item>
-          <a-form-item label="First Name" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-input placeholder="Enter your First Name" v-model="user.name.first"></a-input>
+          <a-form-item
+            label="First Name"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-input
+              placeholder="Enter your First Name"
+              v-model="user.name.first"
+            ></a-input>
           </a-form-item>
-          <a-form-item label="Middle Name" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-input placeholder="Enter your Middle Name" v-model="user.name.middle"></a-input>
+          <a-form-item
+            label="Middle Name"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-input
+              placeholder="Enter your Middle Name"
+              v-model="user.name.middle"
+            ></a-input>
           </a-form-item>
-          <a-form-item label="Last Name" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-input placeholder="Enter your Last Name" v-model="user.name.last"></a-input>
+          <a-form-item
+            label="Last Name"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-input
+              placeholder="Enter your Last Name"
+              v-model="user.name.last"
+            ></a-input>
           </a-form-item>
         </a-form>
       </template>
-      <template v-else-if="curr_tab ==1">
+      <template v-else-if="curr_tab == 1">
         <a-row type="flex" justify="center">
           <!-- <a-col :span="24" style="margin-top:2vh; margin-bottom: 5vh">
             <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
@@ -72,49 +111,99 @@
           </a-col> -->
         </a-row>
         <a-form>
-          <a-form-item label="TIN" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-input placeholder="TIN" v-model="taxpayer.tin"></a-input>
+          <a-form-item
+            label="TIN"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-input readonly placeholder="TIN" v-model="user.tin"></a-input>
           </a-form-item>
-          <a-form-item label="RDO" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-select placeholder="RDO" style="width: 100%" v-model="taxpayer.rdo_code">
-              <a-select-option value="001">RDO 001 -</a-select-option>
+          <a-form-item
+            label="RDO"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <!-- <a-input readonly placeholder="RDO" v-model="user.tin"></a-input> -->
+
+            <a-select
+              placeholder="RDO"
+              style="width: 100%"
+              v-model="taxpayer.rdo_code"
+            >
+              <a-select-option value="001">RDO 008 -</a-select-option>
             </a-select>
           </a-form-item>
-          <a-form-item label="Address" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-textarea :rows="4" placeholder="Address" v-model="taxpayer.address"></a-textarea>
+          <a-form-item
+            label="Address"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-textarea
+              :rows="4"
+              placeholder="Address"
+              v-model="taxpayer.address"
+            ></a-textarea>
           </a-form-item>
-          <a-form-item label="Birth Date" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
+          <a-form-item
+            label="Birth Date"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
             <a-date-picker
               style="width:100%"
               placeholder="Enter your Birthdate"
               v-model="taxpayer.individual_details.birthDate"
             ></a-date-picker>
           </a-form-item>
-          <a-form-item label="Gender" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-radio-group buttonStyle="solid" v-model="taxpayer.individual_details.gender">
+          <a-form-item
+            label="Gender"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-radio-group
+              buttonStyle="solid"
+              v-model="taxpayer.individual_details.gender"
+            >
               <a-radio-button value="M">Male</a-radio-button>
               <a-radio-button value="F">Female</a-radio-button>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="Civil Status" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-radio-group buttonStyle="solid" v-model="taxpayer.individual_details.civil_status">
+          <a-form-item
+            label="Civil Status"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-radio-group
+              buttonStyle="solid"
+              v-model="taxpayer.individual_details.civil_status"
+            >
               <a-radio-button value="S">Single</a-radio-button>
               <a-radio-button value="M">Married</a-radio-button>
               <a-radio-button value="SP">Separated</a-radio-button>
               <a-radio-button value="W">Widower</a-radio-button>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="Spouse TIN" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }">
-            <a-input placeholder="Spouse TIN" v-model="taxpayer.individual_details.spouse_tin"></a-input>
+          <a-form-item
+            label="Spouse TIN"
+            :label-col="{ span: 4 }"
+            :wrapper-col="{ span: 18 }"
+          >
+            <a-input
+              placeholder="Spouse TIN"
+              v-model="taxpayer.individual_details.spouse_tin"
+            ></a-input>
           </a-form-item>
         </a-form>
       </template>
-      <template v-else-if="curr_tab ==2">
+      <template v-else-if="curr_tab == 2">
         <a-row type="flex" justify="center">
           <a-col :span="24" style="margin-top:2vh; margin-bottom: 5vh">
-            <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
+            <a-card
+              style="background: linear-gradient(to right, #000046, #1cb5e0)"
+            >
               <span style="color:#FFFFFF">
-                <a-icon type="exclamation-circle"></a-icon>For faster transaction, input your billing details
+                <a-icon type="exclamation-circle"></a-icon>For faster
+                transaction, input your billing details
               </span>
             </a-card>
           </a-col>
@@ -131,10 +220,14 @@
           </a-form-item>
         </a-form>
       </template>
-      <connections v-else-if="curr_tab==3" :showAddTP="showAddTP" @showAddTP="showAddTP=$event" />
+      <connections
+        v-else-if="curr_tab == 3"
+        :showAddTP="showAddTP"
+        @showAddTP="showAddTP = $event"
+      />
       <!-- </transition-group> -->
       <a-divider></a-divider>
-      <a-row type="flex" justify="end" :gutter="8" v-if="curr_tab!=3">
+      <a-row type="flex" justify="end" :gutter="8" v-if="curr_tab != 3">
         <a-col :span="6">
           <a-button block type="primary" @click="save">
             Save Changes
@@ -173,6 +266,7 @@ export default {
       this.user = JSON.parse(
         JSON.stringify(this.$store.state.account_session.user)
       );
+      console.log("####this.user :", this.user);
     },
     save() {
       this.$http.post("/taxpayer");
@@ -185,5 +279,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

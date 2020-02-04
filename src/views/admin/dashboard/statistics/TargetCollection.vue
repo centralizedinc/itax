@@ -18,12 +18,12 @@ export default {
           {
             label: "Target",
             data: [],
-            backgroundColor: "red"
+            backgroundColor: "#ff7777"
           },
           {
             label: "Collection",
             data: [15, 5],
-            backgroundColor: "blue"
+            backgroundColor: "#8888ff"
           }
         ],
         labels: []
@@ -96,7 +96,7 @@ export default {
             {
               display: false,
               ticks: {
-                max: 5100000,
+                max: 10500000,
                 beginAtZero: true
               }
             }
@@ -105,28 +105,64 @@ export default {
       }
     };
   },
+  mounted() {
+    this.chartdata.datasets[0].data = [];
+    this.rdos.forEach(rdo => {
+      var targets = [10000000, 9000000, 9500000];
+      var random = Math.floor(Math.random() * 2);
+      this.chartdata.datasets[0].data.push(targets[random]);
+    });
+    this.getRdoMockData();
+  },
   created() {
-    this.$store
-      .dispatch("GET_RDOS")
-      .then(result => {
-        this.getMockData();
-        this.setMockDataRealtime();
-      })
-      .catch(err => {});
+    // this.$store
+    //   .dispatch("GET_RDOS")
+    //   .then(result => {
+    //     // this.getMockData();
+    //     // this.setMockDataRealtime();
+    //   })
+    //   .catch(err => {});
   },
   computed: {
     rdos() {
-      return this.$store.state.tax_form.rdos.slice(0, 10);
+      return this.$store.state.tax_form.rdos.slice(0, 5);
+    }
+  },
+  watch: {
+    rdos() {
+      this.getRdoMockData();
     }
   },
   methods: {
+    getRdoMockData() {
+      var datasets = [];
+      for (let index = 0; index < this.rdos.length; index++) {
+        datasets.push({
+          label: this.rdos[index].code,
+          target: this.chartdata.datasets[0].data[index],
+          collection: this.rdos[index].collections
+        });
+      }
+      datasets.sort((a, b) => b.collection - a.collection);
+      if (datasets[0].target <= datasets[0].collection) {
+        this.options.scales.yAxes[0].ticks.max =
+          datasets[0].collection + Math.floor(datasets[0].collection / 5);
+      }
+      this.chartdata.labels = datasets.map(v => v.label);
+      this.chartdata.datasets[1].data = datasets.map(v => v.collection);
+      this.$refs.bar_collection_returns.renderChart(
+        this.chartdata,
+        this.options
+      );
+    },
     getMockData() {
       var datasets = [];
       var mock_targets = [5000000, 4500000, 4000000, 4800000, 4200000];
       for (let index = 0; index < this.rdos.length; index++) {
         var target = Math.floor(Math.random() * 4);
         var collection =
-          Math.floor(Math.random() * (mock_targets[target] - 3900000)) + 10000;
+          Math.floor(Math.random() * (mock_targets[target] - 3900000)) +
+          3500000;
         datasets.push({
           label: this.rdos[index].code,
           target: mock_targets[target],
@@ -134,6 +170,8 @@ export default {
         });
       }
       datasets.sort((a, b) => b.collection - a.collection);
+      this.options.scales.yAxes[0].ticks.max =
+        datasets[0].target + Math.floor(datasets[0].target / 10);
       this.chartdata.labels = datasets.map(v => v.label);
       this.chartdata.datasets[0].data = datasets.map(v => v.target);
       this.chartdata.datasets[1].data = datasets.map(v => v.collection);
@@ -147,7 +185,7 @@ export default {
         try {
           var datasets = [];
           for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
-            var random = Math.round(Math.random() * 2000) +2000;
+            var random = Math.round(Math.random() * 2000) + 2000;
             datasets.push({
               label: this.chartdata.labels[i],
               target: this.chartdata.datasets[0].data[i],
@@ -155,8 +193,9 @@ export default {
             });
           }
           datasets.sort((a, b) => b.collection - a.collection);
-          if(datasets[0].target <= datasets[0].collection){
-            this.options.scales.yAxes[0].ticks.max = datasets[0].collection + 10;
+          if (datasets[0].target <= datasets[0].collection) {
+            this.options.scales.yAxes[0].ticks.max =
+              datasets[0].collection + Math.floor(datasets[0].collection / 5);
           }
           this.chartdata.labels = datasets.map(v => v.label);
           this.chartdata.datasets[0].data = datasets.map(v => v.target);
@@ -174,6 +213,6 @@ export default {
 
 <style>
 .bar-collection-returns canvas {
-  /* height: 55vh !important; */
+  height: 66.5vh !important;
 }
 </style>

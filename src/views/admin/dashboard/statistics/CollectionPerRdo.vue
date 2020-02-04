@@ -15,7 +15,8 @@ export default {
     HorizontalBar
   },
   mounted() {
-    this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
+    // this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
+    this.getRdoMockData();
   },
   data() {
     return {
@@ -98,29 +99,59 @@ export default {
     };
   },
   created() {
-    this.$store
-      .dispatch("GET_RDOS")
-      .then(result => {
-        this.getMockRdo();
-        this.setMockDataRealtime();
-      })
-      .catch(err => {});
+    // this.$store
+    //   .dispatch("GET_RDOS")
+    //   .then(result => {
+    //     // this.getMockRdo();
+    //     // this.setMockDataRealtime();
+    //   })
+    //   .catch(err => {});
+    
   },
   computed: {
     rdos() {
       return this.$store.state.tax_form.rdos.slice(0, 10);
     }
   },
+  watch: {
+    rdos() {
+      this.getRdoMockData();
+    }
+  },
   methods: {
-    getMockRdo() {
+    getRdoMockData() {
       var datasets = [];
       for (let index = 0; index < this.rdos.length; index++) {
-        var val = Math.floor(Math.random() * 100000) + 10000;
+        // var val = Math.floor(Math.random() * 100000) + 10000;
         var random_color =
           "#" + Math.floor(Math.random() * 16777215).toString(16);
         datasets.push({
           label: this.rdos[index].code,
-          value: val,
+          value: this.rdos[index].collections,
+          background:
+            this.chartdata.datasets[0].backgroundColor[index] || random_color
+        });
+      }
+      datasets.sort((a, b) => b.value - a.value);
+      this.chartdata.labels = datasets.map(v => `RDO ${v.label}`);
+      this.chartdata.datasets[0].data = datasets.map(v => v.value);
+      this.chartdata.datasets[0].backgroundColor = datasets.map(
+        v => v.background
+      );
+      this.options.scales.xAxes[0].ticks.max =
+        this.chartdata.datasets[0].data[0] +
+        Math.floor(this.chartdata.datasets[0].data[0] / 5);
+      this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
+    },
+    getMockRdo() {
+      var datasets = [];
+      for (let index = 0; index < this.rdos.length; index++) {
+        // var val = Math.floor(Math.random() * 100000) + 10000;
+        var random_color =
+          "#" + Math.floor(Math.random() * 16777215).toString(16);
+        datasets.push({
+          label: this.rdos[index].code,
+          value: this.rdos[index].collections,
           background: random_color
         });
       }
@@ -131,7 +162,8 @@ export default {
         v => v.background
       );
       this.options.scales.xAxes[0].ticks.max =
-            this.chartdata.datasets[0].data[0] + Math.floor(this.chartdata.datasets[0].data[0]/5);
+        this.chartdata.datasets[0].data[0] +
+        Math.floor(this.chartdata.datasets[0].data[0] / 5);
       this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
     },
     formatCounts(val, disableShortcut) {
@@ -163,31 +195,31 @@ export default {
       return (
         (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
       );
-    },
-    setMockDataRealtime() {
-      setInterval(() => {
-        try {
-          var datasets = [];
-          for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
-            var random = Math.round(Math.random() * 2000) + 2000;
-            datasets.push({
-              label: this.chartdata.labels[i],
-              value: this.chartdata.datasets[0].data[i] + random,
-              background: this.chartdata.datasets[0].backgroundColor[i]
-            });
-          }
-          datasets.sort((a, b) => b.value - a.value);
-          this.chartdata.labels = datasets.map(v => v.label);
-          this.chartdata.datasets[0].data = datasets.map(v => v.value);
-          this.chartdata.datasets[0].backgroundColor = datasets.map(
-            v => v.background
-          );
-          this.options.scales.xAxes[0].ticks.max =
-            this.chartdata.datasets[0].data[0] + Math.floor(this.chartdata.datasets[0].data[0]/5);
-          this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
-        } catch (error) {}
-      }, 1000);
     }
+    // setMockDataRealtime() {
+    //   setInterval(() => {
+    //     try {
+    //       var datasets = [];
+    //       for (let i = 0; i < this.chartdata.datasets[0].data.length; i++) {
+    //         var random = Math.round(Math.random() * 2000) + 2000;
+    //         datasets.push({
+    //           label: this.chartdata.labels[i],
+    //           value: this.chartdata.datasets[0].data[i] + random,
+    //           background: this.chartdata.datasets[0].backgroundColor[i]
+    //         });
+    //       }
+    //       datasets.sort((a, b) => b.value - a.value);
+    //       this.chartdata.labels = datasets.map(v => v.label);
+    //       this.chartdata.datasets[0].data = datasets.map(v => v.value);
+    //       this.chartdata.datasets[0].backgroundColor = datasets.map(
+    //         v => v.background
+    //       );
+    //       this.options.scales.xAxes[0].ticks.max =
+    //         this.chartdata.datasets[0].data[0] + Math.floor(this.chartdata.datasets[0].data[0]/5);
+    //       this.$refs.rdo_bar_chart.renderChart(this.chartdata, this.options);
+    //     } catch (error) {}
+    //   }, 1000);
+    // }
   }
 };
 </script>

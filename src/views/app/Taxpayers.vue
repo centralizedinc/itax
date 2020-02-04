@@ -1,36 +1,44 @@
 <template>
-    <a-row type="flex" justify="center" :gutter="8" style="margin-top:1vh">
-        <a-col :span="12">
-            <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/new')">
-            <a-row type="flex" align="middle" :gutter="8">
-              <a-col :span="8">
-                  <a-avatar  shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
-                        <a-icon style="font-size:24px" type="user-add"></a-icon>
-                    </a-avatar>
-              </a-col>
-              <a-col :span="16">
-                  <h4>Add New Taxpayer</h4>
-                  <p>Create a new taxpayer and add it on your connections </p>
-              </a-col>
-            </a-row>
-            </a-card>
-        </a-col>
-        <a-col :span="12">
-            <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/upload')" >
-            <a-row type="flex" align="middle" :gutter="8">
-              <a-col :span="8">
-                  <a-avatar   shape="square" :size="60" style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);">
-                        <a-icon style="font-size:24px" type="upload"></a-icon>
-                    </a-avatar>
-              </a-col>
-              <a-col :span="16">
-                  <h4>Upload Taxpayer</h4>
-                  <p>Create several taxpayers at once using a smart tax template</p>
-              </a-col>
-            </a-row>
-            </a-card>
-        </a-col>
-        <!-- <a-col :span="8">
+  <a-row type="flex" justify="center" :gutter="8" style="margin-top:1vh">
+    <a-col :span="12">
+      <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/new')">
+        <a-row type="flex" align="middle" :gutter="8">
+          <a-col :span="8">
+            <a-avatar
+              shape="square"
+              :size="60"
+              style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
+            >
+              <a-icon style="font-size:24px" type="user-add"></a-icon>
+            </a-avatar>
+          </a-col>
+          <a-col :span="16">
+            <h4>Add New Taxpayer</h4>
+            <p>Create a new taxpayer and add it on your connections</p>
+          </a-col>
+        </a-row>
+      </a-card>
+    </a-col>
+    <a-col :span="12">
+      <a-card class="avatar_btn" @click="$router.push('/app/taxpayer/upload')">
+        <a-row type="flex" align="middle" :gutter="8">
+          <a-col :span="8">
+            <a-avatar
+              shape="square"
+              :size="60"
+              style="z-index:1;background: linear-gradient(to left, #000046, #1cb5e0);"
+            >
+              <a-icon style="font-size:24px" type="upload"></a-icon>
+            </a-avatar>
+          </a-col>
+          <a-col :span="16">
+            <h4>Upload Taxpayer</h4>
+            <p>Create several taxpayers at once using a smart tax template</p>
+          </a-col>
+        </a-row>
+      </a-card>
+    </a-col>
+    <!-- <a-col :span="8">
             <a-card>
             <a-row type="flex" align="middle" :gutter="8">
               <a-col :span="8">
@@ -46,34 +54,52 @@
             </a-card>
         </a-col> -->
 
-        <a-col :span="24" style="margin-top: 1vh">
-            <a-card>
-                 <h3>My Taxpayer Vault</h3>
-                 <a-divider></a-divider>
-                 <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
-                  <a-list itemLayout="horizontal" :dataSource="taxpayers" :loading="loading">
-                        <a-list-item slot="renderItem" slot-scope="item">
-                            <!-- <a-card> -->
-                            <a slot="actions">edit</a>
-                            <a slot="actions">view</a>
-                        <a-list-item-meta>
-                            
-                            <p slot="title" >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`:'item.corporate_details.registeredName'}}</p>
-                            <template slot="description" >
-                                <p><b>{{formatTIN(item.tin)}}</b></p>
-                                <p>{{item.taxpayer_type=='I'?'Individual':'Non-Individual'}}</p>
-                            </template>
-                            <a-avatar style="border: solid 1px #1cb5e0" slot="avatar" :src="getUserByTin(item.tin).avatar.location" :size="64" />
-                        </a-list-item-meta>
-                        <!-- </a-card> -->
-                        </a-list-item>
-                    </a-list>
-            </a-card>
-           
-        </a-col>
-          
-          
-        <!-- <a-col  :span="12">
+    <a-col :span="24" style="margin-top: 1vh">
+      <a-card>
+        <h3>My Taxpayer Vault</h3>
+        <a-divider></a-divider>
+        <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
+        <a-list
+          itemLayout="horizontal"
+          :dataSource="taxpayers"
+          :loading="loading"
+        >
+          <a-list-item slot="renderItem" slot-scope="item">
+            <!-- <a-card> -->
+            <a slot="actions">edit</a>
+            <a slot="actions">view</a>
+            <a-list-item-meta>
+              <p slot="title">
+                {{
+                  item.taxpayer_type == "I"
+                    ? `${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`
+                    : `${item.registered_name}`
+                }}
+              </p>
+              <template slot="description">
+                <p>
+                  <b>{{ formatTIN(item.tin) }}</b>
+                </p>
+                <p>
+                  {{
+                    item.taxpayer_type == "I" ? "Individual" : "Non-Individual"
+                  }}
+                </p>
+              </template>
+              <a-avatar
+                style="border: solid 1px #1cb5e0"
+                slot="avatar"
+                :src="getUserByTin(item.tin).avatar.location"
+                :size="64"
+              />
+            </a-list-item-meta>
+            <!-- </a-card> -->
+          </a-list-item>
+        </a-list>
+      </a-card>
+    </a-col>
+
+    <!-- <a-col  :span="12">
           <a-input-search
             placeholder="Search"
             @search="onSearch"
@@ -82,84 +108,88 @@
       <a-col :span="24" style="margin-top: 2vh">          
           <a-table :columns="cols"></a-table>
       </a-col> -->
-    </a-row>
+  </a-row>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            loading:false,
-            taxpayers:[],
-            users: [],
-            cols:[
-                {
-                    title: 'Name',
-                    dataIndex: 'name',
-                    sorter: true
-                },
-                {
-                    title: 'TIN',
-                    dataIndex: 'tin'
-                },
-                {
-                    title: 'Classification',
-                    dataIndex: 'classification'
-                },
-                {
-                    title: 'RDO',
-                    dataIndex: 'rdo'
-                }
-            ]
-        }        
-    },
-    created(){
-        this.init();
-    },
-    methods:{
-        init(){
-            this.loading = true;
-            this.$http.get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
-            .then(results=>{
-                console.log('result1 ::: ', JSON.stringify(results.data))
-                this.taxpayers.push(results.data.model.taxpayer);
-                this.users.push(results.data.model.user);
-                return this.$http.get(`/connections/${this.$store.state.account_session.user.tin}`)
-            })
-            .then(results=>{
-                console.log('result2 ::: ', JSON.stringify(results.data))
-                var tins = []
-                results.data.model.forEach(tin=>{
-                    tins.push(tin.to)
-                })
-                return this.$http.post('/taxpayer/details/',tins)
-            })
-            .then(results =>{
-                console.log('result2 ::: ', JSON.stringify(results.data))
-                this.loading = false;
-                this.users.push(...results.data.model.users);
-                this.taxpayers.push(...results.data.model.taxpayers)
-            })
-            .catch(err=>{
-                console.log(`err ::: `, err)
-                this.loading = false;
-            })
-            // this.taxpayers = this.$store.state.taxpayers.records
-            
-
+  data() {
+    return {
+      loading: false,
+      taxpayers: [],
+      users: [],
+      cols: [
+        {
+          title: "Name",
+          dataIndex: "name",
+          sorter: true
         },
-        getUserByTin(tin){
-            const user = this.users.find(v => v.tin === tin);
-            return user || {
-                avatar: { location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg' }
-            };
+        {
+          title: "TIN",
+          dataIndex: "tin"
+        },
+        {
+          title: "Classification",
+          dataIndex: "classification"
+        },
+        {
+          title: "RDO",
+          dataIndex: "rdo"
         }
+      ]
+    };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      this.loading = true;
+      this.$http
+        .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+        .then(results => {
+          console.log("result1 ::: ", JSON.stringify(results.data));
+          this.taxpayers.push(results.data.model.taxpayer);
+          this.users.push(results.data.model.user);
+          return this.$http.get(
+            `/connections/${this.$store.state.account_session.user.tin}`
+          );
+        })
+        .then(results => {
+          console.log("result2 :: connections: ", JSON.stringify(results.data));
+          var tins = [];
+          results.data.model.forEach(tin => {
+            tins.push(tin.to);
+          });
+
+          return this.$http.post("/taxpayer/details/", tins);
+        })
+        .then(results => {
+          console.log("result2 ::: ", JSON.stringify(results.data));
+          this.loading = false;
+          this.users.push(...results.data.model.users);
+          this.taxpayers.push(...results.data.model.taxpayers);
+          console.log("taxpayers data: " + JSON.stringify(this.taxpayers));
+        })
+        .catch(err => {
+          console.log(`err ::: `, err);
+          this.loading = false;
+        });
+      // this.taxpayers = this.$store.state.taxpayers.records
+    },
+    getUserByTin(tin) {
+      const user = this.users.find(v => v.tin === tin);
+      return (
+        user || {
+          avatar: {
+            location:
+              "https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg"
+          }
+        }
+      );
     }
-
-
-}
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

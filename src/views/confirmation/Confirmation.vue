@@ -12,7 +12,7 @@ export default {
       .dispatch("REGISTRATION_CONFIRMATION", this.$route.params.code)
       .then(result => {
         console.log("result.data :", result);
-        this.$notification.open({
+        this.$notification.success({
           message: result.message,
           icon: <a-icon type="check" style="color: blue" />
         });
@@ -20,7 +20,7 @@ export default {
       })
       .catch(err => {
         console.log("confirmation err :", err);
-        this.$notification.open({
+        this.$notification.error({
           message: err.message,
           icon: <a-icon type="exclamation" style="color: red" />
         });

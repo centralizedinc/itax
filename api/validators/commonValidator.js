@@ -93,7 +93,8 @@ class CommonValidator {
     }
 
     static computeCompromise() {
-        return 0;
+        // Mock amount
+        return 1000;
     }
 
     static validateMandatory(value, message) {
@@ -111,6 +112,12 @@ class CommonValidator {
         var error_messages = [];
         console.log(`Checking due date if late filing at page ${page}`);
         if (this.isLateFiling(form_details.due_date)) {
+            console.log("Late filing...")
+            error_messages.push({
+                page,
+                field: 'latefiling',
+                error: 'Late Filing'
+            })
             // Compute Surcharge
             const surcharge = this.computeSurcharges(form_details.tax_due);
             form_details.surcharge = form_details.surcharge ? form_details.surcharge.toFixed(2) : "0.00";
@@ -119,7 +126,7 @@ class CommonValidator {
                 error_messages.push({
                     page,
                     field: 'surcharge',
-                    error: `Surcharge amount must be ${formatAmount(surcharge)}`,
+                    error: `Surcharge amount must be ${this.formatAmount(surcharge)}`,
                     required_value: surcharge.toFixed(2)
                 })
             }
@@ -131,7 +138,7 @@ class CommonValidator {
                 error_messages.push({
                     page,
                     field: 'interest',
-                    error: `Interest amount must be ${formatAmount(interest)}`,
+                    error: `Interest amount must be ${this.formatAmount(interest)}`,
                     required_value: interest.toFixed(2)
                 })
             }
@@ -143,9 +150,10 @@ class CommonValidator {
                 error_messages.push({
                     page,
                     field: 'compromise',
-                    error: `Compromise amount must be ${formatAmount(compromise)}`,
+                    error: `Compromise amount must be ${this.formatAmount(compromise)}`,
                     required_value: compromise.toFixed(2)
                 })
+                console.log('error_messages :', error_messages);
             }
         }
         return { error_messages, form_details };
@@ -160,12 +168,14 @@ class CommonValidator {
         nested_form.due_date = form.due_date;
         console.log('nested_form :', nested_form);
         var { error_messages, form_details } = this.checkDueDate(nested_form, page);
+        console.log('error_messages :', error_messages);
         form[nested_field] = form_details
         var errors = [];
         errors = error_messages.map(v => {
             v.field = `${nested_field}.${v.field}`;
             return v
         })
+        console.log('checkNestedDueDate errors :', errors);
         return { error_messages: errors, form_details: form }
     }
 

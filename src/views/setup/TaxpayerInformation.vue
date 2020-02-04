@@ -1,21 +1,21 @@
 <template>
   <div>
     <a-row type="flex" align="middle" :gutter="5">
-      <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
+      <a-col :xs="{ span: 24 }" :md="{ span: 10 }">
         <a-form-item
           label="TIN"
           :label-col="{ span: 9 }"
           :wrapper-col="{ span: 15 }"
-          
           :validate-status="error_desc('tin') ? 'error' : tin_validate_status"
           :help="error_desc('tin')"
         >
-        <!-- has-feedback
+          <!-- has-feedback
           :validate-status="error_desc('tin') ? 'error' : tin_validate_status"
-          :help="error_desc('tin')" -->
+          :help="error_desc('tin')"-->
           <a-input
             v-model="details.taxpayer.tin"
-            placeholder="TIN"
+            placeholder="13-digit TIN"
+            maxlength="13"
             :disabled="this.user.tin"
             @blur="checkTin"
           />
@@ -31,10 +31,12 @@
         >
           <a-select style="width: 100%" v-model="details.taxpayer.rdo_code">
             <a-select-option
+            :title="item.description"
               v-for="(item, index) in rdos"
               :key="index"
               :value="item.code"
-            >{{item.code}} - {{item.description}}</a-select-option>
+              >{{ item.code }} </a-select-option>
+            >
           </a-select>
         </a-form-item>
       </a-col>
@@ -46,7 +48,10 @@
           :validate-status="error_desc('line_of_business') ? 'error' : ''"
           :help="error_desc('line_of_business')"
         >
-          <a-input v-model="details.taxpayer.line_of_business" placeholder="Line of Business" />
+          <a-input
+            v-model="details.taxpayer.line_of_business"
+            placeholder="Line of Business"
+          />
         </a-form-item>
       </a-col>
     </a-row>
@@ -60,7 +65,10 @@
           :validate-status="error_desc('filer_type') ? 'error' : ''"
           :help="error_desc('filer_type')"
         >
-          <a-radio-group buttonStyle="solid" v-model="details.taxpayer.filer_type">
+          <a-radio-group
+            buttonStyle="solid"
+            v-model="details.taxpayer.filer_type"
+          >
             <a-radio-button value="sp">Single Proprietor</a-radio-button>
             <a-radio-button value="p">Professional</a-radio-button>
             <a-radio-button value="em">Employee</a-radio-button>
@@ -113,13 +121,16 @@
           :validate-status="error_desc('registered_name') ? 'error' : ''"
           :help="error_desc('registered_name')"
         >
-          <a-input v-model="details.taxpayer.registered_name" placeholder="Registered Name" />
+          <a-input
+            v-model="details.taxpayer.registered_name"
+            placeholder="Registered Name"
+          />
         </a-form-item>
       </a-col>
     </a-row>
 
     <a-row type="flex" align="middle" :gutter="5">
-      <a-col :xs="{ span: 24 }" :md="{ span: 10  }">
+      <a-col :xs="{ span: 24 }" :md="{ span: 10 }">
         <a-form-item
           label="Date of Birth"
           :label-col="{ span: 9 }"
@@ -128,6 +139,7 @@
           :help="error_desc('birthDate')"
         >
           <a-date-picker
+          :mode="mode1"
             style="width:100%"
             placeholder="Date of Birth"
             v-model="details.taxpayer.individual_details.birthDate"
@@ -143,7 +155,10 @@
           :validate-status="error_desc('gender') ? 'error' : ''"
           :help="error_desc('gender')"
         >
-          <a-radio-group buttonStyle="solid" v-model="details.taxpayer.individual_details.gender">
+          <a-radio-group
+            buttonStyle="solid"
+            v-model="details.taxpayer.individual_details.gender"
+          >
             <a-radio-button value="M">Male</a-radio-button>
             <a-radio-button value="F">Female</a-radio-button>
           </a-radio-group>
@@ -174,7 +189,10 @@
           :validate-status="error_desc('email') ? 'error' : ''"
           :help="error_desc('email')"
         >
-          <a-input v-model="details.taxpayer.contact_details.email" placeholder="Email" />
+          <a-input
+            v-model="details.taxpayer.contact_details.email"
+            placeholder="Email"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
@@ -185,7 +203,10 @@
           :validate-status="error_desc('telno') ? 'error' : ''"
           :help="error_desc('telno')"
         >
-          <a-input v-model="details.taxpayer.contact_details.telno" placeholder="Tel No" />
+          <a-input
+            v-model="details.taxpayer.contact_details.telno"
+            placeholder="Tel No"
+          />
         </a-form-item>
       </a-col>
       <a-col :xs="{ span: 24 }" :md="{ span: 7 }">
@@ -196,7 +217,10 @@
           :validate-status="error_desc('mobile') ? 'error' : ''"
           :help="error_desc('mobile')"
         >
-          <a-input v-model="details.taxpayer.contact_details.mobile" placeholder="Contact No" />
+          <a-input
+            v-model="details.taxpayer.contact_details.mobile"
+            placeholder="Contact No"
+          />
         </a-form-item>
       </a-col>
     </a-row>
@@ -210,7 +234,11 @@
           :validate-status="error_desc('registered_address') ? 'error' : ''"
           :help="error_desc('registered_address')"
         >
-          <a-textarea :rows="3" placeholder="Registered Address" v-model="details.taxpayer.address"></a-textarea>
+          <a-textarea
+            :rows="3"
+            placeholder="Registered Address"
+            v-model="details.taxpayer.address"
+          ></a-textarea>
         </a-form-item>
       </a-col>
     </a-row>
@@ -243,13 +271,21 @@
           :validate-status="error_desc('zipCode') ? 'error' : ''"
           :help="error_desc('zipCode')"
         >
-          <a-input v-model="details.taxpayer.address_details.zipCode" placeholder="Zip Code" />
+          <a-input
+            maxlength="4"
+            v-model="details.taxpayer.address_details.zipCode"
+            placeholder="Zip Code"
+          />
         </a-form-item>
       </a-col>
     </a-row>
     <a-button-group style="float: right">
-      <a-button @click="$emit('previous', 0)" :disabled="loading">Previous</a-button>
-      <a-button type="primary" @click="validation" :loading="loading">Next</a-button>
+      <a-button @click="$emit('previous', 0)" :disabled="loading"
+        >Previous</a-button
+      >
+      <a-button type="primary" @click="validation" :loading="loading"
+        >Next</a-button
+      >
     </a-button-group>
   </div>
 </template>
@@ -276,6 +312,7 @@ export default {
       default: false
     }
   },
+
   computed: {
     user() {
       return this.deepCopy(this.$store.state.account_session.user);
@@ -295,6 +332,7 @@ export default {
   },
   watch: {
     registered_name(val) {
+      console.log("watch registered name: " + val);
       this.details.taxpayer.registered_name = val;
     }
   },

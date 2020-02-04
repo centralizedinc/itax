@@ -115,12 +115,18 @@
           <a-radio :value="false">No</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item v-if="form.is_avail_tax_relief">
-        <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
+
+      <a-form-item label="If yes, specify">
+        <a-textarea v-model="form.avail_tax_relief"></a-textarea>
       </a-form-item>
     </a-form>
 
-    <!-- Part II -->
+    <!-- <a-form-item v-if="form.is_avail_tax_relief">
+        <a-input placeholder="If yes, specify" v-model="form.avail_tax_relief"></a-input>
+      </a-form-item>
+    </a-form>-->
+
+    <!--------------------------------------------------- Part II ------------------------------------------>
     <a-form v-show="step===2">
       <a-form-item :validate-status="error_item('atc')" :help="error_desc('atc')">
         <div style="color: black">
@@ -284,54 +290,18 @@
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
           <span
             class="text-link"
+            @click="show_sched2=true"
           >Schedule 2</span>)
+          <schedule-two
+            v-if="show_sched2"
+            :show="show_sched2"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
           <!-- @click="show_sched2=true" -->
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer2">Schedule 2</a-button> -->
-      <a-drawer
-        title="Schedule 2 Purchase/Importation of Capital Goods (Aggregate Amount Not Exceeding ₱1Million)"
-        placement="right"
-        :closable="false"
-        @close="sched2_drawer=false"
-        :visible="sched2_drawer"
-        width="1000"
-      >
-        <a-table bordered :dataSource="sched2_data" :columns="columns_sched2">
-          <template slot="date_purchased" slot-scope="text, record,index">
-            <a-date-picker
-              v-model="sched2_data[index].date_purchased"
-              @change="check_sched2"
-              style="width: 100%"
-            />
-          </template>
-          <template slot="description" slot-scope="text, record,index">
-            <a-input v-model="sched2_data[index].description"></a-input>
-          </template>
-          <template slot="vat" slot-scope="text, record,index">
-            <a-input-number v-model="sched2_data[index].vat" @change="sched2Compute"></a-input-number>
-          </template>
-          <template slot="tax" slot-scope="text, record,index">
-            <a-input-number disabled v-model="sched2_data[index].tax"></a-input-number>
-          </template>
-          <template slot="operation" slot-scope="text, record, index">
-            <a-popconfirm
-              v-if="sched2_data.length"
-              title="Sure to delete?"
-              @confirm="() => delete_sched2(index)"
-            >
-              <a href="javascript:;">Delete</a>
-            </a-popconfirm>
-          </template>
-          <template slot="footer">
-            <a-button @click="addSched2">Add</a-button>
-            <a-button>Save</a-button>
-            <p
-              align="right"
-            >18A: {{form.purCapGoodsNotExceed}} 18B: {{form.outputCapGoodsNotExceed}}</p>
-          </template>
-        </a-table>
-      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -355,20 +325,17 @@
       <a-form-item class="computation-item" label>
         <div style="color: black">
           18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
-          <span class="text-link">Schedule 3A</span>)
+          <!-- <span class="text-link" @click="show_sched3A=true">Schedule 3A</span> -->
+          <span class="text-link" @click="openPage2sched3()">Schedule 3A</span>)
+          <schedule-threea
+            v-if="show_sched3A"
+            :show="show_sched3A"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
       </a-form-item>
       <!-- <a-button type="link" @click="showDrawer3A">Schedule 3 A</a-button> -->
-      <a-drawer
-        title="Schedule 3 Purchases/Importation This Period"
-        placement="right"
-        :closable="false"
-        @close="sched3A_drawer=false"
-        :visible="sched3A_drawer"
-        width="1500"
-      >
-        <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A"></a-table>
-      </a-drawer>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
@@ -515,7 +482,13 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20A (
-          <span class="text-link">Schedule 3B</span>)
+          <span class="text-link" @click="openPage2sched3B()">Schedule 3B</span>)
+          <schedule-threeb
+            v-if="show_sched3B"
+            :show="show_sched3B"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="primary" @click="sched3B_drawer = true">Schedule 3B</a-button> -->
         <a-input-number
@@ -526,7 +499,13 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20B (
-          <span class="text-link">Schedule 4</span>)
+          <span class="text-link" @click="openPage2sched4()">Schedule 4</span>)
+          <schedule-four
+            v-if="show_sched4"
+            :show="show_sched4"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched4_drawer = true">Schedule 4</a-button> -->
         <a-input-number
@@ -537,7 +516,13 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20C (
-          <span class="text-link">Schedule 5</span>)
+          <span class="text-link" @click="openPage2sched5()">Schedule 5</span>)
+          <schedule-five
+            v-if="show_sched5"
+            :show="show_sched5"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched5_drawer = true">Schedule 5</a-button> -->
         <a-input-number
@@ -591,9 +576,14 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           23A (
-          <span class="text-link">Schedule 6</span>)
+          <span class="text-link" @click="openPage2sched6()">Schedule 6</span>)
+          <schedule-six
+            v-if="show_sched6"
+            :show="show_sched6"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
-
         <!-- <a-button type="link" @click="sched6_drawer = true">Schedule 6</a-button> -->
         <a-input-number
           disabled
@@ -604,7 +594,13 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           23B (
-          <span class="text-link">Schedule 7</span>)
+          <span class="text-link" @click="openPage2sched7()">Schedule 7</span>)
+          <schedule-seven
+            v-if="show_sched7"
+            :show="show_sched7"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched7_drawer = true">Schedule 7</a-button> -->
         <a-input-number
@@ -616,7 +612,13 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           23C (
-          <span class="text-link">Schedule 8</span>)
+          <span class="text-link" @click="openPage2sched8()">Schedule 8</span>)
+          <schedule-eight
+            v-if="show_sched8"
+            :show="show_sched8"
+            :form="form"
+            @close="updateSchedAndClose"
+          />
         </div>
         <!-- <a-button type="link" @click="sched8_drawer = true">Schedule 8</a-button> -->
         <a-input-number
@@ -722,199 +724,32 @@
         ></a-input-number>
       </a-form-item>
     </a-form>
-    <!-- schedule 3B -->
-    <a-drawer
-      title="Schedule 3 B Purchases/Importation Previous Period"
-      placement="right"
-      :closable="false"
-      @close="sched3B_drawer=false"
-      :visible="sched3B_drawer"
-      width="1000"
-    >
-      <a-table bordered :dataSource="sched3B_data" :columns="columns_sched3A"></a-table>
-    </a-drawer>
-    <!-- schedule 4 -->
-    <a-drawer
-      title="Schedule 4 Input Tax Attributable to Sale to Government"
-      placement="right"
-      :closable="false"
-      @close="sched4_drawer = false"
-      :visible="sched4_drawer"
-      width="1000"
-    >
-      <a-row>
-        <a-col :span="18">
-          <div>
-            <p>
-              Input Tax directly attribute to sale to government
-              Add: Ratable portion of Input Tax not directly attribute to any activity:
-            </p>
-          </div>
-        </a-col>
-        <a-col :span="6">
-          <div>
-            <a-input-number></a-input-number>
-          </div>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="9">
-          <a-row>
-            <a-col :span="12">Taxable sales to government</a-col>
-            <a-col :span="12">
-              <a-input-number disabled></a-input-number>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="12">Total Sales</a-col>
-            <a-col :span="12">
-              <a-input-number disabled></a-input-number>
-            </a-col>
-          </a-row>
-        </a-col>
-        <a-col :span="4">Amount of Input Tax not directly attributable</a-col>
-        <a-col :span="5">
-          <a-input-number></a-input-number>
-        </a-col>
-        <a-col :span="6">
-          <a-input-number disabled></a-input-number>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="18">Total Input Tax attributable to sale to government</a-col>
-        <a-col :span="6">
-          <a-input-number disabled></a-input-number>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="18">Less Standard Input Tax to sale to government</a-col>
-        <a-col :span="6">
-          <a-input-number></a-input-number>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="18">Input Tax on Sale to Govt. closed to expense (to Item 20B)</a-col>
-        <a-col :span="6">
-          <a-input-number disabled></a-input-number>
-        </a-col>
-      </a-row>
-    </a-drawer>
-    <!-- schedule 5 -->
-    <a-drawer
-      title="Schedule 4 Input Tax Attributable to Sale to Government"
-      placement="right"
-      :closable="false"
-      @close="sched5_drawer = false"
-      :visible="sched5_drawer"
-      width="1000"
-    >
-      <a-row>
-        <a-col :span="18">
-          <div>
-            <p>
-              Input Tax directly attribute to sale to government
-              Add: Ratable portion of Input Tax not directly attribute to any activity:
-            </p>
-          </div>
-        </a-col>
-        <a-col :span="6">
-          <div>
-            <a-input-number></a-input-number>
-          </div>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="9">
-          <a-row>
-            <a-col :span="12">Taxable sales to government</a-col>
-            <a-col :span="12">
-              <a-input-number disabled></a-input-number>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="12">Total Sales</a-col>
-            <a-col :span="12">
-              <a-input-number disabled></a-input-number>
-            </a-col>
-          </a-row>
-        </a-col>
-        <a-col :span="4">Amount of Input Tax not directly attributable</a-col>
-        <a-col :span="5">
-          <a-input-number></a-input-number>
-        </a-col>
-        <a-col :span="6">
-          <a-input-number disabled></a-input-number>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="18">Total Input Tax attributable to sale to government</a-col>
-        <a-col :span="6">
-          <a-input-number disabled></a-input-number>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="18">Less Standard Input Tax to sale to government</a-col>
-        <a-col :span="6">
-          <a-input-number></a-input-number>
-        </a-col>
-      </a-row>
-      <!-- -- -->
-      <a-row>
-        <a-col :span="18">Input Tax on Sale to Govt. closed to expense (to Item 20B)</a-col>
-        <a-col :span="6">
-          <a-input-number disabled></a-input-number>
-        </a-col>
-      </a-row>
-    </a-drawer>
-    <!-- schedule 6 -->
-    <a-drawer
-      title="Schedule 6 Purchases/Importation Previous Period"
-      placement="right"
-      :closable="false"
-      @close="sched6_drawer=false"
-      :visible="sched6_drawer"
-      width="1000"
-    >
-      <a-table bordered :dataSource="sched6_data" :columns="columns_sched6"></a-table>
-    </a-drawer>
-    <!-- schedule 7 -->
-    <a-drawer
-      title="Schedule 7 Purchases/Importation Previous Period"
-      placement="right"
-      :closable="false"
-      @close="sched7_drawer=false"
-      :visible="sched7_drawer"
-      width="1000"
-    >
-      <a-table bordered :dataSource="sched6_data" :columns="columns_sched7"></a-table>
-    </a-drawer>
-    <!-- schedule 8 -->
-    <a-drawer
-      title="Schedule 8 Purchases/Importation Previous Period"
-      placement="right"
-      :closable="false"
-      @close="sched8_drawer=false"
-      :visible="sched8_drawer"
-      width="1000"
-    >
-      <a-table bordered :dataSource="sched8_data" :columns="columns_sched8"></a-table>
-    </a-drawer>
   </div>
 </template>
 
 <script>
 import ScheduleOne from "./Schedule1";
+import ScheduleTwo from "./Schedule2";
+import ScheduleThreea from "./Schedule3A";
+import ScheduleThreeb from "./Schedule3B";
+import ScheduleFour from "./Schedule4";
+import ScheduleFive from "./Schedule5";
+import ScheduleSix from "./Schedule6";
+import ScheduleSeven from "./Schedule7";
+import ScheduleEight from "./Schedule8";
+import moment from 'moment';
 
 export default {
   components: {
-    ScheduleOne
+    ScheduleOne,
+    ScheduleTwo,
+    ScheduleThreea,
+    ScheduleThreeb,
+    ScheduleFour,
+    ScheduleFive,
+    ScheduleSix,
+    ScheduleSeven,
+    ScheduleEight
   },
   props: {
     form: {
@@ -933,10 +768,60 @@ export default {
     }
   },
   created() {
-    this.form.pdf_page = 1
+    this.form.return_period = moment(this.form.return_period)
+    this.form.pdf_page = 1;
     console.log("this.form###### :", this.form);
   },
   methods: {
+    openPage2() {
+      this.show_sched1 = true;
+      this.form.pdf_page = 2;
+    },
+    openPage2sched2() {
+      this.show_sched1 = true;
+      this.form.pdf_page = 2;
+    },
+    openPage2sched3(){
+      this.show_sched3A=true
+      this.form.pdf_page = 2
+    },
+    openPage2sched3B(){
+      this.show_sched3B=true
+      this.form.pdf_page = 2
+    },
+    openPage2sched4(){
+      this.show_sched4=true
+      this.form.pdf_page = 2
+    },
+    openPage2sched5(){
+      this.show_sched5=true
+      this.form.pdf_page = 2
+    },
+    openPage2sched6(){
+      this.show_sched6=true
+      this.form.pdf_page = 2
+    },
+    openPage2sched7(){
+      this.show_sched7=true
+      this.form.pdf_page = 2
+    },
+    openPage2sched8(){
+      this.show_sched8=true
+      this.form.pdf_page = 2
+    },
+    closePage2(){
+      this.form.pdf_page = 1
+      this.show_sched1 = false;
+      this.show_sched2 = false;
+      this.show_sched3A = false;
+      this.show_sched3B = false;
+      this.show_sched4 = false;
+      this.show_sched5 = false;
+      this.show_sched6 = false;
+      this.show_sched7 = false;
+      this.show_sched8 = false;
+      this.updateSchedAndClose()
+    },
     // 16A
     getTotalSales() {
       console.log("this.form.totalAtcAmount :", this.form.totalAtcAmount);
@@ -1069,9 +954,26 @@ export default {
       //   this.form[key] = data[key];
       // })
       this.form.sched1 = data.sched1;
+      this.form.sched2 = data.sched2;
+      this.form.sched3A = data.sched3A;
+      this.form.sched3B = data.sched3B;
+      this.form.sched4 = data.sched4;
+      this.form.sched5 = data.sched5;
+      this.form.sched6 = data.sched6;
+      this.form.sched7 = data.sched7;
+      this.form.sched8 = data.sched8;
       this.form.totalAtcAmount = data.totalAtcAmount;
       this.form.totalAtcOutput = data.totalAtcOutput;
+      this.form.pdf_page = 1;
       this.show_sched1 = false;
+      this.show_sched2 = false;
+      this.show_sched3A = false;
+      this.show_sched3B = false;
+      this.show_sched4 = false;
+      this.show_sched5 = false;
+      this.show_sched6 = false;
+      this.show_sched7 = false;
+      this.show_sched8 = false;
     },
     sched2Save() {},
     delete_sched2(index) {
@@ -1130,9 +1032,6 @@ export default {
     onClose_sched2() {
       this.sched2_drawer = false;
     },
-    onClose_sched2() {
-      this.sched2_drawer = false;
-    },
     showDrawer2() {
       console.log("data source show drawer; " + this.dataSource);
       this.sched2_drawer = true;
@@ -1172,14 +1071,14 @@ export default {
   data() {
     return {
       show_sched1: false,
-      sched2_drawer: false,
-      sched3A_drawer: false,
-      sched3B_drawer: false,
-      sched4_drawer: false,
-      sched5_drawer: false,
-      sched6_drawer: false,
-      sched7_drawer: false,
-      sched8_drawer: false,
+      show_sched2: false,
+      show_sched3A: false,
+      show_sched3B: false,
+      show_sched4: false,
+      show_sched5: false,
+      show_sched6: false,
+      show_sched7: false,
+      show_sched8: false,
       loading: false,
       form_layout: {
         label_col: { span: 2 },
@@ -1425,19 +1324,19 @@ export default {
     };
   },
   //----------------------------
- watch: {
-   step() {
-     if(this.step ===   0 ){
-         this.form.pdf_page = 1
-     }else{
-         this.form.pdf_page =2
-     }
-    },
+  watch: {
+    //  step() {
+    //    if(this.step ===   0 ){
+    //        this.form.pdf_page = 1
+    //    }else{
+    //        this.form.pdf_page =2
+    //    }
+    //   },
     loading(val) {
       this.$emit("loading", val);
     },
 
-//--------------------------------
+    //--------------------------------
 
     form: {
       deep: true,
@@ -1456,8 +1355,7 @@ export default {
     },
     "form.taxpayer.address_details.zipCode": val => {
       console.log("form.taxpayer.address_details.zipCode ", val);
-    },
-    
+    }
   }
 };
 </script>

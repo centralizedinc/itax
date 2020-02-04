@@ -26,7 +26,7 @@
             <a-button
               slot="tabBarExtraContent"
               type="primary"
-              v-if="currentView===2"
+              v-if="currentView===4"
               @click="showAddTP=true"
             >Add Taxpayer</a-button>
           </a-tabs>
@@ -49,10 +49,22 @@
       <a-affix :offsetTop="100">
         <a-card>
           <a-steps direction="vertical" :current="currentView">
-            <a-step title="Account Details" description="Your account details in Smart Tax portal." />
-            <a-step title="Taxpayer Information" description="Details that will be using in filing tax form" />
-            <a-step title="Spouse Details" description="Spouse details that will be using in filing tax form." />
-            <a-step title="Company Details" description="Company details that will be using in filing tax form." />
+            <a-step
+              title="Account Details"
+              description="Your account details in Smart Tax portal."
+            />
+            <a-step
+              title="Taxpayer Information"
+              description="Details that will be using in filing tax form"
+            />
+            <a-step
+              title="Spouse Details"
+              description="Spouse details that will be using in filing tax form."
+            />
+            <a-step
+              title="Company Details"
+              description="Company details that will be using in filing tax form."
+            />
             <a-step title="Connections" description="Taxpayers that will be link to your account." />
           </a-steps>
         </a-card>
@@ -173,6 +185,12 @@ export default {
         }
       },
       currentView: 0,
+      spouse_data: {
+        individual_details: {},
+        contact_details: {},
+        address_details: {}
+      },
+      addButton: false,
       view_components: [
         "PersonalDetails",
         "TaxpayerInformation",
@@ -200,6 +218,7 @@ export default {
       this.avatar.image_url = this.user.avatar ? this.user.avatar.location : "";
       this.details.user.avatar = this.user.avatar;
       this.details.user.email = this.user.email;
+      this.details.taxpayer.avatar = this.avatar.image_url;
       this.details.taxpayer.individual_details.firstName = this.user.name.first;
       this.details.taxpayer.individual_details.lastName = this.user.name.last;
       this.details.taxpayer.contact_details.email = this.user.email;
@@ -224,9 +243,29 @@ export default {
       }
     },
     next(i) {
+      // this.details.spouse_details = this.spouse_data;
+      console.log(
+        "setup spouse details: " + JSON.stringify(this.details.spouse_details)
+      );
+      this.details.taxpayer.individual_details.middleName =
+        this.details.user.name.middle == undefined ||
+        this.details.user.name.middle == null ||
+        this.details.user.name.middle == ""
+          ? ""
+          : this.details.user.name.middle;
+      this.details.taxpayer.registered_name = `${this.details.taxpayer.individual_details.firstName} ${this.details.taxpayer.individual_details.middleName} ${this.details.taxpayer.individual_details.lastName}`;
+      this.loading = true;
+      window.scrollTo(0, 0);
       console.log("i :", i);
       if (i === 4) {
+        console.log("i = 4 na this");
         var _self = this;
+        if (
+          this.details.taxpayer.individual_details.civil_status == "M" &&
+          this.currentView == 4
+        ) {
+          this.addButton = true;
+        }
         this.$confirm({
           title: "Do you want to save the information?",
           okText: "Yes",
@@ -236,17 +275,37 @@ export default {
           },
           confirmLoading: _self.loading
         });
-      } else this.currentView = i;
+      } else {
+        console.log("loading : " + this.loading);
+        this.loading = false;
+        this.currentView = i;
+        if (
+          this.details.taxpayer.individual_details.civil_status == "S" &&
+          this.currentView == 2
+        ) {
+          this.addButton = true;
+        } else if (
+          this.details.taxpayer.individual_details.civil_status == "M"
+        ) {
+          console.log(
+            "if married spouse details: " +
+              JSON.stringify(this.details.spouse_details)
+          );
+          this.spouse_data = this.details.spouse_details;
+        }
+      }
     },
     changeView(key) {
       this.currentView = key;
       window.scrollTo(0, 0);
     },
     submitTaxpayer() {
+      console.log("@@@ano this");
       this.loading = true;
       this.details.user.tin = this.details.taxpayer.tin;
       // if (!this.avatar.form_data)
       //   this.details.user.avatar = this.user.avatar;
+      console.log("submit taxpayer data: " + JSON.stringify(this.details));
       this.$store
         .dispatch("ACCOUNT_SETUP", {
           details: this.details,
