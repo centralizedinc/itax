@@ -306,20 +306,20 @@ export default {
       // if (!this.avatar.form_data)
       //   this.details.user.avatar = this.user.avatar;
       console.log("submit taxpayer data: " + JSON.stringify(this.details));
-      // this.$store
-      //   .dispatch("ACCOUNT_SETUP", {
-      //     details: this.details,
-      //     form_data: this.avatar.form_data
-      //   })
-      //   .then(result => {
-      //     console.log("submitTaxpayer :", result);
-      //     this.currentView = 4;
-      //     this.loading = false;
-      //   })
-      //   .catch(err => {
-      //     console.log("submitTaxpayer err :", err);
-      //     this.loading = false;
-      //   });
+      this.$store
+        .dispatch("ACCOUNT_SETUP", {
+          details: this.details,
+          form_data: this.avatar.form_data
+        })
+        .then(result => {
+          console.log("submitTaxpayer :", result);
+          this.currentView = 4;
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log("submitTaxpayer err :", err);
+          this.loading = false;
+        });
     }
   },
   created() {

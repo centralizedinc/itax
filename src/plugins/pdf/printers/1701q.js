@@ -15,20 +15,40 @@ function fillup(details) {
     console.log("fillup details: " + JSON.stringify(details))
     var content = getContent(details);
     console.log('get content ###### :', content);
-    return {
-        background: function (page) {
-            return [{
-                image: "form",
-                width: 550,
-                margin: [25, 0, 0, 0]
-            }]
-        },
-        content: content[details.pdf_page],
-        images: {
-            form: forms[details.pdf_page]
-        },
-        pageSize: 'LEGAL'
-    };
+    var form_images = []
+    getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page1.jpg")
+        .then((result) => {
+            form_images.push(result);
+            return getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/1701q/page2.jpg")
+        })
+        .then((result) => {
+            form_images.push(result);
+            resolve({
+                background: function (page) {
+                    return [{
+                        image: "form",
+                        width: 600
+                    }]
+                },
+                content: content[details.pdf_page || 0],
+                images: {
+                    form: form_images[details.pdf_page || 0]
+                },
+                pageSize: 'legal'
+            });
+        }).catch((err) => {
+            console.error(err)
+            reject({
+                background: function (page) {
+                    return [{
+                        image: "form",
+                        width: 600
+                    }]
+                },
+                content: content[details.pdf_page || 0],
+                pageSize: 'legal'
+            });
+        });
 }
 /**
  * 
@@ -2363,6 +2383,26 @@ function checkName(lastName, firstName, middleName) {
 function checkField(field) {
     if (!field) return " ";
     else return field;
+}
+
+function getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+        var img = new Image();
+        img.setAttribute("crossOrigin", "anonymous");
+        img.onload = () => {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            var dataURL = canvas.toDataURL("image/png");
+            resolve(dataURL);
+        };
+        img.onerror = error => {
+            reject(error);
+        };
+        img.src = url;
+    });
 }
 
 export default {

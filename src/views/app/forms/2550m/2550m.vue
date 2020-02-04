@@ -737,6 +737,7 @@ import ScheduleFive from "./Schedule5";
 import ScheduleSix from "./Schedule6";
 import ScheduleSeven from "./Schedule7";
 import ScheduleEight from "./Schedule8";
+import moment from 'moment';
 
 export default {
   components: {
@@ -767,6 +768,7 @@ export default {
     }
   },
   created() {
+    this.form.return_period = moment(this.form.return_period)
     this.form.pdf_page = 1;
     console.log("this.form###### :", this.form);
   },

@@ -5,12 +5,12 @@ var SettingsDao = require('../dao/SettingsDao');
 var ApplicationSettings = require('./ApplicationSettings');
 const sg_email = require('./email');
 const uploader = require("./uploader");
-
+console.log('process.env.DB_CONNECTION_URL :', process.env.DB_CONNECTION_URL);
 function connect(app) {
     mongoose.connect(process.env.DB_CONNECTION_URL || require('./constant_helper').mongodb_uri, {
-            promiseLibrary: require('bluebird'),
-            useNewUrlParser: true
-        })
+        promiseLibrary: require('bluebird'),
+        useNewUrlParser: true
+    })
         .then(() => {
             console.log('connection successful');
 
