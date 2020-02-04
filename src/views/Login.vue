@@ -59,13 +59,17 @@
                   />
                 </a-input>
               </a-form-item>
-              <a-button size="large" block ghost :loading="loading" @click="login">Login</a-button>
+              <a-button size="large" block type="primary" :loading="loading" @click="login">Submit</a-button>
+              <a-col :span="24" align="center" style="margin-top: 20px">
+                  <a style="color:#FFFFFF">Forgot Password?</a>
+                </a-col>
 
               <!-- <p style="color:white">Login using facebook or google accounts</p> -->
-              <a-row type="flex" gutter="16">
-                <a-divider style="color:#FFFFFF">or</a-divider>
-                <a-col :span="24">
+              <a-row type="flex" gutter="16" style="margin-top:10px">
+                <a-divider style="color:#FFFFFF; font-size:12px"></a-divider>
+                <!-- <a-col :span="24">
                   <a-button
+                  size="small"
                     block
                     :disabled="loading"
                     style="border: #4267B2;background-color:#4267B2; color:#FFFFFF"
@@ -76,6 +80,7 @@
                 </a-col>
                 <a-col :span="24">
                   <a-button
+                  size="small"
                     block
                     :disabled="loading"
                     @click="registerGoogle"
@@ -83,7 +88,11 @@
                   >
                     <a-icon type="google"></a-icon>Google
                   </a-button>
+                </a-col> -->
+                <a-col :span="24" >
+                  <a style="color:#FFFFFF">Don't have a SmartTax account? Sign-up</a>
                 </a-col>
+                
               </a-row>
             </a-form>
           </a-card>

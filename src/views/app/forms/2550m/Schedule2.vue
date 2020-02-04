@@ -169,9 +169,9 @@ export default {
     },
     close() {
       this.$emit("close", {
-        sched2: this.deepCopy(this.data_source),
-        totalAtcAmount: this.deepCopy(this.total_atc_amount),
-        totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
+        sched2: this.sched2_data,
+        // totalAtcAmount: this.deepCopy(this.total_atc_amount),
+        // totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
       });
     },
     showDrawer2() {
