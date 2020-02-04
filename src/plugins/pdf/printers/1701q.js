@@ -1,10 +1,3 @@
-const form = require("../templates/1701q_template");
-var forms = [form.page1, form.page1, form.page2]
-// const form1 = require("../templates/1701q_template").template;
-// const form2 = require("../templates/1601e_template").template;
-// var forms = [form.page1, form.page2]
-
-
 /**
  *
  * @param {LicenseModel} details

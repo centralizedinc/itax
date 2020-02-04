@@ -8,7 +8,7 @@
     width="900"
   >
     <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
-    <template slot="date_purchased" slot-scope="text, record, index">
+      <template slot="date_purchased" slot-scope="text, record, index">
         <a-date-picker
           v-model="sched3A_data[index].date_purchased"
           @change="check_sched3A"
@@ -19,35 +19,22 @@
         <a-input v-model="sched3A_data[index].description"></a-input>
       </template>
       <template slot="vat" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3A_data[index].vat"
-          @change="sched3ACompute"
-        ></a-input-number>
+        <a-input-number v-model="sched3A_data[index].vat" @change="sched3ACompute"></a-input-number>
       </template>
       <template slot="tax_rate" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3A_data[index].tax_rate" @change="sched3ACompute"
-        ></a-input-number>
+        <a-input-number v-model="sched3A_data[index].tax_rate" @change="sched3ACompute"></a-input-number>
       </template>
       <template slot="est_life" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3A_data[index].est_life"
-        ></a-input-number>
+        <a-input-number v-model="sched3A_data[index].est_life"></a-input-number>
       </template>
       <template slot="recog_life" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3A_data[index].recog_life"
-        ></a-input-number>
+        <a-input-number v-model="sched3A_data[index].recog_life"></a-input-number>
       </template>
       <template slot="allowable_input_tax" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3A_data[index].allowable_input_tax"
-        ></a-input-number>
+        <a-input-number v-model="sched3A_data[index].allowable_input_tax"></a-input-number>
       </template>
       <template slot="balance" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3A_data[index].balance"
-        ></a-input-number>
+        <a-input-number v-model="sched3A_data[index].balance"></a-input-number>
       </template>
       <template slot="operation" slot-scope="text, record, index">
         <a-popconfirm
@@ -219,7 +206,7 @@ export default {
       });
     },
     showDrawer3A() {
-        console.log("data source show drawer; " + this.dataSource);
+      console.log("data source show drawer; " + this.dataSource);
       this.show_sched3A = true;
     },
     onClose_sched3A() {
@@ -227,9 +214,9 @@ export default {
     },
     close() {
       this.$emit("close", {
-        sched3A: this.deepCopy(this.data_source),
-        totalAtcAmount: this.deepCopy(this.total_atc_amount),
-        totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
+        sched3A: this.sched3A_data
+        // totalAtcAmount: this.deepCopy(this.total_atc_amount),
+        // totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
       });
     }
   }

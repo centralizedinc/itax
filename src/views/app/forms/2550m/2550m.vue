@@ -133,7 +133,7 @@
           12. Vatable Sales/Receipt-Private (
           <span
             class="text-link"
-            @click="show_sched1=true"
+            @click="show_sched1=true;form.pdf_page=1;"
           >Schedule 1</span>)
         </div>
       </a-form-item>
@@ -290,7 +290,7 @@
           18A/B. Purchase of Capital Goods(Not exceeding ₱1Million)(
           <span
             class="text-link"
-            @click="show_sched2=true"
+            @click="show_sched2=true;form.pdf_page=1;"
           >Schedule 2</span>)
           <schedule-two
             v-if="show_sched2"
@@ -326,7 +326,7 @@
         <div style="color: black">
           18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
           <!-- <span class="text-link" @click="show_sched3A=true">Schedule 3A</span> -->
-          <span class="text-link" @click="openPage2sched3()">Schedule 3A</span>)
+          <span class="text-link" @click="openSchedule('show_sched3A', 1)">Schedule 3A</span>)
           <schedule-threea
             v-if="show_sched3A"
             :show="show_sched3A"
@@ -482,7 +482,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20A (
-          <span class="text-link" @click="openPage2sched3B()">Schedule 3B</span>)
+          <span class="text-link" @click="openSchedule('show_sched3B', 1)">Schedule 3B</span>)
           <schedule-threeb
             v-if="show_sched3B"
             :show="show_sched3B"
@@ -499,7 +499,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20B (
-          <span class="text-link" @click="openPage2sched4()">Schedule 4</span>)
+          <span class="text-link" @click="openSchedule('show_sched4', 1)">Schedule 4</span>)
           <schedule-four
             v-if="show_sched4"
             :show="show_sched4"
@@ -516,7 +516,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20C (
-          <span class="text-link" @click="openPage2sched5()">Schedule 5</span>)
+          <span class="text-link" @click="openSchedule('show_sched5', 1)">Schedule 5</span>)
           <schedule-five
             v-if="show_sched5"
             :show="show_sched5"
@@ -576,7 +576,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           23A (
-          <span class="text-link" @click="openPage2sched6()">Schedule 6</span>)
+          <span class="text-link" @click="openSchedule('show_sched6', 1)">Schedule 6</span>)
           <schedule-six
             v-if="show_sched6"
             :show="show_sched6"
@@ -594,7 +594,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           23B (
-          <span class="text-link" @click="openPage2sched7()">Schedule 7</span>)
+          <span class="text-link" @click="openSchedule('show_sched7', 1)">Schedule 7</span>)
           <schedule-seven
             v-if="show_sched7"
             :show="show_sched7"
@@ -612,7 +612,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           23C (
-          <span class="text-link" @click="openPage2sched8()">Schedule 8</span>)
+          <span class="text-link" @click="openSchedule('show_sched8', 1)">Schedule 8</span>)
           <schedule-eight
             v-if="show_sched8"
             :show="show_sched8"
@@ -737,7 +737,7 @@ import ScheduleFive from "./Schedule5";
 import ScheduleSix from "./Schedule6";
 import ScheduleSeven from "./Schedule7";
 import ScheduleEight from "./Schedule8";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   components: {
@@ -768,49 +768,23 @@ export default {
     }
   },
   created() {
-    this.form.return_period = moment(this.form.return_period)
-    this.form.pdf_page = 1;
+    console.log("this.form.return_period :", this.form.return_period);
+    // this.form.return_period = moment(this.form.return_period)
+    this.form.pdf_page = 0;
     console.log("this.form###### :", this.form);
   },
+  watch: {
+    errors() {
+      console.log("this.errors :", this.errors);
+    }
+  },
   methods: {
-    openPage2() {
-      this.show_sched1 = true;
-      this.form.pdf_page = 2;
+    openSchedule(key, pdf_page) {
+      this[key] = true;
+      this.form.pdf_page = pdf_page;
     },
-    openPage2sched2() {
-      this.show_sched1 = true;
-      this.form.pdf_page = 2;
-    },
-    openPage2sched3(){
-      this.show_sched3A=true
-      this.form.pdf_page = 2
-    },
-    openPage2sched3B(){
-      this.show_sched3B=true
-      this.form.pdf_page = 2
-    },
-    openPage2sched4(){
-      this.show_sched4=true
-      this.form.pdf_page = 2
-    },
-    openPage2sched5(){
-      this.show_sched5=true
-      this.form.pdf_page = 2
-    },
-    openPage2sched6(){
-      this.show_sched6=true
-      this.form.pdf_page = 2
-    },
-    openPage2sched7(){
-      this.show_sched7=true
-      this.form.pdf_page = 2
-    },
-    openPage2sched8(){
-      this.show_sched8=true
-      this.form.pdf_page = 2
-    },
-    closePage2(){
-      this.form.pdf_page = 1
+    closePage2() {
+      this.form.pdf_page = 0;
       this.show_sched1 = false;
       this.show_sched2 = false;
       this.show_sched3A = false;
@@ -820,7 +794,7 @@ export default {
       this.show_sched6 = false;
       this.show_sched7 = false;
       this.show_sched8 = false;
-      this.updateSchedAndClose()
+      this.updateSchedAndClose();
     },
     // 16A
     getTotalSales() {
@@ -950,21 +924,21 @@ export default {
       return total;
     },
     updateSchedAndClose(data) {
-      // Object.keys(data).forEach(key => {
-      //   this.form[key] = data[key];
-      // })
-      this.form.sched1 = data.sched1;
-      this.form.sched2 = data.sched2;
-      this.form.sched3A = data.sched3A;
-      this.form.sched3B = data.sched3B;
-      this.form.sched4 = data.sched4;
-      this.form.sched5 = data.sched5;
-      this.form.sched6 = data.sched6;
-      this.form.sched7 = data.sched7;
-      this.form.sched8 = data.sched8;
-      this.form.totalAtcAmount = data.totalAtcAmount;
-      this.form.totalAtcOutput = data.totalAtcOutput;
-      this.form.pdf_page = 1;
+      Object.keys(data).forEach(key => {
+        this.form[key] = data[key];
+      });
+      // this.form.sched1 = data.sched1;
+      // this.form.sched2 = data.sched2;
+      // this.form.sched3A = data.sched3A;
+      // this.form.sched3B = data.sched3B;
+      // this.form.sched4 = data.sched4;
+      // this.form.sched5 = data.sched5;
+      // this.form.sched6 = data.sched6;
+      // this.form.sched7 = data.sched7;
+      // this.form.sched8 = data.sched8;
+      // this.form.totalAtcAmount = data.totalAtcAmount;
+      // this.form.totalAtcOutput = data.totalAtcOutput;
+      this.form.pdf_page = 0;
       this.show_sched1 = false;
       this.show_sched2 = false;
       this.show_sched3A = false;
@@ -1047,13 +1021,13 @@ export default {
       this.changeStep(this.step + 1);
     },
     validatePage1() {
-      if (!this.form.return_period) {
-        this.errors.push({
-          page: 0,
-          field: "return_period",
-          error: "Return Period is mandatory field."
-        });
-      }
+      // if (!this.form.return_period) {
+      //   this.errors.push({
+      //     page: 0,
+      //     field: "return_period",
+      //     error: "Return Period is mandatory field."
+      //   });
+      // }
     },
     changeStep(step, form) {
       this.$emit("changeStep", step);

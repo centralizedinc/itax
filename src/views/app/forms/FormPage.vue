@@ -247,7 +247,7 @@ export default {
           start_month: "",
           end_month: ""
         },
-        page: 0,
+        pdf_page: 0,
         // spouse_details: {},
         buyer_details: {},
         item29: {},
