@@ -301,6 +301,7 @@
 <script>
 // import form_1601e_image from "@/assets/forms/1601e.jpg";
 import atc from "./atc.vue";
+// import atc from "./Schedule1.vue";
 
 export default {
   components: {
@@ -343,7 +344,7 @@ export default {
       //   this.sub = true;
       // }
       if (this.step == 2) {
-        this.form.pdf_page = 2;
+        this.form.pdf_page = 1;
       } else {
         this.form.pdf_page = 1;
       }
@@ -352,6 +353,7 @@ export default {
   methods: {
     atcSetup() {
       console.log("atc setup");
+      this.sched = true
     },
     validate() {
       this.changeStep(this.step + 1);
