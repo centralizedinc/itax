@@ -1,4 +1,4 @@
-const form = require("../templates/1601c_template").template;
+// const form = require("../templates/1601c_template").template;
 /**
  *
  * @param {LicenseModel} details
@@ -16,9 +16,9 @@ function fillup(details) {
             }]
         },
         content: content,
-        images: {
-            form: form
-        },
+        // images: {
+        //     form: form
+        // },
         pageSize: 'LEGAL'
     };
 }

@@ -1,4 +1,4 @@
-const form = require("../templates/1604e_template").template;
+// const form = require("../templates/1604e_template").template;
 
 /**
  *
@@ -19,9 +19,9 @@ function fillup(details) {
             }]
         },
         content: content,
-        images: {
-            form: form
-        },
+        // images: {
+        //     form: form
+        // },
         pageSize: 'LEGAL'
     };
 }
