@@ -10,11 +10,11 @@ function isAuthenticated(to, from, next) {
   const is_authenticated = store.state.account_session.is_authenticated && store.state.account_session.token && status > 0;
   console.log('to.matched[0].name :', to.matched[0].name);
   if (to.matched[0].name === "Home")
-    next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : "/app") : true);
+    next(is_authenticated && status > 0 ? (status === 0 ? "/app/setup" : "/app") : true);
   else if (to.matched[1].name === "Setup")
-    next(is_authenticated && status === 1 ? true : '/');
+    next(is_authenticated && status === 0 ? true : '/');
   else if (to.matched[0].name === "Secured")
-    next(is_authenticated && status > 0 ? (status === 1 ? "/app/setup" : true) : "/");
+    next(is_authenticated && status > 0 ? (status === 0 ? "/app/setup" : true) : "/");
   //  next("/")
 }
 

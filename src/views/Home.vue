@@ -7,19 +7,9 @@
     </a-back-top>
     <a-layout-header class="header" :style="headerStyle">
       <a-row type="flex" justify="start" :gutter="8" data-aos="fade-up">
-        <!-- <a-col :span="2">
-          <a-avatar style="cursor:pointer" @click="$router.push('/')" src="https://www.lucenacity.gov.ph/img/Lucena_Seal200.png" :size="50"></a-avatar>
-        </a-col>-->
         <a-col :span="4">
           <h2 style="color:white;">Smart Tax</h2>
         </a-col>
-        <!-- <a-col :span="8">
-          <a-tabs :tabBarStyle="{color:red}">
-            <a-tab-pane key="1" tab="Home"></a-tab-pane>
-            
-          </a-tabs>
-        </a-col>-->
-
         <a-col :span="2" :push="14">
           <a-button ghost block type="link">About</a-button>
         </a-col>
@@ -219,7 +209,7 @@
                 has-feedback
                 class="register-form-item"
               >
-                <a-tooltip trigger="focus">
+                <a-tooltip trigger="focus" placement="right">
                   <template slot="title">
                     <div>
                       <a-badge dot :status="pass_upper"></a-badge>Atleast one (1) capital letter
@@ -238,24 +228,33 @@
                     :disabled="loading"
                     v-model="form.password"
                     placeholder="Create a Password"
-                    type="password"
-                  ></a-input>
+                    :type="isPassVisible?'text':'password'">
+                     <a-icon
+                    slot="suffix"
+                    :type="isPassVisible?'eye':'eye-invisible'"
+                    @click="isPassVisible=!isPassVisible"
+                    style="cursor:pointer;margin-right:20px"
+                  />                    
+                  </a-input>
                 </a-tooltip>
               </a-form-item>
               <a-form-item
                 label="Confirm Password"
                 :validate-status="form.confirm ? form.confirm === form.password ? 'success': 'error':''"
-                :help="form.confirm !== form.password ? 'Confirm Password does not match':''"
+                :help="form.confirm && form.confirm !== form.password ? 'Confirm Password does not match':''"
                 has-feedback
-                class="register-form-item"
-              >
+                class="register-form-item">
                 <a-input
-                  @keypress.enter="register"
                   :disabled="loading"
                   v-model="form.confirm"
                   placeholder="Confirm Password"
-                  type="password"
-                ></a-input>
+                  :type="isConfPassVisible?'text':'password'">
+                  <a-icon
+                    slot="suffix"
+                    :type="isConfPassVisible?'eye':'eye-invisible'"
+                    @click="isConfPassVisible=!isConfPassVisible"
+                    style="cursor:pointer;margin-right:20px"/>
+                </a-input>
               </a-form-item>
             </a-form>
           </a-card>
@@ -431,12 +430,15 @@
                     <a-radio-button value="F">Female</a-radio-button>
                   </a-radio-group>
                 </a-form-item>
-                <!-- <a-form-item label="Citizenship">
-                <a-input v-model="form.taxpayer.citenzip"
-                  placeholder="Citizenship"
-                />
-                </a-form-item>-->
               </span>
+               <a-form-item
+                  class="register-form-item"
+                  label="Address"
+                  :validate-status="validation_errors.address ? 'error':''"
+                  :help="validation_errors.address"
+                  has-feedback>                 
+                 <a-textarea rows="4" placeholder="Taxpayer Address"></a-textarea>
+                </a-form-item>
             </a-form>
           </a-card>
 
@@ -449,13 +451,13 @@
                 </a-col>
               </a-row>
               <a-col :span="12">
-                <span>Account Name</span>
+                <span style="font-weight:bold">Account Name</span>
               </a-col>
               <a-col :span="12" align="right">
                 <span>{{form.name.last}}, {{form.name.first}}</span>
               </a-col>
               <a-col :span="12">
-                <span>Email Address</span>
+                <span style="font-weight:bold">Email Address</span>
               </a-col>
               <a-col :span="12" align="right">
                 <span>{{form.email}}</span>
@@ -464,9 +466,11 @@
                 <a-divider orientation="left">Taxpayer Details</a-divider>
               </a-col>
               <a-col :span="12">
-                <div>TIN</div>
-                <div>Registered Name</div>
-                <div>RDO</div>
+                <div style="font-weight:bold">TIN</div>
+                <div style="font-weight:bold">Registered Name</div>
+                <div style="font-weight:bold">RDO</div>
+                <div style="font-weight:bold">Taxpayer Type</div>
+                <div style="font-weight:bold">Address</div>
               </a-col>
               <a-col :span="12" align="right">
                 <div>{{formatTIN(form.taxpayer.tin)}}</div>
@@ -475,7 +479,6 @@
               </a-col>
             </a-row>
           </a-card>
-
           <a-card v-if="step===2" style="margin-top:20px">
             <vue-recaptcha
               sitekey="6LeSh9UUAAAAAK22et0fYuD9IsilyzTyMPC4yH7I"
@@ -494,6 +497,8 @@ export default {
   components: { VueRecaptcha },
   data() {
     return {
+      isConfPassVisible:false,
+      isPassVisible:false,
       verified_recaptcha: false,
       step: 0,
       rdos: null,
