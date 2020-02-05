@@ -1,5 +1,5 @@
-// const form = require("../templates/2550m_template");
-// var forms = [form.page1, form.page1, form.page2]
+const form = require("../templates/2550m_template");
+var forms = [form.page1, form.page2]
 
 /**
  *
@@ -8,46 +8,59 @@
  */
 function fillup(details) {
     // console.log("fillup details: " + JSON.stringify(details))
-    return new Promise((resolve, reject) => {
-        var content = getContent(details);
-        // console.log('get content ###### :', content);
-        var form_images = [];
-        getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/2550m/page1.jpg")
-            .then((result) => {
-                form_images.push(result);
-                return getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/2550m/page2.jpg")
-            })
-            .then((result) => {
-                form_images.push(result);
-                console.log('details.pdf_page :', details.pdf_page);
-                console.log('form_images :', form_images);
-                resolve({
-                    background: function (page) {
-                        return [{
-                            image: "form",
-                            width: 600
-                        }]
-                    },
-                    content: content[details.pdf_page || 0],
-                    images: {
-                        form: form_images[details.pdf_page || 0]
-                    },
-                    pageSize: 'LEGAL'
-                })
-            })
-            .catch((err) => {
-                resolve({
-                    background: function (page) {
-                        return [{
-                            image: "form",
-                            width: 600
-                        }]
-                    },
-                    content: content[details.pdf_page || 0],
-                    pageSize: 'LEGAL'
-                })
-            });
-    })
+    // return new Promise((resolve, reject) => {
+    var content = getContent(details);
+    //     // console.log('get content ###### :', content);
+    //     var form_images = [];
+    //     getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/2550m/page1.jpg")
+    //         .then((result) => {
+    //             form_images.push(result);
+    //             return getBase64ImageFromURL("https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/2550m/page2.jpg")
+    //         })
+    //         .then((result) => {
+    //             form_images.push(result);
+    console.log('details.pdf_page :', details.pdf_page);
+    console.log('form_images :', forms);
+    return {
+        background: function (page) {
+            return [{
+                image: "form",
+                width: 600
+            }]
+        },
+        content: content[details.pdf_page || 0],
+        images: {
+            form: forms[details.pdf_page || 0]
+        },
+        pageSize: 'LEGAL'
+    }
+    // resolve({
+    //     background: function (page) {
+    //         return [{
+    //             image: "form",
+    //             width: 600
+    //         }]
+    //     },
+    //     content: content[details.pdf_page || 0],
+    //     images: {
+    //         form: form_images[details.pdf_page || 0]
+    //     },
+    //     pageSize: 'LEGAL'
+    // })
+    // })
+    // .catch((err) => {
+    //     resolve({
+    //         background: function (page) {
+    //             return [{
+    //                 image: "form",
+    //                 width: 600
+    //             }]
+    //         },
+    //         content: content[details.pdf_page || 0],
+    //         pageSize: 'LEGAL'
+    //     })
+    // });
+    // })
 }
 /**
  * 
@@ -158,7 +171,7 @@ function getContent(forms) {
                         margin: [-1, 9, 0, 0]
                     },
                     {
-                        text: forms.taxpayer.rdo_code == null ? ' ' : forms.taxpayer.rdo_code,
+                        text: checkField(forms.taxpayer.rdo_code),
                         fontSize: 14,
                         characterSpacing: 8.2,
                         alignment: 'justify',
@@ -166,11 +179,11 @@ function getContent(forms) {
                         margin: [55, 9, 0, 0]
                     },
                     {
-                        text: forms.taxpayer.line_of_business == null ? ' ' : forms.taxpayer.line_of_business,
+                        text: checkField(forms.taxpayer.line_of_business),
                         fontSize: 13,
                         alignment: 'justify',
                         // right,down,left,up
-                        margin: [118, 9, 0, 0]
+                        margin: [100, 9, 0, 0]
                     }
                     ],
 
@@ -187,7 +200,7 @@ function getContent(forms) {
                 body: [
                     [{
                         // --------------- Tax Payer's Name ----------------
-                        text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
+                        text: checkField(forms.taxpayer.registered_name),
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
@@ -195,7 +208,7 @@ function getContent(forms) {
                     },
                     {
                         // ---------------------------  Telephone Number ------------------
-                        text: forms.taxpayer.contact_details.telno == null ? ' ' : forms.taxpayer.contact_details.telno,
+                        text: checkField(forms.taxpayer.contact_details.telno),
                         fontSize: 11,
                         characterSpacing: 1,
                         alignment: 'justify',
@@ -214,7 +227,7 @@ function getContent(forms) {
                 widths: [395, 120],
                 body: [
                     [{
-                        text: forms.taxpayer.address == null || forms.taxpayer.address == '' ? ' ' : forms.taxpayer.address,
+                        text: checkField(forms.taxpayer.address),
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
@@ -254,7 +267,7 @@ function getContent(forms) {
                         margin: [23, 5, 0, 0]
                     },
                     {
-                        text: forms.avail_tax_relief == null || forms.avail_tax_relief == '' ? ' ' : forms.avail_tax_relief,
+                        text: checkField(forms.avail_tax_relief),
                         fontSize: 11,
                         alignment: 'justify',
                         // right,down,left,up
@@ -3519,6 +3532,7 @@ function formatDate(date, type) {
 
 function checkField(field) {
     if (!field) return " ";
+    else if (typeof field === "string") return field.toUpperCase();
     else return field;
 }
 

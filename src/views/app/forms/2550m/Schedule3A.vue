@@ -1,60 +1,78 @@
 <template>
-  <a-drawer
-    title="Schedule 3 Purchases/Importation This Period"
-    placement="right"
-    :closable="true"
-    @close="close"
-    :visible="show"
-    width="900"
-  >
-    <a-table bordered :dataSource="sched3A_data" :columns="columns_sched3A">
-      <template slot="date_purchased" slot-scope="text, record, index">
-        <a-date-picker
-          v-model="sched3A_data[index].date_purchased"
-          @change="check_sched3A"
-          style="width: 100%"
-        />
-      </template>
-      <template slot="description" slot-scope="text, record, index">
-        <a-input v-model="sched3A_data[index].description"></a-input>
-      </template>
-      <template slot="vat" slot-scope="text, record, index">
-        <a-input-number v-model="sched3A_data[index].vat" @change="sched3ACompute"></a-input-number>
-      </template>
-      <template slot="tax_rate" slot-scope="text, record, index">
-        <a-input-number v-model="sched3A_data[index].tax_rate" @change="sched3ACompute"></a-input-number>
-      </template>
-      <template slot="est_life" slot-scope="text, record, index">
-        <a-input-number v-model="sched3A_data[index].est_life"></a-input-number>
-      </template>
-      <template slot="recog_life" slot-scope="text, record, index">
-        <a-input-number v-model="sched3A_data[index].recog_life"></a-input-number>
-      </template>
-      <template slot="allowable_input_tax" slot-scope="text, record, index">
-        <a-input-number v-model="sched3A_data[index].allowable_input_tax"></a-input-number>
-      </template>
-      <template slot="balance" slot-scope="text, record, index">
-        <a-input-number v-model="sched3A_data[index].balance"></a-input-number>
-      </template>
-      <template slot="operation" slot-scope="text, record, index">
-        <a-popconfirm
-          v-if="sched3A_data.length"
-          title="Sure to delete?"
-          @confirm="() => delete_sched3A(index)"
+  <div>
+    <!-- <a-row type="flex" justify="space-between">
+      <a-col :span="12">
+        <a-input-search v-model="search" placeholder="Search"></a-input-search>
+      </a-col>
+      <a-col :span="5">
+        <a-button type="primary" @click="addSched3A" icon="plus">ADD</a-button>
+      </a-col>
+    </a-row>-->
+    <a-row>
+      <a-col
+        :span="19"
+        style="font-weight: bold;"
+      >Purchases/Importation of Capital Goods (Aggregate Amount Exceeds P1 Million)</a-col>
+      <a-col :span="5" style="text-align: right;">
+        <a-button type="primary" @click="addSched3A" icon="plus">ADD</a-button>
+      </a-col>
+      <a-col :span="24">
+        <a-table
+          bordered
+          :dataSource="sched3A_data"
+          :columns="columns_sched3A"
+          :scroll="{ x: 1500 }"
         >
-          <a href="javascript:;">Delete</a>
-        </a-popconfirm>
-      </template>
-      <template slot="footer">
-        <a-button @click="addSched3A">Add</a-button>
-        <a-button>Save</a-button>
-        <p align="right">
-          18C: {{ form.purCapGoodsExceed }} 18D:
-          {{ form.outputPurCapGoodsExceed }}
-        </p>
-      </template>
-    </a-table>
-  </a-drawer>
+          <template slot="date_purchased" slot-scope="text, record, index">
+            <a-date-picker
+              v-model="sched3A_data[index].date_purchased"
+              @change="check_sched3A"
+              style="width: 100%"
+            />
+          </template>
+          <template slot="description" slot-scope="text, record, index">
+            <a-input v-model="sched3A_data[index].description"></a-input>
+          </template>
+          <template slot="vat" slot-scope="text, record, index">
+            <a-input-number v-model="sched3A_data[index].vat" @change="sched3ACompute"></a-input-number>
+          </template>
+          <template slot="tax_rate" slot-scope="text, record, index">
+            <a-input-number v-model="sched3A_data[index].tax_rate" @change="sched3ACompute"></a-input-number>
+          </template>
+          <template slot="est_life" slot-scope="text, record, index">
+            <a-input-number v-model="sched3A_data[index].est_life"></a-input-number>
+          </template>
+          <template slot="recog_life" slot-scope="text, record, index">
+            <a-input-number v-model="sched3A_data[index].recog_life"></a-input-number>
+          </template>
+          <template slot="allowable_input_tax" slot-scope="text, record, index">
+            <a-input-number v-model="sched3A_data[index].allowable_input_tax"></a-input-number>
+          </template>
+          <template slot="balance" slot-scope="text, record, index">
+            <a-input-number v-model="sched3A_data[index].balance"></a-input-number>
+          </template>
+          <template slot="action" slot-scope="text, record, index">
+            <a-tooltip title="Remove">
+              <a-button
+                type="link"
+                style="color: red;"
+                icon="delete"
+                @click="delete_sched3A(index)"
+              />
+            </a-tooltip>
+          </template>
+          <template slot="footer">
+            <!-- <a-button @click="addSched3A">Add</a-button>
+            <a-button>Save</a-button>-->
+            <p align="right">
+              18C: {{ form.purCapGoodsExceed }} 18D:
+              {{ form.outputPurCapGoodsExceed }}
+            </p>
+          </template>
+        </a-table>
+      </a-col>
+    </a-row>
+  </div>
 </template>
 
 <script>
@@ -108,9 +126,9 @@ export default {
           scopedSlots: { customRender: "balance" }
         },
         {
-          title: "",
-          dataIndex: "operation",
-          scopedSlots: { cutomRender: "operation" }
+          title: "Action",
+          dataIndex: "action",
+          scopedSlots: { customRender: "action" }
         }
       ],
       data_source: []
@@ -141,7 +159,8 @@ export default {
   methods: {
     sched3ASave() {},
     delete_sched3A(index) {
-      this.sched3A_data[index].splice(index, 1);
+      console.log("index :", index);
+      this.sched3A_data.splice(index, 1);
     },
     check_sched3A(value) {
       var only = this.formatDtMonth(this.form.return_period);

@@ -5,11 +5,10 @@
     :closable="true"
     @close="close"
     :visible="show"
-    width="900"
+    width="1200"
   >
-    <a-divider>Purchases/Importation of Capital Goods (Aggregate Amount Exceeds P1 Million)</a-divider>
     <schedule-a :form="form" />
-    <a-divider>Purchases/Importations This Period</a-divider>
+    <a-divider style="margin: 1vh 0;margin-bottom: 2vh;" />
     <schedule-b :form="form" />
   </a-drawer>
 </template>

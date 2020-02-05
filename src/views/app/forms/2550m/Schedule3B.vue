@@ -1,14 +1,18 @@
 <template>
   <div>
-    <a-row type="flex" justify="space-between">
+    <!-- <a-row type="flex" justify="space-between">
       <a-col :span="12">
         <a-input-search v-model="search" placeholder="Search"></a-input-search>
       </a-col>
       <a-col :span="5">
         <a-button type="primary" @click="addSched3B" icon="plus">ADD</a-button>
       </a-col>
-    </a-row>
+    </a-row>-->
     <a-row>
+      <a-col :span="19" style="font-weight: bold;">Purchases/Importations This Period</a-col>
+      <a-col :span="5" style="text-align: right;">
+        <a-button type="primary" @click="addSched3B" icon="plus">ADD</a-button>
+      </a-col>
       <a-col :span="24">
         <a-table bordered :dataSource="sched3B_data" :columns="columns_sched3B">
           <template slot="date_purchased" slot-scope="text, record, index">
@@ -56,7 +60,7 @@
           </template>
           <template slot="footer">
             <!-- <a-button @click="addSched3B">Add</a-button>
-            <a-button>Save</a-button> -->
+            <a-button>Save</a-button>-->
             <p align="right">20A: {{ form.inputTaxPurchaseCapGoods }}</p>
           </template>
         </a-table>
