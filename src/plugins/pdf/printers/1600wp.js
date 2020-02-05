@@ -435,7 +435,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[0].tax_base == undefined || forms.atc_list[0].tax_base == null ? " " : forms.atc_list[0].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[0].tax_base == undefined || forms.atc_list[0].tax_base == null ? " " : formatAmount(forms.atc_list[0].tax_base),
                              //  text: forms.atc_list == undefined ? "undefined" : "00",
                              fontSize: 9,
                              bold: true,
@@ -448,7 +448,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[0].tax_withheld == undefined || forms.atc_list[0].tax_withheld == null ? " " : forms.atc_list[0].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[0].tax_withheld == undefined || forms.atc_list[0].tax_withheld == null ? " " : formatAmount(forms.atc_list[0].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -472,7 +472,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[1].tax_base == undefined || forms.atc_list[1].tax_base == null ? " " : forms.atc_list[1].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[1].tax_base == undefined || forms.atc_list[1].tax_base == null ? " " : formatAmount(forms.atc_list[1].tax_base),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -483,7 +483,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[1].tax_withheld == undefined || forms.atc_list[1].tax_withheld == null ? " " : forms.atc_list[1].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[1].tax_withheld == undefined || forms.atc_list[1].tax_withheld == null ? " " : formatAmount(forms.atc_list[1].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -507,7 +507,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[2].tax_base == undefined || forms.atc_list[2].tax_base == null ? " " : forms.atc_list[2].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[2].tax_base == undefined || forms.atc_list[2].tax_base == null ? " " : formatAmount(forms.atc_list[2].tax_base),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -518,7 +518,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[2].tax_withheld == undefined || forms.atc_list[2].tax_withheld == null ? " " : forms.atc_list[2].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[2].tax_withheld == undefined || forms.atc_list[2].tax_withheld == null ? " " : formatAmount(forms.atc_list[2].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -541,7 +541,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[3].tax_base == undefined || forms.atc_list[3].tax_base == null ? " " : forms.atc_list[3].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[3].tax_base == undefined || forms.atc_list[3].tax_base == null ? " " : formatAmount(forms.atc_list[3].tax_base),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -552,7 +552,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[3].tax_withheld == undefined || forms.atc_list[3].tax_withheld == null ? " " : forms.atc_list[3].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[3].tax_withheld == undefined || forms.atc_list[3].tax_withheld == null ? " " : formatAmount(forms.atc_list[3].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
