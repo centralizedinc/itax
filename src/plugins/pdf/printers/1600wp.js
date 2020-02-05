@@ -85,7 +85,7 @@
                          },
                          //fromPeriod year
                          {
-                             text: formatDate(forms.taxpayer.start_date, {
+                             text: formatDate(forms.taxpayer.start_month, {
                                  year: "numeric"
                              }),
                              fontSize: 15,
@@ -97,7 +97,7 @@
                          },
                          //toPeriod month
                          {
-                             text: formatDate(forms.taxpayer.end_date, {
+                             text: formatDate(forms.taxpayer.end_month, {
                                  month: "2-digit"
                              }),
                              fontSize: 15,

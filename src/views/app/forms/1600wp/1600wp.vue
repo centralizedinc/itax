@@ -4,16 +4,30 @@
       <a-divider>
         <b>Withholding Tax Declaration (1600WP)</b>
       </a-divider>
-      <a-form-item label="1. For the month of "
-      :validate-status="error_item('fromToDated')"
-        :help="error_desc('fromToDate')"
-      >
+      
+      <a-row>
+        <a-col :span="24">
+          <a-form-item label="1. For the Period of ">
         <!-- (MM/DD/YYYY) -->
-        <p>From: <a-date-picker v-model="form.taxpayer.start_month" /></p>
-        <a-form-item>
-          <p>To: <a-date-picker v-model="form.taxpayer.end_month" /></p>
-        </a-form-item>
        </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="From"
+        :validate-status="error_item('fromDate')"
+        :help="error_desc('fromDate')"
+        >
+        <a-date-picker v-model="form.taxpayer.start_month" />
+        </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item
+          label= "To"
+        :validate-status="error_item('toDate')"
+        :help="error_desc('toDate')"
+        ><a-date-picker v-model="form.taxpayer.end_month" />
+        </a-form-item>
+        </a-col>
+      </a-row>
       <a-form-item label="2. Amended Return"
       :validate-status="error_item('amended_yn')"
         :help="error_desc('amended_yn')"
@@ -397,11 +411,17 @@ export default {
       // -----------------------------
       var errors = [];
       if (is_validate_all || this.step === 0) {
-        if (!this.form.taxpayer.start_month || !this.form.taxpayer.end_month) {
+        if (!this.form.taxpayer.start_month) {
         errors.push({
           page: 0,
-          field: "fromToDate",
-          error: "Date is mandatory field."
+          field: "fromDate",
+          error: "Date From is mandatory field."
+        });
+      } else if (!this.form.taxpayer.end_month) {
+        errors.push({
+          page: 0,
+          field: "toDate",
+          error: "Date To is mandatory field."
         });
       } else if(this.form.amended_yn == null || this.form.amended_yn == undefined || this.amended_yn == ""){
         errors.push({

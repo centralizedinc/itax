@@ -844,14 +844,12 @@ export default {
   watch: {
     step() {
       if (this.step === 0) {
-        this.form.pdf_page = 1;
+        this.form.pdf_page = 0;
       } else if (this.step === 1) {
-        this.form.pdf_page = 1;
-      } else if (this.step === 2) {
-        this.form.pdf_page = 1;
+        this.form.pdf_page = 0;
       } else {
-        this.form.pdf_page = 2;
-      }
+        this.form.pdf_page = 1;
+      } 
     },
     loading(val) {
       this.$emit("loading", val);
@@ -1221,7 +1219,7 @@ export default {
     }
   },
   created() {
-    this.form.pdf_page = 1;
+    this.form.pdf_page = 0;
     this.connections = this.$store.state.relationship.connections;
     console.log(
       "  " + JSON.stringify(this.$store.state.relationship.connections)

@@ -1,3 +1,6 @@
+import forms_images from '../templates/1701q_template'
+var form_images = [forms_images.page1, forms_images.page2]
+
 /**
  *
  * @param {LicenseModel} details
@@ -16,9 +19,9 @@ function fillup(details) {
                 margin: [25, 0, 0, 0]
             }]
         },
-        content: content[details.pdf_page],
+        content: content[details.pdf_page || 0],
         images: {
-            form: forms[details.pdf_page]
+            form: form_images[details.pdf_page || 0]
         },
         pageSize: 'LEGAL'
     };
@@ -2296,7 +2299,7 @@ function getContent(forms) {
 
     ]
 
-    var contents = [content_page1, content_page1, content_page2]
+    var contents = [content_page1, content_page2]
     return contents;
 }
 
