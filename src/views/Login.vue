@@ -181,9 +181,9 @@ export default {
           this.$store
             .dispatch("LOGIN", account)
             .then(result => {
-              this.$notification.open({
+              this.$notification.success({
                 message: "Login success.",
-                icon: <a-icon type="check" style="color: blue" />
+                description:`Welcome ${this.$store.state.account_session.user.name.first}! You have successfully logged-in at ${new Date()}`
               });
               this.loading = false;
               this.$router.push("/app");

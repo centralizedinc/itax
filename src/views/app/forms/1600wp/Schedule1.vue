@@ -10,13 +10,10 @@
     <a-button type="primary" @click="addSched">ADD</a-button>
 
     <a-table bordered :dataSource="data_source" :columns="columns" :pagination="false">
-      <template slot="seq_no" slot-scope="text, record, index">
-        <!-- <a-input-number></a-input-number> -->
-      </template>
-      <template slot="tin" slot-scope="text, record, index">
+      <template slot="tin" slot-scope="text, record">
         <a-input-number v-model="record.tin"></a-input-number>
       </template>
-      <template slot="name" slot-scope="text, record, index">
+      <template slot="name" slot-scope="text, record">
         <a-input v-model="record.name"></a-input>
       </template>
       <template slot="atc_code" slot-scope="text, record, index">
@@ -32,17 +29,17 @@
           >{{data_source[index].atc_code ? data_source[index].atc_code : item.atc_code}}</a-select-option>
         </a-select>
       </template>
-      <template slot="nature_of_payment" slot-scope="text, record, index">
+      <template slot="nature_of_payment" slot-scope="text, record">
         <span>{{record.nature_of_payment}}</span>
       </template>
       <template slot="amount" slot-scope="text, record, index">
         <a-input-number :value="text" style="width:10vw" @change="e => computeAtc(e, index)"></a-input-number>
       </template>
-      <template slot="rate" slot-scope="text, record, index">
+      <template slot="rate" slot-scope="text, record">
         <span>{{record.rate*100}}%</span>
       </template>
-      <template slot="tax_required" slot-scope="text, record, index">
-        <span>{{record.tax_required.toFixed(2)}}</span>
+      <template slot="tax_required" slot-scope="text, record">
+        <span>{{record.tax_required ? record.tax_required.toFixed(2) : ""}}</span>
       </template>
     </a-table>
     <!-- amount:: {{total_amount}} :: tax:: {{total_tax}} -->
@@ -149,7 +146,7 @@ export default {
     addSched() {
       if (!this.data_source) this.data_source = [];
       const new_sched1 = {
-        seq_no: 0,
+        seq_no: this.data_source.length + 1,
         tin: "",
         name: "",
         atc_code: "",

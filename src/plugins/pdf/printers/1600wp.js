@@ -59,7 +59,7 @@
                      [
                          //fromPeriod month
                          {
-                             text: formatDate(forms.start_month, {
+                             text: formatDate(forms.taxpayer.start_date, {
                                  month: "2-digit"
                              }),
 
@@ -72,7 +72,7 @@
                          },
                          //fromPeriod day     
                          {
-                             text: formatDate(forms.start_month, {
+                             text: formatDate(forms.taxpayer.start_date, {
                                  day: "2-digit"
                              }),
 
@@ -85,7 +85,7 @@
                          },
                          //fromPeriod year
                          {
-                             text: formatDate(forms.start_month, {
+                             text: formatDate(forms.taxpayer.start_date, {
                                  year: "numeric"
                              }),
                              fontSize: 15,
@@ -97,7 +97,7 @@
                          },
                          //toPeriod month
                          {
-                             text: formatDate(forms.end_month, {
+                             text: formatDate(forms.taxpayer.end_date, {
                                  month: "2-digit"
                              }),
                              fontSize: 15,
@@ -109,7 +109,7 @@
                          },
                          //toPeriod day
                          {
-                             text: formatDate(forms.end_month, {
+                             text: formatDate(forms.taxpayer.end_date, {
                                  day: "2-digit"
                              }),
                              fontSize: 15,
@@ -121,7 +121,7 @@
                          },
                          //toPeriod year
                          {
-                             text: formatDate(forms.end_month, {
+                             text: formatDate(forms.taxpayer.end_date, {
                                  year: "numeric"
                              }),
                              fontSize: 15,
@@ -274,7 +274,7 @@
                          },
                          // #7 category of withoutholding agent true
                          {
-                             text: forms.category_of_agent == true ? 'X' : ' ',
+                             text: forms.taxpayer.category_of_agent == 'private' ? 'X' : ' ',
                              fontSize: 15,
                              bold: true,
                              // right,down,left,up
@@ -283,7 +283,7 @@
                          },
                          // #7 category of withoutholding agent false
                          {
-                             text: forms.category_of_agent == false ? 'X' : ' ',
+                             text: forms.taxpayer.category_of_agent == 'government' ? 'X' : ' ',
                              fontSize: 15,
                              bold: true,
                              // right,down,left,up
@@ -435,7 +435,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[0].tax_base == undefined || forms.atc_list[0].tax_base == null ? " " : forms.atc_list[0].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[0].tax_base == undefined || forms.atc_list[0].tax_base == null ? " " : formatAmount(forms.atc_list[0].tax_base),
                              //  text: forms.atc_list == undefined ? "undefined" : "00",
                              fontSize: 9,
                              bold: true,
@@ -448,7 +448,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[0].tax_withheld == undefined || forms.atc_list[0].tax_withheld == null ? " " : forms.atc_list[0].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[0].tax_withheld == undefined || forms.atc_list[0].tax_withheld == null ? " " : formatAmount(forms.atc_list[0].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -472,7 +472,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[1].tax_base == undefined || forms.atc_list[1].tax_base == null ? " " : forms.atc_list[1].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[1].tax_base == undefined || forms.atc_list[1].tax_base == null ? " " : formatAmount(forms.atc_list[1].tax_base),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -483,7 +483,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[1].tax_withheld == undefined || forms.atc_list[1].tax_withheld == null ? " " : forms.atc_list[1].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[1].tax_withheld == undefined || forms.atc_list[1].tax_withheld == null ? " " : formatAmount(forms.atc_list[1].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -507,7 +507,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[2].tax_base == undefined || forms.atc_list[2].tax_base == null ? " " : forms.atc_list[2].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[2].tax_base == undefined || forms.atc_list[2].tax_base == null ? " " : formatAmount(forms.atc_list[2].tax_base),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -518,7 +518,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[2].tax_withheld == undefined || forms.atc_list[2].tax_withheld == null ? " " : forms.atc_list[2].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[2].tax_withheld == undefined || forms.atc_list[2].tax_withheld == null ? " " : formatAmount(forms.atc_list[2].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -541,7 +541,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[3].tax_base == undefined || forms.atc_list[3].tax_base == null ? " " : forms.atc_list[3].tax_base,
+                             text: forms.atc_list == undefined || forms.atc_list[3].tax_base == undefined || forms.atc_list[3].tax_base == null ? " " : formatAmount(forms.atc_list[3].tax_base),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -552,7 +552,7 @@
                              text: "",
                          },
                          {
-                             text: forms.atc_list == undefined || forms.atc_list[3].tax_withheld == undefined || forms.atc_list[3].tax_withheld == null ? " " : forms.atc_list[3].tax_withheld,
+                             text: forms.atc_list == undefined || forms.atc_list[3].tax_withheld == undefined || forms.atc_list[3].tax_withheld == null ? " " : formatAmount(forms.atc_list[3].tax_withheld),
                              fontSize: 9,
                              bold: true,
                              alignment: 'right',
@@ -579,8 +579,9 @@
                          },
                          // #12 tax required to be withheld and remitted
                          {
-                             text: forms.tax_req_withld_remtd ? forms.tax_req_withld_remtd : '0.00',
-                             fontSize: 10,
+                            //  text: forms.tax_req_withld_remtd ? forms.tax_req_withld_remtd : '0.00',
+                            text: formatAmount(forms.tax_req_withld_remtd), 
+                            fontSize: 10,
                              bold: true,
                              alignment: 'right',
                              // right,down,left,up
@@ -603,8 +604,9 @@
                          },
                          // #13 less: tax remitted in return previously filed, if this is an amended return
                          {
-                             text: forms.less_tax_remtd_retrn ? forms.less_tax_remtd_retrn : '0.00',
-                             fontSize: 10,
+                            //  text: forms.less_tax_remtd_retrn ? forms.less_tax_remtd_retrn : '0.00',
+                            text: formatAmount(forms.less_tax_remtd_retrn), 
+                            fontSize: 10,
                              bold: true,
                              alignment: 'right',
                              // right,down,left,up
@@ -628,8 +630,9 @@
                          },
                          //#14
                          {
-                             text: forms.tax_due ? forms.tax_due : '0.00',
-                             fontSize: 10,
+                            //  text: forms.tax_due ? forms.tax_due : '0.00',
+                            text: formatAmount(forms.tax_due), 
+                            fontSize: 10,
                              bold: true,
                              alignment: 'right',
                              // right,down,left,up
@@ -669,7 +672,8 @@
                          //15A
                          {
 
-                             text: forms.surcharge ? forms.surcharge : '0.00',
+                            //  text: forms.surcharge ? forms.surcharge : '0.00',
+                             text: formatAmount(forms.surcharge),
                              fontSize: 10,
                              bold: true,
                              alignment: 'right',
@@ -680,8 +684,9 @@
                          //15B
                          {
 
-                             text: forms.interest ? forms.interest : '0.00',
-                             fontSize: 10,
+                            //  text: forms.interest ? forms.interest : '0.00',
+                            text: formatAmount(forms.interest), 
+                            fontSize: 10,
                              bold: true,
                              alignment: 'right',
                              // right,down,left,up
@@ -691,8 +696,9 @@
                          //15C
                          {
 
-                             text: forms.compromise ? forms.compromise : '0.00',
-                             fontSize: 10,
+                            //  text: forms.compromise ? forms.compromise : '0.00',
+                            text: formatAmount(forms.compromise), 
+                            fontSize: 10,
                              bold: true,
                              alignment: 'right',
                              // right,down,left,up
@@ -705,7 +711,8 @@
                          },
                          //15D
                          {
-                             text: forms.penalties ? forms.penalties : '0.00',
+                            //  text: forms.penalties ? forms.penalties : '0.00',
+                            text: formatAmount(forms.penalties),
                              fontSize: 10,
                              bold: true,
                              alignment: 'right',
@@ -730,7 +737,8 @@
                          },
                          //16
                          {
-                             text: forms.total_amount_payable ? forms.total_amount_payable : '0.00',
+                            //  text: forms.total_amount_payable ? forms.total_amount_payable : '0.00',
+                            text: formatAmount(forms.total_amount_payable),
                              fontSize: 10,
                              bold: true,
                              alignment: 'right',
@@ -804,7 +812,7 @@
 
                          //frommPeriod month
                          {
-                             text: formatDate(forms.start_month, {
+                             text: formatDate(forms.taxpayer.start_date, {
                                  month: "2-digit"
                              }),
 
@@ -817,7 +825,7 @@
                          },
                          //fromPeriod day     
                          {
-                             text: formatDate(forms.start_month, {
+                             text: formatDate(forms.taxpayer.start_date, {
                                  day: "2-digit"
                              }),
 
@@ -830,7 +838,7 @@
                          },
                          //                 //fromPeriod year
                          {
-                             text: formatDate(forms.start_month, {
+                             text: formatDate(forms.taxpayer.start_date, {
                                  year: "numeric"
                              }),
                              fontSize: 10,
@@ -842,7 +850,7 @@
                          },
                          //tooPeriod month
                          {
-                             text: formatDate(forms.end_month, {
+                             text: formatDate(forms.taxpayer.end_date, {
                                  month: "2-digit"
                              }),
                              fontSize: 10,
@@ -854,7 +862,7 @@
                          },
                          //toPeriod day
                          {
-                             text: formatDate(forms.end_month, {
+                             text: formatDate(forms.taxpayer.end_date, {
                                  day: "2-digit"
                              }),
                              fontSize: 10,
@@ -866,7 +874,7 @@
                          },
                          //toPeriod year
                          {
-                             text: formatDate(forms.end_month, {
+                             text: formatDate(forms.taxpayer.end_date, {
                                  year: "numeric"
                              }),
                              fontSize: 10,
@@ -946,7 +954,7 @@
              layout: "noBorders",
              table: {
                  widths: [5, 62, 110, 30, 85, 85, 15, 85],
-                 heights: [20],
+                 heights: [68],
                  body: [
                      [{
                              text: forms.sched1[x] == undefined || forms.sched1[x].seq_no == undefined || forms.sched1[x].seq_no == null ? " " : forms.sched1[x].seq_no,
@@ -978,24 +986,24 @@
                          },
                          {
                              text: forms.sched1[x] == undefined || forms.sched1[x].nature_of_payment == undefined || forms.sched1[x].nature_of_payment == null ? " " : forms.sched1[x].nature_of_payment,
-                             fontSize: 8,
+                             fontSize: 7,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
                          },
                          {
-                             text: forms.sched1[x] == undefined || forms.sched1[x].amount == undefined || forms.sched1[x].amount == null ? " " : forms.sched1[x].amount,
+                             text: forms.sched1[x] == undefined || forms.sched1[x].amount == undefined || forms.sched1[x].amount == null ? " " : formatAmount(forms.sched1[x].amount),
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'right'
                          },
                          {
-                             text: forms.sched1[x] == undefined || forms.sched1[x].rate == undefined || forms.sched1[x].rate == null ? " " : forms.sched1[x].rate*100+"%",
+                             text: forms.sched1[x] == undefined || forms.sched1[x].rate == undefined || forms.sched1[x].rate == null ? " " : formatAmount(forms.sched1[x].rate*100+"%"),
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'right'
                          },
                          {
-                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_required == undefined || forms.sched1[x].tax_required == null ? " " : forms.sched1[x].tax_required,
+                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_required == undefined || forms.sched1[x].tax_required == null ? " " : formatAmount(forms.sched1[x].tax_required),
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'right'
@@ -1015,13 +1023,13 @@
                          text: " "
                      },
                      {
-                         text: forms.total_amount,
+                         text: formatAmount(forms.total_amount),
                          fontSize: 8,
                          margin: [5, 0, 0, 0],
                          alignment: 'justify'
                      },
                      {
-                         text: forms.total_tax_req_withheld,
+                         text: formatAmount(forms.total_tax_req_withheld),
                          fontSize: 8,
                          margin: [5, 0, 0, 0],
                          alignment: 'justify'

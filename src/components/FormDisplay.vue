@@ -81,6 +81,7 @@ export default {
         self.prev = dataUrl;
         return dataUrl;
       });
+      // ----------------------------------
       // var printer = printers[this.type];
       // var document = printer.fillup(this.data);
       // var self = this;
