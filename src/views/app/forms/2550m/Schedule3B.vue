@@ -1,78 +1,68 @@
 <template>
-  <a-drawer
-    title="Schedule 3 B Purchases/Importation Previous Period"
-    placement="right"
-    :closable="true"
-    @close="close"
-    :visible="show"
-    width="1000"
-  >
-    <a-table bordered :dataSource="sched3B_data" :columns="columns_sched3B">
-    <template slot="date_purchased" slot-scope="text, record, index">
-        <a-date-picker
-          v-model="sched3B_data[index].date_purchased"
-          @change="check_sched3B"
-          style="width: 100%"
-        />
-      </template>
-      <template slot="description" slot-scope="text, record, index">
-        <a-input v-model="sched3B_data[index].description"></a-input>
-      </template>
-      <template slot="vat" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].vat"
-          @change="sched3BCompute"
-        ></a-input-number>
-      </template>
-      <template slot="balance_input_tax" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].balance_input_tax"
-          @change="sched3BCompute"
-        ></a-input-number>
-      </template>
-      <template slot="tax_rate" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].tax_rate"
-        ></a-input-number>
-      </template>
-      <template slot="est_life" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].est_life"
-        ></a-input-number>
-      </template>
-      <template slot="recog_life" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].recog_life"
-        ></a-input-number>
-      </template>
-      <template slot="allowable_input_tax" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].allowable_input_tax"
-        ></a-input-number>
-      </template>
-      <template slot="balance" slot-scope="text, record, index">
-        <a-input-number
-          v-model="sched3B_data[index].balance"
-        ></a-input-number>
-      </template>
-      <template slot="operation" slot-scope="text, record, index">
-        <a-popconfirm
-          v-if="sched3B_data.length"
-          title="Sure to delete?"
-          @confirm="() => delete_sched3B(index)"
-        >
-          <a href="javascript:;">Delete</a>
-        </a-popconfirm>
-      </template>
-      <template slot="footer">
-        <a-button @click="addSched3B">Add</a-button>
-        <a-button>Save</a-button>
-        <p align="right">
-          20A: {{ form.inputTaxPurchaseCapGoods }}
-        </p>
-      </template>
-    </a-table>
-  </a-drawer>
+  <div>
+    <a-row type="flex" justify="space-between">
+      <a-col :span="12">
+        <a-input-search v-model="search" placeholder="Search"></a-input-search>
+      </a-col>
+      <a-col :span="5">
+        <a-button type="primary" @click="addSched3B" icon="plus">ADD</a-button>
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24">
+        <a-table bordered :dataSource="sched3B_data" :columns="columns_sched3B">
+          <template slot="date_purchased" slot-scope="text, record, index">
+            <a-date-picker
+              v-model="sched3B_data[index].date_purchased"
+              @change="check_date_sched3B"
+              style="width: 100%"
+            />
+          </template>
+          <template slot="description" slot-scope="text, record, index">
+            <a-input v-model="sched3B_data[index].description"></a-input>
+          </template>
+          <template slot="vat" slot-scope="text, record, index">
+            <a-input-number v-model="sched3B_data[index].vat" @change="sched3BCompute"></a-input-number>
+          </template>
+          <template slot="balance_input_tax" slot-scope="text, record, index">
+            <a-input-number
+              v-model="sched3B_data[index].balance_input_tax"
+              @change="sched3BCompute"
+            ></a-input-number>
+          </template>
+          <template slot="tax_rate" slot-scope="text, record, index">
+            <a-input-number v-model="sched3B_data[index].tax_rate"></a-input-number>
+          </template>
+          <template slot="est_life" slot-scope="text, record, index">
+            <a-input-number v-model="sched3B_data[index].est_life"></a-input-number>
+          </template>
+          <template slot="recog_life" slot-scope="text, record, index">
+            <a-input-number v-model="sched3B_data[index].recog_life"></a-input-number>
+          </template>
+          <template slot="allowable_input_tax" slot-scope="text, record, index">
+            <a-input-number v-model="sched3B_data[index].allowable_input_tax"></a-input-number>
+          </template>
+          <template slot="balance" slot-scope="text, record, index">
+            <a-input-number v-model="sched3B_data[index].balance"></a-input-number>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-popconfirm
+              v-if="sched3B_data.length"
+              title="Sure to delete?"
+              @confirm="() => delete_sched3B(index)"
+            >
+              <a-button type="link">Delete</a-button>
+            </a-popconfirm>
+          </template>
+          <template slot="footer">
+            <!-- <a-button @click="addSched3B">Add</a-button>
+            <a-button>Save</a-button> -->
+            <p align="right">20A: {{ form.inputTaxPurchaseCapGoods }}</p>
+          </template>
+        </a-table>
+      </a-col>
+    </a-row>
+  </div>
 </template>
 
 <script>
@@ -161,7 +151,7 @@ export default {
     delete_sched3B(index) {
       this.sched3B_data[index].splice(index, 1);
     },
-    check_sched3B(value) {
+    check_date_sched3B(value) {
       var only = this.formatDtMonth(this.form.return_period);
       var picked = this.formatDtMonth(value);
       console.log("check sched3B: " + value);
@@ -226,7 +216,7 @@ export default {
       });
     },
     showDrawer3B() {
-        console.log("data source show drawer; " + this.dataSource);
+      console.log("data source show drawer; " + this.dataSource);
       this.show_sched3B = true;
     },
     onClose_sched3B() {
@@ -234,9 +224,9 @@ export default {
     },
     close() {
       this.$emit("close", {
-        sched3B: this.deepCopy(this.data_source),
-        totalAtcAmount: this.deepCopy(this.total_atc_amount),
-        totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
+        sched3B: this.sched3B_data
+        // totalAtcAmount: this.deepCopy(this.total_atc_amount),
+        // totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
       });
     }
   }

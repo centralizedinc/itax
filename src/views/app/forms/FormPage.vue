@@ -247,7 +247,7 @@ export default {
           start_month: "",
           end_month: ""
         },
-        page: 0,
+        pdf_page: 0,
         // spouse_details: {},
         buyer_details: {},
         item29: {},
@@ -535,7 +535,9 @@ export default {
       }
     },
     getUserByTin(tin) {
+      console.log("get user by tin data: ", tin)
       const user = this.user_list.find(v => v.tin === tin);
+      console.log("get user by tin user data: " + JSON.stringify(user))
       return (
         user || {
           avatar: {

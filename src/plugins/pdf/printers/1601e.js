@@ -122,7 +122,7 @@ function getContent(forms) {
     }, {
         layout: "noBorders",
         table: {
-            widths: [58, 45, 35, 50, 150, 100],
+            widths: [58, 45, 35, 50, 150, 144],
             body: [
                 [{
                     text: mapTin(forms.taxpayer.tin, 0, 3),
@@ -170,7 +170,7 @@ function getContent(forms) {
                     fontSize: 16,
                     // right,down,left,up
                     alignment: 'justify',
-                    margin: [50, 7, 0, 0]
+                    margin: [40, 7, 0, 0]
                 }
                 ]
             ]
@@ -191,12 +191,13 @@ function getContent(forms) {
                     alignment: 'justify',
                     margin: [14, 5, 0, 0]
                 },
+                {text:""},
                 {
                     text: forms.taxpayer.telephone_no == null ? ' ' : forms.taxpayer.telephone_no,
                     fontSize: 12,
                     // right,down,left,up
                     alignment: 'justify',
-                    margin: [25, 3, 0, 0]
+                    margin: [5, 5, 0, 0]
                 }
                 ]
             ]

@@ -27,8 +27,9 @@
             style="width:100%"
             v-for="item in atc_list"
             :key="item"
+            
             width="100%"
-          >{{item.atc_code}}</a-select-option>
+          >{{data_source[index].atc_code ? data_source[index].atc_code : item.atc_code}}</a-select-option>
         </a-select>
       </template>
       <template slot="nature_of_payment" slot-scope="text, record, index">
@@ -41,7 +42,7 @@
         <span>{{record.rate*100}}%</span>
       </template>
       <template slot="tax_required" slot-scope="text, record, index">
-        <span>{{record.tax_required}}</span>
+        <span>{{record.tax_required.toFixed(2)}}</span>
       </template>
     </a-table>
     <!-- amount:: {{total_amount}} :: tax:: {{total_tax}} -->
@@ -112,7 +113,7 @@ export default {
         {
           atc_code: "WB 191",
           nature_of_payment:
-            "Tax on winnings from double, forecast/quinella and trifecta bets on horse races paid by Government Withholding Agent",
+            "Tax on winnings from double, forecast / quinella and trifecta bets on horse races paid by Government Withholding Agent",
           tax_base: 0,
           rate: 0.04,
           tax_required: 0
@@ -128,7 +129,7 @@ export default {
         {
           atc_code: "WB 193",
           nature_of_payment:
-            "Tax on winnings from double, forecast/quinella and trifecta bets on horse races paid by Private Withholding Agent",
+            "Tax on winnings from double, forecast / quinella and trifecta bets on horse races paid by Private Withholding Agent",
           tax_base: 0,
           rate: 0.04,
           tax_required: 0
@@ -161,6 +162,7 @@ export default {
       console.log("add sched data source: " + JSON.stringify(this.data_source));
     },
     pickAtc(val, index) {
+      console.log("data_source: " + JSON.stringify(this.data_source))
       if (index > -1) {
         console.log("pick atc_code val: " + JSON.stringify(val));
         this.data_source[index].atc_code = val.atc_code;
@@ -182,8 +184,11 @@ export default {
         this.data_source.forEach(data => {
           // console.log("data amount: " + JSON.stringify(this.data.amount));
           // console.log("this is taxwithheld : " + data.tax_required);
+          console.log("data source data details: " + JSON.stringify(data))
           this.total_amount += data.amount;
+          data.tax_required = data.amount*data.rate
           this.total_tax += data.tax_required;
+
           console.log("total amount: " + JSON.stringify(this.total_amount));
           //   this.atc_code_list.push({
           //     atc_code_code: data.atc_code,
@@ -194,7 +199,7 @@ export default {
           //   });
         });
       }
-      return this.data_source[index].tax_required.toFixed(2);
+      return this.data_source[index].tax_required
     },
     close() {
       // console.log(

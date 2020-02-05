@@ -9,6 +9,7 @@
      console.log("fillup details printer: " + JSON.stringify(details))
      var content = getContent(details);
      console.log('get content ###### :', content);
+     
      return {
          background: function (page) {
              return [{
@@ -940,7 +941,7 @@
          }
 
      ]
-     for (x = 0; x < 3; x++) {
+     for (x = 0; x < 1; x++) {
          content.push({
              layout: "noBorders",
              table: {
@@ -951,57 +952,53 @@
                              text: forms.sched1[x] == undefined || forms.sched1[x].seq_no == undefined || forms.sched1[x].seq_no == null ? " " : forms.sched1[x].seq_no,
                              fontSize: 8,
                              margin: [-20, 0, 0, 0],
-                             alignment: 'justify'
+                             alignment: 'right'
 
                          },
                          {
                              text: forms.sched1[x] == undefined || forms.sched1[x].tin == undefined || forms.sched1[x].tin == null ? " " : forms.sched1[x].tin,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
-                             alignment: 'justify'
+                             alignment: 'right'
 
                          },
                          {
                              text: forms.sched1[x] == undefined || forms.sched1[x].name == undefined || forms.sched1[x].name == null ? " " : forms.sched1[x].name,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
-                             alignment: 'justify'
+                             alignment: 'right'
 
                          },
                          {
                              text: forms.sched1[x] == undefined || forms.sched1[x].atc_code == undefined || forms.sched1[x].atc_code == null ? " " : forms.sched1[x].atc_code,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
-                             alignment: 'justify'
+                             alignment: 'right'
 
                          },
                          {
-                             text: forms.sched1[x] == undefined || forms.sched1[x].nature_of_payment == undefined || forms.sched1[x].nature_of_payment == null ? " " : forms.sched1[x].nature_of_payment.toFixed(20),
+                             text: forms.sched1[x] == undefined || forms.sched1[x].nature_of_payment == undefined || forms.sched1[x].nature_of_payment == null ? " " : forms.sched1[x].nature_of_payment,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
                              alignment: 'justify'
-
                          },
                          {
                              text: forms.sched1[x] == undefined || forms.sched1[x].amount == undefined || forms.sched1[x].amount == null ? " " : forms.sched1[x].amount,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
-                             alignment: 'justify'
-
+                             alignment: 'right'
                          },
                          {
-                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_rate == undefined || forms.sched1[x].tax_rate == null ? " " : forms.sched1[x].tax_rate,
+                             text: forms.sched1[x] == undefined || forms.sched1[x].rate == undefined || forms.sched1[x].rate == null ? " " : forms.sched1[x].rate*100+"%",
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
-                             alignment: 'justify'
-
+                             alignment: 'right'
                          },
                          {
-                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_req_withheld == undefined || forms.sched1[x].tax_req_withheld == null ? " " : forms.sched1[x].tax_req_withheld,
+                             text: forms.sched1[x] == undefined || forms.sched1[x].tax_required == undefined || forms.sched1[x].tax_required == null ? " " : forms.sched1[x].tax_required,
                              fontSize: 8,
                              margin: [0, 0, 0, 0],
-                             alignment: 'justify'
-
+                             alignment: 'right'
                          }
                      ]
                  ]

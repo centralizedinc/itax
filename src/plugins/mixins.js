@@ -12,8 +12,25 @@ export default {
                     return JSON.parse(JSON.stringify(obj));
                 },
                 formatTIN(tin) {
+                    
+                    if(tin){
+                        
+                        tin = tin.toString().replace(/-/g,'')
+                    }
+                    if(tin && tin.length > 3 && tin.length <7){                        
+                       return `${tin.substring(0, 3)}-${tin.substring(3, tin.length)}`
+                    }else if(tin && tin.length > 6 && tin.length < 10){
+                        return `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, tin.length)}`
+                     }else if(tin && tin.length > 9){
+                        return `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, tin.length)}`
+                     }else{
+                         return tin
+                     }
+                    //  {
+                    //     return tin && tin.length == 13 ? `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, 13)}` : tin
+                    // }
 
-                    return tin && tin.length == 13 ? `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, 13)}` : tin
+                    
                 },
                 formatAmount(amount, show_sign) {
                     // return amount ? amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, ',') : '0.00'
