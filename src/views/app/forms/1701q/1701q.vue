@@ -722,7 +722,8 @@
             :labelCol="{span: 3}"
             :wrapperCol="{span: 21}"
             label="29"
-            
+            :validate-status="penalties_error ? 'error':''"
+            :help="penalties_error"
           >
           <!-- :validate-status="error_item('taxpayer_tax_payable.penalties')"
             :help="error_desc('taxpayer_tax_payable.penalties')" -->
@@ -881,6 +882,13 @@ export default {
         return_period.setMonth(8);
       }
       return return_period;
+    },
+    penalties_error() {
+      if(this.error_item('taxpayer_tax_payable.surcharge') || 
+        this.error_item('taxpayer_tax_payable.interest') || 
+        this.error_item('taxpayer_tax_payable.compromise')) {
+          return "Late Filing";
+        } return undefined;
     }
   },
   methods: {
