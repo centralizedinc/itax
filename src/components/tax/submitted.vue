@@ -103,6 +103,7 @@ export default {
   }, 
   methods:{
     print(record){
+      console.log("print record form data: " + JSON.stringify(this.form))
       this.selected_record = record.reference_no
       this.printing = true;
       this.$store.dispatch("GET_UPLOAD_TAX_RETURNS", {
@@ -118,7 +119,26 @@ export default {
         this.printing = false;
         console.log('ERROR :::',JSON.stringify(error))
       })
-    }
+    },
+    open() {
+      var printer = printers[this.form_type];
+      this.form.whole_pdf = true;
+      console.log("form details open: " + JSON.stringify(this.form));
+      var pdf_list = [];
+      // for (var x = 0; x <= 1; x++) {
+      //   this.form.pdf_page = x;
+      var document = printer.fillup(this.form);
+      var self = this;
+      pdfMake.createPdf(document).open(dataUrl => {
+        pdf_list.push(dataUrl);
+        console.log("getdata: " + dataUrl);
+        self.prev = dataUrl;
+      });
+      this.refresh();
+      console.log("open form data: " + JSON.stringify(this.form));
+      // }
+      console.log("pdf list data: " + JSON.stringify(pdf_list));
+    },
   }
 };
 </script>

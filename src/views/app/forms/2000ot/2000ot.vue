@@ -479,11 +479,12 @@
               :wrapperCol="form_layout.wrapper_col"
               label="18"
             >
-              <a-input
+              <a-input-number
                 disabled
+                style="width:100%"
                 v-model="form.prev_tax_due"
                 placeholder="Tax Still Due/(Overpayment)"
-              ></a-input>
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -555,10 +556,11 @@
             >
               <a-input
                 disabled
-                v-model="form.total_amount_payable"
+                
+                :value="getTotalAmountPayable()"
                 placeholder="Total Amount Payable/(overpayment)(Sum of Items 18 and 19D) "
               ></a-input>
-              <!-- :value="getTotalAmountPayable()" -->
+              <!-- v-model="form.total_amount_payable" -->
             </a-form-item>
           </a-col>
         </a-row>
@@ -634,8 +636,12 @@ export default {
   },
   methods: {
     getTotalAmountPayable() {
-      var total = this.computeSum([this.form.penalties, this.form.tax_due]);
+      // var total = this.computeSum([this.form.penalties, this.form.tax_due]);
+      var penalty = this.form.penalties > 0 ? this.form.penalties : 0  
+      var due = this.form.prev_tax_due > 0 ? this.form.prev_tax_due : 0
+      var total = penalty + due
       this.form.total_amount_payable = total;
+      return total
     },
     getPenalties() {
       var total = this.computeSum([
@@ -669,6 +675,8 @@ export default {
           15;
       }
       this.form.prev_tax_due = total;
+      this.form.tax_due = total
+      return total
     },
     getTaxDue() {
       var total = this.form.prev_tax_due;

@@ -722,9 +722,11 @@
             :labelCol="{span: 3}"
             :wrapperCol="{span: 21}"
             label="29"
-            :validate-status="error_item('taxpayer_tax_payable.penalties')"
-            :help="error_desc('taxpayer_tax_payable.penalties')"
+            :validate-status="penalties_error ? 'error':''"
+            :help="penalties_error"
           >
+          <!-- :validate-status="error_item('taxpayer_tax_payable.penalties')"
+            :help="error_desc('taxpayer_tax_payable.penalties')" -->
             <a-tooltip>
               <template slot="title">Add: Total Penalties (From Part V, Schedule IV-Item 67)</template>
               <a-input-number
@@ -880,6 +882,13 @@ export default {
         return_period.setMonth(8);
       }
       return return_period;
+    },
+    penalties_error() {
+      if(this.error_item('taxpayer_tax_payable.surcharge') || 
+        this.error_item('taxpayer_tax_payable.interest') || 
+        this.error_item('taxpayer_tax_payable.compromise')) {
+          return "Late Filing";
+        } return undefined;
     }
   },
   methods: {
@@ -1192,39 +1201,39 @@ export default {
           });
         }
       }
-      if (is_validate_all || this.step === 3) {
-        if (!this.form.taxpayer_tax_payable.penalties) {
-          this.$notification.error({
-            message: "Late Filing"
-          });
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.penalties",
-            error: "Please input fields in Schedule 4"
-          });
-        }
-        if (!this.form.taxpayer_tax_payable.surcharge) {
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.surcharge",
-            error: "Please input at least ₱1 Surcharge amount"
-          });
-        }
-        if (!this.form.taxpayer_tax_payable.interest) {
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.interest",
-            error: "Please input least ₱1 Interest amount"
-          });
-        }
-        if (!this.form.taxpayer_tax_payable.compromise) {
-          errors.push({
-            page: 3,
-            field: "taxpayer_tax_payable.compromise",
-            error: "Please input least ₱1 Compromise amount"
-          });
-        }
-      }
+      // if (is_validate_all || this.step === 3) {
+      //   if (!this.form.taxpayer_tax_payable.penalties) {
+      //     this.$notification.error({
+      //       message: "Late Filing"
+      //     });
+      //     errors.push({
+      //       page: 3,
+      //       field: "taxpayer_tax_payable.penalties",
+      //       error: "Please input fields in Schedule 4"
+      //     });
+      //   }
+      //   if (!this.form.taxpayer_tax_payable.surcharge) {
+      //     errors.push({
+      //       page: 3,
+      //       field: "taxpayer_tax_payable.surcharge",
+      //       error: "Please input at least ₱1 Surcharge amount"
+      //     });
+      //   }
+      //   if (!this.form.taxpayer_tax_payable.interest) {
+      //     errors.push({
+      //       page: 3,
+      //       field: "taxpayer_tax_payable.interest",
+      //       error: "Please input least ₱1 Interest amount"
+      //     });
+      //   }
+      //   if (!this.form.taxpayer_tax_payable.compromise) {
+      //     errors.push({
+      //       page: 3,
+      //       field: "taxpayer_tax_payable.compromise",
+      //       error: "Please input least ₱1 Compromise amount"
+      //     });
+      //   }
+      // }
       this.$emit("error", errors);
       if (!errors.length) {
         this.changeStep(this.step + 1);
