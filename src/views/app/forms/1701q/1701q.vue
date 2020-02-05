@@ -274,8 +274,8 @@
             label="14"
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
-            :validate-status="error_item('taxpayer_foreign_tax_credits')"
-            :help="error_desc('taxpayer_foreign_tax_credits')"
+            :validate-status="error_item('taxpayer_foreign_tax_number')"
+            :help="error_desc('taxpayer_foreign_tax_number')"
           >
             <a-input
               :disabled="form.taxpayer_foreign_tax_credits == false"
@@ -290,8 +290,8 @@
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
             label="15"
-            :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
-            :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
+            :validate-status="error_item('taxpayer_foreign_tax_credits')"
+            :help="error_desc('taxpayer_foreign_tax_credits')"
           >
             <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
             <a-radio-group v-model="form.taxpayer_foreign_tax_credits" @change="changeTaxNo">
@@ -350,6 +350,7 @@
               </a-tooltip>
             </a-radio-group>
           </a-form-item>
+          <br />
         </a-col>
       </a-row>
     </a-form>
@@ -606,6 +607,7 @@
               </a-tooltip>
             </a-radio-group>
           </a-form-item>
+          <br />
         </a-col>
       </a-row>
     </a-form>
@@ -847,9 +849,11 @@ export default {
         this.form.pdf_page = 0;
       } else if (this.step === 1) {
         this.form.pdf_page = 0;
+      } else if (this.step === 2) {
+        this.form.pdf_page = 0;
       } else {
         this.form.pdf_page = 1;
-      } 
+      }
     },
     loading(val) {
       this.$emit("loading", val);
@@ -882,22 +886,22 @@ export default {
     openSched1() {
       this.sched = 1;
       this.show = 1;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     openSched2() {
       this.sched = 2;
       this.show = 2;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     openSched3() {
       this.sched = 3;
       this.show = 3;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     openSched4() {
       this.sched = 4;
       this.show = 4;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     closeSched() {
       this.form.pdf_page = 1;
@@ -1152,16 +1156,25 @@ export default {
             error: "Please enter Citizenship  "
           });
         }
+        if ((!this.form.taxpayer_foreign_tax_number)&&
+            (this.form.taxpayer_foreign_tax_credits == true)
+        ) {
+          errors.push({
+            page: 1,
+            field: "taxpayer_foreign_tax_number",
+            error:
+              "You selected Yes in item 15, please input Foreign Tax Number  "
+          });
+        }
         if (
-          this.form.taxpayer_foreign_tax_credits === null ||
-          (this.form.taxpayer_foreign_tax_credits === undefined &&
-            this.form.taxpayer.taxpayer_foreign_tax_credits == false)
+          this.form.taxpayer_foreign_tax_credits == null ||
+          this.form.taxpayer_foreign_tax_credits == undefined 
         ) {
           errors.push({
             page: 1,
             field: "taxpayer_foreign_tax_credits",
             error:
-              "You selected Yes in item 15, please input Foreign Tax Number  "
+              "Please choose Foreign Tax Credits"
           });
         }
         if (
@@ -1221,6 +1234,8 @@ export default {
   created() {
     this.form.pdf_page = 0;
     this.connections = this.$store.state.relationship.connections;
+    this.form.taxpayer_foreign_tax_number = null 
+    this.form.taxpayer_foreign_tax_credits = null
     console.log(
       "  " + JSON.stringify(this.$store.state.relationship.connections)
     );
