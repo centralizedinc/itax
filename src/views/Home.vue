@@ -206,7 +206,11 @@
                 has-feedback
                 class="register-form-item"
               >
-                <a-input :disabled="loading" v-model="form.email" placeholder="Email"></a-input>
+                <a-input
+                  :disabled="loading"
+                  v-model="form.email"
+                  placeholder="Email"
+                ></a-input>
               </a-form-item>
               <a-form-item
                 label="Password"
@@ -330,6 +334,18 @@
                   placeholder="Line of Business"
                   v-model="form.taxpayer.line_of_business"
                 />
+              </a-form-item>
+              <a-form-item
+                label="Email Address"
+                :validate-status="validation_errors.registered_email ? 'error':''"
+                :help="validation_errors.registered_email"
+                has-feedback
+                class="register-form-item"
+              >
+                <a-input placeholder="Email Address" v-model="form.taxpayer.contact_details.email" />
+              </a-form-item>
+              <a-form-item label="Tel No" class="register-form-item">
+                <a-input placeholder="Tel No" v-model="form.taxpayer.contact_details.telno" />
               </a-form-item>
 
               <span v-if="form.taxpayer.taxpayer_type == 'C'">
@@ -470,6 +486,19 @@
                     <a-radio-button value="F">FEMALE</a-radio-button>
                   </a-radio-group>
                 </a-form-item>
+                <a-form-item
+                  class="register-form-item"
+                  label="Citizenship"
+                  :validate-status="validation_errors.citizenship ? 'error':''"
+                  :help="validation_errors.citizenship"
+                  has-feedback
+                >
+                  <a-input
+                    class="text-uppercase"
+                    placeholder="Citizenship"
+                    v-model="form.taxpayer.individual_details.citizenship"
+                  ></a-input>
+                </a-form-item>
               </span>
               <a-form-item
                 class="register-form-item"
@@ -484,6 +513,15 @@
                   v-model="form.taxpayer.address"
                   placeholder="Registered Address"
                 ></a-textarea>
+              </a-form-item>
+              <a-form-item
+                class="register-form-item"
+                label="Zip Code"
+                :validate-status="validation_errors.zipCode ? 'error':''"
+                :help="validation_errors.zipCode"
+                has-feedback
+              >
+                <a-input placeholder="Zip Code" v-model="form.taxpayer.address_details.zipCode"></a-input>
               </a-form-item>
             </a-form>
           </a-card>
@@ -558,6 +596,8 @@ export default {
         name: {},
         taxpayer: {
           individual_details: {},
+          address_details: {},
+          contact_details: {},
           taxpayer_type: "C",
           accounting_type: "c",
           start_month: 0
@@ -598,6 +638,8 @@ export default {
           name: {},
           taxpayer: {
             individual_details: {},
+            address_details: {},
+            contact_details: {},
             taxpayer_type: "C",
             accounting_type: "c",
             start_month: 0
@@ -676,8 +718,14 @@ export default {
         this.validation_errors.line_of_business =
           "Line of Business is required.";
       }
+      if (!this.form.taxpayer.contact_details.email) {
+        this.validation_errors.registered_email = "Email Address is required.";
+      }
       if (!this.form.taxpayer.address) {
         this.validation_errors.address = "Registered Address is required.";
+      }
+      if (!this.form.taxpayer.address_details.zipCode) {
+        this.validation_errors.zipCode = "Zip Code is required.";
       }
 
       if (this.form.taxpayer.taxpayer_type === "C") {
@@ -709,12 +757,13 @@ export default {
           this.validation_errors.filer_type = "Filer Type is required.";
         }
         if (!this.form.taxpayer.individual_details.birthDate) {
-          this.validation_errors.birth_date =
-            "Date of Birth is required.";
+          this.validation_errors.birth_date = "Date of Birth is required.";
         }
         if (!this.form.taxpayer.individual_details.gender) {
-          this.validation_errors.gender =
-            "Gender is required.";
+          this.validation_errors.gender = "Gender is required.";
+        }
+        if (!this.form.taxpayer.individual_details.citizenship) {
+          this.validation_errors.citizenship = "Citizenship is required.";
         }
       }
 

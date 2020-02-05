@@ -101,11 +101,11 @@ class CommonValidator {
 
     }
 
-    static formatAmount(amount) {
-        if (!amount || isNaN(amount)) return "0.00";
+    static formatAmount(amount, show_sign) {
+        if (!amount || isNaN(amount)) return show_sign ? "₱ 0.00" : "0.00";
         var parts = parseFloat(amount).toFixed(2).toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return parts.join(".");
+        return show_sign ? `₱ ${parts.join(".")}` : parts.join(".");
     }
 
     static checkDueDate(form_details, page) {
@@ -113,44 +113,45 @@ class CommonValidator {
         console.log(`Checking due date if late filing at page ${page}`);
         if (this.isLateFiling(form_details.due_date)) {
             console.log("Late filing...")
-            error_messages.push({
-                page,
-                field: 'latefiling',
-                error: 'Late Filing'
-            })
+            // error_messages.push({
+            //     page,
+            //     field: 'latefiling',
+            //     error: 'Late Filing'
+            // })
             // Compute Surcharge
+            console.log('###check form :', form_details);
             const surcharge = this.computeSurcharges(form_details.tax_due);
-            form_details.surcharge = form_details.surcharge ? form_details.surcharge.toFixed(2) : "0.00";
+            form_details.surcharge = form_details.surcharge ? parseFloat(form_details.surcharge).toFixed(2) : "0.00";
             console.log('Surcharge Comparison :', surcharge, ':', form_details.surcharge);
             if (form_details.surcharge !== surcharge.toFixed(2)) {
                 error_messages.push({
                     page,
                     field: 'surcharge',
-                    error: `Surcharge amount must be ${this.formatAmount(surcharge)}`,
+                    error: `Computed surcharge ${this.formatAmount(surcharge, true)}`,
                     required_value: surcharge.toFixed(2)
                 })
             }
             // Compute Interest
             const interest = this.computeInterest(form_details.due_date, form_details.tax_due);
-            form_details.interest = form_details.interest ? form_details.interest.toFixed(2) : "0.00";
+            form_details.interest = form_details.interest ? parseFloat(form_details.interest).toFixed(2) : "0.00";
             console.log('Interest Comparison :', interest, ':', form_details.interest);
             if (form_details.interest !== interest.toFixed(2)) {
                 error_messages.push({
                     page,
                     field: 'interest',
-                    error: `Interest amount must be ${this.formatAmount(interest)}`,
+                    error: `Computed interest ${this.formatAmount(interest, true)}`,
                     required_value: interest.toFixed(2)
                 })
             }
             // Compute Compromise
             const compromise = this.computeCompromise(form_details.due_date, form_details.tax_due);
-            form_details.compromise = form_details.compromise ? form_details.compromise.toFixed(2) : "0.00";
+            form_details.compromise = form_details.compromise ? parseFloat(form_details.compromise).toFixed(2) : "0.00";
             console.log('Compromise Comparison :', compromise, ':', form_details.compromise);
             if (form_details.compromise !== compromise.toFixed(2)) {
                 error_messages.push({
                     page,
                     field: 'compromise',
-                    error: `Compromise amount must be ${this.formatAmount(compromise)}`,
+                    error: `Computed compromise ${this.formatAmount(compromise, true)}`,
                     required_value: compromise.toFixed(2)
                 })
                 console.log('error_messages :', error_messages);

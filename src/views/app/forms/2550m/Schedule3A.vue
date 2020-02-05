@@ -12,7 +12,7 @@
       <a-col
         :span="19"
         style="font-weight: bold;"
-      >Purchases/Importation of Capital Goods (Aggregate Amount Exceeds P1 Million)</a-col>
+      >3A. Purchases/Importation of Capital Goods (Aggregate Amount Exceeds P1 Million)</a-col>
       <a-col :span="5" style="text-align: right;">
         <a-button type="primary" @click="addSched3A" icon="plus">ADD</a-button>
       </a-col>
@@ -26,7 +26,7 @@
           <template slot="date_purchased" slot-scope="text, record, index">
             <a-date-picker
               v-model="sched3A_data[index].date_purchased"
-              @change="check_sched3A"
+              :disabledDate="disabledDate"
               style="width: 100%"
             />
           </template>
@@ -34,28 +34,31 @@
             <a-input v-model="sched3A_data[index].description"></a-input>
           </template>
           <template slot="vat" slot-scope="text, record, index">
-            <a-input-number v-model="sched3A_data[index].vat" @change="sched3ACompute"></a-input-number>
+            <a-input-number v-model="sched3A_data[index].vat" @change="sched3ACompute(index)"></a-input-number>
           </template>
           <template slot="tax_rate" slot-scope="text, record, index">
-            <a-input-number v-model="sched3A_data[index].tax_rate" @change="sched3ACompute"></a-input-number>
+            <a-input-number v-model="sched3A_data[index].tax_rate" @change="sched3ACompute(index)"></a-input-number>
           </template>
           <template slot="est_life" slot-scope="text, record, index">
             <a-input-number v-model="sched3A_data[index].est_life"></a-input-number>
           </template>
           <template slot="recog_life" slot-scope="text, record, index">
-            <a-input-number v-model="sched3A_data[index].recog_life"></a-input-number>
+            <a-input-number
+              v-model="sched3A_data[index].recog_life"
+              @change="sched3ACompute(index)"
+            ></a-input-number>
           </template>
           <template slot="allowable_input_tax" slot-scope="text, record, index">
-            <a-input-number v-model="sched3A_data[index].allowable_input_tax"></a-input-number>
+            <a-input-number disabled v-model="sched3A_data[index].allowable_input_tax"></a-input-number>
           </template>
           <template slot="balance" slot-scope="text, record, index">
-            <a-input-number v-model="sched3A_data[index].balance"></a-input-number>
+            <a-input-number disabled v-model="sched3A_data[index].balance"></a-input-number>
           </template>
           <template slot="action" slot-scope="text, record, index">
             <a-tooltip title="Remove">
               <a-button
                 type="link"
-                style="color: red;"
+                style="color: red;font-size: 24px;"
                 icon="delete"
                 @click="delete_sched3A(index)"
               />
@@ -64,10 +67,30 @@
           <template slot="footer">
             <!-- <a-button @click="addSched3A">Add</a-button>
             <a-button>Save</a-button>-->
-            <p align="right">
-              18C: {{ form.purCapGoodsExceed }} 18D:
-              {{ form.outputPurCapGoodsExceed }}
-            </p>
+            <a-row type="flex" justify="space-between">
+              <a-col :span="7">
+                <a-row>
+                  <a-col :span="12">
+                    <a-tooltip title="Total of Amount(Net of VAT)">
+                      18C:
+                      <span style="font-weight: bold;">{{ formatAmount(total18C, true) }}</span>
+                    </a-tooltip>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-tooltip title="Total of Input Tax (C*Tax Rate)">
+                      18D:
+                      <span style="font-weight: bold;">{{ formatAmount(total18D, true) }}</span>
+                    </a-tooltip>
+                  </a-col>
+                </a-row>
+              </a-col>
+              <a-col :span="6" style="text-align: right;">
+                <a-tooltip title="Total of Balance of Input Tax">
+                  3A. Total Balance:
+                  <span style="font-weight: bold;">{{formatAmount(total_balance)}}</span>
+                </a-tooltip>
+              </a-col>
+            </a-row>
           </template>
         </a-table>
       </a-col>
@@ -76,6 +99,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: ["show", "form"],
   data() {
@@ -126,7 +151,7 @@ export default {
           scopedSlots: { customRender: "balance" }
         },
         {
-          title: "Action",
+          title: "",
           dataIndex: "action",
           scopedSlots: { customRender: "action" }
         }
@@ -154,6 +179,33 @@ export default {
       if (this.data_source && this.data_source.length)
         total = this.data_source.map(v => v.output_tax).reduce((t, v) => t + v);
       return total;
+    },
+    total18C() {
+      var total_balance = 0;
+      if (this.sched3A_data && this.sched3A_data.length)
+        total_balance = this.sched3A_data
+          .map(v => v.vat || 0)
+          .reduce((p, c) => parseFloat(p) + parseFloat(c));
+      this.form.purCapGoodsExceed = total_balance;
+      return total_balance;
+    },
+    total18D() {
+      var total_balance = 0;
+      if (this.sched3A_data && this.sched3A_data.length)
+        total_balance = this.sched3A_data
+          .map(v => v.tax_rate || 0)
+          .reduce((p, c) => parseFloat(p) + parseFloat(c));
+      this.form.outputPurCapGoodsExceed = total_balance;
+      return total_balance;
+    },
+    total_balance() {
+      var total_balance = 0;
+      if (this.sched3A_data && this.sched3A_data.length)
+        total_balance = this.sched3A_data
+          .map(v => v.balance || 0)
+          .reduce((p, c) => parseFloat(p) + parseFloat(c));
+      this.$emit("total", total_balance);
+      return total_balance;
     }
   },
   methods: {
@@ -214,15 +266,25 @@ export default {
         }
       }
     },
-    sched3ACompute(value) {
-      var index = this.sched3A_data.length - 1;
-      this.form.purCapGoodsExceed = 0;
-      this.form.outputPurCapGoodsExceed = 0;
-      this.sched3A_data[index].tax = value * 0.12;
-      this.sched3A_data.forEach(data => {
-        this.form.purCapGoodsExceed += data.vat;
-        this.form.outputPurCapGoodsExceed += data.tax_rate;
-      });
+    sched3ACompute(index) {
+      if (!this.sched3A_data[index].recog_life)
+        this.sched3A_data[index].recog_life = 1;
+      this.sched3A_data[index].tax_rate = this.sched3A_data[index].vat * 0.12;
+      this.sched3A_data[index].allowable_input_tax =
+        parseFloat(this.sched3A_data[index].tax_rate) /
+        parseFloat(this.sched3A_data[index].recog_life);
+      this.sched3A_data[index].balance =
+        parseFloat(this.sched3A_data[index].tax_rate) -
+        parseFloat(this.sched3A_data[index].allowable_input_tax);
+
+      // var index = this.sched3A_data.length - 1;
+      // this.form.purCapGoodsExceed = 0;
+      // this.form.outputPurCapGoodsExceed = 0;
+      // this.sched3A_data[index].tax = value * 0.12;
+      // this.sched3A_data.forEach(data => {
+      //   this.form.purCapGoodsExceed += data.vat;
+      //   this.form.outputPurCapGoodsExceed += data.tax_rate;
+      // });
     },
     showDrawer3A() {
       console.log("data source show drawer; " + this.dataSource);
@@ -237,6 +299,12 @@ export default {
         // totalAtcAmount: this.deepCopy(this.total_atc_amount),
         // totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
       });
+    },
+    disabledDate(current) {
+      return (
+        moment(current).year() !== moment(this.form.return_period).year() ||
+        moment(current).month() !== moment(this.form.return_period).month()
+      );
     }
   }
 };
