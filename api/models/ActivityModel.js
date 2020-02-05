@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
         default: new Date()
     },
     created_by:{
+        account_id: String,
         display_name: String,
         avatar: {},
         tin: String

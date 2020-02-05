@@ -15,6 +15,8 @@ const jwt = require('jsonwebtoken')
 const ApplicationSettings = require('../utils/ApplicationSettings')
 const SendEmail = require('../utils/email');
 
+const ActvityModel = require("../models/ActivityModel")
+
 // VALIDATING TOKEN
 passport.use(new JWTstrategy({
     secretOrKey: ApplicationSettings.getValue("JWT_SECRET_TOKEN"),
@@ -168,6 +170,37 @@ passport.use('signup', new LocalStrategy({
                     })
                     .then((account) => {
                         result.account = account;
+
+                        function toTitleCase(str) {
+                            return str.replace(
+                                /\w\S*/g,
+                                function (txt) {
+                                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                                }
+                            );
+                        }
+
+                        var docs = [{
+                            created_by: {
+                                account_id: result.account.account_id,
+                                display_name: `${result.user.name.first} ${result.user.name.last}`,
+                                tin: result.user.tin
+                            },
+                            activity: 0,
+                            description: 'Registered an account'
+                        }, {
+                            created_by: {
+                                account_id: result.account.account_id,
+                                display_name: `${result.user.name.first} ${result.user.name.last}`,
+                                tin: result.taxpayer.tin
+                            },
+                            activity: 1,
+                            description: `${toTitleCase(result.taxpayer.registered_name)} has been added to your connection.`
+                        }]
+                        return ActvityModel.insertMany(docs)
+                    })
+                    .then((activities) => {
+                        console.log('activities :', activities);
                         done(null, result);
                     })
                     .catch((err) => done(err));

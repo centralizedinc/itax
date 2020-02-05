@@ -7,7 +7,7 @@ module.exports = {
     confirmation_expired: "This confirmation has already expired.",
     invalid_code: "Invalid Code.",
     confirmation_success: "Account confirmed.",
-    confirmation_required: "Please confirm your account at your email.",
+    confirmation_required: "Please confirm first your account at your email.",
 
     // Error Messages
     MANDATORY_FIELD(field) { return `${field} is a required field.` }

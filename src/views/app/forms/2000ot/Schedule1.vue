@@ -5,7 +5,7 @@
     :closable="true"
     @close="close"
     :visible="show"
-    width="1000"
+    width="700"
   >
     <a-form>
       <div
@@ -20,7 +20,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1A"
             >
-              <a-input v-model="form.schedule1.commissionerLand" placeholder="Land"></a-input>
+              <a-input-number
+                style="width: 80%"
+                v-model="form.schedule1.commissionerLand"
+                placeholder="Land"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -29,7 +33,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1B"
             >
-              <a-input v-model="form.schedule1.commissionerImprovement" placeholder="Improvement"></a-input>
+              <a-input-number
+                style="width: 80%"
+                v-model="form.schedule1.commissionerImprovement"
+                placeholder="Improvement"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -38,7 +46,12 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1C"
             >
-              <a-input disabled :value="getCommissionerTotal()" placeholder="Total"></a-input>
+              <a-input-number
+                style="width: 80%"
+                disabled
+                :value="getCommissionerTotal()"
+                placeholder="Total"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -56,7 +69,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2A"
             >
-              <a-input v-model="form.schedule1.provincialLand" placeholder="Land"></a-input>
+              <a-input-number
+                style="width: 80%"
+                v-model="form.schedule1.provincialLand"
+                placeholder="Land"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -65,7 +82,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2B"
             >
-              <a-input v-model="form.schedule1.provincialImprovement" placeholder="Improvement"></a-input>
+              <a-input-number
+                style="width: 80%"
+                v-model="form.schedule1.provincialImprovement"
+                placeholder="Improvement"
+              ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -74,7 +95,12 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2C"
             >
-              <a-input disabled :value="getProvincialTotal()" placeholder="Total"></a-input>
+              <a-input-number
+                style="width: 80%"
+                disabled
+                :value="getProvincialTotal()"
+                placeholder="Total"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -92,7 +118,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="3A"
             >
-              <a-input disabled :value="getSum1A2B()" placeholder="Total"></a-input>
+              <a-input-number style="width: 80%" disabled :value="getSum1A2B()" placeholder="Total"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -110,7 +136,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="4A"
             >
-              <a-input disabled :value="getSum1B2A()" placeholder="Total"></a-input>
+              <a-input-number style="width: 80%" disabled :value="getSum1B2A()" placeholder="Total"></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
@@ -130,7 +156,12 @@
               :wrapperCol="form_layout.wrapper_col"
               label="5A"
             >
-              <a-input disabled :value="getFairMarketValue()" placeholder="Total"></a-input>
+              <a-input-number
+                style="width: 80%"
+                disabled
+                :value="getFairMarketValue()"
+                placeholder="Total"
+              ></a-input-number>
             </a-form-item>
           </a-col>
         </a-row>
