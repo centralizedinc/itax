@@ -56,9 +56,9 @@
 
     <a-col :span="24" style="margin-top: 1vh">
       <a-card>
-        <h3>My Taxpayer Vault</h3>
+        <h3>Taxpayer Vault</h3>
+        <span style="font-size:10px">All your registered taxpayers can be found here.</span>
         <a-divider></a-divider>
-        <!-- <a-table :dataSource="taxpayers" :columns="cols"></a-table> -->
         <a-list
           itemLayout="horizontal"
           :dataSource="taxpayers"
@@ -69,45 +69,32 @@
             <a slot="actions">edit</a>
             <a slot="actions">view</a>
             <a-list-item-meta>
-              <p slot="title">
-                {{
+              <template slot="description">
+                <span style="font-weight:bold">{{
                   item.taxpayer_type == "I"
                     ? `${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`
                     : `${item.registered_name}`
                 }}
-              </p>
-              <template slot="description">
-                <p>
-                  <b>{{ formatTIN(item.tin) }}</b>
-                </p>
-                <p>
-                  {{
-                    item.taxpayer_type == "I" ? "Individual" : "Non-Individual"
-                  }}
-                </p>
+                </span>
+                <br/>
+                <span style="font-weight:bold">{{ formatTIN(item.tin) }}</span>
+                <div style="font-size:10px">{{item.taxpayer_type == "I" ? "Individual" : "Non-Individual"}}</div>
+                <div style="font-size:10px">{{item.address}}</div>
               </template>
               <a-avatar
                 style="border: solid 1px #1cb5e0"
                 slot="avatar"
-                :src="getUserByTin(item.tin).avatar.location"
+                shape="square"
                 :size="64"
-              />
+              >
+              {{item.registered_name[0]}}
+              </a-avatar>
             </a-list-item-meta>
             <!-- </a-card> -->
           </a-list-item>
         </a-list>
       </a-card>
     </a-col>
-
-    <!-- <a-col  :span="12">
-          <a-input-search
-            placeholder="Search"
-            @search="onSearch"
-          />
-      </a-col>
-      <a-col :span="24" style="margin-top: 2vh">          
-          <a-table :columns="cols"></a-table>
-      </a-col> -->
   </a-row>
 </template>
 
@@ -146,30 +133,12 @@ export default {
     init() {
       this.loading = true;
       this.$http
-        .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+        .get(`/taxpayer/users/${this.$store.state.account_session.user.account_id}`)
         .then(results => {
           console.log("result1 ::: ", JSON.stringify(results.data));
-          this.taxpayers.push(results.data.model.taxpayer);
-          this.users.push(results.data.model.user);
-          return this.$http.get(
-            `/connections/${this.$store.state.account_session.user.tin}`
-          );
-        })
-        .then(results => {
-          console.log("result2 :: connections: ", JSON.stringify(results.data));
-          var tins = [];
-          results.data.model.forEach(tin => {
-            tins.push(tin.to);
-          });
-
-          return this.$http.post("/taxpayer/details/", tins);
-        })
-        .then(results => {
-          console.log("result2 ::: ", JSON.stringify(results.data));
-          this.loading = false;
-          this.users.push(...results.data.model.users);
-          this.taxpayers.push(...results.data.model.taxpayers);
-          console.log("taxpayers data: " + JSON.stringify(this.taxpayers));
+          this.taxpayers = results.data.model;
+          // this.users.push(results.data.model);  
+          this.loading = false;        
         })
         .catch(err => {
           console.log(`err ::: `, err);

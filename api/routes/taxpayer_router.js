@@ -109,6 +109,24 @@ router.route('/details')
             });
     })
 
+
+router
+    .route('/users/:id')
+    .get((req, res)=>{
+        TaxpayerDao.findByUserId(req.params.id)
+        .then((model) => {
+            res.json({
+                success: true,
+                model
+            })
+        }).catch((errors) => {
+            res.json({
+                success: false,
+                errors
+            })
+        });
+    })
+
 router
     .route('/:id')
     .post((req, res) => {

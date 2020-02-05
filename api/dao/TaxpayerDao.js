@@ -109,6 +109,10 @@ class TaxpayerDao {
     static getTaxpayersAnalytics(conditions, select){
         return model.find(conditions).select(select).exec();
     }
+
+    static findByUserId(id){
+        return model.find({user_id:id}).exec()
+    }
 }
 
 module.exports = TaxpayerDao;

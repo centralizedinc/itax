@@ -49,4 +49,11 @@ export default class TaxpayersAPI {
     getTaxpayers() {
         return axios.get("taxpayer");
     }
+
+    /**
+     * @returns {Promise}
+     */
+    getTaxpayersByUser(id) {
+        return axios.get(`taxpayer/users/${id}`);
+    }
 }

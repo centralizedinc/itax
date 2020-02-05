@@ -120,11 +120,11 @@
                   </template>
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
-                    slot="avatar"
-                    :src="getUserByTin(item.tin) && getUserByTin(item.tin).avatar ? getUserByTin(item.tin).avatar.location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
+                    slot="avatar"                   
                     :size="64"
+                    shape="square"
                   >
-                  {{}}
+                  <span style="font-size:16px">{{item.registered_name[0]}}</span>
                   </a-avatar>
                 </a-list-item-meta>
               </a-col>
@@ -752,31 +752,43 @@ export default {
     this.loading = true;
     //find tp list
     this.$http
-      .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
-      .then(results => {
-        this.taxpayer_list.push(results.data.model.taxpayer);
-        this.user_list.push(results.data.model.user);
-        return this.$http.get(
-          `/connections/${this.$store.state.account_session.user.tin}`
-        );
-      })
-      .then(results => {
-        var tins = [];
-        results.data.model.forEach(tin => {
-          tins.push(tin.to);
+        .get(`/taxpayer/users/${this.$store.state.account_session.user.account_id}`)
+        .then(results => {
+          console.log("result1 ::: ", JSON.stringify(results.data));
+          this.taxpayer_list   = results.data.model;
+          // this.users.push(results.data.model);  
+          this.loading = false;        
+        })
+        .catch(err => {
+          console.log(`err ::: `, err);
+          this.loading = false;
         });
-        return this.$http.post("/taxpayer/details/", tins);
-      })
-      .then(results => {
-        this.loading = false;
+    // this.$http
+    //   .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+    //   .then(results => {
+    //     this.taxpayer_list.push(results.data.model.taxpayer);
+    //     this.user_list.push(results.data.model.user);
+    //     return this.$http.get(
+    //       `/connections/${this.$store.state.account_session.user.tin}`
+    //     );
+    //   })
+    //   .then(results => {
+    //     var tins = [];
+    //     results.data.model.forEach(tin => {
+    //       tins.push(tin.to);
+    //     });
+    //     return this.$http.post("/taxpayer/details/", tins);
+    //   })
+    //   .then(results => {
+    //     this.loading = false;
 
-        this.taxpayer_list.push(...results.data.model.taxpayers);
-        this.user_list.push(...results.data.model.users);
-      })
-      .catch(err => {
-        console.log(`err ::: `, err);
-        this.loading = false;
-      });
+    //     this.taxpayer_list.push(...results.data.model.taxpayers);
+    //     this.user_list.push(...results.data.model.users);
+    //   })
+    //   .catch(err => {
+    //     console.log(`err ::: `, err);
+    //     this.loading = false;
+    //   });
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);

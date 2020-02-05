@@ -9,54 +9,56 @@
         </a-card>
     </a-col> -->
     <a-col :span="8" style="margin-top:1vh" >
-        <a-card>
+        <a-card style="min-height:250px">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Taxpayer</span>
               </a-col>
-              <a-col :span="10" align="center">
-                  <span style="font-size:22px;font-weight:bold">1</span>
+              <a-col :span="12" align="center">
+                  <span style="font-size:22px;font-weight:bold">{{taxpayer_count.length}}</span>
               </a-col>
-              <a-col :span="14">
+              <a-col :span="12">
                   <apexchart  type="bar" :options="chartOptions" :series="series" />
               </a-col>
             </a-row>  
             <a-divider></a-divider>  
-            <span style="font-size:10px">Last taxpayer you've registered was on {{new Date()}}</span>        
+            <span style="font-size:10px">The last taxpayer (TIN:{{formatTIN(taxpayer_count[taxpayer_count.length-1].tin)}}) you've registered was on {{formatDate(taxpayer_count[taxpayer_count.length-1].date_created)}}</span>        
         </a-card>          
     </a-col>
     <a-col :span="8" style="margin-top:1vh">
-        <a-card>
+        <a-card style="min-height:250px">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Tax Returns</span>
               </a-col>
-              <a-col :span="10" align="center">
-                  <span style="font-size:22px;font-weight:bold">50</span>
+              <a-col :span="12" align="center">
+                  <span style="font-size:22px;font-weight:bold">{{returns_count.length}}</span>
               </a-col>
-              <a-col :span="14">
+              <a-col :span="12">
                   <apexchart  type="bar" :options="chartOptions" :series="series" />
               </a-col>
             </a-row>     
             <a-divider></a-divider>  
-            <span style="font-size:10px">You have filed 1701Q with ref# 2019-123478978 last {{new Date()}}</span>         
+            <span style="font-size:10px" v-if="!returns_count.length">No returns filed</span>  
+            <span style="font-size:10px" v-else>You have filed {{returns_count[0].form_type}} with ref# {{returns_count[0].reference_no}} last {{returns_count[0].date_created}}</span>         
         </a-card>        
     </a-col>
     <a-col :span="8" style="margin-top:1vh" >
-        <a-card>
+        <a-card style="min-height:250px">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Payments</span>
               </a-col>
-              <a-col :span="10" align="center">
-                  <span style="font-size:22px;font-weight:bold">1,000.00</span>
+              <a-col :span="12" align="center">
+                  <span style="font-size:20px;font-weight:bold">{{formatAmount(payments_count.total)}}</span>
               </a-col>
-              <a-col :span="14">
+              <a-col :span="12">
                   <apexchart  type="bar" :options="chartOptions" :series="series" />
               </a-col>
             </a-row>  
-            <a-divider></a-divider>  
-            <span style="font-size:10px">Last Payment with the amount of 2,500.00 pesos was paid last {{new Date()}}</span>          
+            <a-divider></a-divider> 
+            <span style="font-size:10px" v-if="!payments_count.length">No payments made</span>  
+            <span style="font-size:10px" v-else>Last Payment with the amount of ₱{{formatAmount(payments_count[payments_count.length-1].amount_paid)}} was paid last {{formatDate(payments_count[payments_count.length-1].date_created)}}</span>          
         </a-card>        
     </a-col>
     <a-col :span="24" style="margin-top:1vh">
@@ -72,7 +74,7 @@
           <h3>Activity Feeds</h3>
           <span style="font-size:10px">All actvities you've done on SmartTax are listed in your feed.</span>          
       </span>
-        <span slot="extra">
+        <!-- <span slot="extra">
             <a-row type="flex" justify="end" align="bottom" style="margin-right: 2vh">
                 <template v-if="!loading">
               <a-col :span="3" v-for="i in subscribers" :key="i.name" >
@@ -87,9 +89,9 @@
               </a-col>
               </template>
             </a-row>
-        </span>
+        </span> -->
         <a-row type="flex" justify="end" >
-            <a-col :span="2">
+            <!-- <a-col :span="2">
                 <a-avatar
                     shape="square"
                     :size="60"
@@ -105,18 +107,23 @@
                     <a-button type="primary" ghost icon="link">Attach</a-button>
                     <a-button icon="upload" type="primary">Post</a-button>
                 </a-button-group>
-          </a-col>
+          </a-col> -->
         </a-row>
         
        </a-card>
        
        <template v-if="!loading">
-        <a-card v-for="item in data" :key="item.content" style="margin-top:1vh; margin-bottom:1vh" >
+        <a-card v-for="item in feed" :key="item.content" style="margin-top:1vh; margin-bottom:1vh" >
             <a-comment 
-                :author="item.created_by.display_name"
-                :avatar="item.created_by.avatar.location"
+                :author="item.created_by.display_name.toUpperCase()"
+                
             >
-                <template slot="actions">
+            <template slot="avatar">
+                <a-avatar shape="square" :src="item.created_by.avatar && item.created_by.avatar.location? item.created_by.avatar.location : null">
+                    {{$store.state.account_session.user && $store.state.account_session.user.name && $store.state.account_session.user.name.first ? $store.state.account_session.user.name.first[0].toUpperCase() : ''}}{{$store.state.account_session.user && $store.state.account_session.user.name && $store.state.account_session.user.name.last ? $store.state.account_session.user.name.last[0].toUpperCase() : ''}}
+                </a-avatar>
+            </template>
+                <!-- <template slot="actions">
                      <span>
                         <a-tooltip title="Like">
                         <a-icon type="like" :theme="action === 'liked' ? 'filled' : 'outlined'" @click="like" />
@@ -137,7 +144,7 @@
                         {{5}}
                         </span>
                     </span>
-                </template>
+                </template> -->
                 <template slot="content">
                     <p>{{item.description}}</p>
                     <template v-if="getAttachments(item.reference_no)">
@@ -158,7 +165,6 @@
        <template v-else>
            <a-card v-for="i in 4" :key="i" style="margin-top: 1vh">
             <a-skeleton active avatar :paragraph="{rows: 4}" />
-            <!-- <a-divider></a-divider> -->
         </a-card>
        </template>
     </a-col>
@@ -250,6 +256,7 @@ export default {
   },
     data(){
         return{
+            feed:[],
             loading:false,
             subscribers:[],
             data: [],
@@ -292,16 +299,10 @@ export default {
     methods:{
         init(){
             this.loading =true;
-            this.$http.get(`/activities/${this.$store.state.account_session.user.tin}`)
+            this.$http.get(`${process.env.VUE_APP_BASE_API_URI}activities/users/${this.$store.state.account_session.user.account_id}`)
             .then(result=>{                                
-                this.data = result.data.model
-                this.loading=false;   
-                var ref_nos = this.data.map(a => a.reference_no);
-                return this.$http.post(`/upload/activities`, ref_nos)
-            })
-            .then(results=>{
-                this.attachments = results.data.model
-                // this.data = posts;
+                this.feed = result.data.model
+                console.log('FEED ::: ',JSON.stringify(this.feed))
             })      
             .catch(error=>{
                 console.log('ERROR ::::',error);
@@ -313,6 +314,71 @@ export default {
         },
         view(url){
             window.open(url)
+        }
+    },
+    asyncComputed:{
+        taxpayer_count(){
+            return new Promise((resolve, reject)=>{
+                this.$http.get(`${process.env.VUE_APP_BASE_API_URI}taxpayer/users/${this.$store.state.account_session.user.account_id}`)
+                .then(result=>{
+                    console.log('RESULTS:::',result.data.model)
+                    resolve(result.data.model)
+                })
+                .catch(err=>{
+                    reject(0)
+                })
+            })
+        },
+        returns_count(){
+            return new Promise((resolve, reject)=>{
+                this.$store.dispatch("GET_TAX_RETURNS")
+                    .then(result => {
+                        console.log('RESULTS:::', JSON.stringify(result))
+                        resolve(result)
+                    this.loading = false;
+                    })
+                    .catch(err => {
+                    this.loading = false;
+                    });
+            })
+        },
+        payments_count(){
+            return new Promise((resolve, reject)=>{
+                // this.$store.dispatch("GET_TAX_RETURNS")
+                //     .then(result => {
+                //         console.log('ARIEL :::',JSON.stringify(result))
+                //         //TODO: workaround only
+                //         var total =0
+                //         result.forEach(element => {
+                //             total =+ element.total_amount_payable
+                //         });
+                //         result.total = total
+                        
+                //         resolve(result)
+                //     })
+                //     .catch(err => {
+                //         reject()
+                //     });
+                this.$http.get(`/payment/${this.$store.state.account_session.user.account_id}`)
+                    .then(result => {
+                        console.log("get tax returns paid payment data: " + JSON.stringify(result));
+                        this.loading = false;
+                        //TODO: workaround only
+                        var total =0
+                        if(result.data && result.data.model){
+                            result.data.model.forEach(element => {
+                                total =+ element.amount_paid
+                            });
+                            result.data.model.total = total
+                        }
+                        
+                        resolve(result.data.model);
+                    })
+                    .catch(err => {
+                        this.loading = false;
+                        reject(err)
+                    });
+            })
         }
     }
 }
