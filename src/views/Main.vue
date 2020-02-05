@@ -21,16 +21,22 @@
         </a-col>
         <a-col :span="1">
           <a-popover
-            :title="`${user.name.first} ${user.name.last}`"
             trigger="click"
             placement="bottomRight"
           >
+          <span slot="title">
+            <a-row>
+              <a-col :span="24" align="center">
+                <span style="font-weight:bold; color:#0B3A79">{{`${user.name.first.toUpperCase()} ${user.name.last.toUpperCase()}`}}</span>
+              </a-col>
+            </a-row>
+          </span>
             <a-avatar
               shape="square"
               :size="35"
               :src="user && user.avatar ? user.avatar.location : null"
               style="border: 1px solid #FFFFFF; cursor:pointer"
-            >{{user && user.name && user.name.first ? user.name.first[0] : '?'}}</a-avatar>
+            >{{user && user.name && user.name.first ? user.name.first[0].toUpperCase() : ''}}{{user && user.name && user.name.first ? user.name.last[0].toUpperCase() : ''}}</a-avatar>
             <template slot="content">
               <a-menu @click="nav">
                 <a-menu-item key="/app/user">
@@ -67,7 +73,7 @@
                 style="z-index: 1; margin-top: -7vh; border: 3px solid #FFFFFF"
                 :size="60"
                 :src="user && user.avatar ? user.avatar.location : null"
-              >{{user && user.name && user.name.first ? user.name.first[0] : '?' }}</a-avatar>
+              >{{user && user.name && user.name.first ? user.name.first[0].toUpperCase() : ''}}{{user && user.name && user.name.first ? user.name.last[0].toUpperCase() : ''}}</a-avatar>
             </a-col>
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; border-color:#199ECD">
@@ -126,7 +132,6 @@
               </a-card>
             </a-col>
             <a-col :span="24">
-              <h1>{{$route.name}}</h1>
               <transition name="fade" mode="out-in">
                 <router-view></router-view>
               </transition>
@@ -144,28 +149,28 @@
           <a-card style="margin-bottom:0.5vh; border: 1px solid; border-color:#199ECD" class="avatar_btn" @click="$router.push('/app/pay')">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
-                <a-badge dot>
+                <a-badge dot :count="for_payment">
                   <a-icon type="credit-card" style="font-size: 46px"></a-icon>
                 </a-badge>
               </a-col>
               <a-col :span="16" style="text-align:right">
                 <h4>For Payments</h4>
-                <h2>10</h2>
+                <h2>{{for_payment}}</h2>
               </a-col>
               <a-divider></a-divider>
               <span style="font-size:10px">Total Number of submitted forms but not yet paid. To pay these resturns, go to the 'Payments' menu then click 'For Payments' tab.</span>           
             </a-row>
           </a-card>
-          <a-card style="margin-bottom:0.5vh;border: 1px solid;border-color:#199ECD" class="avatar_btn" @click="$router.push('/app/tax')">
+          <a-card style="margin-bottom:0.5vh;border: 1px solid;border-color:#199ECD" class="avatar_btn" @click="$router.push('/app/tax?tab=1')">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
-                <a-badge dot>
+                <a-badge dot :count="for_submission">
                   <a-icon type="snippets" style="font-size: 46px"></a-icon>
                 </a-badge>
               </a-col>
               <a-col :span="16" style="text-align:right">
                 <h4>For Submission</h4>
-                <h2>10</h2>
+                <h2>{{for_submission}}</h2>
               </a-col>
               <a-divider></a-divider>
               <span style="font-size:10px">Total Number of Tax Returns saved but not submitted. All un-submitted forms can be found under tax returns menu and in the drafts tab. </span>
@@ -248,6 +253,12 @@ export default {
     onSearch(e) {}
   },
   computed: {
+    for_submission(){
+      return this.$store.state.tax_form.draft_forms.length
+    },
+    for_payment(){
+      return this.$store.state.tax_form.tax_returns.length
+    },
     active_menu() {
       console.log("PATH :::: ", this.$route.path);
       return [this.$route.path];
