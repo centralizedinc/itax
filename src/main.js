@@ -11,7 +11,8 @@ import 'aos/dist/aos.css';
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeolocation from 'vue-browser-geolocation';
 import ScrollLoader from 'vue-scroll-loader'
-
+import VueApexCharts from 'vue-apexcharts'
+Vue.component('apexchart', VueApexCharts)
 Vue.use(ScrollLoader)
 Vue.config.productionTip = false
 Vue.use(mixins);

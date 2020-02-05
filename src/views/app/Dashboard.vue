@@ -1,6 +1,6 @@
 <template>
 <div>
-  <a-row>
+  <a-row type="flex" :gutter="16">
     <!-- <a-col :span="24">
         <a-card style="background: linear-gradient(to right, #000046, #1cb5e0);">
             <h2 style="color: #FFFFFF">Welcome {{$store.state.account_session.user.name.first}}!</h2>
@@ -8,12 +8,70 @@
             
         </a-card>
     </a-col> -->
+    <a-col :span="8" style="margin-top:1vh" >
+        <a-card>
+            <a-row type="flex" align="middle" :gutter="24">
+              <a-col :span="24" align="">
+                  <span style="font-size:22px">Taxpayer</span>
+              </a-col>
+              <a-col :span="10" align="center">
+                  <span style="font-size:22px;font-weight:bold">1</span>
+              </a-col>
+              <a-col :span="14">
+                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+              </a-col>
+            </a-row>  
+            <a-divider></a-divider>  
+            <span style="font-size:10px">Last taxpayer you've registered was on {{new Date()}}</span>        
+        </a-card>          
+    </a-col>
+    <a-col :span="8" style="margin-top:1vh">
+        <a-card>
+            <a-row type="flex" align="middle" :gutter="24">
+              <a-col :span="24" align="">
+                  <span style="font-size:22px">Tax Returns</span>
+              </a-col>
+              <a-col :span="10" align="center">
+                  <span style="font-size:22px;font-weight:bold">50</span>
+              </a-col>
+              <a-col :span="14">
+                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+              </a-col>
+            </a-row>     
+            <a-divider></a-divider>  
+            <span style="font-size:10px">You have filed 1701Q with ref# 2019-123478978 last {{new Date()}}</span>         
+        </a-card>        
+    </a-col>
+    <a-col :span="8" style="margin-top:1vh" >
+        <a-card>
+            <a-row type="flex" align="middle" :gutter="24">
+              <a-col :span="24" align="">
+                  <span style="font-size:22px">Payments</span>
+              </a-col>
+              <a-col :span="10" align="center">
+                  <span style="font-size:22px;font-weight:bold">1,000.00</span>
+              </a-col>
+              <a-col :span="14">
+                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+              </a-col>
+            </a-row>  
+            <a-divider></a-divider>  
+            <span style="font-size:10px">Last Payment with the amount of 2,500.00 pesos was paid last {{new Date()}}</span>          
+        </a-card>        
+    </a-col>
     <a-col :span="24" style="margin-top:1vh">
        <a-card
-        title="Activity Feeds"
+        
         style="box-shadow: 0px 0px 10px 2px #88888847"
         :headStyle="{'background-color': 'e6e6e6'}"
       >
+      <span slot="title">
+          <!-- <a-row>
+            <a-col :span="12"></a-col>
+          </a-row> -->
+          <h3>Activity Feeds</h3>
+          <span style="font-size:10px">All actvities you've done on SmartTax are listed in your feed.</span>          
+      </span>
         <span slot="extra">
             <a-row type="flex" justify="end" align="bottom" style="margin-right: 2vh">
                 <template v-if="!loading">
@@ -31,10 +89,18 @@
             </a-row>
         </span>
         <a-row type="flex" justify="end" >
-          <a-col :span="24">
-              <a-textarea rows="4" placeholder="Post something..."></a-textarea>
+            <a-col :span="2">
+                <a-avatar
+                    shape="square"
+                    :size="60"
+                    :src="$store.state.account_session.user && $store.state.account_session.user.avatar ? $store.state.account_session.user.avatar.location : null"
+                    style="border: 1px solid #FFFFFF; cursor:pointer"
+                    >{{$store.state.account_session.user && $store.state.account_session.user.name && $store.state.account_session.user.name.first ? $store.state.account_session.user.name.first[0] : '?'}}</a-avatar>
+            </a-col>
+          <a-col :span="22">
+              <a-textarea rows="2" placeholder="Post something..."></a-textarea>
           </a-col>
-          <a-col :span="6" style="margin-top:1vh">
+          <a-col :span="6" style="margin-top:1vh" align="right">
               <a-button-group block>
                     <a-button type="primary" ghost icon="link">Attach</a-button>
                     <a-button icon="upload" type="primary">Post</a-button>
@@ -188,7 +254,36 @@ export default {
             subscribers:[],
             data: [],
             moment, 
-            attachments:[]
+            attachments:[],
+            chartOptions: {
+                chart: { type: "line", sparkline: { enabled: true } },
+                stroke: { width: 2, curve: "smooth" },
+                tooltip: { x: { show: false } },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: "dark",
+                        gradientToColors: ["#1CA7D4"],
+                        shadeIntensity: 1,
+                        type: "vertical",
+                        opacityFrom: 0.8,
+                        opacityTo: 1,
+                        stops: [0, 100, 100, 100]
+                    }
+                }
+            },
+            series: [{
+                name: "Collections",
+                data: [
+                    Math.floor(Math.random() * 100),
+                    Math.floor(Math.random() * 100),
+                    Math.floor(Math.random() * 100),
+                    Math.floor(Math.random() * 100),
+                    Math.floor(Math.random() * 100),
+                    Math.floor(Math.random() * 100),
+                    Math.floor(Math.random() * 100)
+                    ]
+                }]
         }
     },
     created(){
