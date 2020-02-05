@@ -111,6 +111,7 @@
                 <a-list-item-meta>
                   <p
                     slot="title"
+                    style="text-transform: uppercase;font-weight:bold;"
                   >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`: `${item.registered_name}`}}</p>
                   <template slot="description">
                     <p>
@@ -120,11 +121,11 @@
                   </template>
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
-                    slot="avatar"
-                    :src="getUserByTin(item.tin) && getUserByTin(item.tin).avatar ? getUserByTin(item.tin).avatar.location: 'https://icon-library.net/images/my-profile-icon-png/my-profile-icon-png-3.jpg'"
+                    slot="avatar"                   
                     :size="64"
+                    shape="square"
                   >
-                  {{}}
+                  <span style="font-size:16px">{{item.registered_name[0]}}</span>
                   </a-avatar>
                 </a-list-item-meta>
               </a-col>
@@ -406,7 +407,7 @@ export default {
           {
             title: "Part II",
             description: "Computation of Tax"
-          },
+          }
           // {
           //   title: "Part III",
           //   description: "Details of Payment"
@@ -535,9 +536,9 @@ export default {
       }
     },
     getUserByTin(tin) {
-      console.log("get user by tin data: ", tin)
+      console.log("get user by tin data: ", tin);
       const user = this.user_list.find(v => v.tin === tin);
-      console.log("get user by tin user data: " + JSON.stringify(user))
+      console.log("get user by tin user data: " + JSON.stringify(user));
       return (
         user || {
           avatar: {
@@ -649,9 +650,8 @@ export default {
       window.close();
     },
     submit() {
-      this.loading = true;
-      console.log("submiting")
-      // this.errors = [];
+      console.log("submiting");
+      this.errors = [];
       //validate
       this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due;
       // this.form.surcharge
@@ -663,6 +663,7 @@ export default {
       console.log("errors: " + JSON.stringify(this.errors));
       // no errors found, proceed to next page
       if (!this.errors.length) {
+        this.loading = true;
         this.$store
           .dispatch("VALIDATE_AND_SAVE", {
             form_type: this.form_type,
@@ -683,7 +684,7 @@ export default {
               }
               this.$notification.error({ message: "Validation Error" });
             } else {
-               console.log("VALIDATE_AND_SAVE result:", this.form);
+              console.log("VALIDATE_AND_SAVE result:", this.form);
               this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
               this.$store.commit("NOTIFY_MESSAGE", {
                 success: true,
@@ -720,8 +721,6 @@ export default {
             console.log("VALIDATE_AND_SAVE", err);
             this.loading = false;
           });
-      } else {
-        this.loading = false;
       }
     }
   },
@@ -753,32 +752,45 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
     this.loading = true;
     //find tp list
+    console.log("tin :", this.$store.state.account_session.user.tin);
     this.$http
-      .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
-      .then(results => {
-        this.taxpayer_list.push(results.data.model.taxpayer);
-        this.user_list.push(results.data.model.user);
-        return this.$http.get(
-          `/connections/${this.$store.state.account_session.user.tin}`
-        );
-      })
-      .then(results => {
-        var tins = [];
-        results.data.model.forEach(tin => {
-          tins.push(tin.to);
+        .get(`/taxpayer/users/${this.$store.state.account_session.user.account_id}`)
+        .then(results => {
+          console.log("result1 ::: ", JSON.stringify(results.data));
+          this.taxpayer_list   = results.data.model;
+          // this.users.push(results.data.model);  
+          this.loading = false;        
+        })
+        .catch(err => {
+          console.log(`err ::: `, err);
+          this.loading = false;
         });
-        return this.$http.post("/taxpayer/details/", tins);
-      })
-      .then(results => {
-        this.loading = false;
+    // this.$http
+    //   .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
+    //   .then(results => {
+    //     this.taxpayer_list.push(results.data.model.taxpayer);
+    //     this.user_list.push(results.data.model.user);
+    //     return this.$http.get(
+    //       `/connections/${this.$store.state.account_session.user.tin}`
+    //     );
+    //   })
+    //   .then(results => {
+    //     var tins = [];
+    //     results.data.model.forEach(tin => {
+    //       tins.push(tin.to);
+    //     });
+    //     return this.$http.post("/taxpayer/details/", tins);
+    //   })
+    //   .then(results => {
+    //     this.loading = false;
 
-        this.taxpayer_list.push(...results.data.model.taxpayers);
-        this.user_list.push(...results.data.model.users);
-      })
-      .catch(err => {
-        console.log(`err ::: `, err);
-        this.loading = false;
-      });
+    //     this.taxpayer_list.push(...results.data.model.taxpayers);
+    //     this.user_list.push(...results.data.model.users);
+    //   })
+    //   .catch(err => {
+    //     console.log(`err ::: `, err);
+    //     this.loading = false;
+    //   });
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);

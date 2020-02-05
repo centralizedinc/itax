@@ -21,6 +21,25 @@ router.route('/file/:tin')
 })
 
 
+router.route('/users/:id')
+.get((req, res) =>{
+    ActvityModel.find({'created_by.account_id':req.params.id})
+    .then(model=>{
+        res.json({
+            success: true,
+            model
+        })
+    })
+    .catch(errors=>{
+        console.log(errors)
+        res.json({
+            success: false,
+            errors
+        })
+    })
+})
+
+
 router.route('/:tin')
 /**
  * @description find all activities by tin

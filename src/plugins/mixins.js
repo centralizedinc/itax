@@ -80,12 +80,12 @@ export default {
                 },
                 computeSum(data) {
                     var total = 0
-                    console.log("compute sum data: " + JSON.stringify(data))
+                    // console.log("compute sum data: " + JSON.stringify(data))
                     if (data && data.length)
                         total = data.reduce((t, c) => {
                             return (t || 0) + (c || 0);
                         });
-                    console.log("compute sum mixin: " + total)
+                    // console.log("compute sum mixin: " + total)
                     return total
                 }
             },

@@ -84,4 +84,19 @@ router.route("/multiple")
     })
 
 
+router.route("/:id")
+    .get((req, res) => {
+        PaymentDao.findAllByID(req.params.id)
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
+    })
 module.exports = router;

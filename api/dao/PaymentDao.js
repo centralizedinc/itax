@@ -8,6 +8,10 @@ class PaymentDao {
         return model.find({}).lean().exec()
     }
 
+    static findAllByID(id) {
+        return model.find({created_by:id}).lean().exec()
+    }
+
     /**
      * @returns {Promise}
      * @param {String} id 

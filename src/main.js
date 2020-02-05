@@ -12,6 +12,9 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeolocation from 'vue-browser-geolocation';
 import ScrollLoader from 'vue-scroll-loader'
 import VueApexCharts from 'vue-apexcharts'
+import AsyncComputed from 'vue-async-computed'
+
+Vue.use(AsyncComputed);
 Vue.component('apexchart', VueApexCharts)
 Vue.use(ScrollLoader)
 Vue.config.productionTip = false

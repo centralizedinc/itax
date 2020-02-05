@@ -338,7 +338,7 @@
         <div style="color: black">
           18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
           <!-- <span class="text-link" @click="show_sched3A=true">Schedule 3A</span> -->
-          <span class="text-link" @click="openSchedule('show_sched3', 1)">Schedule 3A</span>)
+          <span class="text-link" @click="openSchedule('show_sched3', 1)">Schedule 3</span>)
           <schedule-three
             v-if="show_sched3"
             :show="show_sched3"
@@ -494,7 +494,7 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20A (
-          <span class="text-link" @click="openSchedule('show_sched3', 1)">Schedule 3B</span>)
+          <span class="text-link" @click="openSchedule('show_sched3', 1)">Schedule 3</span>)
           <schedule-three
             v-if="show_sched3"
             :show="show_sched3"
@@ -506,6 +506,7 @@
         <a-input-number
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
           v-model="form.inputTaxPurchaseCapGoods"
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
@@ -523,6 +524,7 @@
         <a-input-number
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
@@ -540,6 +542,7 @@
         <a-input-number
           placeholder="Input Tax allocable to Exempt Sales"
           v-model="form.inputTaxAllocableToExempt"
+          disabled
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -785,6 +788,9 @@ export default {
     console.log("this.form.return_period :", this.form.return_period);
     // this.form.return_period = moment(this.form.return_period)
     this.form.pdf_page = 0;
+    this.form.sched1 = [];
+    this.form.sched2 = [];
+    this.form.sched3 = [];
     console.log("this.form###### :", this.form);
   },
   watch: {
@@ -938,9 +944,10 @@ export default {
       return total;
     },
     updateSchedAndClose(data) {
-      Object.keys(data).forEach(key => {
-        this.form[key] = data[key];
-      });
+      if (data)
+        Object.keys(data).forEach(key => {
+          this.form[key] = data[key];
+        });
       // this.form.sched1 = data.sched1;
       // this.form.sched2 = data.sched2;
       // this.form.sched3A = data.sched3A;
@@ -1030,9 +1037,9 @@ export default {
     onClose_sched3A() {
       this.sched3A_drawer = false;
     },
-    validate() {
+    validate(for_submit) {
       if (this.step === 0) this.validatePage1();
-      this.changeStep(this.step + 1);
+      if (!for_submit) this.changeStep(this.step + 1);
     },
     validatePage1() {
       // if (!this.form.return_period) {
@@ -1051,9 +1058,17 @@ export default {
       return this.errors.find(x => x.field === item) ? "error" : "";
     },
     error_desc(item) {
-      return this.errors.find(x => x.field === item)
-        ? this.errors.find(x => x.field === item).error
-        : "";
+      var err = this.errors.find(x => x.field === item);
+      console.log("err :", err);
+      if (err && err.required_value && err.field) {
+        if (err.field === "surcharge")
+          this.form.surcharge = parseFloat(err.required_value);
+        if (err.field === "interest")
+          this.form.interest = parseFloat(err.required_value);
+        if (err.field === "compromise")
+          this.form.compromise = parseFloat(err.required_value);
+      }
+      return err ? err.error : "";
     }
   },
   data() {

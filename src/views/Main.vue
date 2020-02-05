@@ -79,12 +79,12 @@
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; border-color:#199ECD">
                 <div style="margin-top: 1vh">
                   <span style="text-transform: uppercase; font-weight: bold;">{{user.name.first}} {{user.name.last}}</span>
-                  <p v-if="user.tin">
+                  <!-- <p v-if="user.tin">
                     <a
                       style="font-size:12px"
                       @click="$router.push('/app/user')"
                     >{{formatTIN(user.tin)}}</a>
-                  </p>
+                  </p> -->
                   <!-- <p v-else>
                     <a-icon type="warning" style="color:red"></a-icon>
                     <a

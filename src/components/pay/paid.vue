@@ -47,7 +47,7 @@ export default {
       this.loading = true;
       console.log("GET_TAX_RETURNS");
       this.$http
-        .get("/payment")
+        .get(`/payment/`)
         .then(result => {
           console.log(
             "get tax returns paid payment data: " + JSON.stringify(result)
