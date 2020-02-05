@@ -33,11 +33,13 @@ class SendEmail {
       to: email,
       from: ApplicationSettings.getValue("ITAX_EMAIL"),
       templateId: ApplicationSettings.getValue("REGISTRATION_EMAIL_TEMPLATE"),
-      substitutions: { name, confirmation_url }
+      dynamic_template_data: { name, confirmation_url }
     };
     return new Promise((resolve, reject) => {
+      console.log('msg :', msg);
       sgMail.send(msg)
         .then((result) => {
+          console.log('sgMail result :', result);
           resolve({ result, confirmation_url, expiry_date })
         }).catch((err) => reject(err));
     })
@@ -48,7 +50,7 @@ class SendEmail {
       to: 'ariel.a.balita@gmail.com',
       from: 'itax-pro@itax.com',
       templateId: 'e0d8666d-d31a-4bba-b366-50361c400565',
-      substitutions: {
+      dynamic_template_data: {
         name: 'Some One',
         city: 'Denver',
       },
@@ -82,7 +84,7 @@ class SendEmail {
       to: email,
       from: ApplicationSettings.getValue("ITAX_EMAIL"),
       templateId: ApplicationSettings.getValue("REGISTRATION_INVITATION_TEMPLATE"),
-      substitutions: { name: `${name.first} ${name.last}`, sender, confirmation_url }
+      dynamic_template_data: { name: `${name.first} ${name.last}`, sender, confirmation_url }
     };
     return new Promise((resolve, reject) => {
       sgMail.send(msg)
@@ -112,7 +114,7 @@ class SendEmail {
         to: email,
         from: ApplicationSettings.getValue("ITAX_EMAIL"),
         templateId: ApplicationSettings.getValue("REGISTRATION_INVITATION_TEMPLATE"),
-        substitutions: { name: `${name.first} ${name.last}`, sender, confirmation_url }
+        dynamic_template_data: { name: `${name.first} ${name.last}`, sender, confirmation_url }
       };
       messages.push(msg);
     })

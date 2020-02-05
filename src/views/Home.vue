@@ -179,6 +179,7 @@
                 has-feedback
               >
                 <a-input
+                  class="text-uppercase"
                   :disabled="loading"
                   v-model="form.name.first"
                   placeholder="Enter First Name"
@@ -191,7 +192,12 @@
                 has-feedback
                 class="register-form-item"
               >
-                <a-input :disabled="loading" v-model="form.name.last" placeholder="Last Name"></a-input>
+                <a-input
+                  class="text-uppercase"
+                  :disabled="loading"
+                  v-model="form.name.last"
+                  placeholder="Last Name"
+                ></a-input>
               </a-form-item>
               <a-form-item
                 label="Email Address"
@@ -204,8 +210,8 @@
               </a-form-item>
               <a-form-item
                 label="Password"
-                :validate-status="validation_errors.password ? 'error' : form.password ? validate_password ? 'success': 'error':''"
-                :help="validation_errors.password || (form.password && !validate_password ? 'Invalid Password':'')"
+                :validate-status="validate_password_status"
+                :help="validation_errors.password"
                 has-feedback
                 class="register-form-item"
               >
@@ -228,13 +234,15 @@
                     :disabled="loading"
                     v-model="form.password"
                     placeholder="Create a Password"
-                    :type="isPassVisible?'text':'password'">
-                     <a-icon
-                    slot="suffix"
-                    :type="isPassVisible?'eye':'eye-invisible'"
-                    @click="isPassVisible=!isPassVisible"
-                    style="cursor:pointer;margin-right:20px"
-                  />                    
+                    :type="isPassVisible?'text':'password'"
+                    @change="checkPassword()"
+                  >
+                    <a-icon
+                      slot="suffix"
+                      :type="isPassVisible?'eye':'eye-invisible'"
+                      @click="isPassVisible=!isPassVisible"
+                      style="cursor:pointer;margin-right:20px"
+                    />
                   </a-input>
                 </a-tooltip>
               </a-form-item>
@@ -243,17 +251,21 @@
                 :validate-status="form.confirm ? form.confirm === form.password ? 'success': 'error':''"
                 :help="form.confirm && form.confirm !== form.password ? 'Confirm Password does not match':''"
                 has-feedback
-                class="register-form-item">
+                class="register-form-item"
+              >
                 <a-input
                   :disabled="loading"
                   v-model="form.confirm"
                   placeholder="Confirm Password"
-                  :type="isConfPassVisible?'text':'password'">
+                  :type="isConfPassVisible?'text':'password'"
+                  @change="checkPassword()"
+                >
                   <a-icon
                     slot="suffix"
                     :type="isConfPassVisible?'eye':'eye-invisible'"
                     @click="isConfPassVisible=!isConfPassVisible"
-                    style="cursor:pointer;margin-right:20px"/>
+                    style="cursor:pointer;margin-right:20px"
+                  />
                 </a-input>
               </a-form-item>
             </a-form>
@@ -263,9 +275,13 @@
           <a-card v-if="step===1">
             <a-form>
               <a-form-item label="Taxpayer Type">
-                <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.type">
-                  <a-radio-button value="C">Corporate</a-radio-button>
-                  <a-radio-button value="I">Individual</a-radio-button>
+                <a-radio-group
+                  buttonStyle="solid"
+                  style="width:100%"
+                  v-model="form.taxpayer.taxpayer_type"
+                >
+                  <a-radio-button value="C">CORPORATE</a-radio-button>
+                  <a-radio-button value="I">INDIVIDUAL</a-radio-button>
                 </a-radio-group>
               </a-form-item>
               <a-form-item
@@ -290,28 +306,42 @@
                 :help="validation_errors.rdo_code"
                 has-feedback
               >
-                <a-select style="width: 100%" placeholder="Select Revenue District Office">
+                <a-select
+                  style="width: 100%"
+                  v-model="form.taxpayer.rdo_code"
+                  placeholder="Select Revenue District Office"
+                >
                   <a-select-option
-                    v-model="form.taxpayer.rdo_code"
                     v-for="(item, index) in rdos"
                     :key="index"
                     :value="item.code"
                   >{{item.code}} - {{item.description}}</a-select-option>
                 </a-select>
               </a-form-item>
-              <a-form-item label="Line of Business" class="register-form-item">
-                <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business" />
+              <a-form-item
+                label="Line of Business"
+                :validate-status="validation_errors.line_of_business ? 'error':''"
+                :help="validation_errors.line_of_business"
+                has-feedback
+                class="register-form-item"
+              >
+                <a-input
+                  class="text-uppercase"
+                  placeholder="Line of Business"
+                  v-model="form.taxpayer.line_of_business"
+                />
               </a-form-item>
 
-              <span v-if="form.taxpayer.type == 'C'">
+              <span v-if="form.taxpayer.taxpayer_type == 'C'">
                 <a-form-item
                   label="Registered Business Name"
-                  :validate-status="validation_errors.taxpayer_name ? 'error':''"
-                  :help="validation_errors.taxpayer_name"
+                  :validate-status="validation_errors.taxpayer_registered_name ? 'error':''"
+                  :help="validation_errors.taxpayer_registered_name"
                   has-feedback
                   class="register-form-item"
                 >
                   <a-input
+                    class="text-uppercase"
                     :disabled="loading"
                     v-model="form.taxpayer.registered_name"
                     placeholder="Registered Business Name"
@@ -320,11 +350,15 @@
                 <a-form-item
                   label="Date of Incorporation"
                   class="register-form-item"
-                  :validate-status="validation_errors.date_incorporated ? 'error':''"
-                  :help="validation_errors.date_incorporated"
+                  :validate-status="validation_errors.date_incorporation ? 'error':''"
+                  :help="validation_errors.date_incorporation"
                   has-feedback
                 >
-                  <a-date-picker style="width:100%" placeholder="Date Incorporation"></a-date-picker>
+                  <a-date-picker
+                    style="width:100%"
+                    v-model="form.taxpayer.date_incorporation"
+                    placeholder="Date Incorporation"
+                  ></a-date-picker>
                 </a-form-item>
                 <a-form-item
                   label="Accounting Type"
@@ -336,10 +370,10 @@
                   <a-radio-group
                     buttonStyle="solid"
                     v-model="form.taxpayer.accounting_type"
-                    @change="() => { form.taxpayer.accounting_type === 'C'?form.taxpayer.start_month=0:''}"
+                    @change="() => { form.taxpayer.accounting_type === 'c'?form.taxpayer.start_month=0:''}"
                   >
-                    <a-radio-button value="C">Calendar</a-radio-button>
-                    <a-radio-button value="F">Fiscal</a-radio-button>
+                    <a-radio-button value="c">CALENDAR</a-radio-button>
+                    <a-radio-button value="f">FISCAL</a-radio-button>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item
@@ -352,7 +386,7 @@
                   <a-select
                     style="width: 100%"
                     v-model="form.taxpayer.start_month"
-                    :disabled="form.taxpayer.accounting_type === 'C'"
+                    :disabled="form.taxpayer.accounting_type === 'c'"
                   >
                     <!-- @change="selectStartMonth" -->
                     <a-select-option
@@ -372,22 +406,25 @@
                   class="register-form-item"
                 >
                   <a-input
+                    class="text-uppercase"
                     :disabled="loading"
-                    v-model="form.taxpayer.first_name"
+                    v-model="form.taxpayer.individual_details.firstName"
                     placeholder="First Name"
-                    @change="() => { form.taxpayer.registered_name = `${form.taxpayer.first_name} ${form.taxpayer.middle_name} ${form.taxpayer.last_name}` }"
+                    @change="updateRegName()"
                   ></a-input>
                   <a-input
+                    class="text-uppercase"
                     :disabled="loading"
-                    v-model="form.taxpayer.middle_name"
+                    v-model="form.taxpayer.individual_details.middleName"
                     placeholder="Middle Name"
-                    @change="() => { form.taxpayer.registered_name = `${form.taxpayer.first_name} ${form.taxpayer.middle_name} ${form.taxpayer.last_name}` }"
+                    @change="updateRegName()"
                   ></a-input>
                   <a-input
+                    class="text-uppercase"
                     :disabled="loading"
-                    v-model="form.taxpayer.last_name"
+                    v-model="form.taxpayer.individual_details.lastName"
                     placeholder="Last Name"
-                    @change="() => { form.taxpayer.registered_name = `${form.taxpayer.first_name} ${form.taxpayer.middle_name} ${form.taxpayer.last_name}` }"
+                    @change="updateRegName()"
                   ></a-input>
                 </a-form-item>
                 <a-form-item
@@ -415,7 +452,7 @@
                   <a-date-picker
                     style="width:100%"
                     placeholder="Date of Birth"
-                    v-model="form.taxpayer.birth_date"
+                    v-model="form.taxpayer.individual_details.birthDate"
                   />
                 </a-form-item>
                 <a-form-item
@@ -425,20 +462,29 @@
                   :help="validation_errors.gender"
                   has-feedback
                 >
-                  <a-radio-group buttonStyle="solid" v-model="form.taxpayer.gender">
-                    <a-radio-button value="M">Male</a-radio-button>
-                    <a-radio-button value="F">Female</a-radio-button>
+                  <a-radio-group
+                    buttonStyle="solid"
+                    v-model="form.taxpayer.individual_details.gender"
+                  >
+                    <a-radio-button value="M">MALE</a-radio-button>
+                    <a-radio-button value="F">FEMALE</a-radio-button>
                   </a-radio-group>
                 </a-form-item>
               </span>
-               <a-form-item
-                  class="register-form-item"
-                  label="Address"
-                  :validate-status="validation_errors.address ? 'error':''"
-                  :help="validation_errors.address"
-                  has-feedback>                 
-                 <a-textarea rows="4" placeholder="Taxpayer Address"></a-textarea>
-                </a-form-item>
+              <a-form-item
+                class="register-form-item"
+                label="Registered Address"
+                :validate-status="validation_errors.address ? 'error':''"
+                :help="validation_errors.address"
+                has-feedback
+              >
+                <a-textarea
+                  class="text-uppercase"
+                  rows="4"
+                  v-model="form.taxpayer.address"
+                  placeholder="Registered Address"
+                ></a-textarea>
+              </a-form-item>
             </a-form>
           </a-card>
 
@@ -454,7 +500,7 @@
                 <span style="font-weight:bold">Account Name</span>
               </a-col>
               <a-col :span="12" align="right">
-                <span>{{form.name.last}}, {{form.name.first}}</span>
+                <span class="text-uppercase">{{form.name.last}}, {{form.name.first}}</span>
               </a-col>
               <a-col :span="12">
                 <span style="font-weight:bold">Email Address</span>
@@ -474,8 +520,10 @@
               </a-col>
               <a-col :span="12" align="right">
                 <div>{{formatTIN(form.taxpayer.tin)}}</div>
-                <div>{{form.taxpayer.registered_name}}</div>
-                <div>{{form.taxpayer.rdo}}</div>
+                <div class="text-uppercase">{{form.taxpayer.registered_name}}</div>
+                <div class="text-uppercase">{{getRdoByCode(form.taxpayer.rdo_code)}}</div>
+                <div class="text-uppercase">{{getTaxpayerType(form.taxpayer.taxpayer_type)}}</div>
+                <div class="text-uppercase">{{form.taxpayer.address}}</div>
               </a-col>
             </a-row>
           </a-card>
@@ -497,8 +545,8 @@ export default {
   components: { VueRecaptcha },
   data() {
     return {
-      isConfPassVisible:false,
-      isPassVisible:false,
+      isConfPassVisible: false,
+      isPassVisible: false,
       verified_recaptcha: false,
       step: 0,
       rdos: null,
@@ -509,8 +557,9 @@ export default {
       form: {
         name: {},
         taxpayer: {
-          type: "C",
-          accounting_type: "C",
+          individual_details: {},
+          taxpayer_type: "C",
+          accounting_type: "c",
           start_month: 0
         }
       },
@@ -538,12 +587,26 @@ export default {
         "OCTOBER",
         "NOVEMBER",
         "DECEMBER"
-      ]
+      ],
+      validate_password_status: ""
     };
   },
   watch: {
     signup_visible(val) {
-      if (!val) this.form = { name: {} };
+      if (!val) {
+        this.form = {
+          name: {},
+          taxpayer: {
+            individual_details: {},
+            taxpayer_type: "C",
+            accounting_type: "c",
+            start_month: 0
+          }
+        };
+        this.validation_errors = {};
+        this.validate_password_status = "";
+        this.step = 0;
+      }
     }
   },
   methods: {
@@ -585,6 +648,10 @@ export default {
     },
     validate() {
       this.validation_errors = {};
+      var errorOnStep1 = false;
+
+      // Step 1
+      this.checkPassword();
       if (!this.form.name.first) {
         this.validation_errors.first_name = "Please input first name";
       }
@@ -594,19 +661,86 @@ export default {
       if (!this.form.email) {
         this.validation_errors.email = "Please input email";
       }
-      if (!this.form.password) {
-        this.validation_errors.password = "Please input password";
-      } else if (this.form.password !== this.form.confirm) {
-        this.validation_errors.confirm_password =
-          "Password and Confirm Password does not match";
+
+      errorOnStep1 =
+        this.validation_errors && Object.keys(this.validation_errors).length;
+
+      // Step 2
+      if (!this.form.taxpayer.tin) {
+        this.validation_errors.tin = "Tax Identification Number is required.";
+      }
+      if (!this.form.taxpayer.rdo_code) {
+        this.validation_errors.rdo_code = "RDO is required.";
+      }
+      if (!this.form.taxpayer.line_of_business) {
+        this.validation_errors.line_of_business =
+          "Line of Business is required.";
+      }
+      if (!this.form.taxpayer.address) {
+        this.validation_errors.address = "Registered Address is required.";
       }
 
-      if (!this.form.taxpayer.registered_name) {
-        this.validation_errors.taxpayer_name = "Please Input Registered Name";
+      if (this.form.taxpayer.taxpayer_type === "C") {
+        if (!this.form.taxpayer.registered_name) {
+          this.validation_errors.taxpayer_registered_name =
+            "Please Input Registered Name";
+        }
+        if (!this.form.taxpayer.date_incorporation) {
+          this.validation_errors.date_incorporation =
+            "Date of Incorporation is required.";
+        }
+        if (!this.form.taxpayer.accounting_type) {
+          this.validation_errors.accounting_type =
+            "Accounting Type is required.";
+        }
+        // if (parseInt(this.form.taxpayer.start_month) > -1) {
+        //   this.validation_errors.start_month = "Start Month is required.";
+        // }
+      } else {
+        if (
+          !this.form.taxpayer.individual_details ||
+          !this.form.taxpayer.individual_details.firstName ||
+          !this.form.taxpayer.individual_details.lastName
+        ) {
+          this.validation_errors.taxpayer_name =
+            "Please Input First and Last Name";
+        }
+        if (!this.form.taxpayer.filer_type) {
+          this.validation_errors.filer_type = "Filer Type is required.";
+        }
+        if (!this.form.taxpayer.birth_date) {
+          this.validation_errors.individual_details.birthDate =
+            "Date of Birth is required.";
+        }
+        if (!this.form.taxpayer.gender) {
+          this.validation_errors.individual_details.gender =
+            "Gender is required.";
+        }
+      }
+
+      if (this.validation_errors && Object.keys(this.validation_errors).length)
+        this.step = errorOnStep1 ? 0 : 1;
+    },
+    checkPassword() {
+      delete this.validation_errors.password;
+      this.validate_password_status = "";
+
+      if (!this.form.password) {
+        this.validation_errors.password = "Please input password";
+        this.validate_password_status = "error";
+      } else if (!this.validate_password) {
+        this.validation_errors.password = "Invalid Password";
+        this.validate_password_status = "error";
+      } else {
+        delete this.validation_errors.password;
+        this.validate_password_status = "success";
+        if (this.form.password !== this.form.confirm) {
+          this.validation_errors.confirm_password =
+            "Password and Confirm Password does not match";
+        }
       }
     },
     register(e) {
-      this.loading = true;
       // console.log("this.validate() :", this.validate());
       this.validate();
       console.log("this.validation_errors :", this.validation_errors);
@@ -614,23 +748,32 @@ export default {
         !this.validation_errors ||
         !Object.keys(this.validation_errors).length
       ) {
+        this.loading = true;
         console.log("Received values of form: ", this.form);
         this.$store
           .dispatch("SIGNUP", this.form)
           .then(result => {
             console.log("SIGNUP result :", result);
-            this.$notification.open({
-              message: "Registration success.",
-              description: `Please confirm your account in ${this.form.email}`,
-              icon: <a-icon type="check" style="color: blue" />
-            });
-            this.signup_visible = false;
+            if (!result.error) {
+              this.$notification.success({
+                message: "Registration success.",
+                description: `Please confirm your account in ${this.form.email}`,
+                icon: <a-icon type="check" style="color: blue" />
+              });
+              this.signup_visible = false;
+            } else {
+              this.$notification.error({
+                message: "Validation Error",
+                description: result.error.message || result.error,
+                icon: <a-icon type="close-circle" style="color: red" />
+              });
+            }
             this.loading = false;
           })
           .catch(err => {
             this.loading = false;
           });
-      } else this.loading = false;
+      }
     },
     checkRegCode() {
       const reg_code = this.$route.query.reg_code;
@@ -646,6 +789,21 @@ export default {
     },
     verifyCaptcha(response) {
       alert(JSON.stringify(response));
+    },
+    updateRegName() {
+      this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.middleName} ${this.form.taxpayer.individual_details.lastName}`;
+    },
+    getRdoByCode(code) {
+      if (code && this.rdos && this.rdos.length) {
+        var rdo = this.rdos.find(v => v.code === code);
+        return rdo ? `${rdo.code} - ${rdo.description}` : "";
+      }
+      return "";
+    },
+    getTaxpayerType(type) {
+      if (type && type === "C") return "CALENDAR";
+      else if (type && type === "F") return "FISCAL";
+      else return "";
     }
   },
   created() {
@@ -705,5 +863,9 @@ export default {
 <style>
 .register-form-item .ant-form-item-label {
   line-height: 20px;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 </style>
