@@ -89,7 +89,7 @@ router
             }
 
             AccountDao.modifyByAccountId(account_id, {
-                status: 1,
+                status: 2,
                 confirmation_url: null
             })
                 .then((model) => res.json({

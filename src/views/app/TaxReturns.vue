@@ -46,6 +46,11 @@ export default {
       tabView: ["new", "draft", "submitted"]
     };
   },
+  created(){
+    if(this.$route.query.tab){
+      this.changeView(Number(this.$route.query.tab))
+    }
+  },
   methods: {
     changeActiveKey(key) {
       this.active_key = key;

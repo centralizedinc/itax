@@ -21,22 +21,16 @@
         </a-col>
         <a-col :span="1">
           <a-popover
+            :title="`${user.name.first} ${user.name.last}`"
             trigger="click"
             placement="bottomRight"
           >
-          <span slot="title">
-            <a-row>
-              <a-col :span="24" align="center">
-                <span style="font-weight:bold; color:#0B3A79">{{`${user.name.first.toUpperCase()} ${user.name.last.toUpperCase()}`}}</span>
-              </a-col>
-            </a-row>
-          </span>
             <a-avatar
               shape="square"
               :size="35"
               :src="user && user.avatar ? user.avatar.location : null"
               style="border: 1px solid #FFFFFF; cursor:pointer"
-            >{{user && user.name && user.name.first ? user.name.first[0].toUpperCase() : ''}}{{user && user.name && user.name.first ? user.name.last[0].toUpperCase() : ''}}</a-avatar>
+            >{{user && user.name && user.name.first ? user.name.first[0] : '?'}}</a-avatar>
             <template slot="content">
               <a-menu @click="nav">
                 <a-menu-item key="/app/user">
@@ -60,12 +54,11 @@
         type="flex"
         justify="center"
       >
-      
-    <a-col :span="4">
+        <a-col :span="4" v-if="session_mode==='ACTIVE'">
           <a-row type="flex" justify="center" style="margin-bottom: 2vh">
             <a-col :span="24">
               <a-card
-                style=" min-height: 10vh; background: linear-gradient(to right, #000046, #1cb5e0); border-color:#199ECD"
+                style=" min-height: 10vh; background: linear-gradient(to right, #000046, #1cb5e0);"
               ></a-card>
             </a-col>
             <a-col :span="6">
@@ -73,31 +66,31 @@
                 style="z-index: 1; margin-top: -7vh; border: 3px solid #FFFFFF"
                 :size="60"
                 :src="user && user.avatar ? user.avatar.location : null"
-              >{{user && user.name && user.name.first ? user.name.first[0].toUpperCase() : ''}}{{user && user.name && user.name.first ? user.name.last[0].toUpperCase() : ''}}</a-avatar>
+              >{{user && user.name && user.name.first ? user.name.first[0] : '?' }}</a-avatar>
             </a-col>
             <a-col :span="24">
-              <a-card style="text-align: center; margin-top: -5vh; height: 12vh; border-color:#199ECD">
+              <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
                 <div style="margin-top: 1vh">
-                  <span style="text-transform: uppercase; font-weight: bold;">{{user.name.first}} {{user.name.last}}</span>
+                  <span>{{user.name.first}} {{user.name.last}}</span>
                   <p v-if="user.tin">
                     <a
                       style="font-size:12px"
                       @click="$router.push('/app/user')"
                     >{{formatTIN(user.tin)}}</a>
                   </p>
-                  <!-- <p v-else>
+                  <p v-else>
                     <a-icon type="warning" style="color:red"></a-icon>
                     <a
                       style="font-size:10px"
                       @click="$router.push('/app/user')"
                     >No taxpayer details. Click here.</a>
-                  </p> -->
+                  </p>
                 </div>
               </a-card>
             </a-col>
           </a-row>
           <a-affix :offsetTop="100">
-            <a-menu @click="nav" :selectedKeys="active_menu" >
+            <a-menu @click="nav" :selectedKeys="active_menu">
               <a-menu-item key="/app">
                 <a-icon type="layout" />Dashboard
               </a-menu-item>
@@ -124,7 +117,7 @@
             </a-menu>
           </a-affix>
         </a-col>
-        <a-col :span="15" style="margin-left:2vw; margin-right:2vw">
+        <a-col :span="session_mode==='ACTIVE' ? 15 : 24" style="margin-left:2vw; margin-right:2vw">
           <a-row>
             <a-col :span="24" v-if="session_mode !== 'SETUP'">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
@@ -138,45 +131,37 @@
             </a-col>
           </a-row>
         </a-col>
-        <a-col :span="4">
-          <!-- <a-row style="margin-bottom: 1vh">
+        <a-col :span="4" v-if="session_mode==='ACTIVE'">
+          <a-row style="margin-bottom: 1vh">
             <a-col :span="24">
               <a-card style="background: linear-gradient(to right, #000046, #1cb5e0)">
                 <h2 style="color: #FFFFFF">Summary</h2>
               </a-card>
             </a-col>
-          </a-row> -->
-          <a-card style="margin-bottom:0.5vh; border: 1px solid; border-color:#199ECD" class="avatar_btn" @click="$router.push('/app/pay')">
+          </a-row>
+          <a-card style="margin-bottom:0.5vh; border: 1px solid" class="avatar_btn">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
-                <a-badge dot :count="for_payment">
-                  <a-icon type="credit-card" style="font-size: 46px"></a-icon>
-                </a-badge>
+                <a-icon type="team" style="font-size: 46px"></a-icon>
               </a-col>
               <a-col :span="16" style="text-align:right">
-                <h4>For Payments</h4>
-                <h2>{{for_payment}}</h2>
+                <h4>Total Taxpayers</h4>
+                <h2>10</h2>
               </a-col>
-              <a-divider></a-divider>
-              <span style="font-size:10px">Total Number of submitted forms but not yet paid. To pay these resturns, go to the 'Payments' menu then click 'For Payments' tab.</span>           
             </a-row>
           </a-card>
-          <a-card style="margin-bottom:0.5vh;border: 1px solid;border-color:#199ECD" class="avatar_btn" @click="$router.push('/app/tax?tab=1')">
+          <a-card style="margin-bottom:0.5vh;border: 1px solid;" class="avatar_btn">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
-                <a-badge dot :count="for_submission">
-                  <a-icon type="snippets" style="font-size: 46px"></a-icon>
-                </a-badge>
+                <a-icon type="form" style="font-size: 46px"></a-icon>
               </a-col>
               <a-col :span="16" style="text-align:right">
-                <h4>For Submission</h4>
-                <h2>{{for_submission}}</h2>
+                <h4>Returns Filed</h4>
+                <h2>10</h2>
               </a-col>
-              <a-divider></a-divider>
-              <span style="font-size:10px">Total Number of Tax Returns saved but not submitted. All un-submitted forms can be found under tax returns menu and in the drafts tab. </span>
             </a-row>
           </a-card>
-          <!-- <a-card style="margin-bottom:0.5vh; border: 1px solid;" class="avatar_btn">
+          <a-card style="margin-bottom:0.5vh; border: 1px solid;" class="avatar_btn">
             <a-row type="flex" align="middle" justify="left">
               <a-col :span="8">
                 <a-icon type="credit-card" style="font-size: 46px"></a-icon>
@@ -186,7 +171,7 @@
                 <h2>45,538</h2>
               </a-col>
             </a-row>
-          </a-card> -->
+          </a-card>
         </a-col>
       </a-row>
     </a-layout-content>
@@ -197,7 +182,8 @@
   </a-layout>
 </template>
 
- <script>
+
+// <script>
 // import VueTrend from "vuetrend";
 // import TrendChart from "vue-trend-chart";
 export default {
@@ -253,12 +239,6 @@ export default {
     onSearch(e) {}
   },
   computed: {
-    for_submission(){
-      return this.$store.state.tax_form.draft_forms.length
-    },
-    for_payment(){
-      return this.$store.state.tax_form.tax_returns.length
-    },
     active_menu() {
       console.log("PATH :::: ", this.$route.path);
       return [this.$route.path];

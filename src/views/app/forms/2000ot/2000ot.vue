@@ -754,11 +754,51 @@ export default {
         ? this.errors.find(x => x.field === item).error
         : "";
     },
-    validate() {
-      this.changeStep(this.step + 1);
-    },
+    // validate() {
+    //   this.changeStep(this.step + 1);
+    // },
     updateSchedAndClose() {
       this.show_sched1 = false;
+    },
+    validate(is_validate_all) {
+      var errors = [];
+      if (is_validate_all || this.step === 0) {
+        if (!this.form.return_period) {
+          errors.push({
+            page: 0,
+            field: "return_period",
+            error: "Please enter valid date of transaction"
+          });
+        }
+        if (!this.form.atc_code) {
+          errors.push({
+            page: 0,
+            field: "atc_code",
+            error: "Please select ATC code"
+          });
+        }
+      }
+      if (is_validate_all || this.step === 2) {
+        if (!this.form.natureOfTransaction) {
+          errors.push({
+            page: 2,
+            field: "natureOfTransaction",
+            error: "Please choose Nature of Transaction"
+          });
+        }
+        if (!this.form.realPropertyClass) {
+          errors.push({
+            page: 2,
+            field: "realPropertyClass",
+            error: "Please choose Classification of Real Property"
+          });
+        }
+      }
+
+      this.$emit("error", errors);
+      if (!errors.length) {
+        this.changeStep(this.step + 1);
+      }
     }
   }
 };

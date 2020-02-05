@@ -13,14 +13,14 @@
       >1. Fair Market Value as determined by BIR Commissioner 1A 1B 1C (Zonal Value/BIR Rules)</div>
       <br />
       <a-form>
-        <a-row :gutter="2">
+        <a-row :gutter="2" type="flex">
           <a-col :span="8">
             <a-form-item
               :labelCol="form_layout.label_col"
               :wrapperCol="form_layout.wrapper_col"
               label="1A"
             >
-              <a-input-number v-model="form.schedule1.commissionerLand" placeholder="Land"></a-input-number>
+              <a-input v-model="form.schedule1.commissionerLand" placeholder="Land"></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -29,7 +29,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1B"
             >
-              <a-input-number v-model="form.schedule1.commissionerImprovement" placeholder="Improvement"></a-input-number>
+              <a-input v-model="form.schedule1.commissionerImprovement" placeholder="Improvement"></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -38,7 +38,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="1C"
             >
-              <a-input-number disabled :value="getCommissionerTotal()" placeholder="Total"></a-input-number>
+              <a-input disabled :value="getCommissionerTotal()" placeholder="Total"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -56,7 +56,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2A"
             >
-              <a-input-number v-model="form.schedule1.provincialLand" placeholder="Land"></a-input-number>
+              <a-input v-model="form.schedule1.provincialLand" placeholder="Land"></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -65,7 +65,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2B"
             >
-              <a-input-number v-model="form.schedule1.provincialImprovement" placeholder="Improvement"></a-input-number>
+              <a-input v-model="form.schedule1.provincialImprovement" placeholder="Improvement"></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -74,7 +74,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="2C"
             >
-              <a-input-number disabled :value="getProvincialTotal()" placeholder="Total"></a-input-number>
+              <a-input disabled :value="getProvincialTotal()" placeholder="Total"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -92,7 +92,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="3A"
             >
-              <a-input-number disabled :value="getSum1A2B()" placeholder="Total"></a-input-number>
+              <a-input disabled :value="getSum1A2B()" placeholder="Total"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -110,7 +110,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="4A"
             >
-              <a-input-number disabled :value="getSum1B2A()" placeholder="Total"></a-input-number>
+              <a-input disabled :value="getSum1B2A()" placeholder="Total"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -130,7 +130,7 @@
               :wrapperCol="form_layout.wrapper_col"
               label="5A"
             >
-              <a-input-number disabled :value="getFairMarketValue()" placeholder="Total"></a-input-number>
+              <a-input disabled :value="getFairMarketValue()" placeholder="Total"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -172,7 +172,10 @@ export default {
         this.form.schedule1.commissionerImprovement
       ]);
       this.form.schedule1.commissionerTotal = total;
-      console.log("this.form.commissionerTotal :", this.form.schedule1.commissionerTota);
+      console.log(
+        "this.form.commissionerTotal :",
+        this.form.schedule1.commissionerTota
+      );
       return total;
     },
     // 2C = 2A + 2B
@@ -182,7 +185,10 @@ export default {
         this.form.schedule1.provincialImprovement
       ]);
       this.form.schedule1.provincialTotal = total;
-      console.log("this.form.provincialTotal :", this.form.schedule1.provincialTotal);
+      console.log(
+        "this.form.provincialTotal :",
+        this.form.schedule1.provincialTotal
+      );
       return total;
     },
     // 4A = 1B + 2A
@@ -197,8 +203,14 @@ export default {
     },
     getFairMarketValue() {
       console.log("Math.max :" + Math.max(29, 55));
-      console.log("this.form.commissionerTotal :", this.form.schedule1.commissionerTotal);
-      console.log("this.form.provincialTotal :", this.form.schedule1.provincialTotal);
+      console.log(
+        "this.form.commissionerTotal :",
+        this.form.schedule1.commissionerTotal
+      );
+      console.log(
+        "this.form.provincialTotal :",
+        this.form.schedule1.provincialTotal
+      );
       console.log("this.form.sum1A2B :", this.form.schedule1.sum1A2B);
       console.log("this.form.sum1B2A :", this.form.schedule1.sum1B2A);
       var a = this.form.schedule1.commissionerTotal;

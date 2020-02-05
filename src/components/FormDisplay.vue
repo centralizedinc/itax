@@ -32,9 +32,7 @@ import Form1706 from "../plugins/pdf/printers/1706";
 import Form1701a from "../plugins/pdf/printers/1701a";
 import Form1604c from "../plugins/pdf/printers/1604c";
 import Form1702ex from "../plugins/pdf/printers/1702ex";
-
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
 const printers = {
   FORM1601E: Form1601e,
   FORM1604E: Form1604e,
@@ -71,18 +69,17 @@ export default {
     preview() {
       console.log("computed preview form data: " + JSON.stringify(this.form));
       var printer = printers[this.form_type];
-      printer.fillup(this.form).then(document => {
-        const pdfDocGenerator = pdfMake.createPdf(document);
-        var self = this;
-        pdfDocGenerator.getBuffer(function(buffer) {
-          var file = new Blob([buffer], {
-            type: "application/pdf"
-          });
-          var dataUrl = URL.createObjectURL(file);
-          console.log(dataUrl);
-          self.prev = dataUrl;
-          return dataUrl;
+      var document = printer.fillup(this.form);
+      const pdfDocGenerator = pdfMake.createPdf(document);
+      var self = this;
+      pdfDocGenerator.getBuffer(function(buffer) {
+        var file = new Blob([buffer], {
+          type: "application/pdf"
         });
+        var dataUrl = URL.createObjectURL(file);
+        console.log(dataUrl);
+        self.prev = dataUrl;
+        return dataUrl;
       });
       // ----------------------------------
       // var printer = printers[this.type];
@@ -117,7 +114,6 @@ export default {
     console.log("this.type.toUpperCase() :", this.form_type);
     this.refresh();
   },
-
   methods: {
     load(e) {
       console.log("loaded: ", e);
@@ -148,7 +144,6 @@ export default {
         year: this.formatDtYear(form.dateFiled1)
       };
       form.dateFiled1 = dateFiled1;
-
       var birthday = {
         month: this.formatDtMonth(form.taxpayer.birthday),
         year: this.formatDtYear(form.taxpayer.birthday),
@@ -156,7 +151,6 @@ export default {
       };
       console.log("taxpayer.birthday :", birthday);
       form.birthday = birthday;
-
       var sbirthday = {
         month: this.formatDtMonth(form.taxpayer.sbirthday),
         year: this.formatDtYear(form.taxpayer.sbirthday),
@@ -164,30 +158,14 @@ export default {
       };
       console.log("taxpayer.birthday :", sbirthday);
       form.sbirthday = sbirthday;
-
       var dateFiled2 = {
         month: this.formatDtMonth(form.dateFiled2),
         year: this.formatDtYear(form.dateFiled2)
       };
       console.log("dateField2 :", dateFiled2);
       form.dateFiled2 = dateFiled2;
-
       console.log("this.form##### : ", form);
       var printer = printers[this.form_type];
-      // printer.fillup(form).then(document => {
-      //   var self = this;
-      //   const pdfDocGenerator = pdfMake.createPdf(document);
-      //   pdfDocGenerator.getBuffer(function(buffer) {
-      //     var file = new Blob([buffer], {
-      //       type: "application/pdf"
-      //     });
-      //     var dataUrl = URL.createObjectURL(file);
-      //     console.log("dataurl: " + dataUrl);
-      //     self.prev = dataUrl;
-      //     self.loading = false;
-      //   });
-      // });
-      // -------------------------
       var document = printer.fillup(form);
       var self = this;
       const pdfDocGenerator = pdfMake.createPdf(document);
@@ -204,45 +182,42 @@ export default {
     download() {
       var filename = this.form_type;
       var printer = printers[this.form_type];
-      printer.fillup(this.form).then(document => {
-        var self = this;
-        pdfMake.createPdf(document).download(filename, err => {
-          if (err) {
-            console.log("err: " + err);
-          } else {
-            self.prev = filename;
-            this.refresh();
-          }
-        });
+      var document = printer.fillup(this.form);
+      var self = this;
+      pdfMake.createPdf(document).download(filename, err => {
+        if (err) {
+          console.log("err: " + err);
+        } else {
+          self.prev = filename;
+          this.refresh();
+        }
       });
     },
     open() {
       var printer = printers[this.form_type];
       this.form.whole_pdf = true;
-
       console.log("form details open: " + JSON.stringify(this.form));
       var pdf_list = [];
       // for (var x = 0; x <= 1; x++) {
       //   this.form.pdf_page = x;
-      printer.fillup(this.form).then(document => {
-        var self = this;
-        pdfMake.createPdf(document).open(dataUrl => {
-          pdf_list.push(dataUrl);
-          console.log("getdata: " + dataUrl);
-          self.prev = dataUrl;
-        });
-        this.refresh();
-        console.log("open form data: " + JSON.stringify(this.form));
-        // }
-        console.log("pdf list data: " + JSON.stringify(pdf_list));
+      var document = printer.fillup(this.form);
+      var self = this;
+      pdfMake.createPdf(document).open(dataUrl => {
+        pdf_list.push(dataUrl);
+        console.log("getdata: " + dataUrl);
+        self.prev = dataUrl;
       });
+      this.refresh();
+      console.log("open form data: " + JSON.stringify(this.form));
+      // }
+      console.log("pdf list data: " + JSON.stringify(pdf_list));
     },
-    // upload() {
-    //   var printer = printers[this.form_type];
-    //   var document = printer.fillup(this.form);
-    //   var self = this;
-    //   return pdfMake.createPdf(document);
-    // }
+    upload() {
+      var printer = printers[this.form_type];
+      var document = printer.fillup(this.form);
+      var self = this;
+      return pdfMake.createPdf(document);
+    }
   }
 };
 </script>

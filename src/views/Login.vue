@@ -103,9 +103,9 @@
       :gutter="16"
       type="flex"
       align="middle"
-      style="margin-top:10vh; margin-left:5vh; margin-right:5vh"
+      style="margin-top:10vh; margin-bottom: 130px; margin-left:5vh; margin-right:5vh"
     >
-      <a-col :span="8">
+      <!-- <a-col :span="8">
         <a-card title="News/Announcements">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           <a-divider></a-divider>
@@ -125,72 +125,35 @@
           <a-divider></a-divider>
           <a-button type="primary">Report</a-button>
         </a-card>
-      </a-col>
-    </a-row>
-    <a-row
-      :gutter="16"
-      type="flex"
-      align="middle"
-      style="margin-top:10vh; margin-left:5vh; margin-right:5vh;"
-    >
-      <a-col :span="24">
-        <h1>News/Announcements</h1>
-        <a-divider></a-divider>
-      </a-col>
-      <a-col :span="14">
-        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
-      </a-col>
-      <a-col :span="8">
-        <img
-          src="https://support.apple.com/library/content/dam/edam/applecare/images/en_US/icloud/macos-mojave-ios12-macbook-ipad-pro-iphone-x-set-up-icloud-drive-hero.jpg"
-          width="100%"
-        />
-      </a-col>
-    </a-row>
-    <a-row
-      :gutter="16"
-      type="flex"
-      align="middle"
-      style="margin-top:10vh; margin-left:5vh; margin-right:5vh"
-    >
-      <a-col :span="24">
-        <h1>Permits and Certificates</h1>
-        <a-divider></a-divider>
-      </a-col>
-      <a-col :span="8">
-        <img
-          width="100%"
-          src="https://basecamp.com/assets/general/devices-medium-1047d88c14b1c02d9415d18799ccd289eb16d6733166b4529f317faeb28621c6.png"
-          alt
-        />
-      </a-col>
-      <a-col :span="14">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus at urna condimentum mattis pellentesque id nibh tortor id. Pharetra pharetra massa massa ultricies. Eu turpis egestas pretium aenean pharetra magna ac placerat vestibulum. Interdum consectetur libero id faucibus nisl tincidunt eget. Sapien pellentesque habitant morbi tristique. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Facilisis gravida neque convallis a cras semper auctor. Vitae nunc sed velit dignissim. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl.</p>
-        <p>Malesuada fames ac turpis egestas integer eget aliquet. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Tortor consequat id porta nibh venenatis cras sed. Adipiscing at in tellus integer feugiat scelerisque varius morbi. Cursus mattis molestie a iaculis at. Facilisis mauris sit amet massa vitae tortor condimentum lacinia. Neque egestas congue quisque egestas diam in arcu cursus euismod. Pharetra magna ac placerat vestibulum lectus. Sit amet tellus cras adipiscing enim eu turpis egestas. Viverra tellus in hac habitasse.</p>
-      </a-col>
-    </a-row>
-    <a-row
-      :gutter="16"
-      type="flex"
-      align="middle"
-      style="margin-top:10vh; margin-left:5vh; margin-right:5vh; margin-bottom:10vh"
-    >
-      <a-col :span="24">
-        <h1>Report Emergency/Calamity</h1>
-        <a-divider></a-divider>
-      </a-col>
-      <a-col :span="14">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu turpis egestas pretium aenean. Interdum varius sit amet mattis vulputate enim nulla. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Odio tempor orci dapibus ultrices in iaculis nunc. Tempor id eu nisl nunc mi ipsum faucibus vitae aliquet. Ac feugiat sed lectus vestibulum mattis. Aliquet nec ullamcorper sit amet. Feugiat vivamus at augue eget arcu. Faucibus et molestie ac feugiat sed lectus vestibulum. Tristique nulla aliquet enim tortor at auctor urna. Id eu nisl nunc mi ipsum faucibus vitae aliquet nec. Arcu non odio euismod lacinia at quis risus. Eget sit amet tellus cras adipiscing enim eu turpis egestas. A cras semper auctor neque vitae tempus quam. Vitae justo eget magna fermentum iaculis eu non diam phasellus.</p>
-        <p>Laoreet suspendisse interdum consectetur libero id faucibus. Morbi tristique senectus et netus et malesuada. Mi bibendum neque egestas congue. Neque sodales ut etiam sit amet nisl purus in mollis. Vitae et leo duis ut diam quam nulla. Convallis posuere morbi leo urna molestie. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Platea dictumst quisque sagittis purus sit amet volutpat consequat mauris. Id consectetur purus ut faucibus pulvinar elementum integer. Id aliquet lectus proin nibh nisl. Adipiscing diam donec adipiscing tristique risus nec.</p>
-      </a-col>
-      <a-col :span="8">
-        <img
-          width="100%"
-          src="https://bjango.com/images/mac/skalapreview2/skala-preview-hero.jpg"
-          alt
-        />
-      </a-col>
-    </a-row>
+      </a-col> -->
+      
+        <a-col :span="24" align="center" >
+          <h1 style="font-size:36px">Welcome to SmartTax.</h1>
+        </a-col>
+        <a-col :span="8">         
+          <span style="font-size: 28px"> <a-icon type="form"></a-icon> Interactive Tax Forms</span>
+          <div style="margin-top:40px">
+            Prepare your returns using Smart Tax's interactive forms.
+            Your entries are checked and amounts are computed every time you type.
+          </div>          
+        </a-col>
+
+        <a-col :span="8">         
+          <span style="font-size: 28px"> <a-icon type="audit"></a-icon> Online Validation and Submission</span>
+          <div style="margin-top:20px">
+            Forms are validated online. Penalties for late filed forms are automatically computed.
+          </div>          
+        </a-col>
+
+        <a-col :span="8">         
+          <span style="font-size: 28px"> <a-icon type="credit-card"></a-icon> Pay Online</span>
+          <div style="margin-top:40px">
+            Pay your tax returns using your credit/debit cards.
+          </div>          
+        </a-col>
+    </a-row> 
+
+
   </div>
 </template>
 
@@ -218,9 +181,9 @@ export default {
           this.$store
             .dispatch("LOGIN", account)
             .then(result => {
-              this.$notification.open({
+              this.$notification.success({
                 message: "Login success.",
-                icon: <a-icon type="check" style="color: blue" />
+                description:`Welcome ${this.$store.state.account_session.user.name.first}! You have successfully logged-in at ${new Date()}`
               });
               this.loading = false;
               this.$router.push("/app");
