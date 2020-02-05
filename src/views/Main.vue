@@ -71,7 +71,7 @@
             <a-col :span="24">
               <a-card style="text-align: center; margin-top: -5vh; height: 12vh; ">
                 <div style="margin-top: 1vh">
-                  <span>{{user.name.first}} {{user.name.last}}</span>
+                  <span style="text-transform: uppercase; font-weight: bold;">{{user.name.first}} {{user.name.last}}</span>
                   <p v-if="user.tin">
                     <a
                       style="font-size:12px"

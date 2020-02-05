@@ -7,6 +7,7 @@ const ExtractJWT = require('passport-jwt').ExtractJwt;
 // Dao
 const AccountDao = require('../dao/AccountDao');
 const UserDao = require('../dao/UserDao');
+const TaxpayerDao = require('../dao/TaxpayerDao');
 
 // Utils
 const constant_helper = require('../utils/constant_helper');
@@ -103,7 +104,6 @@ passport.use('signup', new LocalStrategy({
 }, (req, email, password, done) => {
     const {
         name,
-        tin,
         confirm,
         taxpayer
     } = req.body;
@@ -122,15 +122,15 @@ passport.use('signup', new LocalStrategy({
             });
             else {
                 AccountDao.create({
-                        email,
-                        password
-                    })
+                    email,
+                    password
+                })
                     .then((account) => {
                         result.account = account;
                         return UserDao.create({
                             account_id: account.account_id,
                             email,
-                            tin,
+                            tin: taxpayer.tin,
                             name: {
                                 first: name.first,
                                 last: name.last
@@ -139,7 +139,13 @@ passport.use('signup', new LocalStrategy({
                     })
                     .then((user) => {
                         result.user = user;
-                        return SendEmail.registration(email, user.name.first, user.account_id);
+                        taxpayer.user_id = user.account_id.toString();
+                        taxpayer.created_by = user.account_id.toString();
+                        return TaxpayerDao.create(taxpayer)
+                    })
+                    .then((taxpayer) => {
+                        result.taxpayer = taxpayer;
+                        return SendEmail.registration(email, result.user.name.first, result.user.account_id);
                     })
                     .then((send_email) => {
                         const {
