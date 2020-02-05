@@ -59,7 +59,7 @@
                      [
                          //fromPeriod month
                          {
-                             text: formatDate(forms.taxpayer.start_date, {
+                             text: formatDate(forms.start_month, {
                                  month: "2-digit"
                              }),
 
@@ -72,7 +72,7 @@
                          },
                          //fromPeriod day     
                          {
-                             text: formatDate(forms.taxpayer.start_date, {
+                             text: formatDate(forms.start_month, {
                                  day: "2-digit"
                              }),
 
@@ -85,7 +85,7 @@
                          },
                          //fromPeriod year
                          {
-                             text: formatDate(forms.taxpayer.start_month, {
+                             text: formatDate(forms.start_month, {
                                  year: "numeric"
                              }),
                              fontSize: 15,
@@ -97,7 +97,7 @@
                          },
                          //toPeriod month
                          {
-                             text: formatDate(forms.taxpayer.end_month, {
+                             text: formatDate(forms.end_month, {
                                  month: "2-digit"
                              }),
                              fontSize: 15,
@@ -109,7 +109,7 @@
                          },
                          //toPeriod day
                          {
-                             text: formatDate(forms.taxpayer.end_date, {
+                             text: formatDate(forms.end_month, {
                                  day: "2-digit"
                              }),
                              fontSize: 15,
@@ -121,7 +121,7 @@
                          },
                          //toPeriod year
                          {
-                             text: formatDate(forms.taxpayer.end_date, {
+                             text: formatDate(forms.end_month, {
                                  year: "numeric"
                              }),
                              fontSize: 15,
@@ -274,7 +274,7 @@
                          },
                          // #7 category of withoutholding agent true
                          {
-                             text: forms.taxpayer.category_of_agent == 'private' ? 'X' : ' ',
+                             text: forms.category_of_agent == 'private' ? 'X' : ' ',
                              fontSize: 15,
                              bold: true,
                              // right,down,left,up
@@ -283,7 +283,7 @@
                          },
                          // #7 category of withoutholding agent false
                          {
-                             text: forms.taxpayer.category_of_agent == 'government' ? 'X' : ' ',
+                             text: forms.category_of_agent == 'government' ? 'X' : ' ',
                              fontSize: 15,
                              bold: true,
                              // right,down,left,up
@@ -812,7 +812,7 @@
 
                          //frommPeriod month
                          {
-                             text: formatDate(forms.taxpayer.start_date, {
+                             text: formatDate(forms.start_month, {
                                  month: "2-digit"
                              }),
 
@@ -825,7 +825,7 @@
                          },
                          //fromPeriod day     
                          {
-                             text: formatDate(forms.taxpayer.start_date, {
+                             text: formatDate(forms.start_month, {
                                  day: "2-digit"
                              }),
 
@@ -838,7 +838,7 @@
                          },
                          //                 //fromPeriod year
                          {
-                             text: formatDate(forms.taxpayer.start_date, {
+                             text: formatDate(forms.start_month, {
                                  year: "numeric"
                              }),
                              fontSize: 10,
@@ -850,7 +850,7 @@
                          },
                          //tooPeriod month
                          {
-                             text: formatDate(forms.taxpayer.end_date, {
+                             text: formatDate(forms.end_month, {
                                  month: "2-digit"
                              }),
                              fontSize: 10,
@@ -862,7 +862,7 @@
                          },
                          //toPeriod day
                          {
-                             text: formatDate(forms.taxpayer.end_date, {
+                             text: formatDate(forms.end_month, {
                                  day: "2-digit"
                              }),
                              fontSize: 10,
@@ -874,7 +874,7 @@
                          },
                          //toPeriod year
                          {
-                             text: formatDate(forms.taxpayer.end_date, {
+                             text: formatDate(forms.end_month, {
                                  year: "numeric"
                              }),
                              fontSize: 10,
@@ -1054,6 +1054,7 @@
  }
 
  function formatDate(date, type) {
+     console.log('date :', date);
      if (!date) {
          return "";
      }

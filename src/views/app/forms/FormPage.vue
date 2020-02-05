@@ -111,6 +111,7 @@
                 <a-list-item-meta>
                   <p
                     slot="title"
+                    style="text-transform: uppercase;font-weight:bold;"
                   >{{item.taxpayer_type=='I'?`${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName ? item.individual_details.middleName : ''}`: `${item.registered_name}`}}</p>
                   <template slot="description">
                     <p>
@@ -234,6 +235,8 @@ export default {
           address_details: {},
           individual_details: {},
           accounting_type: "",
+          start_month: "",
+          end_month: ""
         },
         taxpayer_tax_payable: {},
         spouse_tax_payable: {},
@@ -404,7 +407,7 @@ export default {
           {
             title: "Part II",
             description: "Computation of Tax"
-          },
+          }
           // {
           //   title: "Part III",
           //   description: "Details of Payment"
@@ -533,9 +536,9 @@ export default {
       }
     },
     getUserByTin(tin) {
-      console.log("get user by tin data: ", tin)
+      console.log("get user by tin data: ", tin);
       const user = this.user_list.find(v => v.tin === tin);
-      console.log("get user by tin user data: " + JSON.stringify(user))
+      console.log("get user by tin user data: " + JSON.stringify(user));
       return (
         user || {
           avatar: {
@@ -647,9 +650,8 @@ export default {
       window.close();
     },
     submit() {
-      this.loading = true;
-      console.log("submiting")
-      // this.errors = [];
+      console.log("submiting");
+      this.errors = [];
       //validate
       this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due;
       // this.form.surcharge
@@ -661,6 +663,7 @@ export default {
       console.log("errors: " + JSON.stringify(this.errors));
       // no errors found, proceed to next page
       if (!this.errors.length) {
+        this.loading = true;
         this.$store
           .dispatch("VALIDATE_AND_SAVE", {
             form_type: this.form_type,
@@ -681,7 +684,7 @@ export default {
               }
               this.$notification.error({ message: "Validation Error" });
             } else {
-               console.log("VALIDATE_AND_SAVE result:", this.form);
+              console.log("VALIDATE_AND_SAVE result:", this.form);
               this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
               this.$store.commit("NOTIFY_MESSAGE", {
                 success: true,
@@ -718,8 +721,6 @@ export default {
             console.log("VALIDATE_AND_SAVE", err);
             this.loading = false;
           });
-      } else {
-        this.loading = false;
       }
     }
   },
@@ -751,6 +752,7 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
     this.loading = true;
     //find tp list
+    console.log("tin :", this.$store.state.account_session.user.tin);
     this.$http
         .get(`/taxpayer/users/${this.$store.state.account_session.user.account_id}`)
         .then(results => {

@@ -5,7 +5,7 @@
     :closable="true"
     @close="close"
     :visible="show"
-    width="500"
+    width="1000"
   >
     <a-button type="primary" @click="addAtc">ADD</a-button>
     <a-table bordered :dataSource="data_source" :columns="columns">
@@ -101,11 +101,8 @@ export default {
   },
   created() {
     console.log("Open Schedule 1 :::", JSON.stringify(this.form.sched1));
-    // if(this.form.sched1){
-    //   this.data_source = this.deepCopy(this.form.sched1);
-    // }else{
-    //   this.data_source = [{}]
-    // }
+    if (this.form.sched1 || this.form.sched1.length)
+      this.data_source = this.deepCopy(this.form.sched1);
   },
   computed: {
     total_atc_amount() {
@@ -160,11 +157,18 @@ export default {
       this.data_source.splice(index, 1);
     },
     close() {
-      this.$emit("close", {
-        sched1: this.deepCopy(this.data_source),
-        totalAtcAmount: this.deepCopy(this.total_atc_amount),
-        totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
-      });
+      console.log("closing...");
+      console.log("this.data_source :", this.data_source);
+      this.form.sched1 = this.deepCopy(this.data_source);
+      console.log("this.form.sched1 :", this.form.sched1);
+      this.form.totalAtcAmount = this.deepCopy(this.total_atc_amount);
+      this.form.totalAtcOutput = this.deepCopy(this.total_atc_output_tax);
+      this.$emit("close");
+      // this.$emit("close", {
+      //   sched1: this.deepCopy(this.data_source),
+      //   totalAtcAmount: this.deepCopy(this.total_atc_amount),
+      //   totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
+      // });
     }
   }
 };

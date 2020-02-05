@@ -192,7 +192,8 @@ function getContent(forms) {
                         text: forms.taxpayer.registered_name == null ? ' ' : forms.taxpayer.registered_name,
                         fontSize: 14,
                         bold: true,
-                        characterSpacing: 2,
+
+                        characterSpacing: 1,
                         alignment: 'justified',
                         margin: [40, 0, 0, 0]
                     }]
@@ -204,21 +205,21 @@ function getContent(forms) {
             layout: "noBorders",
             table: {
                 widths: [460, 80],
-                heights: [23],
+                heights: [20],
                 body: [
                     [{
                         text: forms.taxpayer.address == null || forms.taxpayer.address == ' ' ? ' ' : forms.taxpayer.address,
                         fontSize: 12,
                         alignment: 'left',
                         bold: true,
-                        margin: [40, 3, 0, 0]
+                        margin: [40, 0, 0, 0]
                     },
                     {
                         text: forms.taxpayer.address_details.zipCode == null || forms.taxpayer.address_details.zipCode == ' ' ? ' ' : forms.taxpayer.address_details.zipCode,
                         fontSize: 12,
                         alignment: 'justified',
                         characterSpacing: 4,
-                        margin: [25, 3, 0, 0]
+                        margin: [25, 0, 0, 0]
                     }]
                 ]
             }

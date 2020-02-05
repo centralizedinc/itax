@@ -4,30 +4,31 @@
       <a-divider>
         <b>Withholding Tax Declaration (1600WP)</b>
       </a-divider>
-      
-      <a-row>
-        <a-col :span="24">
-          <a-form-item label="1. For the Period of ">
+      <a-form-item label="1. For the Period of ">
         <!-- (MM/DD/YYYY) -->
        </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label="From"
+       <a-row>
+         <a-col :span="12">
+           <a-form-item label="From"
         :validate-status="error_item('fromDate')"
         :help="error_desc('fromDate')"
         >
-        <a-date-picker v-model="form.taxpayer.start_month" />
+        <a-date-picker v-model="form.start_month" @change="dateChange"/>
         </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item
+         </a-col>
+         <a-col :span="12">
+           <a-form-item
+       
           label= "To"
         :validate-status="error_item('toDate')"
         :help="error_desc('toDate')"
-        ><a-date-picker v-model="form.taxpayer.end_month" />
+        >
+        <a-date-picker disabled v-model="form.end_month" />
         </a-form-item>
-        </a-col>
-      </a-row>
+         </a-col>
+       </a-row>
+       
+        
       <a-form-item label="2. Amended Return"
       :validate-status="error_item('amended_yn')"
         :help="error_desc('amended_yn')"
@@ -68,9 +69,9 @@
       :validate-status="error_item('category_of_agent')"
         :help="error_desc('category_of_agent')"
       >
-        <a-radio-group v-model="form.taxpayer.category_of_agent">
-          <a-radio :value="`private`">Private</a-radio>
-          <a-radio :value="`government`">Government</a-radio>
+        <a-radio-group v-model="form.category_of_agent">
+          <a-radio :value="'private'">Private</a-radio>
+          <a-radio :value="'government'">Government</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="8. Withholding Agent's Name/Registered Name">
@@ -260,9 +261,8 @@ export default {
       console.log(
         "created taxpayer data: " + JSON.stringify(this.form.taxpayer)
       );
-      if(this.form.amended_yn == false){
-
-      }
+      console.log("form end_month: ", this.form.taxpayer.end_month)
+      
     }
     // step() {
     //   if (this.step < 0) {
@@ -277,9 +277,12 @@ export default {
       if(this.form.amended_yn == true){
         return true
       }
-      return false
-      
+      return false      
     }
+  },
+  mounted(){
+    this.form.taxpayer.end_month = new Date()
+    console.log("form end_month: ", this.form.taxpayer.end_month)
   },
   methods: {
     updateAtcAndClose(data) {
@@ -301,6 +304,10 @@ export default {
       console.log(
         "update schedule and close data: " + JSON.stringify(this.form.sched1)
       );
+    },
+    dateChange(){
+      this.form.end_month = this.form.start_month
+      this.form.return_period = this.form.end_month
     },
     openSchedule() {
       if (this.form.tax_req_withld_remtd > 0) {
@@ -345,7 +352,7 @@ export default {
       ) {
         console.log("if");
         this.sched = 1;
-      } else if (!this.form.any_tax_withheld) {
+      }  if (!this.form.any_tax_withheld) {
         console.log("else if 1");
         if (this.form.any_tax_withheld == false) {
           this.$notification.open({
@@ -357,7 +364,7 @@ export default {
             message: "Please select an option for Item no. 4"
           });
         }
-      } else if (!this.form.taxpayer.category_withholding_agent) {
+      } if (!this.form.taxpayer.category_withholding_agent) {
         console.log("else if 2");
         this.$notification.open({
           message: "Please select an option for Item no. 7"
@@ -367,39 +374,49 @@ export default {
     },
     save_draft() {},
     changeStep(step, form) {
+      
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
+      console.log("form end_month: emit ", this.form.taxpayer.end_month)
     },
-    validatePage1() {
-      if (!this.form.taxpayer.start_month|| !this.form.taxpayer.end_month) {
-        this.errors.push({
-          page: 0,
-          field: "fromToDate",
-          error: "Date is mandatory field."
-        });
-      } else if (!this.form.any_tax_withheld) {
-        this.errors.push({
-          page: 0,
-          field: "any_tax_withheld",
-          error: "Taxes withhled is mandatory field."
-        });
-      } else if (!this.form.amended_yn) {
-        this.errors.push({
-          page: 0,
-          field: "amended_yn",
-          error: "Amended Return withhled is mandatory field."
-        });
-      } else {
-        this.changeStep(this.step + 1);
-      }
-      // for the meantime
-      this.changeStep(this.step + 1);
-      console.log("validate page 1 errors: " + JSON.stringify(this.errors));
-    },
-    validatePage2() {
-      this.changeStep(this.step + 1);
-    },
+    // validatePage1() {
+    //   if (!this.form.taxpayer.start_month) {
+    //     this.errors.push({
+    //       page: 0,
+    //       field: "fromDate",
+    //       error: "Date is mandatory field."
+    //     });
+    //   }else if ( !this.form.taxpayer.end_month) {
+    //     this.errors.push({
+    //       page: 0,
+    //       field: "toDate",
+    //       error: "Date is mandatory field."
+    //     });
+    //   }
+    //    else if (!this.form.any_tax_withheld) {
+    //     this.errors.push({
+    //       page: 0,
+    //       field: "any_tax_withheld",
+    //       error: "Taxes withhled is mandatory field."
+    //     });
+    //   } else if (!this.form.amended_yn) {
+    //     this.errors.push({
+    //       page: 0,
+    //       field: "amended_yn",
+    //       error: "Amended Return withhled is mandatory field."
+    //     });
+    //   } else {
+    //     this.changeStep(this.step + 1);
+    //   }
+    //   // for the meantime
+    //   this.changeStep(this.step + 1);
+    //   console.log("validate page 1 errors: " + JSON.stringify(this.errors));
+    // },
+    // validatePage2() {
+    //   this.changeStep(this.step + 1);
+    // },
     validate(is_validate_all) {
+      console.log("form end_month validate: ", this.form.taxpayer.end_month)
       // this.step == 0
         // ? this.validatePage1()
         // : this.step == 1
@@ -411,26 +428,27 @@ export default {
       // -----------------------------
       var errors = [];
       if (is_validate_all || this.step === 0) {
-        if (!this.form.taxpayer.start_month) {
+        if (!this.form.start_month) {
         errors.push({
           page: 0,
           field: "fromDate",
           error: "Date From is mandatory field."
         });
-      } else if (!this.form.taxpayer.end_month) {
+      } if (!this.form.end_month) {
         errors.push({
           page: 0,
           field: "toDate",
           error: "Date To is mandatory field."
         });
-      } else if(this.form.amended_yn == null || this.form.amended_yn == undefined || this.amended_yn == ""){
+      } if(this.form.amended_yn == null || this.form.amended_yn == undefined || this.amended_yn == ""){
         errors.push({
           page: 0,
           field: "amended_yn",
           error: "Amended Return is mandatory field."
         })
-      } else if (this.form.any_tax_withheld == null || this.form.any_tax_withheld == undefined || this.form.any_tax_withheld == "") {
-        errors.push({
+      } if (this.form.any_tax_withheld === null || this.form.any_tax_withheld === undefined || this.form.any_tax_withheld === "") {
+       console.log("form.any_tax_withheld value: ",this.form.any_tax_withheld)
+       errors.push({
           page: 0,
           field: "form.any_tax_withheld",
           error: "Taxes withhled is mandatory field."
@@ -438,19 +456,19 @@ export default {
       }
       }
       if(is_validate_all || this.step === 1){
-        if(!this.form.taxpayer.category_of_agent){
+        if(!this.form.category_of_agent){
           errors.push({
             page: 1,
             field: "category_of_agent",
             error: "Category of Withholding Agent is mandotory field."
           })
-        } else if(!this.form.address){
+        } if(!this.form.address){
           errors.push({
             page: 1,
             field: "address",
             error: "Registered Address is mandatory field."
           })
-        } else if(!this.form.zipCode){
+        } if(!this.form.zipCode){
           errors.push({
             page: 1,
             field: "zipCode",
@@ -458,6 +476,7 @@ export default {
           })
         }
       }
+      console.log("1600WP errors: " + JSON.stringify(errors))
       this.$emit("error", errors);
       if (!errors.length) {
         this.changeStep(this.step + 1);
@@ -494,7 +513,7 @@ export default {
     // },
     submit() {
       this.loading = true;
-
+       this.errors = [];
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "1600WP",
@@ -531,10 +550,12 @@ export default {
       this.$emit("updateForm", form);
     },
     error_item(item) {
+      console.log("form end_month: ", this.form.taxpayer.end_month)
      console.log("##item :", JSON.stringify(item));
       return this.errors.find(x => x.field === item) ? "error" : "";
   },
   error_desc(item) {
+    console.log("form end_month: ", this.form.taxpayer.end_month)
     console.log("##desc :", JSON.stringify(item));
       return this.errors.find(x => x.field === item)
         ? this.errors.find(x => x.field === item).error
@@ -555,11 +576,13 @@ export default {
   //   }
   // },
   created() {
+    console.log("form end_month: ", this.form.taxpayer.end_month)
     // console.log("this.$ref.container.height :", this.$refs);
     // console.log("test :", this.$refs.container.height);
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
+    console.log("form end_month: ", this.form.taxpayer.end_month)
     window.removeEventListener("scroll", this.handleScroll);
   },
   

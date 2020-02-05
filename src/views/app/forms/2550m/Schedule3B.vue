@@ -9,16 +9,21 @@
       </a-col>
     </a-row>-->
     <a-row>
-      <a-col :span="19" style="font-weight: bold;">Purchases/Importations This Period</a-col>
+      <a-col :span="19" style="font-weight: bold;">3B. Purchases/Importations This Period</a-col>
       <a-col :span="5" style="text-align: right;">
         <a-button type="primary" @click="addSched3B" icon="plus">ADD</a-button>
       </a-col>
       <a-col :span="24">
-        <a-table bordered :dataSource="sched3B_data" :columns="columns_sched3B">
+        <a-table
+          bordered
+          :dataSource="sched3B_data"
+          :columns="columns_sched3B"
+          :scroll="{ x: 1500 }"
+        >
           <template slot="date_purchased" slot-scope="text, record, index">
             <a-date-picker
               v-model="sched3B_data[index].date_purchased"
-              @change="check_date_sched3B"
+              :disabledDate="disabledDate"
               style="width: 100%"
             />
           </template>
@@ -26,42 +31,54 @@
             <a-input v-model="sched3B_data[index].description"></a-input>
           </template>
           <template slot="vat" slot-scope="text, record, index">
-            <a-input-number v-model="sched3B_data[index].vat" @change="sched3BCompute"></a-input-number>
+            <a-input-number v-model="sched3B_data[index].vat" @change="sched3BCompute(index)"></a-input-number>
           </template>
           <template slot="balance_input_tax" slot-scope="text, record, index">
             <a-input-number
               v-model="sched3B_data[index].balance_input_tax"
-              @change="sched3BCompute"
+              @change="sched3BCompute(index)"
             ></a-input-number>
           </template>
-          <template slot="tax_rate" slot-scope="text, record, index">
+          <!-- <template slot="tax_rate" slot-scope="text, record, index">
             <a-input-number v-model="sched3B_data[index].tax_rate"></a-input-number>
-          </template>
+          </template>-->
           <template slot="est_life" slot-scope="text, record, index">
             <a-input-number v-model="sched3B_data[index].est_life"></a-input-number>
           </template>
           <template slot="recog_life" slot-scope="text, record, index">
-            <a-input-number v-model="sched3B_data[index].recog_life"></a-input-number>
+            <a-input-number
+              v-model="sched3B_data[index].recog_life"
+              @change="sched3BCompute(index)"
+            ></a-input-number>
           </template>
           <template slot="allowable_input_tax" slot-scope="text, record, index">
-            <a-input-number v-model="sched3B_data[index].allowable_input_tax"></a-input-number>
+            <a-input-number disabled v-model="sched3B_data[index].allowable_input_tax"></a-input-number>
           </template>
           <template slot="balance" slot-scope="text, record, index">
-            <a-input-number v-model="sched3B_data[index].balance"></a-input-number>
+            <a-input-number disabled v-model="sched3B_data[index].balance"></a-input-number>
           </template>
-          <template slot="operation" slot-scope="text, record, index">
-            <a-popconfirm
-              v-if="sched3B_data.length"
-              title="Sure to delete?"
-              @confirm="() => delete_sched3B(index)"
-            >
-              <a-button type="link">Delete</a-button>
-            </a-popconfirm>
+          <template slot="action" slot-scope="text, record, index">
+            <a-tooltip title="Remove">
+              <a-button
+                type="link"
+                icon="delete"
+                style="color: red;font-size: 24px;"
+                @click="delete_sched3B(index)"
+              />
+            </a-tooltip>
           </template>
           <template slot="footer">
             <!-- <a-button @click="addSched3B">Add</a-button>
             <a-button>Save</a-button>-->
-            <p align="right">20A: {{ form.inputTaxPurchaseCapGoods }}</p>
+
+            <a-row type="flex" justify="space-between">
+              <a-col :span="24" style="text-align: right;">
+                <a-tooltip title="Total of Balance of Input Tax">
+                  3B. Total Balance:
+                  <span style="font-weight: bold;">{{formatAmount(total_balance)}}</span>
+                </a-tooltip>
+              </a-col>
+            </a-row>
           </template>
         </a-table>
       </a-col>
@@ -70,6 +87,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: ["show", "form"],
   data() {
@@ -121,8 +140,8 @@ export default {
         },
         {
           title: "",
-          dataIndex: "operation",
-          scopedSlots: { cutomRender: "operation" }
+          dataIndex: "action",
+          scopedSlots: { customRender: "action" }
         }
       ],
       data_source: []
@@ -148,6 +167,15 @@ export default {
       if (this.data_source && this.data_source.length)
         total = this.data_source.map(v => v.output_tax).reduce((t, v) => t + v);
       return total;
+    },
+    total_balance() {
+      var total_balance = 0;
+      if (this.sched3B_data && this.sched3B_data.length)
+        total_balance = this.sched3B_data
+          .map(v => v.balance || 0)
+          .reduce((p, c) => parseFloat(p) + parseFloat(c));
+      this.$emit("total", total_balance);
+      return total_balance;
     }
   },
   methods: {
@@ -210,14 +238,25 @@ export default {
         }
       }
     },
-    sched3BCompute(value) {
-      var index = this.sched3B_data.length - 1;
-      this.form.inputTaxPurchaseCapGoods = 0;
-      this.sched3B_data[index].tax = value * 0.12;
-      this.sched3B_data.forEach(data => {
-        this.form.inputTaxPurchaseCapGoods += data.vat;
-        this.form.inputTaxPurchaseCapGoods += data.tax_rate;
-      });
+    sched3BCompute(index) {
+      if (!this.sched3B_data[index].recog_life)
+        this.sched3B_data[index].recog_life = 1;
+      this.sched3B_data[index].balance_input_tax =
+        this.sched3B_data[index].vat * 0.12;
+      this.sched3B_data[index].allowable_input_tax =
+        parseFloat(this.sched3B_data[index].balance_input_tax) /
+        parseFloat(this.sched3B_data[index].recog_life);
+      this.sched3B_data[index].balance =
+        parseFloat(this.sched3B_data[index].balance_input_tax) -
+        parseFloat(this.sched3B_data[index].allowable_input_tax);
+
+      // var index = this.sched3B_data.length - 1;
+      // this.form.inputTaxPurchaseCapGoods = 0;
+      // this.sched3B_data[index].tax = value * 0.12;
+      // this.sched3B_data.forEach(data => {
+      //   this.form.inputTaxPurchaseCapGoods += data.vat;
+      //   this.form.inputTaxPurchaseCapGoods += data.tax_rate;
+      // });
     },
     showDrawer3B() {
       console.log("data source show drawer; " + this.dataSource);
@@ -232,6 +271,12 @@ export default {
         // totalAtcAmount: this.deepCopy(this.total_atc_amount),
         // totalAtcOutput: this.deepCopy(this.total_atc_output_tax)
       });
+    },
+    disabledDate(current) {
+      return (
+        moment(current).year() !== moment(this.form.return_period).year() ||
+        moment(current).month() !== moment(this.form.return_period).month()
+      );
     }
   }
 };

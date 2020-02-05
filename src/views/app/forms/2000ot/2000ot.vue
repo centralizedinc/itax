@@ -479,7 +479,11 @@
               :wrapperCol="form_layout.wrapper_col"
               label="18"
             >
-              <a-input disabled :value="getTaxDue()" placeholder="Tax Still Due/(Overpayment)"></a-input>
+              <a-input
+                disabled
+                v-model="form.prev_tax_due"
+                placeholder="Tax Still Due/(Overpayment)"
+              ></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -551,9 +555,10 @@
             >
               <a-input
                 disabled
-                :value="getTotalAmountPayable()"
+                v-model="form.total_amount_payable"
                 placeholder="Total Amount Payable/(overpayment)(Sum of Items 18 and 19D) "
               ></a-input>
+              <!-- :value="getTotalAmountPayable()" -->
             </a-form-item>
           </a-col>
         </a-row>
@@ -671,7 +676,6 @@ export default {
         total = this.form.prev_tax_due - this.form.prev_tax_paid;
       }
       this.form.tax_due = total;
-
       return total;
     },
     // item 13
