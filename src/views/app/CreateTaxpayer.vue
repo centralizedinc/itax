@@ -300,7 +300,7 @@ export default {
     save(){
       this.loading=true;
       this.form.taxpayer.user_id=this.$store.state.account_session.user.account_id
-      this.$http.post(`${process.env.VUE_APP_BASE_API_URI}taxpayer`,this.form.taxpayer)
+      this.$http.post(`/taxpayer`,this.form.taxpayer)
       .then(result=>{
         alert(JSON.stringify(result))
         this.loading=false
@@ -309,6 +309,7 @@ export default {
                 description: `TIN: ${this.form.taxpayer.tin}`,
               });
           this.$router.push('/app/taxpayer')
+          // return this.$http.post()
       })
     },
     showRegistration() {

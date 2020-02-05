@@ -18,7 +18,7 @@
                   <span style="font-size:22px;font-weight:bold">{{taxpayer_count.length}}</span>
               </a-col>
               <a-col :span="12">
-                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+                  <apexchart  type="bar" :options="chartOptions" :series="taxpayer_series" />
               </a-col>
             </a-row>  
             <a-divider></a-divider>  
@@ -35,7 +35,7 @@
                   <span style="font-size:22px;font-weight:bold">{{returns_count.length}}</span>
               </a-col>
               <a-col :span="12">
-                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+                  <apexchart  type="bar" :options="chartOptions" :series="returns_series" />
               </a-col>
             </a-row>     
             <a-divider></a-divider>  
@@ -53,7 +53,7 @@
                   <span style="font-size:20px;font-weight:bold">{{formatAmount(payments_count.total)}}</span>
               </a-col>
               <a-col :span="12">
-                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+                  <apexchart  type="bar" :options="chartOptions" :series="payments_series" />
               </a-col>
             </a-row>  
             <a-divider></a-divider> 
@@ -265,7 +265,7 @@ export default {
             chartOptions: {
                 chart: { type: "line", sparkline: { enabled: true } },
                 stroke: { width: 2, curve: "smooth" },
-                tooltip: { x: { show: false } },
+                // tooltip: { x: { show: false } },
                 fill: {
                     type: "gradient",
                     gradient: {
@@ -282,13 +282,13 @@ export default {
             series: [{
                 name: "Collections",
                 data: [
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100)
+                    // 0,
+                    // 0,
+                    // 0,
+                    // 0,
+                    // this.,
+                    // 0,
+                    // 0
                     ]
                 }]
         }
@@ -316,7 +316,52 @@ export default {
             window.open(url)
         }
     },
+    computed:{
+        taxpayer_series(){
+            return [{
+                name: "Taxpayer count",
+                data: [
+                    {x:'Sunday', y:0},
+                    {x:'Monday', y:0},
+                    {x:'Tuesday', y:0},
+                    {x:'Wednesday', y:0},
+                    {x:'Thursday', y:this.taxpayer_count.length},
+                    {x:'Friday', y:0},
+                    {x:'Saturday', y:0}
+                    ]
+                }]
+        },
+        returns_series(){
+            return [{
+                name: "Taxpayer count",
+                data: [
+                    {x:'Sunday', y:0},
+                    {x:'Monday', y:0},
+                    {x:'Tuesday', y:0},
+                    {x:'Wednesday', y:0},
+                    {x:'Thursday', y:this.returns_count.length},
+                    {x:'Friday', y:0},
+                    {x:'Saturday', y:0}
+                    ]
+                }]
+        },
+        payments_series(){
+            return [{
+                name: "Total payment",
+                data: [
+                    {x:'Sunday', y:0},
+                    {x:'Monday', y:0},
+                    {x:'Tuesday', y:0},
+                    {x:'Wednesday', y:0},
+                    {x:'Thursday', y:this.payments_count.total},
+                    {x:'Friday', y:0},
+                    {x:'Saturday', y:0}
+                    ]
+                }]
+        }
+    },
     asyncComputed:{
+        
         taxpayer_count(){
             return new Promise((resolve, reject)=>{
                 this.$http.get(`${process.env.VUE_APP_BASE_API_URI}taxpayer/users/${this.$store.state.account_session.user.account_id}`)
