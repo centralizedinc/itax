@@ -70,6 +70,7 @@ const actions = {
     LOGOUT(context) {
         console.log("Logging out...");
         context.commit("RESET");
+        window.close()
     },
     SIGNUP(context, account) {
         return new Promise((resolve, reject) => {

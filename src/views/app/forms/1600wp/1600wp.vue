@@ -145,7 +145,7 @@
         <a-input-number style="width:100%" v-model="form.compromise"></a-input-number>
       </a-form-item>
       <a-form-item label="15D. Tax Required to be withheld ">
-        <a-input-number style="width:100%" :value="getPenalties()"></a-input-number>
+        <a-input-number style="width:100%" disabled :value="getPenalties()"></a-input-number>
       </a-form-item>
       <a-form-item label="16. Tax Required to be withheld ">
         <a-input-number style="width:100%" disabled :value="totalPayable()"></a-input-number>
