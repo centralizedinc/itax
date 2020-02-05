@@ -60,7 +60,11 @@
         :validate-status="error_item('taxpayer.line_of_business')"
         :help="error_desc('taxpayer.line_of_business')"
       >
-        <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business"></a-input>
+        <a-input
+          class="text-uppercase"
+          placeholder="Line of Business"
+          v-model="form.taxpayer.line_of_business"
+        ></a-input>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -69,7 +73,11 @@
         :validate-status="error_item('taxpayer.registered_name')"
         :help="error_desc('taxpayer.registered_name')"
       >
-        <a-input placeholder="Taxpayer/Registered Name" v-model="form.taxpayer.registered_name"></a-input>
+        <a-input
+          class="text-uppercase"
+          placeholder="Taxpayer/Registered Name"
+          v-model="form.taxpayer.registered_name"
+        ></a-input>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -91,7 +99,11 @@
         :validate-status="error_item('taxpayer.address')"
         :help="error_desc('taxpayer.address')"
       >
-        <a-textarea placeholder="Registered Address" v-model="form.taxpayer.address"></a-textarea>
+        <a-textarea
+          class="text-uppercase"
+          placeholder="Registered Address"
+          v-model="form.taxpayer.address"
+        ></a-textarea>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -117,7 +129,7 @@
       </a-form-item>
 
       <a-form-item label="If yes, specify">
-        <a-textarea v-model="form.avail_tax_relief"></a-textarea>
+        <a-textarea class="text-uppercase" v-model="form.avail_tax_relief"></a-textarea>
       </a-form-item>
     </a-form>
 
@@ -326,10 +338,10 @@
         <div style="color: black">
           18C/D. Purchase of Capital Goods(Exceeding ₱1Million)(
           <!-- <span class="text-link" @click="show_sched3A=true">Schedule 3A</span> -->
-          <span class="text-link" @click="openSchedule('show_sched3A', 1)">Schedule 3A</span>)
-          <schedule-threea
-            v-if="show_sched3A"
-            :show="show_sched3A"
+          <span class="text-link" @click="openSchedule('show_sched3', 1)">Schedule 3A</span>)
+          <schedule-three
+            v-if="show_sched3"
+            :show="show_sched3"
             :form="form"
             @close="updateSchedAndClose"
           />
@@ -482,10 +494,10 @@
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
         <div style="color: black">
           20A (
-          <span class="text-link" @click="openSchedule('show_sched3B', 1)">Schedule 3B</span>)
-          <schedule-threeb
-            v-if="show_sched3B"
-            :show="show_sched3B"
+          <span class="text-link" @click="openSchedule('show_sched3', 1)">Schedule 3B</span>)
+          <schedule-three
+            v-if="show_sched3"
+            :show="show_sched3"
             :form="form"
             @close="updateSchedAndClose"
           />
@@ -730,8 +742,9 @@
 <script>
 import ScheduleOne from "./Schedule1";
 import ScheduleTwo from "./Schedule2";
-import ScheduleThreea from "./Schedule3A";
-import ScheduleThreeb from "./Schedule3B";
+// import ScheduleThreea from "./Schedule3A";
+// import ScheduleThreeb from "./Schedule3B";
+import ScheduleThree from "./Schedule3";
 import ScheduleFour from "./Schedule4";
 import ScheduleFive from "./Schedule5";
 import ScheduleSix from "./Schedule6";
@@ -743,8 +756,9 @@ export default {
   components: {
     ScheduleOne,
     ScheduleTwo,
-    ScheduleThreea,
-    ScheduleThreeb,
+    // ScheduleThreea,
+    // ScheduleThreeb,
+    ScheduleThree,
     ScheduleFour,
     ScheduleFive,
     ScheduleSix,
@@ -787,8 +801,8 @@ export default {
       this.form.pdf_page = 0;
       this.show_sched1 = false;
       this.show_sched2 = false;
-      this.show_sched3A = false;
-      this.show_sched3B = false;
+      this.show_sched3 = false;
+      // this.show_sched3B = false;
       this.show_sched4 = false;
       this.show_sched5 = false;
       this.show_sched6 = false;
@@ -941,8 +955,8 @@ export default {
       this.form.pdf_page = 0;
       this.show_sched1 = false;
       this.show_sched2 = false;
-      this.show_sched3A = false;
-      this.show_sched3B = false;
+      this.show_sched3 = false;
+      // this.show_sched3B = false;
       this.show_sched4 = false;
       this.show_sched5 = false;
       this.show_sched6 = false;
@@ -1046,8 +1060,8 @@ export default {
     return {
       show_sched1: false,
       show_sched2: false,
-      show_sched3A: false,
-      show_sched3B: false,
+      show_sched3: false,
+      // show_sched3B: false,
       show_sched4: false,
       show_sched5: false,
       show_sched6: false,
@@ -1361,5 +1375,9 @@ export default {
 
 .text-link:hover {
   text-decoration: underline;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 </style>
