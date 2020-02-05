@@ -264,7 +264,11 @@
           <a-card v-if="step===1">
             <a-form>
               <a-form-item label="Taxpayer Type">
-                <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.type">
+                <a-radio-group
+                  buttonStyle="solid"
+                  style="width:100%"
+                  v-model="form.taxpayer.taxpayer_type"
+                >
                   <a-radio-button value="C">Corporate</a-radio-button>
                   <a-radio-button value="I">Individual</a-radio-button>
                 </a-radio-group>
@@ -304,11 +308,11 @@
                 <a-input placeholder="Line of Business" v-model="form.taxpayer.line_of_business" />
               </a-form-item>
 
-              <span v-if="form.taxpayer.type == 'C'">
+              <span v-if="form.taxpayer.taxpayer_type == 'C'">
                 <a-form-item
                   label="Registered Business Name"
-                  :validate-status="validation_errors.taxpayer_name ? 'error':''"
-                  :help="validation_errors.taxpayer_name"
+                  :validate-status="validation_errors.taxpayer_registered_name ? 'error':''"
+                  :help="validation_errors.taxpayer_registered_name"
                   has-feedback
                   class="register-form-item"
                 >
@@ -321,11 +325,15 @@
                 <a-form-item
                   label="Date of Incorporation"
                   class="register-form-item"
-                  :validate-status="validation_errors.date_incorporated ? 'error':''"
-                  :help="validation_errors.date_incorporated"
+                  :validate-status="validation_errors.date_incorporation ? 'error':''"
+                  :help="validation_errors.date_incorporation"
                   has-feedback
                 >
-                  <a-date-picker style="width:100%" placeholder="Date Incorporation"></a-date-picker>
+                  <a-date-picker
+                    style="width:100%"
+                    v-model="form.taxpayer.date_incorporation"
+                    placeholder="Date Incorporation"
+                  ></a-date-picker>
                 </a-form-item>
                 <a-form-item
                   label="Accounting Type"
@@ -337,10 +345,10 @@
                   <a-radio-group
                     buttonStyle="solid"
                     v-model="form.taxpayer.accounting_type"
-                    @change="() => { form.taxpayer.accounting_type === 'C'?form.taxpayer.start_month=0:''}"
+                    @change="() => { form.taxpayer.accounting_type === 'c'?form.taxpayer.start_month=0:''}"
                   >
-                    <a-radio-button value="C">Calendar</a-radio-button>
-                    <a-radio-button value="F">Fiscal</a-radio-button>
+                    <a-radio-button value="c">Calendar</a-radio-button>
+                    <a-radio-button value="f">Fiscal</a-radio-button>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item
@@ -353,7 +361,7 @@
                   <a-select
                     style="width: 100%"
                     v-model="form.taxpayer.start_month"
-                    :disabled="form.taxpayer.accounting_type === 'C'"
+                    :disabled="form.taxpayer.accounting_type === 'c'"
                   >
                     <!-- @change="selectStartMonth" -->
                     <a-select-option
@@ -374,21 +382,21 @@
                 >
                   <a-input
                     :disabled="loading"
-                    v-model="form.taxpayer.first_name"
+                    v-model="form.taxpayer.individual_details.firstName"
                     placeholder="First Name"
-                    @change="() => { form.taxpayer.registered_name = `${form.taxpayer.first_name} ${form.taxpayer.middle_name} ${form.taxpayer.last_name}` }"
+                    @change="updateRegName()"
                   ></a-input>
                   <a-input
                     :disabled="loading"
-                    v-model="form.taxpayer.middle_name"
+                    v-model="form.taxpayer.individual_details.middleName"
                     placeholder="Middle Name"
-                    @change="() => { form.taxpayer.registered_name = `${form.taxpayer.first_name} ${form.taxpayer.middle_name} ${form.taxpayer.last_name}` }"
+                    @change="updateRegName()"
                   ></a-input>
                   <a-input
                     :disabled="loading"
-                    v-model="form.taxpayer.last_name"
+                    v-model="form.taxpayer.individual_details.lastName"
                     placeholder="Last Name"
-                    @change="() => { form.taxpayer.registered_name = `${form.taxpayer.first_name} ${form.taxpayer.middle_name} ${form.taxpayer.last_name}` }"
+                    @change="updateRegName()"
                   ></a-input>
                 </a-form-item>
                 <a-form-item
@@ -416,7 +424,7 @@
                   <a-date-picker
                     style="width:100%"
                     placeholder="Date of Birth"
-                    v-model="form.taxpayer.birth_date"
+                    v-model="form.taxpayer.individual_details.birthDate"
                   />
                 </a-form-item>
                 <a-form-item
@@ -426,7 +434,10 @@
                   :help="validation_errors.gender"
                   has-feedback
                 >
-                  <a-radio-group buttonStyle="solid" v-model="form.taxpayer.gender">
+                  <a-radio-group
+                    buttonStyle="solid"
+                    v-model="form.taxpayer.individual_details.gender"
+                  >
                     <a-radio-button value="M">Male</a-radio-button>
                     <a-radio-button value="F">Female</a-radio-button>
                   </a-radio-group>
@@ -504,8 +515,9 @@ export default {
       form: {
         name: {},
         taxpayer: {
-          type: "C",
-          accounting_type: "C",
+          individual_details: {},
+          taxpayer_type: "C",
+          accounting_type: "c",
           start_month: 0
         }
       },
@@ -596,8 +608,53 @@ export default {
           "Password and Confirm Password does not match";
       }
 
-      if (!this.form.taxpayer.registered_name) {
-        this.validation_errors.taxpayer_name = "Please Input Registered Name";
+      if (!this.form.taxpayer.tin) {
+        this.validation_errors.tin = "Tax Identification Number is required.";
+      }
+      if (!this.form.taxpayer.rdo_code) {
+        this.validation_errors.rdo_code = "RDO is required.";
+      }
+      if (!this.form.taxpayer.line_of_business) {
+        this.validation_errors.line_of_business =
+          "Line of Business is required.";
+      }
+
+      if (this.form.taxpayer.taxpayer_type === "C") {
+        if (!this.form.taxpayer.registered_name) {
+          this.validation_errors.taxpayer_registered_name =
+            "Please Input Registered Name";
+        }
+        if (!this.form.taxpayer.date_incorporation) {
+          this.validation_errors.date_incorporation =
+            "Date of Incorporation is required.";
+        }
+        if (!this.form.taxpayer.accounting_type) {
+          this.validation_errors.accounting_type =
+            "Accounting Type is required.";
+        }
+        if (!this.form.taxpayer.start_month) {
+          this.validation_errors.start_month = "Start Month is required.";
+        }
+      } else {
+        if (
+          !this.form.taxpayer.individual_details ||
+          !this.form.taxpayer.individual_details.firstName ||
+          !this.form.taxpayer.individual_details.lastName
+        ) {
+          this.validation_errors.taxpayer_name =
+            "Please Input First and Last Name";
+        }
+        if (!this.form.taxpayer.filer_type) {
+          this.validation_errors.filer_type = "Filer Type is required.";
+        }
+        if (!this.form.taxpayer.birth_date) {
+          this.validation_errors.individual_details.birthDate =
+            "Date of Birth is required.";
+        }
+        if (!this.form.taxpayer.gender) {
+          this.validation_errors.individual_details.gender =
+            "Gender is required.";
+        }
       }
     },
     register(e) {
@@ -641,6 +698,9 @@ export default {
     },
     verifyCaptcha(response) {
       alert(JSON.stringify(response));
+    },
+    updateRegName() {
+      this.form.taxpayer.registered_name = `${this.form.taxpayer.individual_details.firstName} ${this.form.taxpayer.individual_details.middleName} ${this.form.taxpayer.individual_details.lastName}`;
     }
   },
   created() {

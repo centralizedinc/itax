@@ -104,7 +104,8 @@ passport.use('signup', new LocalStrategy({
     const {
         name,
         tin,
-        confirm
+        confirm,
+        taxpayer
     } = req.body;
     if (!email) return done({
         message: constant_helper.invalid_email
