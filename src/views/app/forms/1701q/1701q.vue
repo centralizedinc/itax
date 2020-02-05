@@ -350,6 +350,7 @@
               </a-tooltip>
             </a-radio-group>
           </a-form-item>
+          <br />
         </a-col>
       </a-row>
     </a-form>
@@ -606,6 +607,7 @@
               </a-tooltip>
             </a-radio-group>
           </a-form-item>
+          <br />
         </a-col>
       </a-row>
     </a-form>
@@ -847,9 +849,11 @@ export default {
         this.form.pdf_page = 0;
       } else if (this.step === 1) {
         this.form.pdf_page = 0;
+      } else if (this.step === 2) {
+        this.form.pdf_page = 0;
       } else {
         this.form.pdf_page = 1;
-      } 
+      }
     },
     loading(val) {
       this.$emit("loading", val);
@@ -882,22 +886,22 @@ export default {
     openSched1() {
       this.sched = 1;
       this.show = 1;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     openSched2() {
       this.sched = 2;
       this.show = 2;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     openSched3() {
       this.sched = 3;
       this.show = 3;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     openSched4() {
       this.sched = 4;
       this.show = 4;
-      this.form.pdf_page = 2;
+      this.form.pdf_page = 1;
     },
     closeSched() {
       this.form.pdf_page = 1;
