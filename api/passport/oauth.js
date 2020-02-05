@@ -7,6 +7,7 @@ const ExtractJWT = require('passport-jwt').ExtractJwt;
 // Dao
 const AccountDao = require('../dao/AccountDao');
 const UserDao = require('../dao/UserDao');
+const TaxpayerDao = require('../dao/TaxpayerDao');
 
 // Utils
 const constant_helper = require('../utils/constant_helper');
@@ -45,49 +46,55 @@ passport.use('login', new LocalStrategy({
     console.time("login");
     AccountDao.findByEmail(email)
         .then((account_result) => {
-            if (!account_result) return done({
+            if (!account_result) done({
                 message: constant_helper.invalid_auth
             }, false);
-            else if (account_result.status === 0) return done({
+            else if (account_result.status === 0) done({
                 message: constant_helper.confirmation_required
             }, false);
             // Validate Password
             else {
                 result.account = account_result;
-                return account_result.isValidPassword(password);
+                account_result.isValidPassword(password)
+                    .then((isValid) => {
+                        if (!isValid) done({
+                            message: constant_helper.invalid_auth
+                        }, false);
+                        else {
+                            const token = jwt.sign({
+                                account_id: result.account.account_id,
+                                email: email,
+                                date: new Date()
+                            }, ApplicationSettings.getValue("JWT_SECRET_TOKEN"));
+                            result.token = token;
+                            AccountDao.modifyOne({
+                                account_id: result.account.account_id
+                            }, {
+                                session_token: token
+                            })
+                                .then((modified_account) => {
+                                    if (modified_account) return UserDao.findOne({
+                                        account_id: result.account.account_id
+                                    });
+                                })
+                                .then((user) => {
+                                    if (user) {
+                                        result.user = user;
+                                        result.account.password = undefined;
+                                        result.is_authenticated = true;
+                                    }
+                                    console.timeEnd("login");
+                                    return done(null, result);
+                                })
+                                .catch((error) => {
+                                    return done(error)
+                                })
+                        }
+                    })
+                    .catch((error) => {
+                        return done(error)
+                    })
             }
-        })
-        .then((isValid) => {
-            if (!isValid) return done({
-                message: constant_helper.invalid_auth
-            }, false);
-            else {
-                const token = jwt.sign({
-                    account_id: result.account.account_id,
-                    email: email,
-                    date: new Date()
-                }, ApplicationSettings.getValue("JWT_SECRET_TOKEN"));
-                result.token = token;
-                return AccountDao.modifyOne({
-                    account_id: result.account.account_id
-                }, {
-                    session_token: token
-                });
-            }
-        })
-        .then((modified_account) => {
-            if (modified_account) return UserDao.findOne({
-                account_id: result.account.account_id
-            });
-        })
-        .then((user) => {
-            if (user) {
-                result.user = user;
-                result.account.password = undefined;
-                result.is_authenticated = true;
-            }
-            console.timeEnd("login");
-            return done(null, result);
         })
         .catch((error) => {
             return done(error)
@@ -103,8 +110,8 @@ passport.use('signup', new LocalStrategy({
 }, (req, email, password, done) => {
     const {
         name,
-        tin,
-        confirm
+        confirm,
+        taxpayer
     } = req.body;
     if (!email) return done({
         message: constant_helper.invalid_email
@@ -121,15 +128,15 @@ passport.use('signup', new LocalStrategy({
             });
             else {
                 AccountDao.create({
-                        email,
-                        password
-                    })
+                    email,
+                    password
+                })
                     .then((account) => {
                         result.account = account;
                         return UserDao.create({
                             account_id: account.account_id,
                             email,
-                            tin,
+                            tin: taxpayer.tin,
                             name: {
                                 first: name.first,
                                 last: name.last
@@ -138,7 +145,13 @@ passport.use('signup', new LocalStrategy({
                     })
                     .then((user) => {
                         result.user = user;
-                        return SendEmail.registration(email, user.name.first, user.account_id);
+                        taxpayer.user_id = user.account_id.toString();
+                        taxpayer.created_by = user.account_id.toString();
+                        return TaxpayerDao.create(taxpayer)
+                    })
+                    .then((taxpayer) => {
+                        result.taxpayer = taxpayer;
+                        return SendEmail.registration(email, result.user.name.first, result.user.account_id);
                     })
                     .then((send_email) => {
                         const {
