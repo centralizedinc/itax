@@ -4,11 +4,20 @@
       <a-divider>
         <b>Withholding Tax Declaration (1600WP)</b>
       </a-divider>
-      <a-form-item label="1. For the month of (MM/DD/YYYY)">
-        <a-date-picker v-model="form.start_month" />
-        <a-date-picker v-model="form.end_month" />
-      </a-form-item>
-      <a-form-item label="2. Amended Return">
+      <a-form-item label="1. For the month of "
+      :validate-status="error_item('fromToDated')"
+        :help="error_desc('fromToDate')"
+      >
+        <!-- (MM/DD/YYYY) -->
+        <p>From: <a-date-picker v-model="form.taxpayer.start_month" /></p>
+        <a-form-item>
+          <p>To: <a-date-picker v-model="form.taxpayer.end_month" /></p>
+        </a-form-item>
+       </a-form-item>
+      <a-form-item label="2. Amended Return"
+      :validate-status="error_item('amended_yn')"
+        :help="error_desc('amended_yn')"
+      >
         <a-radio-group v-model="form.amended_yn">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -17,7 +26,11 @@
       <a-form-item label="3. No. of Sheets Attached">
         <a-input-number v-model="form.num_of_sheet"></a-input-number>
       </a-form-item>
-      <a-form-item label="4. Any Taxes Witheld?">
+      <a-form-item label="4. Any Taxes Witheld?"
+      
+      :validate-status="error_item('form.any_tax_withheld')"
+        :help="error_desc('form.any_tax_withheld')"
+      >
         <a-radio-group v-model="form.any_tax_withheld">
           <a-radio :value="true">Yes</a-radio>
           <a-radio :value="false">No</a-radio>
@@ -36,20 +49,30 @@
       <a-form-item label="6. RDO Code">
         <a-input v-model="form.taxpayer.rdo_code"></a-input>
       </a-form-item>
-      <a-form-item label="7. Category of Withholding Agent">
-        <a-radio-group v-model="form.category_of_agent">
-          <a-radio :value="true">Private</a-radio>
-          <a-radio :value="false">Government</a-radio>
+      <a-form-item label="7. Category of Withholding Agent"
+      
+      :validate-status="error_item('category_of_agent')"
+        :help="error_desc('category_of_agent')"
+      >
+        <a-radio-group v-model="form.taxpayer.category_of_agent">
+          <a-radio :value="`private`">Private</a-radio>
+          <a-radio :value="`government`">Government</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="8. Withholding Agent's Name/Registered Name">
         <a-input v-model="form.taxpayer.registered_name"></a-input>
       </a-form-item>
-      <a-form-item label="9. Registered Address">
+      <a-form-item label="9. Registered Address"
+      :validate-status="error_item('address')"
+        :help="error_desc('address')"
+      >
         <a-textarea v-model="form.address"></a-textarea>
       </a-form-item>
-      <a-form-item label="10. Zip Code">
-        <a-input-number v-model="form.zipCode"></a-input-number>
+      <a-form-item label="10. Zip Code"
+      :validate-status="error_item('zipCode')"
+        :help="error_desc('zipCode')"
+      >
+        <a-input-number v-model="form.zipCode" style="width:100%"></a-input-number>
       </a-form-item>
       <a-form-item
         label="11. Are you availing of tax relief under Special Law or International Tax Treaty?"
@@ -87,30 +110,30 @@
       </a-table>-->
       <!-- ----------------------------------- -->
       <a-form-item label="12. Tax Required to be Withheld and Remitted">
-        <a-input-number v-model="form.tax_req_withld_remtd"></a-input-number>
+        <a-input-number style="width:100%" disabled v-model="form.tax_req_withld_remtd"></a-input-number>
       </a-form-item>
       <a-form-item
         label="13. Less: Tax Remitted in Return Previously filed, if this is an amended return "
       >
-        <a-input-number v-model="form.less_tax_remtd_retrn"></a-input-number>
+        <a-input-number style="width:100%" :disabled="!amended" v-model="form.less_tax_remtd_retrn"></a-input-number>
       </a-form-item>
       <a-form-item label="14. Tax Still Due(Overremittance) ">
-        <a-input-number :value="overRemittance()"></a-input-number>
+        <a-input-number style="width:100%" disabled :value="overRemittance()"></a-input-number>
       </a-form-item>
       <a-form-item label="15A. Surcharge ">
-        <a-input-number v-model="form.surcharge"></a-input-number>
+        <a-input-number style="width:100%" v-model="form.surcharge"></a-input-number>
       </a-form-item>
       <a-form-item label="15B. Interest ">
-        <a-input-number v-model="form.interest"></a-input-number>
+        <a-input-number style="width:100%" v-model="form.interest"></a-input-number>
       </a-form-item>
       <a-form-item label="15C. Compromise ">
-        <a-input-number v-model="form.compromise"></a-input-number>
+        <a-input-number style="width:100%" v-model="form.compromise"></a-input-number>
       </a-form-item>
       <a-form-item label="15D. Tax Required to be withheld ">
-        <a-input-number :value="getPenalties()"></a-input-number>
+        <a-input-number style="width:100%" :value="getPenalties()"></a-input-number>
       </a-form-item>
       <a-form-item label="16. Tax Required to be withheld ">
-        <a-input-number :value="totalPayable()"></a-input-number>
+        <a-input-number style="width:100%" disabled :value="totalPayable()"></a-input-number>
       </a-form-item>
       <a-form-item label="16. if overremittance">
         <a-radio-group v-model="form.taxpayer.overremittance">
@@ -122,11 +145,11 @@
         <a-date-picker v-model="form.frommPeriod" />
         <a-date-picker v-model="form.tooPeriod" />
       </a-form-item>-->
-      <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button>
+      <!-- <a-button v-show="sub==true" type="primary" block @click="submit">Submit</a-button> -->
     </a-form>
     <atc
       v-if="sched == 1"
-      :disabled="form.taxes_withheld == false"
+      :disabled="form.any_tax_withheld == false"
       :form="form"
       :show="show"
       @close="updateAtcAndClose"
@@ -193,14 +216,6 @@ export default {
         {
           atc: "WB 191",
           nature_payment:
-            "Tax on winnings from double, forecast/quinella and trifecta bets on horse races paid by Government Withholding Agent",
-          tax_base: 0,
-          rate: 0.04,
-          tax_required: 0.0
-        },
-        {
-          atc: "WB 192",
-          nature_payment:
             "Tax on winnings or prizes paid to winners of winning horse race tickets other than double, forecast/quinella and trifecta bets; & owners of winning race horses paid by Government Withholding Agent",
           tax_base: 0,
           rate: 0.1,
@@ -222,7 +237,8 @@ export default {
           rate: 0.1,
           tax_required: 0.0
         }
-      ]
+      ],
+      errors: []
     };
   },
   watch: {
@@ -230,6 +246,9 @@ export default {
       console.log(
         "created taxpayer data: " + JSON.stringify(this.form.taxpayer)
       );
+      if(this.form.amended_yn == false){
+
+      }
     }
     // step() {
     //   if (this.step < 0) {
@@ -238,6 +257,15 @@ export default {
     //     this.sub = true;
     //   }
     // }
+  },
+  computed:{
+    amended(){
+      if(this.form.amended_yn == true){
+        return true
+      }
+      return false
+      
+    }
   },
   methods: {
     updateAtcAndClose(data) {
@@ -298,14 +326,14 @@ export default {
       this.sched = 1;
       this.show = 1;
       if (
-        this.form.taxes_withheld == true &&
+        this.form.any_tax_withheld == true &&
         this.form.taxpayer.category_withholding_agent !== undefined
       ) {
         console.log("if");
         this.sched = 1;
-      } else if (!this.form.taxes_withheld) {
+      } else if (!this.form.any_tax_withheld) {
         console.log("else if 1");
-        if (this.form.taxes_withheld == false) {
+        if (this.form.any_tax_withheld == false) {
           this.$notification.open({
             message:
               "It is not necessary to select an ATC if you dont have any taxes withheld (Item no.4 is set to NO)"
@@ -329,16 +357,16 @@ export default {
       this.$emit("updateForm", form);
     },
     validatePage1() {
-      if (!this.form.fromPeriod || !this.form.toPeriod) {
+      if (!this.form.taxpayer.start_month|| !this.form.taxpayer.end_month) {
         this.errors.push({
           page: 0,
-          field: "fromToPeriod",
+          field: "fromToDate",
           error: "Date is mandatory field."
         });
-      } else if (!this.form.taxes_withheld) {
+      } else if (!this.form.any_tax_withheld) {
         this.errors.push({
           page: 0,
-          field: "taxes_withheld",
+          field: "any_tax_withheld",
           error: "Taxes withhled is mandatory field."
         });
       } else if (!this.form.amended_yn) {
@@ -357,14 +385,63 @@ export default {
     validatePage2() {
       this.changeStep(this.step + 1);
     },
-    validate() {
-      this.step == 0
-        ? this.validatePage1()
-        : this.step == 1
-        ? this.validatePage2()
-        : this.changeStep(this.step + 1);
+    validate(is_validate_all) {
+      // this.step == 0
+        // ? this.validatePage1()
+        // : this.step == 1
+        // ? this.validatePage2()
+        // : this.changeStep(this.step + 1);
+        // ------------------------
       // if(this.step === 0) this.validateGeneral();
       // else if(this.step === 1) this.validatePartI();
+      // -----------------------------
+      var errors = [];
+      if (is_validate_all || this.step === 0) {
+        if (!this.form.taxpayer.start_month || !this.form.taxpayer.end_month) {
+        errors.push({
+          page: 0,
+          field: "fromToDate",
+          error: "Date is mandatory field."
+        });
+      } else if(this.form.amended_yn == null || this.form.amended_yn == undefined || this.amended_yn == ""){
+        errors.push({
+          page: 0,
+          field: "amended_yn",
+          error: "Amended Return is mandatory field."
+        })
+      } else if (!this.form.any_tax_withheld) {
+        errors.push({
+          page: 0,
+          field: "form.any_tax_withheld",
+          error: "Taxes withhled is mandatory field."
+        });
+      }
+      }
+      if(is_validate_all || this.step === 1){
+        if(!this.form.taxpayer.category_of_agent){
+          errors.push({
+            page: 1,
+            field: "category_of_agent",
+            error: "Category of Withholding Agent is mandotory field."
+          })
+        } else if(!this.form.address){
+          errors.push({
+            page: 1,
+            field: "address",
+            error: "Registered Address is mandatory field."
+          })
+        } else if(!this.form.zipCode){
+          errors.push({
+            page: 1,
+            field: "zipCode",
+            error: "Zipcode is mandatory field."
+          })
+        }
+      }
+      this.$emit("error", errors);
+      if (!errors.length) {
+        this.changeStep(this.step + 1);
+      }
     },
     // validateGeneral() {
     //   this.loading = true;
@@ -397,20 +474,31 @@ export default {
     // },
     submit() {
       this.loading = true;
+
       this.$store
         .dispatch("VALIDATE_AND_SAVE", {
           form_type: "1600WP",
           form_details: this.form
         })
         .then(result => {
-          console.log("VALIDATE_AND_SAVE result:", result.data);
-          this.loading = false;
-          this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
-          this.$store.commit("NOTIFY_MESSAGE", {
-            message: "Successfully submitted Form 2550m."
-          });
-          // window.opener.location.reload();
-          window.close();
+          if(result.data.errors && result.data.errors.length > 0){
+            this.errors = result.data.errors;
+            console.log("this is errors list: " + JSON.stringify(this.errors))
+            if(this.errors && this.errors[0] && this.errors[0].page !== null){
+              this.$emit("changeStep", this.errors[0].page);
+            this.$notification.error({ message: "Validation Error" });
+            }
+          } else {
+            console.log("VALIDATE_AND_SAVE result:", result.data);
+            this.loading = false;
+            this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
+            this.$store.commit("NOTIFY_MESSAGE", {
+              success: true,
+              message: "Successfully submitted Form 1600WP."
+            });
+            // window.opener.location.reload();
+            window.close();
+          }          
         })
         .catch(err => {
           console.log("VALIDATE_AND_SAVE", err);
@@ -421,7 +509,17 @@ export default {
     changeStep(step, form) {
       this.$emit("changeStep", step);
       this.$emit("updateForm", form);
-    }
+    },
+    error_item(item) {
+     console.log("##item :", JSON.stringify(item));
+      return this.errors.find(x => x.field === item) ? "error" : "";
+  },
+  error_desc(item) {
+    console.log("##desc :", JSON.stringify(item));
+      return this.errors.find(x => x.field === item)
+        ? this.errors.find(x => x.field === item).error
+        : "";
+  }
     // submit() {
     //   this.form.validateFieldsAndScroll((err, values) => {
     //     if (!err) console.log("values :", values);
@@ -444,15 +542,7 @@ export default {
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
-  error_item(item) {
-    console.log("item error item: " + JSON.stringify(item));
-    return this.errors.find(x => x.field === item) ? "error" : "";
-  },
-  error_desc(item) {
-    return this.errors.find(x => x.field === item)
-      ? this.errors.find(x => x.field === item).error
-      : "";
-  }
+  
 };
 </script>
 

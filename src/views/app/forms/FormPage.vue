@@ -234,8 +234,6 @@ export default {
           address_details: {},
           individual_details: {},
           accounting_type: "",
-          start_month: "",
-          end_month: ""
         },
         taxpayer_tax_payable: {},
         spouse_tax_payable: {},
@@ -407,10 +405,10 @@ export default {
             title: "Part II",
             description: "Computation of Tax"
           },
-          {
-            title: "Part III",
-            description: "Details of Payment"
-          }
+          // {
+          //   title: "Part III",
+          //   description: "Details of Payment"
+          // }
         ],
         "1601c": [
           {
@@ -650,6 +648,7 @@ export default {
     },
     submit() {
       this.loading = true;
+      console.log("submiting")
       // this.errors = [];
       //validate
       this.form.tax_due = this.form.spouse_tax_due + this.form.taxpayer_tax_due;
@@ -682,6 +681,7 @@ export default {
               }
               this.$notification.error({ message: "Validation Error" });
             } else {
+               console.log("VALIDATE_AND_SAVE result:", this.form);
               this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
               this.$store.commit("NOTIFY_MESSAGE", {
                 success: true,

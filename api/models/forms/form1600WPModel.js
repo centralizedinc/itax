@@ -6,6 +6,12 @@ const autoIncrement = require('mongoose-auto-increment-reworked').MongooseAutoIn
 var common_model = require('./commonModels');
 
 const model_schema = {
+    start_month: {
+        type: Date
+    },
+    end_month: {
+        type: Date
+    },
     any_tax_withheld: {
         type: Boolean
     },

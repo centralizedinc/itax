@@ -84,6 +84,7 @@ export default {
           return dataUrl;
         });
       });
+      // ----------------------------------
       // var printer = printers[this.type];
       // var document = printer.fillup(this.data);
       // var self = this;
@@ -173,18 +174,31 @@ export default {
 
       console.log("this.form##### : ", form);
       var printer = printers[this.form_type];
-      printer.fillup(form).then(document => {
-        var self = this;
-        const pdfDocGenerator = pdfMake.createPdf(document);
-        pdfDocGenerator.getBuffer(function(buffer) {
-          var file = new Blob([buffer], {
-            type: "application/pdf"
-          });
-          var dataUrl = URL.createObjectURL(file);
-          console.log("dataurl: " + dataUrl);
-          self.prev = dataUrl;
-          self.loading = false;
+      // printer.fillup(form).then(document => {
+      //   var self = this;
+      //   const pdfDocGenerator = pdfMake.createPdf(document);
+      //   pdfDocGenerator.getBuffer(function(buffer) {
+      //     var file = new Blob([buffer], {
+      //       type: "application/pdf"
+      //     });
+      //     var dataUrl = URL.createObjectURL(file);
+      //     console.log("dataurl: " + dataUrl);
+      //     self.prev = dataUrl;
+      //     self.loading = false;
+      //   });
+      // });
+      // -------------------------
+      var document = printer.fillup(form);
+      var self = this;
+      const pdfDocGenerator = pdfMake.createPdf(document);
+      pdfDocGenerator.getBuffer(function(buffer) {
+        var file = new Blob([buffer], {
+          type: "application/pdf"
         });
+        var dataUrl = URL.createObjectURL(file);
+        console.log("dataurl: " + dataUrl);
+        self.prev = dataUrl;
+        self.loading = false;
       });
     },
     download() {
