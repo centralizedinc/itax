@@ -409,7 +409,7 @@ export default {
           field: "amended_yn",
           error: "Amended Return is mandatory field."
         })
-      } else if (!this.form.any_tax_withheld) {
+      } else if (this.form.any_tax_withheld == null || this.form.any_tax_withheld == undefined || this.form.any_tax_withheld == "") {
         errors.push({
           page: 0,
           field: "form.any_tax_withheld",
