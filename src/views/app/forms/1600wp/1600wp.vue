@@ -352,7 +352,7 @@ export default {
       ) {
         console.log("if");
         this.sched = 1;
-      } else if (!this.form.any_tax_withheld) {
+      }  if (!this.form.any_tax_withheld) {
         console.log("else if 1");
         if (this.form.any_tax_withheld == false) {
           this.$notification.open({
@@ -364,7 +364,7 @@ export default {
             message: "Please select an option for Item no. 4"
           });
         }
-      } else if (!this.form.taxpayer.category_withholding_agent) {
+      } if (!this.form.taxpayer.category_withholding_agent) {
         console.log("else if 2");
         this.$notification.open({
           message: "Please select an option for Item no. 7"
@@ -434,19 +434,19 @@ export default {
           field: "fromDate",
           error: "Date From is mandatory field."
         });
-      } else if (!this.form.end_month) {
+      } if (!this.form.end_month) {
         errors.push({
           page: 0,
           field: "toDate",
           error: "Date To is mandatory field."
         });
-      } else if(this.form.amended_yn == null || this.form.amended_yn == undefined || this.amended_yn == ""){
+      } if(this.form.amended_yn == null || this.form.amended_yn == undefined || this.amended_yn == ""){
         errors.push({
           page: 0,
           field: "amended_yn",
           error: "Amended Return is mandatory field."
         })
-      } else if (this.form.any_tax_withheld === null || this.form.any_tax_withheld === undefined || this.form.any_tax_withheld === "") {
+      } if (this.form.any_tax_withheld === null || this.form.any_tax_withheld === undefined || this.form.any_tax_withheld === "") {
        console.log("form.any_tax_withheld value: ",this.form.any_tax_withheld)
        errors.push({
           page: 0,
@@ -462,13 +462,13 @@ export default {
             field: "category_of_agent",
             error: "Category of Withholding Agent is mandotory field."
           })
-        } else if(!this.form.address){
+        } if(!this.form.address){
           errors.push({
             page: 1,
             field: "address",
             error: "Registered Address is mandatory field."
           })
-        } else if(!this.form.zipCode){
+        } if(!this.form.zipCode){
           errors.push({
             page: 1,
             field: "zipCode",

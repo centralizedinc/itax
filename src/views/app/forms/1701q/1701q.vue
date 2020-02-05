@@ -274,8 +274,8 @@
             label="14"
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
-            :validate-status="error_item('taxpayer_foreign_tax_credits')"
-            :help="error_desc('taxpayer_foreign_tax_credits')"
+            :validate-status="error_item('taxpayer_foreign_tax_number')"
+            :help="error_desc('taxpayer_foreign_tax_number')"
           >
             <a-input
               :disabled="form.taxpayer_foreign_tax_credits == false"
@@ -290,8 +290,8 @@
             :labelCol="form_layout.label_col"
             :wrapperCol="form_layout.wrapper_col"
             label="15"
-            :validate-status="error_item('taxpayer.taxpayer_foreign_tax_credits')"
-            :help="error_desc('taxpayer.taxpayer_foreign_tax_credits')"
+            :validate-status="error_item('taxpayer_foreign_tax_credits')"
+            :help="error_desc('taxpayer_foreign_tax_credits')"
           >
             <span style="margin-right: 14px">Claiming Foreign Tax Credits?</span>
             <a-radio-group v-model="form.taxpayer_foreign_tax_credits" @change="changeTaxNo">
@@ -1156,16 +1156,25 @@ export default {
             error: "Please enter Citizenship  "
           });
         }
+        if ((!this.form.taxpayer_foreign_tax_number)&&
+            (this.form.taxpayer_foreign_tax_credits == true)
+        ) {
+          errors.push({
+            page: 1,
+            field: "taxpayer_foreign_tax_number",
+            error:
+              "You selected Yes in item 15, please input Foreign Tax Number  "
+          });
+        }
         if (
-          this.form.taxpayer_foreign_tax_credits === null ||
-          (this.form.taxpayer_foreign_tax_credits === undefined &&
-            this.form.taxpayer.taxpayer_foreign_tax_credits == false)
+          this.form.taxpayer_foreign_tax_credits == null ||
+          this.form.taxpayer_foreign_tax_credits == undefined 
         ) {
           errors.push({
             page: 1,
             field: "taxpayer_foreign_tax_credits",
             error:
-              "You selected Yes in item 15, please input Foreign Tax Number  "
+              "Please choose Foreign Tax Credits"
           });
         }
         if (
@@ -1225,6 +1234,8 @@ export default {
   created() {
     this.form.pdf_page = 0;
     this.connections = this.$store.state.relationship.connections;
+    this.form.taxpayer_foreign_tax_number = null 
+    this.form.taxpayer_foreign_tax_credits = null
     console.log(
       "  " + JSON.stringify(this.$store.state.relationship.connections)
     );
