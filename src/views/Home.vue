@@ -708,12 +708,12 @@ export default {
         if (!this.form.taxpayer.filer_type) {
           this.validation_errors.filer_type = "Filer Type is required.";
         }
-        if (!this.form.taxpayer.birth_date) {
-          this.validation_errors.individual_details.birthDate =
+        if (!this.form.taxpayer.individual_details.birthDate) {
+          this.validation_errors.birth_date =
             "Date of Birth is required.";
         }
-        if (!this.form.taxpayer.gender) {
-          this.validation_errors.individual_details.gender =
+        if (!this.form.taxpayer.individual_details.gender) {
+          this.validation_errors.gender =
             "Gender is required.";
         }
       }
