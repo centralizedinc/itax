@@ -234,6 +234,8 @@ export default {
           address_details: {},
           individual_details: {},
           accounting_type: "",
+          start_month: "",
+          end_month: ""
         },
         taxpayer_tax_payable: {},
         spouse_tax_payable: {},
