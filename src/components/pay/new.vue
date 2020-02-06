@@ -364,6 +364,18 @@ export default {
             description: ""
           });
           this.reset();
+          var act = {
+            created_by:{
+                account_id: this.$store.state.account_session.user.account_id,
+                display_name: `${this.$store.state.account_session.user.name.first} ${this.$store.state.account_session.user.name.last}`,
+                avatar: {},
+            },
+            activity:"3",
+            description:`Paid the amount of ${formatAmount(payments.amount_paid)}`,
+          }
+          return this.$http.post(`/activities/${this.$store.state.account_session.user.account_id}`, act)
+        }).then(result=>{
+          console.log('ACT :::', JSON.stringify(result.data))
         })
         .catch(err => {
           console.log("PAYMENT err :", err);

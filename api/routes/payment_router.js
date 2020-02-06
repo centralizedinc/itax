@@ -39,7 +39,7 @@ router.route("/")
                 return ReturnDetailsDao.modifyOne({ reference_no: data.references[0] }, { payment_status: 'paid' })
             })
             .then((return_details) => {
-                activity.pay(return_details.tin, {payments, return_details})
+                activity.pay(return_details.tin, {payments, return_details}, created_by)
                 res.json({
                     success: true,
                     model: {

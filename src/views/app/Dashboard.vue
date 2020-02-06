@@ -154,10 +154,10 @@
                 </template> -->
                 <template slot="content">
                     <p>{{item.description}}</p>
-                    <template v-if="getAttachments(item.reference_no)">
+                    <template v-if="getAttachments(item)">
                         <a-row>
                           <a-col :span="8">
-                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom; border: 1px solid" @click="window.open(getAttachments(item.reference_no))" /> 
+                              <pdf :src="getAttachments(item)" style="width:90%; cursor:zoom; border: 1px solid" @click="window.open(getAttachments(item.reference_no))" /> 
                           </a-col>
                         </a-row>
                         
@@ -316,8 +316,16 @@ export default {
                 this.loading=false;
             })
         },
-        getAttachments(ref_no){
-            return this.attachments.find(x=> x.reference_no === ref_no)?this.attachments.find(x=> x.reference_no === ref_no).url:''
+        getAttachments(rec){
+            console.log('record :::', JSON.stringify(rec))
+            if(rec.attachments && rec.attachments.length>0){
+                return rec.attachments[0].url
+            }else{
+                return ''
+            }
+
+            // return this.attachments.find(x=> x.reference_no === ref_no)?
+            //         this.attachments.find(x=> x.reference_no === ref_no).url:''
         },
         view(url){
             window.open(url)
