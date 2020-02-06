@@ -5,11 +5,19 @@
     <div style="background: linear-gradient(to left, #000046, #1cb5e0);">
       <a-row style="height:100vh" type="flex" justify="start">
         <a-col :push="1" :span="12" style="margin-top:20vh" data-aos="fade-up">
-          <div style="font-size: 52px; color:#ffffff; ">Smart Tax.</div>
+          <!-- <a-col :span="16" align="middle"> -->
+          <img
+            src="https://smart-tax.s3-ap-northeast-1.amazonaws.com/forms/2smartTax.png"
+            style="width: 550px; margin-left: -30px;"
+            alt="SmartTax"
+          />
+          <!-- </a-col> -->
+
+          <!-- <div style="font-size: 52px; color:#ffffff; ">Smart Tax.</div> -->
           <div style="font-size: 42px; color:#ffffff;">Tax Preparation Software.</div>
           <p
             style="margin-top:2vh; color:#ffffff"
-          >Helps corporations, companies or individuals to  prepare and file corporate, income tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
+          >Helps corporations, companies or individuals to prepare and file corporate, income tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
           <a-button size="large" ghost>
             <a-icon type="download"></a-icon>Download & Install on PC
             <a-icon type="windows" />
@@ -61,8 +69,8 @@
               </a-form-item>
               <a-button size="large" block type="primary" :loading="loading" @click="login">Submit</a-button>
               <a-col :span="24" align="center" style="margin-top: 20px">
-                  <a style="color:#FFFFFF">Forgot Password?</a>
-                </a-col>
+                <a style="color:#FFFFFF">Forgot Password?</a>
+              </a-col>
 
               <!-- <p style="color:white">Login using facebook or google accounts</p> -->
               <a-row type="flex" gutter="16" style="margin-top:10px">
@@ -88,11 +96,10 @@
                   >
                     <a-icon type="google"></a-icon>Google
                   </a-button>
-                </a-col> -->
-                <a-col :span="24" >
+                </a-col>-->
+                <a-col :span="24">
                   <a style="color:#FFFFFF">Don't have a SmartTax account? Sign-up</a>
                 </a-col>
-                
               </a-row>
             </a-form>
           </a-card>
@@ -125,35 +132,37 @@
           <a-divider></a-divider>
           <a-button type="primary">Report</a-button>
         </a-card>
-      </a-col> -->
-      
-        <a-col :span="24" align="center" >
-          <h1 style="font-size:36px">Welcome to SmartTax.</h1>
-        </a-col>
-        <a-col :span="8">         
-          <span style="font-size: 28px"> <a-icon type="form"></a-icon> Interactive Tax Forms</span>
-          <div style="margin-top:40px">
-            Prepare your returns using Smart Tax's interactive forms.
-            Your entries are checked and amounts are computed every time you type.
-          </div>          
-        </a-col>
+      </a-col>-->
 
-        <a-col :span="8">         
-          <span style="font-size: 28px"> <a-icon type="audit"></a-icon> Online Validation and Submission</span>
-          <div style="margin-top:20px">
-            Forms are validated online. Penalties for late filed forms are automatically computed.
-          </div>          
-        </a-col>
+      <a-col :span="24" align="center">
+        <h1 style="font-size:36px">Welcome to SmartTax.</h1>
+      </a-col>
+      <a-col :span="8">
+        <span style="font-size: 28px">
+          <a-icon type="form"></a-icon>Interactive Tax Forms
+        </span>
+        <div style="margin-top:40px">
+          Prepare your returns using Smart Tax's interactive forms.
+          Your entries are checked and amounts are computed every time you type.
+        </div>
+      </a-col>
 
-        <a-col :span="8">         
-          <span style="font-size: 28px"> <a-icon type="credit-card"></a-icon> Pay Online</span>
-          <div style="margin-top:40px">
-            Pay your tax returns using your credit/debit cards.
-          </div>          
-        </a-col>
-    </a-row> 
+      <a-col :span="8">
+        <span style="font-size: 28px">
+          <a-icon type="audit"></a-icon>Online Validation and Submission
+        </span>
+        <div
+          style="margin-top:20px"
+        >Forms are validated online. Penalties for late filed forms are automatically computed.</div>
+      </a-col>
 
-
+      <a-col :span="8">
+        <span style="font-size: 28px">
+          <a-icon type="credit-card"></a-icon>Pay Online
+        </span>
+        <div style="margin-top:40px">Pay your tax returns using your credit/debit cards.</div>
+      </a-col>
+    </a-row>
   </div>
 </template>
 
@@ -183,7 +192,9 @@ export default {
             .then(result => {
               this.$notification.success({
                 message: "Login success.",
-                description:`Welcome ${this.$store.state.account_session.user.name.first}! You have successfully logged-in at ${new Date()}`
+                description: `Welcome ${
+                  this.$store.state.account_session.user.name.first
+                }! You have successfully logged-in at ${new Date()}`
               });
               this.loading = false;
               this.$router.push("/app");
