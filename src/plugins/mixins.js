@@ -12,29 +12,29 @@ export default {
                     return JSON.parse(JSON.stringify(obj));
                 },
                 formatTIN(tin) {
-                    
-                    if(tin){
-                        
-                        tin = tin.toString().replace(/-/g,'')
+
+                    if (tin) {
+
+                        tin = tin.toString().replace(/-/g, '')
                     }
-                    if(tin && tin.length > 3 && tin.length <7){                        
-                       return `${tin.substring(0, 3)}-${tin.substring(3, tin.length)}`
-                    }else if(tin && tin.length > 6 && tin.length < 10){
+                    if (tin && tin.length > 3 && tin.length < 7) {
+                        return `${tin.substring(0, 3)}-${tin.substring(3, tin.length)}`
+                    } else if (tin && tin.length > 6 && tin.length < 10) {
                         return `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, tin.length)}`
-                     }else if(tin && tin.length > 9){
+                    } else if (tin && tin.length > 9) {
                         return `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, tin.length)}`
-                     }else{
-                         return tin
-                     }
+                    } else {
+                        return tin
+                    }
                     //  {
                     //     return tin && tin.length == 13 ? `${tin.substring(0, 3)}-${tin.substring(3, 6)}-${tin.substring(6, 9)}-${tin.substring(9, 13)}` : tin
                     // }
 
-                    
+
                 },
                 formatAmount(amount, show_sign) {
                     // return amount ? amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, ',') : '0.00'
-                    if (!amount || isNaN(amount)) return "0.00";
+                    if (!amount || isNaN(amount)) return show_sign ? "₱ 0.00" : "0.00";
                     var parts = parseFloat(amount).toFixed(2).toString().split(".");
                     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     return show_sign ? `₱ ${parts.join(".")}` : parts.join(".");
@@ -87,6 +87,12 @@ export default {
                         });
                     // console.log("compute sum mixin: " + total)
                     return total
+                },
+                currencyFormater(value) {
+                    return `₱ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                },
+                currencyParser(value) {
+                    return value.replace(/\₱\s?|(,*)/g, '')
                 }
             },
         })
