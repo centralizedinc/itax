@@ -10,7 +10,7 @@
     <a-button type="primary" @click="addAtc">ADD</a-button>
     <a-table bordered :dataSource="data_source" :columns="columns">
       <template slot="description" slot-scope="text, record">
-        <span>{{getDescription(record.atc)}}</span>
+        <span style="text-transform: uppercase">{{getDescription(record.atc)}}</span>
       </template>
       <template slot="atc" slot-scope="text, record, index">
         <a-select style="width 100%" @change="e => pickAtc(e, index)" :defaultValue="text || null">
@@ -20,7 +20,7 @@
       </template>
       <template slot="amount" slot-scope="text, record, index">
         <a-input-number
-        style="width: 100%;"
+          style="width: 100%;"
           :formatter="val => currencyFormater(val)"
           :parser="val => currencyParser(val)"
           :disabled="!record.atc"
@@ -92,13 +92,43 @@ export default {
       ],
       atc_list: [
         {
-          description: "BUSINESS SERVICES-IN GENERAL",
-          atc: "VB010",
+          description: "Mining & Quarrying",
+          atc: "VQ010",
           rate: 0.12
         },
         {
-          description: "CONSTRUCTION",
-          atc: "VC010",
+          description: "Tobacco",
+          atc: "VM040",
+          rate: 0.25
+        },
+        {
+          description: "Alcohol",
+          atc: "VM110",
+          rate: 0.12
+        },
+        {
+          description: "Petroleum",
+          atc: "VM120",
+          rate: 0.25
+        },
+        {
+          description: "Automobiles",
+          atc: "VM130",
+          rate: 0.12
+        },
+        {
+          description: "Hotels, Motels",
+          atc: "VB100",
+          rate: 0.25
+        },
+        {
+          description: "Restaurants, Caterers",
+          atc: "VB101",
+          rate: 0.12
+        },
+        {
+          description: "Land Transport Cargo",
+          atc: "VB105",
           rate: 0.25
         }
       ],
