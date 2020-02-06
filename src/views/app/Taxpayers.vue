@@ -56,7 +56,7 @@
 
     <a-col :span="24" style="margin-top: 1vh">
       <a-card>
-        <h3>Taxpayer Vault</h3>
+        <h3>Taxpayers</h3>
         <span style="font-size:10px">All your registered taxpayers can be found here.</span>
         <a-divider></a-divider>
         <a-list

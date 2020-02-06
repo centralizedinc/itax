@@ -197,6 +197,20 @@
           <a-radio-button value="F">FEMALE</a-radio-button>
         </a-radio-group>
       </a-form-item>
+    
+    <a-form-item
+      class="register-form-item"
+      label="Citizenship"
+      :validate-status="validation_errors.citizenship ? 'error':''"
+      :help="validation_errors.citizenship"
+      has-feedback
+    >
+      <a-input
+        class="text-uppercase"
+        placeholder="Citizenship"
+        v-model="form.taxpayer.individual_details.citizenship"
+      ></a-input>
+    </a-form-item>
     </span>
     <a-form-item
       class="register-form-item"
@@ -211,6 +225,15 @@
         v-model="form.taxpayer.address"
         placeholder="Registered Address"
       ></a-textarea>
+    </a-form-item>
+    <a-form-item
+      class="register-form-item"
+      label="Zip Code"
+      :validate-status="validation_errors.zipCode ? 'error':''"
+      :help="validation_errors.zipCode"
+      has-feedback
+    >
+      <a-input placeholder="Zip Code" v-model="form.taxpayer.address_details.zipCode"></a-input>
     </a-form-item>
   </a-form>
   <a-divider></a-divider>
@@ -247,7 +270,8 @@ export default {
           individual_details: {},
           taxpayer_type: "C",
           accounting_type: "c",
-          start_month: 0
+          start_month: 0,
+          address_details:{}
         }
       },
       loading: false,
@@ -302,14 +326,28 @@ export default {
       this.form.taxpayer.user_id=this.$store.state.account_session.user.account_id
       this.$http.post(`/taxpayer`,this.form.taxpayer)
       .then(result=>{
-        alert(JSON.stringify(result))
+        // alert(JSON.stringify(result))
         this.loading=false
          this.$notification.success({
                 message: "New Taxpayer Created",
                 description: `TIN: ${this.form.taxpayer.tin}`,
               });
           this.$router.push('/app/taxpayer')
-          // return this.$http.post()
+          //create activity
+          var act = {
+            created_by:{
+                account_id: this.$store.state.account_session.user.account_id,
+                display_name: `${this.$store.state.account_session.user.name.first} ${this.$store.state.account_session.user.name.last}`,
+                avatar: {},
+                tin: this.form.taxpayer.tin
+            },
+            activity:"1",
+            description:`New taxpayer added ${this.form.taxpayer.registered_name} TIN: (${this.formatTIN(this.form.taxpayer.tin)})`,
+          }
+          return this.$http.post(`/activities/${this.$store.state.account_session.user.account_id}`, act)
+      }).then(result=>{
+        console.log(`RES::::`,JSON.stringify(result.data))
+        // alert(success)
       })
     },
     showRegistration() {

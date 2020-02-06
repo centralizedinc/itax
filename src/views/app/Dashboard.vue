@@ -39,7 +39,10 @@
               </a-col>
             </a-row>     
             <a-divider></a-divider>  
-            <span style="font-size:10px" v-if="!returns_count.length">No returns filed</span>  
+            <span style="font-size:10px" v-if="!returns_count.length">No returns filed.
+                <br/>
+                This section displays the last tax return filed.
+            </span>  
             <span style="font-size:10px" v-else>You have filed {{returns_count[0].form_type}} with ref# {{returns_count[0].reference_no}} last {{returns_count[0].date_created}}</span>         
         </a-card>        
     </a-col>
@@ -57,7 +60,11 @@
               </a-col>
             </a-row>  
             <a-divider></a-divider> 
-            <span style="font-size:10px" v-if="!payments_count.length">No payments made</span>  
+            <span style="font-size:10px" v-if="!payments_count.length">
+                No payments made
+                <br/>
+                This will display the lastest payment made.
+            </span>  
             <span style="font-size:10px" v-else>Last Payment with the amount of ₱{{formatAmount(payments_count[payments_count.length-1].amount_paid)}} was paid last {{formatDate(payments_count[payments_count.length-1].date_created)}}</span>          
         </a-card>        
     </a-col>
