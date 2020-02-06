@@ -120,5 +120,22 @@ class SendEmail {
     })
     return sgMail.sendMultiple(messages);
   }
+
+  static sendEmail(email, details, template) {
+    console.log('template :', ApplicationSettings.getValue(template));
+    const msg = {
+      to: email,
+      from: ApplicationSettings.getValue("ITAX_EMAIL"),
+      templateId: ApplicationSettings.getValue(template),
+      dynamic_template_data: details
+    };
+    console.log('send msg :', msg);
+    return new Promise((resolve, reject) => {
+      sgMail.send(msg)
+        .then((result) => {
+          resolve({ result })
+        }).catch((err) => reject(err));
+    })
+  }
 }
 module.exports = SendEmail
