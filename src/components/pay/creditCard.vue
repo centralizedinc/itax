@@ -51,11 +51,27 @@
 </template>
 
 <script>
+import Card from 'card'
 export default {
   props: ["details"],
+  // mounted() {
+  //   this.$emit("mounted");
+  // }
   mounted() {
-    this.$emit("mounted");
-  }
+    // this.$emit("mounted");
+    this.card = new Card({
+      form: "form",
+      container: ".card-wrapper"
+    });
+    console.log("this.card1 :", this.card);
+  },
+  created() {
+    this.card = new Card({
+      form: "form",
+      container: ".card-wrapper"
+    });
+    console.log("this.card :", this.card);
+  },
 };
 </script>
 

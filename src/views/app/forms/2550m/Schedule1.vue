@@ -19,10 +19,17 @@
         </a-select>
       </template>
       <template slot="amount" slot-scope="text, record, index">
-        <a-input-number :disabled="!record.atc" @change="e => changeAmount(e, index)" :value="text"></a-input-number>
+        <a-input-number
+        style="width: 100%;"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          :disabled="!record.atc"
+          @change="e => changeAmount(e, index)"
+          :value="text"
+        ></a-input-number>
       </template>
       <template slot="output_tax" slot-scope="text, record, index">
-        <span>{{getOutputTax(record.atc, index)}}</span>
+        <span>{{formatAmount(getOutputTax(record.atc, index), true)}}</span>
       </template>
       <template slot="operation" slot-scope="text, record, index">
         <a-popconfirm placement="left" title="Sure to delete ?" @confirm="deleteAtc(index)">
@@ -33,12 +40,12 @@
         <p align="left">
           <span>
             12A. Total Amount:
-            <b>{{total_atc_amount}}</b>
+            <b>{{formatAmount(total_atc_amount, true)}}</b>
           </span>
           <br />
           <span>
             12B. Total Output Tax:
-            <b>{{total_atc_output_tax}}</b>
+            <b>{{formatAmount(total_atc_output_tax, true)}}</b>
           </span>
         </p>
       </template>

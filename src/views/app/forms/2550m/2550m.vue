@@ -163,6 +163,8 @@
         <a-input-number
           placeholder="Sales/Receipt for the Month"
           v-model="form.totalAtcAmount"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           disabled
         ></a-input-number>
       </a-form-item>
@@ -174,6 +176,8 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           v-model="form.totalAtcOutput"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           disabled
         ></a-input-number>
       </a-form-item>
@@ -184,14 +188,24 @@
         :wrapperCol="form_layout.wrapper_col"
         label="13A"
       >
-        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.salesGovAmount"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Sales/Receipt for the Month"
+          v-model="form.salesGovAmount"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="13B"
       >
-        <a-input-number placeholder="Output Tax Due for the Month" v-model="form.salesGovOutput"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Output Tax Due for the Month"
+          v-model="form.salesGovOutput"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item label="14. Zero Rated Sales/Receipts" />
@@ -200,7 +214,12 @@
         :wrapperCol="form_layout.wrapper_col"
         label="14"
       >
-        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.zeroRatedAmount"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Sales/Receipt for the Month"
+          v-model="form.zeroRatedAmount"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item label="15. Exempt Sales/Receipts" />
@@ -209,7 +228,12 @@
         :wrapperCol="form_layout.wrapper_col"
         label="15"
       >
-        <a-input-number placeholder="Sales/Receipt for the Month" v-model="form.exemptAmount"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Sales/Receipt for the Month"
+          v-model="form.exemptAmount"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item label="16. Total Sales/Receipts and Output Tax Due" />
@@ -218,7 +242,13 @@
         :wrapperCol="form_layout.wrapper_col"
         label="16A"
       >
-        <a-input-number placeholder="Sales/Receipt for the Month" disabled :value="getTotalSales()"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Sales/Receipt for the Month"
+          disabled
+          :value="getTotalSales()"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -228,6 +258,8 @@
         <a-input-number
           placeholder="Output Tax Due for the Month"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           :value="getTotalOutputTax()"
         ></a-input-number>
       </a-form-item>
@@ -242,6 +274,8 @@
           placeholder="Input Tax Carried Over from Previous Period"
           v-model="form.carriedOverPreviousPeriod"
           :defaultValue="0"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -253,6 +287,8 @@
           placeholder="Input Tax Deferred on Capital Goods Exceeding ₱1Million from Previous Period"
           v-model="form.txbleGoodsServices"
           :defaultValue="0"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -264,6 +300,8 @@
           placeholder="Transitional Input Tax"
           v-model="form.transInputTax"
           :defaultValue="0"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -275,6 +313,8 @@
           placeholder="Presumptive Input Tax"
           v-model="form.presumpInputTax"
           :defaultValue="0"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -286,6 +326,8 @@
           placeholder="Others"
           v-model="form.otherAllowableLessInputTax"
           :defaultValue="0"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -293,7 +335,13 @@
         :wrapperCol="form_layout.wrapper_col"
         label="17F"
       >
-        <a-input-number placeholder="Total" disabled :value="getTotalAllowableInputTax()"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Total"
+          disabled
+          :value="getTotalAllowableInputTax()"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item label="18. Current Transaction" />
@@ -320,7 +368,13 @@
         class="computation-item"
         label="18A"
       >
-        <a-input-number disabled placeholder="Purchase" v-model="form.purCapGoodsNotExceed"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          disabled
+          placeholder="Purchase"
+          v-model="form.purCapGoodsNotExceed"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -331,6 +385,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           v-model="form.outputCapGoodsNotExceed"
         ></a-input-number>
       </a-form-item>
@@ -354,7 +410,13 @@
         class="computation-item"
         label="18C"
       >
-        <a-input-number placeholder="Purchase" disabled v-model="form.purCapGoodsExceed"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          disabled
+          v-model="form.purCapGoodsExceed"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -365,6 +427,8 @@
         <a-input-number
           placeholder="Output Tax Due"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           v-model="form.outputPurCapGoodsExceed"
         ></a-input-number>
       </a-form-item>
@@ -378,7 +442,12 @@
         class="computation-item"
         label="18E"
       >
-        <a-input-number placeholder="Purchase" v-model="form.domesticPurchaseGoods"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          v-model="form.domesticPurchaseGoods"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -386,7 +455,12 @@
         class="computation-item"
         label="18F"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputDomesticPurchaseGoods"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Output Tax Due"
+          v-model="form.outputDomesticPurchaseGoods"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         class="computation-item"
@@ -398,7 +472,12 @@
         class="computation-item"
         label="18G"
       >
-        <a-input-number placeholder="Purchase" v-model="form.importationGoods"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          v-model="form.importationGoods"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -406,7 +485,12 @@
         class="computation-item"
         label="18H"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputImportationGoods"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Output Tax Due"
+          v-model="form.outputImportationGoods"
+        ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18I/J. Domestic Purchase of Services" />
       <a-form-item
@@ -415,7 +499,12 @@
         class="computation-item"
         label="18I"
       >
-        <a-input-number placeholder="Purchase" v-model="form.domesticPurchaseService"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          v-model="form.domesticPurchaseService"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -423,7 +512,12 @@
         class="computation-item"
         label="18J"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputDomesticPurchaseService"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Output Tax Due"
+          v-model="form.outputDomesticPurchaseService"
+        ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18K/L. Services rendered by Non-residents" />
       <a-form-item
@@ -432,7 +526,12 @@
         class="computation-item"
         label="18K"
       >
-        <a-input-number placeholder="Purchase" v-model="form.servicesNonResidents"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          v-model="form.servicesNonResidents"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -440,7 +539,12 @@
         class="computation-item"
         label="18L"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputServicesNonResidents"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Output Tax Due"
+          v-model="form.outputServicesNonResidents"
+        ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18M. Purchases Not Qualified for Input Tax" />
       <a-form-item
@@ -449,7 +553,12 @@
         class="computation-item"
         label="18M"
       >
-        <a-input-number placeholder="Purchase" v-model="form.purchaseNotQualified"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          v-model="form.purchaseNotQualified"
+        ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18N/O. Others" />
       <a-form-item
@@ -458,7 +567,12 @@
         class="computation-item"
         label="18N"
       >
-        <a-input-number placeholder="Purchase" v-model="form.purchaseOthers"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          v-model="form.purchaseOthers"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -466,7 +580,12 @@
         class="computation-item"
         label="18O"
       >
-        <a-input-number placeholder="Output Tax Due" v-model="form.outputPurchaseOthers"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Output Tax Due"
+          v-model="form.outputPurchaseOthers"
+        ></a-input-number>
       </a-form-item>
       <a-form-item class="computation-item" label="18P. Total Current Purchases" />
       <a-form-item
@@ -475,7 +594,13 @@
         class="computation-item"
         label="18P"
       >
-        <a-input-number placeholder="Purchase" disabled :v-model="getTotalCurrentPurchases()"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Purchase"
+          disabled
+          :value="getTotalCurrentPurchases()"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -486,6 +611,8 @@
         <a-input-number
           placeholder="Total Available Input Tax"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           :value="getTotalAvailableInputTax()"
         ></a-input-number>
       </a-form-item>
@@ -507,6 +634,8 @@
           placeholder="Input Tax on Purchases of Capital Goods exceeding ₱1Million"
           v-model="form.inputTaxPurchaseCapGoods"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
@@ -525,6 +654,8 @@
           placeholder="Input Tax on Sale to Govt. closed to expense"
           v-model="form.inputTaxSaleToGovt"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item :labelCol="form_layout.label_col" :wrapperCol="form_layout.wrapper_col">
@@ -543,6 +674,8 @@
           placeholder="Input Tax allocable to Exempt Sales"
           v-model="form.inputTaxAllocableToExempt"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -550,21 +683,37 @@
         :wrapperCol="form_layout.wrapper_col"
         label="20D"
       >
-        <a-input-number placeholder="VAT Refund/TCC claimed" v-model="form.refundTcm"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="VAT Refund/TCC claimed"
+          v-model="form.refundTcm"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="20E"
       >
-        <a-input-number placeholder="Others" v-model="form.otherDeductionFrInputTax"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Others"
+          v-model="form.otherDeductionFrInputTax"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="20F"
       >
-        <a-input-number placeholder="Total" disabled :value="getTotalDeductionFrInputTax()"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Total"
+          disabled
+          :value="getTotalDeductionFrInputTax()"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -575,6 +724,8 @@
         <a-input-number
           placeholder="Total Allowable Input Tax"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           :value="getTotalInputTax()"
         ></a-input-number>
       </a-form-item>
@@ -584,7 +735,13 @@
         :wrapperCol="form_layout.wrapper_col"
         label="22"
       >
-        <a-input-number placeholder="Net VAT Payable" disabled :value="getNetVatPayable()"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Net VAT Payable"
+          disabled
+          :value="getNetVatPayable()"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item label="23. Less: Tax Credits/Payments" />
@@ -602,6 +759,8 @@
         <!-- <a-button type="link" @click="sched6_drawer = true">Schedule 6</a-button> -->
         <a-input-number
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           placeholder="Creditable Value-Added Tax Withheld"
           v-model="form.creditableVatWithheld"
         ></a-input-number>
@@ -620,6 +779,8 @@
         <!-- <a-button type="link" @click="sched7_drawer = true">Schedule 7</a-button> -->
         <a-input-number
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           placeholder="Advance Payments for Sugar and Flour Industries"
           v-model="form.advPaySugarFlourInd"
         ></a-input-number>
@@ -640,6 +801,8 @@
           placeholder="VAT withheld on Sales to Government"
           v-model="form.taxWthld"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
         ></a-input-number>
       </a-form-item>
       <a-form-item
@@ -649,6 +812,8 @@
       >
         <a-input-number
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           placeholder="VAT paid in return previously filed, if this is an amended return"
           v-model="form.prevTaxPaid"
         ></a-input-number>
@@ -658,14 +823,24 @@
         :wrapperCol="form_layout.wrapper_col"
         label="23E"
       >
-        <a-input-number placeholder="Advance Payments made" v-model="form.advPymt"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Advance Payments made"
+          v-model="form.advPymt"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="23F"
       >
-        <a-input-number placeholder="Others" v-model="form.otherTaxCredits"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Others"
+          v-model="form.otherTaxCredits"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -675,6 +850,8 @@
         <a-input-number
           placeholder="Total Tax Credits/Payments"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           :value="getTotalCredits()"
         ></a-input-number>
       </a-form-item>
@@ -687,6 +864,8 @@
         <a-input-number
           placeholder="Tax Still Payable/(Overpayment)"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           :value="getAmtPayable()"
         ></a-input-number>
       </a-form-item>
@@ -699,7 +878,12 @@
         :validate-status="error_item('surcharge')"
         :help="error_desc('surcharge')"
       >
-        <a-input-number placeholder="Surcharge" v-model="form.surcharge"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Surcharge"
+          v-model="form.surcharge"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -708,7 +892,12 @@
         :validate-status="error_item('interest')"
         :help="error_desc('interest')"
       >
-        <a-input-number placeholder="Interest" v-model="form.interest"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Interest"
+          v-model="form.interest"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
@@ -717,14 +906,25 @@
         :validate-status="error_item('compromise')"
         :help="error_desc('compromise')"
       >
-        <a-input-number placeholder="Compromise" v-model="form.compromise"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Compromise"
+          v-model="form.compromise"
+        ></a-input-number>
       </a-form-item>
       <a-form-item
         :labelCol="form_layout.label_col"
         :wrapperCol="form_layout.wrapper_col"
         label="25D"
       >
-        <a-input-number placeholder="Total Penalties" disabled :value="getPenalties()"></a-input-number>
+        <a-input-number
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          placeholder="Total Penalties"
+          disabled
+          :value="getPenalties()"
+        ></a-input-number>
       </a-form-item>
 
       <a-form-item
@@ -735,6 +935,8 @@
         <a-input-number
           placeholder="Total Amount Payable/(Overpayment)"
           disabled
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
           :value="getTotalAmtPayable()"
         ></a-input-number>
       </a-form-item>

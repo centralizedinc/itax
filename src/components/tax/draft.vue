@@ -72,6 +72,7 @@ export default {
   },
   computed: {
     draft_forms() {
+      console.log(JSON.stringify(this.$store.state.tax_form.draft_forms))
       return this.deepCopy(this.$store.state.tax_form.draft_forms);
     }
   }

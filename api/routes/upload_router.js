@@ -55,19 +55,19 @@ router.route('/forms/:form/:ref_no')
             if(req.params.form == '1701q') {
                 form_value = form1701QModel
                 go = true
-            }if(req.params.form === '2550w'){
-                form_value = form2550MModel.
+            }if(req.params.form == '2550m'){
+                form_value = form2550MModel
                 go = true
-            }if(req.params.form === '2000ot'){
+            }if(req.params.form == '2000ot'){
                 form_value = form2000OTModel
                 go = true
-            }if(req.params.form === '1600wp'){
+            }if(req.params.form == '1600wp'){
                 form_value = form1600WPModel
                 go = true
             }
             console.log("form value data: ", go)
         }if(go==true){
- 
+            console.log("go true")
             form_value.findOne({reference_no:req.params.ref_no}).exec()
         .then(model=>{
             console.log("upload router data model details: " + JSON.stringify(model))
