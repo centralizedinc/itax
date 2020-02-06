@@ -257,7 +257,9 @@ export default {
       return this.$store.state.tax_form.draft_forms.length
     },
     for_payment(){
-      return this.$store.state.tax_form.tax_returns.length
+      const returns = this.deepCopy(this.$store.state.tax_form.tax_returns);
+      const unpaid_returns = returns.filter(v => v.payment_status !== "paid");
+      return unpaid_returns.length;
     },
     active_menu() {
       console.log("PATH :::: ", this.$route.path);
