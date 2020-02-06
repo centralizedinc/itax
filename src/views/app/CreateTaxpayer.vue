@@ -1,12 +1,6 @@
 <template>
   <a-card>
     <a-form>
-      <a-form-item label="Taxpayer Type">
-        <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.taxpayer_type">
-          <a-radio-button value="C">CORPORATE</a-radio-button>
-          <a-radio-button value="I">INDIVIDUAL</a-radio-button>
-        </a-radio-group>
-      </a-form-item>
       <a-form-item
         label="Tax Identification Number"
         :validate-status="validation_errors.tin ? 'error':''"
@@ -21,6 +15,12 @@
           :parser="value => value.replace(/-/g,'')"
           placeholder="TIN with 4-digit branch code (eg. 123-456-789-0000)"
         ></a-input-number>
+      </a-form-item>
+      <a-form-item label="Taxpayer Type">
+        <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.taxpayer_type">
+          <a-radio-button value="C">CORPORATE</a-radio-button>
+          <a-radio-button value="I">INDIVIDUAL</a-radio-button>
+        </a-radio-group>
       </a-form-item>
       <a-form-item
         label="RDO"
@@ -360,7 +360,7 @@ export default {
           // alert(success)
         })
         .catch(err => {
-          console.log('err :', err);
+          console.log("err :", err);
           this.loading = false;
         });
     },

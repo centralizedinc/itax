@@ -162,6 +162,7 @@ export default {
       this.$router.push('/app/taxpayer/view')
     },
     edit(item) {
+      console.log('item :', item);
       this.$store.commit("SET_EDIT_TAXPAYER", item);
       this.$router.push('/app/taxpayer/edit');
     }

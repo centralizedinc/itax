@@ -112,26 +112,27 @@ router.route('/details')
 
 router
     .route('/users/:id')
-    .get((req, res)=>{
+    .get((req, res) => {
         TaxpayerDao.findByUserId(req.params.id)
-        .then((model) => {
-            res.json({
-                success: true,
-                model
-            })
-        }).catch((errors) => {
-            res.json({
-                success: false,
-                errors
-            })
-        });
+            .then((model) => {
+                res.json({
+                    success: true,
+                    model
+                })
+            }).catch((errors) => {
+                res.json({
+                    success: false,
+                    errors
+                })
+            });
     })
 
 router
     .route('/:id')
     .post((req, res) => {
         var data = req.body;
-        data.modified_by = jwt.decode(req.headers.access_token).account_id;
+        if (req.headers.access_token && jwt.decode(req.headers.access_token) && jwt.decode(req.headers.access_token).account_id)
+            data.modified_by = jwt.decode(req.headers.access_token).account_id;
         TaxpayerDao.modifyByID(req.params.id, data)
             .then((model) => {
                 res.json({

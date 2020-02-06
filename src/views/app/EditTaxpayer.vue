@@ -1,12 +1,12 @@
 <template>
   <a-card>
     <a-form>
-      <a-form-item label="Taxpayer Type">
+      <!-- <a-form-item label="Taxpayer Type">
         <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.taxpayer_type">
           <a-radio-button value="C">CORPORATE</a-radio-button>
           <a-radio-button value="I">INDIVIDUAL</a-radio-button>
         </a-radio-group>
-      </a-form-item>
+      </a-form-item>-->
       <a-form-item
         label="Tax Identification Number"
         :validate-status="validation_errors.tin ? 'error':''"
@@ -16,6 +16,7 @@
       >
         <a-input-number
           style="width:100%"
+          disabled
           v-model="form.taxpayer.tin"
           :formatter="formatTIN"
           :parser="value => value.replace(/-/g,'')"
@@ -250,6 +251,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
@@ -290,8 +292,9 @@ export default {
       this.loading = true;
       this.form.taxpayer.user_id = this.$store.state.account_session.user.account_id;
       this.$http
-        .post(`/taxpayer/${this.form._id}`, this.form.taxpayer)
+        .post(`/taxpayer/${this.form.taxpayer._id}`, this.form.taxpayer)
         .then(result => {
+          console.log("result :", result);
           // alert(JSON.stringify(result))
           this.loading = false;
           this.$notification.success({
@@ -429,7 +432,21 @@ export default {
     }
   },
   created() {
-    this.form = this.deepCopy(this.$store.state.tax_form.edit_taxpayer);
+    this.form.taxpayer = this.deepCopy(
+      this.$store.state.tax_form.edit_taxpayer
+    );
+
+    if (!this.form.taxpayer.individual_details)
+      this.form.taxpayer.individual_details = {};
+    else if (this.form.taxpayer.individual_details.birthDate)
+      this.form.taxpayer.individual_details.birthDate = moment(
+        this.form.taxpayer.individual_details.birthDate
+      );
+    if (!this.form.taxpayer.contact_details)
+      this.form.taxpayer.contact_details = {};
+    if (!this.form.taxpayer.address_details)
+      this.form.taxpayer.address_details = {};
+
     this.$http
       .get(`${process.env.VUE_APP_BASE_API_URI}reference/rdos`)
       .then(result => {
