@@ -66,11 +66,11 @@ export default {
           dataIndex: "date_created",
           scopedSlots: { customRender: "datetime" }
         },
-        {
-          title: "Status",
-          dataIndex: "status",
-          scopedSlots: { customRender: "status" }
-        },
+        // {
+        //   title: "Status",
+        //   dataIndex: "status",
+        //   scopedSlots: { customRender: "status" }
+        // },
         {
           title: "",
           dataIndex: "actions",
