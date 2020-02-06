@@ -62,6 +62,11 @@ export default new Router({
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/CreateTaxpayer.vue'),
     },
     {
+      path: 'taxpayer/view',
+      name: 'Create New Taxpayer',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Viewtaxpayer.vue'),
+    },
+    {
       path: 'taxpayer/upload',
       name: 'Upload Taxpayers',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),

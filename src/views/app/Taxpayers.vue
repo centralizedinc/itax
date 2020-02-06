@@ -66,8 +66,8 @@
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <!-- <a-card> -->
-            <a slot="actions">edit</a>
-            <a slot="actions">view</a>
+            <a slot="actions" @click="view()">edit</a>
+            <a slot="actions" @click="view(item)">view</a>
             <a-list-item-meta>
               <template slot="description">
                 <span style="font-weight:bold">{{
@@ -156,6 +156,9 @@ export default {
           }
         }
       );
+    },
+    view(item){      
+      this.$router.push('/app/taxpayer/view')
     }
   }
 };
