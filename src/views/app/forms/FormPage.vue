@@ -125,7 +125,7 @@
                     :size="64"
                     shape="square"
                   >
-                  <span style="font-size:16px">{{item.registered_name[0]}}</span>
+                  <span style="font-size:16px;text-transform: uppercase;">{{item.registered_name[0]}}</span>
                   </a-avatar>
                 </a-list-item-meta>
               </a-col>

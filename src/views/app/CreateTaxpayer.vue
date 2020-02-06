@@ -1,251 +1,251 @@
 <template>
-<a-card>
-  <a-form>
-    <a-form-item label="Taxpayer Type">
-      <a-radio-group
-        buttonStyle="solid"
-        style="width:100%"
-        v-model="form.taxpayer.taxpayer_type"
-      >
-        <a-radio-button value="C">CORPORATE</a-radio-button>
-        <a-radio-button value="I">INDIVIDUAL</a-radio-button>
-      </a-radio-group>
-    </a-form-item>
-    <a-form-item
-      label="Tax Identification Number"
-      :validate-status="validation_errors.tin ? 'error':''"
-      :help="validation_errors.tin"
-      has-feedback
-      class="register-form-item"
-    >
-      <a-input-number
-        style="width:100%"
-        v-model="form.taxpayer.tin"
-        :formatter="formatTIN"
-        :parser="value => value.replace(/-/g,'')"
-        placeholder="TIN with 4-digit branch code (eg. 123-456-789-0000)"
-      ></a-input-number>
-    </a-form-item>
-    <a-form-item
-      label="RDO"
-      class="register-form-item"
-      :validate-status="validation_errors.rdo_code ? 'error':''"
-      :help="validation_errors.rdo_code"
-      has-feedback
-    >
-      <a-select
-        style="width: 100%"
-        v-model="form.taxpayer.rdo_code"
-        placeholder="Select Revenue District Office"
-      >
-        <a-select-option
-          v-for="(item, index) in rdos"
-          :key="index"
-          :value="item.code"
-        >{{item.code}} - {{item.description}}</a-select-option>
-      </a-select>
-    </a-form-item>
-    <a-form-item
-      label="Line of Business"
-      :validate-status="validation_errors.line_of_business ? 'error':''"
-      :help="validation_errors.line_of_business"
-      has-feedback
-      class="register-form-item"
-    >
-      <a-input
-        class="text-uppercase"
-        placeholder="Line of Business"
-        v-model="form.taxpayer.line_of_business"
-      />
-    </a-form-item>
-
-    <span v-if="form.taxpayer.taxpayer_type == 'C'">
-      <a-form-item
-        label="Registered Business Name"
-        :validate-status="validation_errors.taxpayer_registered_name ? 'error':''"
-        :help="validation_errors.taxpayer_registered_name"
-        has-feedback
-        class="register-form-item"
-      >
-        <a-input
-          class="text-uppercase"
-          :disabled="loading"
-          v-model="form.taxpayer.registered_name"
-          placeholder="Registered Business Name"
-        ></a-input>
-      </a-form-item>
-      <a-form-item
-        label="Date of Incorporation"
-        class="register-form-item"
-        :validate-status="validation_errors.date_incorporation ? 'error':''"
-        :help="validation_errors.date_incorporation"
-        has-feedback
-      >
-        <a-date-picker
-          style="width:100%"
-          v-model="form.taxpayer.date_incorporation"
-          placeholder="Date Incorporation"
-        ></a-date-picker>
-      </a-form-item>
-      <a-form-item
-        label="Accounting Type"
-        class="register-form-item"
-        :validate-status="validation_errors.accounting_type ? 'error':''"
-        :help="validation_errors.accounting_type"
-        has-feedback
-      >
-        <a-radio-group
-          buttonStyle="solid"
-          v-model="form.taxpayer.accounting_type"
-          @change="() => { form.taxpayer.accounting_type === 'c'?form.taxpayer.start_month=0:''}"
-        >
-          <a-radio-button value="c">CALENDAR</a-radio-button>
-          <a-radio-button value="f">FISCAL</a-radio-button>
+  <a-card>
+    <a-form>
+      <a-form-item label="Taxpayer Type">
+        <a-radio-group buttonStyle="solid" style="width:100%" v-model="form.taxpayer.taxpayer_type">
+          <a-radio-button value="C">CORPORATE</a-radio-button>
+          <a-radio-button value="I">INDIVIDUAL</a-radio-button>
         </a-radio-group>
       </a-form-item>
       <a-form-item
-        label="Start Month"
+        label="Tax Identification Number"
+        :validate-status="validation_errors.tin ? 'error':''"
+        :help="validation_errors.tin"
+        has-feedback
         class="register-form-item"
-        :validate-status="validation_errors.start_month ? 'error':''"
-        :help="validation_errors.start_month"
+      >
+        <a-input-number
+          style="width:100%"
+          v-model="form.taxpayer.tin"
+          :formatter="formatTIN"
+          :parser="value => value.replace(/-/g,'')"
+          placeholder="TIN with 4-digit branch code (eg. 123-456-789-0000)"
+        ></a-input-number>
+      </a-form-item>
+      <a-form-item
+        label="RDO"
+        class="register-form-item"
+        :validate-status="validation_errors.rdo_code ? 'error':''"
+        :help="validation_errors.rdo_code"
         has-feedback
       >
         <a-select
           style="width: 100%"
-          v-model="form.taxpayer.start_month"
-          :disabled="form.taxpayer.accounting_type === 'c'"
+          v-model="form.taxpayer.rdo_code"
+          placeholder="Select Revenue District Office"
         >
-          <!-- @change="selectStartMonth" -->
           <a-select-option
-            v-for="(item, index) in months"
+            v-for="(item, index) in rdos"
             :key="index"
-            :value="index"
-          >{{item}}</a-select-option>
+            :value="item.code"
+          >{{item.code}} - {{item.description}}</a-select-option>
         </a-select>
       </a-form-item>
-    </span>
-    <span v-else>
       <a-form-item
-        label="Taxpayer Name"
-        :validate-status="validation_errors.taxpayer_name ? 'error':''"
-        :help="validation_errors.taxpayer_name"
+        label="Line of Business"
+        :validate-status="validation_errors.line_of_business ? 'error':''"
+        :help="validation_errors.line_of_business"
         has-feedback
         class="register-form-item"
       >
         <a-input
           class="text-uppercase"
-          :disabled="loading"
-          v-model="form.taxpayer.individual_details.firstName"
-          placeholder="First Name"
-          @change="updateRegName()"
-        ></a-input>
-        <a-input
-          class="text-uppercase"
-          :disabled="loading"
-          v-model="form.taxpayer.individual_details.middleName"
-          placeholder="Middle Name"
-          @change="updateRegName()"
-        ></a-input>
-        <a-input
-          class="text-uppercase"
-          :disabled="loading"
-          v-model="form.taxpayer.individual_details.lastName"
-          placeholder="Last Name"
-          @change="updateRegName()"
-        ></a-input>
-      </a-form-item>
-      <a-form-item
-        class="register-form-item"
-        label="Select Filer Type"
-        :validate-status="validation_errors.filer_type ? 'error':''"
-        :help="validation_errors.filer_type"
-        has-feedback
-      >
-        <a-radio-group v-model="form.taxpayer.filer_type">
-          <a-radio value="sp">Single Proprietor</a-radio>
-          <a-radio value="p">Professional</a-radio>
-          <a-radio value="em">Employee</a-radio>
-          <a-radio value="e">Estate</a-radio>
-          <a-radio value="t">Trust</a-radio>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item
-        label="Date of Birth"
-        class="register-form-item"
-        :validate-status="validation_errors.birth_date ? 'error':''"
-        :help="validation_errors.birth_date"
-        has-feedback
-      >
-        <a-date-picker
-          style="width:100%"
-          placeholder="Date of Birth"
-          v-model="form.taxpayer.individual_details.birthDate"
+          placeholder="Line of Business"
+          v-model="form.taxpayer.line_of_business"
         />
       </a-form-item>
       <a-form-item
+        label="Email Address"
+        :validate-status="validation_errors.registered_email ? 'error':''"
+        :help="validation_errors.registered_email"
+        has-feedback
         class="register-form-item"
-        label="Gender"
-        :validate-status="validation_errors.gender ? 'error':''"
-        :help="validation_errors.gender"
+      >
+        <a-input placeholder="Email Address" v-model="form.taxpayer.contact_details.email" />
+      </a-form-item>
+      <a-form-item label="Tel No" class="register-form-item">
+        <a-input placeholder="Tel No" v-model="form.taxpayer.contact_details.telno" />
+      </a-form-item>
+
+      <span v-if="form.taxpayer.taxpayer_type == 'C'">
+        <a-form-item
+          label="Registered Business Name"
+          :validate-status="validation_errors.taxpayer_registered_name ? 'error':''"
+          :help="validation_errors.taxpayer_registered_name"
+          has-feedback
+          class="register-form-item"
+        >
+          <a-input
+            class="text-uppercase"
+            :disabled="loading"
+            v-model="form.taxpayer.registered_name"
+            placeholder="Registered Business Name"
+          ></a-input>
+        </a-form-item>
+        <a-form-item
+          label="Date of Incorporation"
+          class="register-form-item"
+          :validate-status="validation_errors.date_incorporation ? 'error':''"
+          :help="validation_errors.date_incorporation"
+          has-feedback
+        >
+          <a-date-picker
+            style="width:100%"
+            v-model="form.taxpayer.date_incorporation"
+            placeholder="Date Incorporation"
+          ></a-date-picker>
+        </a-form-item>
+        <a-form-item
+          label="Accounting Type"
+          class="register-form-item"
+          :validate-status="validation_errors.accounting_type ? 'error':''"
+          :help="validation_errors.accounting_type"
+          has-feedback
+        >
+          <a-radio-group
+            buttonStyle="solid"
+            v-model="form.taxpayer.accounting_type"
+            @change="() => { form.taxpayer.accounting_type === 'c'?form.taxpayer.start_month=0:''}"
+          >
+            <a-radio-button value="c">CALENDAR</a-radio-button>
+            <a-radio-button value="f">FISCAL</a-radio-button>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item
+          label="Start Month"
+          class="register-form-item"
+          :validate-status="validation_errors.start_month ? 'error':''"
+          :help="validation_errors.start_month"
+          has-feedback
+        >
+          <a-select
+            style="width: 100%"
+            v-model="form.taxpayer.start_month"
+            :disabled="form.taxpayer.accounting_type === 'c'"
+          >
+            <!-- @change="selectStartMonth" -->
+            <a-select-option v-for="(item, index) in months" :key="index" :value="index">{{item}}</a-select-option>
+          </a-select>
+        </a-form-item>
+      </span>
+      <span v-else>
+        <a-form-item
+          label="Taxpayer Name"
+          :validate-status="validation_errors.taxpayer_name ? 'error':''"
+          :help="validation_errors.taxpayer_name"
+          has-feedback
+          class="register-form-item"
+        >
+          <a-input
+            class="text-uppercase"
+            :disabled="loading"
+            v-model="form.taxpayer.individual_details.firstName"
+            placeholder="First Name"
+            @change="updateRegName()"
+          ></a-input>
+          <a-input
+            class="text-uppercase"
+            :disabled="loading"
+            v-model="form.taxpayer.individual_details.middleName"
+            placeholder="Middle Name"
+            @change="updateRegName()"
+          ></a-input>
+          <a-input
+            class="text-uppercase"
+            :disabled="loading"
+            v-model="form.taxpayer.individual_details.lastName"
+            placeholder="Last Name"
+            @change="updateRegName()"
+          ></a-input>
+        </a-form-item>
+        <a-form-item
+          class="register-form-item"
+          label="Select Filer Type"
+          :validate-status="validation_errors.filer_type ? 'error':''"
+          :help="validation_errors.filer_type"
+          has-feedback
+        >
+          <a-radio-group v-model="form.taxpayer.filer_type">
+            <a-radio value="sp">Single Proprietor</a-radio>
+            <a-radio value="p">Professional</a-radio>
+            <a-radio value="em">Employee</a-radio>
+            <a-radio value="e">Estate</a-radio>
+            <a-radio value="t">Trust</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item
+          label="Date of Birth"
+          class="register-form-item"
+          :validate-status="validation_errors.birth_date ? 'error':''"
+          :help="validation_errors.birth_date"
+          has-feedback
+        >
+          <a-date-picker
+            style="width:100%"
+            placeholder="Date of Birth"
+            v-model="form.taxpayer.individual_details.birthDate"
+          />
+        </a-form-item>
+        <a-form-item
+          class="register-form-item"
+          label="Gender"
+          :validate-status="validation_errors.gender ? 'error':''"
+          :help="validation_errors.gender"
+          has-feedback
+        >
+          <a-radio-group buttonStyle="solid" v-model="form.taxpayer.individual_details.gender">
+            <a-radio-button value="M">MALE</a-radio-button>
+            <a-radio-button value="F">FEMALE</a-radio-button>
+          </a-radio-group>
+        </a-form-item>
+
+        <a-form-item
+          class="register-form-item"
+          label="Citizenship"
+          :validate-status="validation_errors.citizenship ? 'error':''"
+          :help="validation_errors.citizenship"
+          has-feedback
+        >
+          <a-input
+            class="text-uppercase"
+            placeholder="Citizenship"
+            v-model="form.taxpayer.individual_details.citizenship"
+          ></a-input>
+        </a-form-item>
+      </span>
+      <a-form-item
+        class="register-form-item"
+        label="Registered Address"
+        :validate-status="validation_errors.address ? 'error':''"
+        :help="validation_errors.address"
         has-feedback
       >
-        <a-radio-group
-          buttonStyle="solid"
-          v-model="form.taxpayer.individual_details.gender"
-        >
-          <a-radio-button value="M">MALE</a-radio-button>
-          <a-radio-button value="F">FEMALE</a-radio-button>
-        </a-radio-group>
+        <a-textarea
+          class="text-uppercase"
+          rows="4"
+          v-model="form.taxpayer.address"
+          placeholder="Registered Address"
+        ></a-textarea>
       </a-form-item>
-    
-    <a-form-item
-      class="register-form-item"
-      label="Citizenship"
-      :validate-status="validation_errors.citizenship ? 'error':''"
-      :help="validation_errors.citizenship"
-      has-feedback
-    >
-      <a-input
-        class="text-uppercase"
-        placeholder="Citizenship"
-        v-model="form.taxpayer.individual_details.citizenship"
-      ></a-input>
-    </a-form-item>
-    </span>
-    <a-form-item
-      class="register-form-item"
-      label="Registered Address"
-      :validate-status="validation_errors.address ? 'error':''"
-      :help="validation_errors.address"
-      has-feedback
-    >
-      <a-textarea
-        class="text-uppercase"
-        rows="4"
-        v-model="form.taxpayer.address"
-        placeholder="Registered Address"
-      ></a-textarea>
-    </a-form-item>
-    <a-form-item
-      class="register-form-item"
-      label="Zip Code"
-      :validate-status="validation_errors.zipCode ? 'error':''"
-      :help="validation_errors.zipCode"
-      has-feedback
-    >
-      <a-input placeholder="Zip Code" v-model="form.taxpayer.address_details.zipCode"></a-input>
-    </a-form-item>
-  </a-form>
-  <a-divider></a-divider>
-  <a-row>
-    <a-col :span="24" align="right">
-      <a-button-group>
-        <a-button size="large" ghost type="primary" icon="close">Cancel</a-button>
-        <a-button size="large" type="primary" icon="save" @click="save">Save</a-button>
-      </a-button-group>
-    </a-col>
-  </a-row>
-  
+      <a-form-item
+        class="register-form-item"
+        label="Zip Code"
+        :validate-status="validation_errors.zipCode ? 'error':''"
+        :help="validation_errors.zipCode"
+        has-feedback
+      >
+        <a-input placeholder="Zip Code" v-model="form.taxpayer.address_details.zipCode"></a-input>
+      </a-form-item>
+    </a-form>
+    <a-divider></a-divider>
+    <a-row>
+      <a-col :span="24" align="right">
+        <a-button-group>
+          <a-button size="large" ghost type="primary" icon="close">Cancel</a-button>
+          <a-button size="large" type="primary" icon="save" @click="save">Save</a-button>
+        </a-button-group>
+      </a-col>
+    </a-row>
   </a-card>
 </template>
 
@@ -268,10 +268,11 @@ export default {
         name: {},
         taxpayer: {
           individual_details: {},
+          contact_details: {},
+          address_details: {},
           taxpayer_type: "C",
           accounting_type: "c",
-          start_month: 0,
-          address_details:{}
+          start_month: 0
         }
       },
       loading: false,
@@ -309,6 +310,8 @@ export default {
           name: {},
           taxpayer: {
             individual_details: {},
+            contact_details: {},
+            address_details: {},
             taxpayer_type: "C",
             accounting_type: "c",
             start_month: 0
@@ -321,34 +324,41 @@ export default {
     }
   },
   methods: {
-    save(){
-      this.loading=true;
-      this.form.taxpayer.user_id=this.$store.state.account_session.user.account_id
-      this.$http.post(`/taxpayer`,this.form.taxpayer)
-      .then(result=>{
-        // alert(JSON.stringify(result))
-        this.loading=false
-         this.$notification.success({
-                message: "New Taxpayer Created",
-                description: `TIN: ${this.form.taxpayer.tin}`,
-              });
-          this.$router.push('/app/taxpayer')
+    save() {
+      this.loading = true;
+      this.form.taxpayer.user_id = this.$store.state.account_session.user.account_id;
+      this.$http
+        .post(`/taxpayer`, this.form.taxpayer)
+        .then(result => {
+          // alert(JSON.stringify(result))
+          this.loading = false;
+          this.$notification.success({
+            message: "New Taxpayer Created",
+            description: `TIN: ${this.form.taxpayer.tin}`
+          });
+          this.$router.push("/app/taxpayer");
           //create activity
           var act = {
-            created_by:{
-                account_id: this.$store.state.account_session.user.account_id,
-                display_name: `${this.$store.state.account_session.user.name.first} ${this.$store.state.account_session.user.name.last}`,
-                avatar: {},
-                tin: this.form.taxpayer.tin
+            created_by: {
+              account_id: this.$store.state.account_session.user.account_id,
+              display_name: `${this.$store.state.account_session.user.name.first} ${this.$store.state.account_session.user.name.last}`,
+              avatar: {},
+              tin: this.form.taxpayer.tin
             },
-            activity:"1",
-            description:`New taxpayer added ${this.form.taxpayer.registered_name} TIN: (${this.formatTIN(this.form.taxpayer.tin)})`,
-          }
-          return this.$http.post(`/activities/${this.$store.state.account_session.user.account_id}`, act)
-      }).then(result=>{
-        console.log(`RES::::`,JSON.stringify(result.data))
-        // alert(success)
-      })
+            activity: "1",
+            description: `New taxpayer added ${
+              this.form.taxpayer.registered_name
+            } TIN: (${this.formatTIN(this.form.taxpayer.tin)})`
+          };
+          return this.$http.post(
+            `/activities/${this.$store.state.account_session.user.account_id}`,
+            act
+          );
+        })
+        .then(result => {
+          console.log(`RES::::`, JSON.stringify(result.data));
+          // alert(success)
+        });
     },
     showRegistration() {
       this.signup_visible = true;
@@ -391,7 +401,7 @@ export default {
       var errorOnStep1 = false;
 
       // Step 1
-      this.checkPassword();
+      // this.checkPassword();
       if (!this.form.name.first) {
         this.validation_errors.first_name = "Please input first name";
       }
@@ -416,8 +426,14 @@ export default {
         this.validation_errors.line_of_business =
           "Line of Business is required.";
       }
+      if (!this.form.taxpayer.contact_details.email) {
+        this.validation_errors.registered_email = "Email Address is required.";
+      }
       if (!this.form.taxpayer.address) {
         this.validation_errors.address = "Registered Address is required.";
+      }
+      if (!this.form.taxpayer.address_details.zipCode) {
+        this.validation_errors.zipCode = "Zip Code is required.";
       }
 
       if (this.form.taxpayer.taxpayer_type === "C") {
@@ -449,12 +465,13 @@ export default {
           this.validation_errors.filer_type = "Filer Type is required.";
         }
         if (!this.form.taxpayer.individual_details.birthDate) {
-          this.validation_errors.birth_date =
-            "Date of Birth is required.";
+          this.validation_errors.birth_date = "Date of Birth is required.";
         }
         if (!this.form.taxpayer.individual_details.gender) {
-          this.validation_errors.gender =
-            "Gender is required.";
+          this.validation_errors.gender = "Gender is required.";
+        }
+        if (!this.form.taxpayer.individual_details.citizenship) {
+          this.validation_errors.citizenship = "Citizenship is required.";
         }
       }
 
@@ -497,7 +514,7 @@ export default {
             if (!result.error) {
               this.$notification.success({
                 message: "Registration success.",
-                description: `Please confirm your account in ${this.form.email}`,
+                description: `Please confirm your account in ${this.form.email}`
               });
               this.signup_visible = false;
             } else {
@@ -547,14 +564,14 @@ export default {
   },
   created() {
     this.$http
-          .get(`${process.env.VUE_APP_BASE_API_URI}reference/rdos`)
-          .then(result => {
-            console.log(result.data);
-            this.rdos = result.data;
-            this.rdos.sort(function(a, b) {
-              return a.code - b.code;
-            });
-          });
+      .get(`${process.env.VUE_APP_BASE_API_URI}reference/rdos`)
+      .then(result => {
+        console.log(result.data);
+        this.rdos = result.data;
+        this.rdos.sort(function(a, b) {
+          return a.code - b.code;
+        });
+      });
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
