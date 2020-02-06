@@ -283,7 +283,9 @@ export default {
       this.$store
         .dispatch("GET_TAX_RETURNS")
         .then(result => {
-          console.log("get tax returns new payment data: " + JSON.stringify(result))
+          console.log(
+            "get tax returns new payment data: " + JSON.stringify(result)
+          );
           this.loading = false;
         })
         .catch(err => {
@@ -357,6 +359,8 @@ export default {
         .then(result => {
           console.log("result.data.model :", result.data.model);
           this.printReceipt(result.data.model);
+          console.log("payments :", result.data.model.payments);
+          this.sendPaymentEmail(result.data.model.payments);
           this.loading_payments = false;
           this.init();
           this.$notification.success({
@@ -365,17 +369,24 @@ export default {
           });
           this.reset();
           var act = {
-            created_by:{
-                account_id: this.$store.state.account_session.user.account_id,
-                display_name: `${this.$store.state.account_session.user.name.first} ${this.$store.state.account_session.user.name.last}`,
-                avatar: {},
+            created_by: {
+              account_id: this.$store.state.account_session.user.account_id,
+              display_name: `${this.$store.state.account_session.user.name.first} ${this.$store.state.account_session.user.name.last}`,
+              avatar: {}
             },
-            activity:"3",
-            description:`Paid the amount of ${formatAmount(payments.amount_paid)}`,
-          }
-          return this.$http.post(`/activities/${this.$store.state.account_session.user.account_id}`, act)
-        }).then(result=>{
-          console.log('ACT :::', JSON.stringify(result.data))
+            activity: "3",
+            description: `Paid the amount of ${this.formatAmount(
+              payments.amount_paid
+            )}`
+          };
+          return this.$http.post(
+            `/activities/${this.$store.state.account_session.user.account_id}`,
+            act
+          );
+        })
+        .then(result => {
+          console.log("ACT :::", JSON.stringify(result.data));
+          this.loading_payments = false;
         })
         .catch(err => {
           console.log("PAYMENT err :", err);
@@ -405,6 +416,32 @@ export default {
             console.log("UPLOAD ERROR ::: ", JSON.stringify(result));
           });
       });
+    },
+    sendPaymentEmail(payments) {
+      var last_card_no = payments.payment_details.card_no.substring(
+        payments.payment_details.card_no.length - 4,
+        payments.payment_details.card_no.length
+      );
+      var payment_data = {
+        name:
+          this.user && this.user.name
+            ? `${this.user.name.first} ${this.user.name.last}`
+            : "",
+        amount: this.formatAmount(payments.amount_paid, true),
+        ref_no: payments.payment_conf_no,
+        trans_date: this.formatDate(new Date()),
+        card_no: `XXXX-XXXX-XXXX-${last_card_no}`
+      };
+      console.log("email :", this.user.email);
+      console.log("payment_data :", payment_data);
+      this.$http
+        .post(`/payment/email/${this.user.email}`, payment_data)
+        .then(result => {
+          console.log("payment email result :", result);
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
     },
     reset() {
       this.record = {};
@@ -438,6 +475,9 @@ export default {
         total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
       }
       return total;
+    },
+    user() {
+      return this.$store.state.account_session.user;
     }
   }
 };
