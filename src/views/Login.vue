@@ -9,7 +9,7 @@
           <div style="font-size: 42px; color:#ffffff;">Tax Preparation Software.</div>
           <p
             style="margin-top:2vh; color:#ffffff"
-          >Help individuals or companies prepare and file income, corporate tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
+          >Helps corporations, companies or individuals to  prepare and file corporate, income tax returns. Tax made easy by walking the user through tax forms and calculates automatically tax obligations.</p>
           <a-button size="large" ghost>
             <a-icon type="download"></a-icon>Download & Install on PC
             <a-icon type="windows" />

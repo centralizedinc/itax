@@ -9,10 +9,10 @@
         </a-card>
     </a-col> -->
     <a-col :span="8" style="margin-top:1vh" >
-        <a-card style="min-height:250px">
+        <a-card style="min-height:250px; cursor:pointer" @click="$router.push('/app/taxpayer')" class="avatar_btn"> 
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
-                  <span style="font-size:22px">Taxpayer</span>
+                  <span style="font-size:22px">Taxpayers</span>
               </a-col>
               <a-col :span="12" align="center">
                   <span style="font-size:22px;font-weight:bold">{{taxpayer_count.length}}</span>
@@ -26,7 +26,7 @@
         </a-card>          
     </a-col>
     <a-col :span="8" style="margin-top:1vh">
-        <a-card style="min-height:250px">
+        <a-card style="min-height:250px; cursor:pointer" @click="$router.push('/app/tax')" class="avatar_btn">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Tax Returns</span>
@@ -43,11 +43,11 @@
                 <br/>
                 This section displays the last tax return filed.
             </span>  
-            <span style="font-size:10px" v-else>You have filed {{returns_count[0].form_type}} with ref# {{returns_count[0].reference_no}} last {{returns_count[0].date_created}}</span>         
+            <span style="font-size:10px" v-else>You have filed {{returns_count[0].form_type}} with ref# {{returns_count[0].reference_no}} last {{formatDate(returns_count[0].date_created)}}</span>         
         </a-card>        
     </a-col>
     <a-col :span="8" style="margin-top:1vh" >
-        <a-card style="min-height:250px">
+        <a-card style="min-height:250px; cursor:pointer" @click="$router.push('/app/pay')" class="avatar_btn">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Payments</span>
