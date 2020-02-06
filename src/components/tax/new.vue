@@ -22,16 +22,14 @@
           <a-menu @click="nav">
             <!-- <a-menu-item key="1700">From 1700</a-menu-item> -->
             <!-- <a-menu-item key="1701Q">From 1701Q</a-menu-item> -->
-            <a-menu-item key="1700">
-              <a-icon type="form"></a-icon>Form 1700
-            </a-menu-item>
-            <a-menu-item key="1701a">Form 1701A</a-menu-item>
-            <a-menu-item key="1702">Form 1702</a-menu-item>
-            <a-menu-item key="1702q">Form 1702Q</a-menu-item>
-            <a-menu-item key="1701q">Form 1701Q</a-menu-item>
-            <a-menu-item key="1702rt">Form 1702-RT</a-menu-item>
-            <a-menu-item key="1706">Form 1706</a-menu-item>
-            <a-menu-item key="1702ex">Form 1702EX</a-menu-item>
+            <a-menu-item key="1700" disabled>Form 1700</a-menu-item>
+            <a-menu-item key="1701a" disabled="true">Form 1701A</a-menu-item>
+            <a-menu-item key="1702" disabled="true">Form 1702</a-menu-item>
+            <a-menu-item key="1702q" disabled="true">Form 1702Q</a-menu-item>
+              <a-menu-item key="1701q">Form 1701Q</a-menu-item>
+            <a-menu-item key="1702rt" disabled>Form 1702-RT</a-menu-item>
+            <a-menu-item key="1706" disabled>Form 1706</a-menu-item>
+            <a-menu-item key="1702ex" disabled>Form 1702EX</a-menu-item>
           </a-menu>
         </template>
       </a-popover>
@@ -56,8 +54,8 @@
         </a-card>
         <template slot="content">
           <a-menu @click="nav">
-            <a-menu-item key="2550m">From 2550M</a-menu-item>
-            <a-menu-item key="2550q">Form 2550Q</a-menu-item>
+            <a-menu-item key="2550m" >From 2550M</a-menu-item>
+            <a-menu-item key="2550q" disabled>Form 2550Q</a-menu-item>
           </a-menu>
         </template>
       </a-popover>
@@ -82,16 +80,16 @@
         </a-card>
         <template slot="content">
           <a-menu @click="nav">
-            <a-menu-item key="1601c">Form 1601C</a-menu-item>
-            <a-menu-item key="1601e">Form 1601E</a-menu-item>
-            <a-menu-item key="1601eq">Form 1601EQ</a-menu-item>
+            <a-menu-item key="1601c" disabled>Form 1601C</a-menu-item>
+            <a-menu-item key="1601e" disabled>Form 1601E</a-menu-item>
+            <a-menu-item key="1601eq" disabled>Form 1601EQ</a-menu-item>
             <a-menu-item key="1600wp">Form 1600WP</a-menu-item>
-            <a-menu-item key="1604e">Form 1604E</a-menu-item>
-            <a-menu-item key="1601f">Form 1601F</a-menu-item>
-            <a-menu-item key="1606">Form 1606</a-menu-item>
-            <a-menu-item key="1601fq">Form 1601FQ</a-menu-item>
-            <a-menu-item key="1601c">Form 1601C</a-menu-item>
-            <a-menu-item key="1604c">Form 1604C</a-menu-item>
+            <a-menu-item key="1604e" disabled>Form 1604E</a-menu-item>
+            <a-menu-item key="1601f" disabled>Form 1601F</a-menu-item>
+            <a-menu-item key="1606" disabled>Form 1606</a-menu-item>
+            <a-menu-item key="1601fq" disabled>Form 1601FQ</a-menu-item>
+            <a-menu-item key="1601c" disabled>Form 1601C</a-menu-item>
+            <a-menu-item key="1604c" disabled>Form 1604C</a-menu-item>
           </a-menu>
         </template>
       </a-popover>
@@ -117,7 +115,7 @@
         </a-card>
         <template slot="content">
           <a-menu @click="nav">
-            <a-menu-item key="2551q">Form 2551Q</a-menu-item>
+            <a-menu-item key="2551q" disabled>Form 2551Q</a-menu-item>
           </a-menu>
         </template>
       </a-popover>

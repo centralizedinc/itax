@@ -11,7 +11,7 @@ const activity = require('../services/actvities_service')
  * @param {String} form_type 
  * @param {Object} form_details 
  */
-function save(form_type, form_details) {
+function save(form_type, form_details, account_id) {
     console.log('Saving form ...');
     return new Promise((resolve, reject) => {
         new FormDao(form_type).create(form_details)
@@ -36,7 +36,7 @@ function save(form_type, form_details) {
             })
             .then((result) => {
                 console.log(`Return Details(${form_type}) :`, result);
-                activity.file(result.tin, result)
+                activity.file(result.tin, result, account_id)
                 resolve(result)
             })
             .catch((err) => {

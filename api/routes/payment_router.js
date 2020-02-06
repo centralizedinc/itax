@@ -12,6 +12,8 @@ const PaymentDao = require('../dao/PaymentDao');
 const ReturnDetailsDao = require('../dao/ReturnDetailsDao');
 const activity = require('../services/actvities_service')
 
+const sendEmail = require('../utils/email');
+
 router.route("/")
     .get((req, res) => {
         PaymentDao.findAll()
@@ -39,7 +41,7 @@ router.route("/")
                 return ReturnDetailsDao.modifyOne({ reference_no: data.references[0] }, { payment_status: 'paid' })
             })
             .then((return_details) => {
-                activity.pay(return_details.tin, {payments, return_details})
+                activity.pay(return_details.tin, { payments, return_details }, created_by)
                 res.json({
                     success: true,
                     model: {
@@ -81,6 +83,20 @@ router.route("/multiple")
                 })
             });
 
+    })
+
+router.route("/email/:email")
+    .post((req, res) => {
+        var data = req.body;
+        console.log('req.params.email :', req.params.email);
+        console.log('data :', data);
+        sendEmail.sendEmail(req.params.email, data, "PAYMENT_NOTIFICATION")
+            .then((result) => {
+                console.log('result :', result);
+                res.json(result);
+            }).catch((error) => {
+                res.json({ error });
+            });
     })
 
 

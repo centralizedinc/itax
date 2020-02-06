@@ -39,6 +39,25 @@ router.route('/users/:id')
     })
 })
 
+.post((req, res)=>{
+    console.log('saving :::', JSON.stringify(req.body))
+    (new ActvityModel(req.body)).save()
+    .then(model=>{
+        console.log('saved :::', JSON.stringify(model))
+        res.json({
+            success: true,
+            model
+        })
+    })
+    .catch(errors=>{
+        console.log(errors)
+        res.json({
+            success: false,
+            errors
+        })
+    })
+})
+
 
 router.route('/:tin')
 /**

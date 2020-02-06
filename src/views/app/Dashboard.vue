@@ -9,16 +9,16 @@
         </a-card>
     </a-col> -->
     <a-col :span="8" style="margin-top:1vh" >
-        <a-card style="min-height:250px">
+        <a-card style="min-height:250px; cursor:pointer" @click="$router.push('/app/taxpayer')" class="avatar_btn"> 
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
-                  <span style="font-size:22px">Taxpayer</span>
+                  <span style="font-size:22px">Taxpayers</span>
               </a-col>
               <a-col :span="12" align="center">
                   <span style="font-size:22px;font-weight:bold">{{taxpayer_count.length}}</span>
               </a-col>
               <a-col :span="12">
-                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+                  <apexchart  type="bar" :options="chartOptions" :series="taxpayer_series" />
               </a-col>
             </a-row>  
             <a-divider></a-divider>  
@@ -26,7 +26,7 @@
         </a-card>          
     </a-col>
     <a-col :span="8" style="margin-top:1vh">
-        <a-card style="min-height:250px">
+        <a-card style="min-height:250px; cursor:pointer" @click="$router.push('/app/tax')" class="avatar_btn">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Tax Returns</span>
@@ -35,16 +35,19 @@
                   <span style="font-size:22px;font-weight:bold">{{returns_count.length}}</span>
               </a-col>
               <a-col :span="12">
-                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+                  <apexchart  type="bar" :options="chartOptions" :series="returns_series" />
               </a-col>
             </a-row>     
             <a-divider></a-divider>  
-            <span style="font-size:10px" v-if="!returns_count.length">No returns filed</span>  
-            <span style="font-size:10px" v-else>You have filed {{returns_count[0].form_type}} with ref# {{returns_count[0].reference_no}} last {{returns_count[0].date_created}}</span>         
+            <span style="font-size:10px" v-if="!returns_count.length">No returns filed.
+                <br/>
+                This section displays the last tax return filed.
+            </span>  
+            <span style="font-size:10px" v-else>You have filed {{returns_count[0].form_type}} with ref# {{returns_count[0].reference_no}} last {{formatDate(returns_count[0].date_created)}}</span>         
         </a-card>        
     </a-col>
     <a-col :span="8" style="margin-top:1vh" >
-        <a-card style="min-height:250px">
+        <a-card style="min-height:250px; cursor:pointer" @click="$router.push('/app/pay')" class="avatar_btn">
             <a-row type="flex" align="middle" :gutter="24">
               <a-col :span="24" align="">
                   <span style="font-size:22px">Payments</span>
@@ -53,11 +56,15 @@
                   <span style="font-size:20px;font-weight:bold">{{formatAmount(payments_count.total)}}</span>
               </a-col>
               <a-col :span="12">
-                  <apexchart  type="bar" :options="chartOptions" :series="series" />
+                  <apexchart  type="bar" :options="chartOptions" :series="payments_series" />
               </a-col>
             </a-row>  
             <a-divider></a-divider> 
-            <span style="font-size:10px" v-if="!payments_count.length">No payments made</span>  
+            <span style="font-size:10px" v-if="!payments_count.length">
+                No payments made
+                <br/>
+                This will display the lastest payment made.
+            </span>  
             <span style="font-size:10px" v-else>Last Payment with the amount of ₱{{formatAmount(payments_count[payments_count.length-1].amount_paid)}} was paid last {{formatDate(payments_count[payments_count.length-1].date_created)}}</span>          
         </a-card>        
     </a-col>
@@ -147,10 +154,10 @@
                 </template> -->
                 <template slot="content">
                     <p>{{item.description}}</p>
-                    <template v-if="getAttachments(item.reference_no)">
+                    <template v-if="getAttachments(item)">
                         <a-row>
                           <a-col :span="8">
-                              <pdf :src="getAttachments(item.reference_no)" style="width:90%; cursor:zoom; border: 1px solid" @click="window.open(getAttachments(item.reference_no))" /> 
+                              <pdf :src="getAttachments(item)" style="width:90%; cursor:zoom; border: 1px solid" @click="window.open(getAttachments(item.reference_no))" /> 
                           </a-col>
                         </a-row>
                         
@@ -265,7 +272,7 @@ export default {
             chartOptions: {
                 chart: { type: "line", sparkline: { enabled: true } },
                 stroke: { width: 2, curve: "smooth" },
-                tooltip: { x: { show: false } },
+                // tooltip: { x: { show: false } },
                 fill: {
                     type: "gradient",
                     gradient: {
@@ -282,13 +289,13 @@ export default {
             series: [{
                 name: "Collections",
                 data: [
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100)
+                    // 0,
+                    // 0,
+                    // 0,
+                    // 0,
+                    // this.,
+                    // 0,
+                    // 0
                     ]
                 }]
         }
@@ -309,14 +316,67 @@ export default {
                 this.loading=false;
             })
         },
-        getAttachments(ref_no){
-            return this.attachments.find(x=> x.reference_no === ref_no)?this.attachments.find(x=> x.reference_no === ref_no).url:''
+        getAttachments(rec){
+            console.log('record :::', JSON.stringify(rec))
+            if(rec.attachments && rec.attachments.length>0){
+                return rec.attachments[0].url
+            }else{
+                return ''
+            }
+
+            // return this.attachments.find(x=> x.reference_no === ref_no)?
+            //         this.attachments.find(x=> x.reference_no === ref_no).url:''
         },
         view(url){
             window.open(url)
         }
     },
+    computed:{
+        taxpayer_series(){
+            return [{
+                name: "Taxpayer count",
+                data: [
+                    {x:'Sunday', y:0},
+                    {x:'Monday', y:0},
+                    {x:'Tuesday', y:0},
+                    {x:'Wednesday', y:0},
+                    {x:'Thursday', y:this.taxpayer_count.length},
+                    {x:'Friday', y:0},
+                    {x:'Saturday', y:0}
+                    ]
+                }]
+        },
+        returns_series(){
+            return [{
+                name: "Taxpayer count",
+                data: [
+                    {x:'Sunday', y:0},
+                    {x:'Monday', y:0},
+                    {x:'Tuesday', y:0},
+                    {x:'Wednesday', y:0},
+                    {x:'Thursday', y:this.returns_count.length},
+                    {x:'Friday', y:0},
+                    {x:'Saturday', y:0}
+                    ]
+                }]
+        },
+        payments_series(){
+            return [{
+                name: "Total payment",
+                data: [
+                    {x:'Sunday', y:0},
+                    {x:'Monday', y:0},
+                    {x:'Tuesday', y:0},
+                    {x:'Wednesday', y:0},
+                    {x:'Thursday', y:this.payments_count.total},
+                    {x:'Friday', y:0},
+                    {x:'Saturday', y:0}
+                    ]
+                }]
+        }
+    },
     asyncComputed:{
+        
         taxpayer_count(){
             return new Promise((resolve, reject)=>{
                 this.$http.get(`${process.env.VUE_APP_BASE_API_URI}taxpayer/users/${this.$store.state.account_session.user.account_id}`)

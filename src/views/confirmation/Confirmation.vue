@@ -13,8 +13,7 @@ export default {
       .then(result => {
         console.log("result.data :", result);
         this.$notification.success({
-          message: result.message,
-          icon: <a-icon type="check" style="color: blue" />
+          message: result.message
         });
         this.$router.push("/app");
       })

@@ -56,7 +56,7 @@
 
     <a-col :span="24" style="margin-top: 1vh">
       <a-card>
-        <h3>Taxpayer Vault</h3>
+        <h3>Taxpayers</h3>
         <span style="font-size:10px">All your registered taxpayers can be found here.</span>
         <a-divider></a-divider>
         <a-list
@@ -66,11 +66,11 @@
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <!-- <a-card> -->
-            <a slot="actions">edit</a>
-            <a slot="actions">view</a>
+            <a slot="actions" @click="view()">edit</a>
+            <a slot="actions" @click="view(item)">view</a>
             <a-list-item-meta>
               <template slot="description">
-                <span style="font-weight:bold">{{
+                <span style="font-weight:bold;text-transform: uppercase;">{{
                   item.taxpayer_type == "I"
                     ? `${item.individual_details.lastName}, ${item.individual_details.firstName} ${item.individual_details.middleName}`
                     : `${item.registered_name}`
@@ -79,10 +79,10 @@
                 <br/>
                 <span style="font-weight:bold">{{ formatTIN(item.tin) }}</span>
                 <div style="font-size:10px">{{item.taxpayer_type == "I" ? "Individual" : "Non-Individual"}}</div>
-                <div style="font-size:10px">{{item.address}}</div>
+                <div style="font-size:10px;text-transform: uppercase;">{{item.address}}</div>
               </template>
               <a-avatar
-                style="border: solid 1px #1cb5e0"
+                style="border: solid 1px #1cb5e0;text-transform: uppercase;"
                 slot="avatar"
                 shape="square"
                 :size="64"
@@ -156,6 +156,9 @@ export default {
           }
         }
       );
+    },
+    view(item){      
+      this.$router.push('/app/taxpayer/view')
     }
   }
 };
