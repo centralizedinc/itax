@@ -8,7 +8,9 @@ function initialState() {
         draft_forms: [],
         tax_returns: [],
         rdos: [],
-        login_rdo: ""
+        login_rdo: "",
+        view_taxpayer: {},
+        edit_taxpayer: {}
     }
 }
 
@@ -40,6 +42,12 @@ const mutations = {
     },
     SET_RDOS(state, data) {
         state.rdos = data;
+    },
+    SET_VIEW_TAXPAYER(state, data) {
+        state.view_taxpayer = data;
+    },
+    SET_EDIT_TAXPAYER(state, data) {
+        state.edit_taxpayer = data;
     },
     RESET(state) {
         Object.keys(state).forEach(key => {

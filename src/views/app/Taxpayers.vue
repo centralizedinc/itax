@@ -66,7 +66,7 @@
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <!-- <a-card> -->
-            <a slot="actions" @click="view()">edit</a>
+            <a slot="actions" @click="edit(item)">edit</a>
             <a slot="actions" @click="view(item)">view</a>
             <a-list-item-meta>
               <template slot="description">
@@ -158,7 +158,12 @@ export default {
       );
     },
     view(item){      
+      this.$store.commit("SET_VIEW_TAXPAYER", item);
       this.$router.push('/app/taxpayer/view')
+    },
+    edit(item) {
+      this.$store.commit("SET_EDIT_TAXPAYER", item);
+      this.$router.push('/app/taxpayer/edit');
     }
   }
 };

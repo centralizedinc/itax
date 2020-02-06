@@ -67,6 +67,11 @@ export default new Router({
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/Viewtaxpayer.vue'),
     },
     {
+      path: 'taxpayer/edit',
+      name: 'Update Taxpayer',
+      component: () => import( /* webpackChunkName: "tax" */ '@/views/app/EditTaxpayer.vue'),
+    },
+    {
       path: 'taxpayer/upload',
       name: 'Upload Taxpayers',
       component: () => import( /* webpackChunkName: "tax" */ '@/views/app/UploadTaxpayers.vue'),
