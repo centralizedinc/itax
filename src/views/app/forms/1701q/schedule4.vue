@@ -236,10 +236,27 @@ export default {
       return this.errors.find(x => x.field === item) ? "error" : "";
     },
     error_desc(item) {
-      console.log("##errorDesc :", item);
-      return this.errors.find(x => x.field === item)
-        ? this.errors.find(x => x.field === item).error
-        : "";
+      var err = this.errors.find(x => x.field === item);
+      console.log("err :", err);
+      if (err && err.required_value && err.field) {
+        if (err.field === "taxpayer_tax_payable.surcharge")
+          this.form.taxpayer_tax_payable.surcharge = parseFloat(
+            err.required_value
+          );
+        if (err.field === "taxpayer_tax_payable.interest")
+          this.form.taxpayer_tax_payable.interest = parseFloat(
+            err.required_value
+          );
+        if (err.field === "taxpayer_tax_payable.compromise")
+          this.form.taxpayer_tax_payable.compromise = parseFloat(
+            err.required_value
+          );
+      }
+      return err ? err.error : "";
+      // console.log("##errorDesc :", item);
+      // return this.errors.find(x => x.field === item)
+      //   ? this.errors.find(x => x.field === item).error
+      //   : "";
     },
     onClose() {
       // this.visible = false;

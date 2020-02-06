@@ -25,7 +25,7 @@
         </a-col>
         <template v-for="(item, index) in items">
           <a-col :key="`t${index}`" :span="10" style="text-align: right; margin: 5px 0;">{{item.title}}:</a-col>
-          <a-col :key="`f${index}`" :span="14" style="text-align: left; margin: 5px 0;">
+          <a-col :key="`f${index}`" :span="14" style="text-align: left; margin: 5px 0;text-transform: uppercase;">
             <span>
               <b>{{details[item.field]}}</b>
             </span>
