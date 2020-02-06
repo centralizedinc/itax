@@ -2,6 +2,10 @@ var router = require("express").Router();
 
 var Uploader = require('../utils/uploader')
 var model = require('../models/FormModel')
+var form1701QModel = require('../models/forms/form1701QModel');
+var form2550MModel = require('../models/forms/form2550MModel');
+var form2000OTModel = require('../models/forms/form2000OTModel');
+var form1600WPModel = require('../models/forms/form1600WPModel');
 
 
 router.route('/')
@@ -43,8 +47,30 @@ router.route('/avatar/:account_id')
 
 router.route('/forms/:form/:ref_no')
     .get((req, res)=>{
-        model.findOne({reference_no:req.params.ref_no, form:req.params.form}).exec()
+        console.log("reference number details: " + JSON.stringify(req.params.ref_no))
+        console.log("form details: " + JSON.stringify(req.params.form))
+        var form_value = ""
+        var go = false
+        if(req.params.form){
+            if(req.params.form == '1701q') {
+                form_value = form1701QModel
+                go = true
+            }if(req.params.form === '2550w'){
+                form_value = form2550MModel.
+                go = true
+            }if(req.params.form === '2000ot'){
+                form_value = form2000OTModel
+                go = true
+            }if(req.params.form === '1600wp'){
+                form_value = form1600WPModel
+                go = true
+            }
+            console.log("form value data: ", go)
+        }if(go==true){
+ 
+            form_value.findOne({reference_no:req.params.ref_no}).exec()
         .then(model=>{
+            console.log("upload router data model details: " + JSON.stringify(model))
             res.json({
                 success: true,
                 model
@@ -56,6 +82,25 @@ router.route('/forms/:form/:ref_no')
                 errors
             })
         })
+        }
+        
+        
+        
+
+        // model.findOne({reference_no:req.params.ref_no, form:req.params.form}).exec()
+        // .then(model=>{
+        //     console.log("upload router data model details: " + JSON.stringify(model))
+        //     res.json({
+        //         success: true,
+        //         model
+        //     })
+        // })
+        // .catch(errors=>{
+        //     res.json({
+        //         success: false,
+        //         errors
+        //     })
+        // })
     })
     .post((req, res) => {
         console.log("Upload_router ...")
