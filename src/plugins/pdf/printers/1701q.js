@@ -33,7 +33,7 @@ function fillup(details) {
 function getContent(forms) {
     console.log("get content forms: ", forms)
     var _forms = Array.isArray(forms) ? forms : [forms];
-    console.log("get _form data: " + JSON.stringify(_forms))
+    console.log("get _form data: ", forms)
     var content_page1 = [
         // 1-4
         {
@@ -593,7 +593,7 @@ function getContent(forms) {
                 widths: [500],
                 body: [
                     [{
-                        text: checkName(forms.spouse_details.individual_details.lastName, forms.spouse_details.individual_details.firstName, forms.spouse_details.individual_details.middleName),
+                        text: checkName(forms.spouse_details),
                         // text: 'SPOUSE NAME,
                         fontSize: 13,
                         // right,down,left,up
@@ -886,7 +886,6 @@ function getContent(forms) {
             }
         }
     ]
-
     //   var content2 = [{
     //           text: 'Unordered list',
     //           style: 'header'
@@ -1034,7 +1033,7 @@ function getContent(forms) {
                         },
                         {
                             // text: "000",
-                            text: forms.sched1.taxpayer.total_sales_revenue ? forms.sched1.taxpayer.total_sales_revenue : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_sales_revenue ? forms.sched1.taxpayer.total_sales_revenue : '0',
                             // text: forms.mor_assumed ? forms.mor_assumed : '0.00',
                             fontSize: 12,
                             bold: true,
@@ -1045,7 +1044,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_sales_revenue),
-                            text: forms.sched1.spouse.total_sales_revenue ? forms.sched1.spouse.total_sales_revenue : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_sales_revenue ? forms.sched1.spouse.total_sales_revenue : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1073,7 +1072,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_sales_services),
-                            text: forms.sched1.taxpayer.total_sales_services ? forms.sched1.taxpayer.total_sales_services : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_sales_services ? forms.sched1.taxpayer.total_sales_services : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1083,7 +1082,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_sales_services),
-                            text: forms.sched1.spouse.total_sales_services ? forms.sched1.spouse.total_sales_services : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_sales_services ? forms.sched1.spouse.total_sales_services : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1111,7 +1110,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.gross_income),
-                            text: forms.sched1.taxpayer.gross_income ? forms.sched1.taxpayer.gross_income : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.gross_income ? forms.sched1.taxpayer.gross_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1121,7 +1120,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.gross_income),
-                            text: forms.sched1.spouse.gross_income ? forms.sched1.spouse.gross_income : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.gross_income ? forms.sched1.spouse.gross_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1149,7 +1148,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_allowable_itemized_deductions),
-                            text: forms.sched1.taxpayer.total_allowable_itemized_deductions ? forms.sched1.taxpayer.total_allowable_itemized_deductions : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_allowable_itemized_deductions ? forms.sched1.taxpayer.total_allowable_itemized_deductions : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1159,7 +1158,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_allowable_itemized_deductions),
-                            text: forms.sched1.spouse.total_allowable_itemized_deductions ? forms.sched1.spouse.total_allowable_itemized_deductions : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_allowable_itemized_deductions ? forms.sched1.spouse.total_allowable_itemized_deductions : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1189,7 +1188,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_standard_deductions),
-                            text: forms.sched1.taxpayer.total_standard_deductions ? forms.sched1.taxpayer.total_standard_deductions : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_standard_deductions ? forms.sched1.taxpayer.total_standard_deductions : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1199,7 +1198,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_standard_deductions),
-                            text: forms.sched1.spouse.total_standard_deductions ? forms.sched1.spouse.total_standard_deductions : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_standard_deductions ? forms.sched1.spouse.total_standard_deductions : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1227,7 +1226,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_net_income),
-                            text: forms.sched1.taxpayer.total_net_income ? forms.sched1.taxpayer.total_net_income : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_net_income ? forms.sched1.taxpayer.total_net_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1237,7 +1236,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_net_income),
-                            text: forms.sched1.spouse.total_net_income ? forms.sched1.spouse.total_net_income : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_net_income ? forms.sched1.spouse.total_net_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1265,7 +1264,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_taxable_income),
-                            text: forms.sched1.taxpayer.total_taxable_income ? forms.sched1.taxpayer.total_taxable_income : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_taxable_income ? forms.sched1.taxpayer.total_taxable_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1275,7 +1274,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_taxable_income),
-                            text: forms.sched1.spouse.total_taxable_income ? forms.sched1.spouse.total_taxable_income : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_taxable_income ? forms.sched1.spouse.total_taxable_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1310,7 +1309,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_operation_income),
-                            text: forms.sched1.taxpayer.total_operation_income ? forms.sched1.taxpayer.total_operation_income : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_operation_income ? forms.sched1.taxpayer.total_operation_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1320,7 +1319,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_operation_income),
-                            text: forms.sched1.spouse.total_operation_income ? forms.sched1.spouse.total_operation_income : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_operation_income ? forms.sched1.spouse.total_operation_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1349,7 +1348,7 @@ function getContent(forms) {
                             // text: "000",
 
                             // text: formatAmount(forms.sched1.taxpayer.amount_recieved_share),
-                            text: forms.sched1.taxpayer.amount_recieved_share ? forms.sched1.taxpayer.amount_recieved_share : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.amount_recieved_share ? forms.sched1.taxpayer.amount_recieved_share : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1359,7 +1358,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.amount_recieved_share),
-                            text: forms.sched1.spouse.amount_recieved_share ? forms.sched1.spouse.amount_recieved_share : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.amount_recieved_share ? forms.sched1.spouse.amount_recieved_share : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1387,7 +1386,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.total_taxable_income_date),
-                            text: forms.sched1.taxpayer.total_taxable_income_date ? forms.sched1.taxpayer.total_taxable_income_date : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.total_taxable_income_date ? forms.sched1.taxpayer.total_taxable_income_date : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1397,7 +1396,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_taxable_income_date),
-                            text: forms.sched1.spouse.total_taxable_income_date ? forms.sched1.spouse.total_taxable_income_date : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_taxable_income_date ? forms.sched1.spouse.total_taxable_income_date : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1425,7 +1424,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.taxpayer.ttotal_tax_due),
-                            text: forms.sched1.taxpayer.ttotal_tax_due ? forms.sched1.taxpayer.ttotal_tax_due : '0',
+                            text: forms.sched1 && forms.sched1.taxpayer && forms.sched1.taxpayer.ttotal_tax_due ? forms.sched1.taxpayer.ttotal_tax_due : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1435,7 +1434,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched1.spouse.total_tax_due),
-                            text: forms.sched1.spouse.total_tax_due ? forms.sched1.spouse.total_tax_due : '0',
+                            text: forms.sched1 && forms.sched1.spouse && forms.sched1.spouse.total_tax_due ? forms.sched1.spouse.total_tax_due : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1464,7 +1463,7 @@ function getContent(forms) {
                             // text: "000",
 
                             // text: formatAmount(forms.sched2.taxpayer.total_sales_revenue),
-                            text: forms.sched2.taxpayer.total_sales_revenue ? forms.sched2.taxpayer.total_sales_revenue : '0',
+                            text: forms.sched2 && forms.sched2.taxpayer && forms.sched2.taxpayer.total_sales_revenue ? forms.sched2.taxpayer.total_sales_revenue : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1474,7 +1473,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.spouse.total_sales_revenue),
-                            text: forms.sched2.spouse.total_sales_revenue ? forms.sched2.spouse.total_sales_revenue : '0',
+                            text: forms.sched2 && forms.sched2.spouse && forms.sched2.spouse.total_sales_revenue ? forms.sched2.spouse.total_sales_revenue : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1507,7 +1506,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.taxpayer.total_operation_income),
-                            text: forms.sched2.taxpayer.total_operation_income ? forms.sched2.taxpayer.total_operation_income : '0',
+                            text: forms.sched2 && forms.sched2.taxpayer && forms.sched2.taxpayer.total_operation_income ? forms.sched2.taxpayer.total_operation_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1517,7 +1516,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.spouse.total_operation_income),
-                            text: forms.sched2.spouse.total_operation_income ? forms.sched2.spouse.total_operation_income : '0',
+                            text: forms.sched2 && forms.sched2.spouse && forms.sched2.spouse.total_operation_income ? forms.sched2.spouse.total_operation_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1545,7 +1544,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.taxpayer.total_income_quarter),
-                            text: forms.sched2.taxpayer.total_income_quarter ? forms.sched2.taxpayer.total_income_quarter : '0',
+                            text: forms.sched2 && forms.sched2.taxpayer && forms.sched2.taxpayer.total_income_quarter ? forms.sched2.taxpayer.total_income_quarter : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1555,7 +1554,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.spouse.total_income_quarter),
-                            text: forms.sched2.spouse.total_income_quarter ? forms.sched2.spouse.total_income_quarter : '0',
+                            text: forms.sched2 && forms.sched2.spouse && forms.sched2.spouse.total_income_quarter ? forms.sched2.spouse.total_income_quarter : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1583,7 +1582,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.taxpayer.previous_quarter_taxable_income),
-                            text: forms.sched2.taxpayer.previous_quarter_taxable_income ? forms.sched2.taxpayer.previous_quarter_taxable_income : '0',
+                            text: forms.sched2 && forms.sched2.taxpayer && forms.sched2.taxpayer.previous_quarter_taxable_income ? forms.sched2.taxpayer.previous_quarter_taxable_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1593,7 +1592,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.spouse.previous_quarter_taxable_income),
-                            text: forms.sched2.spouse.previous_quarter_taxable_income ? forms.sched2.spouse.previous_quarter_taxable_income : '0',
+                            text: forms.sched2 && forms.sched2.spouse && forms.sched2.spouse.previous_quarter_taxable_income ? forms.sched2.spouse.previous_quarter_taxable_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1621,7 +1620,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.taxpayer.total_cumulative_income),
-                            text: forms.sched2.taxpayer.total_cumulative_income ? forms.sched2.taxpayer.total_cumulative_income : '0',
+                            text: forms.sched2 && forms.sched2.taxpayer && forms.sched2.taxpayer.total_cumulative_income ? forms.sched2.taxpayer.total_cumulative_income : '0',
                             fontSize: 12,
                             bold: true,
                             alignment: 'right',
@@ -1631,7 +1630,7 @@ function getContent(forms) {
                         {
                             // text: "000",
                             // text: formatAmount(forms.sched2.spouse.total_cumulative_income),
-                            text: forms.sched2.spouse.total_cumulative_income ? forms.sched2.spouse.total_cumulative_income : '0',
+                            text: forms.sched2 && forms.sched2.spouse && forms.sched2.spouse.total_cumulative_income ? forms.sched2.spouse.total_cumulative_income : '0',
 
                             fontSize: 12,
                             bold: true,
@@ -2299,6 +2298,7 @@ function getContent(forms) {
 
     ]
 
+    console.log('test');
     var contents = [content_page1, content_page2]
     return contents;
 }
@@ -2334,26 +2334,34 @@ function mapTin(tin, from, to) {
     return tin.substring(from, to);
 }
 
-function checkName(lastName, firstName, middleName) {
-    console.log('!!!lastName :', lastName);
-    console.log('!!!firstName :', firstName);
-    console.log('!!!middleName :', middleName);
-    var last = ""
-    var first = ""
-    var mid = ""
-    if (lastName) {
-        // forms.spouse_details.individual_details.lastName + "," + " " + forms.spouse_details.individual_details.firstName + " " + forms.spouse_details.individual_details.middleName == null ? ' ' : forms.spouse_details.individual_details.lastName + "," + " " + forms.spouse_details.individual_details.firstName + " " + forms.spouse_details.individual_details.middleName
-        last = lastName
+function checkName(details) {
+    var fullname = " ";
+    if (details && details.individual_details) {
+        fullname = "";
+        if (details.individual_details.lastName) fullname += `${details.individual_details.lastName}, `;
+        if (details.individual_details.firstName) fullname += details.individual_details.firstName;
+        if (details.individual_details.middleName) fullname += ` ${details.individual_details.middleName}`;
     }
-    if (firstName) {
-        first = firstName
-    }
-    if (middleName) {
-        mid = middleName
-    }
-    var full = (last + ", " + first + " " + mid)
-    console.log("checkName: " + full)
-    return full
+    return fullname
+    // console.log('!!!lastName :', lastName);
+    // console.log('!!!firstName :', firstName);
+    // console.log('!!!middleName :', middleName);
+    // var last = ""
+    // var first = ""
+    // var mid = ""
+    // if (lastName) {
+    //     // forms.spouse_details.individual_details.lastName + "," + " " + forms.spouse_details.individual_details.firstName + " " + forms.spouse_details.individual_details.middleName == null ? ' ' : forms.spouse_details.individual_details.lastName + "," + " " + forms.spouse_details.individual_details.firstName + " " + forms.spouse_details.individual_details.middleName
+    //     last = lastName
+    // }
+    // if (firstName) {
+    //     first = firstName
+    // }
+    // if (middleName) {
+    //     mid = middleName
+    // }
+    // var full = (last + ", " + first + " " + mid)
+    // console.log("checkName: " + full)
+    // return full
 }
 
 function checkField(field) {
