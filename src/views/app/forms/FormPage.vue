@@ -696,6 +696,7 @@ export default {
               this.showSuccessForm(return_details);
 
               this.$refs.form_display_component.upload().getBuffer(buffer => {
+                console.log("  this.$refs.form_display_component.upload()"+JSON.stringify(this.$refs.form_display_component))
                 var file = new Blob([buffer], { type: "application/pdf" });
                 // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
                 var data = new FormData();

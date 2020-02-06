@@ -37,11 +37,29 @@
 <script>
 import moment from "moment";
 // import FormDisplay from "@/components/FormDisplay.vue";
+import pdf from "vue-pdf";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import Form2550m from "../../plugins/pdf/printers/2550m";
+import Form1701q from "../../plugins/pdf/printers/1701q";
+import Form2000ot from "../../plugins/pdf/printers/2000ot";
+import Form1600wp from "../../plugins/pdf/printers/1600wp";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+const printers = {
+  FORM2550M: Form2550m,
+  FORM1701Q: Form1701q,
+  FORM2000OT: Form2000ot,
+  FORM1600WP: Form1600wp,
+};
 export default {
+  components: {
+    pdf
+  },
   data() {
     return {
       moment,
       form_type:'',
+      prev: '',
       form:{},
       printing:false,
       loading: false,
@@ -66,11 +84,11 @@ export default {
           dataIndex: "date_created",
           scopedSlots: { customRender: "datetime" }
         },
-        {
-          title: "Status",
-          dataIndex: "status",
-          scopedSlots: { customRender: "status" }
-        },
+        // {
+        //   title: "Status",
+        //   dataIndex: "status",
+        //   scopedSlots: { customRender: "status" }
+        // },
         {
           title: "",
           dataIndex: "actions",
@@ -103,7 +121,7 @@ export default {
   }, 
   methods:{
     print(record){
-      console.log("print record form data: " + JSON.stringify(this.form))
+      console.log("print record form data: " + JSON.stringify(record))
       this.selected_record = record.reference_no
       this.printing = true;
       this.$store.dispatch("GET_UPLOAD_TAX_RETURNS", {
@@ -111,31 +129,41 @@ export default {
         ref_no:record.reference_no
       })
       .then(result=>{
-        console.log('RESULT :::',JSON.stringify(result))
-        this.printing = false;
-        window.open(result.data.model.url)
+        console.log('RESULT 1:::',JSON.stringify(result.data.model))
+        console.log("record data: " + JSON.stringify(record.form_type))
+        // this.printing = false;
+        this.open(record.form_type, result.data.model)
+        // window.open(result.data.model.url)
       })
       .catch(error=>{
         this.printing = false;
         console.log('ERROR :::',JSON.stringify(error))
       })
     },
-    open() {
-      var printer = printers[this.form_type];
-      this.form.whole_pdf = true;
-      console.log("form details open: " + JSON.stringify(this.form));
+    form_types(type) {
+      return `FORM${type.toUpperCase()}`;
+    },
+    open(form_typed, form_data_model) {
+      var form_model = form_data_model
+      console.log("form_typed data: " + JSON.stringify(form_typed))
+      console.log("form_model data: " + JSON.stringify(form_model))
+      var type_form = `FORM${form_typed.toUpperCase()}`;
+      console.log("type_form: ", type_form)
+      var printer = printers[type_form];
+      form_model.whole_pdf = true;
       var pdf_list = [];
       // for (var x = 0; x <= 1; x++) {
       //   this.form.pdf_page = x;
-      var document = printer.fillup(this.form);
+      var document = printer.fillup(form_model);
       var self = this;
       pdfMake.createPdf(document).open(dataUrl => {
+        console.log("inside pdfmake")
         pdf_list.push(dataUrl);
-        console.log("getdata: " + dataUrl);
+        console.log("getdata submitted: " + dataUrl);
         self.prev = dataUrl;
       });
       this.refresh();
-      console.log("open form data: " + JSON.stringify(this.form));
+      console.log("open form data: " + JSON.stringify(form_model));
       // }
       console.log("pdf list data: " + JSON.stringify(pdf_list));
     },
