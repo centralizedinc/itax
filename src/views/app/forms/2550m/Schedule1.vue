@@ -10,7 +10,7 @@
     <a-button type="primary" @click="addAtc">ADD</a-button>
     <a-table bordered :dataSource="data_source" :columns="columns">
       <template slot="description" slot-scope="text, record">
-        <span>{{getDescription(record.atc)}}</span>
+        <span style="text-transform: uppercase">{{getDescription(record.atc)}}</span>
       </template>
       <template slot="atc" slot-scope="text, record, index">
         <a-select style="width 100%" @change="e => pickAtc(e, index)" :defaultValue="text || null">
@@ -19,10 +19,17 @@
         </a-select>
       </template>
       <template slot="amount" slot-scope="text, record, index">
-        <a-input-number :disabled="!record.atc" @change="e => changeAmount(e, index)" :value="text"></a-input-number>
+        <a-input-number
+          style="width: 100%;"
+          :formatter="val => currencyFormater(val)"
+          :parser="val => currencyParser(val)"
+          :disabled="!record.atc"
+          @change="e => changeAmount(e, index)"
+          :value="text"
+        ></a-input-number>
       </template>
       <template slot="output_tax" slot-scope="text, record, index">
-        <span>{{getOutputTax(record.atc, index)}}</span>
+        <span>{{formatAmount(getOutputTax(record.atc, index), true)}}</span>
       </template>
       <template slot="operation" slot-scope="text, record, index">
         <a-popconfirm placement="left" title="Sure to delete ?" @confirm="deleteAtc(index)">
@@ -33,12 +40,12 @@
         <p align="left">
           <span>
             12A. Total Amount:
-            <b>{{total_atc_amount}}</b>
+            <b>{{formatAmount(total_atc_amount, true)}}</b>
           </span>
           <br />
           <span>
             12B. Total Output Tax:
-            <b>{{total_atc_output_tax}}</b>
+            <b>{{formatAmount(total_atc_output_tax, true)}}</b>
           </span>
         </p>
       </template>
@@ -85,13 +92,43 @@ export default {
       ],
       atc_list: [
         {
-          description: "BUSINESS SERVICES-IN GENERAL",
-          atc: "VB010",
+          description: "Mining & Quarrying",
+          atc: "VQ010",
           rate: 0.12
         },
         {
-          description: "CONSTRUCTION",
-          atc: "VC010",
+          description: "Tobacco",
+          atc: "VM040",
+          rate: 0.25
+        },
+        {
+          description: "Alcohol",
+          atc: "VM110",
+          rate: 0.12
+        },
+        {
+          description: "Petroleum",
+          atc: "VM120",
+          rate: 0.25
+        },
+        {
+          description: "Automobiles",
+          atc: "VM130",
+          rate: 0.12
+        },
+        {
+          description: "Hotels, Motels",
+          atc: "VB100",
+          rate: 0.25
+        },
+        {
+          description: "Restaurants, Caterers",
+          atc: "VB101",
+          rate: 0.12
+        },
+        {
+          description: "Land Transport Cargo",
+          atc: "VB105",
           rate: 0.25
         }
       ],
