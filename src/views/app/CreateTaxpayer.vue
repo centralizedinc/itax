@@ -241,8 +241,8 @@
     <a-row>
       <a-col :span="24" align="right">
         <a-button-group>
-          <a-button size="large" ghost type="primary" icon="close">Cancel</a-button>
-          <a-button size="large" type="primary" icon="save" @click="save">Save</a-button>
+          <a-button size="large" ghost type="primary" icon="close" :disabled="loading">Cancel</a-button>
+          <a-button size="large" type="primary" icon="save" @click="save" :loading="loading">Save</a-button>
         </a-button-group>
       </a-col>
     </a-row>
@@ -358,6 +358,10 @@ export default {
         .then(result => {
           console.log(`RES::::`, JSON.stringify(result.data));
           // alert(success)
+        })
+        .catch(err => {
+          console.log('err :', err);
+          this.loading = false;
         });
     },
     showRegistration() {
