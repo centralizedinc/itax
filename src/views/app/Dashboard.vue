@@ -122,8 +122,7 @@
        <template v-if="!loading">
         <a-card v-for="item in feed" :key="item.content" style="margin-top:1vh; margin-bottom:1vh" >
             <a-comment 
-                :author="item.created_by.display_name.toUpperCase()"
-                
+                :author="item.created_by.display_name?item.created_by.display_name.toUpperCase():''"                
             >
             <template slot="avatar">
                 <a-avatar shape="square" :src="item.created_by.avatar && item.created_by.avatar.location? item.created_by.avatar.location : null">
