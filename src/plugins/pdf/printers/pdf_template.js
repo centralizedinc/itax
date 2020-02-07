@@ -35,20 +35,33 @@ function getContent(forms) {
     var _forms = Array.isArray(forms) ? forms : [forms];
     console.log("get _form data: " + JSON.stringify(_forms))
     var content = [], widths = [], body = [], datas = []
-    // initialize datas
-    for (let a = 0; a < 100; a++) {
+    // ---------------------------------------------------------------------------------------------------
+    // grid v2
+     // initialize datas
+     for (let a = 0; a < 100; a++) {
         datas[a] = []
-        for (let b = 0; b < 30; b++) datas[a][b] = { text: "A", styles: 'cell', fillColor: "#AARRGGBB" };
+        for (let b = 0; b < 30; b++){
+            if(a==0){
+                datas[a][b] = { text: `${b}`,fontSize: 8, styles: 'cell', color: 'green', bold: true };
+            }else if(a!==0 && b==0){
+                datas[a][b] = { text: `${a}`,fontSize: 8, styles: 'cell', color: 'blue', bold: true };
+            }
+            else{
+                datas[a][b] = { text: " ",fontSize: 8, styles: 'cell', color: '#e1e1e1', bold: true };
+            }
+        }
+         
     }
 
     // setup data
-    datas[10][1] = {
-        text: "hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123",
-        colSpan: 24,
-        rowSpan: 3,
+    datas[13][1] = {
+        text: "h123123123",
+        characterSpacing: 9,
+        colSpan: 23,
+        rowSpan: 2,
         // noWrap: true,
-        // right,down,up,left
-        margin:[-10,0,0,0]
+        // right,down,left,up
+        margin:[0,0,0,0]
     }
 
     datas[10][27] = {
@@ -69,18 +82,96 @@ function getContent(forms) {
     // console.log('widths :', widths);
     content.push({
         // layout: "lightHorizontalLines",
-        layout: "noBorders",
+        // layout: "noBorders",
         table: {
             widths,
             body
         },
+        layout: {
+            hLineWidth: function (i, node) {
+                return 0.1;
+            },
+            vLineWidth: function (i, node) {
+                return  0.1;
+            },
+            hLineColor: function (i, node) {
+                return 'red';
+            },
+            vLineColor: function (i, node) {
+                return 'red';
+            },
+        },
         styles: {
             cell: {
-                color: 'red',
-                fillColor: "yellow"
+                color: '#FFF',
+                opacity: `100%`
             }
         }
     })
+    // -----------------------------------------------------------------------------------------------
+    // grid v1
+    // // initialize datas
+    // for (let a = 0; a < 100; a++) {
+    //     datas[a] = []
+    //     for (let b = 0; b < 30; b++) datas[a][b] = { text: `${a},${b}`,fontSize: 8, styles: 'cell', color: '#e1e1e1', bold: true };
+    // }
+
+    // // setup data
+    // datas[10][1] = {
+    //     text: "hey123123123123",
+    //     colSpan: 12,
+    //     rowSpan: 0,
+    //     // noWrap: true,
+    //     // right,down,left,up
+    //     margin:[0,0,0,0]
+    // }
+
+    // datas[10][27] = {
+    //     text: "1117",
+    //     colSpan: 3
+    // }
+
+    // // Setup widths
+    // for (let a = 0; a < 30; a++) widths.push(20);
+
+    // // setup body
+    // for (let a = 0; a < 100; a++) {
+    //     var col_datas = [];
+    //     for (let b = 0; b < 30; b++) col_datas.push(datas[a][b]);
+    //     body.push(col_datas)
+    // }
+    // console.log('widths :', widths);
+    // // console.log('widths :', widths);
+    // content.push({
+    //     // layout: "lightHorizontalLines",
+    //     // layout: "noBorders",
+    //     table: {
+    //         widths,
+    //         body
+    //     },
+    //     layout: {
+    //         hLineWidth: function (i, node) {
+    //             return 0.1;
+    //         },
+    //         vLineWidth: function (i, node) {
+    //             return  0.1;
+    //         },
+    //         hLineColor: function (i, node) {
+    //             return 'gray';
+    //         },
+    //         vLineColor: function (i, node) {
+    //             return 'gray';
+    //         },
+    //     },
+    //     styles: {
+    //         cell: {
+    //             color: '#FFF',
+    //             opacity: `100%`
+    //         }
+    //     }
+    // })
+    // ----------------------------------------------------------------------------------------------------
+    // grid v0
     // for(x= 0 ; x <= 100; x++){
     // content.push({
     //     layout: "noBorders",
