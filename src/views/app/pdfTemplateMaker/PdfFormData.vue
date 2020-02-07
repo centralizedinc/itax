@@ -2,26 +2,51 @@
   <a-card style="margin-top: 2vh;">
     <a-row v-if="visible" type="flex" :gutter="10">
       <a-col :span="24">
-          <a-button type="primary" ghost @click="visible=false">Back</a-button>
+        <a-row type="flex" :gutter="10">
+          <a-col :span="5">
+            <a-button type="primary" @click="visible=false">Close and Submit</a-button>
+          </a-col>
+          <a-col :span="5">
+            <a-button type="danger" @click="cancelData">Close without saving</a-button>
+          </a-col>
+        </a-row>
       </a-col>
       <a-col :span="12">
         <a-form-item>
-          <a-input-number v-model="record_data.x" placeholder="Row" style="width: 100%;" />
+          <a-input-number
+            v-model="record_data.x"
+            placeholder="Row"
+            style="width: 100%;"
+            @blur="data_changes.apply=!data_changes.apply"
+          />
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item>
-          <a-input-number v-model="record_data.y" placeholder="Column" style="width: 100%;" />
+          <a-input-number
+            v-model="record_data.y"
+            placeholder="Column"
+            style="width: 100%;"
+            @blur="data_changes.apply=!data_changes.apply"
+          />
         </a-form-item>
       </a-col>
       <a-col :span="24">
         <a-form-item>
-          <a-input v-model="record_data.text" placeholder="Text" />
+          <a-input
+            v-model="record_data.text"
+            placeholder="Text"
+            @blur="data_changes.apply=!data_changes.apply"
+          />
         </a-form-item>
       </a-col>
       <a-col :span="24">
         <a-form-item>
-          <a-input v-model="record_data.key" placeholder="Keyword" />
+          <a-input
+            v-model="record_data.key"
+            placeholder="Keyword"
+            @blur="data_changes.apply=!data_changes.apply"
+          />
         </a-form-item>
       </a-col>
       <a-col :span="9">
@@ -30,6 +55,7 @@
             style="width: 100%;"
             v-model="record_data.options.colSpan"
             placeholder="Column Span"
+            @blur="data_changes.apply=!data_changes.apply"
           />
         </a-form-item>
       </a-col>
@@ -39,12 +65,16 @@
             style="width: 100%;"
             v-model="record_data.options.rowSpan"
             placeholder="Row Span"
+            @blur="data_changes.apply=!data_changes.apply"
           />
         </a-form-item>
       </a-col>
       <a-col :span="6">
         <a-form-item>
-          <a-checkbox v-model="record_data.options.noWrap">No wrap</a-checkbox>
+          <a-checkbox
+            v-model="record_data.options.noWrap"
+            @change="data_changes.apply=!data_changes.apply"
+          >No wrap</a-checkbox>
         </a-form-item>
       </a-col>
       <a-col :span="24">
@@ -61,6 +91,7 @@
                   style="width: 100%;"
                   v-model="record_data.options.margin[0]"
                   placeholder="Left"
+                  @change="data_changes.apply=!data_changes.apply"
                 />
               </a-tooltip>
             </a-col>
@@ -70,6 +101,7 @@
                   style="width: 100%;"
                   v-model="record_data.options.margin[1]"
                   placeholder="Top"
+                  @change="data_changes.apply=!data_changes.apply"
                 />
               </a-tooltip>
             </a-col>
@@ -79,6 +111,7 @@
                   style="width: 100%;"
                   v-model="record_data.options.margin[2]"
                   placeholder="Right"
+                  @change="data_changes.apply=!data_changes.apply"
                 />
               </a-tooltip>
             </a-col>
@@ -88,6 +121,7 @@
                   style="width: 100%;"
                   v-model="record_data.options.margin[3]"
                   placeholder="Bottom"
+                  @change="data_changes.apply=!data_changes.apply"
                 />
               </a-tooltip>
             </a-col>
@@ -100,6 +134,7 @@
             style="width: 100%;"
             v-model="record_data.options.fontSize"
             placeholder="Font Size"
+            @change="data_changes.apply=!data_changes.apply"
           />
         </a-form-item>
       </a-col>
@@ -109,12 +144,16 @@
             style="width: 100%;"
             v-model="record_data.options.characterSpacing"
             placeholder="Character Spacing"
+            @change="data_changes.apply=!data_changes.apply"
           />
         </a-form-item>
       </a-col>
       <a-col :span="6">
         <a-form-item>
-          <a-checkbox v-model="record_data.options.bold">Font Bold</a-checkbox>
+          <a-checkbox
+            v-model="record_data.options.bold"
+            @change="data_changes.apply=!data_changes.apply"
+          >Font Bold</a-checkbox>
         </a-form-item>
       </a-col>
       <a-col :span="24">
@@ -123,6 +162,7 @@
             v-model="record_data.options.alignment"
             style="width: 100%;"
             placeholder="Alignment"
+            @change="data_changes.apply=!data_changes.apply"
           >
             <a-select-option value="justified">Justified</a-select-option>
             <a-select-option value="left">Left</a-select-option>
@@ -316,7 +356,7 @@
 
 <script>
 export default {
-  props: ["record"],
+  props: ["record", "data_changes"],
   data() {
     return {
       cols: [
@@ -355,7 +395,8 @@ export default {
       record_data: {
         options: {
           noWrap: true,
-          margin: [0, 0, 0, 0]
+          margin: [0, 0, 0, 0],
+          fontSize: 8
         }
       }
     };
@@ -368,7 +409,8 @@ export default {
         text: "",
         options: {
           noWrap: true,
-          margin: [0, 0, 0, 0]
+          margin: [0, 0, 0, 0],
+          fontSize: 8
         }
       });
       this.record_data = this.record.datas[this.record.datas.length - 1];
@@ -381,7 +423,12 @@ export default {
     },
     remove(index) {
       this.record.datas.splice(index, 1);
+      this.data_changes.apply = !this.data_changes.apply;
       this.$notification.success({ message: "Success removed data. " });
+    },
+    cancelData() {
+      this.record.datas.splice(this.record.datas.length - 1, 1);
+      this.visible = false;
     },
     edit(record) {
       this.record_data = record;

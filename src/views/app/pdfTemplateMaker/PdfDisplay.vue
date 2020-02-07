@@ -22,7 +22,7 @@ import pdf_template from "./pdf_template";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
-  props: ["record"],
+  props: ["record", "data_changes"],
   components: {
     pdf
   },
@@ -36,13 +36,42 @@ export default {
     };
   },
   watch: {
-    record: {
-      handler(val) {
-        console.log("#update record ", this.record);
-        this.refresh();
-      },
-      deep: true
+    background_image(val) {
+      this.refresh();
+    },
+    applying_changes(val) {
+      this.refresh();
     }
+    // record: {
+    //   handler(val) {
+    //     console.log("#update record ", this.record);
+    //     this.refresh();
+    //   },
+    //   deep: true
+    // }
+  },
+  computed: {
+    background_image() {
+      return this.record.background_image;
+    },
+    applying_changes() {
+        return this.data_changes.apply;
+    }
+    // background_image() {
+    //   return this.record.background_image;
+    // },
+    // background_image() {
+    //   return this.record.background_image;
+    // },
+    // background_image() {
+    //   return this.record.background_image;
+    // },
+    // background_image() {
+    //   return this.record.background_image;
+    // },
+    // background_image() {
+    //   return this.record.background_image;
+    // }
   },
   created() {
     console.log("#record :", this.record);
@@ -97,7 +126,7 @@ export default {
           console.log("error in fillup :", err);
           this.loading = false;
         });
-    },
+    }
     // download() {
     //   var filename = this.form_type;
     //   var printer = printers[this.form_type];

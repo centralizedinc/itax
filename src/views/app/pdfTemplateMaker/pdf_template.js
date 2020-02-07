@@ -54,11 +54,23 @@ function fillup(record, pages_data) {
 function getContent(record, pages) {
     var content = [];
     pages.forEach((page, page_index) => {
-        var widths = [], body = [], datas = [], rows = 100, cols = 30;
+        var widths = [], body = [], datas = [], rows = 100, cols = 34;
         // initialize datas
         for (let a = 0; a < rows; a++) {
             datas[a] = []
-            for (let b = 0; b < cols; b++) datas[a][b] = { text: "A" };
+            for (let b = 0; b < cols; b++) {
+                if (a == 0) {
+                    datas[a][b] = { text: `${b}`, fontSize: 8, styles: 'cell', color: 'green', bold: true };
+                } else if (a !== 0 && b == 0) {
+                    datas[a][b] = { text: `${a}`, fontSize: 8, styles: 'cell', color: 'blue', bold: true };
+                }
+                else if (a !== 0 && b >= 33) {
+                    datas[a][b] = { text: `${a}`, fontSize: 8, styles: 'cell', color: 'blue', bold: true };
+                }
+                else {
+                    datas[a][b] = { text: " ", fontSize: 8, styles: 'cell', color: '#e1e1e1', bold: true };
+                }
+            }
         }
 
         page.datas.forEach(config => {
@@ -84,6 +96,26 @@ function getContent(record, pages) {
             table: {
                 widths,
                 body
+            },
+            layout: {
+                hLineWidth: function (i, node) {
+                    return 0.1;
+                },
+                vLineWidth: function (i, node) {
+                    return 0.1;
+                },
+                hLineColor: function (i, node) {
+                    return 'red';
+                },
+                vLineColor: function (i, node) {
+                    return 'red';
+                },
+            },
+            styles: {
+                cell: {
+                    color: '#FFF',
+                    opacity: `100%`
+                }
             }
         })
 
