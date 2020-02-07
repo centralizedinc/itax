@@ -937,7 +937,6 @@ function getContent(forms) {
     //   return content1[forms.page];
     // content 2
     var content_page2 = [
-
         {
             layout: "noBorders",
             table: {
@@ -947,7 +946,8 @@ function getContent(forms) {
                     [
 
                         {
-                            text: ""
+                            text: "",
+                            pageBreak: 'before'
                         }
 
                     ]

@@ -1,5 +1,5 @@
  const form = require("../templates/1600wp_template").template;
-
+var form_list = [form, form]
  /**
   *
   * @param {LicenseModel} details
