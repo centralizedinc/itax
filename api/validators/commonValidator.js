@@ -216,7 +216,7 @@ class CommonValidator {
         console.log('reference :', reference);
         // Compute Return Period
         if (reference.period_type === 'm') {
-            if (!form.return_period_year || !form.return_period_month) {
+            if (!form.return_period_year || (!form.return_period_month && form.return_period_month !== 0)) {
                 return { errors: [{ page: 0, field: "return_period", error: constant_helper.MANDATORY_FIELD('Return Period') }] }
             }
             form.return_period = new Date(form.return_period_year, form.return_period_month + 1, 0);

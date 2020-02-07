@@ -472,7 +472,12 @@ export default {
       var total = 0;
       console.log("this.records :", this.records);
       if (this.records) {
-        total = this.records.map(v => v.sub_total).reduce((t, c) => t + c);
+        var filtered_records = this.records.filter(v => v.sub_total),
+          records =
+            filtered_records && filtered_records.length
+              ? filtered_records.map(v => v.sub_total)
+              : [];
+        total = records && records.length ? records.reduce((t, c) => t + c) : 0;
       }
       return total;
     },
