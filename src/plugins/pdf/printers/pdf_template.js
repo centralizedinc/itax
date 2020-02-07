@@ -9,7 +9,7 @@ function fillup(details) {
     console.log("fillup details printer: " + JSON.stringify(details))
     var content = getContent(details);
     console.log('get content ###### :', content);
-
+    
     return {
         background: function (page) {
             return [{
@@ -18,10 +18,12 @@ function fillup(details) {
             }]
         },
         content: content,
+        pageMargins: [0,30,0,0],
         images: {
             form: form
         },
-        pageSize: 'LEGAL'
+        pageSize: 'LEGAL',
+        
     };
 }
 
@@ -40,10 +42,13 @@ function getContent(forms) {
      // initialize datas
      for (let a = 0; a < 100; a++) {
         datas[a] = []
-        for (let b = 0; b < 30; b++){
+        for (let b = 0; b < 34; b++){
             if(a==0){
                 datas[a][b] = { text: `${b}`,fontSize: 8, styles: 'cell', color: 'green', bold: true };
             }else if(a!==0 && b==0){
+                datas[a][b] = { text: `${a}`,fontSize: 8, styles: 'cell', color: 'blue', bold: true };
+            }
+            else if(a!== 0 && b>=33){
                 datas[a][b] = { text: `${a}`,fontSize: 8, styles: 'cell', color: 'blue', bold: true };
             }
             else{
@@ -70,17 +75,18 @@ function getContent(forms) {
     }
 
     // Setup widths
-    for (let a = 0; a < 30; a++) widths.push(10);
+    for (let a = 0; a < 34; a++) widths.push(10);
 
     // setup body
     for (let a = 0; a < 100; a++) {
         var col_datas = [];
-        for (let b = 0; b < 30; b++) col_datas.push(datas[a][b]);
+        for (let b = 0; b < 34; b++) col_datas.push(datas[a][b]);
         body.push(col_datas)
     }
     console.log('widths :', widths);
     // console.log('widths :', widths);
     content.push({
+        
         // layout: "lightHorizontalLines",
         // layout: "noBorders",
         table: {

@@ -9,7 +9,7 @@ var form_list = [form, form]
      console.log("fillup details printer: " + JSON.stringify(details))
      var content = getContent(details);
      console.log('get content ###### :', content);
-     
+    //  
      return {
          background: function (page) {
              return [{
