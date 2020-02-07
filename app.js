@@ -65,6 +65,7 @@ app.use('/payment', require('./api/routes/payment_router'));
 app.use('/activities', require('./api/routes/activity_router'));
 app.use('/collections', require('./api/routes/collections_router'));
 app.use('/analytics', require('./api/routes/analytics_router'));
+app.use('/pdf_config', require('./api/routes/pdf_data_router'));
 
 // START SERVER
 //#############################################################################

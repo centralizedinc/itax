@@ -15,7 +15,7 @@
         </a-col>
       </a-row>
     </a-layout-header>
-    <a-layout-content style="min-height:100vh; margin-top:15vh;">
+    <a-layout-content style="margin-top:15vh;">
       <a-card></a-card>
       <a-row :gutter="16" justify="center">
         <a-col :xs="0" :md="12">
@@ -121,11 +121,13 @@
                   </template>
                   <a-avatar
                     style="border: solid 1px #1cb5e0"
-                    slot="avatar"                   
+                    slot="avatar"
                     :size="64"
                     shape="square"
                   >
-                  <span style="font-size:16px;text-transform: uppercase;">{{item.registered_name[0]}}</span>
+                    <span
+                      style="font-size:16px;text-transform: uppercase;"
+                    >{{item.registered_name[0]}}</span>
                   </a-avatar>
                 </a-list-item-meta>
               </a-col>
@@ -681,8 +683,22 @@ export default {
                 var errors = this.errors.sort((a, b) => a.page - b.page);
                 console.log("this.errors :", errors);
                 this.curr_step = errors[0].page;
+                var errors_field = [];
+                errors_field = errors.filter(v => v.field).map(v => v.field);
+                if (
+                  errors_field &&
+                  errors_field.length &&
+                  (errors_field.includes("surcharge") ||
+                    errors_field.includes("interest") ||
+                    errors_field.includes("compromise") ||
+                    errors_field.includes("taxpayer_tax_payable.surcharge") ||
+                    errors_field.includes("taxpayer_tax_payable.interest") ||
+                    errors_field.includes("taxpayer_tax_payable.compromise"))
+                )
+                  this.$notification.error({ message: "Late Filing" });
+                else this.$notification.error({ message: "Validation Error" });
               }
-              this.$notification.error({ message: "Validation Error" });
+              // this.$notification.error({ message: "Validation Error" });
             } else {
               console.log("VALIDATE_AND_SAVE result:", this.form);
               this.$store.commit("REMOVE_DRAFT_FORM", this.$route.query.ref_no);
@@ -696,7 +712,10 @@ export default {
               this.showSuccessForm(return_details);
 
               this.$refs.form_display_component.upload().getBuffer(buffer => {
-                console.log("  this.$refs.form_display_component.upload()"+JSON.stringify(this.$refs.form_display_component))
+                console.log(
+                  "  this.$refs.form_display_component.upload()" +
+                    JSON.stringify(this.$refs.form_display_component)
+                );
                 var file = new Blob([buffer], { type: "application/pdf" });
                 // var pdf = new File(b64toBlob(buffer), `123.pdf`, {type: "application/pdf"});
                 var data = new FormData();
@@ -755,17 +774,19 @@ export default {
     //find tp list
     console.log("tin :", this.$store.state.account_session.user.tin);
     this.$http
-        .get(`/taxpayer/users/${this.$store.state.account_session.user.account_id}`)
-        .then(results => {
-          console.log("result1 ::: ", JSON.stringify(results.data));
-          this.taxpayer_list   = results.data.model;
-          // this.users.push(results.data.model);  
-          this.loading = false;        
-        })
-        .catch(err => {
-          console.log(`err ::: `, err);
-          this.loading = false;
-        });
+      .get(
+        `/taxpayer/users/${this.$store.state.account_session.user.account_id}`
+      )
+      .then(results => {
+        console.log("result1 ::: ", JSON.stringify(results.data));
+        this.taxpayer_list = results.data.model;
+        // this.users.push(results.data.model);
+        this.loading = false;
+      })
+      .catch(err => {
+        console.log(`err ::: `, err);
+        this.loading = false;
+      });
     // this.$http
     //   .get(`/taxpayer/tin/${this.$store.state.account_session.user.tin}`)
     //   .then(results => {
