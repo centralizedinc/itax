@@ -38,17 +38,17 @@ function getContent(forms) {
     // initialize datas
     for (let a = 0; a < 100; a++) {
         datas[a] = []
-        for (let b = 0; b < 30; b++) datas[a][b] = { text: "A", styles: 'cell', fillColor: "#AARRGGBB" };
+        for (let b = 0; b < 30; b++) datas[a][b] = { text: `${a},${b}`,fontSize: 8, styles: 'cell', color: '#BE2625', bold: true };
     }
 
     // setup data
     datas[10][1] = {
-        text: "hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123hey123123123123",
-        colSpan: 24,
-        rowSpan: 3,
+        text: "hey123123123123",
+        colSpan: 12,
+        rowSpan: 0,
         // noWrap: true,
-        // right,down,up,left
-        margin:[-10,0,0,0]
+        // right,down,left,up
+        margin:[0,0,0,0]
     }
 
     datas[10][27] = {
@@ -57,7 +57,7 @@ function getContent(forms) {
     }
 
     // Setup widths
-    for (let a = 0; a < 30; a++) widths.push(10);
+    for (let a = 0; a < 30; a++) widths.push(20);
 
     // setup body
     for (let a = 0; a < 100; a++) {
@@ -69,15 +69,15 @@ function getContent(forms) {
     // console.log('widths :', widths);
     content.push({
         // layout: "lightHorizontalLines",
-        layout: "noBorders",
+        // layout: "noBorders",
         table: {
             widths,
             body
         },
         styles: {
             cell: {
-                color: 'red',
-                fillColor: "yellow"
+                color: '#FFF',
+                opacity: `100%`
             }
         }
     })
