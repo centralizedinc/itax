@@ -32,7 +32,19 @@ router.route("/")
             created_by = jwt.decode(req.headers.access_token).account_id
             data.created_by = created_by;
         };
-        (new model(data)).save()
+        model.find({ status: "A" })
+            .then(results => {
+                if(results) {
+                    var codes = results.map(v => v.code);
+                    if(!codes.includes(data.code)) {
+                        return (new model(data)).save()
+                    } else {
+                        return { error: { code: 'code_err', message: "Code already exists." } }
+                    }
+                } else {
+                    return (new model(data)).save()
+                }
+            })
             .then((result) => {
                 res.json(result)
             }).catch((error) => {
@@ -42,7 +54,17 @@ router.route("/")
 
 router.route("/code/:code")
     .get((req, res) => {
-        model.find({ status: "A", code: req.params.code })
+        model.findOne({ status: "A", code: req.params.code })
+            .then((results) => {
+                res.json(results)
+            }).catch((error) => {
+                res.json({ error })
+            });
+    })
+
+router.route("/remove/:code")
+    .get((req, res) => {
+        model.findOneAndUpdate({ code: req.params.code }, { status: "I" })
             .then((results) => {
                 res.json(results)
             }).catch((error) => {
@@ -64,8 +86,20 @@ router.route("/:id")
         if (req.headers.access_token && jwt.decode(req.headers.access_token) && jwt.decode(req.headers.access_token).account_id) {
             modified_by = jwt.decode(req.headers.access_token).account_id
             data.modified_by = modified_by;
-        };
-        model.findByIdAndUpdate(req.params.id, data)
+        };        
+        model.find({ status: "A" })
+            .then(results => {
+                if(results) {
+                    var codes = results.map(v => v.code);
+                    if(!codes.includes(data.code)) {
+                        return model.findByIdAndUpdate(req.params.id, data)
+                    } else {
+                        return { error: { code: 'code_err', message: "Code already exists." } }
+                    }
+                } else {
+                    return model.findByIdAndUpdate(req.params.id, data)
+                }
+            })
             .then((result) => {
                 res.json(result)
             }).catch((error) => {

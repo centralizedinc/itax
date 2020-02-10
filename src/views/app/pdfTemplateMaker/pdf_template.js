@@ -10,7 +10,8 @@ function fillup(record, pages_data) {
     console.log('##### pages_data :', pages_data);
     var document = {
         content: [],
-        pageSize: 'LEGAL'
+        pageSize: 'LEGAL',
+        pageMargins: [0,30,0,0],
     };
     if (pages_data && pages_data.length) {
         var content = getContent(record, pages_data);

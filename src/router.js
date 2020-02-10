@@ -433,9 +433,15 @@ export default new Router({
         name: "Dashboard",
         component: () => import('./views/admin/dashboard/Dashboard.vue')
       }]
-    }, {
+    }, 
+    {
       path: '/pdfview',
-      name: "PDF View",
+      name: "PDF Records",
+      component: () => import('./views/app/pdfTemplateMaker/PdfRecords.vue')
+    }, 
+    {
+      path: '/pdfview/:mode/:index',
+      name: "New PDF Template",
       component: () => import('./views/app/pdfTemplateMaker/PdfMaker.vue')
     }
   ]

@@ -2,11 +2,11 @@
   <a-card style="margin-top: 2vh;">
     <a-row v-if="visible" type="flex" :gutter="10">
       <a-col :span="24">
-        <a-row type="flex" :gutter="10">
-          <a-col :span="5">
+        <a-row :gutter="15">
+          <a-col :span="12">
             <a-button type="primary" @click="visible=false">Close and Submit</a-button>
           </a-col>
-          <a-col :span="5">
+          <a-col :span="12" style="text-align: right">
             <a-button type="danger" @click="cancelData">Close without saving</a-button>
           </a-col>
         </a-row>
@@ -174,30 +174,32 @@
     </a-row>
     <a-row v-else>
       <a-col :span="24">
-        <a-form-item>
-          <a-input v-model="record.name" placeholder="Name" />
+        <a-form-item :validate-status="name_err ? 'error':''" :help="name_err" has-feedback>
+          <a-input v-model="record.name" :disabled="loading" placeholder="Name*" />
+        </a-form-item>
+      </a-col>
+      <a-col :span="24">
+        <a-form-item :validate-status="code_err ? 'error':''" :help="code_err" has-feedback>
+          <a-tooltip title="Use as identifier/code to match the needed pdf template">
+            <a-input v-model="record.code" :disabled="loading" placeholder="Code*" />
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="24">
         <a-form-item>
-          <a-input v-model="record.code" placeholder="Code" />
+          <a-input v-model="record.page" :disabled="loading" placeholder="Page No" />
         </a-form-item>
       </a-col>
       <a-col :span="24">
         <a-form-item>
-          <a-input v-model="record.page" placeholder="Page No" />
-        </a-form-item>
-      </a-col>
-      <a-col :span="24">
-        <a-form-item>
-          <a-input v-model="record.background_image" placeholder="Background Image Url" />
+          <a-input v-model="record.background_image" :disabled="loading" placeholder="Background Image Url" />
         </a-form-item>
       </a-col>
       <a-col :span="24" style="text-align: right">
-        <a-button type="primary" @click="add">Add Data</a-button>
+        <a-button type="primary" @click="add" :disabled="loading">Add Data</a-button>
       </a-col>
       <a-col :span="24">
-        <a-table :columns="cols" :bordered="true" :dataSource="record.datas">
+        <a-table :loading="loading" :columns="cols" :bordered="true" :dataSource="record.datas">
           <div slot="options" slot-scope="text">
             <a-tooltip placement="right">
               <template slot="title">
@@ -210,146 +212,21 @@
             </a-tooltip>
           </div>
           <a-button-group slot="action" slot-scope="text, record, index">
-            <a-button icon="edit" type="primary" @click="edit(record)" />
-            <a-button icon="delete" type="danger" @click="remove(index)" />
+            <a-button icon="edit" :disabled="loading" type="primary" @click="edit(record)" />
+            <a-button icon="delete" :disabled="loading" type="danger" @click="remove(index)" />
           </a-button-group>
         </a-table>
       </a-col>
-      <a-modal :visible="false" @cancel="visible=false" title="New Data">
-        <a-button-group slot="footer">
-          <a-button type="primary" ghost @click="visible=false">Cancel</a-button>
-          <a-button type="primary" @click="addData">Add</a-button>
-        </a-button-group>
-        <a-row type="flex" :gutter="10">
-          <a-col :span="12">
-            <a-form-item>
-              <a-input-number v-model="record_data.x" placeholder="Row" style="width: 100%;" />
-            </a-form-item>
+      <a-col :span="24">
+        <a-row :gutter="15">
+          <a-col :span="16">
+            <a-button style="width: 100%;" type="primary" @click="saveTemplate" :loading="loading">SAVE TEMPLATE</a-button>
           </a-col>
-          <a-col :span="12">
-            <a-form-item>
-              <a-input-number v-model="record_data.y" placeholder="Column" style="width: 100%;" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item>
-              <a-input v-model="record_data.text" placeholder="Text" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item>
-              <a-input v-model="record_data.key" placeholder="Keyword" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="9">
-            <a-form-item>
-              <a-input-number
-                style="width: 100%;"
-                v-model="record_data.options.colSpan"
-                placeholder="Column Span"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="9">
-            <a-form-item>
-              <a-input-number
-                style="width: 100%;"
-                v-model="record_data.options.rowSpan"
-                placeholder="Row Span"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="6">
-            <a-form-item>
-              <a-checkbox v-model="record_data.options.noWrap">No wrap</a-checkbox>
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item
-              label="Margin"
-              :label-col="{ span: 4 }"
-              :wrapper-col="{ span: 20 }"
-              style="text-align: left"
-            >
-              <a-row type="flex" :gutter="5">
-                <a-col :span="6">
-                  <a-tooltip title="Left">
-                    <a-input-number
-                      style="width: 100%;"
-                      v-model="record_data.options.margin[0]"
-                      placeholder="Left"
-                    />
-                  </a-tooltip>
-                </a-col>
-                <a-col :span="6">
-                  <a-tooltip title="Top">
-                    <a-input-number
-                      style="width: 100%;"
-                      v-model="record_data.options.margin[1]"
-                      placeholder="Top"
-                    />
-                  </a-tooltip>
-                </a-col>
-                <a-col :span="6">
-                  <a-tooltip title="Right">
-                    <a-input-number
-                      style="width: 100%;"
-                      v-model="record_data.options.margin[2]"
-                      placeholder="Right"
-                    />
-                  </a-tooltip>
-                </a-col>
-                <a-col :span="6">
-                  <a-tooltip title="Bottom">
-                    <a-input-number
-                      style="width: 100%;"
-                      v-model="record_data.options.margin[3]"
-                      placeholder="Bottom"
-                    />
-                  </a-tooltip>
-                </a-col>
-              </a-row>
-            </a-form-item>
-          </a-col>
-          <a-col :span="9">
-            <a-form-item>
-              <a-input-number
-                style="width: 100%;"
-                v-model="record_data.options.fontSize"
-                placeholder="Font Size"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="9">
-            <a-form-item>
-              <a-input-number
-                style="width: 100%;"
-                v-model="record_data.options.characterSpacing"
-                placeholder="Character Spacing"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="6">
-            <a-form-item>
-              <a-checkbox v-model="record_data.options.bold">Font Bold</a-checkbox>
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item>
-              <a-select
-                v-model="record_data.options.alignment"
-                style="width: 100%;"
-                placeholder="Alignment"
-              >
-                <a-select-option value="justified">Justified</a-select-option>
-                <a-select-option value="left">Left</a-select-option>
-                <a-select-option value="right">Right</a-select-option>
-                <a-select-option value="center">Center</a-select-option>
-              </a-select>
-            </a-form-item>
+          <a-col :span="8">
+            <a-button type="danger" style="width: 100%;" :disabled="loading">CANCEL</a-button>
           </a-col>
         </a-row>
-      </a-modal>
+      </a-col>
     </a-row>
   </a-card>
 </template>
@@ -392,18 +269,8 @@ export default {
         }
       ],
       visible: false,
-      record_data: {
-        options: {
-          noWrap: true,
-          margin: [0, 0, 0, 0],
-          fontSize: 8
-        }
-      }
-    };
-  },
-  methods: {
-    add() {
-      this.record.datas.push({
+      record_data: {},
+      default_data: {
         x: 0,
         y: 0,
         text: "",
@@ -412,19 +279,58 @@ export default {
           margin: [0, 0, 0, 0],
           fontSize: 8
         }
-      });
+      },
+      loading: false,
+      code_err: "",
+      name_err: ""
+    };
+  },
+  created() {
+    if(this.mode.toLowerCase() === 'new') {
+      var randomCode = `template_${new Date().getTime()}${this.$route.params.code||''}`
+      this.record.name = randomCode;
+      this.record.code = randomCode;
+      this.record_data = JSON.parse(JSON.stringify(this.default_data))
+    } else if(this.mode.toLowerCase() === 'edit') {
+      this.loading = true;
+      this.$http
+        .get(`/pdf_config/code/${this.$route.params.code}`)
+        .then(results => {
+          console.log("#results in getting pdf data :", results);
+          if (results.data && !results.data.error) {
+            this.record = results.data;
+            this.data_changes.apply = !this.data_changes.apply;
+          }
+          else {
+            console.error(results.data.error);
+            this.$notification.error({ message: "Invalid Request." })
+          }
+          this.loading = false;
+        })
+        .catch(err => {
+          console.error(err);
+          this.loading = false;
+        });
+    } else {
+      this.$notification.error({ message: "Invalid Request." })
+      this.$router.push('/pdfview');
+    }
+  },
+  computed: {
+    mode(){
+      return this.$route.params.mode;
+    }
+  },
+  methods: {
+    add() {
+      this.record.datas.push(JSON.parse(JSON.stringify(this.default_data)));
       this.record_data = this.record.datas[this.record.datas.length - 1];
       this.visible = true;
-    },
-    addData() {
-      this.record.datas.push(this.record_data);
-      this.visible = false;
-      this.$notification.success({ message: "Success added data. " });
     },
     remove(index) {
       this.record.datas.splice(index, 1);
       this.data_changes.apply = !this.data_changes.apply;
-      this.$notification.success({ message: "Success removed data. " });
+      this.$notification.success({ message: "Data has been removed." });
     },
     cancelData() {
       this.record.datas.splice(this.record.datas.length - 1, 1);
@@ -433,6 +339,49 @@ export default {
     edit(record) {
       this.record_data = record;
       this.visible = true;
+    },
+    saveTemplate() {
+      this.code_err = "";
+      this.name_err = ""
+      if(!this.record.code) this.code_err = "Code is required.";
+      else if(!this.record.name) this.name_err = "Name is required.";
+      else if(this.mode.toLowerCase() === 'new') {
+        this.loading = true;
+        this.$http.post('/pdf_config', this.record)
+          .then((result) => {
+            console.log('### result :', result);
+            if(result.data && result.data.error && result.data.error.code === 'code_err'){
+              this.code_err = result.data.error.message;
+              this.$notification.error({ message: result.data.error.message });
+            } else {
+              this.$notification.success({ message: "Saving template completed. " });
+              this.$router.push('/pdfview');
+            }
+            this.loading = false;
+          }).catch((err) => {
+            this.$notification.error({ message: "Saving template error. " });
+            console.error(err);
+            this.loading = false;
+          });
+      } else if(this.mode.toLowerCase() === 'edit') {
+        this.loading = true;
+        this.$http.post(`/pdf_config/${this.record._id}`, this.record)
+          .then((result) => {
+            console.log('### result :', result);
+            if(result.data && result.data.error && result.data.error.code === 'code_err'){
+              this.code_err = result.data.error.message;
+              this.$notification.error({ message: result.data.error.message });
+            } else {
+              this.$notification.success({ message: "Saving template completed. " });
+              this.$router.push('/pdfview');
+            }
+            this.loading = false;
+          }).catch((err) => {
+            this.$notification.error({ message: "Saving template error. " });
+            console.error(err);
+            this.loading = false;
+          });
+      }
     }
   }
 };
